@@ -211,6 +211,11 @@
 .btn-group > .btn + .dropdown-toggle {
     padding-right: 8px;
     padding-left: 8px;
+    height:30px;
+    /*toggle height hack,
+    added because, just in Atlas, the caret appears on top of the box
+    not needed on demo pages and I couldn't spot the difference
+    */
 }
 .btn-group > .btn-lg + .dropdown-toggle {
     padding-right: 12px;
