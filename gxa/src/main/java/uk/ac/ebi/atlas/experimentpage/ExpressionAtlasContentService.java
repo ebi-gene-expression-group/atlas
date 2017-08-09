@@ -50,7 +50,8 @@ public class ExpressionAtlasContentService {
             ExperimentDesignFile.RnaSeq rnaSeqDifferentialExperimentDesignFile,
             ExperimentDesignFile.Microarray microarrayExperimentDesignFile,
             RnaSeqQCReport rnaSeqQCReport,
-            LinkToArrayExpress.Baseline baselineLinkToArrayExpress,
+            LinkToArrayExpress.RnaSeqBaseline rnaSeqBaselineLinkToArrayExpress,
+            LinkToArrayExpress.ProteomicsBaseline proteomicsBaselineLinkToArrayExpress,
             LinkToArrayExpress.Differential differentialLinkToArrayExpress,
             LinkToArrayExpress.Microarray microarrayLinkToArrayExpress,
             ExperimentTrader experimentTrader) {
@@ -61,7 +62,7 @@ public class ExpressionAtlasContentService {
                                 proteomicsExperimentDownloadSupplier,
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
-                                baselineLinkToArrayExpress)
+                                proteomicsBaselineLinkToArrayExpress)
                 );
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -69,7 +70,7 @@ public class ExpressionAtlasContentService {
                                 rnaSeqBaselineExperimentDownloadSupplier,
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
-                                baselineLinkToArrayExpress)
+                                rnaSeqBaselineLinkToArrayExpress)
                 );
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(

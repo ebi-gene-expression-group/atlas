@@ -28,7 +28,26 @@ public abstract class LinkToArrayExpress<E extends Experiment> extends Externall
     }
 
     @Named
-    public static class Baseline extends LinkToArrayExpress<BaselineExperiment> {
+    public static class ProteomicsBaseline extends LinkToArrayExpress<BaselineExperiment> {
+
+        /*
+        In the future we will source proteomics experiments from PRIDE, and one requirement is that they are not backported into ArrayExpress.
+        E-PROT-6 is an example experiment from PRIDE not in AE.
+        */
+        static Collection<String> PROTEOMICS_EXPS_STILL_IN_AE = ImmutableList.of(
+                "E-PROT-1",
+                "E-PROT-3",
+                "E-PROT-5"
+        );
+
+        @Override
+        public Collection<ExternallyAvailableContent> get(BaselineExperiment experiment) {
+            return PROTEOMICS_EXPS_STILL_IN_AE.contains(experiment.getAccession()) ? super.get(experiment) : ImmutableList.of();
+        }
+    }
+
+    @Named
+    public static class RnaSeqBaseline extends LinkToArrayExpress<BaselineExperiment> {
 
     }
 
