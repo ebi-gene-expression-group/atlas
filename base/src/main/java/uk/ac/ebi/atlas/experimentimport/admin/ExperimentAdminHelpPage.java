@@ -21,6 +21,12 @@ public class ExperimentAdminHelpPage {
         addLine(result, title);
         addLine(result, StringUtils.repeat('-', title.length()));
         addLine(result,"");
+        addLine(result, "### Usage");
+        addLine(result,"");
+        addLine(result, "admin/experiments/<accessions>/<ops>");
+        addLine(result,"e.g.");
+        addLine(result, "admin/experiments/E-MTAB-513/update_design");
+        addLine(result,"");
         addLine(result, "### Operations by name");
         addLine(result,"");
         for(Op op: Op.values()){
