@@ -1,8 +1,9 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +52,7 @@ public class ExperimentDownloadController {
     }
 
     public static final String url = "experiments-content/{experimentAccession}/download/{experimentType}";
-    
+
     @RequestMapping(value = url)
     public String dispatch(HttpServletRequest request,
                            @PathVariable String experimentAccession,
@@ -64,10 +65,16 @@ public class ExperimentDownloadController {
         return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey));
     }
 
-    public static String getUrl(String experimentAccession, String accessKey, ExperimentType experimentType, ExperimentPageRequestPreferences<?> experimentPageRequestPreferences){
+    public static String getUrl(String experimentAccession, String accessKey, ExperimentType experimentType, ExperimentPageRequestPreferences<?> experimentPageRequestPreferences) {
         try {
-            List<BasicNameValuePair> parameters = org.apache.commons.beanutils.BeanUtils.describe(experimentPageRequestPreferences).entrySet().stream().map(e -> new BasicNameValuePair(e.getKey(), e.getValue())).collect(Collectors.toList());
-            if(isNotEmpty(accessKey)) {
+            List<BasicNameValuePair> parameters =
+                    org.apache.commons.beanutils.BeanUtils.describe(experimentPageRequestPreferences)
+                            .entrySet().stream()
+                            .filter(e -> !ImmutableList.of("class", "selectedColumnIds").contains(e.getKey()))
+                            .map(e -> new BasicNameValuePair(e.getKey(), e.getValue()))
+                            .collect(Collectors.toList());
+            parameters.add(new BasicNameValuePair("selectedColumnIds", Joiner.on(",").join(experimentPageRequestPreferences.getSelectedColumnIds())));
+            if (isNotEmpty(accessKey)) {
                 parameters.add(new BasicNameValuePair("accessKey", accessKey));
             }
 
@@ -75,14 +82,15 @@ public class ExperimentDownloadController {
 
             return URI.create(
                     url.replace("{experimentAccession}", experimentAccession).replace("{experimentType}", experimentType.getParent().name().toUpperCase())
-                    +"?"+query).toString();
-        } catch (IllegalAccessException|InvocationTargetException|NoSuchMethodException e) {
+                            + "?" + query).toString();
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    private class NoExperimentSubResourceException extends RuntimeException {}
+    private class NoExperimentSubResourceException extends RuntimeException {
+    }
 
     @RequestMapping(value = url, params = "type=PROTEOMICS_BASELINE")
     public void proteomicsExperimentDownload(@PathVariable String experimentAccession,
@@ -107,15 +115,14 @@ public class ExperimentDownloadController {
     }
 
 
-
     @RequestMapping(value = url, params = "type=RNASEQ_MRNA_DIFFERENTIAL")
     public void rnaSeqDifferentialExperimentDownload(@PathVariable String experimentAccession,
-                                     @RequestParam(value = "accessKey", required = false) String accessKey,
-                                     @ModelAttribute("preferences") @Valid
-                                     DifferentialRequestPreferences preferences, HttpServletResponse response) throws IOException {
+                                                     @RequestParam(value = "accessKey", required = false) String accessKey,
+                                                     @ModelAttribute("preferences") @Valid
+                                                     DifferentialRequestPreferences preferences, HttpServletResponse response) throws IOException {
 
         DifferentialExperiment experiment = (DifferentialExperiment)
-                experimentTrader.getExperiment(experimentAccession,accessKey);
+                experimentTrader.getExperiment(experimentAccession, accessKey);
 
         rnaSeqDifferentialExperimentDownloadSupplier.write(response, preferences, experiment, "tsv");
 
@@ -130,7 +137,7 @@ public class ExperimentDownloadController {
             throws IOException {
 
         MicroarrayExperiment experiment =
-                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession,accessKey);
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
         microarrayExperimentDownloadSupplier.write(response, preferences, experiment, "tsv");
     }
