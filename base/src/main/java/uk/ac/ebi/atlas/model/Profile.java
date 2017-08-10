@@ -15,18 +15,23 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
+import static java.util.stream.Collectors.toList;
 
-public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression, Self extends Profile<DataColumnDescriptor, Expr, Self>>
-        implements KryoSerializable {
+public abstract class Profile<
+        DataColumnDescriptor extends DescribesDataColumns,
+        Expr extends Expression,
+        Self extends Profile<DataColumnDescriptor, Expr, Self>>
+
+implements KryoSerializable {
+
     protected Map<DataColumnDescriptor, Expr> expressionsByCondition = new HashMap<>();
-
     private String id;
-
     private String name;
 
     @Override
@@ -44,7 +49,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return Objects.hashCode(expressionsByCondition, getId(), getName());
     }
 
-    protected Profile(){}
+    protected Profile() {}
 
     protected Profile(String id, String name) {
         this.id = id;
@@ -66,6 +71,16 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     public long getSpecificity() {
         return expressionsByCondition.values().stream().filter(expr -> expr.getLevel() != 0).count();
     }
+
+    public long getSpecificity(Collection<AssayGroup> assayGroups) {
+        List<String> assayGroupIds = assayGroups.stream().map(DescribesDataColumns::getId).collect(toList());
+
+        return expressionsByCondition.values().stream()
+                .filter(expr -> assayGroupIds.contains(expr.getDataColumnDescriptorId()))
+                .filter(expr -> expr.getLevel() != 0)
+                .count();
+    }
+
 
     @Nullable
     public Double getExpressionLevel(DataColumnDescriptor condition) {
@@ -111,6 +126,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
                 return true;
             }
         }
+
         return false;
     }
 
@@ -130,6 +146,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         if (StringUtils.isBlank(name)) {
             return id;
         }
+
         return name;
     }
 
@@ -138,6 +155,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         expressionsByCondition.entrySet().stream().filter(e -> keepExpressions.apply(e.getValue())).forEach(e -> {
             result.add(e.getKey(), e.getValue());
         });
+
         return result;
     }
 

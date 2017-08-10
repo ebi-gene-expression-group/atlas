@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 
 import java.util.HashSet;
@@ -42,12 +43,12 @@ public class BaselineProfileTest {
 
     @Test
     public void testGetGeneSpecificity() throws Exception {
-        assertThat(subject.getSpecificity(), is(3));
+        assertThat(subject.getSpecificity(), is(3L));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenQueryFactorsIsEmpty() {
-        subject.getAverageExpressionLevelOn(new HashSet<AssayGroup>());
+        subject.getAverageExpressionLevelOn(new HashSet<>());
     }
 
     @Test

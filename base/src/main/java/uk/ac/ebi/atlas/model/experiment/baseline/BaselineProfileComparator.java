@@ -14,17 +14,12 @@ import java.util.Map;
 
 public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
-    // This value is just smaller than the smallest non-zero value we allow,
-    // c.f. FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ZEROPOINTONE in
-    // BaselineExpressionLevelRounder class
-    private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.00000009;
     private static final int DEFAULT_CACHE_SIZE = 50;
 
     private final boolean isSpecific;
     private final Collection<AssayGroup> selectedQueryFactors;
     private final Collection<AssayGroup> allQueryFactors;
     private final Collection<AssayGroup> nonSelectedQueryFactorsCachedInstance;
-    private final double cutoffDivisor;
     private final BaselineProfileCachedStats baselineProfileStats;
 
     public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions<?> options) {
@@ -32,21 +27,18 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                 options.isSpecific(),
                 options.getDataColumnsToReturn(),
                 options.getAllDataColumns(),
-                options.getCutoff(),
                 options.getHeatmapMatrixSize() + 1);    // The top ranked rows plus the profile we’re evaluating
     }
 
     protected BaselineProfileComparator(boolean isSpecific,
                                         Collection<AssayGroup> selectedQueryFactors,
-                                        Collection<AssayGroup> allQueryFactors,
-                                        double cutoff) {
-        this(isSpecific, selectedQueryFactors, allQueryFactors, cutoff, DEFAULT_CACHE_SIZE);
+                                        Collection<AssayGroup> allQueryFactors) {
+        this(isSpecific, selectedQueryFactors, allQueryFactors, DEFAULT_CACHE_SIZE);
     }
 
     private BaselineProfileComparator(boolean isSpecific,
                                         Collection<AssayGroup> selectedQueryFactors,
                                         Collection<AssayGroup> allQueryFactors,
-                                        double cutoff,
                                         int cacheSize) {
         this.isSpecific = isSpecific;
         this.selectedQueryFactors = selectedQueryFactors;
@@ -55,20 +47,18 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         this.nonSelectedQueryFactorsCachedInstance =
                 Sets.difference(ImmutableSet.copyOf(allQueryFactors), ImmutableSet.copyOf(selectedQueryFactors));
 
-        cutoffDivisor = cutoff != 0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
-
         baselineProfileStats = new BaselineProfileCachedStats(cacheSize);
     }
 
     @Override
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
-        boolean allContrastsSelected = nonSelectedQueryFactorsCachedInstance.isEmpty();
+        boolean allFactorsSelected = nonSelectedQueryFactorsCachedInstance.isEmpty();
 
-        if (isSpecific && allContrastsSelected) {
+        if (isSpecific && allFactorsSelected) {
             int order = ComparisonChain
                     .start()
-                    .compare(firstBaselineProfile.getSpecificity(),otherBaselineProfile.getSpecificity() )
+                    .compare(firstBaselineProfile.getSpecificity(), otherBaselineProfile.getSpecificity())
                     .result();
 
             return 0 != order ?
@@ -76,18 +66,27 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                     compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
         }
 
-        if (isSpecific && !allContrastsSelected) {
+        if (isSpecific && !allFactorsSelected) {
+            int order = ComparisonChain
+                    .start()
+                    .compare(
+                            firstBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance),
+                            otherBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance))
+                    .result();
+
             // reverse because we want lower values to come first
-            return Ordering.natural().reverse().compare(
-                    getExpressionLevelFoldChange(firstBaselineProfile),
-                    getExpressionLevelFoldChange(otherBaselineProfile));
+            return 0 != order ?
+                    order :
+                    Ordering.natural().reverse().compare(
+                            getExpressionLevelFoldChange(firstBaselineProfile),
+                            getExpressionLevelFoldChange(otherBaselineProfile));
         }
 
-        if (!isSpecific && allContrastsSelected) {
+        if (!isSpecific && allFactorsSelected) {
             return compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
         }
 
-        // !isSpecific && !allContrastsSelected
+        // !isSpecific && !allFactorsSelected
         return compareOnAverageExpressionLevelOverSelectedQueryFactors(firstBaselineProfile, otherBaselineProfile);
 
     }
@@ -171,10 +170,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                     baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactorsCachedInstance);
 
             if (maxExpressionLevelOnNonSelectedQueryFactors == 0) {
-                if (nonSelectedQueryFactorsCachedInstance.isEmpty()) {
-                    return averageExpressionLevelOnSelectedQueryFactors;
-                }
-                return averageExpressionLevelOnSelectedQueryFactors / cutoffDivisor;
+                return averageExpressionLevelOnSelectedQueryFactors;
             }
 
             return averageExpressionLevelOnSelectedQueryFactors / maxExpressionLevelOnNonSelectedQueryFactors;
