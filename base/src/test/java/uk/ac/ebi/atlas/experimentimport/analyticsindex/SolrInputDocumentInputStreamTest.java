@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPointStream;
 import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
