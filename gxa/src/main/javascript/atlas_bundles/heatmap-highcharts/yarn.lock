@@ -239,8 +239,8 @@ express@^4.15.2:
     vary "~1.1.1"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.4.tgz#4b96cff93b5516001bf8437625c5d134b9b34a7d"
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.8.tgz#29569e86d30f569c84b8900caeff3cd2afd89d96"
   dependencies:
     anatomogram latest
     color "^2.0.0"
@@ -798,8 +798,8 @@ unpipe@~1.0.0:
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
 
 urijs@^1.18.10:
-  version "1.18.10"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.18.10.tgz#b94463eaba59a1a796036a467bb633c667f221ab"
+  version "1.18.11"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.18.11.tgz#6d9a31427d35569c745d7fdfbd59974bb31d9e59"
 
 util-deprecate@~1.0.1:
   version "1.0.2"
