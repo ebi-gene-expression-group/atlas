@@ -18,7 +18,7 @@
     "react-router-dom": "^4.0.0",
     "single-cell-gene-tsne-plot": "latest",
     "single-cell-tsne-plot": "latest",
-    "urijs": "^1.18.10"
+    "urijs": "^1.18.11"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -34,7 +34,7 @@
     "less-loader": "^2.2.3",
     "react-hot-loader": "^3.0.0-beta.7",
     "webpack": "^2.6.0",
-    "webpack-dev-server": "^2.5.0",
+    "webpack-dev-server": "^2.7.1",
     "whatwg-fetch": "^2.0.3"
   }
 }

@@ -1,7 +1,7 @@
 var expressionAtlasHeatmapHighcharts =
 webpackJsonp_name_([5],{
 
-/***/ 445:
+/***/ 454:
 /*!***************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/index.js ***!
   \***************************************************/
@@ -23,5 +23,5 @@ exports.render = _expressionAtlasHeatmapHighcharts.render;
 
 /***/ })
 
-},[445]);
+},[454]);
 //# sourceMappingURL=expressionAtlasHeatmapHighcharts.bundle.js.map
