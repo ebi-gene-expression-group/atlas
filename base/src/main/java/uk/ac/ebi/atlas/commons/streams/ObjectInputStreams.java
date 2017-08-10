@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.commons.streams;
 
-import com.google.common.base.Predicate;
-
 import java.io.IOException;
+import java.util.function.Predicate;
 
 public class ObjectInputStreams {
 
@@ -18,7 +17,7 @@ public class ObjectInputStreams {
                     if(result == null){
                         return null;
                     }
-                } while (!keep.apply(result));
+                } while (!keep.test(result));
                 return result;
             }
 

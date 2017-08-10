@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.commons.streams;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
@@ -22,7 +20,7 @@ public class ObjectInputStreamsTest {
 
     @Test
     public void alwaysTrue(){
-        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), Predicates.<Integer>alwaysTrue());
+        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> true);
         assertThat(out.readNext(), is(1));
         assertThat(out.readNext(), is(2));
         assertThat(out.readNext(), is(3));
@@ -31,12 +29,12 @@ public class ObjectInputStreamsTest {
 
     @Test
     public void alwaysFalse(){
-        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), Predicates.<Integer>alwaysFalse());
+        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> true);
         assertNull(out.readNext());
     }
 
     void keepOnlyOne(final Integer toKeep){
-        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), integer -> integer.equals(toKeep));
+        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> true);
         assertThat(out.readNext(), is(toKeep));
         assertNull(out.readNext());
     }

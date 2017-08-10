@@ -1,14 +1,12 @@
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -80,7 +78,7 @@ public class MicroarrayProfileStreamFactoryTest {
 
     @Test
     public void oneRowWithTwoProfilesEach(){
-        String header  = Joiner.on("\t").join(new String[] {"gene id", "gene name", "design element", "contrast_1.p-value", "contrast_1.t-stat", "contrast_1.fold-change",    "contrast_2.p-value", "contrast_2.t-stat", "contrast_2.fold-change"});
+        String header  = Joiner.on("\t").join(new String[] {"gene id", "gene name", "design element", "contrast_1.p-value", "contrast_1.t-stat", "contrast_1.fold-change", "contrast_2.p-value", "contrast_2.t-stat", "contrast_2.fold-change"});
         String LINE_2_CONTRASTS = Joiner.on("\t").join(new String[] {GENE_ID, GENE_NAME, DESIGN_ELEMENT, P_VALUE, T_STAT, FOLD_CHANGE, P_VALUE_2, T_STAT_2, FOLD_CHANGE_2});
         List<Contrast> contrasts = ContrastTest.get(2);
         List<String> LINES = ImmutableList.of(header, LINE_2_CONTRASTS);
@@ -123,7 +121,7 @@ public class MicroarrayProfileStreamFactoryTest {
         MicroarrayRequestContext microarrayRequestContext = new MicroarrayRequestContext(microarrayRequestPreferences,experiment);
 
         return microarrayProfileStreamFactory.select(experiment,
-                microarrayRequestContext, Predicates.<MicroarrayProfile>alwaysTrue(), (SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>) (profiles, maxSize) -> new DifferentialProfilesList<>( Lists.newArrayList(new IterableObjectInputStream<>(profiles))));
+                microarrayRequestContext, x -> true, (SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>) (profiles, maxSize) -> new DifferentialProfilesList<>( Lists.newArrayList(new IterableObjectInputStream<>(profiles))));
     }
 
 }

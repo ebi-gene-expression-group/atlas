@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreams;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -14,12 +12,13 @@ import uk.ac.ebi.atlas.profiles.SelectProfiles;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 
-public abstract class ProfileStreamFactory<
-        DataColumnDescriptor extends DescribesDataColumns,
-        Expr extends Expression,
-        E extends Experiment<DataColumnDescriptor>,
-        StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
-        Prof extends Profile<DataColumnDescriptor, Expr, Prof>>
+import java.util.function.Predicate;
+
+public abstract class ProfileStreamFactory<DataColumnDescriptor extends DescribesDataColumns,
+                                           Expr extends Expression,
+                                           E extends Experiment<DataColumnDescriptor>,
+                                           StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
+                                           Prof extends Profile<DataColumnDescriptor, Expr, Prof>>
 
 implements CreatesProfileStream<DataColumnDescriptor, Expr, E, StreamOptions, Prof> {
 
@@ -45,9 +44,10 @@ implements CreatesProfileStream<DataColumnDescriptor, Expr, E, StreamOptions, Pr
     public int[] histogram(E experiment, StreamOptions streamOptions, double[] cutoffBins) {
         int[] result = new int[cutoffBins.length];
 
-        for (Prof prof :
-                new IterableObjectInputStream<>(getProfiles(experiment, streamOptions, Predicates.alwaysTrue()))) {
-            result[binarySearch0(cutoffBins, prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn()))] +=1;
+        for (Prof prof : new IterableObjectInputStream<>(getProfiles(experiment, streamOptions, x -> true))) {
+
+            result[binarySearch0(
+                    cutoffBins, prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn()))] += 1;
         }
 
         return result;
