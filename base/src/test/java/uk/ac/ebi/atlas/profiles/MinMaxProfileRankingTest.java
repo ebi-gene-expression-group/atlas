@@ -35,74 +35,13 @@ public class MinMaxProfileRankingTest {
                                                    Collection<AssayGroup> allQueryFactors) {
             super(isSpecific, selectedQueryFactors, allQueryFactors);
         }
-        
-        @Override
-        public int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile,
-                                                   BaselineProfile otherBaselineProfile,
-                                                   Collection<AssayGroup> assayGroups) {
-        return super.compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, assayGroups);
-        }
     }
 
-    private BaselineProfilesList selectAverageExpressionsOnly(final Iterable<BaselineProfile> profiles, int maxSize) {
-        final boolean isSpecific = true;
-        final List<AssayGroup> selectedQueryFactors = ImmutableList.of();
-        final List<AssayGroup> allQueryFactors = ImmutableList.of();
-
-        final VisibleBaselineProfileComparator c =
-                new VisibleBaselineProfileComparator(isSpecific,selectedQueryFactors,allQueryFactors);
-
-        Comparator<BaselineProfile> comparatorThatTestsAverageExpressionsOnly =
-                (o1, o2) -> c.compareOnAverageExpressionLevel(o1,o2,allQueryFactors);
-
-        MinMaxProfileRanking<BaselineProfile, BaselineProfilesList> subject =
-                new MinMaxProfileRanking<>(
-                        comparatorThatTestsAverageExpressionsOnly, new BaselineProfilesListBuilder());
-
-        return subject.select(convert(profiles), maxSize);
-    }
-
-    private BaselineProfile mockProfile(double averageExpression){
-        BaselineProfile result = Mockito.mock(BaselineProfile.class);
-        when(result.getAverageExpressionLevelOn(anyList())).thenReturn(averageExpression);
-        return result;
-    }
 
     private double randDouble(double min, double max) {
         return min + rng.nextDouble() * (max - min);
     }
 
-    @Test
-    public void testComparingByAverageExpression(){
-        BaselineProfilesList l = new BaselineProfilesList();
-
-        List<Double> expressions = new ArrayList<>();
-
-        double min = 1000 * rng.nextDouble();
-        double max = min + 1000 * rng.nextDouble();
-
-        int n = rng.nextInt(500);
-
-        for(int i = 0 ; i < n ; i++) {
-            double v = randDouble(min,  max);
-            l.add(mockProfile(v));
-            expressions.add(v);
-        }
-
-        int maxSize = rng.nextInt(n) + 1;
-
-        BaselineProfilesList result = selectAverageExpressionsOnly(l, maxSize);
-        List<Double> resultExpressions = new ArrayList<>();
-        for(BaselineProfile p : result){
-            resultExpressions.add(p.getAverageExpressionLevelOn(ImmutableList.of()));
-        }
-
-        //sort expressions independently
-        List<Double> sortedExpressions =
-                new ArrayList<>(new TreeSet<>(expressions).descendingSet()).subList(0, resultExpressions.size());
-
-        assertEquals(sortedExpressions,resultExpressions);
-    }
 
     private BaselineProfile randomProfile(double min, double max, String id, List<AssayGroup> allFactors,
                                           boolean includeAll) {

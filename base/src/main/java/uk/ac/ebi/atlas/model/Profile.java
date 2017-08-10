@@ -92,7 +92,6 @@ implements KryoSerializable {
     }
 
     public double getMaxExpressionLevelOn(Collection<DataColumnDescriptor> conditions) {
-        checkArgument(!CollectionUtils.isEmpty(conditions));
         double expressionLevel = 0D;
 
         for (DataColumnDescriptor condition : conditions) {
