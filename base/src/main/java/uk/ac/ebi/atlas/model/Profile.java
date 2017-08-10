@@ -122,7 +122,7 @@ implements KryoSerializable {
     public boolean isExpressedOnAnyOf(Collection<DataColumnDescriptor> conditions) {
         for (DataColumnDescriptor condition : conditions) {
             Double level = getExpressionLevel(condition);
-            if (level != null && level > 0) {
+            if (level != null && level != 0) {
                 return true;
             }
         }
