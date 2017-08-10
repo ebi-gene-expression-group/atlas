@@ -11,8 +11,7 @@ class ExperimentPage extends Component {
 
     render() {
         return (
-            <BrowserRouter basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}
-                >
+            <BrowserRouter>
                 <div>
                     <Route path='/' render={props => (
                         <Experiment {...props}
@@ -52,7 +51,7 @@ class Experiment extends Component {
 
     handleChange(param, item) {
         let _newparam = {};
-        _newparam[param] = (param === "k" ? item.target.value : item);
+        _newparam[param] = (param === "k" ? Number.parseInt(item.target.value) : item);
         this.setState(_newparam);
 
         this.props.history.push("?" + queryString.stringify({
@@ -65,7 +64,7 @@ class Experiment extends Component {
     componentDidMount() {
         this.setState({
             geneId: this.state.params.geneId,
-            k: Number.parseInt(this.state.params.k),
+            k: this.state.params.k !== undefined ? Number.parseInt(this.state.params.k) : this.state.k,
             clusterId: JSON.parse(this.state.params.clusterId || '[]')
         });
     }
