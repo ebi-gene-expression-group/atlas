@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row margin-bottom-xxlarge">
                 <div class="small-4 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5214">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/gtex_logo.png" />
@@ -97,6 +97,18 @@
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/gramene_logo_big.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/plant/experiments">Plant experiments</a>
+                        </h6>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="small-4 columns combo text-center padding-top-medium">
+                    <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
+                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/pcawg_logo.png" />
+                        <h6>
+                            <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5200">PCAWG by disease</a><br>
+                            <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5423">PCAWG by individual</a>
                         </h6>
                     </a>
                 </div>

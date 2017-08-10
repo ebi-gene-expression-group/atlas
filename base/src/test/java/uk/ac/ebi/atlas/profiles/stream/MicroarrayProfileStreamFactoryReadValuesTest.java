@@ -1,15 +1,13 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -60,44 +58,46 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
     public void setUp() throws Exception {
         dataFileHub = new MockDataFileHub();
         subject = new MicroarrayProfileStreamFactory.Impl(dataFileHub);
-        profileFromTsvLine = subject.howToReadLineStream(experiment, Predicates.<MicroarrayExpression>alwaysTrue()).apply(
-                "Gene ID\tGene Name\tDesign element\tg1_g2.p-value\tg1_g2.tstat\tg1_g2.log2foldchange\tg1_g3.p-value\tg1_g3.tstat\tg1_g3.log2foldchange".split("\t")
-        );
+        profileFromTsvLine = subject.howToReadLineStream(experiment, microarrayExpression -> true).apply(
+                ("Gene ID\tGene Name\tDesign element\tg1_g2.p-value\tg1_g2.tstat\tg1_g2.log2foldchange" +
+                        "\tg1_g3.p-value\tg1_g3.tstat\tg1_g3.log2foldchange")
+                        .split("\t"));
     }
 
     @Test
     public void shouldReadValuesRight() {
         assertThat(
                 profileFromTsvLine.apply(TWO_CONTRASTS).getExpression(g1_g2),
-                Matchers.<Expression>is(new MicroarrayExpression(Double.parseDouble(P_VAL_1), Double.parseDouble(FOLD_CHANGE_1), Double.parseDouble(T_VAL_1), g1_g2)
-                )
+                Matchers.is(
+                        new MicroarrayExpression(Double.parseDouble(P_VAL_1),
+                        Double.parseDouble(FOLD_CHANGE_1), Double.parseDouble(T_VAL_1), g1_g2))
         );
 
         assertThat(
                 profileFromTsvLine.apply(TWO_CONTRASTS).getExpression(g1_g3),
-                Matchers.<Expression>is(new MicroarrayExpression(Double.parseDouble(P_VAL_2), Double.NEGATIVE_INFINITY,Double.parseDouble(T_VAL_2), g1_g3)
-                )
-        );
+                Matchers.is(
+                        new MicroarrayExpression(
+                                Double.parseDouble(P_VAL_2),
+                                Double.NEGATIVE_INFINITY,
+                                Double.parseDouble(T_VAL_2), g1_g3)));
     }
 
     @Test
     public void skipNAValues(){
-        assertThat(
-                profileFromTsvLine.apply(TWO_CONTRASTS)
-                        .getSpecificity(),
-                is(2)
-        );
-        assertThat(
-                profileFromTsvLine.apply(new String[]{id, name, designElement, P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", T_VAL_2, FOLD_CHANGE_2})
-                        .getSpecificity(),
-                is(1)
-        );
+        assertThat(profileFromTsvLine.apply(TWO_CONTRASTS).getSpecificity(), is(2L));
 
         assertThat(
-                profileFromTsvLine.apply(new String[]{id, name, designElement, P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", "NA", "NA"})
+                profileFromTsvLine.apply(
+                        new String[]{
+                                id, name, designElement, P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", T_VAL_2, FOLD_CHANGE_2})
                         .getSpecificity(),
-                is(1)
-        );
+                is(1L));
+
+        assertThat(
+                profileFromTsvLine.apply(
+                        new String[]{id, name, designElement, P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", "NA", "NA"})
+                        .getSpecificity(),
+                is(1L));
     }
 
 }

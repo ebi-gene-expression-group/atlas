@@ -49,21 +49,21 @@ public class RnaSeqProfileStreamFactoryTest {
     public void setUp() throws Exception {
         dataFileHub = new MockDataFileHub();
         subject = new RnaSeqProfileStreamFactory.Impl(dataFileHub);
-        profileFromTsvLine = subject.howToReadLineStream(differentialExperiment, Predicates.<DifferentialExpression>alwaysTrue()).apply(
+        profileFromTsvLine = subject.howToReadLineStream(differentialExperiment, Predicates.alwaysTrue()).apply(
                 "Gene ID\tGene Name\tg1_g2.p-value\tg1_g2.log2foldchange\tg1_g3.p-value\tg1_g3.log2foldchange".split("\t")
         );
     }
 
     @Test
     public void parseRightValues(){
-        assertThat(profileFromTsvLine.apply(new String[]{id, name, P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2}).getExpression(g1_g3), Matchers.<Expression>is(
+        assertThat(profileFromTsvLine.apply(new String[]{id, name, P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2}).getExpression(g1_g3), Matchers.is(
                 new DifferentialExpression(0.5, 0.1337, g1_g3)
         ));
     }
 
     @Test
     public void handleInfinity() {
-        assertThat(profileFromTsvLine.apply(new String[]{id, name, P_VAL_1, FOLD_CHANGE_1, P_VAL_2, "-Inf"}).getExpression(g1_g3), Matchers.<Expression>is(
+        assertThat(profileFromTsvLine.apply(new String[]{id, name, P_VAL_1, FOLD_CHANGE_1, P_VAL_2, "-Inf"}).getExpression(g1_g3), Matchers.is(
                 new DifferentialExpression(0.5, Double.NEGATIVE_INFINITY, g1_g3)
         ));
     }
@@ -71,8 +71,8 @@ public class RnaSeqProfileStreamFactoryTest {
     @Test
     public void ignoreNAValues() throws Exception {
 
-        assertThat(profileFromTsvLine.apply(new String[]{id, name,P_VAL_1, FOLD_CHANGE_1, "NA", "NA"}).getSpecificity(), is(1));
-        assertThat(profileFromTsvLine.apply(new String[]{id, name,"NA", "NA", P_VAL_1, FOLD_CHANGE_1}).getSpecificity(), is(1));
-        assertThat(profileFromTsvLine.apply(new String[]{id, name,P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2}).getSpecificity(), is(2));
+        assertThat(profileFromTsvLine.apply(new String[]{id, name,P_VAL_1, FOLD_CHANGE_1, "NA", "NA"}).getSpecificity(), is(1L));
+        assertThat(profileFromTsvLine.apply(new String[]{id, name,"NA", "NA", P_VAL_1, FOLD_CHANGE_1}).getSpecificity(), is(1L));
+        assertThat(profileFromTsvLine.apply(new String[]{id, name,P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2}).getSpecificity(), is(2L));
     }
 }

@@ -7,7 +7,6 @@ import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
@@ -16,18 +15,23 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
+import static java.util.stream.Collectors.toList;
 
-public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression, Self extends Profile<DataColumnDescriptor, Expr, Self>>
-        implements KryoSerializable {
+public abstract class Profile<
+        DataColumnDescriptor extends DescribesDataColumns,
+        Expr extends Expression,
+        Self extends Profile<DataColumnDescriptor, Expr, Self>>
+
+implements KryoSerializable {
+
     protected Map<DataColumnDescriptor, Expr> expressionsByCondition = new HashMap<>();
-
     private String id;
-
     private String name;
 
     @Override
@@ -45,7 +49,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return Objects.hashCode(expressionsByCondition, getId(), getName());
     }
 
-    protected Profile(){}
+    protected Profile() {}
 
     protected Profile(String id, String name) {
         this.id = id;
@@ -61,12 +65,22 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     }
 
     public boolean hasAllExpressionsEqualZero(){
-        return FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0).isEmpty();
+        return expressionsByCondition.values().stream().noneMatch(expr -> expr.getLevel() != 0);
     }
 
-    public int getSpecificity() {
-        return FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0).size();
+    public long getSpecificity() {
+        return expressionsByCondition.values().stream().filter(expr -> expr.getLevel() != 0).count();
     }
+
+    public long getSpecificity(Collection<AssayGroup> assayGroups) {
+        List<String> assayGroupIds = assayGroups.stream().map(DescribesDataColumns::getId).collect(toList());
+
+        return expressionsByCondition.values().stream()
+                .filter(expr -> assayGroupIds.contains(expr.getDataColumnDescriptorId()))
+                .filter(expr -> expr.getLevel() != 0)
+                .count();
+    }
+
 
     @Nullable
     public Double getExpressionLevel(DataColumnDescriptor condition) {
@@ -106,11 +120,13 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     }
 
     public boolean isExpressedOnAnyOf(Collection<DataColumnDescriptor> conditions) {
-        for(DataColumnDescriptor dataColumnDescriptor : conditions){
-            if(expressionsByCondition.containsKey(dataColumnDescriptor)){
+        for (DataColumnDescriptor condition : conditions) {
+            Double level = getExpressionLevel(condition);
+            if (level != null && level > 0) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -130,6 +146,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         if (StringUtils.isBlank(name)) {
             return id;
         }
+
         return name;
     }
 
@@ -138,6 +155,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         expressionsByCondition.entrySet().stream().filter(e -> keepExpressions.apply(e.getValue())).forEach(e -> {
             result.add(e.getKey(), e.getValue());
         });
+
         return result;
     }
 

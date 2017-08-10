@@ -1,14 +1,12 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
@@ -25,9 +23,8 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
     AssayGroup g2 = new AssayGroup("g2", "r2");
 
 
-    BaselineExperiment baselineExperiment = BaselineExperimentTest.mockExperiment(ImmutableList.of(
-            g1, g2
-    ), "accession");
+    BaselineExperiment baselineExperiment =
+            BaselineExperimentTest.mockExperiment(ImmutableList.of(g1, g2), "accession");
 
     @Before
     public void setUp() throws Exception {
@@ -38,16 +35,15 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
     public void proteomicsHeadersCanHaveSpectraclCountStuff(){
         //gene name and gene id gets removed somewhere else
         //future proteomics headers will not even have the extra SpectralCount
-        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(baselineExperiment, Predicates.<BaselineExpression>alwaysTrue())
-                .apply("id name g1.SpectralCount g2.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance".split(" "));
+        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine =
+                subject.howToReadLineStream(baselineExperiment, baselineExpression -> true)
+                .apply(
+                        "id name g1.SpectralCount g2.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance"
+                                .split(" "));
 
         assertThat(
                 profileFromTsvLine.apply(new String[]{"id", "name", "_", "_", "1.0", "2.0"}).getExpression(g1),
-                Matchers.<Expression>is(new BaselineExpression(1.0, g1.getId()))
-        );
+                Matchers.is(new BaselineExpression(1.0, g1.getId())));
     }
-
-
-
 
 }

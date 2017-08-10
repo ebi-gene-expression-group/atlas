@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.model.Profile;
 
 public class BaselineProfile extends Profile<AssayGroup, BaselineExpression, BaselineProfile> {
 
-    private BaselineProfile(){}
+    private BaselineProfile() {}
 
     public BaselineProfile(String geneId, String geneName) {
         super(geneId, geneName);

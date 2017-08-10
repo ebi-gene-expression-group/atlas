@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.annotation.Nullable;
 import java.beans.Introspector;

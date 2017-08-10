@@ -23,9 +23,7 @@ public class ProfileStreamFilter<DataColumnDescriptor extends DescribesDataColum
     public ProfileStreamFilter(StreamOptions options, GeneQueryResponse geneQueryResponse){
         
         decorated = geneQueryResponse.getAllGeneIds().isEmpty()
-                ? options.isSpecific() && !options.getDataColumnsToReturn().equals(options.getAllDataColumns())
-                    ? keepOnlyProfilesOverExpressedOnColumns(options.getDataColumnsToReturn(), options.getAllDataColumns())
-                    : keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn())
+                ? keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn())
                 : Predicates.and(
                     keepOnlyProfilesWithGeneIds(geneQueryResponse.getAllGeneIds()),
                     keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn())
@@ -56,11 +54,4 @@ public class ProfileStreamFilter<DataColumnDescriptor extends DescribesDataColum
         return prof -> prof.isExpressedOnAnyOf(selectedColumns);
     }
 
-    Predicate<Prof> keepOnlyProfilesOverExpressedOnColumns
-            (final Collection<DataColumnDescriptor> selectedColumns, final Collection<DataColumnDescriptor> allColumns){
-        final Set<DataColumnDescriptor> nonSelectedColumns = Sets.difference(ImmutableSet.copyOf(allColumns),
-                ImmutableSet.copyOf(selectedColumns));
-        return prof -> prof.getAverageExpressionLevelOn(selectedColumns)
-                > (prof.isExpressedOnAnyOf(nonSelectedColumns) ? prof.getMaxExpressionLevelOn(nonSelectedColumns) : 0.0d);
-    }
 }

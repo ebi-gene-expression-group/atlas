@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 

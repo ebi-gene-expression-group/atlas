@@ -36,9 +36,7 @@ public abstract class DifferentialProfileStreamFactory<Expr extends Differential
         for(int i = 0; i < header.length ; i++){
             String columnHeader = header[i];
             if (columnHeader.endsWith(".p-value")) {
-                if (experiment.getDataColumnDescriptor(StringUtils.substringBefore(columnHeader, ".")) != null) {
-                    b.put(i, experiment.getDataColumnDescriptor(StringUtils.substringBefore(columnHeader, ".")));
-                }
+                b.put(i,experiment.getDataColumnDescriptor(StringUtils.substringBefore(columnHeader, ".")) );
             }
         }
         return b.build();

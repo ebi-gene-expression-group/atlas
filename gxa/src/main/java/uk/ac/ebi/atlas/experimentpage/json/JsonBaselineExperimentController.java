@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.json;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,6 @@ import javax.validation.Valid;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Controller
-@Scope("request")
 public class JsonBaselineExperimentController extends JsonExperimentController {
 
     @InitBinder("preferences")
@@ -67,9 +65,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
-                    method = RequestMethod.GET,
-                    produces = "application/json;charset=UTF-8",
-                    params = "type=RNASEQ_MRNA_BASELINE")
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8",
+            params = "type=RNASEQ_MRNA_BASELINE")
     @ResponseBody
     public String baselineRnaSeqExperimentData(
             @Valid RnaSeqBaselineRequestPreferences preferences,
@@ -83,9 +81,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
-                    method = RequestMethod.GET,
-                    produces = "application/json;charset=UTF-8",
-                    params = "type=PROTEOMICS_BASELINE")
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8",
+            params = "type=PROTEOMICS_BASELINE")
     @ResponseBody
     public String baselineProteomicsExperimentData(
             @Valid ProteomicsBaselineRequestPreferences preferences,
@@ -109,7 +107,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences, HttpServletRequest request) {
 
         //different default - reference experiments always had FPKMs, no need to change this now
-        if(!request.getParameterMap().containsKey("unit")){
+        if (!request.getParameterMap().containsKey("unit")) {
             preferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
         }
 
@@ -125,11 +123,11 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
 
     public static final String GENE_DISTRIBUTION_URL = "json/experiments/{experimentAccession}/genedistribution";
 
-    public static String geneDistributionUrl(String experimentAccession, String accessKey, ExperimentType experimentType){
+    public static String geneDistributionUrl(String experimentAccession, String accessKey, ExperimentType experimentType) {
         return GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)
-                + "?experimentType="+experimentType.name()
-                +(
-                org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "&accessKey="+accessKey : ""
+                + "?experimentType=" + experimentType.name()
+                + (
+                org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "&accessKey=" + accessKey : ""
         );
     }
 
@@ -162,7 +160,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                 proteomicsHistograms.get(experimentAccession, accessKey, preferences).asJson()
         );
     }
-
 
 
 }
