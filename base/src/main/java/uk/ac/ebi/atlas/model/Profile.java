@@ -7,7 +7,6 @@ import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
@@ -61,11 +60,11 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     }
 
     public boolean hasAllExpressionsEqualZero(){
-        return FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0).isEmpty();
+        return expressionsByCondition.values().stream().noneMatch(expr -> expr.getLevel() != 0);
     }
 
-    public int getSpecificity() {
-        return FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0).size();
+    public long getSpecificity() {
+        return expressionsByCondition.values().stream().filter(expr -> expr.getLevel() != 0).count();
     }
 
     @Nullable
