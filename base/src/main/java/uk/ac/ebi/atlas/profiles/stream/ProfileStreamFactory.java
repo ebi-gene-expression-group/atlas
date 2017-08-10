@@ -14,31 +14,42 @@ import uk.ac.ebi.atlas.profiles.SelectProfiles;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 
-public abstract class ProfileStreamFactory<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
-        E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
-        Prof extends Profile<DataColumnDescriptor, Expr, Prof>> implements CreatesProfileStream<DataColumnDescriptor, Expr, E, StreamOptions, Prof> {
+public abstract class ProfileStreamFactory<
+        DataColumnDescriptor extends DescribesDataColumns,
+        Expr extends Expression,
+        E extends Experiment<DataColumnDescriptor>,
+        StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
+        Prof extends Profile<DataColumnDescriptor, Expr, Prof>>
 
-    private ObjectInputStream<Prof> getProfiles(E experiment, StreamOptions streamOptions, Predicate<Prof> keepProfiles) {
+implements CreatesProfileStream<DataColumnDescriptor, Expr, E, StreamOptions, Prof> {
+
+    private ObjectInputStream<Prof> getProfiles(E experiment,
+                                                StreamOptions streamOptions,
+                                                Predicate<Prof> keepProfiles) {
         return ObjectInputStreams.filter(create(experiment, streamOptions), keepProfiles);
     }
 
-    public <L extends GeneProfilesList<Prof>> L select(E experiment, StreamOptions streamOptions, Predicate<Prof> keepProfiles,
+    public <L extends GeneProfilesList<Prof>> L select(E experiment,
+                                                       StreamOptions streamOptions,
+                                                       Predicate<Prof> keepProfiles,
                                                        SelectProfiles<Prof, L> selectProfiles) {
         return selectProfiles.select(getProfiles(experiment, streamOptions, keepProfiles),
                 streamOptions.getHeatmapMatrixSize());
     }
 
-    public long write(E experiment, StreamOptions streamOptions, Predicate<Prof> keepProfiles, ProfilesWriter<Prof> profilesWriter) {
+    public long write(E experiment, StreamOptions streamOptions, Predicate<Prof> keepProfiles,
+                      ProfilesWriter<Prof> profilesWriter) {
         return profilesWriter.write(getProfiles(experiment, streamOptions, keepProfiles));
     }
 
     public int[] histogram(E experiment, StreamOptions streamOptions, double[] cutoffBins) {
         int[] result = new int[cutoffBins.length];
 
-        for (Prof prof : new IterableObjectInputStream<>(getProfiles(experiment, streamOptions, Predicates.<Prof>alwaysTrue()))) {
-
+        for (Prof prof :
+                new IterableObjectInputStream<>(getProfiles(experiment, streamOptions, Predicates.alwaysTrue()))) {
             result[binarySearch0(cutoffBins, prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn()))] +=1;
         }
+
         return result;
     }
 
