@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
