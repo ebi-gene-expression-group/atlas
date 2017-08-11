@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -38,6 +39,13 @@ public class BaselineProfileTest {
         subject.add(g1, expression_1);
         subject.add(g2, expression_2);
         subject.add(g3, expression_3);
+    }
+
+    @Test
+    public void getSpecificityOnAssayGroups(){
+        assertThat(subject.getSpecificity(ImmutableList.of(g1)), is(1L));
+        assertThat(subject.getSpecificity(ImmutableList.of()), is(0L));
+        assertThat(subject.getSpecificity(ImmutableList.of(g4)), is(0L));
     }
 
     @Test

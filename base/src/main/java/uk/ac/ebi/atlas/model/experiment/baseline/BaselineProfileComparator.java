@@ -53,14 +53,14 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
         if(isSpecific) {
             return ComparisonChain.start().compare(
-                    firstBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance),
-                    otherBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance)
+                    baselineProfileStats.getSpecificityOnNonSelectedQueryFactors(firstBaselineProfile),
+                    baselineProfileStats.getSpecificityOnNonSelectedQueryFactors(otherBaselineProfile)
             ).compare(
-                    firstBaselineProfile.getSpecificity(),
-                    otherBaselineProfile.getSpecificity()
+                    baselineProfileStats.getSpecificity(firstBaselineProfile),
+                    baselineProfileStats.getSpecificity(otherBaselineProfile)
             ).compare(
-                    -getExpressionLevelFoldChange(firstBaselineProfile),
-                    -getExpressionLevelFoldChange(otherBaselineProfile)
+                    -baselineProfileStats.getExpressionLevelFoldChange(firstBaselineProfile),
+                    -baselineProfileStats.getExpressionLevelFoldChange(otherBaselineProfile)
             ).result();
         } else {
             return Ordering.natural().reverse().
@@ -68,10 +68,6 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                             baselineProfileStats.getAverageOverSelectedQueryFactors(otherBaselineProfile));
         }
 
-    }
-
-    public double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {
-        return baselineProfileStats.getExpressionLevelFoldChange(baselineProfile);
     }
 
     static private <K, V> Map<K, V> createLRUMap(final int maxEntries) {
@@ -86,10 +82,33 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private class BaselineProfileCachedStats {
         private final Map<String, Double> averageOverSelectedQueryFactors;
         private final Map<String, Double> expressionLevelFoldChange;
+        private final Map<String, Long> specificityOnNonSelectedQueryFactors;
+        private final  Map<String, Long> specificity;
 
         private BaselineProfileCachedStats(int cacheSize) {
             averageOverSelectedQueryFactors = createLRUMap(cacheSize);
             expressionLevelFoldChange = createLRUMap(cacheSize);
+            specificityOnNonSelectedQueryFactors = createLRUMap(cacheSize);
+            specificity = createLRUMap(cacheSize);
+        }
+
+        long getSpecificityOnNonSelectedQueryFactors(BaselineProfile baselineProfile){
+            if(nonSelectedQueryFactorsCachedInstance.isEmpty()){
+                return 0;
+            }
+            if(!specificityOnNonSelectedQueryFactors.containsKey(baselineProfile.getId())) {
+                specificityOnNonSelectedQueryFactors.put(
+                        baselineProfile.getId(), baselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance));
+            }
+            return specificityOnNonSelectedQueryFactors.get(baselineProfile.getId());
+        }
+
+        long getSpecificity(BaselineProfile baselineProfile){
+            if(!specificity.containsKey(baselineProfile.getId())) {
+                specificity.put(
+                        baselineProfile.getId(), baselineProfile.getSpecificity());
+            }
+            return specificity.get(baselineProfile.getId());
         }
 
         double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {

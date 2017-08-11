@@ -214,19 +214,4 @@ public class BaselineProfileComparatorTest {
         assertThat(comparison, is(lessThan(0)));
     }
 
-    @Test
-    public void testGetExpressionLevelFoldChangeOnForSpecificity1() {
-        subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts);
-        double averageExpressionLevel = subject.getExpressionLevelFoldChange(geneWithSpecificity1);
-        assertThat(averageExpressionLevel, Matchers.is(5.0));
-    }
-
-    @Test
-    public void testGetExpressionLevelFoldChangeOnForSpecificityGraterThan1() {
-        subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts);
-        double averageExpressionLevel = subject.getExpressionLevelFoldChange(geneWithSpecificity16);
-        assertThat(averageExpressionLevel, is(2.0));
-    }
-
-
 }
