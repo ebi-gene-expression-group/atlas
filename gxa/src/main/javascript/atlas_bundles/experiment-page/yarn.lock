@@ -243,8 +243,8 @@ express@^4.15.2:
     vary "~1.1.1"
 
 expression-atlas-experiment-page@latest:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.5.tgz#a1156363b962383e48565ac55002cf0cb01c3586"
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.6.tgz#a9530bec163a6bd23f091d6f52a88d32cca32e8c"
   dependencies:
     expression-atlas-heatmap-highcharts latest
     lodash "^4.17.4"
@@ -264,8 +264,8 @@ expression-atlas-experiment-page@latest:
     urijs "^1.18.10"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.3.8"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.8.tgz#29569e86d30f569c84b8900caeff3cd2afd89d96"
+  version "3.3.9"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.9.tgz#b577d872321a2e98a89ea0ae1011f1981473b325"
   dependencies:
     anatomogram latest
     color "^2.0.0"
@@ -889,8 +889,8 @@ unpipe@~1.0.0:
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
 
 urijs@^1.18.10:
-  version "1.18.11"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.18.11.tgz#6d9a31427d35569c745d7fdfbd59974bb31d9e59"
+  version "1.18.12"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.18.12.tgz#f04d91e1fabb29c16fc842f9a14ee8ddc3fda64e"
 
 util-deprecate@~1.0.1:
   version "1.0.2"
