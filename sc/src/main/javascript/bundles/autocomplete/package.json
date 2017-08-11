@@ -9,7 +9,7 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "atlas-autocomplete": "latest",
+    "atlas-autocomplete": "^0.7.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }

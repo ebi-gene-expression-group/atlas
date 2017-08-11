@@ -1,50 +1,54 @@
 package uk.ac.ebi.atlas.commons.streams;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ObjectInputStreamsTest {
 
+    @Mock
+    ObjectInputStream<Integer> inputStreamMock;
 
-    ObjectInputStream<Integer> oneTwoThreeNull(){
-        ObjectInputStream<Integer> inputStream = (ObjectInputStream<Integer>) mock(ObjectInputStream.class);
-        when(inputStream.readNext())
-                .thenReturn(1, 2, 3, null);
-        return inputStream;
+    private ObjectInputStream<Integer> oneTwoThreeNull() {
+        return inputStreamMock;
+    }
+
+    @Before
+    public void setUp() throws Exception {
+
+        when(inputStreamMock.readNext()).thenReturn(1, 2, 3, null);
     }
 
     @Test
     public void alwaysTrue(){
-        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), Predicates.<Integer>alwaysTrue());
+        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> true);
         assertThat(out.readNext(), is(1));
         assertThat(out.readNext(), is(2));
         assertThat(out.readNext(), is(3));
-        assertNull(out.readNext());
+        assertThat(out.readNext(), is(nullValue()));
     }
 
     @Test
     public void alwaysFalse(){
-        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), Predicates.<Integer>alwaysFalse());
-        assertNull(out.readNext());
-    }
-
-    void keepOnlyOne(final Integer toKeep){
-        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), integer -> integer.equals(toKeep));
-        assertThat(out.readNext(), is(toKeep));
-        assertNull(out.readNext());
+        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> false);
+        assertThat(out.readNext(), is(nullValue()));
     }
 
     @Test
     public void keepOne(){
-        keepOnlyOne(1);
-        keepOnlyOne(2);
-        keepOnlyOne(3);
+        int toKeep = ThreadLocalRandom.current().nextInt(1, 4);
+        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> x.equals(toKeep));
+        assertThat(out.readNext(), is(toKeep));
+        assertThat(out.readNext(), is(nullValue()));
     }
 }

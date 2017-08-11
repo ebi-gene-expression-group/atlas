@@ -40,7 +40,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         // A1:
         if (isSpecific && allContrastsSelected) {
-            int order = Integer.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
+            int order = Long.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
             if (0 == order) {
                 order = compareOnAverageExpressionLevel(firstProfile, otherProfile, selectedQueryContrasts);
             }

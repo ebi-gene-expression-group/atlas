@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.search.baseline;
-
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;

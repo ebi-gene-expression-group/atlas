@@ -50,8 +50,8 @@ public class DifferentialProfileComparatorTest {
         //when
         subject = new DifferentialProfileComparator<>(true, allContrasts, allContrasts, Regulation.UP);
 
-        when(profileMock1.getSpecificity(Regulation.UP)).thenReturn(1);
-        when(profileMock2.getSpecificity(Regulation.UP)).thenReturn(2);
+        when(profileMock1.getSpecificity(Regulation.UP)).thenReturn(1L);
+        when(profileMock2.getSpecificity(Regulation.UP)).thenReturn(2L);
 
         //then
         int comparison = subject.compare(profileMock1, profileMock2);

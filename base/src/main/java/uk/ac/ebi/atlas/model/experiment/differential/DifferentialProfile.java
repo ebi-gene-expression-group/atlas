@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
-import com.google.common.collect.FluentIterable;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;
 
@@ -8,7 +7,10 @@ import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public abstract class DifferentialProfile<T extends DifferentialExpression, Self extends Profile<Contrast, T, Self>> extends Profile<Contrast, T, Self> {
+public abstract class DifferentialProfile<T extends DifferentialExpression,
+                                          Self extends Profile<Contrast, T, Self>>
+
+extends Profile<Contrast, T, Self> {
 
     private static final double MIN_P_VALUE = 1;
 
@@ -18,8 +20,10 @@ public abstract class DifferentialProfile<T extends DifferentialExpression, Self
         super(geneId, geneName);
     }
 
-    public int getSpecificity(final Regulation regulation) {
-        return  FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0 && expr.isRegulatedLike(regulation)).size();
+    public long getSpecificity(final Regulation regulation) {
+        return expressionsByCondition.values().stream()
+                .filter(expr -> expr.getLevel() != 0 && expr.isRegulatedLike(regulation))
+                .count();
     }
 
     public double getAveragePValueOn(Collection<Contrast> contrasts) {

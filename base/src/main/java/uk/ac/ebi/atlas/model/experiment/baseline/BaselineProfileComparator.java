@@ -18,7 +18,6 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     private final boolean isSpecific;
     private final Collection<AssayGroup> selectedQueryFactors;
-    private final Collection<AssayGroup> allQueryFactors;
     private final Collection<AssayGroup> nonSelectedQueryFactorsCachedInstance;
     private final BaselineProfileCachedStats baselineProfileStats;
 
@@ -42,7 +41,6 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                                         int cacheSize) {
         this.isSpecific = isSpecific;
         this.selectedQueryFactors = selectedQueryFactors;
-        this.allQueryFactors = allQueryFactors;
 
         this.nonSelectedQueryFactorsCachedInstance =
                 Sets.difference(ImmutableSet.copyOf(allQueryFactors), ImmutableSet.copyOf(selectedQueryFactors));
@@ -53,65 +51,23 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     @Override
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
-        boolean allFactorsSelected = nonSelectedQueryFactorsCachedInstance.isEmpty();
-
-        if (isSpecific && allFactorsSelected) {
-            int order = ComparisonChain
-                    .start()
-                    .compare(firstBaselineProfile.getSpecificity(), otherBaselineProfile.getSpecificity())
-                    .result();
-
-            return 0 != order ?
-                    order :
-                    compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
+        if(isSpecific) {
+            return ComparisonChain.start().compare(
+                    firstBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance),
+                    otherBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance)
+            ).compare(
+                    firstBaselineProfile.getSpecificity(),
+                    otherBaselineProfile.getSpecificity()
+            ).compare(
+                    -getExpressionLevelFoldChange(firstBaselineProfile),
+                    -getExpressionLevelFoldChange(otherBaselineProfile)
+            ).result();
+        } else {
+            return Ordering.natural().reverse().
+                    compare(baselineProfileStats.getAverageOverSelectedQueryFactors(firstBaselineProfile),
+                            baselineProfileStats.getAverageOverSelectedQueryFactors(otherBaselineProfile));
         }
 
-        if (isSpecific && !allFactorsSelected) {
-            int order = ComparisonChain
-                    .start()
-                    .compare(
-                            firstBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance),
-                            otherBaselineProfile.getSpecificity(nonSelectedQueryFactorsCachedInstance))
-                    .result();
-
-            // reverse because we want lower values to come first
-            return 0 != order ?
-                    order :
-                    Ordering.natural().reverse().compare(
-                            getExpressionLevelFoldChange(firstBaselineProfile),
-                            getExpressionLevelFoldChange(otherBaselineProfile));
-        }
-
-        if (!isSpecific && allFactorsSelected) {
-            return compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
-        }
-
-        // !isSpecific && !allFactorsSelected
-        return compareOnAverageExpressionLevelOverSelectedQueryFactors(firstBaselineProfile, otherBaselineProfile);
-
-    }
-
-    private int compareOnAverageExpressionLevelOverAllQueryFactors(BaselineProfile firstBaselineProfile,
-                                                                     BaselineProfile otherBaselineProfile) {
-        return Ordering.natural().reverse().
-                compare(baselineProfileStats.getAverageOverAllQueryFactors(firstBaselineProfile),
-                        baselineProfileStats.getAverageOverAllQueryFactors(otherBaselineProfile));
-    }
-
-    private int compareOnAverageExpressionLevelOverSelectedQueryFactors(BaselineProfile firstBaselineProfile,
-                                                                          BaselineProfile otherBaselineProfile) {
-        return Ordering.natural().reverse().
-                compare(baselineProfileStats.getAverageOverSelectedQueryFactors(firstBaselineProfile),
-                        baselineProfileStats.getAverageOverSelectedQueryFactors(otherBaselineProfile));
-    }
-
-    protected int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile,
-                                                  BaselineProfile otherBaselineProfile,
-                                                  Collection<AssayGroup> assayGroups) {
-
-        return Ordering.natural().reverse().
-                compare(firstBaselineProfile.getAverageExpressionLevelOn(assayGroups),
-                        otherBaselineProfile.getAverageExpressionLevelOn(assayGroups));
     }
 
     public double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {
@@ -129,12 +85,10 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     private class BaselineProfileCachedStats {
         private final Map<String, Double> averageOverSelectedQueryFactors;
-        private final Map<String, Double> averageOverAllQueryFactors;
         private final Map<String, Double> expressionLevelFoldChange;
 
         private BaselineProfileCachedStats(int cacheSize) {
             averageOverSelectedQueryFactors = createLRUMap(cacheSize);
-            averageOverAllQueryFactors = createLRUMap(cacheSize);
             expressionLevelFoldChange = createLRUMap(cacheSize);
         }
 
@@ -152,14 +106,6 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                         baselineProfile.getId(), baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors));
             }
             return averageOverSelectedQueryFactors.get(baselineProfile.getId());
-        }
-
-        double getAverageOverAllQueryFactors(BaselineProfile baselineProfile) {
-            if(!averageOverAllQueryFactors.containsKey(baselineProfile.getId())) {
-                averageOverAllQueryFactors.put(
-                        baselineProfile.getId(), baselineProfile.getAverageExpressionLevelOn(allQueryFactors));
-            }
-            return averageOverAllQueryFactors.get(baselineProfile.getId());
         }
 
         private double computeExpressionLevelFoldChange(BaselineProfile baselineProfile) {
