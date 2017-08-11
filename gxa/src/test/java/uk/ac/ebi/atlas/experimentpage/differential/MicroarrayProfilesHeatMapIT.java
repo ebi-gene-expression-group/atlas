@@ -20,11 +20,9 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.Collection;
-import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -118,37 +116,24 @@ public class MicroarrayProfilesHeatMapIT {
 
         DifferentialProfilesList profilesUp = subject.fetch(requestContext);
 
-        assertThat(profilesAll.size()==50 || profilesAll.extractGeneNames().containsAll(profilesUp.extractGeneNames()),
+        assertThat(
+                profilesAll.size() == 50 || profilesAll.extractGeneNames().containsAll(profilesUp.extractGeneNames()),
                 is(true));
-
-        for(Object o: profilesUp) {
-            MicroarrayProfile profile = (MicroarrayProfile) o;
-            assertThat(
-                    profile.getSpecificity(Regulation.DOWN),
-                    is(0)
-            );
-        }
 
         requestPreferences.setRegulation(Regulation.DOWN);
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesDown = subject.fetch(requestContext);
-        assertThat(profilesAll.size()==50 ||
-                        profilesAll.extractGeneNames().containsAll(profilesDown.extractGeneNames()),
+        assertThat(
+                profilesAll.size() == 50 || profilesAll.extractGeneNames().containsAll(profilesDown.extractGeneNames()),
                 is(true));
-        for(Object o: profilesDown) {
-            MicroarrayProfile profile = (MicroarrayProfile) o;
-            assertThat(
-                    profile.getSpecificity(Regulation.UP),
-                    is(0)
-            );
-        }
 
         setUp();
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
-        assertThat(profilesAll.size() ==50 ||
+        assertThat(
+                profilesAll.size() == 50 ||
                         profilesAll.extractGeneNames().containsAll(profilesQueryFactorValues.extractGeneNames()),
                 is(true));
         assertAbout(requestContext.getExperiment(), profilesQueryFactorValues);

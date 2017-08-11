@@ -18,13 +18,11 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.Collection;
-import java.util.Collections;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -118,38 +116,27 @@ public class RnaSeqProfilesHeatMapIT {
 
         DifferentialProfilesList profilesUp = subject.fetch(requestContext);
 
-        assertTrue(profilesAll.size()==50 || profilesAll.extractGeneNames().containsAll(profilesUp
-                .extractGeneNames()));
-        for(Object o: profilesUp) {
-            RnaSeqProfile profile = (RnaSeqProfile) o;
-            assertThat(
-                    profile.getSpecificity(Regulation.DOWN),
-                    is(0)
-            );
-        }
-
+        assertThat(
+                profilesAll.size() == 50 || profilesAll.extractGeneNames().containsAll(profilesUp.extractGeneNames()),
+                is(true));
 
         requestPreferences.setRegulation(Regulation.DOWN);
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesDown = subject.fetch(requestContext);
-        assertTrue(profilesAll.size()==50 || profilesAll.extractGeneNames().containsAll(profilesDown.extractGeneNames
-                ()));
-        for(Object o: profilesDown) {
-            RnaSeqProfile profile = (RnaSeqProfile) o;
-            assertThat(
-                    profile.getSpecificity(Regulation.DOWN),
-                    is(0)
-            );
-        }
+        assertThat(
+                profilesAll.size() == 50 || profilesAll.extractGeneNames().containsAll(profilesDown.extractGeneNames()),
+                is(true));
+
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
-        assertTrue(profilesAll.size() ==50 || profilesAll.extractGeneNames().containsAll
-                (profilesQueryFactorValues
-                .extractGeneNames()));
-        assertAbout(requestContext.getExperiment(), profilesQueryFactorValues);
+        assertThat(
+                profilesAll.size() ==50 ||
+                        profilesAll.extractGeneNames().containsAll(profilesQueryFactorValues.extractGeneNames()),
+                is(true));
 
+        assertAbout(requestContext.getExperiment(), profilesQueryFactorValues);
     }
 
 
@@ -158,7 +145,7 @@ public class RnaSeqProfilesHeatMapIT {
 
         DifferentialProfilesList profiles = subject.fetch(requestContext);
 
-        assertTrue( profiles.extractGeneNames().isEmpty());
+        assertThat(profiles.extractGeneNames().size(), is(0));
     }
 
 
@@ -166,14 +153,14 @@ public class RnaSeqProfilesHeatMapIT {
 
         for(Object o: profiles){
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            assertEquals(true, profile.isExpressedOnAnyOf(experiment.getDataColumnDescriptors()));
+            assertThat(profile.isExpressedOnAnyOf(experiment.getDataColumnDescriptors()), is(true));
 
-            assertFalse(profile.getId().isEmpty());
-            assertFalse(profile.getName().isEmpty());
+            assertThat(profile.getId().isEmpty(), is(false));
+            assertThat(profile.getName().isEmpty(), is(false));
         }
 
         assertThat(experiment.getAccession(), profiles.getTotalResultCount(), greaterThan(0));
-        assertEquals(profiles.size(), profiles.extractGeneNames().size());
+        assertThat(profiles.size(), is(profiles.extractGeneNames().size()));
     }
 
 }
