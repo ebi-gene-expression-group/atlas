@@ -30,7 +30,7 @@ public abstract class Profile<
 
 implements KryoSerializable {
 
-    protected Map<DataColumnDescriptor, Expr> expressionsByCondition = new HashMap<>();
+    protected Map<String, Expr> expressionsByCondition = new HashMap<>();
     private String id;
     private String name;
 
@@ -84,7 +84,7 @@ implements KryoSerializable {
 
     @Nullable
     public Double getExpressionLevel(DataColumnDescriptor condition) {
-        Expression expression = expressionsByCondition.get(condition);
+        Expression expression = getExpression(condition);
         if (expression != null) {
             return expression.getLevel();
         }
@@ -130,11 +130,11 @@ implements KryoSerializable {
     }
 
     public void add(DataColumnDescriptor condition, Expr expression) {
-        expressionsByCondition.put(condition, expression);
+        expressionsByCondition.put(condition.getId(), expression);
     }
 
     public Expr getExpression(DataColumnDescriptor condition) {
-        return expressionsByCondition.get(condition);
+        return expressionsByCondition.get(condition.getId());
     }
 
     public String getName() {
@@ -147,8 +147,9 @@ implements KryoSerializable {
 
     public Self filter(Predicate<Expr> keepExpressions){
         Self result = createEmptyCopy();
+
         expressionsByCondition.entrySet().stream().filter(e -> keepExpressions.apply(e.getValue())).forEach(e -> {
-            result.add(e.getKey(), e.getValue());
+            result.expressionsByCondition.put(e.getKey(), e.getValue());
         });
 
         return result;
