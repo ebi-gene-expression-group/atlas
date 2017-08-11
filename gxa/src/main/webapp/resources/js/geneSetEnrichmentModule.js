@@ -22,7 +22,7 @@ var geneSetEnrichmentModule = (function ($) {
         //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
         $experimentsTable.dataTable.defaults.oLanguage.sInfoEmpty = ' ';
 
-        var oTable = $experimentsTable.DataTable({
+        var table = $experimentsTable.DataTable({
             "autoWidth": false,
             "processing": true,
             "data": allData,
@@ -95,14 +95,16 @@ var geneSetEnrichmentModule = (function ($) {
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
-            dom: '<"button primary white-color float-left margin-right-large"B>lfrtip',
-            language: {
-                buttons: {
-                    csv: "Download all results"
-                }
-            },
+            dom: "<'row expanded margin-bottom-none'<'small-12 medium-2 medium-offset-10 columns text-right'B>>" +
+                 "<'row expanded'<'small-6 columns'l><'small-6 columns'f>>" +
+                 "<'row expanded'<'small-12 columns't>>" +
+                 "<'row expanded'<'small-6 columns'i><'small-6 columns'p>>",
             buttons: [
-                "csvHtml5"
+              {
+                extend: 'csv',
+                text: '<span class="icon icon-functional" data-icon="="> Download results</span>',
+                className: 'tiny'
+              }
             ]
         });
     }
