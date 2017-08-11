@@ -120,7 +120,7 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
             if(baselineExpression.getLevel() > 0) {
                 builder.add(new BaselineAnalytics(
                         geneId,
-                        baselineExpression.getDataColumnDescriptorId(),
+                        assayGroupIds[i],
                         baselineExpression.getLevel(),
                         baselineExpression.getQuartiles()
                 ));

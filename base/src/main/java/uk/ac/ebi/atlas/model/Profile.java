@@ -75,9 +75,8 @@ implements KryoSerializable {
     public long getSpecificity(Collection<AssayGroup> assayGroups) {
         List<String> assayGroupIds = assayGroups.stream().map(DescribesDataColumns::getId).collect(toList());
 
-        return expressionsByCondition.values().stream()
-                .filter(expr -> assayGroupIds.contains(expr.getDataColumnDescriptorId()))
-                .filter(expr -> expr.getLevel() != 0)
+        return expressionsByCondition.entrySet().stream()
+                .filter(p -> assayGroupIds.contains(p.getKey()) && p.getValue().getLevel() != 0)
                 .count();
     }
 
