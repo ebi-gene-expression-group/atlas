@@ -64,7 +64,7 @@ public class BaselineProfileComparatorTest {
         assertThat(
                 subject.compare(profileWithExpressions(ImmutableMap.of(g1, 2d)),
                         profileWithExpressions(ImmutableMap.of(g1, 1d)))
-                ,lessThan(0)
+                , lessThan(0)
         );
     }
 
@@ -74,12 +74,12 @@ public class BaselineProfileComparatorTest {
         assertThat(
                 subject.compare(profileWithExpressions(ImmutableMap.of(g1, 1d)),
                         profileWithExpressions(ImmutableMap.of(g1, 1d, g2, 1d)))
-                ,lessThan(0)
+                , lessThan(0)
         );
         assertThat(
                 subject.compare(profileWithExpressions(ImmutableMap.of(g1, 1d, g2, 1d)),
                         profileWithExpressions(ImmutableMap.of(g1, 1d, g2, 1d, g3, 1d)))
-                ,lessThan(0)
+                , lessThan(0)
         );
     }
 
@@ -164,10 +164,6 @@ public class BaselineProfileComparatorTest {
         when(geneWithSpecificity16AndSmallerExpressionLevel.getId()).thenReturn("Gene with specificity 16 and smaller");
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16L);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(0D);
-
-        when(geneWithAverageExpression3.getAverageExpressionLevelOn(anyList())).thenReturn(3D);
-
-        when(geneWithAverageExpression8.getAverageExpressionLevelOn(anyList())).thenReturn(8D);
     }
 
 

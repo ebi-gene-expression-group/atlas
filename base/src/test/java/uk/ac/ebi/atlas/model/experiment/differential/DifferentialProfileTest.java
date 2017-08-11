@@ -42,9 +42,9 @@ public class DifferentialProfileTest {
         subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
-        assertThat(subject.getSpecificity(Regulation.UP), is(2));
-        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2));
-        assertThat(subject.getSpecificity(Regulation.DOWN), is(0));
+        assertThat(subject.getSpecificity(Regulation.UP), is(2L));
+        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2L));
+        assertThat(subject.getSpecificity(Regulation.DOWN), is(0L));
     }
 
     @Test
@@ -59,9 +59,9 @@ public class DifferentialProfileTest {
         subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
-        assertThat(subject.getSpecificity(Regulation.DOWN), is(2));
-        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2));
-        assertThat(subject.getSpecificity(Regulation.UP), is(0));
+        assertThat(subject.getSpecificity(Regulation.DOWN), is(2L));
+        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2L));
+        assertThat(subject.getSpecificity(Regulation.UP), is(0L));
     }
 
     @Test
