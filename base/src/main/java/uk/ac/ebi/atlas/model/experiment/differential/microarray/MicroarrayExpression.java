@@ -2,20 +2,14 @@ package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
 import com.google.common.base.MoreObjects;
 import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 
 public class MicroarrayExpression extends DifferentialExpression {
 
     private double tstatistic;
 
-    public MicroarrayExpression(double pValue, double foldChange, double tstatistic, Contrast contrast) {
-        this(pValue, foldChange, tstatistic, contrast.getId());
-
-    }
-
-    public MicroarrayExpression(double pValue, double foldChange, double tstatistic, String dataColumnDescriptor) {
-        super(pValue, foldChange, dataColumnDescriptor);
+    public MicroarrayExpression(double pValue, double foldChange, double tstatistic) {
+        super(pValue, foldChange);
         this.tstatistic = tstatistic;
     }
 

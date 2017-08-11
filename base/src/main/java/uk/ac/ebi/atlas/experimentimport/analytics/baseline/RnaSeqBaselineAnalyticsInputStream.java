@@ -116,7 +116,7 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
 
         for (int i = 0; i < expressionLevels.length; i++) {
 
-            BaselineExpression baselineExpression = BaselineExpression.create(expressionLevels[i], assayGroupIds[i]);
+            BaselineExpression baselineExpression = BaselineExpression.create(expressionLevels[i]);
             if(baselineExpression.getLevel() > 0) {
                 builder.add(new BaselineAnalytics(
                         geneId,

@@ -26,7 +26,7 @@ public class MicroarrayExpressionTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExpression(P_VALUE, FOLD_CHANGE, TSTATISTIC, contrastMock);
+        subject = new MicroarrayExpression(P_VALUE, FOLD_CHANGE, TSTATISTIC);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class MicroarrayExpressionTest {
     @Test
     public void testSmallPValue() {
         //when
-        MicroarrayExpression expression = new MicroarrayExpression(SMALLPVALUE, -1.0, TSTATISTIC, contrastMock);
+        MicroarrayExpression expression = new MicroarrayExpression(SMALLPVALUE, -1.0, TSTATISTIC);
 
         //then
         assertThat(expression.getPValue(), is(0D));

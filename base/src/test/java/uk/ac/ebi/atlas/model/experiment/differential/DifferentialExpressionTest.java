@@ -23,7 +23,7 @@ public class DifferentialExpressionTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new DifferentialExpression(P_VALUE, FOLD_CHANGE, contrastMock);
+        subject = new DifferentialExpression(P_VALUE, FOLD_CHANGE);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testEquals() {
-        assertThat(subject.equals(new DifferentialExpression(P_VALUE, FOLD_CHANGE, contrastMock)), is(true));
+        assertThat(subject.equals(new DifferentialExpression(P_VALUE, FOLD_CHANGE)), is(true));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class DifferentialExpressionTest {
     @Test
     public void testUnderExpressedGeneIsForRegulation() throws Exception {
         //when
-        DifferentialExpression expression = new DifferentialExpression(1.0, -1.0, "");
+        DifferentialExpression expression = new DifferentialExpression(1.0, -1.0);
 
         //then
         assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
@@ -70,7 +70,7 @@ public class DifferentialExpressionTest {
     @Test
     public void testOverExpressedGeneIsForRegulation() throws Exception {
         //when
-        DifferentialExpression expression = new DifferentialExpression(1.0, 1.0, "");
+        DifferentialExpression expression = new DifferentialExpression(1.0, 1.0);
 
         //then
         assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
@@ -81,7 +81,7 @@ public class DifferentialExpressionTest {
     @Test
     public void testSmallPValue() {
         //when
-        DifferentialExpression expression = new DifferentialExpression(SMALL_P_VALUE, -1.0, "");
+        DifferentialExpression expression = new DifferentialExpression(SMALL_P_VALUE, -1.0);
 
         //then
         assertThat(expression.getPValue(), is(0D));

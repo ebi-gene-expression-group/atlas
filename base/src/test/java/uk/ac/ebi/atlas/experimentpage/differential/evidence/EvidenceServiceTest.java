@@ -75,7 +75,7 @@ public class EvidenceServiceTest {
     @Test
     public void pValuesRoundedLikeWeDid() {
         assertThat(
-                subject.getPValue(new DifferentialExpression(5.21107983317421e-10, 0.0, c1)),
+                subject.getPValue(new DifferentialExpression(5.21107983317421e-10, 0.0)),
                 is(Double.valueOf("5.21e-10"))
         );
     }

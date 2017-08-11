@@ -6,7 +6,6 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperimentTest;
@@ -57,14 +56,14 @@ public class RnaSeqProfileStreamFactoryTest {
     @Test
     public void parseRightValues(){
         assertThat(profileFromTsvLine.apply(new String[]{id, name, P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2}).getExpression(g1_g3), Matchers.is(
-                new DifferentialExpression(0.5, 0.1337, g1_g3)
+                new DifferentialExpression(0.5, 0.1337)
         ));
     }
 
     @Test
     public void handleInfinity() {
         assertThat(profileFromTsvLine.apply(new String[]{id, name, P_VAL_1, FOLD_CHANGE_1, P_VAL_2, "-Inf"}).getExpression(g1_g3), Matchers.is(
-                new DifferentialExpression(0.5, Double.NEGATIVE_INFINITY, g1_g3)
+                new DifferentialExpression(0.5, Double.NEGATIVE_INFINITY)
         ));
     }
 

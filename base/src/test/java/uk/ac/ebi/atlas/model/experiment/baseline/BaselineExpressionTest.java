@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import org.junit.Assert;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -24,18 +22,18 @@ public class BaselineExpressionTest {
         String EXPRESSION_LEVEL_2 = "123.4";
 
         Assert.assertThat(
-                BaselineExpression.create(EXPRESSION_LEVEL_1, "g1").getLevel(),
+                BaselineExpression.create(EXPRESSION_LEVEL_1).getLevel(),
                 is(Double.valueOf(EXPRESSION_LEVEL_1))
         );
 
         Assert.assertThat(
-                BaselineExpression.create(EXPRESSION_LEVEL_2, "g1").getLevel(),
+                BaselineExpression.create(EXPRESSION_LEVEL_2).getLevel(),
                 is(Double.valueOf(EXPRESSION_LEVEL_2))
         );
 
         Assert.assertThat(
-                BaselineExpression.create("0", "g1"),
-                is(BaselineExpression.create("NA", "g1"))
+                BaselineExpression.create("0"),
+                is(BaselineExpression.create("NA"))
         );
 
     }

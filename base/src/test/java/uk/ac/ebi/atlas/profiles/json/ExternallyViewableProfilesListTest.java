@@ -52,14 +52,14 @@ public class ExternallyViewableProfilesListTest {
                         new FactorSet());
 
         FactorAcrossExperiments f11 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "11"));
-        firstProfile.add(f11, new BaselineExpression(12.34, "11"));
+        firstProfile.add(f11, new BaselineExpression(12.34));
 
         BaselineExperimentProfile secondProfile = new BaselineExperimentProfile(
                 BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_2"),
                 new FactorSet());
         FactorAcrossExperiments f21 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "21"));
 
-        secondProfile.add(f21, new BaselineExpression(56.78, "21"));
+        secondProfile.add(f21, new BaselineExpression(56.78));
 
 
         FactorAcrossExperiments f3 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "3"));
@@ -102,12 +102,12 @@ public class ExternallyViewableProfilesListTest {
         List<AssayGroup> factorsAcrossExperiments = ImmutableList.of(g1, g2);
 
         BaselineProfile p1 = new BaselineProfile("gene_1_id", "gene_1_name");
-        p1.add(g1, new BaselineExpression(1000, "g1"));
-        p1.add(g2, new BaselineExpression(2000, "g2"));
+        p1.add(g1, new BaselineExpression(1000));
+        p1.add(g2, new BaselineExpression(2000));
 
 
         BaselineProfile p2 = new BaselineProfile("gene_2_id", "gene_2_name");
-        p2.add(g1, new BaselineExpression(3000, "g1"));
+        p2.add(g1, new BaselineExpression(3000));
 
         BaselineProfilesList profiles = new BaselineProfilesList();
         profiles.add(p1);
@@ -153,12 +153,12 @@ public class ExternallyViewableProfilesListTest {
         DifferentialExperiment experiment = DifferentialExperimentTest.mockExperiment("accession", factorsAcrossExperiments);
 
         RnaSeqProfile p1 = new RnaSeqProfile("gene_1_id", "gene_1_name");
-        p1.add(g1_g2, new DifferentialExpression(1000, 10, ""));
-        p1.add(g1_g3, new DifferentialExpression(2000, 20, ""));
+        p1.add(g1_g2, new DifferentialExpression(1000, 10));
+        p1.add(g1_g3, new DifferentialExpression(2000, 20));
 
 
         RnaSeqProfile p2 = new RnaSeqProfile("gene_2_id", "gene_2_name");
-        p2.add(g1_g2, new DifferentialExpression(3000, 30, ""));
+        p2.add(g1_g2, new DifferentialExpression(3000, 30));
 
         DifferentialProfilesList<RnaSeqProfile> profiles = new DifferentialProfilesList<>();
         profiles.add(p1);

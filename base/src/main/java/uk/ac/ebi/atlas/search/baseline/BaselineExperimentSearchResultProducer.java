@@ -66,7 +66,7 @@ public class BaselineExperimentSearchResultProducer {
                 })){
                     baselineExperimentProfile.add(
                             new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType)),
-                            new BaselineExpression(Optional.fromNullable(assayGroupIdAndExpression.get(assayGroup.getId())).or(0.0d), assayGroup.getId())
+                            new BaselineExpression(Optional.fromNullable(assayGroupIdAndExpression.get(assayGroup.getId())).or(0.0d))
                     );
                 }
                 resultRows.add(baselineExperimentProfile);

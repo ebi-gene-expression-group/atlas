@@ -50,7 +50,7 @@ public class RnaSeqProfileStreamFactory extends ProfileStreamKryoLayer<Contrast,
                             if (notAllDoubles(pValueString, foldChangeString)) {
                                 return null;
                             } else {
-                                return new DifferentialExpression(parseDouble(pValueString), parseDouble(foldChangeString), correspondingColumn);
+                                return new DifferentialExpression(parseDouble(pValueString), parseDouble(foldChangeString));
                             }
                         }
 

@@ -70,7 +70,6 @@ public class AtlasKryo {
                 for(double d : quartiles){
                     output.writeDouble(d);
                 }
-                output.writeString(baselineExpression.getDataColumnDescriptorId());
             }
 
             @Override
@@ -81,13 +80,11 @@ public class AtlasKryo {
                             input.readDouble(),
                             input.readDouble(),
                             input.readDouble(),
-                            input.readDouble(),
-                            input.readString()
-                            );
+                            input.readDouble()
+                    );
                 } else {
                     return new BaselineExpression(
-                            input.readDouble(),
-                            input.readString()
+                            input.readDouble()
                     );
                 }
             }
@@ -99,12 +96,11 @@ public class AtlasKryo {
             public void write(Kryo kryo, Output output, DifferentialExpression differentialExpression) {
                 output.writeDouble(differentialExpression.getPValue());
                 output.writeDouble(differentialExpression.getFoldChange());
-                output.writeString(differentialExpression.getDataColumnDescriptorId());
             }
 
             @Override
             public DifferentialExpression read(Kryo kryo, Input input, Class<DifferentialExpression> aClass) {
-                return new DifferentialExpression(input.readDouble(), input.readDouble(), input.readString());
+                return new DifferentialExpression(input.readDouble(), input.readDouble());
             }
         });
 
@@ -112,16 +108,14 @@ public class AtlasKryo {
 
             @Override
             public void write(Kryo kryo, Output output, MicroarrayExpression microarrayExpression) {
-
                 output.writeDouble(microarrayExpression.getPValue());
                 output.writeDouble(microarrayExpression.getFoldChange());
                 output.writeDouble(microarrayExpression.getTstatistic());
-                output.writeString(microarrayExpression.getDataColumnDescriptorId());
             }
 
             @Override
             public MicroarrayExpression read(Kryo kryo, Input input, Class<MicroarrayExpression> aClass) {
-                return new MicroarrayExpression(input.readDouble(), input.readDouble(), input.readDouble(), input.readString());
+                return new MicroarrayExpression(input.readDouble(), input.readDouble(), input.readDouble());
             }
         });
 

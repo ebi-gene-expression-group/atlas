@@ -55,8 +55,7 @@ public class MicroarrayProfileStreamFactory
                                 return new MicroarrayExpression(
                                         parseDouble(pValueString),
                                         parseDouble(foldChangeString),
-                                        parseDouble(tStatisticString),
-                                        correspondingColumn
+                                        parseDouble(tStatisticString)
                                 );
                             }
                         }

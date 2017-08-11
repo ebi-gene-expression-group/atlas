@@ -51,7 +51,7 @@ public class DiffAnalyticsRowMapperTest {
         MatcherAssert.assertThat(expression.getExperimentAccession(), Is.is("e1"));
         MatcherAssert.assertThat(expression.getSpecies(), Is.is("org1"));
 
-        DifferentialExpression value = new MicroarrayExpression(0.0001, -1.1, 1.1, contrast);
+        DifferentialExpression value = new MicroarrayExpression(0.0001, -1.1, 1.1);
         MatcherAssert.assertThat(expression.getExpression(), Is.is(value));
     }
 

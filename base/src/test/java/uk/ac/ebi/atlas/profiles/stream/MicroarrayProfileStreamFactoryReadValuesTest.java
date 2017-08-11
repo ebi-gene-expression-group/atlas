@@ -70,7 +70,7 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
                 profileFromTsvLine.apply(TWO_CONTRASTS).getExpression(g1_g2),
                 Matchers.is(
                         new MicroarrayExpression(Double.parseDouble(P_VAL_1),
-                        Double.parseDouble(FOLD_CHANGE_1), Double.parseDouble(T_VAL_1), g1_g2))
+                        Double.parseDouble(FOLD_CHANGE_1), Double.parseDouble(T_VAL_1)))
         );
 
         assertThat(
@@ -79,7 +79,7 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
                         new MicroarrayExpression(
                                 Double.parseDouble(P_VAL_2),
                                 Double.NEGATIVE_INFINITY,
-                                Double.parseDouble(T_VAL_2), g1_g3)));
+                                Double.parseDouble(T_VAL_2))));
     }
 
     @Test

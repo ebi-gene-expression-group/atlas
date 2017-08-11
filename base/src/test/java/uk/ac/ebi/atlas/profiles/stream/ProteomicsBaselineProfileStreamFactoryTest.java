@@ -43,7 +43,7 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
 
         assertThat(
                 profileFromTsvLine.apply(new String[]{"id", "name", "_", "_", "1.0", "2.0"}).getExpression(g1),
-                Matchers.is(new BaselineExpression(1.0, g1.getId())));
+                Matchers.is(new BaselineExpression(1.0)));
     }
 
 }

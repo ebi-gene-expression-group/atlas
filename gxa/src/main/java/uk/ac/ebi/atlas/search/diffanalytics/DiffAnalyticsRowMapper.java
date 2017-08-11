@@ -53,9 +53,9 @@ class DiffAnalyticsRowMapper implements RowMapper<DiffAnalytics> {
         }
 
         if (tstatistic == null) {
-            return new DifferentialExpression(pValue, foldChange, contrast);
+            return new DifferentialExpression(pValue, foldChange);
         }
-        return new MicroarrayExpression(pValue, foldChange, Double.parseDouble(tstatistic), contrast);
+        return new MicroarrayExpression(pValue, foldChange, Double.parseDouble(tstatistic));
 
 
     }

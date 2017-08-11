@@ -33,9 +33,9 @@ public class DifferentialProfileTest {
     @Test
     public void addingAnOverExpressedExpressionShouldUpdateMinAndMaxUpRegulatedLevelsAndSpecificity() throws Exception {
         DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, 0.4D, fakeContrasts.get(0));
+                = new DifferentialExpression(0.05, 0.4D);
         DifferentialExpression differentialExpressionMock2
-                = new DifferentialExpression(0.05, 0.6D, fakeContrasts.get(1));
+                = new DifferentialExpression(0.05, 0.6D);
 
         //when
         subject.add(fakeContrasts.get(0),differentialExpressionMock1);
@@ -50,9 +50,9 @@ public class DifferentialProfileTest {
     @Test
     public void addingUnderExpressedExpressionsShouldUpdateMinAndMaxDownRegulatedLevelsAndSpecificity() throws Exception {
         DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, -0.3D, fakeContrasts.get(0));
+                = new DifferentialExpression(0.05, -0.3D);
         DifferentialExpression differentialExpressionMock2
-                = new DifferentialExpression(0.05, -0.5D, fakeContrasts.get(1));
+                = new DifferentialExpression(0.05, -0.5D);
 
         //when
         subject.add(fakeContrasts.get(0),differentialExpressionMock1);
@@ -67,9 +67,9 @@ public class DifferentialProfileTest {
     @Test
     public void getAverageExpressionLevelOnShouldReturnAverageValueOfOneExpression() throws Exception {
         DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, -0.3D, fakeContrasts.get(0));
+                = new DifferentialExpression(0.05, -0.3D);
         DifferentialExpression differentialExpressionMock2
-                = new DifferentialExpression(0.05, 0.3D, fakeContrasts.get(1));
+                = new DifferentialExpression(0.05, 0.3D);
 
         //when
         subject.add(fakeContrasts.get(0),differentialExpressionMock1);
@@ -83,9 +83,9 @@ public class DifferentialProfileTest {
     @Test
     public void getAverageExpressionLevelOnShouldReturnAverageValueOfBoth() throws Exception {
         DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, -0.3D, fakeContrasts.get(0));
+                = new DifferentialExpression(0.05, -0.3D);
         DifferentialExpression differentialExpressionMock2
-                = new DifferentialExpression(0.05, -0.5D, fakeContrasts.get(1));
+                = new DifferentialExpression(0.05, -0.5D);
 
         //when
         subject.add(fakeContrasts.get(0),differentialExpressionMock1);

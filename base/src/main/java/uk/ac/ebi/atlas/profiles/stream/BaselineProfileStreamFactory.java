@@ -27,7 +27,7 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
             @Override
             protected BaselineExpression nextExpression(Integer index, AssayGroup assayGroup, String[] currentLine) {
 
-                return BaselineExpression.create(currentLine[index], assayGroup.getId());
+                return BaselineExpression.create(currentLine[index]);
             }
 
             @Override

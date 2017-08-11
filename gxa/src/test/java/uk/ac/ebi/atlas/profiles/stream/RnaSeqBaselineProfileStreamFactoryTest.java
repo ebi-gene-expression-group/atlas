@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -137,7 +136,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
         assertThat(
                 profileFromTsvLine.apply(new String[]{"id", "name", "1.0", "2.0"}).getExpression(assayGroup),
-                Matchers.is(new BaselineExpression(1.0, assayGroup.getId()))
+                Matchers.is(new BaselineExpression(1.0))
         );
 
         assertThat(

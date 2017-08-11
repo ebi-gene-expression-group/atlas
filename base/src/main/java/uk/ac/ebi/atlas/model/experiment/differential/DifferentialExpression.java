@@ -13,19 +13,13 @@ public class DifferentialExpression implements Expression {
     private double pValue;
     private double foldChange;
 
-    private String dataColumnDescriptorId;
 
     // If pValue is smaller than minim allowed value, treat it as 0D. This checks this condition when reading
     //  from the tsv file
 
-    public DifferentialExpression(double pValue, double foldChange, String dataColumnDescriptorId) {
+    public DifferentialExpression(double pValue, double foldChange) {
         this.pValue = (pValue < SMALLEST_P_VALUE_ALLOWED) ? 0D : pValue;
         this.foldChange = foldChange;
-        this.dataColumnDescriptorId = dataColumnDescriptorId;
-    }
-
-    public DifferentialExpression(double pValue, double foldChange, Contrast contrast) {
-        this(pValue, foldChange, contrast.getId());
     }
 
     public double getPValue() {
@@ -62,18 +56,12 @@ public class DifferentialExpression implements Expression {
         DifferentialExpression other = (DifferentialExpression) object;
 
         return Objects.equal(foldChange, other.foldChange) &&
-                Objects.equal(pValue, other.pValue) &&
-                Objects.equal(dataColumnDescriptorId, other.dataColumnDescriptorId);
+                Objects.equal(pValue, other.pValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(pValue, foldChange, dataColumnDescriptorId);
-    }
-
-    @Override
-    public String getDataColumnDescriptorId() {
-        return dataColumnDescriptorId;
+        return Objects.hashCode(pValue, foldChange);
     }
 
     @Override
@@ -106,6 +94,6 @@ public class DifferentialExpression implements Expression {
 
     @Override
     public String toString(){
-        return MessageFormat.format("DifferentialExpression={0} foldChange={1} pValue={2}", dataColumnDescriptorId, foldChange, pValue);
+        return MessageFormat.format("DifferentialExpression foldChange={1} pValue={2}", foldChange, pValue);
     }
 }

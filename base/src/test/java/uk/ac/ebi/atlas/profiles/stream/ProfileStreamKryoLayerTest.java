@@ -127,13 +127,13 @@ public class ProfileStreamKryoLayerTest {
         when(source.filterExpressions(experiment, profileStreamOptions)).thenReturn(Predicates.alwaysTrue());
 
         Profile p1 = new BaselineProfile("id_1", "name_1");
-        p1.add(new AssayGroup("g1", "r1"), new BaselineExpression(1.2, "g1"));
+        p1.add(new AssayGroup("g1", "r1"), new BaselineExpression(1.2));
 
         Profile p2 = new RnaSeqProfile("id_2", "name_2");
-        p2.add(ContrastTest.get(1).get(0), new DifferentialExpression(0.05, 1.3, ContrastTest.get(1).get(0).getId()));
+        p2.add(ContrastTest.get(1).get(0), new DifferentialExpression(0.05, 1.3));
 
         Profile p3 = new MicroarrayProfile("id_3", "name_3", "design_element");
-        p3.add(ContrastTest.get(1).get(0), new MicroarrayExpression(0.05, 1.3,1.4, ContrastTest.get(1).get(0).getId()));
+        p3.add(ContrastTest.get(1).get(0), new MicroarrayExpression(0.05, 1.3,1.4));
 
         given(objectInputStream.readNext())
                 .willReturn(p1)

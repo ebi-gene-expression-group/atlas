@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -27,9 +26,9 @@ public class BaselineProfileTest {
     private AssayGroup g3 = new AssayGroup("g3", "run31","run32");
     private AssayGroup g4 = new AssayGroup("g4", "g41");
 
-    private BaselineExpression expression_1 = new BaselineExpression(2.2D, "g1");
-    private BaselineExpression expression_2 = new BaselineExpression(3D, "g2");
-    private BaselineExpression expression_3 = new BaselineExpression(3.001D, "g3");
+    private BaselineExpression expression_1 = new BaselineExpression(2.2D);
+    private BaselineExpression expression_2 = new BaselineExpression(3D);
+    private BaselineExpression expression_3 = new BaselineExpression(3.001D);
 
     private BaselineProfile subject;
 

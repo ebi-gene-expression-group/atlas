@@ -4,7 +4,6 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.text.DecimalFormat;
@@ -12,31 +11,24 @@ import java.text.NumberFormat;
 
 public class BaselineExpression implements Expression {
     private double level;
-    private String dataColumnDescriptorId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
     public BaselineExpression(double level) {
-        this.level = level;
-    }
-
-    public BaselineExpression(double level, String dataColumnDescriptorId) {
-        this(level, dataColumnDescriptorId, new double[]{level});
+        this(level, new double[]{level});
     }
 
     public BaselineExpression(double min,
                               double lowerQuartile,
                               double median,
                               double upperQuartile,
-                              double max,
-                              String dataColumnDescriptorId) {
-        this(median, dataColumnDescriptorId, new double[]{min,lowerQuartile, median, upperQuartile, max});
+                              double max) {
+        this(median, new double[]{min,lowerQuartile, median, upperQuartile, max});
     }
 
 
-    private BaselineExpression(double level, String dataColumnDescriptorId, double[] quartiles) {
-        this(level);
-        this.dataColumnDescriptorId = dataColumnDescriptorId;
+    private BaselineExpression(double level, double[] quartiles) {
+        this.level = level;
         this.quartiles = quartiles;
     }
 
@@ -45,13 +37,13 @@ public class BaselineExpression implements Expression {
     "-" was documented as a "zero code"
     */
     private static final ImmutableList<String> zeros = ImmutableList.of("NA", "-", "NT");
-    public static BaselineExpression create(String expressionLevelString, String assayGroupId){
+    public static BaselineExpression create(String expressionLevelString){
         if (expressionLevelString == null) {
             return null;
         }
 
         if (zeros.contains(expressionLevelString)) {
-            return new BaselineExpression(0.0, assayGroupId);
+            return new BaselineExpression(0.0);
         }
 
         if (expressionLevelString.contains(",")) {
@@ -62,22 +54,17 @@ public class BaselineExpression implements Expression {
             double max = Double.parseDouble(vals[4]);
 
             return min == max
-                    ? new BaselineExpression(min, assayGroupId)
+                    ? new BaselineExpression(min)
                     : new BaselineExpression(
                     min,
                     Double.parseDouble(vals[1]),
                     Double.parseDouble(vals[2]),
                     Double.parseDouble(vals[3]),
-                    max,
-                    assayGroupId);
+                    max
+            );
         }
 
-        return new BaselineExpression(Double.parseDouble(expressionLevelString), assayGroupId);
-    }
-
-    @Override
-    public String getDataColumnDescriptorId(){
-        return dataColumnDescriptorId;
+        return new BaselineExpression(Double.parseDouble(expressionLevelString));
     }
 
     public double[] getQuartiles() {
@@ -103,13 +90,12 @@ public class BaselineExpression implements Expression {
 
         BaselineExpression other = (BaselineExpression) object;
 
-        return Objects.equal(level, other.level) &&
-                Objects.equal(dataColumnDescriptorId, other.dataColumnDescriptorId);
+        return Objects.equal(level, other.level);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(level, dataColumnDescriptorId);
+        return Objects.hashCode(level);
     }
 
     static String removeTrailingZero(double value) {
@@ -120,7 +106,6 @@ public class BaselineExpression implements Expression {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("level", level)
-                .add("id", dataColumnDescriptorId)
                 .toString();
     }
 

@@ -12,7 +12,7 @@ public class ExpressionTest {
 
     @Before
     public void setUp() {
-        subject = new BaselineExpression(2.3, "g1");
+        subject = new BaselineExpression(2.3);
     }
 
     @Test
