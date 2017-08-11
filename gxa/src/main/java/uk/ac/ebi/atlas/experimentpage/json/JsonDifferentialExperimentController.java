@@ -113,7 +113,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
 
     /*
     View of experiment as set of evidence between genes and diseases, in the Open Targets format.
-    Returns an empty array for experiments that are not about diseases.
+    Returns an empty response for experiments that are not about diseases or that we have no evidence for.
      */
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
             method = RequestMethod.GET,

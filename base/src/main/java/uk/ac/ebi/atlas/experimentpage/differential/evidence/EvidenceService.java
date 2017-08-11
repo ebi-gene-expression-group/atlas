@@ -59,7 +59,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
             return new JsonArray();
         }
 
-        String expressionAtlasVersion = "10-05-2017"; //TODO
+        String expressionAtlasVersion = "11-08-2017"; //TODO you can get this as resources.version
 
         String methodDescription = getMethodDescriptionFromAnalysisMethodsFile(experiment);
 
@@ -490,8 +490,12 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return "";
     }
 
+    /*
+    If something's a factor then it is also a characteristic unless we've made a mistake.
+    Example mistake was E-GEOD-23764.
+     */
     boolean cellLineAsSampleCharacteristicButNoDiseaseAsFactor(ExperimentDesign experimentDesign){
-        return experimentDesign.getSampleHeaders().contains("cell line") && ! experimentDesign.getFactorHeaders().contains("disease");
+        return (experimentDesign.getSampleHeaders().contains("cell line") || experimentDesign.getFactorHeaders().contains("cell line"))  && ! experimentDesign.getFactorHeaders().contains("disease");
     }
 
 }
