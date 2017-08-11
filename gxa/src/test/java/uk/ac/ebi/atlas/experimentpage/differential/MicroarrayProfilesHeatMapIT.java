@@ -123,10 +123,10 @@ public class MicroarrayProfilesHeatMapIT {
 
         for(Object o: profilesUp) {
             MicroarrayProfile profile = (MicroarrayProfile) o;
-            for(Contrast contrast: profile.getConditions()){
-                assertThat(profile.getExpression(contrast).isOverExpressed(), is(true));
-                assertThat(profile.getExpression(contrast).isUnderExpressed(), is(false));
-            }
+            assertThat(
+                    profile.getSpecificity(Regulation.DOWN),
+                    is(0)
+            );
         }
 
         requestPreferences.setRegulation(Regulation.DOWN);
@@ -138,10 +138,10 @@ public class MicroarrayProfilesHeatMapIT {
                 is(true));
         for(Object o: profilesDown) {
             MicroarrayProfile profile = (MicroarrayProfile) o;
-            for(Contrast contrast: profile.getConditions()){
-                assertThat(profile.getExpression(contrast).isOverExpressed(), is(false));
-                assertThat(profile.getExpression(contrast).isUnderExpressed(), is(true));
-            }
+            assertThat(
+                    profile.getSpecificity(Regulation.UP),
+                    is(0)
+            );
         }
 
         setUp();
@@ -168,17 +168,7 @@ public class MicroarrayProfilesHeatMapIT {
 
         for(Object o: profiles){
             MicroarrayProfile profile = (MicroarrayProfile) o;
-
-            assertThat(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()), is(true));
-            for(Contrast contrast: profile.getConditions()){
-                assertThat(profile.isExpressedOnAnyOf(Collections.singleton(contrast)), is(true));
-
-                DifferentialExpression expression = profile.getExpression(contrast);
-                assertThat(expression.getPValue(), greaterThan(0d));
-                assertThat(expression.getPValue(), lessThanOrEqualTo(1d));
-                assertThat(expression.getAbsoluteFoldChange(), greaterThan(0d));
-            }
-
+            assertThat(profile.isExpressedOnAnyOf(experiment.getDataColumnDescriptors()), is(true));
             assertThat(profile.getId().isEmpty(), is(false));
             assertThat(profile.getName().isEmpty(), is(false));
         }

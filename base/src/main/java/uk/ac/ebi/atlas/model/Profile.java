@@ -129,10 +129,6 @@ implements KryoSerializable {
         return false;
     }
 
-    public Set<DataColumnDescriptor> getConditions() {
-        return Sets.newHashSet(expressionsByCondition.keySet());
-    }
-
     public void add(DataColumnDescriptor condition, Expr expression) {
         expressionsByCondition.put(condition, expression);
     }

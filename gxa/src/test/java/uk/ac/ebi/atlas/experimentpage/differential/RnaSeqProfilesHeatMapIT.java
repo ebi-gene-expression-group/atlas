@@ -22,6 +22,7 @@ import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.*;
 
@@ -121,10 +122,10 @@ public class RnaSeqProfilesHeatMapIT {
                 .extractGeneNames()));
         for(Object o: profilesUp) {
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            for(Contrast contrast: profile.getConditions()){
-                assertEquals(true, profile.getExpression(contrast).isOverExpressed());
-                assertEquals(false, profile.getExpression(contrast).isUnderExpressed());
-            }
+            assertThat(
+                    profile.getSpecificity(Regulation.DOWN),
+                    is(0)
+            );
         }
 
 
@@ -136,10 +137,10 @@ public class RnaSeqProfilesHeatMapIT {
                 ()));
         for(Object o: profilesDown) {
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            for(Contrast contrast: profile.getConditions()){
-                assertEquals(false, profile.getExpression(contrast).isOverExpressed());
-                assertEquals(true, profile.getExpression(contrast).isUnderExpressed());
-            }
+            assertThat(
+                    profile.getSpecificity(Regulation.DOWN),
+                    is(0)
+            );
         }
         requestContext = populateRequestContext(accession);
 
@@ -165,17 +166,7 @@ public class RnaSeqProfilesHeatMapIT {
 
         for(Object o: profiles){
             RnaSeqProfile profile = (RnaSeqProfile) o;
-
-            assertTrue(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()));
-            for(Contrast contrast: profile.getConditions()){
-                assertEquals(true, profile.isExpressedOnAnyOf(Collections.singleton(contrast)));
-
-                DifferentialExpression expression = profile.getExpression(contrast);
-                assertEquals(contrast.getId(), expression.getDataColumnDescriptorId());
-                assertThat(expression.getPValue(), greaterThan(0d));
-                assertThat(expression.getPValue(), lessThanOrEqualTo(1d));
-                assertThat(expression.getAbsoluteFoldChange(), greaterThan(0d));
-            }
+            assertEquals(true, profile.isExpressedOnAnyOf(experiment.getDataColumnDescriptors()));
 
             assertFalse(profile.getId().isEmpty());
             assertFalse(profile.getName().isEmpty());

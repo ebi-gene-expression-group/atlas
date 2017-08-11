@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
@@ -13,7 +14,9 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, BaselineExpression, BaselineExperimentProfile> implements Comparable<BaselineExperimentProfile> {
 
@@ -28,6 +31,18 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
                 experiment.getDisplayName());
         this.experiment = experiment;
         this.filterFactors = filterFactors;
+    }
+
+    private final Set<FactorAcrossExperiments> conditionsCopy= new HashSet<>();
+
+    public Set<FactorAcrossExperiments> getConditions() {
+        return conditionsCopy;
+    }
+
+    @Override
+    public void add(FactorAcrossExperiments condition, BaselineExpression expression) {
+        conditionsCopy.add(condition);
+        super.add(condition, expression);
     }
 
     @Override
