@@ -14,12 +14,12 @@
                 <ul>
                     <li><strong>537</strong> RNA-seq and <strong>3</strong> proteomics
                         datasets, of which <strong>131</strong> report <a
-                                href="https://www.ebi.ac.uk/gxa/baseline/experiments">baseline</a> gene
+                                href="baseline/experiments">baseline</a> gene
                         expression, across a total of <strong>32</strong> different
                         organisms;</li>
-                    <li><strong>731</strong> datasets reporting expression in <a href="https://www.ebi.ac.uk/gxa/plant/experiments">plants</a>;</li>
+                    <li><strong>731</strong> datasets reporting expression in <a href="plant/experiments">plants</a>;</li>
                     <li><strong>2,998</strong> datasets studying samples in <strong>8,391</strong>
-                        <a href="https://www.ebi.ac.uk/gxa/help/differential-atlas.html">differential</a> comparisons across <strong>33</strong> different organisms.</li>
+                        <a href="help/differential-atlas.html">differential</a> comparisons across <strong>33</strong> different organisms.</li>
                 </ul>
             </li>
         </ul>
@@ -27,14 +27,14 @@
         <h4>New experiments</h4>
 
         <ul>
-            <li>First pig baseline RNA-seq data (Sus scrofa):
+            <li>First pig baseline RNA-seq data (<i>Sus scrofa</i>):
                 <ul>
-                    <li><a href="https://www.ebi.ac.uk/gxa/experiments/E-MTAB-5895">RNA-seq of different tissues from Sus scrofa</a></li>
+                    <li><a href="experiments/E-MTAB-5895">RNA-seq of different tissues from Sus scrofa</a></li>
                 </ul>
             </li>
             <li>Updated version of Human Induced Pluripotent Stem Cells Initiative (HipSci) with 397 samples:
                 <ul>
-                    <li><a href="https://www.ebi.ac.uk/gxa/experiments/E-MTAB-4748">RNA-seq of coding RNA in human fibroblasts, Peripheral Blood Mononuclear Cells (PBMCs) and induced pluripotent stem cells (iPS cells) as part of the HipSci project</a></li>
+                    <li><a href="experiments/E-MTAB-4748">RNA-seq of coding RNA in human fibroblasts, Peripheral Blood Mononuclear Cells (PBMCs) and induced pluripotent stem cells (iPS cells) as part of the HipSci project</a></li>
                 </ul>
             </li>
         </ul>
@@ -43,11 +43,14 @@
 
         <ul>
             <li>All RNA-Seq baseline experiments are displayed using TPMs by default where available. There is a new radio button to switch to FPKMs if desired.</li>
+                <ul>
+                    <li>Example: <a href="experiments/E-MTAB-4101/Results">Cell Lines - OpenTargets - Haematopoiesis TPM</a> cf. <a href="experiments/E-MTAB-4101/Results?unit=%2522FPKM%2522">Cell Lines - OpenTargets - Haematopoiesis FPKM</a></li>
+                </ul>
             <li>You can download results from the Gene Set Enrichment results page by clicking on the <em>Download results</em> button on the top right.</li>
-            <li>Now you can choose what data to download in the experiment page: the heatmap or all results matching your query.
-            <li>Revamped anatomogram.</li>
-            <li>Bug fixes and stability improvements.</li>
-            <li></li>
+            <li>Now you can choose what data to download in the experiment page: the highest expressed genes as displayed in the heatmap, or all results matching your query.</li>
+                <ul>
+                    <li>Example: click on the down-pointing arrow in the <em>Download</em> button, located to the right above the heatmap, to download e.g. <a href="experiments/E-MTAB-513/Results?specific=true&geneQuery=%255B%255D&filterFactors=%257B%257D&cutoff=%257B%2522value%2522%253A10%257D&unit=%2522TPM%2522">all genes with expression level above 10 TPM in <em>Illumina Body Map</em>, or only the top 50 genes sorted by expression level</a>.</li>
+                </ul>
         </ul>
 
     </div>
