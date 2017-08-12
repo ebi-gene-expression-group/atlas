@@ -45,6 +45,7 @@
                     <li><a href="${pageContext.request.contextPath}/help/index.html">Help</a></li>
                     <li><a href="${pageContext.request.contextPath}/licence.html">Licence</a></li>
                     <li><a href="${pageContext.request.contextPath}/about.html">About</a></li>
+                    <li><a href="https://www.ebi.ac.uk/support/gxa" target="_blank">Feedback</a></li>
                 </ul>
             </nav>
         </div>
