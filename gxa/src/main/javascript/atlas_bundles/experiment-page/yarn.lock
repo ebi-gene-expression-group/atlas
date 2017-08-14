@@ -16,8 +16,8 @@ add-dom-event-listener@1.x:
     object-assign "4.x"
 
 anatomogram@latest:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.5.1.tgz#42b2706a45863214d442ef5fecfd2144321c0d57"
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.5.2.tgz#2960015e897b05adebdca7eba16c59026349d1a8"
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
@@ -244,8 +244,8 @@ express@^4.15.2:
     vary "~1.1.1"
 
 expression-atlas-experiment-page@latest:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.6.tgz#a9530bec163a6bd23f091d6f52a88d32cca32e8c"
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.7.tgz#44acf84ca9114985b346179bc9787fc14db30679"
   dependencies:
     expression-atlas-heatmap-highcharts latest
     lodash "^4.17.4"
@@ -265,8 +265,8 @@ expression-atlas-experiment-page@latest:
     urijs "^1.18.10"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.3.10"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.10.tgz#56536c7d93073be2364372cf3761c31264d3a5c7"
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.4.0.tgz#bbb265133fa4f19306023edefcb0cfc4fb77c301"
   dependencies:
     anatomogram latest
     color "^2.0.0"

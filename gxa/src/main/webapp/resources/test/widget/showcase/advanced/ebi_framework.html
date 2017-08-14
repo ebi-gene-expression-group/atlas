@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>Mus musculus, ASPM &lt; Expression Atlas widget showcase</title>
+    <title>Don’t use EBI Framework &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -33,19 +33,21 @@
 <body>
     <div id="content" role="main" class="row">
         <div class="row column">
-            <div class="callout code-block">
+             <div class="callout code-block">
 <pre>expressionAtlasHeatmapHighcharts.render({
-  target: 'highchartsContainer',
+  target: 'highchartsContainer1',
   experiment: 'reference',
   query: {
-    species: 'caenorhabditis elegans',
-    gene: [{value: 'ASPM'}]
-  }
+    species: 'monodelphis domestica',
+    gene: [{value: 'zinc finger'}]
+  },
+  showAnatomogram: false
 });</pre>
-            </div>
+             </div>
 
-            <div id="highchartsContainer"></div>
+            <div id="highchartsContainer1"></div>
         </div>
+
     </div>
 
     <!-- JavaScript -->
@@ -68,13 +70,16 @@
 <script>
   expressionAtlasHeatmapHighcharts.render(
     {
-      target: 'highchartsContainer',
+      target: 'highchartsContainer1',
       experiment: 'reference',
       query: {
-        species: 'caenorhabditis elegans'
+        species: 'monodelphis domestica',
+        gene: [{value: 'zinc finger'}]
       },
+      showAnatomogram: false,
       atlasUrl: '/gxa/',
-      disableGoogleAnalytics: true
+      disableGoogleAnalytics: true,
+      useEbiFramework: false
     }
   );
 </script>
