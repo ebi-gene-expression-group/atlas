@@ -66,8 +66,8 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
 
 anatomogram@latest:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.5.2.tgz#2960015e897b05adebdca7eba16c59026349d1a8"
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.5.3.tgz#4d0eb403a9bc380053c5ce57086a596199241d7d"
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
