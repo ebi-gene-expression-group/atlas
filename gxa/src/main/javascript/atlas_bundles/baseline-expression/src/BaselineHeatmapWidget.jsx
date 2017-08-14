@@ -17,6 +17,7 @@ const BaselineHeatmapWidget = (props) =>
                               }}
                               isWidget={false}
                               showAnatomogram={props.showAnatomogram}
+                              useEbiFramewokr={false}
       />
   </div>
 
