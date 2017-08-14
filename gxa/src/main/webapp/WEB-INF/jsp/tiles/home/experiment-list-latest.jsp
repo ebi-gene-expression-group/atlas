@@ -108,7 +108,6 @@
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/pcawg_logo.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5200">PCAWG by disease</a><br>
-                            <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5423">PCAWG by individual</a>
                         </h6>
                     </a>
                 </div>
