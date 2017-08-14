@@ -240,8 +240,8 @@ express@^4.15.2:
     vary "~1.1.1"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.4.0.tgz#bbb265133fa4f19306023edefcb0cfc4fb77c301"
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.4.1.tgz#69499ad98096e236dae90768bba84eb13d6d4a69"
   dependencies:
     anatomogram latest
     color "^2.0.0"

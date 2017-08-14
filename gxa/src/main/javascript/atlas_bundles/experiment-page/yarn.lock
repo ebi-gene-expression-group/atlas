@@ -244,8 +244,8 @@ express@^4.15.2:
     vary "~1.1.1"
 
 expression-atlas-experiment-page@latest:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.7.tgz#44acf84ca9114985b346179bc9787fc14db30679"
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.8.tgz#eeaa9dc65d1b4f72ac1788cf406d77597f50ec62"
   dependencies:
     expression-atlas-heatmap-highcharts latest
     lodash "^4.17.4"
@@ -265,8 +265,8 @@ expression-atlas-experiment-page@latest:
     urijs "^1.18.10"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.4.0.tgz#bbb265133fa4f19306023edefcb0cfc4fb77c301"
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.4.1.tgz#69499ad98096e236dae90768bba84eb13d6d4a69"
   dependencies:
     anatomogram latest
     color "^2.0.0"
