@@ -16,8 +16,8 @@ add-dom-event-listener@1.x:
     object-assign "4.x"
 
 anatomogram@latest:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.4.5.tgz#8546453541ac486cfa66cff95910b9734055a68b"
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.5.1.tgz#42b2706a45863214d442ef5fecfd2144321c0d57"
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
@@ -25,6 +25,7 @@ anatomogram@latest:
     react-dom "^15.6.1"
     react-svg "^2.1.21"
     recompose "^0.24.0"
+    urijs "^1.18.12"
 
 array-flatten@1.1.1:
   version "1.1.1"
@@ -264,8 +265,8 @@ expression-atlas-experiment-page@latest:
     urijs "^1.18.10"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.3.9"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.9.tgz#b577d872321a2e98a89ea0ae1011f1981473b325"
+  version "3.3.10"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.10.tgz#56536c7d93073be2364372cf3761c31264d3a5c7"
   dependencies:
     anatomogram latest
     color "^2.0.0"
@@ -888,7 +889,7 @@ unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
 
-urijs@^1.18.10:
+urijs@^1.18.10, urijs@^1.18.12:
   version "1.18.12"
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.18.12.tgz#f04d91e1fabb29c16fc842f9a14ee8ddc3fda64e"
 
