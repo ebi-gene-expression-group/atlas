@@ -1003,8 +1003,8 @@ browserslist@^1.3.6, browserslist@^1.5.2, browserslist@^1.7.6:
     electron-to-chromium "^1.2.7"
 
 browserslist@^2.1.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.3.2.tgz#343ff101cce799d5eaf0b742e17d0d21efc2d379"
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.3.3.tgz#2b0cabc4d28489f682598605858a0782f14b154c"
   dependencies:
     caniuse-lite "^1.0.30000715"
     electron-to-chromium "^1.3.18"
@@ -2120,8 +2120,8 @@ expression-atlas-feedback@./atlas_modules/expression-atlas-feedback-v1.3.0.tgz:
     react-timer-mixin "^0.13.3"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.4.1.tgz#69499ad98096e236dae90768bba84eb13d6d4a69"
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.5.0.tgz#fa23785358480b521a96104733b96c3919eca92e"
   dependencies:
     anatomogram latest
     color "^2.0.0"
