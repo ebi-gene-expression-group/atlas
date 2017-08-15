@@ -853,6 +853,11 @@ button.close {
     border-left: 4px solid transparent;
 }
 
+/*To make split button toggle full height*/
+.dropdown-toggle:after {
+    content:" ";
+}
+
 @font-face{
     font-family:'Glyphicons Halflings';
     src:url(https://maxcdn.bootstrapcdn.com/bootstrap/latest/fonts/glyphicons-halflings-regular.eot);
