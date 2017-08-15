@@ -1,3 +1,23 @@
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -233,7 +253,7 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;
+    /*border-radius: 4px;*/
 }
 .btn:focus,
 .btn:active:focus,
@@ -414,7 +434,7 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
 }
 
 .close {
@@ -524,7 +544,6 @@ button.close {
 }
 .modal-header {
     padding: 15px;
-    border-bottom: 1px solid #e5e5e5;
 }
 .modal-header .close {
     margin-top: -2px;
@@ -718,7 +737,7 @@ button.close {
 .nav .noBorderTab {
     border:none !important;}
 .nav  li.disabled  a {
-    color: red;}
+    color: lightgrey;}
 .nav  li.disabled  a:hover, .nav > li.disabled > a:focus {
     color: #777;
     text-decoration: none;
@@ -749,7 +768,7 @@ button.close {
     margin-right: 2px;
     line-height: 1.42857143;
     border: 1px solid transparent;
-    border-radius: 4px 4px 0 0;
+    /*border-radius: 4px 4px 0 0;*/
 }
 .nav-tabs > li > a:hover {
     border-color: #eee #eee #ddd;
@@ -784,12 +803,30 @@ button.close {
 .nav-tabs .disabled {
     margin-right: 2px;
     line-height: 1.42857143;
-    border-radius: 4px 4px 0 0;
+    /*border-radius: 4px 4px 0 0;*/
     padding: 10px 15px;
     color:#dedede;
     background-color: #fff;
     border: 1px solid #ddd;
     border-bottom-color: transparent;
+}
+
+.nav-pills > li {
+    float: left;
+}
+.nav-pills > li > a {
+    /*border-radius: 4px;*/
+    border-bottom: none;
+}
+.nav-pills > li + li {
+    margin-left: 2px;
+}
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+    color: #fff;
+    background-color: #207a7a;
+    border-bottom: none;
 }
 
 .glyphicon {
