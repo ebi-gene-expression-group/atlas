@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.base.Function;
 import uk.ac.ebi.atlas.experimentpage.ExternallyAvailableContentController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -24,6 +23,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 public abstract class ExperimentDesignFile<E extends Experiment> extends CanStreamSupplier<E> {
 
