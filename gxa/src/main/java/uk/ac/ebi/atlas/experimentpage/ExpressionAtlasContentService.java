@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
@@ -18,6 +17,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.List;
+import java.util.function.Function;
 
 @Named
 public class ExpressionAtlasContentService {

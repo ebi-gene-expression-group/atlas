@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.resource;
 
 import uk.ac.ebi.atlas.model.resource.ResourceType;
-import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -14,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Named
 public class AtlasResourceHub {
@@ -34,7 +34,7 @@ public class AtlasResourceHub {
             Optional<String> arrayDesign =
                     differentialExperiment instanceof MicroarrayExperiment
                             ? Optional.of(contrast.getArrayDesignAccession())
-                            : Optional.<String>absent();
+                            : Optional.empty();
             JsonArray resultsForThisContrast = new JsonArray();
             for( ResourceType resourceType
                             : ContrastImage.RESOURCE_TYPES){

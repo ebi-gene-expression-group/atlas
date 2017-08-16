@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
@@ -19,14 +17,23 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFilter;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.stream.*;
+import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.ProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqDifferentialProfilesWriterFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.web.*;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs extends ExperimentPageRequestPreferences> extends CanStreamSupplier<E> {
 
@@ -135,10 +144,9 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
 
         @Override
         public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment) {
-            return FluentIterable.from(dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFiles())
-                    .transform(unit -> getOne(experiment, RnaSeqBaselineRequestPreferences.requestAllData(unit),
-                            MessageFormat.format("{0}s.tsv", unit.toString().toLowerCase()),
-                            MessageFormat.format("Expression values across all genes ({0})", unit))).toList();
+            return dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFiles().stream().map(unit -> getOne(experiment, RnaSeqBaselineRequestPreferences.requestAllData(unit),
+                    MessageFormat.format("{0}s.tsv", unit.toString().toLowerCase()),
+                    MessageFormat.format("Expression values across all genes ({0})", unit))).collect(Collectors.toList());
         }
     }
 
@@ -174,8 +182,8 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             };
         }
 
-        private Function<HttpServletResponse, Void> stream(MicroarrayExperiment experiment,
-                                                           MicroarrayRequestPreferences preferences) {
+        private java.util.function.Function<HttpServletResponse, Void> stream(MicroarrayExperiment experiment,
+                                                                              MicroarrayRequestPreferences preferences) {
             GeneQueryResponse geneQueryResponse =
                     solrQueryService.fetchResponse(preferences.getGeneQuery(), experiment.getSpecies());
 
@@ -245,5 +253,3 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
     }
 
 }
-
-

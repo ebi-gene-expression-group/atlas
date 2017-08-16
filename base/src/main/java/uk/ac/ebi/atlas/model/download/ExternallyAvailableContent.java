@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.model.download;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.NotImplementedException;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.function.Function;
 
 public class ExternallyAvailableContent {
 
@@ -24,14 +23,14 @@ public class ExternallyAvailableContent {
     public final Function<HttpServletResponse, Void> stream;
 
 
-    public ExternallyAvailableContent(URI uri, Description description, Function<HttpServletResponse, Void> stream){
+    public ExternallyAvailableContent(URI uri, Description description, Function<HttpServletResponse, Void> stream) {
         this.uri = uri;
         this.description = description;
         this.stream = stream;
     }
 
-    public ExternallyAvailableContent(final String redirect, Description description){
-        this.uri = URI.create("redirect:"+redirect);
+    public ExternallyAvailableContent(final String redirect, Description description) {
+        this.uri = URI.create("redirect:" + redirect);
         this.description = description;
         this.stream = response -> {
             throw new NotImplementedException(MessageFormat.format(
@@ -55,7 +54,6 @@ public class ExternallyAvailableContent {
 
     @AutoValue
     public abstract static class Description {
-
         /*
         Where in the resources tab this should go? Optional because usually the content list is not further split into sections
          */
@@ -72,15 +70,15 @@ public class ExternallyAvailableContent {
          */
         public abstract String description();
 
-        public static Description create(String type, String description){
+        public static Description create(String type, String description) {
             return create("", type, description);
         }
 
-        public static Description create(String group, String type, String description){
+        public static Description create(String group, String type, String description) {
             return new AutoValue_ExternallyAvailableContent_Description(group, type, description);
         }
 
-        public JsonObject asJson(){
+        public JsonObject asJson() {
             JsonObject result = new JsonObject();
             result.addProperty("group", group());
             result.addProperty("type", type());
@@ -91,7 +89,6 @@ public class ExternallyAvailableContent {
 
 
     public static abstract class Supplier<E extends Experiment> {
-
         /*
         Tell the user what resources are available for this experiment
          */
@@ -103,7 +100,7 @@ public class ExternallyAvailableContent {
         If o1.equals(o2) then o1.base() should equal o2.base()
         Needs to finish with the slash!
         */
-        protected URI base(){
+        protected URI base() {
             String[] xs = this.getClass().getCanonicalName().split("\\.");
 
             String uniqueEnoughButShortName = xs.length >1 ? xs[xs.length-2]+"."+xs[xs.length-1] : xs[xs.length-1];
@@ -114,11 +111,11 @@ public class ExternallyAvailableContent {
             return ImmutableSet.of();
         }
 
-        private final boolean matchesReservedUri(URI uri){
+        private boolean matchesReservedUri(URI uri) {
             return reservedUris().contains(uri.toString().toLowerCase());
         }
 
-        protected final URI makeUri(String id){
+        protected final URI makeUri(String id) {
             return base().resolve(id);
         }
 
@@ -131,13 +128,16 @@ public class ExternallyAvailableContent {
         Subclasses could override this method for efficiency
         */
         public ExternallyAvailableContent get(E experiment, final URI uri){
-            return FluentIterable.from(get(experiment)).firstMatch(externallyAvailableContent -> externallyAvailableContent.uri.equals(uri) || matchesReservedUri(uri)).or(() -> {
-                throw new ResourceNotFoundException(uri.toString());
+            return get(experiment).stream()
+                    .filter(externallyAvailableContent ->
+                            externallyAvailableContent.uri.equals(uri) || matchesReservedUri(uri))
+                    .findFirst()
+                    .orElseGet(() -> { throw new ResourceNotFoundException(uri.toString());
             });
         }
     }
 
     public enum ContentType {
-        DATA,SUPPLEMENTARY_INFORMATION,PLOTS
+        DATA, SUPPLEMENTARY_INFORMATION, PLOTS
     }
 }

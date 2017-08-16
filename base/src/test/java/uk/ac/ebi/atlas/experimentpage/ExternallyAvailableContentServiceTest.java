@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -14,9 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class ExternallyAvailableContentServiceTest {
 
@@ -125,7 +129,7 @@ public class ExternallyAvailableContentServiceTest {
     public void testFound(List<ExternallyAvailableContent.Supplier<Experiment>> suppliers, ExternallyAvailableContent externallyAvailableContent){
         subject = new ExternallyAvailableContentService<>(suppliers);
 
-        Function result = subject.stream(experiment, externallyAvailableContent.uri);
+        Function<HttpServletResponse, Void> result = subject.stream(experiment, externallyAvailableContent.uri);
 
         assertSame(result, externallyAvailableContent.stream);
     }

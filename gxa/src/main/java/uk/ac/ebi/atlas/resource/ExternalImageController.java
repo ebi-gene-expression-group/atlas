@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.resource;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +8,8 @@ import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
+import java.util.function.Function;
 
 @Controller
 public class ExternalImageController {
@@ -58,7 +58,7 @@ public class ExternalImageController {
                 contrastName).get());
     }
 
-    void streamExternalImage(HttpServletResponse response, Function<HttpServletResponse, ?> callback) {
+    void streamExternalImage(HttpServletResponse response, Function<HttpServletResponse, Void> callback) {
         callback.apply(response);
     }
 }

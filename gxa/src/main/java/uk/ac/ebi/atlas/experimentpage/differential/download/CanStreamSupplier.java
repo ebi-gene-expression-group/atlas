@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.base.Function;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -15,13 +14,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.List;
+import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public abstract class CanStreamSupplier<E extends Experiment> extends ExternallyAvailableContent.Supplier<E> {
 
     protected Function<HttpServletResponse, Void> streamFolder(final String folderName,
-                                                     final List<Pair<String, Function<Writer, Void>>> documents){
+                                                               final List<Pair<String, Function<Writer, Void>>> documents){
         return response -> {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + folderName + ".zip\"");
             response.setContentType("application/octet-stream");

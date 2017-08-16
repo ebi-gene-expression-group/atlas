@@ -4,10 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerMapping;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +56,7 @@ public class ExternallyAvailableContentController {
     - the QC report needs a redirect to another Atlas page, preserving the access key
     - the typical resource needs to circle back to this page
     */
-    private JsonObject contentAsJson(ExternallyAvailableContent content,String accession,String accessKey, HttpServletRequest request){
+    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey, HttpServletRequest request){
         JsonObject result = content.description.asJson();
         if("redirect".equals(content.uri.getScheme())){
             try {
@@ -100,9 +103,9 @@ public class ExternallyAvailableContentController {
                     HttpServletRequest request, HttpServletResponse response) {
 
         expressionAtlasContentService.stream(experimentAccession, accessKey,
-                URI.create(request.getAttribute( HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE )
+                URI.create(request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE)
                         .toString()
-                        .replaceFirst(".*/resources/","")
+                        .replaceFirst(".*/resources/", "")
                         .replaceFirst("\\?.*$", "")
                 )
         ).apply(response);
