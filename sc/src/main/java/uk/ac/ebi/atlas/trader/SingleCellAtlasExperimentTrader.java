@@ -15,16 +15,16 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-public class SingleCellExperimentTrader extends ExperimentTrader {
+public class SingleCellAtlasExperimentTrader extends ExperimentTrader {
 
     private final LoadingCache<String, BaselineExperiment> baselineExperimentsCache;
 
     @Inject
-    public SingleCellExperimentTrader(ExperimentDAO experimentDAO,
-                                      SingleCellRnaSeqBaselineExperimentFactory
+    public SingleCellAtlasExperimentTrader(ExperimentDAO experimentDAO,
+                                           SingleCellRnaSeqBaselineExperimentFactory
                                               experimentFactory,
-                                      ArrayExpressClient arrayExpressClient,
-                                      ExperimentDesignParser experimentDesignParser) {
+                                           ArrayExpressClient arrayExpressClient,
+                                           ExperimentDesignParser experimentDesignParser) {
         super(experimentDAO);
         baselineExperimentsCache = CacheBuilder.newBuilder().build(new ExperimentsCacheLoader<>(arrayExpressClient,
                 experimentDesignParser, experimentDAO, experimentFactory));

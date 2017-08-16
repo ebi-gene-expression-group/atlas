@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
+import uk.ac.ebi.atlas.trader.SingleCellAtlasExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +28,7 @@ public class CellTypeController {
 
 
     @Inject
-    public CellTypeController(SingleCellExperimentTrader experimentTrader){
+    public CellTypeController(SingleCellAtlasExperimentTrader experimentTrader){
         this.experimentTrader = experimentTrader;
     }
 

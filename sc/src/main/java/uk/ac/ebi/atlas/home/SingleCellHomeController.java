@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experiments.LatestExperimentsDao;
 import uk.ac.ebi.atlas.experiments.LatestExperimentsService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
+import uk.ac.ebi.atlas.trader.SingleCellAtlasExperimentTrader;
 
 import javax.inject.Inject;
 
@@ -19,7 +19,7 @@ public class SingleCellHomeController extends HtmlExceptionHandlingController {
 
     @Inject
     public SingleCellHomeController(LatestExperimentsDao latestExperimentsDao,
-                                    SingleCellExperimentTrader experimentTrader) {
+                                    SingleCellAtlasExperimentTrader experimentTrader) {
         latestExperimentsService =
                 new LatestExperimentsService(
                         latestExperimentsDao, experimentTrader,

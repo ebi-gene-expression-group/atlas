@@ -14,7 +14,7 @@ import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
+import uk.ac.ebi.atlas.trader.SingleCellAtlasExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
 
 
     @Inject
-    public SingleCellExperimentPageController(SingleCellExperimentTrader experimentTrader){
+    public SingleCellExperimentPageController(SingleCellAtlasExperimentTrader experimentTrader){
         this.experimentTrader = experimentTrader;
     }
 
