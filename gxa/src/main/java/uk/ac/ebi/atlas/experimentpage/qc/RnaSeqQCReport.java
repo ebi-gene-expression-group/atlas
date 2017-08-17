@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.qc;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
-import com.google.common.collect.FluentIterable;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
@@ -19,6 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Named
 public class RnaSeqQCReport extends CanStreamSupplier<DifferentialExperiment> {
@@ -38,18 +37,16 @@ public class RnaSeqQCReport extends CanStreamSupplier<DifferentialExperiment> {
     @Override
     public Collection<ExternallyAvailableContent> get(DifferentialExperiment experiment) {
 
-        List<Pair<String, Function<Writer, Void>>> documents = FluentIterable.from(
-                new RnaSeqQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder).get().entrySet()).transform(
-                new Function<Map.Entry<String,AtlasResource<TsvReader>>, Pair<String, Function<Writer, Void>>>() {
-                    @Nullable
-                    @Override
-                    public Pair<String, Function<Writer, Void>> apply(@Nullable Map.Entry<String, AtlasResource<TsvReader>> stringAtlasResourceEntry) {
-                        return Pair.of(
-                                stringAtlasResourceEntry.getKey(),
-                                readFromResourceAndWriteTsv(stringAtlasResourceEntry.getValue(), Functions.<String[]>identity())
-                        );
-                    }
-                }).toList();
+        List<Pair<String, Function<Writer, Void>>> documents = new RnaSeqQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder).get().entrySet().stream().map(new java.util.function.Function<Map.Entry<String, AtlasResource<TsvReader>>, Pair<String, java.util.function.Function<Writer, Void>>>() {
+            @Nullable
+            @Override
+            public Pair<String, java.util.function.Function<Writer, Void>> apply(@Nullable Map.Entry<String, AtlasResource<TsvReader>> stringAtlasResourceEntry) {
+                return Pair.of(
+                        stringAtlasResourceEntry.getKey(),
+                        readFromResourceAndWriteTsv(stringAtlasResourceEntry.getValue(), Function.identity())
+                );
+            }
+        }).collect(Collectors.toList());
 
 
         if(! documents.isEmpty()){
