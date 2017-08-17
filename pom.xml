@@ -39,14 +39,6 @@
 
         <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
         <europepmc.base.url>https://www.ebi.ac.uk/europepmc</europepmc.base.url>
-
-        <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
-        <!-- mailtrap.io password: atlas-ebi-14 -->
-        <mail.smtp.host>mailtrap.io</mail.smtp.host>
-        <mail.smtp.port>2525</mail.smtp.port>
-        <mail.smtp.user>feedback-mail-3e3ccf8bbcedeb96</mail.smtp.user>
-        <mail.smtp.password>324c3bac45dfb398</mail.smtp.password>
-        <mail.smtp.auth>true</mail.smtp.auth>
     </properties>
 
     <build>
@@ -613,9 +605,6 @@
             <properties>
                 <db.context>pgContext.xml</db.context>
                 <data.files.location>/srv/gxa/data</data.files.location>
-                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
-                <mail.smtp.port>25</mail.smtp.port>
-                <mail.smtp.auth>false</mail.smtp.auth>
             </properties>
             <build>
                 <resources>
@@ -637,9 +626,6 @@
             <properties>
                 <data.files.location>/srv/gxa/data-sc</data.files.location>
                 <db.context>pgContext.xml</db.context>
-                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
-                <mail.smtp.port>25</mail.smtp.port>
-                <mail.smtp.auth>false</mail.smtp.auth>
             </properties>
             <build>
                 <resources>
