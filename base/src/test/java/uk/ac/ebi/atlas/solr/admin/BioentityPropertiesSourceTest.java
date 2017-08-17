@@ -21,20 +21,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class BioentityPropertiesSourceTest {
 
-
     BioentityPropertiesSource subject;
 
     String bioentityPropertiesDirectoryLocation;
-
-
     SpeciesProperties HUMAN = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of());
 
     @Before
@@ -57,7 +54,6 @@ public class BioentityPropertiesSourceTest {
         subject = new BioentityPropertiesSource(bioentityPropertiesDirectoryLocation, new SpeciesFactory(speciesPropertiesTrader));
 
     }
-
 
     private void addTemporaryFile(String where,String fileName, Collection<String[]> lines){
         File f = new File(bioentityPropertiesDirectoryLocation, where + File.separator + fileName);
@@ -90,7 +86,7 @@ public class BioentityPropertiesSourceTest {
         assertThat(subject.getAnnotationFiles().count(), is(2L));
     }
 
-    void assertHasOneGoodResource(Stream<? extends BioentityPropertyFile> s){
+    private void assertHasOneGoodResource(Stream<? extends BioentityPropertyFile> s){
         List<BioentityPropertyFile> l = s.collect(Collectors.toList());
         assertThat(l.size(), is(1));
         assertThat(l.get(0).existsAndIsNonEmpty(), is(true));
@@ -121,10 +117,10 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"id", "synonym_value"}
         ));
         assertHasOneGoodResource(subject.getAnnotationFiles());
-        assertThat(subject.getAnnotationFiles().findFirst().get().get().collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getAnnotationFiles().findFirst().get().get().collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("id", "Homo_sapiens", "ensgene", "id"),
                 new BioentityProperty("id", "Homo_sapiens", "synonym", "synonym_value")
-                )));
+                ));
     }
 
     @Test
@@ -134,12 +130,12 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"MIMAT0001535", "cfa-miR-448", "miR-448", "UUGCAUAUGUAGGAUGUCCCAU"}
         ));
         assertHasOneGoodResource(subject.getAnnotationFiles());
-        assertThat(subject.getAnnotationFiles().findFirst().get().get().collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getAnnotationFiles().findFirst().get().get().collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_accession", "MIMAT0001535"),
                 new BioentityProperty("MIMAT0001535", "Homo_sapiens", "symbol", "cfa-miR-448"),
                 new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_name", "miR-448"),
                 new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_sequence", "UUGCAUAUGUAGGAUGUCCCAU")
-                )));
+                ));
     }
 
     @Test
@@ -152,13 +148,13 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"ensgene", "synonym", "other"},
                 new String[]{"id", "synonym_value", "other_value"}
         ));
-        assertThat(subject.getAnnotationFiles().flatMap(BioentityPropertiesSource.AnnotationFile::get).collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getAnnotationFiles().flatMap(BioentityPropertiesSource.AnnotationFile::get).collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("id", "Homo_sapiens", "ensgene", "id"),
                 new BioentityProperty("id", "Homo_sapiens", "synonym", "synonym_value"),
                 new BioentityProperty("id", "", "ensgene", "id"),
                 new BioentityProperty("id", "", "synonym", "synonym_value"),
                 new BioentityProperty("id", "", "other", "other_value")
-        )));
+        ));
     }
 
 
@@ -168,10 +164,10 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"ensgene", "synonym", "other"},
                 new String[]{"id", "synonym_value", ""}
         ));
-        assertThat(subject.getAnnotationFiles().flatMap(BioentityPropertiesSource.AnnotationFile::get).collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getAnnotationFiles().flatMap(BioentityPropertiesSource.AnnotationFile::get).collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("id", "Homo_sapiens", "ensgene", "id"),
                 new BioentityProperty("id", "Homo_sapiens", "synonym", "synonym_value")
-        )));
+        ));
     }
 
     @Test
@@ -180,12 +176,12 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"ensgene", "synonym"},
                 new String[]{"id", "v1@@v2"}
         ));
-        assertThat(subject.getAnnotationFiles().flatMap(BioentityPropertiesSource.AnnotationFile::get).collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getAnnotationFiles().flatMap(BioentityPropertiesSource.AnnotationFile::get).collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("id", "Homo_sapiens", "ensgene", "id"),
                 new BioentityProperty("id", "Homo_sapiens", "synonym", "v1"),
                 new BioentityProperty("id", "Homo_sapiens", "synonym", "v2")
 
-        )));
+        ));
     }
 
 
@@ -194,9 +190,9 @@ public class BioentityPropertiesSourceTest {
         addTemporaryFile("array_designs", "Homo_sapiens.A-AFFY-1.tsv", ImmutableList.of(
                 new String[]{"ENSG00000000003", "39361_f_at"}
         ));
-        assertThat(subject.getArrayDesignMappingFiles().flatMap(BioentityPropertiesSource.ArrayDesignMappingFile::get).collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getArrayDesignMappingFiles().flatMap(BioentityPropertiesSource.ArrayDesignMappingFile::get).collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("ENSG00000000003", "Homo_sapiens", BioentityPropertyName.DESIGN_ELEMENT.name, "39361_f_at")
-        )));
+        ));
     }
 
     @Test
@@ -205,8 +201,8 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"ENSG00000000003", ""}
 
         ));
-        assertThat(subject.getArrayDesignMappingFiles().flatMap(BioentityPropertiesSource.ArrayDesignMappingFile::get).collect(Collectors.toList()), is(ImmutableList.of(
-        )));
+        assertThat(subject.getArrayDesignMappingFiles().flatMap(BioentityPropertiesSource.ArrayDesignMappingFile::get).collect(Collectors.toList()), containsInAnyOrder(
+        ));
     }
 
     @Test
@@ -217,10 +213,10 @@ public class BioentityPropertiesSourceTest {
         addTemporaryFile("array_designs", "Homo_sapiens.A-AFFY-2.tsv", ImmutableList.of(
                 new String[]{"ENSG00000000003", "something_different_at"}
         ));
-        assertThat(subject.getArrayDesignMappingFiles().flatMap(BioentityPropertiesSource.ArrayDesignMappingFile::get).collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getArrayDesignMappingFiles().flatMap(BioentityPropertiesSource.ArrayDesignMappingFile::get).collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("ENSG00000000003", "Homo_sapiens", BioentityPropertyName.DESIGN_ELEMENT.name, "39361_f_at"),
                 new BioentityProperty("ENSG00000000003", "Homo_sapiens", BioentityPropertyName.DESIGN_ELEMENT.name, "something_different_at")
-        )));
+        ));
     }
 
     @Test
@@ -229,11 +225,11 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"ensgene", "pathwayid", "pathwayname"},
                 new String[]{"ENSG00000000419",   "R-HSA-162699",  "Synthesis of dolichyl-phosphate mannose"}
         ));
-        assertThat(subject.getReactomePropertyFiles().flatMap(BioentityPropertiesSource.ReactomePropertyFile::get).collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getReactomePropertyFiles().flatMap(BioentityPropertiesSource.ReactomePropertyFile::get).collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("ENSG00000000419", "Homo_sapiens", BioentityPropertyName.PATHWAYID.name,"R-HSA-162699" ),
                 new BioentityProperty("ENSG00000000419", "Homo_sapiens", BioentityPropertyName.PATHWAYNAME.name,"Synthesis of dolichyl-phosphate mannose" )
 
-                )));
+                ));
     }
 
     @Test
@@ -242,10 +238,10 @@ public class BioentityPropertiesSourceTest {
                 new String[]{"header", "is", "ignored"},
                 new String[]{"ENSG00000000419",   "R-HSA-162699",  "Synthesis of dolichyl-phosphate mannose"}
         ));
-        assertThat(subject.getReactomePropertyFiles().flatMap(BioentityPropertiesSource.ReactomePropertyFile::get).collect(Collectors.toList()), is(ImmutableList.of(
+        assertThat(subject.getReactomePropertyFiles().flatMap(BioentityPropertiesSource.ReactomePropertyFile::get).collect(Collectors.toList()), containsInAnyOrder(
                 new BioentityProperty("ENSG00000000419", "Homo_sapiens", BioentityPropertyName.PATHWAYID.name,"R-HSA-162699" ),
                 new BioentityProperty("ENSG00000000419", "Homo_sapiens", BioentityPropertyName.PATHWAYNAME.name,"Synthesis of dolichyl-phosphate mannose" )
 
-        )));
+        ));
     }
 }
