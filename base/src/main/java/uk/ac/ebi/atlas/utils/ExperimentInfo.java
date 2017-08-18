@@ -107,8 +107,8 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
         return arrayDesignNames;
     }
 
-    public void setArrayDesignNames(SortedSet<String> arrayDesignNames) {
-        this.arrayDesignNames = arrayDesignNames;
+    public void setArrayDesignNames(Set<String> arrayDesignNames) {
+        this.arrayDesignNames = Sets.newTreeSet(arrayDesignNames);
     }
 
     @Override
