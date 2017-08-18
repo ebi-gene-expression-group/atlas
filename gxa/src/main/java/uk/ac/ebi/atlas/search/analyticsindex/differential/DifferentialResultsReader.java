@@ -36,13 +36,11 @@ public class DifferentialResultsReader {
 
     private static final ParseContext parser = JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST));
 
-    private final ColourGradient colourGradient;
     private final Gson gson = new Gson();
 
     @Inject
-    public DifferentialResultsReader(ExperimentTrader experimentTrader, ColourGradient colourGradient) {
+    public DifferentialResultsReader(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.colourGradient = colourGradient;
     }
 
     public JsonObject extractResultsAsJson(String solrResponseAsJson, LinkToContrast linkToContrast) {
@@ -112,8 +110,8 @@ public class DifferentialResultsReader {
         for (JsonObject document : filteredDocuments) {
             double foldChange = document.get("fold_change").getAsDouble();
             String colour = foldChange > 0.0
-                    ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
-                    : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
+                    ? ColourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
+                    : ColourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
             document.addProperty("colour", colour);
             document.addProperty("foldChange", FoldChangeRounder.round(foldChange));
             results.add(document);

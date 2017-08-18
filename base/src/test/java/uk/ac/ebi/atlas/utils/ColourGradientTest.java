@@ -1,112 +1,58 @@
 package uk.ac.ebi.atlas.utils;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import java.awt.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ColourGradientTest {
 
-    ColourGradient subject;
-
-    @Before
-    public void initSubject() {
-        this.subject = new ColourGradient(Color.WHITE, Color.RED, Color.WHITE, 0.3d);
-
+    @Test
+    public void maxValueIsHighValueColour() throws Exception {
+        double max = 1.0;
+        assertThat(ColourGradient.getGradientColour(max, 0.0, max, "#000000", "#FF0000"), is("#FF0000"));
     }
 
     @Test
-    public void calculateColourDistance() throws Exception {
-        assertThat(subject.calculateColourDistance(Color.WHITE, Color.RED), is(510));
+    public void minValueIsLowValueColour() throws Exception {
+        double min = 0.0;
+        assertThat(ColourGradient.getGradientColour(min, min, 1.0, "#000000", "#FF0000"), is("#000000"));
+    }
+
+
+    @Test
+    public void itCanUnderstandColourNames() throws Exception {
+        double min = 0.0;
+        double max = 1.0;
+        assertThat(ColourGradient.getGradientColour(max, min, max, "white", "red"), is("#FF0000"));
+        assertThat(ColourGradient.getGradientColour(min, min, max, "white", "red"), is("#FFFFFF"));
     }
 
     @Test
-    public void calculatePercentPosition() throws Exception {
-        assertThat(subject.calculatePercentPosition(1, 0, 2), is(0.5));
-        assertThat(subject.calculatePercentPosition(0, 0, 2), is(0.0));
-        assertThat(subject.calculatePercentPosition(2, 0, 2), is(1.0));
+    public void returnsMinimumIfColourSpaceIsEmpty() throws Exception {
+        assertThat(ColourGradient.getGradientColour(1.0, 1.0, 2.0, "red", "blue"), is("#FF0000"));
     }
 
-    @Test
-    public void getColourPositionLogScale() throws Exception {
-
-        //given
-        this.subject = new ColourGradient(Color.WHITE, Color.RED, Color.WHITE, ColourGradient.SCALE_LOGARITHMIC);
-
-        assertThat(subject.getColourPosition(0.5, Color.WHITE, Color.RED), is(414));
-        assertThat(subject.getColourPosition(0.0, Color.WHITE, Color.RED), is(0));
-        assertThat(subject.getColourPosition(1.0, Color.WHITE, Color.RED), is(510));
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsIfValueIsAboveMax() throws Exception {
+        ColourGradient.getGradientColour(2.0, 0.0, 1.0, "white", "red");
     }
 
-    @Test
-    public void getColourPositionLinearScale() throws Exception {
-        //given
-        this.subject = new ColourGradient(Color.WHITE, Color.RED, Color.WHITE, ColourGradient.SCALE_LINEAR);
-
-        assertThat(subject.getColourPosition(0.5, Color.WHITE, Color.RED), is(255));
-        assertThat(subject.getColourPosition(0.0, Color.WHITE, Color.RED), is(0));
-        assertThat(subject.getColourPosition(1.0, Color.WHITE, Color.RED), is(510));
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsIfValueIsBelowMin() throws Exception {
+        ColourGradient.getGradientColour(-1.0, 0.0, 1.0, "white", "red");
     }
 
-    @Test
-    public void calculateColorForPosition() throws Exception {
-
-        Color color = subject.calculateColorForPosition(1, new Color(255, 255, 255), new Color(255, 0, 0));
-        assertThat(color.getRed(), is(255));
-        assertThat(color.getGreen(), is(254));
-        assertThat(color.getBlue(), is(255));
-
-        color = subject.calculateColorForPosition(2, new Color(255, 255, 255), new Color(255, 0, 0));
-        assertThat(color.getRed(), is(255));
-        assertThat(color.getGreen(), is(254));
-        assertThat(color.getBlue(), is(254));
-
-        color = subject.calculateColorForPosition(509, new Color(255, 255, 255), new Color(255, 0, 0));
-        assertThat(color.getRed(), is(255));
-        assertThat(color.getGreen(), is(0));
-        assertThat(color.getBlue(), is(1));
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsOnUnknownColourNames() throws Exception {
+        ColourGradient.getGradientColour(0.0, 0.0, 1.0, "white", "foobar");
     }
 
     @Test
     public void updateColourValue() throws Exception {
-
-        assertThat(subject.updateColourValue(3, 255), is(2));
-        assertThat(subject.updateColourValue(3, -255), is(4));
-        assertThat(subject.updateColourValue(3, 0), is(3));
-    }
-
-    @Test
-    public void colorToHexString() throws Exception {
-        assertThat(subject.colorToHexString(Color.RED), is("#FF0000"));
-        assertThat(subject.colorToHexString(Color.BLUE), is("#0000FF"));
-    }
-
-    @Test
-    public void getColourShouldReturnLowLevelColourWhenValueEqualsToMinLevel(){
-        String hexColor = subject.getGradientColour(2, 2, 300);
-        assertThat(hexColor, is(subject.colorToHexString(Color.WHITE)));
-    }
-
-    @Test
-    public void getColourShouldReturnHighLevelColourWhenValueEqualsToMaxLevel(){
-        String hexColor = subject.getGradientColour(300, 2, 300);
-        assertThat(hexColor, is(subject.colorToHexString(Color.RED)));
-    }
-
-    @Test
-    public void getColourByNameTest(){
-        assertThat(subject.getColourByName("blue"), is(Color.BLUE));
-        assertThat(subject.getColourByName("pink"), is(Color.PINK));
-        assertThat(subject.getColourByName("lightGray"), is(Color.LIGHT_GRAY));
-    }
-
-    @Test
-    public void getHexByColourByNameTest(){
-        assertThat(subject.getHexByColourName("blue"), is("#0000FF"));
-        assertThat(subject.getHexByColourName("pink"), is("#FFAFAF"));
+        assertThat(ColourGradient.updateColourValue(3, 255), is(2));
+        assertThat(ColourGradient.updateColourValue(3, -255), is(4));
+        assertThat(ColourGradient.updateColourValue(3, 0), is(3));
     }
 
 }
