@@ -1,11 +1,10 @@
-
 package uk.ac.ebi.atlas.commons.streams;
 
-import com.google.common.base.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.function.Predicate;
 
 public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T> {
 
@@ -26,7 +25,7 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
 
         T object;
         while ((object = inputStream.readNext()) != null) {
-            if (getAcceptanceCriteria().apply(object)) {
+            if (getAcceptanceCriteria().test(object)) {
                 return object;
             }
         }
@@ -40,7 +39,6 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
     }
 
     protected abstract Predicate<T> getAcceptanceCriteria();
-
 
 }
 

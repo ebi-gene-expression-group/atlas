@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.commons;
 
-import com.google.common.base.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,12 +9,13 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
 
 import java.io.IOException;
+import java.util.function.Predicate;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -48,7 +48,7 @@ public class ObjectInputStreamFilterTest {
     @Test
     public void testReadNext() throws Exception {
         //given
-        given(predicateMock.apply(anyObject())).willReturn(false)
+        given(predicateMock.test(any())).willReturn(false)
                                                 .willReturn(true)
                                                 .willReturn(false);
         //and
