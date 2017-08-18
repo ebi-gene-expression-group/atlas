@@ -19,13 +19,13 @@ public class ReactomeClientEIT {
     private ReactomeClient subject;
 
     @Test
-    public void parseReactomeId() {
+    public void parseReactomeId() throws Exception {
         assertThat(subject.fetchPathwayNameFailSafe("R-HSA-15869"), is("Metabolism of nucleotides"));
         assertThat(subject.fetchPathwayNameFailSafe("R-HSA-73887"), is("Death Receptor Signalling"));
     }
 
     @Test
-    public void unmatchedIdReturnsNull() {
+    public void unmatchedIdReturnsNull() throws Exception {
         assertThat(subject.fetchPathwayNameFailSafe("foobar"), is(nullValue()));
     }
 }
