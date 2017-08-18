@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
@@ -16,11 +13,18 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class DifferentialExperiment extends Experiment<Contrast> {
 
-    private final ImmutableSet<Contrast> contrastsWithCttvPrimaryAnnotation;
+    private final Set<Contrast> contrastsWithCttvPrimaryAnnotation;
 
     public DifferentialExperiment(String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts,
                                   String description, Species species, Collection<String> pubMedIds,
@@ -30,16 +34,18 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     }
 
-    private static final Function<Pair<Contrast,Boolean>, Contrast> unpack = Pair::getLeft;
+    private static final Function<Pair<Contrast, Boolean>, Contrast> unpack = Pair::getLeft;
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
                                      List<Pair<Contrast, Boolean>> contrasts, String description, Species species,
                                      Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
 
         super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
-                experimentDesign, Collections.emptyList(), Collections.<String>emptyList(),
-                Collections.emptyList(), Collections.emptyList(), FluentIterable.from(contrasts).transform(unpack).toList(), ExperimentDisplayDefaults.simpleDefaults());
-        this.contrastsWithCttvPrimaryAnnotation = FluentIterable.from(contrasts).filter(Pair::getRight).transform(unpack).toSet();
+                experimentDesign, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
+                Collections.emptyList(), contrasts.stream().map(unpack).collect(Collectors.toList()),
+                ExperimentDisplayDefaults.simpleDefaults());
+        this.contrastsWithCttvPrimaryAnnotation =
+                contrasts.stream().filter(Pair::getRight).map(unpack).collect(Collectors.toSet());
     }
 
     public boolean doesContrastHaveCttvPrimaryAnnotation(Contrast contrast){
@@ -47,9 +53,8 @@ public class DifferentialExperiment extends Experiment<Contrast> {
     }
 
     @Override
-    public Map<String, Object> getAttributes() {
-
-        Map<String, Object> result = new HashMap<>();
+    public HashMap<String, Object> getAttributes() {
+        HashMap<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
         result.put("regulationValues", Regulation.values());
         result.put("contrasts", this.getDataColumnDescriptors());

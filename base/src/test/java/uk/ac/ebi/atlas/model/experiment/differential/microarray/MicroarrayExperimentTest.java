@@ -69,6 +69,7 @@ public class MicroarrayExperimentTest {
 
     @Test
     public void testGetPubMedIds() throws Exception {
+        Object pubMedIdsAttribute = subject.getAttributes().get("pubMedIds");
         assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
     }
 
@@ -80,5 +81,10 @@ public class MicroarrayExperimentTest {
 
         assertThat(subject.getGenomeBrowserNames(), hasSize(1));
         assertThat(miRnaSubject.getGenomeBrowserNames(), hasSize(0));
+    }
+
+    @Test
+    public void buildExperimentInfo() throws Exception {
+
     }
 }

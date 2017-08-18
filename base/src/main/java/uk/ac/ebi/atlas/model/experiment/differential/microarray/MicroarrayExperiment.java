@@ -8,18 +8,25 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+
 
 public class MicroarrayExperiment extends DifferentialExperiment {
 
     private SortedSet<String> arrayDesignAccessions;
     private SortedSet<String> arrayDesignNames;
 
-    public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts,
+    public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate,
+                                List<Pair<Contrast, Boolean>> contrasts,
                                 String description, Species species,
-                                SortedSet<String> arrayDesignAccessions, SortedSet<String> arrayDesignNames,
-                                ExperimentDesign experimentDesign, Set<String> pubMedIds) {
-
+                                SortedSet<String> arrayDesignAccessions,
+                                SortedSet<String> arrayDesignNames,
+                                ExperimentDesign experimentDesign,
+                                Set<String> pubMedIds) {
         super(type, accession, lastUpdate, contrasts, description, species, pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
         this.arrayDesignNames = arrayDesignNames;
@@ -33,8 +40,8 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
 
     @Override
-    public Map<String, Object> getAttributes(){
-        Map<String, Object> result = new HashMap<>();
+    public HashMap<String, Object> getAttributes(){
+        HashMap<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
         //For showing the QC REPORTS button in the header
         result.put("qcArrayDesigns", getArrayDesignAccessions());

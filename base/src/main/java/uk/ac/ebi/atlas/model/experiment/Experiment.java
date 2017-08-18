@@ -149,13 +149,13 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return b.build();
     }
 
-    public Map<String, Object> getAttributes(){
-        Map<String, Object> result = new HashMap<>();
+    public HashMap<String, Object> getAttributes(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("experimentAccession", accession);
+        result.put("experimentDescription", description);
         result.put("type", type);
         result.putAll(species.getAttributes());
-        result.put("experimentDescription", description);
         result.put("pubMedIds", pubMedIds);
-        result.put("experimentAccession", accession);
         result.put("disclaimer", disclaimer);
 
         //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
