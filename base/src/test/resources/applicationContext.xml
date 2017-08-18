@@ -10,14 +10,9 @@
            http://www.springframework.org/schema/util
            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-    <!-- enables annotation-based dependency injection -->
-    <context:annotation-config/>
-
-    <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-    </bean>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
 </beans>
