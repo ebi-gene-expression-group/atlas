@@ -153,7 +153,7 @@ public class BaselineExperimentSearchResultProducerTest {
                 ImmutableMap.of());
     }
 
-    void sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
+    private void sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
             Map<String, Double> data) {
         assertThat(
                 resultShape(twoFactorExperimentWithThreeDifferentValuesForEachFactor, factorType, data),
@@ -173,7 +173,7 @@ public class BaselineExperimentSearchResultProducerTest {
                 ImmutableMap.of());
     }
 
-    void oneDataPointPerRowForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(Map<String, Double> data) {
+    private void oneDataPointPerRowForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(Map<String, Double> data) {
         assertThat(
                 resultShape(twoFactorExperimentWithThreeDifferentValuesForEachFactor, factorType, data),
                 Matchers.is(Collections.nCopies(data.size(), 1L))
