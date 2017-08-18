@@ -3,13 +3,11 @@ package uk.ac.ebi.atlas.experiments;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -48,13 +46,11 @@ public class ExperimentsInfoListServiceTest {
 
     @Before
     public void setUp() throws Exception {
-
         when(experimentTrader.getPublicExperiments(ExperimentType.RNASEQ_MRNA_BASELINE))
-                .thenReturn(ImmutableSet.<Experiment>of(BaselineExperimentTest.mockExperiment()));
+                .thenReturn(ImmutableSet.of(BaselineExperimentTest.mockExperiment()));
 
         subject =
                 new ExperimentInfoListService(experimentTrader, ImmutableSet.of(ExperimentType.RNASEQ_MRNA_BASELINE));
-
     }
 
 
@@ -62,7 +58,7 @@ public class ExperimentsInfoListServiceTest {
     @Test
     public void sizeIsRight() throws Exception {
         JsonArray result = subject.getExperimentsJson().get("aaData").getAsJsonArray();
-       assertThat(result.size(), is(1));
+        assertThat(result.size(), is(1));
     }
     
     @Test
