@@ -23,9 +23,6 @@ public class UrlTsvReaderBuilderEIT {
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_FOOBAR = "E-FOOBAR";
 
-    @Value("#{configuration['experiment.magetab.idf.url.template']}")
-    private String arrayExpressUrlTemplate;
-
     private UrlTsvReaderBuilder subject;
 
     @Rule
@@ -34,7 +31,9 @@ public class UrlTsvReaderBuilderEIT {
 
     @Before
     public void setUp() {
-        subject = new UrlTsvReaderBuilder().forTsvFileUrlTemplate(arrayExpressUrlTemplate);
+        subject =
+                new UrlTsvReaderBuilder()
+                        .forTsvFileUrlTemplate("https://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
     }
 
     @Test

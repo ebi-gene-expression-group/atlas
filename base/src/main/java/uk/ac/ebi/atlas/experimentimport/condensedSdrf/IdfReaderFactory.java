@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.UrlTsvReaderBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -16,10 +15,9 @@ public class IdfReaderFactory {
     private DataFileHub dataFileHub;
 
     @Inject
-    public IdfReaderFactory(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate,
-                            UrlTsvReaderBuilder urlTsvReaderBuilder,
-                            DataFileHub dataFileHub) {
-        this.urlTsvReaderBuilder = urlTsvReaderBuilder.forTsvFileUrlTemplate(idfUrlTemplate);
+    public IdfReaderFactory(UrlTsvReaderBuilder urlTsvReaderBuilder, DataFileHub dataFileHub) {
+        this.urlTsvReaderBuilder =
+                urlTsvReaderBuilder.forTsvFileUrlTemplate("https://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
         this.dataFileHub = dataFileHub;
     }
 
