@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
@@ -9,20 +8,18 @@ import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 
-@Named("applicationProperties")
+@Named
 public class ApplicationProperties {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
+    private static final String PUBMED_URL_TEMPLATE = "https://europepmc.org/abstract/MED/{0}";
+    private static final String AE_ARRAY_URL_TEMPLATE = "https://www.ebi.ac.uk/arrayexpress/arrays/{0}";
 
-    private static Map<String,String> speciesToExperimentProperties =
+    private static final Map<String,String> REFERENCE_EXPERIMENTS =
             ImmutableMap.<String,String>builder()
                     .put("anolis carolinensis","E-MTAB-3727")
                     .put("arabidopsis thaliana","E-GEOD-30720")
@@ -48,46 +45,26 @@ public class ApplicationProperties {
                     .put("xenopus tropicalis","E-MTAB-3726")
                     .put("zea mays","E-MTAB-4342").build();
 
-    private Properties configurationProperties;
     private ArrayDesignTrader arrayDesignTrader;
 
     @Inject
-    ApplicationProperties(@Named("configuration") Properties configurationProperties,
-                          ArrayDesignTrader arrayDesignTrader) {
-        this.configurationProperties = configurationProperties;
+    ApplicationProperties(ArrayDesignTrader arrayDesignTrader) {
         this.arrayDesignTrader = arrayDesignTrader;
-    }
-
-
-    //This is invoked from jsp el
-    public String getArrayExpressURL(String experimentAccession) {
-        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.url.template");
-        return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
     //This is invoked from jsp el
     public String getArrayExpressArrayURL(String arrayAccession) {
         String arrayDesign = arrayDesignTrader.getArrayDesignAccession(arrayAccession);  //getKey from arrayDesignMap
-        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.arrays.url.template");
-        return MessageFormat.format(arrayExpressUrlTemplate, arrayDesign);
+        return MessageFormat.format(AE_ARRAY_URL_TEMPLATE, arrayDesign);
     }
 
     //This is invoked from jsp el
     public String getPubMedURL(String pubMedId) {
-        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.pubmed.url.template");
-        return MessageFormat.format(arrayExpressUrlTemplate, pubMedId);
-    }
-
-    public String getFeedbackEmailAddress() {
-        return configurationProperties.getProperty("feedback.email");
-    }
-
-    public Set<String> getArrayDesignAccessions() {
-        return Sets.newHashSet(configurationProperties.getProperty("arraydesign.accessions").trim().split(","));
+        return MessageFormat.format(PUBMED_URL_TEMPLATE, pubMedId);
     }
 
     public static String getBaselineReferenceExperimentAccession(Species species) {
-        return speciesToExperimentProperties.get(species.getReferenceName());
+        return REFERENCE_EXPERIMENTS.get(species.getReferenceName());
     }
 
     public String buildDownloadURL(SemanticQuery geneQuery, HttpServletRequest request) {
