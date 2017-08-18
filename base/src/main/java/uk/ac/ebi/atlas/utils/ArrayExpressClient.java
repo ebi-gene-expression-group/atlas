@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.utils;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.IdfParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
 import org.xml.sax.InputSource;
@@ -19,30 +18,27 @@ import java.text.MessageFormat;
 @Named
 @Scope("prototype")
 public class ArrayExpressClient {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ArrayExpressClient.class);
 
     private static final String EXPERIMENT_NAME_XPATH = "//experiment/name";
 
-    private String arrayExpressUrlTemplate;
+    private static final String AE_URL_TEMPLATE = "https://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?accession={0}";
     private RestTemplate restTemplate;
     private IdfParser idfParser;
 
     @Inject
-    public ArrayExpressClient(RestTemplate restTemplate,
-                              @Value("#{configuration['experiment.arrayexpress.rest.url.template']}") String arrayExpressUrlTemplate,
-                              IdfParser idfParser) {
+    public ArrayExpressClient(RestTemplate restTemplate, IdfParser idfParser) {
         this.restTemplate = restTemplate;
-        this.arrayExpressUrlTemplate = arrayExpressUrlTemplate;
         this.idfParser = idfParser;
     }
 
     public String fetchExperimentName(String experimentAccession) {
         try {
-            String experimentXML = restTemplate.getForObject(MessageFormat.format(arrayExpressUrlTemplate, experimentAccession), String.class);
+            String experimentXML =
+                    restTemplate.getForObject(MessageFormat.format(AE_URL_TEMPLATE, experimentAccession), String.class);
             return parseExperimentName(experimentXML);
         } catch (Exception e) {
-            LOGGER.error("There was an error parsing the experiment name from ArrayExpress, falling back to IDF file: " + e);
+            LOGGER.warn("Could not retrieve experiment name from ArrayExpress, falling back to IDF file: " + e);
             String experimentName = idfParser.parse(experimentAccession).getLeft();
 
             if (experimentName.isEmpty()) {
