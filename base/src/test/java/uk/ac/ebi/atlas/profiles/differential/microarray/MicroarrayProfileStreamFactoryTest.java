@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.profiles.differential.microarray;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -112,7 +112,9 @@ public class MicroarrayProfileStreamFactoryTest {
         dataFileHub.addTemporaryFile("/magetab/accession/accession_array-analytics.tsv", sequenceLines);
         MicroarrayProfileStreamFactory microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
 
-        MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, contrasts, ImmutableSortedSet.of("array"));
+        MicroarrayExperiment experiment =
+                MicroarrayExperimentTest.get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                        contrasts, ImmutableSet.of("array"), ImmutableSet.of());
         MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
         microarrayRequestPreferences.setFoldChangeCutoff(0.0);
         microarrayRequestPreferences.setCutoff(1.0);

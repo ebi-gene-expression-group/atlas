@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -23,13 +24,13 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate,
                                 List<Pair<Contrast, Boolean>> contrasts,
                                 String description, Species species,
-                                SortedSet<String> arrayDesignAccessions,
-                                SortedSet<String> arrayDesignNames,
+                                Set<String> arrayDesignAccessions,
+                                Set<String> arrayDesignNames,
                                 ExperimentDesign experimentDesign,
                                 Set<String> pubMedIds) {
         super(type, accession, lastUpdate, contrasts, description, species, pubMedIds, experimentDesign);
-        this.arrayDesignAccessions = arrayDesignAccessions;
-        this.arrayDesignNames = arrayDesignNames;
+        this.arrayDesignAccessions = Sets.newTreeSet(arrayDesignAccessions);
+        this.arrayDesignNames =  Sets.newTreeSet(arrayDesignNames);
     }
 
     public SortedSet<String> getArrayDesignAccessions() {

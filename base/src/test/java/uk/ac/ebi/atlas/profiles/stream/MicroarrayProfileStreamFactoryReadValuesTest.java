@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -33,10 +34,10 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
 
     CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine;
 
-    MicroarrayExperiment experiment = MicroarrayExperimentTest.get(
-            "accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(g1_g2, g1_g3),
-            ImmutableSortedSet.of("A-AFFY-1")
-    );
+    MicroarrayExperiment experiment =
+            MicroarrayExperimentTest.get(
+                    "accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(g1_g2, g1_g3),
+                    ImmutableSet.of("A-AFFY-1"), ImmutableSet.of());
 
     String id = "id";
     String name = "name";
