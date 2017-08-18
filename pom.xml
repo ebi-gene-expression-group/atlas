@@ -36,9 +36,6 @@
         <log.level.root>warn</log.level.root>
         <log.level.atlas>info</log.level.atlas>
         <log.prudent>true</log.prudent>
-
-        <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
-        <europepmc.base.url>https://www.ebi.ac.uk/europepmc</europepmc.base.url>
     </properties>
 
     <build>
@@ -527,13 +524,13 @@
 
     <profiles>
         <profile>
-            <id>dev.pg</id>
+            <id>dev</id>
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <db.context>pgContext.xml</db.context>
-                <_jdbc.url.postgresql>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</_jdbc.url.postgresql>
-                <_jdbc.username.postgresql>atlas3dev</_jdbc.username.postgresql>
-                <_jdbc.password.postgresql>YxyR9PKvOAtY</_jdbc.password.postgresql>
+                <db.context>dbContext.xml</db.context>
+                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</jdbc.url>
+                <jdbc.username>atlas3dev</jdbc.username>
+                <jdbc.password>YxyR9PKvOAtY</jdbc.password>
                 <solr.host>lime</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -550,13 +547,13 @@
         </profile>
 
         <profile>
-            <id>dev.local.pg</id>
+            <id>dev.local</id>
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <db.context>pgContext.xml</db.context>
-                <_jdbc.url.postgresql>jdbc:postgresql:gxpatlasloc</_jdbc.url.postgresql>
-                <_jdbc.username.postgresql>atlas3dev</_jdbc.username.postgresql>
-                <_jdbc.password.postgresql>atlas3dev</_jdbc.password.postgresql>
+                <db.context>dbContext.xml</db.context>
+                <jdbc.url>jdbc:postgresql:gxpatlasloc</jdbc.url>
+                <jdbc.username>atlas3dev</jdbc.username>
+                <jdbc.password>atlas3dev</jdbc.password>
                 <solr.host>localhost</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -573,15 +570,15 @@
         </profile>
 
         <profile>
-            <id>integration.pg</id>
+            <id>integration</id>
             <!-- Embedded tomcat started by mvn in Bamboo plan -->
             <properties>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <db.context>pgContext.xml</db.context>
-                <_jdbc.url.postgresql>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</_jdbc.url.postgresql>
-                <_jdbc.username.postgresql>atlas3it</_jdbc.username.postgresql>
-                <_jdbc.password.postgresql>Ujp2HSSVc3MN</_jdbc.password.postgresql>
+                <db.context>dbContext.xml</db.context>
+                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
+                <jdbc.username>atlas3it</jdbc.username>
+                <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -599,11 +596,11 @@
 
         <profile>
             <!--build used for staging and production -->
-            <id>production.pg</id>
+            <id>production</id>
             <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
-                <db.context>pgContext.xml</db.context>
+                <db.context>dbContext.xml</db.context>
                 <data.files.location>/srv/gxa/data</data.files.location>
             </properties>
             <build>
@@ -625,7 +622,7 @@
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
                 <data.files.location>/srv/gxa/data-sc</data.files.location>
-                <db.context>pgContext.xml</db.context>
+                <db.context>dbContext.xml</db.context>
             </properties>
             <build>
                 <resources>
@@ -642,10 +639,10 @@
 
         <profile>
             <!-- Used for build that is deployed to ves-hx-77 -->
-            <id>test.pg</id>
+            <id>test</id>
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
-                <db.context>pgContext.xml</db.context>
+                <db.context>dbContext.xml</db.context>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
@@ -666,7 +663,7 @@
         <profile>
             <id>performance</id>
             <properties>
-                <db.context>pgContext.xml</db.context>
+                <db.context>dbContext.xml</db.context>
             </properties>
             <build>
                 <plugins>
