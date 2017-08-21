@@ -31,7 +31,6 @@
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>data-files/**</exclude>
-                    <exclude>solr/**</exclude>
                 </excludes>
             </testResource>
         </testResources>

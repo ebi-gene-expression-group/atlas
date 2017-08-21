@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class GoPoTraderIT {
 
     private static final String GO_0000001 = "GO:0000001";

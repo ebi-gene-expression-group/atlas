@@ -2,12 +2,10 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-
 
 public class FactorTest {
 

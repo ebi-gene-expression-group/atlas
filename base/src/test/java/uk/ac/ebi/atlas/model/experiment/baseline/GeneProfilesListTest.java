@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.Lists;
@@ -11,8 +10,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GeneProfilesListTest {

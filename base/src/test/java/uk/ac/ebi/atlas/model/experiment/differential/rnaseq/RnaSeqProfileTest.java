@@ -1,8 +1,6 @@
-
 package uk.ac.ebi.atlas.model.experiment.differential.rnaseq;
 
 import org.junit.Before;
-import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 
 public class RnaSeqProfileTest {
 

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,7 +76,7 @@ public class BaselineExperimentTest {
 
     @Test
     public void testGetExperimentRunAccessions() throws Exception {
-        assertThat(subject.getAnalysedRowsAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
+        assertThat(subject.getAnalysedAssays(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
     }
 
     @Test

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class DataFileHubIT {
 
     @Inject

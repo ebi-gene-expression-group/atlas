@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class ReactomeClientEIT {
 
     @Inject

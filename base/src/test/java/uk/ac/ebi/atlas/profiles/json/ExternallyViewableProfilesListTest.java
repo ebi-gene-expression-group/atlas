@@ -18,10 +18,8 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 
 import javax.annotation.Nullable;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -31,22 +29,7 @@ public class ExternallyViewableProfilesListTest {
 
     @Test
     public void weCanSerializeDataForTheWidget() throws Exception {
-        Function<BaselineExperimentProfile, URI> provideLinkToProfile = new Function<BaselineExperimentProfile, URI>() {
-
-            @Nullable
-            @Override
-            public URI apply(@Nullable BaselineExperimentProfile o) {
-                try {
-                    return new URI("experiments/" +URLEncoder.encode(o.getId(), "UTF-8"));
-                } catch (URISyntaxException | UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-
         String defaultQueryFactorType = "type1";
-
-
 
         BaselineExperimentProfile firstProfile = new BaselineExperimentProfile(BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_1"),
                         new FactorSet());
@@ -148,9 +131,6 @@ public class ExternallyViewableProfilesListTest {
 
 
         List<Contrast> factorsAcrossExperiments = ImmutableList.of(g1_g2, g1_g3);
-
-
-        DifferentialExperiment experiment = DifferentialExperimentTest.mockExperiment("accession", factorsAcrossExperiments);
 
         RnaSeqProfile p1 = new RnaSeqProfile("gene_1_id", "gene_1_name");
         p1.add(g1_g2, new DifferentialExpression(1000, 10));

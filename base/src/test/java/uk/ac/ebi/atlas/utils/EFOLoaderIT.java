@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class EFOLoaderIT {
 
     private Map<String, EFONode> efoMap;

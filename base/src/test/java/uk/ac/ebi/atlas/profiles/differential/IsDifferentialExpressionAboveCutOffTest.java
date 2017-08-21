@@ -1,12 +1,9 @@
-
 package uk.ac.ebi.atlas.profiles.differential;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
@@ -16,9 +13,7 @@ import static org.hamcrest.Matchers.is;
 @RunWith(MockitoJUnitRunner.class)
 public class IsDifferentialExpressionAboveCutOffTest {
 
-    IsDifferentialExpressionAboveCutOff subject;
-
-    Contrast contrastMock = ContrastTest.get(1).iterator().next();
+    IsDifferentialExpressionAboveCutOff<DifferentialExpression> subject;
 
     DifferentialExpression expression1 = new DifferentialExpression(0.05, 40.0);
 
@@ -26,7 +21,7 @@ public class IsDifferentialExpressionAboveCutOffTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new IsDifferentialExpressionAboveCutOff();
+        subject = new IsDifferentialExpressionAboveCutOff<>();
         subject.setPValueCutoff(0.1);
         subject.setRegulation(Regulation.UP_DOWN);
     }

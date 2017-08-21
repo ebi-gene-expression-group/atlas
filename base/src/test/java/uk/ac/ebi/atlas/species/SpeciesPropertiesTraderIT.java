@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class SpeciesPropertiesTraderIT {
 
     @Inject

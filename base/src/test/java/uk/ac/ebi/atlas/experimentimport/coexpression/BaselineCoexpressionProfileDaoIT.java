@@ -24,7 +24,7 @@ import static org.junit.Assert.assertThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class BaselineCoexpressionProfileDaoIT {
 
     private static String EXPERIMENT_ACCESSION = "E-FOOBAR";

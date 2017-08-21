@@ -23,14 +23,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
-The displayName is a bit confusing - it's used for baseline landing page and I think only there.
-There's also a title which is fetched from ArrayExpress or (as fallback) from the IDF file.
-
- */
+ * The displayName is a bit confusing - it's used for baseline landing page and I think only there.
+ * There's also a title which is fetched from ArrayExpress or (as fallback) from the IDF file.
+*/
 public abstract class Experiment<DataColumnDescriptor extends DescribesDataColumns> implements Serializable {
 
     private ExperimentType type;
@@ -139,14 +137,12 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return result;
     }
 
-    //this doesn't quite match our model and only used to be used in experiment design
-    @Deprecated //remove me soon!
-    public Set<String> getAnalysedRowsAccessions(){
-        ImmutableSet.Builder<String> b = ImmutableSet.builder();
-        for(DataColumnDescriptor dataColumnDescriptor: getDataColumnDescriptors()){
-            b.addAll(dataColumnDescriptor.assaysAnalyzedForThisDataColumn());
-        }
-        return b.build();
+    public ImmutableSet<String> getAnalysedAssays() {
+        return ImmutableSet.copyOf(
+                getDataColumnDescriptors().stream()
+                        .flatMap(dataColumnDescriptor ->
+                                    dataColumnDescriptor.assaysAnalyzedForThisDataColumn().stream())
+                        .collect(Collectors.toSet()));
     }
 
     public HashMap<String, Object> getAttributes(){
@@ -189,7 +185,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         experimentInfo.setKingdom(species.getKingdom());
         experimentInfo.setExperimentType(type.getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
-        experimentInfo.setNumberOfAssays(getAnalysedRowsAccessions().size());
+        experimentInfo.setNumberOfAssays(getAnalysedAssays().size());
         return experimentInfo;
     }
 

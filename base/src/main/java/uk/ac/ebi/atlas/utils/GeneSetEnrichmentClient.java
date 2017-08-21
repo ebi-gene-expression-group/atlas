@@ -36,7 +36,49 @@ public class GeneSetEnrichmentClient {
         this.restTemplate = restTemplate;
     }
 
-    List<String[]> fetchResponse(Species species, Collection<String> bioentityIdentifiers) {
+    public Pair<Optional<String>, Optional<JsonArray>> fetchEnrichedGenes(Species species,
+                                                                          Collection<String> bioentityIdentifiers) {
+        try {
+            Optional<String> maybeError = validateInput(species, bioentityIdentifiers);
+            return maybeError.isPresent() ?
+                    Pair.of(maybeError, Optional.empty()) :
+                    formatResponse(fetchResponse(species, bioentityIdentifiers));
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return Pair.of(Optional.of("Exception occurred:\n" + e.getMessage()), Optional.empty());
+        }
+    }
+
+    public static boolean isSuccess(Pair<Optional<String>, Optional<JsonArray>> result) {
+        return !result.getLeft().isPresent();
+    }
+
+    //either error message or result
+    public Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
+        if(lines.isEmpty()) {
+            return Pair.of(Optional.of("Result empty!"),
+                    Optional.empty());
+        }
+        else if (lines.size() == 1){
+            return Pair.of(Optional.of("Error: "+Joiner.on("\t").join(lines.get(0))),
+                    Optional.empty());
+        }
+        else if(!Arrays.deepEquals(expectedHeader, lines.get(0))){
+            return Pair.of(Optional.of("Header not as expected: " + Joiner.on("\t").join(lines.get(0))),
+                    Optional.empty());
+        }
+        else if(! linesHaveCorrectDimensions(lines)){
+            return Pair.of(Optional.of("Data malformed, expected a matrix" ),
+                    Optional.empty());
+        }
+        else {
+            return Pair.of(Optional.empty(),
+                    Optional.of(formatLines(lines.subList(1, lines.size()))));
+        }
+    }
+
+    private List<String[]> fetchResponse(Species species, Collection<String> bioentityIdentifiers) {
         return new TsvReaderImpl(
                 new StringReader(
                         restTemplate.getForObject(
@@ -54,31 +96,8 @@ public class GeneSetEnrichmentClient {
         }
         return true;
     }
-    //either error message or result
-    Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
-        if(lines.isEmpty()) {
-            return Pair.of(Optional.of("Result empty!"),
-                    Optional.<JsonArray>empty());
-        }
-        else if (lines.size() == 1){
-            return Pair.of(Optional.of("Error: "+Joiner.on("\t").join(lines.get(0))),
-                    Optional.<JsonArray>empty());
-        }
-        else if(!Arrays.deepEquals(expectedHeader, lines.get(0))){
-            return Pair.of(Optional.of("Header not as expected: "+Joiner.on("\t").join(lines.get(0))),
-                    Optional.<JsonArray>empty());
-        }
-        else if(! linesHaveCorrectDimensions(lines)){
-            return Pair.of(Optional.of("Data malformed, expected a matrix" ),
-                    Optional.<JsonArray>empty());
-        }
-        else {
-            return Pair.of(Optional.<String>empty(),
-                    Optional.of(formatLines(lines.subList(1, lines.size()))));
-        }
-    }
 
-    JsonArray formatLines(List<String[]> lines) {
+    private JsonArray formatLines(List<String[]> lines) {
         JsonArray result = new JsonArray();
         for (String [] line : lines) {
             result.add(formatLine(line));
@@ -87,7 +106,7 @@ public class GeneSetEnrichmentClient {
     }
 
     //This is the format required by the data tables UI
-    JsonObject formatLine(String[] line) {
+    private JsonObject formatLine(String[] line) {
         JsonObject result = new JsonObject();
 
         result.addProperty("experiment_accession", line[0]);
@@ -105,7 +124,7 @@ public class GeneSetEnrichmentClient {
     }
 
     //Effect size is observed/expected, and R says 1/0 is Inf
-    Double parseOrNaN(String s){
+    private Double parseOrNaN(String s){
         try {
             return Double.parseDouble(s);
         } catch (NumberFormatException e){
@@ -113,7 +132,7 @@ public class GeneSetEnrichmentClient {
         }
     }
 
-    Optional<String> validateInput(Species species, Collection<String> bioentityIdentifiers) {
+    private Optional<String> validateInput(Species species, Collection<String> bioentityIdentifiers) {
         Set<String> errors = new HashSet<>();
         if (species.isUnknown()) {
             errors.add("Unknown species: " + species.getName());
@@ -122,25 +141,7 @@ public class GeneSetEnrichmentClient {
             errors.add("Please use at least 10 gene identifiers, was: " + bioentityIdentifiers.size());
         }
 
-        return errors.isEmpty() ? Optional.<String>empty() : Optional.of(Joiner.on("\n").join(errors));
-    }
-
-    public Pair<Optional<String>, Optional<JsonArray>> fetchEnrichedGenes(Species species,
-                                                                          Collection<String> bioentityIdentifiers) {
-        try {
-            Optional<String> maybeError = validateInput(species,bioentityIdentifiers);
-            return maybeError.isPresent()?
-                    Pair.of(maybeError, Optional.<JsonArray>empty()) :
-                    formatResponse(fetchResponse(species, bioentityIdentifiers));
-
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            return Pair.of(Optional.of("Exception occurred: \n" + e.getMessage()), Optional.<JsonArray>empty());
-        }
-    }
-
-    public static boolean isSuccess(Pair<Optional<String>, Optional<JsonArray>> result) {
-        return !result.getLeft().isPresent();
+        return errors.isEmpty() ? Optional.empty() : Optional.of(Joiner.on("\n").join(errors));
     }
 
 }

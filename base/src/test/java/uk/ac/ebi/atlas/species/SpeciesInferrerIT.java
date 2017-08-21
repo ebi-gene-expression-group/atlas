@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class SpeciesInferrerIT {
 
     static final String HOMO_SAPIENS = "homo sapiens";

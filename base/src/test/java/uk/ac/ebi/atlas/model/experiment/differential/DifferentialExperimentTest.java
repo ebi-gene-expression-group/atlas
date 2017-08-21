@@ -73,7 +73,7 @@ public class DifferentialExperimentTest {
 
     @Test
     public void testGetAssayAccessions() throws Exception {
-        assertThat(subject.getAnalysedRowsAccessions(), hasItems("assay1", "assay2", "assay3","assay41", "assay42"));
+        assertThat(subject.getAnalysedAssays(), hasItems("assay1", "assay2", "assay3","assay41", "assay42"));
     }
 
     @Test

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr;
 
 import org.apache.solr.client.solrj.impl.HttpSolrClient;

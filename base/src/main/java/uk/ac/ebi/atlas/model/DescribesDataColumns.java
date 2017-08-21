@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.model;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public abstract class DescribesDataColumns {
     protected final String id;
 
     public DescribesDataColumns(String id){
-        checkArgument(StringUtils.isNotBlank(id));
+        checkArgument(isNotBlank(id));
         this.id = id;
     }
 
@@ -18,7 +17,5 @@ public abstract class DescribesDataColumns {
         return id;
     }
 
-
     public abstract Set<String> assaysAnalyzedForThisDataColumn();
-
 }

@@ -11,11 +11,9 @@ import javax.inject.Inject;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml","/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class ConfigurationTraderIT {
-
     @Inject
     ConfigurationTrader subject;
 

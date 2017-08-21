@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml","/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class BioentitiesIndexerIT {
 
     @Inject

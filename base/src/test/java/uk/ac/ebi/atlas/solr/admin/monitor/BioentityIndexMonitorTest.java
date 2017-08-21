@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.monitor;
 
 import org.junit.Before;

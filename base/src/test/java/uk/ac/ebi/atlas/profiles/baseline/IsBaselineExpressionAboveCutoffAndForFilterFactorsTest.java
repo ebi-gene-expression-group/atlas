@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import org.junit.Before;

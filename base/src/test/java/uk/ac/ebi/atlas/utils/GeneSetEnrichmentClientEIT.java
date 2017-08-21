@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
+@ContextConfiguration("classpath:applicationContext.xml")
 public class GeneSetEnrichmentClientEIT {
 
     @Inject
