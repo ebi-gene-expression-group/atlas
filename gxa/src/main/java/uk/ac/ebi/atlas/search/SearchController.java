@@ -130,7 +130,7 @@ public class SearchController extends HtmlExceptionHandlingController {
 
             model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-            return "foundation-bioentities-search-results";
+            return "search-results";
         }
     }
 

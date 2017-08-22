@@ -4,9 +4,12 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experiments.LatestExperimentsDao;
 import uk.ac.ebi.atlas.experiments.LatestExperimentsService;
@@ -21,7 +24,10 @@ import javax.inject.Inject;
 import java.util.Random;
 
 @Controller
-public class HomeController extends HtmlExceptionHandlingController {
+public class HomeController {
+
+    @Autowired
+    protected Environment env;
 
     private static final int FEATURED_SPECIES = 6;
     private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
@@ -54,7 +60,7 @@ public class HomeController extends HtmlExceptionHandlingController {
         ));
     }
 
-    @RequestMapping(value = "/home")
+    @RequestMapping(value = "/home", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getHome(Model model) {
         ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
         for (PopularSpeciesInfo popularSpeciesInfo: popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)) {
@@ -83,7 +89,7 @@ public class HomeController extends HtmlExceptionHandlingController {
 
         model.addAttribute("organismPath", ""); // Required by Spring form tag
 
-        return "foundation-home";
+        return "home";
     }
 
 }

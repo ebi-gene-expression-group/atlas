@@ -27,7 +27,7 @@ public class StaticPageController {
                                 @PathVariable String pageName) throws IOException {
         String path = String.format("/resources/html/%s.html", pageName);
         request.setAttribute("contentResource", fetchResource(path));
-        return "foundation-static";
+        return "static";
     }
 
     @RequestMapping("/help/{pageName}.html")
@@ -35,7 +35,7 @@ public class StaticPageController {
                               @PathVariable String pageName) throws IOException {
         String path = String.format("/resources/html/help/%s.html", pageName);
         request.setAttribute("contentResource", fetchResource(path));
-        return "foundation-static";
+        return "static";
     }
 
     @RequestMapping("/{pageName}.hhhh")

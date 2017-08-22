@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
@@ -22,11 +24,12 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
-
+// Ideally this shouldn’t be scoped to request, but that means that on application startup all experiments are going to
+// be cached making startup times way slower than necessary. In production, experiments are already cached; the added
+// cost of scoping the bean instead of just being a singleton isn’t noticeable.
 @Controller
-// if we make it singleton it gets initialized during deployment, that means deployment becomes slow
 @Scope("request")
-public class PlantExperimentsController {
+public class PlantExperimentsController extends HtmlExceptionHandlingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlantExperimentsController.class);
 
     private ExpressionAtlasExperimentTrader experimentTrader;
@@ -44,7 +47,7 @@ public class PlantExperimentsController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping("/plant/experiments")
+    @RequestMapping(value = "/plant/experiments", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getPlantExperimentsPage(Model model) {
 
         loadExperimentAccessionsBySpecies();
@@ -57,7 +60,7 @@ public class PlantExperimentsController {
 
         model.addAttribute("mainTitle", "Plant experiments ");
 
-        return "foundation-plants-experiments";
+        return "plants-landing-page";
     }
 
     @PostConstruct
@@ -68,13 +71,13 @@ public class PlantExperimentsController {
 
         Comparator<String> keyComparator = String::compareTo;
         // experiments should be sorted by their display name, not accession
-        Comparator<String> valueComparator = (o1, o2) -> experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
+        Comparator<String> valueComparator = Comparator.comparing(o -> experimentDisplayNames.get(o));
         baselineExperimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
             try {
                 Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-                int numberOfAssays = experiment.getAnalysedRowsAccessions().size();
+                int numberOfAssays = experiment.getAnalysedAssays().size();
 
                 experimentDisplayNames.put(experimentAccession, experiment.getDisplayName() + " (" + numberOfAssays + " assays)");
 

@@ -1,12 +1,16 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.collect.FluentIterable;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
@@ -21,8 +25,8 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
@@ -38,7 +42,9 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         this.dataFileHub = dataFileHub;
     }
 
-    @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"})
+    @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
+                    method = RequestMethod.GET,
+                    produces = "text/html;charset=UTF-8")
     public String showExperimentPage(Model model,
                                      @PathVariable String experimentAccession,
                                      @RequestParam(defaultValue = "") String accessKey) {
@@ -49,7 +55,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
         model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 
-        return "foundation-experiment-page";
+        return "experiment-page";
     }
 
     private JsonObject experimentPageContentForExperiment(final Experiment experiment, final String accessKey){
@@ -127,13 +133,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
             supplementaryInformationTabs.add(customContentTab("qc-report", "QC Report",
                     "reports",
                     pairsToArrayOfObjects("name", "url",
-                            FluentIterable.from(new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
-                                    .getArrayDesignsThatHaveQcReports())
-                            .transform(arrayDesign -> Pair.of(
-                                    "QC for array design " +arrayDesign,
+                            new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
+                                    .getArrayDesignsThatHaveQcReports().stream().map(arrayDesign -> Pair.of(
+                                    "QC for array design " + arrayDesign,
                                     QCReportController.getQcReportUrl(experiment.getAccession(), arrayDesign, accessKey
                                     )
-                            )).toList()
+                            )).collect(Collectors.toList())
                     )
             ));
         }

@@ -3,11 +3,11 @@ package uk.ac.ebi.atlas.bioentity;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.bioentity.geneset.GeneSetPropertyService;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
@@ -20,7 +20,6 @@ import java.util.Map;
 import static uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil.matchesReactomeID;
 
 @Controller
-@Scope("request")
 public class GeneSetPageController extends BioentityPageController {
 
     private GeneSetPropertyService geneSetPropertyService;
@@ -30,7 +29,9 @@ public class GeneSetPageController extends BioentityPageController {
         this.geneSetPropertyService = geneSetPropertyService;
     }
 
-    @RequestMapping(value = "/genesets/{identifier:.*}", produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/genesets/{identifier:.*}",
+                    method = RequestMethod.GET,
+                    produces = "text/html;charset=UTF-8")
     public String showGeneSetPage(@PathVariable String identifier,
                                   @RequestParam(value = "organism", required = false) String speciesReferenceName,
                                   Model model) {

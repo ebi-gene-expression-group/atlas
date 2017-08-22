@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -67,17 +68,17 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
     }
 
 
-    @RequestMapping(value = REDIRECT_URL_TEMPLATE,
-                    method = {RequestMethod.GET, RequestMethod.HEAD})
-    public String redirectToGenomeBrowser(@RequestParam String name,
-                                          @RequestParam String experimentAccession,
+    @RequestMapping(value = REDIRECT_URL_TEMPLATE, method = {RequestMethod.GET, RequestMethod.HEAD})
+    public String redirectToGenomeBrowser(@PathVariable String experimentAccession,
+                                          @RequestParam String name,
                                           @RequestParam String geneId,
                                           @RequestParam(required = false, defaultValue = "") String trackId,
                                           @RequestParam(required = false, defaultValue = "") String accessKey,
                                           HttpServletRequest request)
             throws IOException {
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment<? extends DescribesDataColumns> experiment =
+                experimentTrader.getExperiment(experimentAccession, accessKey);
 
         String genomeBrowserUrl = null;
         ImmutableCollection<ImmutableMap<String, String>> genomeBrowsers = experiment.getGenomeBrowsers();

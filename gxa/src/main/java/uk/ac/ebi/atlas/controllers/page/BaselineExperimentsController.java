@@ -4,9 +4,12 @@ import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
@@ -15,8 +18,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+// Ideally this shouldn’t be scoped to request, but that means that on application startup all experiments are going to
+// be cached making startup times way slower than necessary. In production, experiments are already cached; the added
+// cost of scoping the bean instead of just being a singleton isn’t noticeable.
 @Controller
-public class BaselineExperimentsController {
+@Scope("request")
+public class BaselineExperimentsController extends HtmlExceptionHandlingController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentsController.class);
 
@@ -27,7 +34,7 @@ public class BaselineExperimentsController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping("/baseline/experiments")
+    @RequestMapping(value = "/baseline/experiments", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getBaselineExperimentsPage(Model model) {
 
         Map<String, String> experimentDisplayNames = new HashMap<>();
@@ -37,18 +44,18 @@ public class BaselineExperimentsController {
             try {
                 displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
             } catch (RuntimeException e) {
-                // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
+                // we don't want the entire application to crash just because one condensedSdrf file may be offline
+                // because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
                 displayName = experimentAccession;
             }
 
-            int numberOfAssays = ((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getAnalysedRowsAccessions().size();
+            int numberOfAssays = experimentTrader.getPublicExperiment(experimentAccession).getAnalysedAssays().size();
 
             experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
         }
 
         Comparator<String> keyComparator = (o1, o2) -> {
-            // Services review: Alvis' edict for Homo sapiens experiments to always come up on top of baseline landing page
             if (o1.equals("Homo sapiens") && !o2.equals("Homo sapiens"))
                 return -1;
             else if (o2.equals("Homo sapiens") && !o1.equals("Homo sapiens"))
@@ -67,18 +74,21 @@ public class BaselineExperimentsController {
             else
                 return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
         };
-        SortedSetMultimap<String, String> experimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
+        SortedSetMultimap<String, String> experimentAccessionsBySpecies =
+                TreeMultimap.create(keyComparator, valueComparator);
 
         Map<String, String> experimentLinks = new HashMap<>();
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
 
             try {
-                BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+                BaselineExperiment experiment =
+                        (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
                 experimentAccessionsBySpecies.put(experiment.getSpecies().getName(), experimentAccession);
                 experimentLinks.put(experimentAccession + experiment.getSpecies().getName(), "");
             } catch (RuntimeException e) {
-                // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
+                // we don't want the entire application to crash just because one condensedSdrf file may be offline
+                // because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
 
@@ -90,7 +100,7 @@ public class BaselineExperimentsController {
 
         model.addAttribute("mainTitle", "Baseline expression experiments ");
 
-        return "foundation-baseline-experiments";
+        return "baseline-landing-page";
     }
 
 }

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.qc;
 
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,17 +10,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.text.MessageFormat;
 
 @Controller
 public class QCReportController {
 
-    private static final String QC_REPORT_URL = "/experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
+    private static final String QC_REPORT_URL = "experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
     public static String getQcReportUrl(String experimentAccession, String arrayDesign, String accessKey) {
         return QC_REPORT_URL.replace("{experimentAccession}", experimentAccession)
@@ -30,32 +27,18 @@ public class QCReportController {
                 + (org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey=" + accessKey : "");
     }
 
-
     private ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
 
     @Inject
-    public QCReportController(ExperimentTrader experimentTrader,
-                              DataFileHub dataFileHub) {
+    public QCReportController(ExperimentTrader experimentTrader, DataFileHub dataFileHub) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
     }
 
-
-    /**
-     * @param request
-     * @param model
-     * @param experimentAccession
-     * @param arrayDesign
-     * @param resource
-     * @param ra                  RedirectAttributes is needed for redirection without parameters being added to the url
-     *                            DO NOT REMOVE IT
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping(value = QC_REPORT_URL,
-            method = RequestMethod.GET)
-    public String getQCPage(HttpServletRequest request, Model model,
+    // RedirectAttributes is needed for redirection without parameters being added to the url
+    @RequestMapping(value = QC_REPORT_URL, method = RequestMethod.GET)
+    public String getQCPage(HttpServletRequest request,
                             @PathVariable final String experimentAccession,
                             @PathVariable final String arrayDesign,
                             @PathVariable String resource,
