@@ -1,6 +1,8 @@
-var pubmedMinedBioentitiesModule = (function($, europepmcUrl) {
-    "use strict";
+"use strict";
 
+var pubmedMinedBioentitiesModule = (function($) {
+    var europepmcUrl =
+      "https://www.ebi.ac.uk/europepmc/webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
     var ids = [];
 
     function fetchPubmedMinedBioentities(pubmedId, callback) {
@@ -15,8 +17,7 @@ var pubmedMinedBioentitiesModule = (function($, europepmcUrl) {
             success: parseEuropePMCJSONResponse
         }).done(function() {
             callback(null, ids);
-        })
-            .fail(function(jqHXR) {
+        }).fail(function(jqHXR) {
                 callback(jqHXR.statusText);
             });
     }
@@ -35,4 +36,4 @@ var pubmedMinedBioentitiesModule = (function($, europepmcUrl) {
         fetchPubmedMinedBioentities: fetchPubmedMinedBioentities
     };
 
-} (jQuery, europepmcUrl));
+} (jQuery));
