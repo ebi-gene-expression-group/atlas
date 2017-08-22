@@ -31,6 +31,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Scope("request")
 public class GeneSetEnrichmentController extends HtmlExceptionHandlingController {
 
+    private final Gson gson = new Gson();
     private final ExperimentMetadataEnrichmentService experimentMetadataEnrichmentService;
     private final GeneSetEnrichmentClient geneSetEnrichmentClient;
     private final SpeciesFactory speciesFactory;
@@ -47,7 +48,8 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
         this.speciesLookupService = speciesLookupService;
     }
 
-    @RequestMapping(value = "/genesetenrichment", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+
+    @RequestMapping(value = "/genesetenrichment", method = RequestMethod.GET)
     public String getExperimentsListParameters(@RequestParam(defaultValue = "") String query, Model model) {
         List<String> bioentityIdentifiers = Arrays.asList(query.split("\\W+"));
         checkArgument(
@@ -67,8 +69,6 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
             model.addAttribute("species", StringUtils.capitalizeFirstLetter(species.getReferenceName()));
             model.addAttribute("queryShort", Joiner.on(" ").join(Arrays.asList(query.split("\\W+")).subList(0,3)));
             model.addAttribute("query", query);
-
-            Gson gson = new Gson();
             model.addAttribute(
                     "data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
             return "gene-set-enrichment-results";
