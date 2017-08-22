@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +12,6 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 
 @Named
-@Scope("prototype")
 public class ReactomeClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactomeClient.class);
