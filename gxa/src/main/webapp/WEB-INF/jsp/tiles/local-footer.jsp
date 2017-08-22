@@ -1,5 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <footer id="local-footer" class="local-footer row expanded">
     <div class="small-12 small-centered medium-8 large-6 columns">
         <div class="row small-up-1 medium-up-3">

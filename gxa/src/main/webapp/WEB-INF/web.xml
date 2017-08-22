@@ -6,14 +6,28 @@
          version="3.0">
 
     <context-param>
-        <param-name>log4jConfiguration</param-name>
-        <param-value>classpath:log4j2.xml</param-value>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml classpath:solrContext.xml classpath:dbContext.xml</param-value>
-    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>-->
+    <!--</listener>-->
+
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
@@ -59,30 +73,6 @@
         <url-pattern>/search/differential/json</url-pattern>
     </filter-mapping>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>
-
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-
-    <!-- Spring MVC Services Servlet -->
-    <servlet>
-        <servlet-name>services</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>services</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Admin</web-resource-name>
@@ -121,5 +111,9 @@
     <session-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
 </web-app>
