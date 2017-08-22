@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="home" extends="base">
+        <put-attribute name="title" value="Home &lt; "/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/tiles/views/home.jsp">
+                <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/views/home/hero.jsp"/>
+                <put-attribute name="home-search" value="/WEB-INF/jsp/tiles/views/home/search.jsp"/>
+                <put-attribute name="browse-by-box" value="/WEB-INF/jsp/tiles/views/home/browse-by.jsp"/>
+                <put-attribute name="experiment-list-latest-box" value="/WEB-INF/jsp/tiles/views/home/experiment-list-latest.jsp"/>
+                <put-attribute name="tools-box" value="/WEB-INF/jsp/tiles/views/home/tools.jsp"/>
+                <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/views/home/publications.jsp"/>
+                <put-attribute name="news" value="/WEB-INF/jsp/tiles/views/home/twitter-timeline.jsp"/>
+            </definition>
+        </put-attribute>
+    </definition>
+
+    <definition name="experiments" extends="base">
+        <put-attribute name="title" value="Experiments &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/experiments.jsp"/>
+    </definition>
+
+    <definition name="baseline-landing-page" extends="base">
+        <put-attribute name="title" value="Baseline experiments &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/baseline-landing-page.jsp"/>
+    </definition>
+
+    <definition name="plants-landing-page" extends="base">
+        <put-attribute name="title" value="Plant experiments &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/plants-landing-page.jsp"/>
+    </definition>
+
+    <definition name="experiment-page" extends="base">
+        <put-attribute name="title" value="Experiment &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/experiment-page.jsp"/>
+    </definition>
+
+    <definition name="qc-template" template="/WEB-INF/jsp/tiles/views/experiment-page-qc-template.jsp">
+    </definition>
+
+    <definition name="static" extends="base">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/static-page.jsp"/>
+    </definition>
+
+    <definition name="request-diagnostics" extends="base">
+        <put-attribute name="title" value="Search results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/request-diagnostics.jsp"/>
+    </definition>
+
+    <definition name="search-results" extends="base">
+        <put-attribute name="title" value="Search results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/search-results.jsp"/>
+    </definition>
+
+    <definition name="das-features" template="/WEB-INF/jsp/tiles/views/das-features.jsp">
+    </definition>
+
+    <definition name="gene-set-enrichment-results" extends="base">
+        <put-attribute name="title" value="Gene set enrichment results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/gene-set-enrichment-results.jsp"/>
+    </definition>
+
+    <!--Error pages-->
+    <definition name="error-page" extends="base">
+        <put-attribute name="title" value="Error &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/errors/generic-error.jsp"/>
+    </definition>
+
+    <!--Not technically an error, but it seems the best place to put it-->
+    <definition name="no-results" extends="base">
+        <put-attribute name="title" value="No results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/errors/no-results.jsp"/>
+    </definition>
+
+</tiles-definitions>
