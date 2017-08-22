@@ -18,12 +18,10 @@ import java.util.regex.Pattern;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class BaselineExperimentAssayGroupsLinesIT {
-
 
     private BaselineExperimentAssayGroupsLines subject;
 
@@ -65,6 +63,7 @@ public class BaselineExperimentAssayGroupsLinesIT {
 
         }
     }
+
     @Test
     public void testSomeProteomicsExperiments() throws Exception{
         for(String accession : experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)){

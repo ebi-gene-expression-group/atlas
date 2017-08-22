@@ -2,34 +2,26 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 
 public class DiffAnalyticsDAOTest {
-
 
     @Mock
     JdbcTemplate jdbcTemplate;
 
-
     @Mock
     DiffAnalyticsRowMapper dbeRowMapper;
-
 
     DiffAnalyticsDao subject;
 
     @Before
-            public void setUp(){
+    public void setUp(){
         MockitoAnnotations.initMocks(this);
         this.subject = new DiffAnalyticsDao(jdbcTemplate,dbeRowMapper);
     }

@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class AtlasResourceHubEIT {
 
     @Inject
@@ -30,7 +30,6 @@ public class AtlasResourceHubEIT {
     @Inject
     ExpressionAtlasExperimentTrader experimentTrader;
 
-
     @Test
     public void rnaSeqExperiments(){
         for(String accession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()){
@@ -38,7 +37,6 @@ public class AtlasResourceHubEIT {
 
             assertAboutResult(subject.contrastImages(differentialExperiment));
         }
-
     }
 
     @Test
@@ -48,10 +46,9 @@ public class AtlasResourceHubEIT {
 
             assertAboutResult(subject.contrastImages(differentialExperiment));
         }
-
     }
 
-    void assertAboutResult(Map<String,JsonArray> result){
+    private void assertAboutResult(Map<String,JsonArray> result){
         for(Map.Entry<String, JsonArray> entryPerContrast: result.entrySet()){
             for(JsonElement e: entryPerContrast.getValue()){
                 testResourceExists(e.getAsJsonObject().get("uri").getAsString());
@@ -59,16 +56,9 @@ public class AtlasResourceHubEIT {
         }
     }
 
-
-    void testResourceExists(String resourceURI) {
-
+    private void testResourceExists(String resourceURI) {
        Response response =  new EndPoint("/gxa/" + resourceURI).getResponse();
-
-
-        assertThat(response.getStatusCode(), is(200));
-
-
+       assertThat(response.getStatusCode(), is(200));
     }
-
 
 }

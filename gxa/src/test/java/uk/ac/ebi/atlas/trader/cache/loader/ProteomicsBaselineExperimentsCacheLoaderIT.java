@@ -23,7 +23,6 @@ import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -38,7 +37,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class ProteomicsBaselineExperimentsCacheLoaderIT {
 
     private static final String E_PROT_1 = "E-PROT-1";
@@ -91,7 +90,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     public void experimentShouldOnlyContainRunsFromDataFile() throws Exception {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
-        assertThat(experiment.getAnalysedRowsAccessions(), containsInAnyOrder(
+        assertThat(experiment.getAnalysedAssays(), containsInAnyOrder(
                 "Adult_Adrenalgland", "Adult_Bcells", "Adult_CD4Tcells", "Adult_CD8Tcells",
                 "Adult_Colon", "Adult_Esophagus", "Adult_Frontalcortex", "Adult_Gallbladder",
                 "Adult_Heart", "Adult_Kidney", "Adult_Liver", "Adult_Lung",

@@ -1,46 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.2.xsd
            http://www.springframework.org/schema/util
-           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+           http://www.springframework.org/schema/util/spring-util-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- enables annotation-based dependency injection -->
-    <context:annotation-config/>
+    <!-- PostgreSQL configuration -->
+    <!-- If jdbc.properties isn’t found, inject variables from the profile -->
+    <context:property-placeholder location="classpath:jdbc.properties" ignore-resource-not-found="true"/>
 
-    <!-- Scans within the base package of the application for @Components to configure as beans -->
-    <context:component-scan base-package="uk.ac.ebi.atlas"/>
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="poolName" value="gxaHikari" />
+        <property name="connectionTestQuery" value="SELECT 1" />
+        <property name="dataSourceClassName" value="org.postgresql.ds.PGSimpleDataSource" />
+        <!--<property name="maximumPoolSize" value="10" />-->
+        <!--<property name="idleTimeout" value="600000" />-->
 
-    <util:properties id="configuration" location="classpath:configuration.properties"/>
-
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-        <constructor-arg>
-            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
-                  p:readTimeout="120000"
-                  p:connectTimeout="120000" />
-        </constructor-arg>
-    </bean>
-
-    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-        <property name="customEditors">
-            <map>
-                <entry key="uk.ac.ebi.atlas.search.SemanticQuery" value="uk.ac.ebi.atlas.search.SemanticQueryPropertyEditor" />
-            </map>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="url">${jdbc.url}</prop>
+                <prop key="user">${jdbc.username}</prop>
+                <prop key="password">${jdbc.password}</prop>
+            </props>
         </property>
     </bean>
 
-    <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig" factory-method="custom"/>
-    <bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build" />
-    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" destroy-method="shutdown"/>
-    <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
-        <property name="defaultRequestConfig" ref="requestConfig" />
-        <property name="connectionManager" ref="httpClientConnectionManager"/>
+    <!-- HikariCP configuration -->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig" />
     </bean>
-    <bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build" />
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <!-- Enables @Transactional -->
+    <tx:annotation-driven/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- End of PostgreSQL configuration -->
+
+    <!-- Solr configuration -->
+    <bean id="solrClientBioentities" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
+        <constructor-arg value="http://${solr.host}:8983/solr/bioentities"/>
+    </bean>
+
+    <bean id="solrClientAnalytics" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
+        <constructor-arg value="http://${solr.host}:8983/solr/analytics"/>
+    </bean>
+
+    <bean id="solrAnalyticsServerURL" class="java.lang.String">
+        <constructor-arg value="http://${solr.host}:8983/solr/analytics/"/>
+    </bean>
+    <!-- End of Solr configuration -->
+
+    <util:properties id="configuration" location="classpath:configuration.properties"/>
+
 </beans>

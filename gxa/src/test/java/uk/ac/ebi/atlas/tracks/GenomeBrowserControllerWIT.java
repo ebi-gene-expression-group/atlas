@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class GenomeBrowserControllerWIT {
     static final String URL_TEMPLATE = "/external-services/genome-browser/%s?experimentAccession=%s&geneId=%s&trackId=%s";
 
@@ -34,9 +34,6 @@ public class GenomeBrowserControllerWIT {
     WebApplicationContext wac;
 
     MockMvc mockMvc;
-
-    @Inject
-    ExpressionAtlasExperimentTrader experimentTrader;
 
     @Before
     public void setUp() {

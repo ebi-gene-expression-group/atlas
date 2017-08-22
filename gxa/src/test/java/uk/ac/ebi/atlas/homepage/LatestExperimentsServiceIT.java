@@ -26,7 +26,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration({"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class LatestExperimentsServiceIT {
 
     static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");

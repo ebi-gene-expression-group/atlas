@@ -31,4 +31,5 @@ public class ExperimentsCacheTest {
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new FileNotFoundException()));
         subject.getExperiment("");
     }
+
 }

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.interceptors;
 
 import org.junit.Before;

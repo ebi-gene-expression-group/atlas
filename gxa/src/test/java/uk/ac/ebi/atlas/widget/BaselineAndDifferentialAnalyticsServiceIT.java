@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixture {
 
     static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();

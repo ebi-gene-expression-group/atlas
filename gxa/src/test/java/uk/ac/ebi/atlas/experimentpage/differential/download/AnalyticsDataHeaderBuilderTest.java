@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import org.junit.Before;

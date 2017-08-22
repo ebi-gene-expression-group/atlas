@@ -20,10 +20,9 @@ import java.util.Map;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class GenePageControllerIT {
 
     @Inject
@@ -31,16 +30,13 @@ public class GenePageControllerIT {
 
     @Test
     public void bioentityProperties() throws Exception {
-
-
         bioentityProperties("ENSG00000005801", 8, true); //zinc finger
         bioentityProperties("ENSMUSG00000006386", 5, true);
         bioentityProperties("Sb01g008360");
-
     }
 
     private void bioentityProperties(String bioentityIdentifier){
-        bioentityProperties(bioentityIdentifier,3, false);
+        bioentityProperties(bioentityIdentifier, 3, false);
     }
 
     private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms){

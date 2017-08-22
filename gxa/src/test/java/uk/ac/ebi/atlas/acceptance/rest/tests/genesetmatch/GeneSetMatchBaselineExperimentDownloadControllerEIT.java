@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.acceptance.rest.tests.genesetmatch;
-
 
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Ignore;

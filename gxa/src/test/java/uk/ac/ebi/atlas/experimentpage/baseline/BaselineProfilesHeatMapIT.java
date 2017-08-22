@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class BaselineProfilesHeatMapIT {
 
     static final ImmutableSet<String> EXPERIMENTS_ACCESSIONS_WITH_NO_PROTEIN_CODING_RESULTS =

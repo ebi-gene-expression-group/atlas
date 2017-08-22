@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.acceptance.utils;
 
 import com.google.common.base.Strings;

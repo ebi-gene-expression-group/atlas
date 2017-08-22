@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
@@ -44,4 +43,5 @@ public class MicroarrayExperimentsCacheTest {
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
         subject.getExperiment("");
     }
+
 }

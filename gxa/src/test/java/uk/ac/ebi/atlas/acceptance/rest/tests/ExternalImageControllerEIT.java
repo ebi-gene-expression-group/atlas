@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
-
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
@@ -11,7 +10,6 @@ import java.text.MessageFormat;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-
 
 public class ExternalImageControllerEIT {
 

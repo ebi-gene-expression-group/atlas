@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class BaselineExperimentsCacheLoaderIT {
 
     private String accession = "E-MTAB-513";
@@ -77,7 +77,7 @@ public class BaselineExperimentsCacheLoaderIT {
     public void experimentShouldOnlyContainRunsFromDataFile() throws Exception {
         BaselineExperiment experiment = subject.load(accession);
 
-        assertThat(experiment.getAnalysedRowsAccessions(), hasItems(
+        assertThat(experiment.getAnalysedAssays(), hasItems(
             "ERR030872", "ERR030873", "ERR030874", "ERR030875",
             "ERR030876", "ERR030877", "ERR030878", "ERR030879",
             "ERR030880", "ERR030881", "ERR030882", "ERR030883",

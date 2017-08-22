@@ -5,10 +5,6 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-/**
- * Created by barrera on 06/10/2015.
- *
- */
 public class ExperimentsTypeMapConverterTest {
 
     @Test

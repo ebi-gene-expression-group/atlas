@@ -18,17 +18,25 @@
     <url>https://www.ebi.ac.uk/gxa/</url>
 
     <properties>
-        <test.integration.pattern>**/*IT.java</test.integration.pattern>
-        <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
-
-        <!-- default values for configuration properties,
-        they are set to local development machine defaults
-        and are overridden in profiles for specific deployment environments-->
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
     </properties>
 
     <build>
         <finalName>gxa</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/webapp/WEB-INF</directory>
+                <includes>
+                    <include>applicationContext.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 
         <testResources>
             <testResource>
@@ -69,13 +77,14 @@
                             <value>14092</value>
                         </property>
                     </systemProperties>
-                    <excludes>
-                        <exclude>**/*SIT.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
 
-            <!-- Run ITs in the server/port selenium.test.host/selenium.test.portnumber, usually lime -->
+            <!-- Before running ITs, use running Tomcat to mount gxa nd then we can run EITs against
+                 selenium.test.host:selenium.test.portnumber, usually lime:14092, see RestAssuredFixture or URLBuilder;
+                 as noted below, if EITs depend on Spring’s MockMvc this section could be removed. If any test fails
+                 the newly generated WAR is removed and the previous one is restored at /gxa, therefore only green
+                 builds are available in lime:14092/gxa -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -89,9 +98,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <url>http://lime:14092/manager/text</url>-->
+                    <url>http://lime:14092/manager/text</url>
                     <path>/${project.build.finalName}</path>
-                    <update>true</update>-->
+                    <update>true</update>
                 </configuration>
             </plugin>
 
@@ -101,11 +110,6 @@
                 <version>2.4</version>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>selenium-maven-plugin</artifactId>
-                <version>2.3</version>
-            </plugin>
         </plugins>
     </build>
 
@@ -116,91 +120,18 @@
             <version>3.5</version>
         </dependency>
 
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.13</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.googlecode.lambdaj</groupId>
-            <artifactId>lambdaj</artifactId>
-            <version>2.3.3</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>cglib</groupId>
-                    <artifactId>cglib-nodep</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- For URL rewrite, because of possible / suffix -->
+        <!-- For URL rewrite (see WEB-INF/web.xml) -->
         <dependency>
             <groupId>org.tuckey</groupId>
             <artifactId>urlrewritefilter</artifactId>
             <version>4.0.3</version>
         </dependency>
 
-        <!-- Jackson JSON -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>displaytag</groupId>
-            <artifactId>displaytag</artifactId>
-            <version>1.2</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-lang</artifactId>
-                    <groupId>commons-lang</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-collections</artifactId>
-                    <groupId>commons-collections</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jcl104-over-slf4j</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <scope>compile</scope>
-            <version>4.3.4</version>
-        </dependency>
-
-        <!-- for URLrewrite proxying -->
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-        </dependency>
-
-        <!-- Java Mail -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.5</version>
-        </dependency>
-
         <!-- For testing REST services -->
+        <!-- Migrate to Spring’s MockMvc, as it doesn’t flood the server and seems to be more robust (see, e.g.
+             https://github.com/gxa/atlas/commit/ca69e94c5fe665d780ef3399f568e5a1245845ad which was casing the build to
+             “randomly” fail when lime couldn’t keep up with requests; also, it removes the requirement of running EITs
+             against an embedded Tomcat server -->
         <dependency>
             <groupId>com.jayway.restassured</groupId>
             <artifactId>rest-assured</artifactId>

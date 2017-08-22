@@ -37,7 +37,7 @@ import static org.junit.Assert.assertThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class SolrInputDocumentInputStreamIT {
 
     @Inject

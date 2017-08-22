@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
 public class DifferentialExperimentsCacheLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
