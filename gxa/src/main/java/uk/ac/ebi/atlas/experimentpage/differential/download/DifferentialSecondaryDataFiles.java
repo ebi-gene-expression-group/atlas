@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
@@ -19,6 +17,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExperiment> extends CanStreamSupplier<E> {
 
@@ -61,7 +60,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                                         "All the raw counts for the experiment"
                                 ),
                                 streamFile(experiment.getAccession()+"-raw-counts.tsv",
-                                        readFromResourceAndWriteTsv(rawCounts, Functions.<String[]>identity())
+                                        readFromResourceAndWriteTsv(rawCounts, Function.identity())
                                 )
                         )
                 );
@@ -111,7 +110,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 if(r.exists()){
                     logFoldChanges.add(Pair.of(
                             MessageFormat.format("{0}-{1}-log-fold-changes.tsv", experiment.getAccession(), arrayDesign),
-                            readFromResourceAndWriteTsv(r, Functions.<String[]>identity())
+                            readFromResourceAndWriteTsv(r, Function.identity())
                     ));
                 }
             }
@@ -134,7 +133,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 if(r.exists()){
                     normalizedExpressions.add(Pair.of(
                             MessageFormat.format("{0}-{1}-normalized-expressions.tsv", experiment.getAccession(), arrayDesign),
-                            readFromResourceAndWriteTsv(r, Functions.<String[]>identity())
+                            readFromResourceAndWriteTsv(r, Function.identity())
                     ));
                 }
             }

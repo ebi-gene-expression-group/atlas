@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.resource;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -15,6 +14,7 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class ContrastImageSupplier<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E>{
 
@@ -73,7 +73,7 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
             ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
             for(Contrast contrast: contrasts){
                 for(ResourceType resourceType : ContrastImage.RESOURCE_TYPES){
-                    ExternalImage externalImage = contrastImageFactory.getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrast.getId());
+                    ExternalImage externalImage = contrastImageFactory.getContrastImage(resourceType, experimentAccession, Optional.empty(), contrast.getId());
                     if(externalImage.exists()){
                         b.add(new ExternallyAvailableContent
                                 (makeUri(MessageFormat.format("contrast_image-{0}-{1}", resourceType.name(), contrast.getId())),

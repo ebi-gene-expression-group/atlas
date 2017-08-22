@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import com.google.common.base.Function;
 import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -8,6 +7,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
