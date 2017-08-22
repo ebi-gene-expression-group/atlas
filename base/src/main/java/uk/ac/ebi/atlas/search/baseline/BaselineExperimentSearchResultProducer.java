@@ -47,16 +47,16 @@ public class BaselineExperimentSearchResultProducer {
             Map<String, Double> assayGroupIdAndExpression = e.getValue();
 
             final Set<String> commonFactorTypes =
-                    RichFactorGroup.typesWithCommonValues(FluentIterable.from(assayGroupIdAndExpression.keySet()).transform(idOfAssayGroupWithExpression -> experiment.getFactors(experiment.getDataColumnDescriptor(idOfAssayGroupWithExpression)).withoutTypes(ImmutableList.of(factorType))));
+                    RichFactorGroup.typesWithCommonValues(assayGroupIdAndExpression.keySet().stream().map(idOfAssayGroupWithExpression -> experiment.getFactors(experiment.getDataColumnDescriptor(idOfAssayGroupWithExpression)).withoutTypes(ImmutableList.of(factorType))).collect(Collectors.toList()));
 
-            final Set<FactorGroup> factorGroups = FluentIterable.from(experiment.getDataColumnDescriptors()).transform(assayGroup -> {
+            final Set<FactorGroup> factorGroups = experiment.getDataColumnDescriptors().stream().map(assayGroup -> {
                 FactorGroup factorGroup = experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType));
-                if(factorGroup.withoutTypes(commonFactorTypes).size() > 0){
+                if (factorGroup.withoutTypes(commonFactorTypes).size() > 0) {
                     return factorGroup.withoutTypes(commonFactorTypes);
                 } else {
                     return factorGroup;
                 }
-            }).toSet();
+            }).collect(Collectors.toSet());
 
             for(final FactorGroup factorGroup: factorGroups){
                 BaselineExperimentProfile baselineExperimentProfile =
