@@ -1,6 +1,9 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
@@ -9,10 +12,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
@@ -25,7 +26,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 @Controller
 @Scope("request")
-public class DASFeaturesController {
+public class DASFeaturesController extends HtmlExceptionHandlingController {
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private ExperimentTrader experimentTrader;
@@ -36,18 +37,8 @@ public class DASFeaturesController {
         this.experimentTrader = experimentTrader;
     }
 
-
-    @ExceptionHandler(value = {Exception.class})
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ModelAndView InternalServerHandleException(Exception e) {
-        ModelAndView mav = new ModelAndView("error-page");
-        mav.addObject("exceptionMessage", e.getMessage());
-        return mav;
-    }
-
-    @RequestMapping(value = "/das/s4/features")
+    @RequestMapping(value = "/das/s4/features", method = RequestMethod.GET, produces = "application/xml;charset=UTF-8")
     public String dasFeatures(@RequestParam(value = "segment") String geneId, Model model) {
-
         checkArgument(geneId.length() <= 255, "Segment parameter is too long");
 
         List<DiffAnalytics> diffAnalyticsList = diffAnalyticsSearchService.fetchTopWithoutCountAnySpecies(geneId);

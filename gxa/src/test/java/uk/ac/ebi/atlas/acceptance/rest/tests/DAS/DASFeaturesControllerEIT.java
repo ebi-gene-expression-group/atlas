@@ -24,8 +24,8 @@ public class DASFeaturesControllerEIT {
         assertThat(response.getContentType(), is("application/xml;charset=UTF-8"));
 
         String responseXML = response.getBody().asString();
-        assertThat(responseXML, not(isEmptyOrNullString()));
-        assertThat(responseXML, startsWith("<?xml"));
+        assertThat(responseXML.trim(), not(isEmptyOrNullString()));
+        assertThat(responseXML.trim(), startsWith("<?xml"));
     }
 
 
@@ -39,8 +39,8 @@ public class DASFeaturesControllerEIT {
         assertThat(response.getContentType(), is("application/xml;charset=UTF-8"));
 
         String responseXML = response.getBody().asString();
-        assertThat(responseXML, not(isEmptyOrNullString()));
-        assertThat(responseXML, startsWith("<?xml"));
+        assertThat(responseXML.trim(), not(isEmptyOrNullString()));
+        assertThat(responseXML.trim(), startsWith("<?xml"));
 //        assertThat(responseXML, startsWith("<DASGFF>\n" +
 //                "<GFF href=\"http://www.ebi.ac.uk/gxa/das/s4/features?segment=asdfasd\">\n" +
 //                "<UNKNOWNSEGMENT id=\"FOOBAR\"/>\n" +
@@ -58,8 +58,8 @@ public class DASFeaturesControllerEIT {
         assertThat(response.getContentType(), is("application/xml;charset=UTF-8"));
 
         String responseXML = response.getBody().asString();
-        assertThat(responseXML, not(isEmptyOrNullString()));
-        assertThat(responseXML, startsWith("<?xml"));
+        assertThat(responseXML.trim(), not(isEmptyOrNullString()));
+        assertThat(responseXML.trim(), startsWith("<?xml"));
     }
 
 }
