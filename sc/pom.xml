@@ -7,11 +7,11 @@
     <parent>
         <artifactId>atlas</artifactId>
         <groupId>uk.ac.ebi.atlas</groupId>
-        <version>3.5</version>
+        <version>4.0</version>
     </parent>
 
     <artifactId>sc</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>war</packaging>
 
     <name>Single-Cell Atlas</name>
