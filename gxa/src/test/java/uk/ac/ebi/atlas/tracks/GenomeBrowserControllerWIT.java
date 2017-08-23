@@ -11,9 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
-
-import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
@@ -23,6 +20,7 @@ import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -44,21 +42,21 @@ public class GenomeBrowserControllerWIT {
     public void invalidGenomeBrowserForExperimentSpecies() throws Exception {
         this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensemblgenomes", "E-MTAB-3827", "ENSG00000102970", "g13")))
                 .andExpect(status().isBadRequest())
-                .andExpect(forwardedUrl("error-page"));
+                .andExpect(view().name("error-page"));
     }
 
     @Test
     public void experimentNotFound() throws Exception {
         this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-FOO-BAR", "ENSG00000102970", "g13")))
                 .andExpect(status().isNotFound())
-                .andExpect(forwardedUrl("error-page"));
+                .andExpect(view().name("error-page"));
     }
 
     @Test
     public void miRNAExperimentsDontHaveEnsembleIdsAndCantShowTheGenomeBrowser() throws Exception {
         this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-GEOD-13316", "ENSG00000102970", "g13")))
                 .andExpect(status().isBadRequest())
-                .andExpect(forwardedUrl("error-page"));
+                .andExpect(view().name("error-page"));
     }
 
     @Test

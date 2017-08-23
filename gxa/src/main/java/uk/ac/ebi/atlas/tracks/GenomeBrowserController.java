@@ -64,7 +64,7 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
                                                      @RequestParam(required = false, defaultValue = "") String trackId,
                                                      @RequestParam(required = false, defaultValue = "") String accessKey,
                                                      HttpServletRequest request) throws IOException {
-        return redirectToGenomeBrowser(genomeBrowserName, experimentAccession, geneId, trackId, accessKey, request);
+        return redirectToGenomeBrowser(experimentAccession, genomeBrowserName, geneId, trackId, accessKey, request);
     }
 
 
@@ -77,15 +77,14 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
                                           HttpServletRequest request)
             throws IOException {
 
-        Experiment<? extends DescribesDataColumns> experiment =
-                experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         String genomeBrowserUrl = null;
         ImmutableCollection<ImmutableMap<String, String>> genomeBrowsers = experiment.getGenomeBrowsers();
 
-        for (ImmutableMap<String, String> genomeBrowserO : genomeBrowsers) {
-            if (name.equalsIgnoreCase(genomeBrowserO.get("name").replaceAll("\\s+", ""))) {
-                genomeBrowserUrl = genomeBrowserO.get("url");
+        for (ImmutableMap<String, String> genomeBrowserObj : genomeBrowsers) {
+            if (name.equalsIgnoreCase(genomeBrowserObj.get("name").replaceAll("\\s+", ""))) {
+                genomeBrowserUrl = genomeBrowserObj.get("url");
                 break;
             }
         }
