@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -34,7 +34,7 @@ public class GenePageControllerWIT {
     public void geneNotFound() throws Exception {
         this.mockMvc.perform(get("/genes/foobar"))
                 .andExpect(status().isNotFound())
-                .andExpect(forwardedUrl("error-page")); // Can be a view name
+                .andExpect(view().name("error-page")); // Can be a view name
     }
 
 }
