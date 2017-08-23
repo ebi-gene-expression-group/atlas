@@ -7,11 +7,11 @@
     <parent>
         <artifactId>atlas</artifactId>
         <groupId>uk.ac.ebi.atlas</groupId>
-        <version>3.5</version>
+        <version>4.0</version>
     </parent>
 
     <artifactId>gxa</artifactId>
-    <version>3.5</version>
+    <version>3.6</version>
     <packaging>war</packaging>
 
     <name>Gene Expression Atlas</name>
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
             <artifactId>atlas-base</artifactId>
-            <version>3.5</version>
+            <version>4.0</version>
         </dependency>
 
         <!-- For URL rewrite (see WEB-INF/web.xml) -->

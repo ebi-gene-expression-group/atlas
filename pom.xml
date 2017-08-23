@@ -4,7 +4,7 @@
 
     <groupId>uk.ac.ebi.atlas</groupId>
     <artifactId>atlas</artifactId>
-    <version>3.5</version>
+    <version>4.0</version>
 
     <name>Atlas</name>
     <url>https://www.ebi.ac.uk/gxa/</url>
