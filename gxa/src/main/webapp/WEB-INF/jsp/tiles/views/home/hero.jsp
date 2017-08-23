@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <div class="row expanded">
     <div class="columns small-2">
         <img src="${pageContext.request.contextPath}/resources/images/foundation/heatmap-hero.png">

@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <div class="callout publication-list" data-equalizer-watch>
     <h4>Publications </h4>
     <div class="row">

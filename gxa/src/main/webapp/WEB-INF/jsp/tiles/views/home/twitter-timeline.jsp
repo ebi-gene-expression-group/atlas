@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <div class="row">
     <div class="small-centered small-8 medium-4 columns">
         <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png" width="50"/>

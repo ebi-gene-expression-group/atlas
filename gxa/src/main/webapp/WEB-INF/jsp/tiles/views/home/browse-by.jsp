@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <div class="callout browse-by padding-bottom-for-button" data-equalizer-watch>
     <ul class="tabs" data-tabs id="browse-by-tabs">
         <li class="tabs-title is-active"><a href="#by-species" aria-selected="true">By species</a></li>

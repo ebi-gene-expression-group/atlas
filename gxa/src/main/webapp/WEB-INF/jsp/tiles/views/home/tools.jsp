@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <div class="callout tools" data-equalizer-watch>
     <h4>Tools</h4>
 

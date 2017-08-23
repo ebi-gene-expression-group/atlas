@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <header id="masthead-black-bar" class="clearfix masthead-black-bar">
     <nav class="row expanded">
         <ul id="global-nav" class="menu">

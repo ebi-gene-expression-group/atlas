@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <div id="global-footer" class="global-footer">
 
     <nav id="global-nav-expanded" class="row global-nav-expanded">

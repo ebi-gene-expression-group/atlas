@@ -2,6 +2,8 @@
 <%--@elvariable id="relevantGoPoLinks" type="java.util.List"--%>
 <%--@elvariable id="allGoPoLinks" type="java.util.List"--%>
 
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <div class="row expanded">
     <div class="small-12 columns">
         <div id="bioentityInformationTab"></div>
