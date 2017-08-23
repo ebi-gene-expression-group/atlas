@@ -14,10 +14,6 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!--<listener>-->
-        <!--<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>-->
-    <!--</listener>-->
-
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -102,18 +98,16 @@
         <role-name>admin</role-name>
     </security-role>
 
-    <!-- Define error page to react on Java exception -->
-    <error-page>
-        <location>/WEB-INF/jsp/views/error.jsp</location>
-    </error-page>
-
     <!-- Disable JSessionID -->
     <session-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
     </welcome-file-list>
 
+    <error-page>
+        <location>/jsp/error.jsp</location>
+    </error-page>
 </web-app>
