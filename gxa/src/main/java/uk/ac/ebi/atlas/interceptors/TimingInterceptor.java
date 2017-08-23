@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.interceptors;
 
 import org.slf4j.Logger;
@@ -19,9 +18,11 @@ public class TimingInterceptor extends HandlerInterceptorAdapter {
     protected static final String STOP_WATCH = "requestURLStopWatch";
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-
-        String requestURL = request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Object handler) {
+        String requestURL =
+                request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 
         LOGGER.info("{} - start", requestURL);
 
@@ -34,12 +35,15 @@ public class TimingInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Object handler,
+                           ModelAndView modelAndView) {
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
         stopWatch.stop();
 
-        String requestURL = request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        String requestURL =
+                request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 
         LOGGER.info("{} - time taken {}", requestURL, stopWatch.getTotalTimeSeconds());
     }

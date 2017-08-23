@@ -15,20 +15,23 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * BioentityIndexMonitor can be polled by clients to get a progress report, useful for synchronous request protocols like HTTP REST,
- * or can be also "observed" by Observer clients that want to be notified of indexing completion or failure
- * (for example useful in tests that need to wait for completion before doing any assertion)
+ * BioentityIndexMonitor can be polled by clients to get a progress report, useful for synchronous request protocols
+ * like HTTP REST, or can be also "observed" by Observer clients that want to be notified of indexing completion or
+ * failure (for example useful in tests that need to wait for completion before doing any assertion)
  *
- * A more elaborate but maybe better distributed design would be to have BioentityIndexMonitor only used for polling progress report
- * and BioentityIndex be the Observable that can be listened for processing and completion events;
+ * A more elaborate but maybe better distributed design would be to have BioentityIndexMonitor only used for polling
+ * progress report and BioentityIndex be the Observable that can be listened for processing and completion events;
  * Pros would be:
- * -Monitor would not be Observable anymore
- * -BioentityIndex would not depend on Monitor BioentityIndexMonitor, making it usable and testable independently of BioentityIndexMonitor stopwatch state
- * -BioentityIndexMonitor would be updating progress state without the need for synchronous messages, by being an Observer of BioentityIndex
+ * - Monitor would not be Observable anymore
+ * - BioentityIndex would not depend on Monitor BioentityIndexMonitor, making it usable and testable independently of
+ *   BioentityIndexMonitor stopwatch state
+ * - BioentityIndexMonitor would be updating progress state without the need for synchronous messages, by being an
+ *   Observer of BioentityIndex
+ *
  * Cons would be:
- * -BioentityIndex would have to be Observable not only for completion but also for file processing events
- * -BioentityIndexMonitor would have to be an Observer and implement its own update
- * -Similar responsibility (progress report and progress events) would be executed by separate classes
+ * - BioentityIndex would have to be Observable not only for completion but also for file processing events
+ * - BioentityIndexMonitor would have to be an Observer and implement its own update
+ * - Similar responsibility (progress report and progress events) would be executed by separate classes
  */
 @Named
 public class BioentityIndexMonitor {
@@ -37,19 +40,21 @@ public class BioentityIndexMonitor {
     private String bioentityPropertiesDirectory;
 
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
-            + ",\ntotal time elapsed: {0} minutes,\nestimated progress: {1}%,\nestimated minutes to completion: {2},\nfile being processed: {3}"
-            + ",\ntime elapsed for current file: {4} seconds,\nfiles successfully processed:\n{5}\n";
+            + ",\n" +
+            "total time elapsed: {0} minutes,\n" +
+            "estimated progress: {1}%,\n" +
+            "estimated minutes to completion: {2},\n" +
+            "file being processed: {3}\n" +
+            "time elapsed for current file: {4} seconds,\n" +
+            "files successfully processed:\n" +
+            "{5}\n";
 
     public Status status;
 
     private BioentityPropertyFile currentFile;
-
     private IndexingProgress indexingProgress;
-
     private Exception failureReason;
-
     private Stopwatch totalTimeStopwatch;
-
     private Stopwatch currentFileStopwatch;
 
     @Inject
@@ -75,7 +80,9 @@ public class BioentityIndexMonitor {
     }
 
     public synchronized void processing(BioentityPropertyFile file) {
-        checkState(Status.INITIALIZED == status || Status.STARTED == status || Status.IN_PROGRESS == status, "Illegal status: " + status);
+        checkState(
+                Status.INITIALIZED == status || Status.STARTED == status || Status.IN_PROGRESS == status,
+                "Illegal status: " + status);
         status = Status.PROCESSING;
         currentFile = file;
         currentFileStopwatch = Stopwatch.createStarted();
