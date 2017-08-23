@@ -15,6 +15,7 @@
             <list>
                 <value>/WEB-INF/tiles/layout.xml</value>
                 <value>/WEB-INF/tiles/views.xml</value>
+                <value>/WEB-INF/tiles/errors.xml</value>
             </list>
         </property>
     </bean>
