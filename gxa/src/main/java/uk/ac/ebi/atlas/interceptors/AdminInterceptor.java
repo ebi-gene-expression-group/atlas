@@ -18,8 +18,9 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) {
-//        String username = request.getUserPrincipal().getName();
-        LOGGER.info("<preHandle> username: {}, request: {}, query: {}", "blah", request.getRequestURI(), request.getQueryString());
+        LOGGER.info(
+                "<preHandle> username: {}, request: {}, query: {}",
+                request.getUserPrincipal().getName(), request.getRequestURI(), request.getQueryString());
         return true;
     }
 
