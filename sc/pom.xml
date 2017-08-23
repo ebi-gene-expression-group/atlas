@@ -75,9 +75,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <url>http://lime:14092/manager/text</url>-->
+                    <url>http://lime:14092/manager/text</url>
                     <path>/${project.build.finalName}</path>
-                    <update>true</update>-->
+                    <update>true</update>
                 </configuration>
             </plugin>
 
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
             <artifactId>atlas-base</artifactId>
-            <version>3.5</version>
+            <version>4.0</version>
         </dependency>
     </dependencies>
 </project>
