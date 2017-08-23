@@ -18,9 +18,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-// Ideally this shouldn’t be scoped to request, but that means that on application startup all experiments are going to
-// be cached making startup times way slower than necessary. In production, experiments are already cached; the added
-// cost of scoping the bean instead of just being a singleton isn’t noticeable.
+// Ideally this shouldn’t be scoped to request but, if singleton, on application startup all experiments are going to
+// be cached making init times way slower than necessary; especially in development. In production, experiments are
+// already cached; the added cost of creating the bean for each HTTP request is a trade-off for a page that doesn’t get
+// a lot of traffic.
 @Controller
 @Scope("request")
 public class BaselineExperimentsController extends HtmlExceptionHandlingController {
