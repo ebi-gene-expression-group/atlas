@@ -47,21 +47,21 @@
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/static-page.jsp"/>
     </definition>
 
-    <definition name="request-diagnostics" extends="base">
-        <put-attribute name="title" value="Search results &lt; "/>
-        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/request-diagnostics.jsp"/>
-    </definition>
-
     <definition name="search-results" extends="base">
         <put-attribute name="title" value="Search results &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/search-results.jsp"/>
     </definition>
 
-    <definition name="das-features" template="/WEB-INF/jsp/tiles/views/das-features.jsp">
-    </definition>
-
     <definition name="gene-set-enrichment-results" extends="base">
         <put-attribute name="title" value="Gene set enrichment results &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/gene-set-enrichment-results.jsp"/>
+    </definition>
+
+    <definition name="das-features" template="/WEB-INF/jsp/tiles/views/das-features.jsp">
+    </definition>
+
+    <definition name="request-diagnostics" extends="base">
+        <put-attribute name="title" value="Request diagnostics &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/request-diagnostics.jsp"/>
     </definition>
 </tiles-definitions>
