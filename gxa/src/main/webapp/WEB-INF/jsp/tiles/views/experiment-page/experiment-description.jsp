@@ -1,17 +1,17 @@
-<%--@elvariable id="preferences" type="atlas.web.ExperimentPageRequestPreferences"--%>
-<%--@elvariable id="experimentDescription" type="java.lang.String"--%>
+<%--@elvariable id="experimentDescription" type="String"--%>
+<%--@elvariable id="experimentAccession" type="String"--%>
 <%--@elvariable id="hasExtraInfo" type="boolean"--%>
-<%--@elvariable id="isWidget" type="boolean"--%>
-<%--@elvariable id="dataProviderURL" type="java.util.List<String>"--%>
-<%--@elvariable id="dataProviderDescription" type="java.util.List<String>"--%>
-<%--@elvariable id="allArrayDesigns" type="java.util.SortedSet<String>"--%>
-<%--@elvariable id="pubMedIds" type="java.util.List<String>"--%>
+<%--@elvariable id="dataProviderURL" type="List<String>"--%>
+<%--@elvariable id="dataProviderDescription" type="List<String>"--%>
+<%--@elvariable id="allArrayDesigns" type="SortedSet<String>"--%>
+<%--@elvariable id="pubMedIds" type="List<String>"--%>
 <%--@elvariable id="species" type="uk.ac.ebi.atlas.species.Species"--%>
-<%--@elvariable id="accessKey" type="java.lang.String"--%>
-<%--@elvariable id="type" type="atlas.model.ExperimentType"--%>
+<%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
+<%--@elvariable id="alternativeViews" type="List<String>"--%>
+<%--@elvariable id="alternativeViewDescriptions" type="List<String>"--%>
+<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 

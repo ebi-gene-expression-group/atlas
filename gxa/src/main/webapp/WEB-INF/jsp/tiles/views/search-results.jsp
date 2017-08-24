@@ -4,7 +4,6 @@
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="hasBaselineResults" type="boolean"--%>
 <%--@elvariable id="hasDifferentialResults" type="boolean"--%>
-<%--@elvariable id="applicationProperties" type="atlas.web.ApplicationProperties"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
