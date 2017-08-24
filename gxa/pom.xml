@@ -18,10 +18,6 @@
     <name>Gene Expression Atlas</name>
     <url>https://www.ebi.ac.uk/gxa/</url>
 
-    <properties>
-        <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
-    </properties>
-
     <build>
         <finalName>gxa</finalName>
 
