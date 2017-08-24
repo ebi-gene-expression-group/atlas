@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="home" extends="base">
+        <put-attribute name="title" value="Home &lt; "/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/tiles/views/home.jsp">
+                <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/views/home/hero.jsp"/>
+                <put-attribute name="search" value="/WEB-INF/jsp/tiles/views/home/search.jsp"/>
+                <put-attribute name="experiment-list-latest-box"
+                               value="/WEB-INF/jsp/tiles/views/home/experiment-list-latest.jsp"/>
+                <put-attribute name="type-cell" value="/WEB-INF/jsp/tiles/views/home/type-cell.jsp"/>
+                <put-attribute name="type-tissue" value="/WEB-INF/jsp/tiles/views/home/type-tissue.jsp"/>
+                <put-attribute name="tools-box" value="/WEB-INF/jsp/tiles/views/home/tools.jsp"/>
+                <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/views/home/publications.jsp"/>
+                <put-attribute name="news" value="/WEB-INF/jsp/tiles/views/home/latest-tweet.jsp"/>
+            </definition>
+        </put-attribute>
+    </definition>
+
+    <definition name="marker-genes-search-results" extends="base">
+        <put-attribute name="title" value="Search results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/marker-genes-search-results.jsp"/>
+    </definition>
+
+    <definition name="experiment-page" extends="base">
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/tiles/views/experiment-page.jsp">
+                <put-attribute name="description-blurb"
+                               value="/WEB-INF/jsp/tiles/views/experiment-page/description.jsp"/>
+                <put-attribute name="react-container"
+                               value="/WEB-INF/jsp/tiles/views/experiment-page/react-container-experiment-page.jsp"/>
+            </definition>
+        </put-attribute>
+    </definition>
+
+    <!--<definition name="experiment-reference-plot" extends="experiment-base">-->
+        <!--<put-attribute name="body">-->
+            <!--<definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">-->
+                <!--<put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>-->
+                <!--<put-attribute name="react-container"-->
+                               <!--value="/WEB-INF/jsp/tiles/experiment/react-reference-plot-experiment-page.jsp"/>-->
+            <!--</definition>-->
+        <!--</put-attribute>-->
+    <!--</definition>-->
+
+    <!--<definition name="experiment-tsne-plot" extends="experiment-base">-->
+        <!--<put-attribute name="body">-->
+            <!--<definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">-->
+                <!--<put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>-->
+                <!--<put-attribute name="react-container"-->
+                               <!--value="/WEB-INF/jsp/tiles/experiment/react-tsne-plot-experiment-page.jsp"/>-->
+            <!--</definition>-->
+        <!--</put-attribute>-->
+    <!--</definition>-->
+
+    <!--<definition name="experiment-spatial" extends="experiment-base">-->
+        <!--<put-attribute name="body">-->
+            <!--<definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">-->
+                <!--<put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>-->
+                <!--<put-attribute name="react-container" value="/WEB-INF/jsp/tiles/experiment/react-bw3d-experiment-page.jsp"/>-->
+            <!--</definition>-->
+        <!--</put-attribute>-->
+    <!--</definition>-->
+    
+</tiles-definitions>

@@ -1,18 +1,20 @@
+<%--@elvariable id="resourcesVersion" type="String"--%>
+<%--@elvariable id="geneId" type="String"--%>
+
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row">
-    <div class="small-12 columns">
-        <tiles:insertAttribute name="search"/>
-    </div>
-
     <div class="small-12 columns">
         <h3>Search results</h3>
     </div>
 
-    <!-- If there are marker genes results show this... -->
     <div class="small-12 columns">
-        <div id="marker-genes"></div>
+        <tiles:insertTemplate template="./marker-genes-search-results/search.jsp"/>
+    </div>
+
+    <div class="small-12 columns">
+        <div id="marker-genes-search-results-list"></div>
     </div>
 </div>
 
@@ -23,5 +25,5 @@
   markerGenesSearchResults.render({
     atlasUrl: '${pageContext.request.contextPath}/',
     geneId: '${geneId}',
-  }, 'marker-genes')
+  }, 'marker-genes-search-results-list')
 </script>

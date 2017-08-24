@@ -5,43 +5,24 @@
          version="3.1">
 
     <context-param>
-        <param-name>log4jConfiguration</param-name>
-        <param-value>classpath:log4j2.xml</param-value>
-    </context-param>
-
-    <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml classpath:solrContext.xml classpath:dbContext.xml</param-value>
+        <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>
-
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-
-    <!-- Spring MVC Services Servlet -->
     <servlet>
-        <servlet-name>services</servlet-name>
+        <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>services</servlet-name>
+        <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <!-- Disable JSessionID -->
-    <session-config>
-        <tracking-mode>COOKIE</tracking-mode>
-    </session-config>
 
     <filter>
         <filter-name>cors-headers</filter-name>
@@ -52,4 +33,18 @@
         <filter-name>cors-headers</filter-name>
         <url-pattern>/json/*</url-pattern>
     </filter-mapping>
+
+    <!-- Disable JSessionID -->
+    <session-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <location>/WEB-INF/jsp/error.jsp</location>
+    </error-page>
+
 </web-app>

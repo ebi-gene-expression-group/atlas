@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -14,16 +15,34 @@
     <version>0.2</version>
     <packaging>war</packaging>
 
-    <name>Single-Cell Atlas</name>
-    <url>https://www.ebi.ac.uk/gxa/sc</url>
+    <name>Single Cell Atlas</name>
+    <url>https://www-test.ebi.ac.uk/gxa_sc/</url>
 
     <build>
         <finalName>gxa_sc</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/webapp/WEB-INF</directory>
+                <includes>
+                    <include>applicationContext.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 
         <!--<testResources>-->
             <!--<testResource>-->
                 <!--<directory>src/test/resources</directory>-->
                 <!--<filtering>true</filtering>-->
+                <!--<excludes>-->
+                    <!--<exclude>keystore</exclude>-->
+                    <!--<exclude>tomcat-users.xml</exclude>-->
+                <!--</excludes>-->
             <!--</testResource>-->
         <!--</testResources>-->
 
@@ -55,13 +74,14 @@
                             <value>14092</value>
                         </property>
                     </systemProperties>
-                    <excludes>
-                        <exclude>**/*SIT.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
 
-            <!-- Run ITs in the server/port selenium.test.host/selenium.test.portnumber, usually lime -->
+            <!-- Before running ITs, use running Tomcat to mount gxa nd then we can run EITs against
+                 selenium.test.host:selenium.test.portnumber, usually lime:14092, see RestAssuredFixture or URLBuilder;
+                 as noted below, if EITs depend on Spring’s MockMvc this section could be removed. If any test fails
+                 the newly generated WAR is removed and the previous one is restored at /gxa, therefore only green
+                 builds are available in lime:14092/gxa -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -87,11 +107,6 @@
                 <version>2.4</version>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>selenium-maven-plugin</artifactId>
-                <version>2.3</version>
-            </plugin>
         </plugins>
     </build>
 
@@ -102,4 +117,5 @@
             <version>4.0</version>
         </dependency>
     </dependencies>
+
 </project>

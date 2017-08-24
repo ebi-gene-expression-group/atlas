@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="error-page" extends="base">
+        <put-attribute name="title" value="Error &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/errors/generic-error.jsp"/>
+    </definition>
+</tiles-definitions>

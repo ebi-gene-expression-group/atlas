@@ -1,7 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--@elvariable id="resourcesVersion" type="String"--%>
+<%--@elvariable id="geneId" type="String"--%>
 
-<form method="get" action="search" id="home-search-atlas-form">
-    <h3>What gene?</h3>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<form action="search" id="home-search-atlas-form">
+    <h3>Marker genes search</h3>
 
     <!-- No need to enclose in row as the component already uses Foundation classes -->
     <div id="target"></div>

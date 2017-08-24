@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <footer id="local-footer" class="local-footer" role="local-footer">
     <div class="row padding-top-large padding-bottom-large">

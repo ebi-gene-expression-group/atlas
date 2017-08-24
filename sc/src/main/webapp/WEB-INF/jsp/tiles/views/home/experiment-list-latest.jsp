@@ -1,4 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--@elvariable id="experimentCount" type="int"--%>
+<%--@elvariable id="latestExperiments" type="int"--%>
+
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- List cell-line experiments -->
@@ -21,10 +24,10 @@
                                 <div class="flex-item">
                                     <c:choose>
                                         <c:when test="${experimentInfo.experimentType.baseline}">
-                                            <span data-tooltip aria-haspopup="true" class="float-left baseline button-rd" title="Baseline experiment">B</span>
+                                            <span data-tooltip class="float-left baseline button-rd" title="Baseline experiment">B</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span data-tooltip aria-haspopup="true" class="float-left differential button-rd" title="Differential experiment">D</span>
+                                            <span data-tooltip class="float-left differential button-rd" title="Differential experiment">D</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>

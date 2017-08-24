@@ -14,7 +14,7 @@ public class SearchController extends HtmlExceptionHandlingController {
                          Model model) {
         model.addAttribute("geneId", geneId);
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
-        return "search-results";
+        return "marker-genes-search-results";
     }
 
 }

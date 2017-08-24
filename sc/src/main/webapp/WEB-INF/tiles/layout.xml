@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="base" template="/WEB-INF/jsp/tiles/base.jsp">
+        <put-attribute name="title" value="Single Cell Expression Atlas"/>
+        <put-attribute name="global-masthead" value="/WEB-INF/jsp/tiles/global-masthead.jsp"/>
+        <put-attribute name="local-masthead" value="/WEB-INF/jsp/tiles/local-masthead.jsp"/>
+        <put-attribute name="content"/>
+        <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
+        <put-attribute name="credits" value="/WEB-INF/jsp/tiles/credits.jsp"/>
+        <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
+    </definition>
+</tiles-definitions>

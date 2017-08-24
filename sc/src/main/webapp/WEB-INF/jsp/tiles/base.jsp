@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Single Cell Expression Atlas &lt; EMBL-EBI</title>
+    <title><tiles:insertAttribute name="title"/>Single Cell Atlas &lt; EMBL-EBI</title>
     <meta name="description" content="EMBL-EBI Single Cell Expression Atlas, an open public repository of single cell gene expression data">
     <meta name="keywords" content="expression atlas, single cell expression, gene expression, baseline expression, functional genomics, public repository, repository, bioinformatics, europe, institute">
     <meta name="author" content="EMBL-EBI Single Cell Expression Atlas development team: github.com/gxa/atlas/graphs/contributors">
@@ -66,16 +66,16 @@
     </ul>
 </div>
 
-<tiles:insertAttribute name="masthead-black-bar"/>
+<tiles:insertAttribute name="global-masthead"/>
 
 <div id="content">
-    <tiles:insertAttribute name="masthead"/>
-    <tiles:insertAttribute name="body"/>
+    <tiles:insertAttribute name="local-masthead"/>
+    <section id="main-content-area" class="margin-top-large margin-bottom-large" role="main">
+        <tiles:insertAttribute name="content"/>
+    </section>
+    <tiles:insertAttribute name="local-footer"/>
+    <tiles:insertAttribute name="credits"/>
 </div>
-
-<tiles:insertAttribute name="local-footer"/>
-
-<tiles:insertAttribute name="credits"/>
 
 <tiles:insertAttribute name="global-footer"/>
 
@@ -97,17 +97,6 @@
 <script src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
 <script type="text/JavaScript">$(document).foundation();</script>
 <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
-
-<!-- Google Analytics details... -->
-<!-- Change UA-XXXXX-X to be your site's ID -->
-<!--
-<script>
-  window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-  Modernizr.load({
-    load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-  });
-</script>
--->
 
 </body>
 </html>
