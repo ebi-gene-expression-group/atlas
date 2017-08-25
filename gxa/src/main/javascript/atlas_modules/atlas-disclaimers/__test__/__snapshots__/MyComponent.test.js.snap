@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Zebrafish body matches snapshot 1`] = `
+<div>
+  <p>
+    This is a pre-publication release in accordance with 
+    <a
+      href="http://www.sanger.ac.uk/datasharing/"
+    >
+      the Fort Lauderdale Agreement 
+    </a>
+    . Feel free to search and download data on your genes of interest.
+  </p>
+  <p>
+    Equally, you can use the dataset to show developmental expression profiles for specific genes in your publications.
+  </p>
+  <p>
+    However, we ask that you refrain from publishing larger scale or genome-wide analyses of this dataset for 12 months from the time of deposition in Expression Atlas or until we have published our transcriptional time-course paper, whichever comes first.
+  </p>
+  <p>
+    For citations in publications before the paper is out please use this link to the Expression Atlas site (
+    <a
+      href="https://www.ebi.ac.uk/gxa/experiments/E-ERAD-475"
+    >
+      http://www.ebi.ac.uk/gxa/experiments/E-ERAD-475
+    </a>
+    ) and acknowledge us: “We would like to thank the Busch-Nentwich lab for providing RNA-seq data.”
+  </p>
+</div>
+`;
