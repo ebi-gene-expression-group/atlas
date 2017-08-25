@@ -1,6 +1,6 @@
 {
   "name": "expression-atlas-disclaimers",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Custom disclaimers for Expression Atlas experiments",
   "main": "lib/index.js",
   "scripts": {
