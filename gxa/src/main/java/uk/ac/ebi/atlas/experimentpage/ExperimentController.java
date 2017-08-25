@@ -66,6 +66,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         result.addProperty("experimentType", experiment.getType().name());
         result.addProperty("accessKey", accessKey);
         result.addProperty("species", experiment.getSpecies().getReferenceName());
+        result.addProperty("disclaimer", experiment.getDisclaimer());
 
         JsonArray availableTabs = new JsonArray();
         // everything wants to have a heatmap
