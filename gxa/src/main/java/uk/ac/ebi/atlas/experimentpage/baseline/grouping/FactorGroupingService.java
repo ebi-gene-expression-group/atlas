@@ -37,11 +37,12 @@ public class FactorGroupingService {
     JsonArray groupOrganismPartOntologyTerms(Collection<OntologyTerm> ontologyTermsInAllFactors) {
         JsonArray result = new JsonArray();
 
-        groupingAsJson(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsInAllFactors), "Anatomical Systems", "Anatomical system")
-                .ifPresent(o -> result.add(o));
-
         groupingAsJson(organismPartGroupingService.getOrgansGrouping(ontologyTermsInAllFactors), "Organs", "Organ")
                 .ifPresent(o -> result.add(o));
+
+        groupingAsJson(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsInAllFactors), "Anatomical Systems", "Anatomical system")
+                .ifPresent(o -> result.add(o));
+        
         return result;
     }
 
