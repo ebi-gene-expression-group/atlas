@@ -21,14 +21,14 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Controller
-public class ExperimentController extends HtmlExceptionHandlingController {
+public class SingleCellExperimentController extends HtmlExceptionHandlingController {
 
     private final ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
     private static final Gson gson = new Gson();
     
     @Inject
-    public ExperimentController(ExperimentTrader experimentTrader, DataFileHub dataFileHub) {
+    public SingleCellExperimentController(ExperimentTrader experimentTrader, DataFileHub dataFileHub) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
     }
