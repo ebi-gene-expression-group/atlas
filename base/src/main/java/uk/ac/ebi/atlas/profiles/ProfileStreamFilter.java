@@ -48,7 +48,7 @@ implements Predicate<Prof> {
     }
 
     private Predicate<Prof> keepOnlyProfilesExpressedOnColumns(final Collection<DataColumnDescriptor>  selectedColumns){
-        return prof -> prof.isExpressedOnAnyOf(selectedColumns);
+        return prof -> prof.getSpecificity(selectedColumns) > 0;
     }
 
 }

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.profiles.json;
 
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.*;
@@ -13,6 +12,7 @@ import uk.ac.ebi.atlas.search.baseline.LinkToBaselineProfile;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ExternallyViewableProfilesList<DataColumnDescriptor extends DescribesDataColumns,
         Prof extends Profile<DataColumnDescriptor, ? extends Expression, Prof>, Unit extends ExpressionUnit> {
@@ -64,11 +64,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         }
         JsonArray expressions = new JsonArray();
         for(DataColumnDescriptor c: prescribedOrderOfColumns){
-            if(profile.isExpressedOnAnyOf(ImmutableSet.of(c))){
-                expressions.add( profile.getExpression(c).toJson());
-            } else {
-                expressions.add(new JsonObject());
-            }
+            expressions.add(Optional.ofNullable(profile.getExpression(c)).map(e -> e.toJson()).orElse(new JsonObject()));
         }
         result.add("expressions", expressions);
         result.addProperty("uri", provideLinkToProfile.apply(profile).toString());

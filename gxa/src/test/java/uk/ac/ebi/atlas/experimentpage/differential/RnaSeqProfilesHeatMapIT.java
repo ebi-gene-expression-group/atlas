@@ -153,8 +153,7 @@ public class RnaSeqProfilesHeatMapIT {
 
         for(Object o: profiles){
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            assertThat(profile.isExpressedOnAnyOf(experiment.getDataColumnDescriptors()), is(true));
-
+            assertThat(profile.getSpecificity(experiment.getDataColumnDescriptors()) > 0, is(true));
             assertThat(profile.getId().isEmpty(), is(false));
             assertThat(profile.getName().isEmpty(), is(false));
         }

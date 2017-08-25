@@ -72,11 +72,11 @@ implements KryoSerializable {
         return expressionsByCondition.values().stream().filter(expr -> expr.getLevel() != 0).count();
     }
 
-    public long getSpecificity(Collection<AssayGroup> assayGroups) {
-        List<String> assayGroupIds = assayGroups.stream().map(DescribesDataColumns::getId).collect(toList());
+    public long getSpecificity(Collection<DataColumnDescriptor> conditions) {
+        List<String> dataColumnDescriptorIds = conditions.stream().map(DescribesDataColumns::getId).collect(toList());
 
         return expressionsByCondition.entrySet().stream()
-                .filter(p -> assayGroupIds.contains(p.getKey()) && p.getValue().getLevel() != 0)
+                .filter(p -> dataColumnDescriptorIds.contains(p.getKey()) && p.getValue().getLevel() != 0)
                 .count();
     }
 
@@ -115,17 +115,6 @@ implements KryoSerializable {
         }
 
         return expressionLevel / conditions.size();
-    }
-
-    public boolean isExpressedOnAnyOf(Collection<DataColumnDescriptor> conditions) {
-        for (DataColumnDescriptor condition : conditions) {
-            Double level = getExpressionLevel(condition);
-            if (level != null && level != 0) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public void add(DataColumnDescriptor condition, Expr expression) {

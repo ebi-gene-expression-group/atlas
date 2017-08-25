@@ -153,7 +153,7 @@ public class MicroarrayProfilesHeatMapIT {
 
         for(Object o: profiles){
             MicroarrayProfile profile = (MicroarrayProfile) o;
-            assertThat(profile.isExpressedOnAnyOf(experiment.getDataColumnDescriptors()), is(true));
+            assertThat(profile.getSpecificity(experiment.getDataColumnDescriptors()) > 0, is(true));
             assertThat(profile.getId().isEmpty(), is(false));
             assertThat(profile.getName().isEmpty(), is(false));
         }
