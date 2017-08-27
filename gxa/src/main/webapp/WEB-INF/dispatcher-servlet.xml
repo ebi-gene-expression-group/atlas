@@ -40,12 +40,4 @@
         </property>
     </bean>
 
-    <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig" factory-method="custom"/>
-    <bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build" />
-    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" destroy-method="shutdown"/>
-    <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
-        <property name="defaultRequestConfig" ref="requestConfig" />
-        <property name="connectionManager" ref="httpClientConnectionManager"/>
-    </bean>
-    <bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build" />
 </beans>
