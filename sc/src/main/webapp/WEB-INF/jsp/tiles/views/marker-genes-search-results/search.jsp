@@ -15,8 +15,8 @@
     </div>
 </form>
 
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/atlasAutocomplete.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/atlasAutocomplete.bundle.js"></script>
 
 <script>
   atlasAutocomplete.render({

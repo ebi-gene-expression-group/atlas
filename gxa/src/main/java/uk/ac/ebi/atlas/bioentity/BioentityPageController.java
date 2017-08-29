@@ -99,7 +99,6 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
         model.addAllAttributes(bioEntityPropertyService.modelAttributes(identifier, species,desiredOrderOfPropertyNames,
                 entityName, propertyValuesByType));
 
-        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
         return "search-results";
     }

@@ -18,8 +18,8 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/markerGenesSearchResults.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/markerGenesSearchResults.bundle.js"></script>
 
 <script>
   markerGenesSearchResults.render({

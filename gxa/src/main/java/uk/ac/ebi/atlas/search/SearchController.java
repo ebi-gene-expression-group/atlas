@@ -128,7 +128,7 @@ public class SearchController extends HtmlExceptionHandlingController {
             model.addAttribute("hasDifferentialResults", hasDifferentialResults);
             model.addAttribute("hasBaselineResults", hasBaselineResults);
 
-            model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
 
             return "search-results";
         }

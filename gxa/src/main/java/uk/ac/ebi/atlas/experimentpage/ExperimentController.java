@@ -48,7 +48,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     public String showExperimentPage(Model model,
                                      @PathVariable String experimentAccession,
                                      @RequestParam(defaultValue = "") String accessKey) {
-        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());

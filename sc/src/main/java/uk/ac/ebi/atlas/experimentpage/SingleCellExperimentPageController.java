@@ -54,7 +54,7 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
         model.addAttribute("messagesAboutCells", ImmutableList.of(howManySamples, updates));
         model.addAttribute("species", experiment.getSpecies().getName());
 
-        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
 
         return "experiment-page";
     }

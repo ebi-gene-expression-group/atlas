@@ -11,13 +11,13 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/experimentPage.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPage.bundle.js"></script>
 
 <script type="text/javascript">
     experimentPage.render({
         atlasUrl: '${pageContext.request.contextPath}/',
-        pathToFolderWithBundledResources: '${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/',
+        pathToFolderWithBundledResources: '${pageContext.request.contextPath}/resources/js-bundles/',
         content: ${content},
         target: 'experiment-page'
     });

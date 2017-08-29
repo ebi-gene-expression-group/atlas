@@ -29,7 +29,7 @@ public class SingleCellHomeController extends HtmlExceptionHandlingController {
     @RequestMapping(value = "/home")
     public String getHomePage(Model model) {
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
-        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
         return "home";
     }
 }

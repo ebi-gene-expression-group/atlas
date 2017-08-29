@@ -13,7 +13,7 @@ public class SearchController extends HtmlExceptionHandlingController {
     public String search(@RequestParam(value = "geneId", required = false, defaultValue = "") String geneId,
                          Model model) {
         model.addAttribute("geneId", geneId);
-        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
         return "marker-genes-search-results";
     }
 
