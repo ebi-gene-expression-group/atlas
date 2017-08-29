@@ -11,7 +11,8 @@
     </parent>
 
     <artifactId>gxa</artifactId>
-    <version>3.6</version>
+    <!-- We modify this version in Bamboo plans  -->
+    <version>dev</version>
     <packaging>war</packaging>
 
     <name>Gene Expression Atlas</name>
