@@ -66,11 +66,6 @@ module.exports = {
       "process.env": {
         NODE_ENV: process.env.NODE_ENV === 'production' ? JSON.stringify("production") : JSON.stringify("development")
       }
-    }),
-    // Beacuse copy-webpack-plugin doesn’t wait for WebPack to finish, and the output dir is cleaned above
-    new WebpackShellPlugin({
-      onBuildStart: ['echo Cleaning versioned-resouces...', 'rm -rf ../webapp/versioned-resources/js-bundles', 'echo Done!'],
-      onBuildEnd: ['echo Populating versioned-resources...', 'cp -a ../webapp/resources/js-bundles ../webapp/versioned-resources', 'echo Done!']
     })
   ],
 
