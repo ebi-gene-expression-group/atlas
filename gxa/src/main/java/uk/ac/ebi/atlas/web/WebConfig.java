@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.web;
 
-import uk.ac.ebi.atlas.interceptors.AdminInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -8,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import uk.ac.ebi.atlas.interceptors.AdminInterceptor;
 import uk.ac.ebi.atlas.interceptors.TimingInterceptor;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -30,14 +30,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Inject
     private DataFileHub dataFileHub;
 
+
     // equivalent to mvc:resources
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
 
-        registry.addResourceHandler("/versioned-resources-" + props.getProperty("resources.version") + "/**")
-                .addResourceLocations("/versioned-resources/");
+        registry.addResourceHandler("/resources-" + props.getProperty("projectVersion") + "/**")
+                .addResourceLocations("/resources/");
 
         registry.addResourceHandler("/expdata/**")
                 .addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());

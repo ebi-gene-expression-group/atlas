@@ -31,8 +31,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-        registry.addResourceHandler("/versioned-resources-" + props.getProperty("resources.version") + "/**")
-                .addResourceLocations("/versioned-resources/");
+
         registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
     }
 
