@@ -21,6 +21,11 @@
         </put-attribute>
     </definition>
 
+    <definition name="experiments" extends="base">
+        <put-attribute name="title" value="Experiments &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/experiments.jsp"/>
+    </definition>
+
     <definition name="marker-genes-search-results" extends="base">
         <put-attribute name="title" value="Search results &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/marker-genes-search-results.jsp"/>

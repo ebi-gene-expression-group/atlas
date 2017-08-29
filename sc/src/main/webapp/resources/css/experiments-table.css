@@ -1,0 +1,38 @@
+#experiments-table th {
+    text-align: center;
+    font-size: small;
+}
+
+#experiments-table td {
+    text-align: center;
+    font-size: small;
+}
+
+#experiments-table td.italic {
+    font-style: italic;
+}
+
+#experiments-table_filter input {
+    /* After inspecting Data Tables own inputs... */
+    height: 39px;
+}
+
+#experiments-table select {
+    margin: 0;
+    font-size: small;
+}
+
+#experiments-table tfoot input {
+    margin: 0;
+    font-size: small;
+}
+
+#experiments-table tfoot input.search_init {
+    color: grey;
+    font-style: italic;
+}
+
+/* Make experiments table header inputs (Show and Columns) expanded */
+#experiments-table_wrapper .row {
+    max-width: none;
+}
