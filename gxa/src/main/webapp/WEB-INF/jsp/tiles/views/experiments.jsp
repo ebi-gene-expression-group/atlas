@@ -68,7 +68,7 @@
 <script>
     (function ($) {
         $(document).ready(function () {
-            foundationExperimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}", "${experimentSet}");
+            foundationExperimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}", "${experimentSet}", "${pageContext.request.contextPath}");
         });
     })(jQuery);
 </script>

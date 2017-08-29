@@ -23,12 +23,12 @@ var foundationExperimentsPageModule = (function ($) {
         return html;
     }
 
-    function formatExperimentType(data) {
+    function formatExperimentType(data, contextPath) {
         if (data === 'RNASEQ_MRNA_BASELINE' || data === 'PROTEOMICS_BASELINE') {
-            return '<img src="resources/images/allup2_transparent_bkg.png" alt="baseline"/>';
+            return '<img src= "' + contextPath + '/resources/images/allup2_transparent_bkg.png" alt="baseline"/>';
         }
         if (data === 'RNASEQ_MRNA_DIFFERENTIAL' || data === 'MICROARRAY_ANY') {
-            return '<img src="resources/images/updown_transparent_bkg.png" alt="differential"/>';
+            return '<img src="' + contextPath + '/resources/images/updown_transparent_bkg.png" alt="differential"/>';
         }
         return data;
     }
@@ -57,7 +57,7 @@ var foundationExperimentsPageModule = (function ($) {
 
     var asInitVals = [];
 
-    function _init(experimentType, kingdom, organism, experimentSet) {
+    function _init(experimentType, kingdom, organism, experimentSet, contextPath) {
 
         /* Sort on the 'alt' tags of images in a column */
         $.extend($.fn.dataTableExt.oSort, {
@@ -134,11 +134,11 @@ var foundationExperimentsPageModule = (function ($) {
         var oTable = $experimentsTable.DataTable({
             "autoWidth": false,
             "processing": true,
-            "ajax":"json/experiments",
+            "ajax": contextPath + "/json/experiments",
             "columns":[
                 { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string", "width": "7%",
                     "render": function (data, type, full) {
-                        return formatExperimentType(data);
+                        return formatExperimentType(data, contextPath);
                     } },
                 { "title":"Loaded", "data":"lastUpdate", "className":"center nowrap", 'type': 'date-eu', "width": "6%",
                     "render": function (data, type, full) {
