@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.markergenes;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,7 +24,7 @@ import static uk.ac.ebi.atlas.markergenes.MarkerGenesSearchService.DEFAULT_P_THR
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class MarkerGenesSearchServiceIT {
 
     @Inject

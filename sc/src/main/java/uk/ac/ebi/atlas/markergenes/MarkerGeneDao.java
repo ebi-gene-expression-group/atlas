@@ -64,7 +64,7 @@ public class MarkerGeneDao {
                         .map(rowMap ->
                                 MarkerGeneDto.create(
                                         (String) rowMap.get("experiment_accession"),
-                                        (int) rowMap.get("perplexity"),
+                                        (int) rowMap.get("k"),
                                         (int) rowMap.get("cluster_id"),
                                         (double) rowMap.get("marker_probability")))
                         .collect(toList());
@@ -76,10 +76,10 @@ public class MarkerGeneDao {
         markerGeneDtos.stream()
                 .collect(groupingBy(MarkerGeneDao.MarkerGeneDto::experimentAccession))
                 .forEach((experimentAccession, mgdsByExperimentAccession) -> mgdsByExperimentAccession.stream()
-                        .collect(groupingBy(MarkerGeneDao.MarkerGeneDto::perplexity))
+                        .collect(groupingBy(MarkerGeneDao.MarkerGeneDto::k))
                         .values()
-                        .forEach(mgdsByExperimentAccessionAndPerplexity ->
-                                builder.add(MarkerGeneProfile.create(mgdsByExperimentAccessionAndPerplexity))));
+                        .forEach(mgdsByExperimentAccessionAndK ->
+                                builder.add(MarkerGeneProfile.create(mgdsByExperimentAccessionAndK))));
 
         return builder.build();
     }
@@ -96,12 +96,12 @@ public class MarkerGeneDao {
 
     @AutoValue
     static abstract class MarkerGeneDto {
-        static MarkerGeneDto create(String experimentAccession, int perplexity, int clusterId, double p) {
-            return new AutoValue_MarkerGeneDao_MarkerGeneDto(experimentAccession, perplexity, clusterId, p);
+        static MarkerGeneDto create(String experimentAccession, int k, int clusterId, double p) {
+            return new AutoValue_MarkerGeneDao_MarkerGeneDto(experimentAccession, k, clusterId, p);
         }
 
         abstract String experimentAccession();
-        abstract int perplexity();
+        abstract int k();
         abstract int clusterId();
         abstract double p();
     }

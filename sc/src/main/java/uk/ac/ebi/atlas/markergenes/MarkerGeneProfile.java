@@ -18,12 +18,12 @@ import uk.ac.ebi.atlas.markergenes.MarkerGeneDao.MarkerGeneDto;
 @AutoValue
 public abstract class MarkerGeneProfile {
     public abstract String experimentAccession();
-    public abstract int perplexity();
+    public abstract int k();
     public abstract ImmutableList<ImmutablePair<Integer, Double>> clusters();
 
-    private static MarkerGeneProfile create(String experimentAccession, int perplexity, List<Pair<Integer, Double>> clusters) {
+    private static MarkerGeneProfile create(String experimentAccession, int k, List<Pair<Integer, Double>> clusters) {
         return new AutoValue_MarkerGeneProfile(
-                experimentAccession, perplexity,
+                experimentAccession, k,
                 ImmutableList.copyOf(
                         clusters.stream()
                                 .map(cluster -> ImmutablePair.of(cluster.getLeft(), cluster.getRight()))
@@ -37,7 +37,7 @@ public abstract class MarkerGeneProfile {
 
         return create (
                 head.experimentAccession(),
-                head.perplexity(),
+                head.k(),
                 markerGeneDtos.stream()
                         .map(mgd -> Pair.of(mgd.clusterId(), mgd.p()))
                         .collect(toList()));
@@ -49,12 +49,12 @@ public abstract class MarkerGeneProfile {
                 "Error building marker gene profile: experiment accession must be unique");
 
         checkArgument(
-                markerGeneDtos.stream().collect(groupingBy(MarkerGeneDto::perplexity)).keySet().size() == 1,
+                markerGeneDtos.stream().collect(groupingBy(MarkerGeneDto::k)).keySet().size() == 1,
                 "Error building marker gene profile: perplexity must be unique");
 
         markerGeneDtos.stream()
                 .collect(groupingBy(
-                        mgd -> Triple.of(mgd.experimentAccession(), mgd.perplexity(), mgd.clusterId())))
+                        mgd -> Triple.of(mgd.experimentAccession(), mgd.k(), mgd.clusterId())))
                 .forEach(
                         (key, value) -> checkArgument(value.size() == 1,
                                 String.format(
@@ -64,9 +64,9 @@ public abstract class MarkerGeneProfile {
 
         markerGeneDtos.forEach(
                 mgd -> checkArgument(
-                        mgd.perplexity() > mgd.clusterId(),
+                        mgd.k() > mgd.clusterId(),
                         String.format(
                                 "Error building marker gene profile: perplexity is %d but cluster ID is %d",
-                                mgd.perplexity(), mgd.clusterId())));
+                                mgd.k(), mgd.clusterId())));
     }
 }

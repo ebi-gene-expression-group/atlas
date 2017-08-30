@@ -45,7 +45,7 @@ public class MarkerGenesSearchService {
                     new URIBuilder()
                             .setPath("/gxa_sc/experiments/" + markerGeneProfile.experimentAccession())
                             .addParameter("geneId", geneId)
-                            .addParameter("k", Integer.toString(markerGeneProfile.perplexity()))
+                            .addParameter("k", Integer.toString(markerGeneProfile.k()))
                             .addParameter("clusterId", gson.toJson(markerGeneProfile.clusters().stream().map(Pair::getLeft).collect(toList())))
                             .build()
                             .toString());
