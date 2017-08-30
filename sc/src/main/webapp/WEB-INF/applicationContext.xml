@@ -63,5 +63,8 @@
     </bean>
     <!-- End of Solr configuration -->
 
+    <context:component-scan base-package="uk.ac.ebi.atlas"/>
+
     <util:properties id="configuration" location="classpath:configuration.properties"/>
+
 </beans>
