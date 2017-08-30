@@ -50,7 +50,7 @@ public abstract class MarkerGeneProfile {
 
         checkArgument(
                 markerGeneDtos.stream().collect(groupingBy(MarkerGeneDto::k)).keySet().size() == 1,
-                "Error building marker gene profile: perplexity must be unique");
+                "Error building marker gene profile: k must be unique");
 
         markerGeneDtos.stream()
                 .collect(groupingBy(
@@ -58,15 +58,15 @@ public abstract class MarkerGeneProfile {
                 .forEach(
                         (key, value) -> checkArgument(value.size() == 1,
                                 String.format(
-                                        "Error building marker gene profile: experiment accession %s, " +
-                                                "perplexity %d and cluster ID %d must be unique",
+                                        "Error building marker gene profile: experiment accession %s, k %d and " +
+                                        "cluster ID %d must be unique",
                                         key.getLeft(), key.getMiddle(), key.getRight())));
 
         markerGeneDtos.forEach(
                 mgd -> checkArgument(
                         mgd.k() > mgd.clusterId(),
                         String.format(
-                                "Error building marker gene profile: perplexity is %d but cluster ID is %d",
+                                "Error building marker gene profile: k is %d but cluster ID is %d",
                                 mgd.k(), mgd.clusterId())));
     }
 }

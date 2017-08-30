@@ -25,7 +25,7 @@ public class MarkerGeneDao {
     private static final int BATCH_SIZE = 2000;
     private static final String MARKER_GENE_INSERT_STATEMENT =
             "INSERT INTO marker_genes " +
-            "(gene_id, experiment_accession, perplexity, cluster_id, marker_probability) VALUES (?, ?, ?, ?, ?)";
+            "(gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES (?, ?, ?, ?, ?)";
     private static final String MARKER_GENE_SELECT_STATEMENT =
             "SELECT * FROM marker_genes WHERE gene_id=? AND marker_probability>?";
 

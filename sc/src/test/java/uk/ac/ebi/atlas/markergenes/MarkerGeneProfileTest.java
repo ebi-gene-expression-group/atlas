@@ -30,14 +30,14 @@ public class MarkerGeneProfileTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidPerplexityAndClusterId() throws Exception {
+    public void invalidKAndClusterId() throws Exception {
         MarkerGeneProfile.create(
                 ImmutableList.of(
                         MarkerGeneDao.MarkerGeneDto.create("E-MTAB-4388", 2, 2, 0.999)));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void duplicatePerplexityAndClusterId() throws Exception {
+    public void duplicateKAndClusterId() throws Exception {
         MarkerGeneProfile.create(
                 ImmutableList.of(
                         MarkerGeneDao.MarkerGeneDto.create("E-MTAB-4388", 2, 0, 0.989),

@@ -37,7 +37,7 @@ public class MarkerGenesSearchController {
         results.forEach(pair -> {
             JsonObject markerProfile = new JsonObject();
             markerProfile.addProperty("experimentAccession", pair.getLeft().experimentAccession());
-            markerProfile.addProperty("perplexity", pair.getLeft().k());
+            markerProfile.addProperty("k", pair.getLeft().k());
 
             JsonArray clusters = new JsonArray();
             pair.getLeft().clusters().forEach(clusterPair -> {

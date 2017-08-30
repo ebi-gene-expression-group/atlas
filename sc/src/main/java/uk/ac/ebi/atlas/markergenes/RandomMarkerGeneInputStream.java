@@ -18,14 +18,14 @@ public class RandomMarkerGeneInputStream implements ObjectInputStream<Object[]> 
     // Change to higher or lower values to decrease or increase, respectively, the probability of a gene being in the
     // same experiment with different cluster IDs
     private final int NUMBER_OF_GENES = 10;
-    private final int PERPLEXITY_VALUES = 4;
+    private final int K_VALUES = 4;
 
     private final List<Object[]> markerGenes;
     private int position;
 
     public RandomMarkerGeneInputStream(String experimentAccession, int size) {
         markerGenes = IntStream.rangeClosed(1, size).boxed()
-                .map(i -> Triple.of(randomHumanGeneId(), experimentAccession, randomPerplexityCluster()))
+                .map(i -> Triple.of(randomHumanGeneId(), experimentAccession, randomKCluster()))
                 .distinct()
                 .map(triple -> new Object[] {triple.getLeft(), triple.getMiddle(), triple.getRight().getLeft(), triple.getRight().getRight(), ThreadLocalRandom.current().nextDouble()})
                 .collect(toList());
@@ -46,8 +46,8 @@ public class RandomMarkerGeneInputStream implements ObjectInputStream<Object[]> 
         return "ENSG" + leftPad(Integer.toString(ThreadLocalRandom.current().nextInt(1, NUMBER_OF_GENES)), 11, '0');
     }
 
-    private Pair<Integer, Integer> randomPerplexityCluster() {
-        int k = ThreadLocalRandom.current().nextInt(2, PERPLEXITY_VALUES);
+    private Pair<Integer, Integer> randomKCluster() {
+        int k = ThreadLocalRandom.current().nextInt(2, K_VALUES);
         return Pair.of(k, ThreadLocalRandom.current().nextInt(0, k));
     }
 }
