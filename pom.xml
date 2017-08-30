@@ -542,21 +542,6 @@
         </profile>
 
         <profile>
-            <id>integration-sc</id>
-            <properties>
-                <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data-sc</data.files.location>
-                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
-                <jdbc.username>atlas3it</jdbc.username>
-                <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
-                <solr.host>lime.ebi.ac.uk</solr.host>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
-
-        <profile>
             <!--build used for staging and production -->
             <id>production</id>
             <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
