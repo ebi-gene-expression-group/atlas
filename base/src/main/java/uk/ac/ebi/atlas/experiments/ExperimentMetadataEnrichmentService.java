@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experiments;
 
+import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,7 +22,7 @@ public class ExperimentMetadataEnrichmentService {
     }
 
 
-    private String getComparisonTitle(Experiment e, String chosenContrast){
+    private String comparisonTitle(Experiment e, String chosenContrast){
         if(e!= null && e instanceof DifferentialExperiment){
            Contrast c = ((DifferentialExperiment) e).getDataColumnDescriptor(chosenContrast);
             if(c != null){
@@ -31,17 +32,28 @@ public class ExperimentMetadataEnrichmentService {
         return chosenContrast;
     }
 
-    private String experimentName(@Nullable Experiment e, String experimentAccession){
-        return  e!= null ? e.getDisplayName() : experimentAccession;
+    private String experimentName(@Nullable Experiment experiment, String experimentAccession){
+        return Optional.fromNullable(experiment).transform(e -> e.getDescription()).or(experimentAccession);
+    }
+
+    private JsonObject nameWithUrl(String name, String url){
+        JsonObject result = new JsonObject();
+        result.addProperty("name", name);
+        result.addProperty("url",url);
+        return result;
+    }
+
+    private JsonObject experimentObject(Experiment e, String experimentAccession){
+        return nameWithUrl(
+                experimentName(e, experimentAccession),
+                MessageFormat.format("/gxa/experiments/{0}", experimentAccession));
     }
 
     private JsonObject comparisonObject(Experiment e, String experimentAccession, String chosenContrast){
-        JsonObject result = new JsonObject();
-        result.addProperty("name", getComparisonTitle(e, chosenContrast));
-        result.addProperty("url",
+        return nameWithUrl(
+                comparisonTitle(e, chosenContrast),
                 MessageFormat.format("/gxa/experiments/{0}?selectedColumnIds={1}",
                         experimentAccession, chosenContrast));
-        return result;
     }
 
     private Experiment getExperimentOrNull(String experimentAccession){
@@ -60,8 +72,8 @@ public class ExperimentMetadataEnrichmentService {
                             e,
                             inObject.get("experiment_accession").getAsString(),
                             inObject.get("comparison_id").getAsString()));
-            inObject.addProperty("experiment",
-                    experimentName(e, inObject.get("experiment_accession").getAsString()));
+            inObject.add("experiment",
+                    experimentObject(e, inObject.get("experiment_accession").getAsString()));
         }
         return inObject;
     }

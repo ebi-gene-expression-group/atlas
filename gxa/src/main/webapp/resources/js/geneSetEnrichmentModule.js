@@ -30,7 +30,7 @@ var geneSetEnrichmentModule = (function ($) {
                 {
                     "title": "Experiment", "data": "experiment", "className": "center", "type": "center",
                     "render": function (data, type, full) {
-                        return data;
+                        return formatExperimentDescription(data);
                     }
                 },
                 {
