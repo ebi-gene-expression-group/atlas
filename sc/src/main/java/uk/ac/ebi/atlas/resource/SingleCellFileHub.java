@@ -12,7 +12,7 @@ import javax.inject.Named;
 @Named
 public class SingleCellFileHub extends DataFileHub {
 
-    final static String SINGLECELL_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
+    private final static String SINGLE_CELL_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
 
     @Inject
     public SingleCellFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation) {
@@ -32,7 +32,7 @@ public class SingleCellFileHub extends DataFileHub {
 
         SingleCellExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.data = new TsvFile.ReadAsStream(dataFilesLocation, SINGLECELL_FILE_PATH_TEMPLATE, experimentAccession);
+            this.data = new TsvFile.ReadAsStream(dataFilesLocation, SINGLE_CELL_FILE_PATH_TEMPLATE, experimentAccession);
 
         }
     }
