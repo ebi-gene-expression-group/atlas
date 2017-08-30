@@ -45,13 +45,16 @@ public class DataFileHub {
     final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
     final static String QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
     final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
-    final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
+    final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE =
+            "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
     final static String COEXPRESSION_FILE_TEMPLATE = "/magetab/{0}/{0}-coexpressions.tsv.gz";
 
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
-        Validate.notNull(dataFilesLocation, "Data files location not found - if this is a developement environment try maven clean/install");
+        Validate.notNull(
+                dataFilesLocation,
+                "Data files location not found - if this is a developement environment try maven clean/install");
         this.dataFilesLocation = dataFilesLocation;
     }
 
@@ -88,7 +91,8 @@ public class DataFileHub {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
     }
 
-    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession, ProfileStreamOptions<?> profileStreamOptions){
+    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
+                                                      ProfileStreamOptions<?> profileStreamOptions){
         return new KryoFile(dataFilesLocation, experimentAccession, profileStreamOptions);
     }
 
@@ -109,20 +113,27 @@ public class DataFileHub {
         public final AtlasResource<TsvWriter> adminOpLogAppend;
         public final AtlasResource<Set<Path>> qcFolder;
 
-        ExperimentFiles(String experimentAccession){
-            this.analysisMethods = new TsvFile.ReadOnly(dataFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.configuration = new XmlFile.ReadOnly(dataFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
+        ExperimentFiles(String experimentAccession) {
+            this.analysisMethods =
+                    new TsvFile.ReadOnly(dataFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.configuration =
+                    new XmlFile.ReadOnly(dataFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
 
-            this.experimentDesign = new TsvFile.ReadOnly(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
-            this.experimentDesignWrite = new TsvFile.Overwrite(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
+            this.experimentDesign =
+                    new TsvFile.ReadOnly(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
+            this.experimentDesignWrite =
+                    new TsvFile.Overwrite(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
 
-            this.condensedSdrf = new TsvFile.ReadOnly(dataFilesLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+            this.condensedSdrf =
+                    new TsvFile.ReadOnly(dataFilesLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
 
             this.idf = new TsvFile.ReadOnly(dataFilesLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
 
             this.adminOpLog = new TsvFile.ReadOnly(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            this.adminOpLogWrite = new TsvFile.Overwrite(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            this.adminOpLogAppend = new TsvFile.Appendable(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            this.adminOpLogWrite =
+                    new TsvFile.Overwrite(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            this.adminOpLogAppend =
+                    new TsvFile.Appendable(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
             this.qcFolder = new Directory(dataFilesLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
         }
 
@@ -133,11 +144,15 @@ public class DataFileHub {
         private final AtlasResource<ObjectInputStream<String[]>> tpms;
         RnaSeqBaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.fpkms = new TsvFile.ReadAsStream(dataFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.tpms = new TsvFile.ReadAsStream(dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.fpkms =
+                    new TsvFile.ReadAsStream(
+                            dataFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.tpms =
+                    new TsvFile.ReadAsStream(
+                            dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
         }
 
-        public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit){
+        public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit) {
             switch(unit){
                 case FPKM:
                     return fpkms;
@@ -148,7 +163,7 @@ public class DataFileHub {
             }
         }
 
-        public ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles(){
+        public ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles() {
             ImmutableList.Builder<ExpressionUnit.Absolute.Rna> b = ImmutableList.builder();
             if(tpms.exists()){
                 b.add(ExpressionUnit.Absolute.Rna.TPM);
@@ -164,7 +179,9 @@ public class DataFileHub {
         public final AtlasResource<ObjectInputStream<String[]>> main;
         ProteomicsBaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.main = new TsvFile.ReadAsStream(dataFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
+            this.main =
+                    new TsvFile.ReadAsStream(
+                            dataFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
@@ -175,7 +192,8 @@ public class DataFileHub {
         BaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.factors = new XmlFile.ReadOnly(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.coexpressions = new TsvFile.ReadCompressed(dataFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
+            this.coexpressions =
+                    new TsvFile.ReadCompressed(dataFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
         }
     }
 
@@ -184,7 +202,9 @@ public class DataFileHub {
 
         DifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.percentileRanks = new TsvFile.ReadAsStream(dataFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.percentileRanks =
+                    new TsvFile.ReadAsStream(
+                            dataFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
@@ -194,21 +214,34 @@ public class DataFileHub {
 
         RnaSeqDifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.analytics = new TsvFile.ReadAsStream(dataFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.rawCounts = new TsvFile.ReadOnly(dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.analytics =
+                    new TsvFile.ReadAsStream(
+                            dataFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.rawCounts =
+                    new TsvFile.ReadOnly(
+                            dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
     public class MicroarrayExperimentFiles extends DifferentialExperimentFiles {
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
-        public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1 colour specific
-        public final AtlasResource<TsvReader> logFoldChanges;   // Microarray 2 colour specific
+        public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1-colour specific
+        public final AtlasResource<TsvReader> logFoldChanges;   // Microarray 2-colour specific
 
         MicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
             super(experimentAccession);
-            analytics = new TsvFile.ReadAsStream(dataFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
-            normalizedExpressions = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
-            logFoldChanges = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
+            analytics =
+                    new TsvFile.ReadAsStream(
+                            dataFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE,
+                            experimentAccession, arrayDesign);
+            normalizedExpressions =
+                    new TsvFile.ReadOnly(
+                            dataFilesLocation, MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE,
+                            experimentAccession, arrayDesign);
+            logFoldChanges =
+                    new TsvFile.ReadOnly(
+                            dataFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE,
+                            experimentAccession, arrayDesign);
         }
     }
 
