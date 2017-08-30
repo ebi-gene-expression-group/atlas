@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search;
 
-
 import com.google.gson.JsonObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +15,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class GuysDataForGeneControllerIT {
 
 
