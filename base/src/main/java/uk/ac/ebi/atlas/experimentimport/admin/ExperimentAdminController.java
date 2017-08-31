@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,8 +24,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ExperimentAdminController extends JsonExceptionHandlingController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminController.class);
 
     private final ExperimentOps experimentOps;
     private final ExperimentAdminHelpPage helpPage = new ExperimentAdminHelpPage();
@@ -37,7 +36,7 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             value = "",
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
-    public void listAllExperiments(HttpServletResponse response) {
+    public void listAllExperiments(HttpServletResponse response) throws IOException {
         doOp("all", "list" ,response);
     }
 
@@ -65,8 +64,12 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             value = "/{accessions}/{op}",
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
-    public void doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter, HttpServletResponse response) {
+    public void doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter, HttpServletResponse response) throws IOException {
+        JsonWriter writer = new JsonWriter(response.getWriter());
+        writer.setIndent("  ");
+        writer.beginArray();
         try {
+
             final Collection<String> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
                     ? ImmutableList.of()
                     : ImmutableList.copyOf(readAccessions(accessionParameter));
@@ -74,18 +77,17 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             Iterable<JsonElement> result = maybeOps(opParameter)
                     .transform(ops -> experimentOps.dispatchAndPerform(accessions, ops)).or(ImmutableList.of(usageMessage(opParameter)));
 
-            JsonWriter writer = new JsonWriter(response.getWriter());
-            writer.setIndent("  ");
-            writer.beginArray();
             for (JsonElement element : result) {
                 gson.toJson(element, writer);
                 writer.flush();
             }
-            writer.endArray();
-            writer.close();
 
         } catch (Exception e) {
-            LOGGER.error(gson.toJson(errorMessage(accessionParameter, e)));
+            gson.toJson(errorMessage(accessionParameter, e),writer);
+        } finally {
+            writer.endArray();
+            writer.flush();
+            writer.close();
         }
     }
 
