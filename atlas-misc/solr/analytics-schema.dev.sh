@@ -3,6 +3,31 @@
 HOST="localhost:8983"
 CORE="analytics"
 
+printf "\n\nDelete field type text_en_tight"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "delete-field-type":
+  {
+    "name": "text_en_tight"
+  }
+}' http://$HOST/solr/$CORE/schema
+
+printf "\n\Create field type text_en_tight"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field-type" : {
+     "name":"text_en_tight",
+     "class":"solr.TextField",
+     "positionIncrementGap":"100",
+     "analyzer" : {
+        "tokenizer":{
+           "class":"solr.WhitespaceTokenizerFactory" },
+        "filters":[{
+           "class":"solr.LowerCaseFilterFactory"},
+           {
+           "class":"solr.EnglishPossessiveFilterFactory"},
+           {
+           "class":"solr.PorterStemFilterFactory"}]}}
+}' http://$HOST/solr/$CORE/schema
+
 printf "\n\nDelete field bioentity_identifier"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "delete-field":
@@ -329,6 +354,6 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name": "conditions_search",
-    "type": "text_en"
+    "type": "text_en_tight"
   }
 }' http://$HOST/solr/$CORE/schema
