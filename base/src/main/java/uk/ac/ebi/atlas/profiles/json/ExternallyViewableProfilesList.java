@@ -28,22 +28,30 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
     public ExternallyViewableProfilesList(GeneProfilesList<Prof> profiles,
                                           Function<Prof, URI> provideLinkToProfile,
                                           List<DataColumnDescriptor> prescribedOrderOfColumns,
-                                          Function<Prof, Unit> expressionUnitForProfile){
+                                          Function<Prof, Unit> expressionUnitForProfile) {
         this.profiles = profiles;
         this.provideLinkToProfile = provideLinkToProfile;
         this.prescribedOrderOfColumns = prescribedOrderOfColumns;
         this.expressionUnitForProfile = expressionUnitForProfile;
     }
 
-    public static ExternallyViewableProfilesList<FactorAcrossExperiments, BaselineExperimentProfile, ExpressionUnit.Absolute>
-    createForExperimentProfiles(SemanticQuery geneQuery, BaselineExperimentProfilesList experimentProfiles, List<FactorAcrossExperiments> dataColumns) {
+    public static
+    ExternallyViewableProfilesList<FactorAcrossExperiments, BaselineExperimentProfile, ExpressionUnit.Absolute>
+    createForExperimentProfiles(SemanticQuery geneQuery,
+                                BaselineExperimentProfilesList experimentProfiles,
+                                List<FactorAcrossExperiments> dataColumns) {
         return new ExternallyViewableProfilesList<>(
-                experimentProfiles, new LinkToBaselineProfile(geneQuery), dataColumns, (Function<BaselineExperimentProfile, ExpressionUnit.Absolute>) baselineExperimentProfile -> baselineExperimentProfile.getExperimentType().isRnaSeqBaseline() ? ExpressionUnit.Absolute.Rna.TPM : ExpressionUnit.Absolute.Protein.ANY);
+                experimentProfiles,
+                new LinkToBaselineProfile(geneQuery),
+                dataColumns,
+                baselineExperimentProfile -> baselineExperimentProfile.getExperimentType().isRnaSeqBaseline() ?
+                        ExpressionUnit.Absolute.Rna.TPM :
+                        ExpressionUnit.Absolute.Protein.ANY);
     }
 
-    public JsonObject asJson(){
+    public JsonObject asJson() {
         JsonObject result = new JsonObject();
-        for(Map.Entry<String, String> e: profiles.properties().entrySet()){
+        for (Map.Entry<String, String> e: profiles.properties().entrySet()) {
             result.addProperty(e.getKey(), e.getValue());
         }
 
@@ -56,15 +64,16 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         return result;
     }
 
-    private JsonObject convert(Prof profile){
+    private JsonObject convert(Prof profile) {
 
         JsonObject result = new JsonObject();
-        for(Map.Entry<String, String> e: profile.properties().entrySet()){
+        for (Map.Entry<String, String> e: profile.properties().entrySet()) {
             result.addProperty(e.getKey(), e.getValue());
         }
         JsonArray expressions = new JsonArray();
-        for(DataColumnDescriptor c: prescribedOrderOfColumns){
-            expressions.add(Optional.ofNullable(profile.getExpression(c)).map(e -> e.toJson()).orElse(new JsonObject()));
+        for (DataColumnDescriptor c: prescribedOrderOfColumns) {
+            expressions.add(Optional.ofNullable(
+                    profile.getExpression(c)).map(e -> e.toJson()).orElse(new JsonObject()));
         }
         result.add("expressions", expressions);
         result.addProperty("uri", provideLinkToProfile.apply(profile).toString());
@@ -73,7 +82,5 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         return result;
 
     }
-
-
 
 }
