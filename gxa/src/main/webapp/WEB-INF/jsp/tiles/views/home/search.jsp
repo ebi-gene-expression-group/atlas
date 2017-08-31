@@ -22,7 +22,7 @@
                                 Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
                                 <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
                                 <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>,
-                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0019080"}]'>GO:0019080 (viral gene expression)</a>,
+                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0010468", "category":"go"}]'>GO:0010468 (regulation of gene expression)</a>,
                                 <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"PO:0004714"}]'>PO:0004714 (terminal flower bud)</a>
                             </div>
                         </div>
