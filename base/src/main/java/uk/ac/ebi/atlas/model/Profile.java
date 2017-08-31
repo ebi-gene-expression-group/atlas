@@ -23,11 +23,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.util.stream.Collectors.toList;
 
-public abstract class Profile<
-        DataColumnDescriptor extends DescribesDataColumns,
-        Expr extends Expression,
-        Self extends Profile<DataColumnDescriptor, Expr, Self>>
-
+public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
+                              Expr extends Expression,
+                              Self extends Profile<DataColumnDescriptor, Expr, Self>>
 implements KryoSerializable {
 
     protected Map<String, Expr> expressionsByCondition = new HashMap<>();
