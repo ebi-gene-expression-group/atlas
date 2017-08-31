@@ -75,9 +75,7 @@
 
             <!-- Before running ITs, use running Tomcat to mount gxa nd then we can run EITs against
                  selenium.test.host:selenium.test.portnumber, usually lime:14092, see RestAssuredFixture or URLBuilder;
-                 as noted below, if EITs depend on Spring’s MockMvc this section could be removed. If any test fails
-                 the newly generated WAR is removed and the previous one is restored at /gxa, therefore only green
-                 builds are available in lime:14092/gxa -->
+                 as noted below, if EITs depend on Spring’s MockMvc this section could be removed. -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
