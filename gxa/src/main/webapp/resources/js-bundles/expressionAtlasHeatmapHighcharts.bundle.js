@@ -1,7 +1,7 @@
 var expressionAtlasHeatmapHighcharts =
 webpackJsonp_name_([5],{
 
-/***/ 455:
+/***/ 453:
 /*!***************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/index.js ***!
   \***************************************************/
@@ -17,11 +17,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 138);
+var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 139);
 
 exports.render = _expressionAtlasHeatmapHighcharts.render;
 
 /***/ })
 
-},[455]);
+},[453]);
 //# sourceMappingURL=expressionAtlasHeatmapHighcharts.bundle.js.map
