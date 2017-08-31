@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.base.Function;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
+import uk.ac.ebi.atlas.experimentpage.LinkToGene;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -16,9 +16,6 @@ import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
-import javax.annotation.Nullable;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -42,18 +39,6 @@ public class DifferentialExperimentPageService
 
     }
 
-    Function<P, URI> linkToGenes = new Function<P, URI>() {
-        @Nullable
-        @Override
-        public URI apply(@Nullable P differentialProfile) {
-            try {
-                return new URI("genes/"+differentialProfile.getId());
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    };
-
     public JsonObject getResultsForExperiment(E experiment,String accessKey, K preferences) {
 
         JsonObject result = new JsonObject();
@@ -72,7 +57,7 @@ public class DifferentialExperimentPageService
                 result.add("columnGroupings", new JsonArray());
                 result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
                 result.add("profiles", new ExternallyViewableProfilesList<>(
-                        differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn(),
+                        differentialProfiles, new LinkToGene<>(), requestContext.getDataColumnsToReturn(),
                         p -> ExpressionUnit.Relative.FOLD_CHANGE).asJson());
 
                 return result;

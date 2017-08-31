@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.json;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,6 +20,7 @@ import javax.annotation.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -31,7 +31,9 @@ public class ExternallyViewableProfilesListTest {
     public void weCanSerializeDataForTheWidget() throws Exception {
         String defaultQueryFactorType = "type1";
 
-        BaselineExperimentProfile firstProfile = new BaselineExperimentProfile(BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_1"),
+        BaselineExperimentProfile firstProfile =
+                new BaselineExperimentProfile(
+                        BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_1"),
                         new FactorSet());
 
         FactorAcrossExperiments f11 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "11"));
@@ -53,13 +55,19 @@ public class ExternallyViewableProfilesListTest {
         profiles.add(firstProfile);
         profiles.add(secondProfile);
 
-        JsonObject result = ExternallyViewableProfilesList.createForExperimentProfiles(SemanticQuery.create(), profiles,factorsAcrossExperiments).asJson();
+        JsonObject result =
+                ExternallyViewableProfilesList.createForExperimentProfiles(
+                        SemanticQuery.create(), profiles,factorsAcrossExperiments).asJson();
 
 
-        assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(firstProfile, secondProfile).size()));
+        assertThat(
+                result.get("rows").getAsJsonArray().size(),
+                is(ImmutableList.of(firstProfile, secondProfile).size()));
 
         for(JsonElement row: result.get("rows").getAsJsonArray()){
-            assertThat(row.getAsJsonObject().get("expressions").getAsJsonArray().size(), is(factorsAcrossExperiments.size()));
+            assertThat(
+                    row.getAsJsonObject().get("expressions").getAsJsonArray().size(),
+                    is(factorsAcrossExperiments.size()));
         }
 
     }
@@ -97,13 +105,17 @@ public class ExternallyViewableProfilesListTest {
         profiles.add(p2);
 
         JsonObject result =
-                new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments, baselineProfile -> ExpressionUnit.Absolute.Rna.TPM).asJson();
+                new ExternallyViewableProfilesList<>(
+                        profiles, provideLinkToProfile, factorsAcrossExperiments,
+                        baselineProfile -> ExpressionUnit.Absolute.Rna.TPM).asJson();
 
 
         assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(p1, p2).size()));
 
         for(JsonElement row: result.get("rows").getAsJsonArray()){
-            assertThat(row.getAsJsonObject().get("expressions").getAsJsonArray().size(), is(factorsAcrossExperiments.size()));
+            assertThat(
+                    row.getAsJsonObject().get("expressions").getAsJsonArray().size(),
+                    is(factorsAcrossExperiments.size()));
         }
     }
 
@@ -144,7 +156,10 @@ public class ExternallyViewableProfilesListTest {
         profiles.add(p1);
         profiles.add(p2);
 
-        JsonObject result = new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments, rnaSeqProfile -> ExpressionUnit.Relative.FOLD_CHANGE).asJson();
+        JsonObject result =
+                new ExternallyViewableProfilesList<>(
+                        profiles, provideLinkToProfile, factorsAcrossExperiments,
+                        rnaSeqProfile -> ExpressionUnit.Relative.FOLD_CHANGE).asJson();
 
 
         assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(p1, p2).size()));

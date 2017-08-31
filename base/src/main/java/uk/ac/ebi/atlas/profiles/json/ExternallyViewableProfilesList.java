@@ -1,9 +1,13 @@
 package uk.ac.ebi.atlas.profiles.json;
 
-import com.google.common.base.Function;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
@@ -13,22 +17,21 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class ExternallyViewableProfilesList<DataColumnDescriptor extends DescribesDataColumns,
-        Prof extends Profile<DataColumnDescriptor, ? extends Expression, Prof>, Unit extends ExpressionUnit> {
+                                            Prof extends Profile<DataColumnDescriptor, ? extends Expression, Prof>,
+                                            Unit extends ExpressionUnit> {
 
     private final GeneProfilesList<Prof> profiles;
-
     private final Function<Prof, URI> provideLinkToProfile;
-
     private final List<DataColumnDescriptor> prescribedOrderOfColumns;
-
     private final Function<Prof, Unit> expressionUnitForProfile;
 
     public ExternallyViewableProfilesList(GeneProfilesList<Prof> profiles,
                                           Function<Prof, URI> provideLinkToProfile,
                                           List<DataColumnDescriptor> prescribedOrderOfColumns,
-                                          Function<Prof, Unit> expressionUnitForProfile) {
+                                          Function<Prof, Unit> expressionUnitForProfile){
         this.profiles = profiles;
         this.provideLinkToProfile = provideLinkToProfile;
         this.prescribedOrderOfColumns = prescribedOrderOfColumns;
@@ -51,12 +54,12 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
 
     public JsonObject asJson() {
         JsonObject result = new JsonObject();
-        for (Map.Entry<String, String> e: profiles.properties().entrySet()) {
+        for(Map.Entry<String, String> e: profiles.properties().entrySet()){
             result.addProperty(e.getKey(), e.getValue());
         }
 
         JsonArray rows = new JsonArray();
-        for(Prof profile : profiles){
+        for(Prof profile : profiles) {
             rows.add(convert(profile));
         }
         result.add("rows", rows);
@@ -72,8 +75,8 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         }
         JsonArray expressions = new JsonArray();
         for (DataColumnDescriptor c: prescribedOrderOfColumns) {
-            expressions.add(Optional.ofNullable(
-                    profile.getExpression(c)).map(e -> e.toJson()).orElse(new JsonObject()));
+            expressions.add(Optional.ofNullable(profile.getExpression(c))
+                    .map(e -> e.toJson()).orElse(new JsonObject()));
         }
         result.add("expressions", expressions);
         result.addProperty("uri", provideLinkToProfile.apply(profile).toString());
@@ -82,5 +85,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         return result;
 
     }
+
+
 
 }

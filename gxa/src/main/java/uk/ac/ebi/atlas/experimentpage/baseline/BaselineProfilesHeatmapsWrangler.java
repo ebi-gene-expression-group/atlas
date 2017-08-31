@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.experimentpage.LinkToGene;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -17,10 +17,8 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import javax.annotation.Nullable;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
+import java.util.function.Function;
 
 public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolute> {
 
@@ -33,18 +31,6 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
     private final BaselineExperiment experiment;
     private final BaselineRequestContext<Unit> requestContext;
     private final CoexpressedGenesService coexpressedGenesService;
-
-    private final Function<BaselineProfile, URI> linkToGenes = new Function<BaselineProfile, URI>() {
-        @Nullable
-        @Override
-        public URI apply(@Nullable BaselineProfile baselineProfile) {
-            try {
-                return new URI("genes/"+baselineProfile.getId());
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    };
 
     private final Function<BaselineProfile, Unit> provideUnits = new Function<BaselineProfile, Unit>() {
         @Override
@@ -85,7 +71,7 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
 
     public JsonObject getJsonProfiles()  {
         fetchProfilesIfMissing();
-        return new ExternallyViewableProfilesList<>(jsonProfiles,linkToGenes,
+        return new ExternallyViewableProfilesList<>(jsonProfiles, new LinkToGene<>(),
                 requestContext.getDataColumnsToReturn(), provideUnits).asJson();
     }
 
@@ -111,7 +97,7 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
                                 baselineProfilesHeatMap.fetchInPrescribedOrder(
                                         coexpressedStuff.get().getRight(), experiment, requestContext,
                                         coexpressedStuff.get().getLeft()),
-                                linkToGenes,
+                                new LinkToGene<>(),
                                 requestContext.getDataColumnsToReturn(), provideUnits)
                                 .asJson());
 

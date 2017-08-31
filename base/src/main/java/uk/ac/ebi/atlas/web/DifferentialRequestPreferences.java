@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.web;
-
 
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;

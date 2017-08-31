@@ -20,9 +20,10 @@ public class LinkToBaselineProfile extends LinkToExperimentPage<BaselineExperime
     public Map<String, String> perInputQueryParameters(BaselineExperimentProfile baselineExperimentProfile) {
         Pair<String, FactorGroup> accessionAndFilterFactors = baselineExperimentProfile.getExperimentSlice();
 
-        return accessionAndFilterFactors.getRight().isEmpty()
-                ? ImmutableMap.<String, String>of()
-                : ImmutableMap.of("filterFactors", new RichFactorGroup(accessionAndFilterFactors.getRight()).asUrlEncodedJson());
+        return accessionAndFilterFactors.getRight().isEmpty() ?
+                ImmutableMap.of() :
+                ImmutableMap.of(
+                        "filterFactors", new RichFactorGroup(accessionAndFilterFactors.getRight()).asUrlEncodedJson());
     }
 
     @Override

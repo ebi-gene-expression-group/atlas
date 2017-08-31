@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -9,6 +8,7 @@ import javax.annotation.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.function.Function;
 
 public abstract class LinkToExperimentPage<Input> implements Function<Input, URI> {
 
@@ -22,8 +22,7 @@ public abstract class LinkToExperimentPage<Input> implements Function<Input, URI
             throw new RuntimeException(e);
         }
 
-        params = geneQuery.size()>0 ? ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson()): ImmutableMap.<String, String>of();
-
+        params = geneQuery.size()>0 ? ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson()): ImmutableMap.of();
     }
 
     public abstract Map<String, String> perInputQueryParameters(Input input);
@@ -33,8 +32,8 @@ public abstract class LinkToExperimentPage<Input> implements Function<Input, URI
     @Nullable
     @Override
     public URI apply(@Nullable Input input) {
-
-        Map<String, String> allQueryParams = ImmutableMap.<String, String>builder().putAll(params).putAll(perInputQueryParameters(input)).build();
+        Map<String, String> allQueryParams =
+                ImmutableMap.<String, String>builder().putAll(params).putAll(perInputQueryParameters(input)).build();
 
         return experimentsLocation.resolve(accession(input) +
                 (allQueryParams.isEmpty() ? "" : "?" + Joiner.on("&").withKeyValueSeparator("=").join(allQueryParams))
