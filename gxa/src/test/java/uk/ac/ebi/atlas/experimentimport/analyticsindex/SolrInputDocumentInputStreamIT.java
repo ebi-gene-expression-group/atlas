@@ -38,6 +38,7 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
+//this class is testing stuff from here and there
 public class SolrInputDocumentInputStreamIT {
 
     @Inject
@@ -48,11 +49,6 @@ public class SolrInputDocumentInputStreamIT {
 
     @Inject
     private AnalyticsQueryClient analyticsQueryClient;
-
-    private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator = new AnalyticsIndexDocumentValidator();
-
-    // TODO The lack of a subject is “code smell” that this class is testing stuff from here and there
-    // TODO Split this into isolated tests for ExperimentDataPoint, SolrInputDocumentInputStream, etc.
 
     private Iterable<SolrInputDocument> getResults(Experiment experiment) throws Exception {
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityPropertyNames = ImmutableMap.of();
@@ -108,12 +104,9 @@ public class SolrInputDocumentInputStreamIT {
         assertThat(identifiersForThatExperiment, not(empty()));
 
         for(SolrInputDocument solrInputDocument: results) {
-            if (analyticsIndexDocumentValidator.validate(solrInputDocument)) {
                 String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
                 assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
-            }
          }
-
     }
 
     private void assertThatDocumentsReturnContent(String accession, Collection<SolrInputDocument> results){
