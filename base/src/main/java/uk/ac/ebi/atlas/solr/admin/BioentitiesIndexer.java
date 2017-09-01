@@ -32,9 +32,9 @@ public class BioentitiesIndexer {
 
     @Inject
     public BioentitiesIndexer(BioentityIndexMonitor bioentityIndexMonitor,
-                       BioentityPropertiesSource bioentityPropertiesSource,
-                       @Qualifier("solrClientBioentities") SolrClient solrClient) {
-        this(bioentityIndexMonitor,bioentityPropertiesSource, solrClient, Executors.newSingleThreadExecutor() );
+                              BioentityPropertiesSource bioentityPropertiesSource,
+                              @Qualifier("solrClientBioentities") SolrClient solrClient) {
+        this(bioentityIndexMonitor,bioentityPropertiesSource, solrClient, Executors.newSingleThreadExecutor());
     }
 
     BioentitiesIndexer(BioentityIndexMonitor bioentityIndexMonitor,
@@ -48,24 +48,24 @@ public class BioentitiesIndexer {
     }
 
     public void rebuildIndex() {
-        if (bioentityIndexMonitor.start()){
+        if (bioentityIndexMonitor.start()) {
             executorService.execute(this::doRebuild);
             executorService.shutdown();
         }
     }
 
-    private void addFileToIndex(BioentityPropertyFile bioentityPropertyFile){
+    private void addFileToIndex(BioentityPropertyFile bioentityPropertyFile) {
         Iterators.partition(bioentityPropertyFile.get().iterator(), BATCH_SIZE).forEachRemaining(this::addBeans);
     }
 
-    private void addFileAndLog(BioentityPropertyFile bioentityPropertyFile){
+    private void addFileAndLog(BioentityPropertyFile bioentityPropertyFile) {
         LOGGER.info("<indexFile> streaming started: {}", bioentityPropertyFile.toString());
         bioentityIndexMonitor.processing(bioentityPropertyFile);
         addFileToIndex(bioentityPropertyFile);
         bioentityIndexMonitor.completed();
     }
 
-    private void addBeans(Collection<?> x){
+    private void addBeans(Collection<?> x) {
         try {
             solrClient.addBeans(x);
         } catch (SolrServerException | IOException e) {
@@ -74,7 +74,7 @@ public class BioentitiesIndexer {
         }
     }
 
-    void doRebuild(){
+    void doRebuild() {
         try {
             bioentityIndexMonitor.start();
             deleteAll();
@@ -89,7 +89,6 @@ public class BioentitiesIndexer {
             bioentityIndexMonitor.failed(e);
         }
     }
-
 
     void deleteAll() {
         try {

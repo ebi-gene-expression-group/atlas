@@ -18,13 +18,11 @@ import java.util.concurrent.TimeUnit;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 
 @Named
-// Can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non
-// thread safe state!
+// Can be singleton because HttpSolrClient is thread safe, do not to add any other non thread safe state!
 public class SolrQueryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SolrQueryService.class);
 
-    static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
-
+    private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     private final BioentitiesSolrClient solrClient;
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
 
@@ -35,10 +33,8 @@ public class SolrQueryService {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
-    private GeneQueryResponse fetchGeneIdsGroupedByGeneQueryToken(SemanticQuery geneQuery,
-                                                                  Species species) {
+    private GeneQueryResponse fetchGeneIdsGroupedByGeneQueryToken(SemanticQuery geneQuery, Species species) {
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
-
         //associate gene ids with each token in the query string
         for (SemanticQueryTerm queryTerm : geneQuery) {
             geneQueryResponse.addGeneIds(queryTerm.toString(), fetchGeneIds(queryTerm, species));
@@ -57,22 +53,20 @@ public class SolrQueryService {
 
         stopwatch.stop();
         LOGGER.debug(
-                String.format("Fetched gene ids for %s: returned %s results in %s secs",
-                        queryTerm.toString(), geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+                "Fetched gene ids for {}: returned {} results in {} secs",
+                queryTerm.toString(), geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
         return geneIds;
     }
 
     public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, Species species) {
-        if (isEmpty(geneQuery)) {
-            return new GeneQueryResponse();
-        }
-
         GeneQueryResponse geneQueryResponse = fetchGeneIdsGroupedByGeneQueryToken(geneQuery, species);
 
         if (geneQueryResponse.isEmpty()) {
             throw new GenesNotFoundException(
-                    "No genes found for searchText = " + geneQuery.toJson() + ", species = " + species.getName());
+                    String.format(
+                            "No genes found for searchText = %s, species = %s",
+                            geneQuery.toJson(), species.getName()));
         }
 
         return geneQueryResponse;
