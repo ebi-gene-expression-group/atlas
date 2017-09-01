@@ -13,19 +13,27 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 
 printf "\n\Create field type text_en_tight"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
-  "add-field-type" : {
-     "name":"text_en_tight",
-     "class":"solr.TextField",
-     "positionIncrementGap":"100",
-     "analyzer" : {
-        "tokenizer":{
-           "class":"solr.WhitespaceTokenizerFactory" },
-        "filters":[{
-           "class":"solr.LowerCaseFilterFactory"},
-           {
-           "class":"solr.EnglishPossessiveFilterFactory"},
-           {
-           "class":"solr.PorterStemFilterFactory"}]}}
+  "add-field-type": {
+    "name": "text_en_tight",
+    "class": "solr.TextField",
+    "positionIncrementGap": "100",
+    "analyzer" : {
+      "tokenizer": {
+        "class": "solr.WhitespaceTokenizerFactory"
+      },
+      "filters": [
+        {
+          "class":"solr.LowerCaseFilterFactory"
+        },
+        {
+          "class":"solr.EnglishPossessiveFilterFactory"
+        },
+        {
+          "class":"solr.PorterStemFilterFactory"
+        }
+      ]
+    }
+  }
 }' http://$HOST/solr/$CORE/schema
 
 printf "\n\nDelete field bioentity_identifier"
@@ -349,7 +357,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field conditions_search (text_en)"
+printf "\n\nCreate field conditions_search (text_en_tight)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
