@@ -22,8 +22,7 @@
                                 Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
                                 <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
                                 <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>,
-                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0010468", "category":"go"}]'>GO:0010468 (regulation of gene expression)</a>,
-                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"PO:0004714"}]'>PO:0004714 (terminal flower bud)</a>
+                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0010468", "category":"go"}]'>GO:0010468 (regulation of gene expression)</a>
                             </div>
                         </div>
                         <div class="small-12 medium-4 large-2 columns">
@@ -44,7 +43,7 @@
                                 Examples: <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
                                 <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
                                 <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
-                                <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
+                                <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a>
                             </div>
                         </div>
                     </div>
