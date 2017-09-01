@@ -39,13 +39,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         List<AssayGroup> dataColumnsToReturn = requestContext.getDataColumnsToReturn();
 
-        BaselineProfilesHeatmapsWrangler heatmapResults = baselineProfilesHeatmapWranglerFactory.create
-                (preferences,experiment);
+        BaselineProfilesHeatmapsWrangler heatmapResults =
+                baselineProfilesHeatmapWranglerFactory.create(preferences, experiment);
 
-        result.add("columnHeaders",
-                constructColumnHeaders(dataColumnsToReturn,requestContext, experiment));
+        result.add("columnHeaders", constructColumnHeaders(dataColumnsToReturn, requestContext, experiment));
 
-        result.add("columnGroupings",new JsonArray());
+        result.add("columnGroupings", new JsonArray());
 
         try {
             result.add("profiles", heatmapResults.getJsonProfiles());
@@ -54,15 +53,19 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             if (jsonCoexpressions.size() > 0) {
                 result.add("coexpressions", jsonCoexpressions);
             }
-        } catch (GenesNotFoundException e){
-            return jsonError("No genes found for query: '" + preferences.getGeneQuery() + "'");
+        } catch (GenesNotFoundException e) {
+            return jsonError(String.format("No genes found for query: '%s'", preferences.getGeneQuery()));
         }
 
-        result.add("anatomogram", anatomogramFactory.get(requestContext.getDataColumnsToReturn(),experiment).orElse(JsonNull.INSTANCE));
+        result.add(
+                "anatomogram",
+                anatomogramFactory.get(requestContext.getDataColumnsToReturn(), experiment)
+                        .orElse(JsonNull.INSTANCE));
 
-        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences).entrySet()){
+        for (Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences).entrySet()) {
             result.add(e.getKey(), e.getValue());
         }
+
         return result;
     }
 

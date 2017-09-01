@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
@@ -21,14 +21,15 @@ public class BaselineProfilesHeatmapsWranglerFactory {
     public BaselineProfilesHeatmapsWranglerFactory(ProfileStreamFactory<AssayGroup, BaselineExpression,
             BaselineExperiment, ? extends BaselineProfileStreamOptions<?>,BaselineProfile> inputStreamFactory
             , SolrQueryService solrQueryService, CoexpressedGenesService coexpressedGenesService) {
-        this.baselineProfilesHeatMap = new BaselineProfilesHeatMap(inputStreamFactory);
+        this.baselineProfilesHeatMap = new BaselineProfilesHeatMap<>(inputStreamFactory);
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
     }
 
-    public BaselineProfilesHeatmapsWrangler create(BaselineRequestPreferences
-                                                          preferences, BaselineExperiment experiment) {
-        return new BaselineProfilesHeatmapsWrangler(
+    public BaselineProfilesHeatmapsWrangler create(
+            BaselineRequestPreferences<? extends ExpressionUnit.Absolute> preferences,
+            BaselineExperiment experiment) {
+        return new BaselineProfilesHeatmapsWrangler<>(
                 baselineProfilesHeatMap, solrQueryService, coexpressedGenesService,
                 preferences,
                 experiment);
