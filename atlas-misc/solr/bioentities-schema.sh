@@ -3,9 +3,42 @@
 HOST="localhost:8983"
 CORE="bioentities"
 
+printf "\n\nDelete field type text_en_tight"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "delete-field-type":
+  {
+    "name": "text_en_tight"
+  }
+}' http://$HOST/solr/$CORE/schema
+
+printf "\n\Create field type text_en_tight"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field-type": {
+    "name": "text_en_tight",
+    "class": "solr.TextField",
+    "positionIncrementGap": "100",
+    "analyzer" : {
+      "tokenizer": {
+        "class":"solr.WhitespaceTokenizerFactory"
+      },
+      "filters":[
+        {
+          "class":"solr.LowerCaseFilterFactory"
+        },
+        {
+          "class":"solr.EnglishPossessiveFilterFactory"
+        },
+        {
+          "class":"solr.PorterStemFilterFactory"
+        }
+      ]
+    }
+  }
+}' http://$HOST/solr/$CORE/schema
+
 printf "\n\nDelete field bioentity_identifier"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
+  "delete-field":
   {
     "name":"bioentity_identifier" 
   }
@@ -23,7 +56,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 
 printf "\n\nDelete field bioentity_type"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
+  "delete-field":
   {
     "name":"bioentity_type" 
   }
@@ -41,7 +74,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 
 printf "\n\nDelete field property_name"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
+  "delete-field":
   {
     "name":"property_name" 
   }
@@ -65,19 +98,18 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field property_value (text_en)"
+printf "\n\nCreate field property_value (text_en_tight)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name":"property_value",
-    "type":"text_en"
+    "type":"text_en_tight"
   }
 }' http://$HOST/solr/$CORE/schema
 
-
 printf "\n\nDelete field species"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
+  "delete-field":
   {
     "name":"species"
   }
@@ -95,7 +127,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 
 printf "\n\nDelete field property_weight"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
+  "delete-field":
   {
     "name":"property_weight"
   }
