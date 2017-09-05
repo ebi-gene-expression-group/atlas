@@ -156,7 +156,7 @@ var foundationExperimentsPageModule = (function ($) {
                     "render": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, full);
                     } },
-                { "title":"Organisms", "data":"species", "className":"center italic", "width":"10%",
+                { "title":"Organism", "data":"species", "className":"center italic", "width":"10%",
                     "render": function (data, type, full) {
                         return data;
                     } },
