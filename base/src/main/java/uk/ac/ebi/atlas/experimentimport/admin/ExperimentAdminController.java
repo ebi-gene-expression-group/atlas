@@ -86,7 +86,6 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             gson.toJson(errorMessage(accessionParameter, e),writer);
         } finally {
             writer.endArray();
-            writer.flush();
             writer.close();
         }
     }
