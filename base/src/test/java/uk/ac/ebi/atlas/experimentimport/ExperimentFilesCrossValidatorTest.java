@@ -27,6 +27,7 @@ public class ExperimentFilesCrossValidatorTest {
 
     @Before
     public void setUp(){
+        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
         when(experimentConfiguration.getAssayGroups()).thenReturn(ImmutableList.of(assayGroup));
     }
 
