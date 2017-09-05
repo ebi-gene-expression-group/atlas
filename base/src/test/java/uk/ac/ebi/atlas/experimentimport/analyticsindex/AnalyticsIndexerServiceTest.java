@@ -37,6 +37,8 @@ public class AnalyticsIndexerServiceTest {
     private SolrClient solrClient;
     @Mock
     private ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
+    @Mock
+    private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator;
 
     private AnalyticsIndexerService subject;
 
@@ -48,8 +50,9 @@ public class AnalyticsIndexerServiceTest {
         UpdateResponse r = Mockito.mock(UpdateResponse.class);
         when(r.getQTime()).thenReturn(10);
         when(solrClient.add(anyCollection())).thenReturn(r);
+        when(analyticsIndexDocumentValidator.validate(any(SolrInputDocument.class))).thenReturn(true);
 
-        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory);
+        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
     }
 
     @Test
