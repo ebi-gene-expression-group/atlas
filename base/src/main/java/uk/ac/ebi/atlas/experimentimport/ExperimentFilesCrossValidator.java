@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -53,10 +54,18 @@ public class ExperimentFilesCrossValidator {
     void factorsConsistentWithinAssay(){
 
         for(AssayGroup assayGroup : experimentConfiguration.getAssayGroups()){
-            Set<ImmutableSet<Map.Entry<String, String>>> factorsPerAssayForThisAssayGroup = new HashSet<>();
+            Set<Set<Map.Entry<String, String>>> factorsPerAssayForThisAssayGroup = new HashSet<>();
             for(String assayGroupId: assayGroup.assaysAnalyzedForThisDataColumn()){
                 Map<String, String> factorValues = experimentDesign.getFactorValues(assayGroupId);
-                factorsPerAssayForThisAssayGroup.add(ImmutableSet.copyOf(factorValues.entrySet()));
+
+                /*
+                We allow differential experiments with factor type "block" e.g. E-MTAB-4442.
+                They're introduced for the pipeline, to facilitate processing experiments with a particular type of batch effects.
+                Differential experiments as of 5 Sep 2017 will work fine without an unambiguous assay group -> factor group mapping.
+                We continue to make assertions for differential experiments too - to flag up cases with inconsistent factor values within assay group.
+                They're probably not wanted but future developers should feel free to revisit this assertion or remove it.
+                 */
+                factorsPerAssayForThisAssayGroup.add(factorValues.entrySet().stream().filter(e -> !experimentConfiguration.getExperimentType().isDifferential() || !e.getKey().equals("block")).collect(Collectors.toSet()));
             }
             checkState(factorsPerAssayForThisAssayGroup.size() == 1,
                     MessageFormat.format("Factor values inconsistent across assays in assay group {0}!", assayGroup.getId()));

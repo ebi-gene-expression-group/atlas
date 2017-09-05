@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import static org.mockito.Mockito.when;
 
@@ -72,6 +73,47 @@ public class ExperimentFilesCrossValidatorTest {
     public void consistentFactorsPass(){
         when(experimentDesign.getFactorValues("r1")).thenReturn(ImmutableMap.of("type", "value"));
         when(experimentDesign.getFactorValues("r2")).thenReturn(ImmutableMap.of("type", "value"));
+
+        new ExperimentFilesCrossValidator(experimentConfiguration, experimentDesign).factorsConsistentWithinAssay();
+    }
+
+    @Test
+    public void consistentFactorsPassWithMultipleFactorTypes(){
+        when(experimentDesign.getFactorValues("r1")).thenReturn(ImmutableMap.of("type", "value", "type_2", "value_2"));
+        when(experimentDesign.getFactorValues("r2")).thenReturn(ImmutableMap.of("type", "value", "type_2", "value_2"));
+
+        new ExperimentFilesCrossValidator(experimentConfiguration, experimentDesign).factorsConsistentWithinAssay();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void inconsistentFactorsFailWithMultipleFactorTypes(){
+        when(experimentDesign.getFactorValues("r1")).thenReturn(ImmutableMap.of("type", "value", "type_2", "value_2"));
+        when(experimentDesign.getFactorValues("r2")).thenReturn(ImmutableMap.of("type", "value", "type_2", "different_value_2"));
+
+        new ExperimentFilesCrossValidator(experimentConfiguration, experimentDesign).factorsConsistentWithinAssay();
+    }
+
+    @Test
+    public void blockIsTheSpecialCaseWhereInconsistencyDoesntMatter(){
+        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
+
+        when(experimentDesign.getFactorValues("r1")).thenReturn(ImmutableMap.of("type", "value", "block", "value_2"));
+        when(experimentDesign.getFactorValues("r2")).thenReturn(ImmutableMap.of("type", "value", "block", "value_2"));
+
+        new ExperimentFilesCrossValidator(experimentConfiguration, experimentDesign).factorsConsistentWithinAssay();
+
+        when(experimentDesign.getFactorValues("r1")).thenReturn(ImmutableMap.of("type", "value", "block", "value_2"));
+        when(experimentDesign.getFactorValues("r2")).thenReturn(ImmutableMap.of("type", "value", "block", "different_value_2"));
+
+        new ExperimentFilesCrossValidator(experimentConfiguration, experimentDesign).factorsConsistentWithinAssay();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void blockButBaselineExperimentIsNotFine(){
+        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
+
+        when(experimentDesign.getFactorValues("r1")).thenReturn(ImmutableMap.of("type", "value", "block", "value_2"));
+        when(experimentDesign.getFactorValues("r2")).thenReturn(ImmutableMap.of("type", "value", "block", "different_value_2"));
 
         new ExperimentFilesCrossValidator(experimentConfiguration, experimentDesign).factorsConsistentWithinAssay();
     }
