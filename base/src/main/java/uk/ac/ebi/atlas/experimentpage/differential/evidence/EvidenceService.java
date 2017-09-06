@@ -40,11 +40,13 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
     private final ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory;
     private final DataFileHub dataFileHub;
+    private final String expressionAtlasVersion;
 
 
-    public EvidenceService(ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory, DataFileHub dataFileHub) {
+    public EvidenceService(ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory, DataFileHub dataFileHub, String expressionAtlasVersion) {
         this.differentialProfileStreamFactory = differentialProfileStreamFactory;
         this.dataFileHub = dataFileHub;
+        this.expressionAtlasVersion = expressionAtlasVersion;
     }
 
     public JsonArray evidenceForExperiment(E experiment, StreamOptions streamOptions) {
@@ -58,8 +60,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
         if (diseaseAssociations.size() == 0) {
             return new JsonArray();
         }
-
-        String expressionAtlasVersion = "11-08-2017"; //TODO you can get this as resources.version
 
         String methodDescription = getMethodDescriptionFromAnalysisMethodsFile(experiment);
 
@@ -78,8 +78,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
                             expression,
                             rankPerContrastPerGene.get(profile.getId()).get(contrast),
                             profile.getId(),
-                            contrast,
-                            expressionAtlasVersion
+                            contrast
                             )
                     );
                 }
@@ -92,8 +91,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     JsonArray piecesOfEvidence(E experiment, String methodDescription,
                                DiseaseAssociation linkToDisease,
                                Expr expression, Integer foldChangeRank,
-                               String ensemblGeneId, Contrast contrast,
-                               String expressionAtlasVersion) {
+                               String ensemblGeneId, Contrast contrast) {
         JsonArray result = new JsonArray();
         for (OntologyTerm diseaseUri : linkToDisease.diseaseInfo().valueOntologyTerms()) {
             result.add(pieceOfEvidence(
@@ -108,7 +106,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
                     ensemblGeneId,
                     contrast,
                     linkToDisease.isCttvPrimary(),
-                    expressionAtlasVersion,
                     linkToDisease.organismPart())
             );
         }
@@ -122,7 +119,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                DiseaseAssociation.CONFIDENCE confidence,
                                Expr expression, Integer foldChangeRank,
                                String ensemblGeneId, Contrast contrast,
-                               boolean isCttvPrimary, String expressionAtlasVersion,
+                               boolean isCttvPrimary,
                                SampleCharacteristic organismPart) {
 
         return withLiteratureReferences(
@@ -149,7 +146,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                 contrast,
                                 confidence,
                                 methodDescription,
-                                expressionAtlasVersion,
                                 organismPart)
                 ), experiment.getPubMedIds()
         );
@@ -179,7 +175,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
                         Contrast contrast,
                         DiseaseAssociation.CONFIDENCE confidence,
                         String methodDescription,
-                        String expressionAtlasVersion,
                         SampleCharacteristic organismPart) {
         JsonObject result = new JsonObject();
         result.addProperty("is_associated", true);
@@ -197,7 +192,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         result.addProperty("reference_replicates_n", contrast.getReferenceAssayGroup().getReplicates());
         result.addProperty("confidence_level", confidence.name().toLowerCase());
         result.add("resource_score", resourceScore(expression, methodDescription));
-        result.add("provenance_type", provenanceType(expressionAtlasVersion));
+        result.add("provenance_type", provenanceType());
         return result;
     }
 
@@ -273,7 +268,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
-    JsonObject provenanceType(String expressionAtlasVersion) {
+    JsonObject provenanceType() {
         JsonObject result = new JsonObject();
         JsonObject database = new JsonObject();
         database.addProperty("version", expressionAtlasVersion);

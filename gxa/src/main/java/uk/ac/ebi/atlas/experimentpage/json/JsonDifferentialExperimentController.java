@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.experimentpage.json;
 
 import com.google.gson.JsonElement;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -64,8 +66,10 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
                                                 MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
                                                 SolrQueryService solrQueryService,
                                                 AtlasResourceHub atlasResourceHub,
-                                                DataFileHub dataFileHub) {
+                                                DataFileHub dataFileHub,
+                                                Environment props) {
         super(experimentTrader);
+        String resourcesVersion = props.getProperty("projectVersion");
 
         diffRnaSeqExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.RnaSeq(),
@@ -77,9 +81,9 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
                         new DifferentialProfilesHeatMap<>(microarrayProfileStreamFactory, solrQueryService),
                         atlasResourceHub);
         diffRnaSeqEvidenceService =
-                new EvidenceService<>(rnaSeqProfileStreamFactory, dataFileHub);
+                new EvidenceService<>(rnaSeqProfileStreamFactory, dataFileHub, resourcesVersion);
         diffMicroarrayEvidenceService =
-                new EvidenceService<>(microarrayProfileStreamFactory, dataFileHub);
+                new EvidenceService<>(microarrayProfileStreamFactory, dataFileHub, resourcesVersion);
 
     }
 
