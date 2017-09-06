@@ -54,7 +54,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 result.add("coexpressions", jsonCoexpressions);
             }
         } catch (GenesNotFoundException e) {
-            return jsonError(String.format("No genes found for query: '%s'", preferences.getGeneQuery()));
+            throw new RuntimeException(String.format("No genes found for query: '%s'", preferences.getGeneQuery()));
         }
 
         result.add(

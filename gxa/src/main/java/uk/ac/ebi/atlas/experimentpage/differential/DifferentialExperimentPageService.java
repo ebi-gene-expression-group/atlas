@@ -70,7 +70,7 @@ public class DifferentialExperimentPageService
     }
 
     JsonObject noMatchError(K preferences){
-        return jsonError("No genes found matching query: '" + preferences.getGeneQuery().description() + "'");
+        throw new RuntimeException("No genes found matching query: '" + preferences.getGeneQuery().description() + "'");
     }
 
     private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment

@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.controllers.ReturnsJsonErrors;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.tracks.GenomeBrowserController;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
@@ -14,7 +13,7 @@ import java.util.Map;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class ExperimentPageService extends ReturnsJsonErrors {
+public class ExperimentPageService {
 
     protected final Gson gson = new Gson();
 
