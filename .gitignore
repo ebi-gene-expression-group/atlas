@@ -1,11 +1,9 @@
 web/src/main/javascript/**/.tmp
 # Compiled and auto-generated classes
 target
-**/target
 
 # IntelliJ IDEA project files
 *.iml
-**/*.iml
 _idea
 .idea
 .idea-files
@@ -17,8 +15,6 @@ _idea
 **/src/test/resources/log4j.xml 
 bin
 .classpath
-.project
-.settings/
 
 # OS X “Desktop Services” files
 .DS_Store
