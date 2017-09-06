@@ -33,7 +33,6 @@
             <param-value>/WEB-INF/urlrewrite.xml</param-value>
         </init-param>
     </filter>
-
     <filter-mapping>
         <filter-name>UrlRewriteFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -49,7 +48,6 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
-
     <filter-mapping>
         <filter-name>encoding-filter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -59,7 +57,6 @@
         <filter-name>cors-headers</filter-name>
         <filter-class>uk.ac.ebi.atlas.filters.CORSHeaders</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>cors-headers</filter-name>
         <url-pattern>/resources/*</url-pattern>
@@ -67,6 +64,19 @@
         <url-pattern>/json/*</url-pattern>
         <url-pattern>/widgets/*</url-pattern>
         <url-pattern>/search/differential/json</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>resourceUrlEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.servlet.resource.ResourceUrlEncodingFilter</filter-class>
+        <init-param>
+            <param-name>addMappingForUrlPatterns</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>resourceUrlEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <security-role>

@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>
+<script src="<c:url value="/resources/js/pubmedMinedBioentitiesModule.js"/>"></script>
 <script>
     (function ($, pubmedMinedBioentitiesModule) {
         $(document).ready(function () {

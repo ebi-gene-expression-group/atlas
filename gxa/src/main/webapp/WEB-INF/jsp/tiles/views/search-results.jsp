@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities-box.css"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/foundation/bioentities-box.css"/>"/>
 
 <div class="row expanded">
     <div class="small-12 columns">
@@ -59,10 +59,10 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBioentityInformation.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBaselineExpression.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasDifferentialExpression.bundle.js"></script>
+<script src="<c:url value="/resources/js-bundles/vendorCommons.bundle.js"/>"></script>
+<script src="<c:url value="/resources/js-bundles/expressionAtlasBioentityInformation.bundle.js"/>"></script>
+<script src="<c:url value="/resources/js-bundles/expressionAtlasBaselineExpression.bundle.js"/>"></script>
+<script src="<c:url value="/resources/js-bundles/expressionAtlasDifferentialExpression.bundle.js"/>"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 <script>

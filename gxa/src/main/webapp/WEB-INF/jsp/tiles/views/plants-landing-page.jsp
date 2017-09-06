@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/baseline_plant-experiments.css">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/baseline_plant-experiments.css"/>"/>
 
 <div class="row">
     <div class="small-12 columns">
@@ -16,7 +16,7 @@
 
         <div class="row">
             <div class="small-1 column">
-                <p><img src="${pageContext.request.contextPath}/resources/images/gramene_logo.png"/></p>
+                <p><img src="<c:url value="/resources/images/gramene_logo.png"/>"/></p>
             </div>
 
             <div class="small-11 columns">
