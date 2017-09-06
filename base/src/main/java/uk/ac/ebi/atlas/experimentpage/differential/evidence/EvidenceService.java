@@ -108,7 +108,8 @@ public class EvidenceService<Expr extends DifferentialExpression,
                     ensemblGeneId,
                     contrast,
                     linkToDisease.isCttvPrimary(),
-                    expressionAtlasVersion)
+                    expressionAtlasVersion,
+                    linkToDisease.organismPart())
             );
         }
         return result;
@@ -121,7 +122,8 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                DiseaseAssociation.CONFIDENCE confidence,
                                Expr expression, Integer foldChangeRank,
                                String ensemblGeneId, Contrast contrast,
-                               boolean isCttvPrimary, String expressionAtlasVersion) {
+                               boolean isCttvPrimary, String expressionAtlasVersion,
+                               SampleCharacteristic organismPart) {
 
         return withLiteratureReferences(
                 associationRecord(
@@ -147,8 +149,8 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                 contrast,
                                 confidence,
                                 methodDescription,
-                                expressionAtlasVersion
-                        )
+                                expressionAtlasVersion,
+                                organismPart)
                 ), experiment.getPubMedIds()
         );
     }
@@ -177,7 +179,8 @@ public class EvidenceService<Expr extends DifferentialExpression,
                         Contrast contrast,
                         DiseaseAssociation.CONFIDENCE confidence,
                         String methodDescription,
-                        String expressionAtlasVersion) {
+                        String expressionAtlasVersion,
+                        SampleCharacteristic organismPart) {
         JsonObject result = new JsonObject();
         result.addProperty("is_associated", true);
         result.addProperty("unique_experiment_reference", MessageFormat.format("STUDYID_{0}", experiment.getAccession()));
@@ -189,6 +192,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         result.addProperty("date_asserted", new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss'Z'").format(experiment.getLastUpdate()));
         result.addProperty("experiment_overview", experiment.getDescription());
         result.addProperty("comparison_name", contrast.getDisplayName());
+        result.addProperty("organism_part", organismPartProperty(organismPart));
         result.addProperty("test_replicates_n", contrast.getTestAssayGroup().getReplicates());
         result.addProperty("reference_replicates_n", contrast.getReferenceAssayGroup().getReplicates());
         result.addProperty("confidence_level", confidence.name().toLowerCase());
@@ -203,6 +207,10 @@ public class EvidenceService<Expr extends DifferentialExpression,
         result.addProperty("url", url);
 
         return result;
+    }
+
+    String organismPartProperty(SampleCharacteristic organismPart){
+        return organismPart.valueOntologyTerms().stream().findFirst().map(o -> o.uri()).orElse(organismPart.value());
     }
 
     JsonArray linkUrls(String experimentAccession, String ensemblGeneId) {
@@ -380,13 +388,16 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
         public abstract boolean isCttvPrimary();
 
+        public abstract SampleCharacteristic organismPart();
+
 
         public static DiseaseAssociation create(SampleCharacteristic biosampleInfo, ExperimentDesign experimentDesign, Contrast contrast,
                                                 boolean isCttvPrimary, SampleCharacteristic diseaseInfo){
             String referenceSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getReferenceAssayGroup());
             String testSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getTestAssayGroup());
             DiseaseAssociation.CONFIDENCE confidence = determineStudyConfidence(experimentDesign, diseaseInfo, contrast.getTestAssayGroup(), isCttvPrimary);
-            return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo, referenceSampleLabel, testSampleLabel, diseaseInfo, confidence, isCttvPrimary);
+            SampleCharacteristic organismPart = Optional.fromNullable(experimentDesign.getSampleCharacteristic(contrast.getTestAssayGroup().getFirstAssayAccession(), "organism part")).or(SampleCharacteristic.create("organism part", ""));
+            return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo, referenceSampleLabel, testSampleLabel, diseaseInfo, confidence, isCttvPrimary, organismPart);
         }
     }
 
