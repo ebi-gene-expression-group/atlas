@@ -134,7 +134,7 @@
 
     geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, geneQueryPlaceHolder, contextPath);
     geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, geneQueryPlaceHolder, contextPath);
-    conditionAutocompleteModule.init('#home-search-condition-query-input', 'https://www.ebi.ac.uk/arrayexpress', function(){});
+    conditionAutocompleteModule.init('#home-search-condition-query-input', 'https://www.ebi.ac.uk/arrayexpress/', function(){});
 
     $('#home-search-atlas-clear-button').on('click' , function () {
         // Remove all tags
