@@ -1,9 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="row expanded">
     <div class="columns small-2">
-        <img src="<c:url value="/resources/images/foundation/heatmap-hero.png"/>"/>
+        <img src="${pageContext.request.contextPath}/resources/images/foundation/heatmap-hero.png">
     </div>
 
     <div class="columns small-10">

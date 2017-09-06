@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+    <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" href="<c:url value="/resources/css/experiments-table.css"/>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiments-table.css" media="screen">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.foundation.min.css" media="screen">
 
 <div class="row expanded">
@@ -61,9 +61,9 @@
     </div>
 </div>
 
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
-<script src="<c:url value="/resources/js/foundationExperimentsPageModule.js"/>"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/foundationExperimentsPageModule.js"></script>
 
 <script>
     (function ($) {

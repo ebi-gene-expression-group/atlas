@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/alt-customized-bootstrap-3.3.5.css"/>"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/alt-customized-bootstrap-3.3.5.css"/>
 
 <div id="gxaBaselineTab"></div>
 

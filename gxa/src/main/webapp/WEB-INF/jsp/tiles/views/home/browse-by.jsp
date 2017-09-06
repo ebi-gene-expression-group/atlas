@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="callout browse-by padding-bottom-for-button" data-equalizer-watch>
     <ul class="tabs" data-tabs id="browse-by-tabs">
         <li class="tabs-title is-active"><a href="#by-species" aria-selected="true">By species</a></li>
@@ -22,8 +21,8 @@
     </div>
 </div>
 
-<script src="<c:url value="/resources/js-bundles/vendorCommons.bundle.js"/>"></script>
-<script src="<c:url value="/resources/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"/>"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
 
 <script>
     var $viewAllLink = $('#viewAllLink');

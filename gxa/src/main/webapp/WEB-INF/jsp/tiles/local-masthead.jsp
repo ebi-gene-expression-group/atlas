@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div data-sticky-container>
     <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
@@ -7,7 +6,7 @@
             <div class="small-8 columns media-object">
                 <div class="show-for-medium media-object-section middle">
                     <a href="${pageContext.request.contextPath}/home/" title="Back to Expression Atlas homepage" class="clear">
-                        <img src="<c:url value="/resources/images/foundation/logos/logo_atlas_transparent.png"/>" alt="Expression Atlas logo">
+                        <img src="${pageContext.request.contextPath}/resources/images/foundation/logos/logo_atlas_transparent.png" alt="Expression Atlas logo">
                     </a>
                 </div>
                 <div class="media-object-section middle">

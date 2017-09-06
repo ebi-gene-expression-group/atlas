@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
 
@@ -29,26 +28,26 @@
 
     <!-- favicons generated at realfavicongenerator.net, and merged with https://github.com/ebiwd/EBI-Pattern-library/blob/gh-pages/sample-site/boilerplate/blank.html -->
     <meta name="theme-color" content="#ffffff">
-    <link rel="shortcut icon" href="<c:url value="/resources/favicons/favicon.ico"/>">
-    <link rel="icon" type="image/x-icon" href="<c:url value="/resources/favicons/favicon.ico"/>" />
-    <link rel="icon" type="image/png" href="<c:url value="/resources/favicons/favicon-16x16.png"/>" sizes="16x16">
-    <link rel="icon" type="image/png" href="<c:url value="/resources/favicons/favicon-32x32.png"/>" sizes="32x32">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/favicons/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/favicons/favicon-32x32.png" sizes="32x32" />
 
-    <link rel="icon" type="image/png" sizes="192×192" href="<c:url value="/resources/favicons/android-chrome-192x192.png"/>">
-    <link rel="manifest" href="<c:url value="/resources/favicons/manifest.json"/>">
+    <link rel="icon" type="image/png" sizes="192×192" href="${pageContext.request.contextPath}/resources/favicons/android-chrome-192x192.png" /> <!-- Android (192px) -->
+    <link rel="manifest" href="${pageContext.request.contextPath}/resources/favicons/manifest.json" />
 
     <!-- Apple icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<c:url value="/resources/favicons/apple-icon-114x114.png"/>"> <!-- For iPhone 4 Retina display (114px) -->
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<c:url value="/resources/favicons/apple-icon-72x72.png"/>"> <!-- For iPad (72px) -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<c:url value="/resources/favicons/apple-icon-144x144.png"/>"> <!-- For iPad retina (144px) -->
-    <link rel="apple-touch-icon-precomposed" href="<c:url value="/resources/favicons/apple-icon-57x57.png"/>"> <!-- For iPhone (57px) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="<c:url value="/resources/favicons/apple-touch-icon.png"/>">
-    <link rel="mask-icon" href="<c:url value="/resources/favicons/safari-pinned-tab.svg"/>" color="#5bbad5"> <!-- Safari icon for pinned tab -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath}/resources/favicons/apple-icon-114x114.png" /> <!-- For iPhone 4 Retina display (114px) -->
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath}/resources/favicons/apple-icon-72x72.png" /> <!-- For iPad (72px) -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath}/resources/favicons/apple-icon-144x144.png" /> <!-- For iPad retina (144px) -->
+    <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/resources/favicons/apple-icon-57x57.png" /> <!-- For iPhone (57px) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/resources/favicons/apple-touch-icon.png" />
+    <link rel="mask-icon" href="${pageContext.request.contextPath}/resources/favicons/safari-pinned-tab.svg" color="#5bbad5" /> <!-- Safari icon for pinned tab -->
 
     <!-- MS icons -->
     <meta name="msapplication-TileColor" content="#da532c" />
-    <meta name="msapplication-TileImage" content="<c:url value="/resources/favicons/mstile-144x144.png"/>" />
-    <meta name="msapplication-config" content="<c:url value="/resources/favicons/browserconfig.xml"/>" />
+    <meta name="msapplication-TileImage" content="${pageContext.request.contextPath}/resources/favicons/mstile-144x144.png" />
+    <meta name="msapplication-config" content="${pageContext.request.contextPath}/resources/favicons/browserconfig.xml" />
 
     <!-- CSS: implied media=all -->
     <!-- CSS concatenated and minified via ant build script-->
@@ -58,20 +57,20 @@
 
     <!-- Use this CSS file for any custom styling -->
     <!-- <link rel="stylesheet" href="css/custom.css" type="text/css" media="all"> -->
-    <link rel="stylesheet" href="<c:url value="/resources/css/foundation/atlas.css"/>" type="text/css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/atlas.css" type="text/css" media="all">
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/foundation/theme-atlas.css"/>" type="text/css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
 
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css"/>">
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css"/>" media="screen">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
     <!-- end CSS-->
 
     <!-- All JavaScript at the bottom, except for jQuery -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 
-    <script src="<c:url value="/resources/js/lib/babel-polyfill.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/lib/fetch-polyfill.min.js"/>"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/fetch-polyfill.min.js"></script>
 </head>
 
 <body class="level2">
@@ -102,13 +101,13 @@
 <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
 
 <!-- The Foundation theme JavaScript -->
-<script>$(document).foundation();</script>
-<script>$(document).foundationExtendEBI();</script>
+<script type="text/JavaScript">$(document).foundation();</script>
+<script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 
 <!-- JSON Tag Editor -->
-<script src="<c:url value="/resources/js/lib/jquery-json-tag-editor/jquery.caret.min.js"/>"></script>
-<script src="<c:url value="/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.min.js"/>"></script>
-<script src="<c:url value="/resources/js/geneQueryTagEditorModule.js"/>"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.caret.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
 
 <!-- Google Analytics details -->
 <script>
@@ -121,13 +120,14 @@
   ga('send', 'pageview');
 </script>
 
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
 
 <!-- Condition AUTOCOMPLETE -->
-<script src="<c:url value="/resources/js/lib/arrayexpress-autocomplete/jquery.caret-range-1.0.js"/>"></script>
-<script src="<c:url value="/resources/js/lib/arrayexpress-autocomplete/jquery.array-express.autocomplete-1.1.0.150319.js"/>"></script>
-<script src="<c:url value="/resources/js/conditionAutocompleteModule.js"/>"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/arrayexpress-autocomplete/jquery.caret-range-1.0.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/arrayexpress-autocomplete/jquery.array-express.autocomplete-1.1.0.150319.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/conditionAutocompleteModule.js"></script>
 <script>
     var contextPath = '${pageContext.request.contextPath}/';
     var geneQueryPlaceHolder = 'Enter gene query…';
