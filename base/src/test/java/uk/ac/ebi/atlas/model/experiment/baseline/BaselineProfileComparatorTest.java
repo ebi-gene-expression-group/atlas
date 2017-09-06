@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.RandomStringUtils;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +17,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,12 +29,6 @@ public class BaselineProfileComparatorTest {
 
     @Mock
     BaselineProfile geneWithSpecificity16;
-
-    @Mock
-    BaselineProfile geneWithAverageExpression3;
-
-    @Mock
-    BaselineProfile geneWithAverageExpression8;
 
     @Mock
     BaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
