@@ -60,6 +60,9 @@ public class SolrQueryService {
     }
 
     public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, Species species) {
+        if (isEmpty(geneQuery)) {
+            return new GeneQueryResponse();
+        }
         GeneQueryResponse geneQueryResponse = fetchGeneIdsGroupedByGeneQueryToken(geneQuery, species);
 
         if (geneQueryResponse.isEmpty()) {
