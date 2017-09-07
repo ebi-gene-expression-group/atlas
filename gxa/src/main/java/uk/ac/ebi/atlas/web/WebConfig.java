@@ -2,14 +2,11 @@ package uk.ac.ebi.atlas.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.resource.PathResourceResolver;
-import org.springframework.web.servlet.resource.VersionResourceResolver;
 import uk.ac.ebi.atlas.interceptors.AdminInterceptor;
 import uk.ac.ebi.atlas.interceptors.TimingInterceptor;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -22,17 +19,16 @@ import java.util.concurrent.TimeUnit;
 @PropertySource("classpath:configuration.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Inject
-    private Environment props;
+    private final AdminInterceptor adminInterceptor;
+    private final TimingInterceptor timingInterceptor;
+    private final DataFileHub dataFileHub;
 
     @Inject
-    private AdminInterceptor adminInterceptor;
-
-    @Inject
-    private TimingInterceptor timingInterceptor;
-
-    @Inject
-    private DataFileHub dataFileHub;
+    public WebConfig(AdminInterceptor adminInterceptor, TimingInterceptor timingInterceptor, DataFileHub dataFileHub) {
+        this.adminInterceptor = adminInterceptor;
+        this.timingInterceptor = timingInterceptor;
+        this.dataFileHub = dataFileHub;
+    }
 
     // equivalent to mvc:resources
     @Override

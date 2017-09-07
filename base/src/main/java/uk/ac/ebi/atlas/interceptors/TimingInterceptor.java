@@ -18,9 +18,7 @@ public class TimingInterceptor extends HandlerInterceptorAdapter {
     protected static final String STOP_WATCH = "requestURLStopWatch";
 
     @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String requestURL =
                 request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 
@@ -35,10 +33,8 @@ public class TimingInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Object handler,
-                           ModelAndView modelAndView) {
+    public void postHandle(
+            HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
         stopWatch.stop();
 

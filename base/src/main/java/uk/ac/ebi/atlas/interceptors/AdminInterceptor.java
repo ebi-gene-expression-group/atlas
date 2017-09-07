@@ -15,19 +15,14 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (request.getUserPrincipal() == null) {
+            return false;
+        }
+
         LOGGER.info(
                 "<preHandle> username: {}, request: {}, query: {}",
                 request.getUserPrincipal().getName(), request.getRequestURI(), request.getQueryString());
         return true;
     }
-
-    @Override
-    public void postHandle(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Object handler,
-                           ModelAndView modelAndView) {}
-
 }
