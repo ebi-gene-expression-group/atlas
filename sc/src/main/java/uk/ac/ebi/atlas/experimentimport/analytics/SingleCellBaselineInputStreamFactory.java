@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
-import uk.ac.ebi.atlas.resource.SingleCellFileHub;
+import uk.ac.ebi.atlas.resource.SingleCellDataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,10 +9,10 @@ import java.io.IOException;
 @Named
 public class SingleCellBaselineInputStreamFactory {
 
-    private final SingleCellFileHub dataFileHub;
+    private final SingleCellDataFileHub dataFileHub;
 
     @Inject
-    public SingleCellBaselineInputStreamFactory(SingleCellFileHub dataFileHub) {
+    public SingleCellBaselineInputStreamFactory(SingleCellDataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
     }
 

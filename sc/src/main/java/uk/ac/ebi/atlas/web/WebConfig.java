@@ -2,44 +2,51 @@ package uk.ac.ebi.atlas.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
+import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.interceptors.AdminInterceptor;
+import uk.ac.ebi.atlas.interceptors.TimingInterceptor;
+import uk.ac.ebi.atlas.resource.SingleCellDataFileHub;
 
 import javax.inject.Inject;
+import java.util.concurrent.TimeUnit;
 
 @EnableWebMvc //equivalent to mvc:annotation-driven
 @Configuration
 @PropertySource("classpath:configuration.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Inject
-    Environment props;
-
-//    @Inject
-//    private AdminInterceptor adminInterceptor;
-
-//    @Inject
-//    private TimingInterceptor timingInterceptor;
+    private final AdminInterceptor adminInterceptor;
+    private final TimingInterceptor timingInterceptor;
+    private final SingleCellDataFileHub fileHub;
 
     @Inject
-    private DataFileHub dataFileHub;
+    public WebConfig(
+            AdminInterceptor adminInterceptor, TimingInterceptor timingInterceptor, SingleCellDataFileHub fileHub) {
+        this.adminInterceptor = adminInterceptor;
+        this.timingInterceptor = timingInterceptor;
+        this.fileHub = fileHub;
+    }
 
     // equivalent to mvc:resources
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/")
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
 
-        registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
+//        registry.addResourceHandler("/expdata/**")
+//                .addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
     }
 
     // equivalent to mvc:interceptors
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
-//        registry.addInterceptor(timingInterceptor).addPathPatterns("/**");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
+        registry.addInterceptor(timingInterceptor).addPathPatterns("/**");
+    }
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.resource.SingleCellFileHub;
+import uk.ac.ebi.atlas.resource.SingleCellDataFileHub;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
@@ -42,12 +42,12 @@ public class GuysDataForGeneController { // give me a better class name when I b
 
     @Inject
     public GuysDataForGeneController(AnalyticsSearchService analyticsSearchService, SpeciesFactory speciesFactory,
-                                     SingleCellFileHub singleCellFileHub) throws URISyntaxException, IOException {
+                                     SingleCellDataFileHub singleCellDataFileHub) throws URISyntaxException, IOException {
         this.analyticsSearchService = analyticsSearchService;
         this.SPECIES_IN_GUYS_EXPERIMENT = speciesFactory.create("mus musculus");
         ImmutableMap.Builder<String, String> b = new ImmutableMap.Builder<>();
 
-        for(String[] bits: singleCellFileHub.getGuysIdentifiers().get().readAll()){
+        for(String[] bits: singleCellDataFileHub.getGuysIdentifiers().get().readAll()){
             if(bits.length == 2){
                 b.put(bits[1],bits[0]);
             } else {

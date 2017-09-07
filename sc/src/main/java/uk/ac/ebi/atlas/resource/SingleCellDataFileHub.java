@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class SingleCellFileHub extends DataFileHub {
+public class SingleCellDataFileHub extends DataFileHub {
 
     private final static String SINGLE_CELL_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
 
     @Inject
-    public SingleCellFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation) {
+    public SingleCellDataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation) {
         super(dataFilesLocation);
     }
 
