@@ -37,7 +37,7 @@ public class MarkerGenesSearchServiceIT {
     public void searchIdsOfGenesWithHighProbability() throws Exception {
         List<String> fiveMarkerGeneIds =
                 jdbcTemplate.queryForList(
-                        "SELECT DISTINCT(gene_id) FROM marker_genes WHERE marker_probability>? LIMIT 5",
+                        "SELECT DISTINCT(gene_id) FROM sca_marker_genes WHERE marker_probability>? LIMIT 5",
                         DEFAULT_P_THRESHOLD).stream()
             .map(rowMap -> (String) rowMap.get("gene_id"))
             .collect(Collectors.toList());
@@ -57,8 +57,8 @@ public class MarkerGenesSearchServiceIT {
     @Test
     public void searchIdsOfGenesWithLowProbability() throws Exception {
         List<String> fiveNonMarkerGeneIds = jdbcTemplate.queryForList(
-                "SELECT all_p.gene_id FROM marker_genes all_p LEFT JOIN " +
-                "  (SELECT gene_id, marker_probability FROM marker_genes WHERE marker_probability>?) high_p ON all_p.gene_id=high_p.gene_id " +
+                "SELECT all_p.gene_id FROM sca_marker_genes all_p LEFT JOIN " +
+                "  (SELECT gene_id, marker_probability FROM sca_marker_genes WHERE marker_probability>?) high_p ON all_p.gene_id=high_p.gene_id " +
                 "WHERE high_p.gene_id IS NULL LIMIT 5", DEFAULT_P_THRESHOLD).stream()
                 .map(rowMap -> (String) rowMap.get("gene_id"))
                 .collect(Collectors.toList());

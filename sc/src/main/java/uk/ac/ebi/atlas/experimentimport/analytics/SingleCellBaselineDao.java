@@ -16,7 +16,7 @@ public class SingleCellBaselineDao {
 
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 2000;
-    private static final String SC_EXPRESSION_INSERT = "INSERT INTO SINGLE_CELL_EXPRESSION " +
+    private static final String SC_EXPRESSION_INSERT = "INSERT INTO sca_single_cell_expression " +
             "(EXPERIMENT_ACCESSION, GENE_ID, CELL_ID, EXPRESSION_LEVEL) VALUES (?, ?, ?, ?)";
 
     private final JdbcTemplate jdbcTemplate;
@@ -49,7 +49,7 @@ public class SingleCellBaselineDao {
 
     public void deleteAnalytics(String experimentAccession) {
         LOGGER.info("delete SingleCellExpression for experiment {}", experimentAccession);
-        jdbcTemplate.update("DELETE FROM SINGLE_CELL_EXPRESSION WHERE EXPERIMENT_ACCESSION = ?", experimentAccession);
+        jdbcTemplate.update("DELETE FROM sca_single_cell_expression WHERE EXPERIMENT_ACCESSION = ?", experimentAccession);
     }
 
 }

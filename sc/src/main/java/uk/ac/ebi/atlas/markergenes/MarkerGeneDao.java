@@ -24,10 +24,10 @@ public class MarkerGeneDao {
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 2000;
     private static final String MARKER_GENE_INSERT_STATEMENT =
-            "INSERT INTO marker_genes " +
+            "INSERT INTO sca_marker_genes " +
             "(gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES (?, ?, ?, ?, ?)";
     private static final String MARKER_GENE_SELECT_STATEMENT =
-            "SELECT * FROM marker_genes WHERE gene_id=? AND marker_probability>?";
+            "SELECT * FROM sca_marker_genes WHERE gene_id=? AND marker_probability>?";
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -85,12 +85,12 @@ public class MarkerGeneDao {
     }
 
     public void deleteAll() {
-        int rowCount = jdbcTemplate.update("DELETE FROM marker_genes");
+        int rowCount = jdbcTemplate.update("DELETE FROM sca_marker_genes");
         LOGGER.info("{} rows deleted", rowCount);
     }
 
     public void delete(String experimentAccession) {
-        int rowCount = jdbcTemplate.update("DELETE FROM marker_genes WHERE experiment_accession=?", experimentAccession);
+        int rowCount = jdbcTemplate.update("DELETE FROM sca_marker_genes WHERE experiment_accession=?", experimentAccession);
         LOGGER.info("{} rows deleted", rowCount);
     }
 
