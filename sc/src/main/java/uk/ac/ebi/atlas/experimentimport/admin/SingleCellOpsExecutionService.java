@@ -116,8 +116,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
                 break;
             /*
             ANALYTICS_IMPORT and ANALYTICS_DELETE
-            are currently different than the Expression Atlas equivalents
-            (uses database not Solr)
+            are currently different than the Expression Atlas equivalents (uses database not Solr)
              */
             case ANALYTICS_IMPORT:
                 analyticsLoaderFactory.getLoader(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE)
