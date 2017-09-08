@@ -2,7 +2,7 @@
 
 <div id="react-container-experiment-page"></div>
 
-<script type="text/javascript">
+<script>
     tsne.render({
         target: "react-container-experiment-page"
     });

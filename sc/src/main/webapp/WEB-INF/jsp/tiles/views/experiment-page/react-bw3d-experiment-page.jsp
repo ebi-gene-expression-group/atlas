@@ -155,7 +155,7 @@
     </div>
 
 
-<script type="text/javascript">
+<script>
     // This should be also be set in the model attributes from the controller
     reactBioWeb3D.render({
         baseUrl: '${pageContext.request.contextPath}',

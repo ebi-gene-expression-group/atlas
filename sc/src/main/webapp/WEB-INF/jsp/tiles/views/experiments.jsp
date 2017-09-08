@@ -61,9 +61,9 @@
     </div>
 </div>
 
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/experimentsPageModule.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/experimentsPageModule.js"></script>
 
 <script>
     (function ($) {

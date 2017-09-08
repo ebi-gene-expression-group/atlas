@@ -2,7 +2,7 @@
 
 <div id="react-container-experiment-page"></div>
 
-<script type="text/javascript">
+<script>
     reference_plot.render({
         referenceDataSourceUrlTemplate:
                 "${pageContext.request.contextPath}/json/experiments/E-MTAB-4388/expression?query={0}",

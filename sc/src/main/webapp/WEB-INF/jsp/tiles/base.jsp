@@ -99,8 +99,8 @@
 <!-- The Foundation theme JavaScript -->
 <script src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
 <script src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
-<script type="text/JavaScript">$(document).foundation();</script>
-<script type="text/JavaScript">$(document).foundationExtendEBI();</script>
+<script>$(document).foundation();</script>
+<script>$(document).foundationExtendEBI();</script>
 
 </body>
 </html>
