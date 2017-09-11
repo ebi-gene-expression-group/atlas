@@ -24,7 +24,7 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
         this.speciesFactory = speciesFactory;
     }
 
-    @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET,
+    @RequestMapping(value = "/json/suggestions",
                     produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

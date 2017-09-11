@@ -50,7 +50,7 @@ public final class DBSolrStatusController extends JsonExceptionHandlingControlle
         this.solrClient = solrClientAnalytics;
     }
 
-    @RequestMapping(value = "/json/dbsolr/status", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/dbsolr/status",produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String dbAndSolrStatus(){

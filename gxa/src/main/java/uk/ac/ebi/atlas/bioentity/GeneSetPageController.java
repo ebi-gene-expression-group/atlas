@@ -30,7 +30,6 @@ public class GeneSetPageController extends BioentityPageController {
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}",
-                    method = RequestMethod.GET,
                     produces = "text/html;charset=UTF-8")
     public String showGeneSetPage(@PathVariable String identifier,
                                   @RequestParam(value = "organism", required = false) String speciesReferenceName,

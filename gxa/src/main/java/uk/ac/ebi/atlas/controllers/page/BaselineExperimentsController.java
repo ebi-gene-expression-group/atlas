@@ -35,7 +35,7 @@ public class BaselineExperimentsController extends HtmlExceptionHandlingControll
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/baseline/experiments", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/baseline/experiments",produces = "text/html;charset=UTF-8")
     public String getBaselineExperimentsPage(Model model) {
 
         Map<String, String> experimentDisplayNames = new HashMap<>();

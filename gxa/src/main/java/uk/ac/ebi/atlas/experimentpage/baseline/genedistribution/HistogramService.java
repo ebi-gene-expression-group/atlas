@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Objects;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -94,6 +95,29 @@ public class HistogramService<StreamOptions extends ProfileStreamOptions<?>, E e
             create(String accession, String accessKey, StreamOptions streamOptions){
             return new AutoValue_HistogramService_HistogramCacheKey<>(accession, accessKey, streamOptions);
         }
+
+        @Override
+        public boolean equals(Object object) {
+            if (this == object) {
+                return true;
+            }
+            if ((null == object) || (getClass() != object.getClass())) {
+                return false;
+            }
+
+            HistogramCacheKey other = (HistogramCacheKey) object;
+
+            return Objects.equal(this.accession(), other.accession()) &&
+                    Objects.equal(this.accessKey(), other.accessKey()) &&
+                    Objects.equal(this.streamOptions().serializationShortString(), other.streamOptions().serializationShortString());
+        }
+
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(accession(), accessKey(), this.streamOptions().serializationShortString());
+        }
+
 
     }
 }

@@ -34,7 +34,6 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
 
     @RequestMapping(
             value = "",
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public void listAllExperiments(HttpServletResponse response) throws IOException {
         doOp("all", "list" ,response);
@@ -53,7 +52,6 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
 
     @RequestMapping(
             value = "/help",
-            method = RequestMethod.GET,
             produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String help() {
@@ -62,7 +60,6 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
 
     @RequestMapping(
             value = "/{accessions}/{op}",
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public void doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter, HttpServletResponse response) throws IOException {
         JsonWriter writer = new JsonWriter(response.getWriter());

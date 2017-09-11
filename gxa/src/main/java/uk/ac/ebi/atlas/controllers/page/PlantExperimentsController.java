@@ -48,7 +48,7 @@ public class PlantExperimentsController extends HtmlExceptionHandlingController 
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/plant/experiments", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/plant/experiments",produces = "text/html;charset=UTF-8")
     public String getPlantExperimentsPage(Model model) {
 
         loadExperimentAccessionsBySpecies();

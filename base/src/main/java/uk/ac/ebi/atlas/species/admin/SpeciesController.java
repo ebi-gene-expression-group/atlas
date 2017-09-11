@@ -22,7 +22,7 @@ public class SpeciesController extends JsonExceptionHandlingController {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
     }
 
-    @RequestMapping(value = "/json/species/{speciesName}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/json/species/{speciesName}",produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getSpeciesInfo(@PathVariable("speciesName") String speciesName) {
         return gson.toJson(speciesPropertiesTrader.get(speciesName));

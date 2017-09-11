@@ -46,7 +46,7 @@ public class SpeciesAdminController extends JsonExceptionHandlingController {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
     }
 
-    @RequestMapping(value = "/{op}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/{op}",produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String doOp(@PathVariable("op") String opParameter) {
 

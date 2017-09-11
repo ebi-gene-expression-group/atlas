@@ -88,7 +88,6 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
-                    method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8",
                     params = "type=MICROARRAY_ANY")
     @ResponseBody
@@ -102,7 +101,6 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
-                    method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8",
                     params = "type=RNASEQ_MRNA_DIFFERENTIAL")
     @ResponseBody
@@ -120,7 +118,6 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     Returns an empty response for experiments that are not about diseases or that we have no evidence for.
      */
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
-            method = RequestMethod.GET,
             produces = "application/json-seq;charset=UTF-8",
             params = "type=MICROARRAY_ANY")
     public void differentialMicroarrayExperimentEvidence(
@@ -134,7 +131,6 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
-            method = RequestMethod.GET,
             produces = "application/json-seq;charset=UTF-8",
             params = "type=RNASEQ_MRNA_DIFFERENTIAL")
     public void differentialRnaSeqExperimentEvidence(

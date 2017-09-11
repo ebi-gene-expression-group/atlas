@@ -37,7 +37,7 @@ public class DASFeaturesController extends HtmlExceptionHandlingController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/das/s4/features", method = RequestMethod.GET, produces = "application/xml;charset=UTF-8")
+    @RequestMapping(value = "/das/s4/features",produces = "application/xml;charset=UTF-8")
     public String dasFeatures(@RequestParam(value = "segment") String geneId, Model model) {
         checkArgument(geneId.length() <= 255, "Segment parameter is too long");
 

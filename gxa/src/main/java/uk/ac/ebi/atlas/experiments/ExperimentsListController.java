@@ -44,7 +44,6 @@ public class ExperimentsListController {
 
     //Used by experiments table page
     @RequestMapping(value = "/json/experiments",
-                    method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -53,7 +52,6 @@ public class ExperimentsListController {
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/info",
-                    method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

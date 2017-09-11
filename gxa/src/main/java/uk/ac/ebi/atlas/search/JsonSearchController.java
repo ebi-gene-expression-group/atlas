@@ -33,7 +33,7 @@ public class JsonSearchController extends JsonExceptionHandlingController {
     }
 
 //    @RequestMapping(value = "/json/search/baseline_facets",
-//                    method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+//produces = "application/json;charset=UTF-8")
 //    @ResponseBody
 //    public String getJsonBaselineFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "")
 //                                        SemanticQuery geneQuery,
@@ -45,7 +45,7 @@ public class JsonSearchController extends JsonExceptionHandlingController {
 //    }
 
     @RequestMapping(value = "/json/search/differential_facets",
-                    method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getDifferentialJsonFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "")
                                             SemanticQuery geneQuery,
@@ -64,7 +64,7 @@ public class JsonSearchController extends JsonExceptionHandlingController {
     }
 
     @RequestMapping(value = "/json/search/differential_results",
-                    method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getDifferentialJsonResults(@RequestParam(value = "geneQuery", required = false, defaultValue = "")
                                              SemanticQuery geneQuery,

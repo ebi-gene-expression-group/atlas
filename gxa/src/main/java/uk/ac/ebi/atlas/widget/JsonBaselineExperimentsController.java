@@ -53,7 +53,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
     @RequestMapping(
             value = "/widgets/heatmap/baselineAnalytics",
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @Deprecated
     public String analyticsJson() {
@@ -62,7 +61,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
     @RequestMapping(
             value = url,
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String jsonBaselineExperiments(
