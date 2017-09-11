@@ -49,7 +49,7 @@ public class GenePageController extends BioentityPageController {
                 + (StringUtils.isEmpty(entityName) ? identifier : entityName)
                 + " - " + species.getName();
 
-        return ImmutableMap.<String, Object>of(
+        return ImmutableMap.of(
                 "mainTitle", s,
                 "pageDescription", s,
                 "pageKeywords", "gene," + identifier + "," + species.getName()
