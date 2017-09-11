@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 @Controller
 public class ExperimentsController extends HtmlExceptionHandlingController{
 
-    @RequestMapping(value = "/experiments", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/experiments",produces = "text/html;charset=UTF-8")
     public String getExperimentsListParameters(
             @RequestParam(value = "experimentType", required = false) String experimentType,
             @RequestParam(value = "kingdom", required = false) String kingdom,

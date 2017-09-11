@@ -25,7 +25,7 @@ public class CoexpressedGenesController extends JsonExceptionHandlingController 
     }
 
     @RequestMapping(value ={"/json/experiments/coexpression"},
-                    method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchCoexpressedGenes(@RequestParam(value = "experiment") String experiment,
                                         @RequestParam(value = "identifier") String identifier) {

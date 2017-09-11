@@ -65,7 +65,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8",
             params = "type=RNASEQ_MRNA_BASELINE")
     @ResponseBody
@@ -81,7 +80,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8",
             params = "type=PROTEOMICS_BASELINE")
     @ResponseBody
@@ -98,7 +96,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
 
     @RequestMapping(
             value = "/json/baseline_refexperiment",
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String jsonBaselineRefExperiment(
@@ -132,7 +129,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     }
 
     @RequestMapping(value = GENE_DISTRIBUTION_URL,
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8",
             params = "type=RNASEQ_MRNA_BASELINE")
     @ResponseBody
@@ -147,7 +143,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     }
 
     @RequestMapping(value = GENE_DISTRIBUTION_URL,
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8",
             params = "type=PROTEOMICS_BASELINE")
     @ResponseBody

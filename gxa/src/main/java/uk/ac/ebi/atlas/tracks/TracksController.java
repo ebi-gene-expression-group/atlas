@@ -21,8 +21,7 @@ public class TracksController extends HtmlExceptionHandlingController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/experiments-content/{experimentAccession}/tracks/{trackFileName:.*}",
-                    method = {RequestMethod.GET})
+    @RequestMapping(value = "/experiments-content/{experimentAccession}/tracks/{trackFileName:.*}")
     public String forwardToTrackFile(@PathVariable String experimentAccession,
                                      @PathVariable String trackFileName,
                                      @RequestParam(required = false, defaultValue = "") String accessKey)

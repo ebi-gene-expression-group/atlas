@@ -32,7 +32,7 @@ public final class ExpressionDataController extends JsonExceptionHandlingControl
         this.speciesTrader = speciesTrader;
     }
 
-    @RequestMapping(value = "/json/expressionData", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/json/expressionData",produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String existGeneIdentifier(@RequestParam(value = "geneId") String geneId ) {
@@ -41,7 +41,7 @@ public final class ExpressionDataController extends JsonExceptionHandlingControl
     }
 
     // Wojtek: this doesn't seem right.
-    @RequestMapping(value = "/json/expressionData/species", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/json/expressionData/species",produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String existSpeciesForGeneIdentifier() {

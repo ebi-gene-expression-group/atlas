@@ -20,7 +20,7 @@ import java.util.Set;
 @Controller
 public class GenePageController extends BioentityPageController {
 
-    @RequestMapping(value = "/genes/{identifier:.*}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/genes/{identifier:.*}",produces = "text/html;charset=UTF-8")
     public String showGenePage(@PathVariable String identifier, Model model) {
         if(identifier.toUpperCase().startsWith("MGI")){
             Set<String> correspondingEnsemblIdentifiers = bioentityPropertyDao.fetchGeneIdsForPropertyValue
