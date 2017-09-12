@@ -21,6 +21,14 @@
             </div>
         </c:if>
 
+        <c:if test="${not empty entityBriefName}">
+            <div class="gxaBioentityHeader">
+                <p class="gxaBioentityName">${entityFullName}</p>
+                <p class="gxaBioentitySpecies">${species}</p>
+                <p class="gxaBioentityDescription">${bioEntityDescription}</p>
+            </div>
+        </c:if>
+
         <c:choose>
             <c:when test="${hasBaselineResults && hasDifferentialResults}">
                 <c:set var="baselineTabClass" value="is-active"/>

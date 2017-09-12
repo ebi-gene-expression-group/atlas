@@ -81,7 +81,8 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
         model.addAttribute("hasBaselineResults", hasBaselineResults);
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
 
-        Species species = speciesFactory.create(speciesReferenceName);
+        String speciesInferred = (speciesReferenceName.isEmpty() ? model.asMap().get("species").toString() : speciesReferenceName);
+        Species species = speciesFactory.create(speciesInferred);
         model.addAttribute("species", species.getName());
 
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
