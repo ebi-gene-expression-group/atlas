@@ -16,7 +16,6 @@ import java.util.Map;
 public class ApplicationProperties {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
-    private static final String PUBMED_URL_TEMPLATE = "https://europepmc.org/abstract/MED/{0}";
     private static final String AE_ARRAY_URL_TEMPLATE = "https://www.ebi.ac.uk/arrayexpress/arrays/{0}";
 
     private static final Map<String,String> REFERENCE_EXPERIMENTS =
@@ -56,11 +55,6 @@ public class ApplicationProperties {
     public String getArrayExpressArrayURL(String arrayAccession) {
         String arrayDesign = arrayDesignTrader.getArrayDesignAccession(arrayAccession);  //getKey from arrayDesignMap
         return MessageFormat.format(AE_ARRAY_URL_TEMPLATE, arrayDesign);
-    }
-
-    //This is invoked from jsp el
-    public String getPubMedURL(String pubMedId) {
-        return MessageFormat.format(PUBMED_URL_TEMPLATE, pubMedId);
     }
 
     public static String getBaselineReferenceExperimentAccession(Species species) {

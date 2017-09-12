@@ -26,8 +26,6 @@ public class ApplicationPropertiesTest {
     private static final String A_AFFY_35 = "A-AFFY-35";
     private static final String A_AFFY_35_NAME = "A-AFFY-35-NAME";
     private static final String ARRAYEXPRESS_ARRAYS_URL = "https://www.ebi.ac.uk/arrayexpress/arrays/";
-    private static final String PUBMED_URL = "https://europepmc.org/abstract/MED/";
-    private static final String PUB_MED_ID = "123456";
 
     private static final String EXPERIMENT_URL = "http://x.y/z/experiments/X";
     private static final String CONTEXT_PATH = "/z";
@@ -62,10 +60,6 @@ public class ApplicationPropertiesTest {
         assertThat(subject.getArrayExpressArrayURL(A_AFFY_35_NAME), is(ARRAYEXPRESS_ARRAYS_URL + A_AFFY_35));
     }
 
-    @Test
-    public void testGetPubMedURL() throws Exception {
-        assertThat(subject.getPubMedURL(PUB_MED_ID), is(PUBMED_URL + PUB_MED_ID));
-    }
 
     @Test
     public void buildDownloadUrl() {
