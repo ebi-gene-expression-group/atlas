@@ -38,7 +38,7 @@ public class ArrayDesignDAO {
     }
 
     public ArrayDesign getArrayDesign(String accession){
-        return arrayDesigns.get().stream().filter(a -> a.accession() == accession).findFirst().orElse(ArrayDesign.createForUnknownName(accession));
+        return arrayDesigns.get().stream().filter(a -> a.accession().equals(accession)).findFirst().orElse(ArrayDesign.createForUnknownName(accession));
     }
 
     public Map<String, String> getArrayDesignMapNames() {
