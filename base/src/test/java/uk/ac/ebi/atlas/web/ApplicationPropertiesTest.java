@@ -10,7 +10,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -23,52 +22,12 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationPropertiesTest {
-    private static final String A_AFFY_35 = "A-AFFY-35";
-    private static final String A_AFFY_35_NAME = "A-AFFY-35-NAME";
-    private static final String ARRAYEXPRESS_ARRAYS_URL = "https://www.ebi.ac.uk/arrayexpress/arrays/";
-
-    private static final String EXPERIMENT_URL = "http://x.y/z/experiments/X";
-    private static final String CONTEXT_PATH = "/z";
-
-    private static final Map<String, String[]> REQUEST_PARAMETERS_MAP =
-            ImmutableMap.of("p1",new String[]{"1"},"p2",new String[]{"2"});
-    private static final String DOWNLOAD_URL =
-            "/experiments/X.tsv?p1=1&geneQuery="+SemanticQuery.create().toUrlEncodedJson()+"&p2=2";
-
-    @Mock
-    private HttpServletRequest httpServletRequestMock;
-
-    @Mock
-    private ArrayDesignTrader arrayDesignTraderMock;
 
     private ApplicationProperties subject;
 
     @Before
     public void setUp() throws Exception {
-        //given
-        when(httpServletRequestMock.getContextPath()).thenReturn(CONTEXT_PATH);
-        when(httpServletRequestMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
-        when(httpServletRequestMock.getParameterMap()).thenReturn(REQUEST_PARAMETERS_MAP);
-
-        when(arrayDesignTraderMock.getArrayDesignAccession(A_AFFY_35_NAME)).thenReturn(A_AFFY_35);
-
-        subject = new ApplicationProperties(arrayDesignTraderMock);
-    }
-
-    @Test
-    public void testGetArrayExpressArrayURL() throws Exception {
-        assertThat(subject.getArrayExpressArrayURL(A_AFFY_35_NAME), is(ARRAYEXPRESS_ARRAYS_URL + A_AFFY_35));
-    }
-
-
-    @Test
-    public void buildDownloadUrl() {
-        //when
-        String downloadUrl = subject.buildDownloadURL(SemanticQuery.create(),httpServletRequestMock);
-
-        // TODO Assert that the parameters are present with the required values in any order
-        //then
-        assertThat(downloadUrl, is(DOWNLOAD_URL));
+        subject = new ApplicationProperties();
     }
 
     @Test

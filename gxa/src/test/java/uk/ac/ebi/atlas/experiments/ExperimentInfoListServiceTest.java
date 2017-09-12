@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -98,8 +99,8 @@ public class ExperimentInfoListServiceTest {
         microarrayExperiment = Mockito.spy(new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
                 lastUpdateStub ,contrasts,
-                "description", new Species(SPECIES, SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
-                Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<>()));
+                "description", new Species(SPECIES, SpeciesProperties.UNKNOWN),
+                experimentDesignMock, new HashSet<>(), ImmutableList.of(ArrayDesign.create(ARRAY,"ARRAY_NAME"))));
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment<? extends DescribesDataColumns>>>
                 experimentAccessionsPerType =

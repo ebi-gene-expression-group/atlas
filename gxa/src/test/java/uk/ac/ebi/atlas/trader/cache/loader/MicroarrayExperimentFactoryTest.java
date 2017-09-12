@@ -6,7 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -14,7 +16,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,13 +48,13 @@ public class MicroarrayExperimentFactoryTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
-    private ArrayDesignTrader arrayDesignTraderMock;
+    ArrayDesignDAO arrayDesignDAO;
 
     private MicroarrayExperimentFactory subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentFactory(configurationTraderMock, speciesFactory, arrayDesignTraderMock);
+        subject = new MicroarrayExperimentFactory(configurationTraderMock, speciesFactory, arrayDesignDAO);
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
         when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
@@ -64,8 +65,7 @@ public class MicroarrayExperimentFactoryTest {
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)));
-        when(arrayDesignTraderMock.getArrayDesignNames(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)))).thenReturn
-                (Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_NAME)));
+        when(arrayDesignDAO.getArrayDesign(ARRAYDESIGN_ID)).thenReturn(ArrayDesign.create(ARRAYDESIGN_ID, ARRAYDESIGN_NAME));
     }
 
     @Test

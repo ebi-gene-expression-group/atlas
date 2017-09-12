@@ -34,12 +34,12 @@
             <span style="font-style:italic">${species}</span>
         </div>
 
-        <c:if test="${allArrayDesigns!=null}">
+        <c:if test="${not empty arrayDesignAccessions and not empty arrayDesignNames}">
         <div id="experimentArrayDesigns">Array Design(s):
-            <c:forEach items="${allArrayDesigns}" var="arrayDesign">
-                <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
-                   href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
-                   target='_blank'>${arrayDesign}</a>
+            <c:forEach items="${arrayDesignAccessions}" var="arrayDesignAccession" varStatus="status">
+                <a class="array-design" id="${arrayDesignAccession}" title="View array design in ArrayExpress"
+                   href="https://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesignAccession}"
+                   target='_blank'>${arrayDesignNames.get(status.index)}</a>
             </c:forEach>
         </div>
         </c:if>

@@ -1,22 +1,17 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.ImmutableMap;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 @Named
 public class ApplicationProperties {
-
-    private static final String TSV_FILE_EXTENSION = ".tsv";
-    private static final String AE_ARRAY_URL_TEMPLATE = "https://www.ebi.ac.uk/arrayexpress/arrays/{0}";
 
     private static final Map<String,String> REFERENCE_EXPERIMENTS =
             ImmutableMap.<String,String>builder()
@@ -42,38 +37,11 @@ public class ApplicationProperties {
                     .put("triticum aestivum","E-MTAB-4260")
                     .put("vitis vinifera","E-MTAB-4350")
                     .put("xenopus tropicalis","E-MTAB-3726")
-                    .put("zea mays","E-MTAB-4342").build();
-
-    private ArrayDesignTrader arrayDesignTrader;
-
-    @Inject
-    ApplicationProperties(ArrayDesignTrader arrayDesignTrader) {
-        this.arrayDesignTrader = arrayDesignTrader;
-    }
-
-    //This is invoked from jsp el
-    public String getArrayExpressArrayURL(String arrayAccession) {
-        String arrayDesign = arrayDesignTrader.getArrayDesignAccession(arrayAccession);  //getKey from arrayDesignMap
-        return MessageFormat.format(AE_ARRAY_URL_TEMPLATE, arrayDesign);
-    }
+                    .put("zea mays","E-MTAB-4342")
+                    .build();
 
     public static String getBaselineReferenceExperimentAccession(Species species) {
         return REFERENCE_EXPERIMENTS.get(species.getReferenceName());
-    }
-
-    public String buildDownloadURL(SemanticQuery geneQuery, HttpServletRequest request) {
-        Map<String, String[]> allParameters = new HashMap<>(request.getParameterMap());
-        allParameters.put("geneQuery", new String[]{geneQuery.toUrlEncodedJson()});
-        StringBuilder sourceURLBuilder = new StringBuilder(
-                request.getRequestURI()
-                        .replaceFirst("^.*"+request.getContextPath(), "")
-                        .replace("/json/experiments", "/experiments")
-                        .replaceFirst("\\??$", TSV_FILE_EXTENSION+"?"));
-        allParameters.entrySet().stream().filter(e -> e.getValue().length > 0).forEach(e -> {
-            sourceURLBuilder.append(e.getKey()).append("=").append(e.getValue()[0]).append("&");
-        });
-        sourceURLBuilder.deleteCharAt(sourceURLBuilder.lastIndexOf("&"));
-        return sourceURLBuilder.toString();
     }
 
 }

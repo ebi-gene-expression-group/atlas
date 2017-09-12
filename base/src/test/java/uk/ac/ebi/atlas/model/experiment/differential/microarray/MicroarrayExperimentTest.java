@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -19,8 +20,6 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,6 +37,12 @@ public class MicroarrayExperimentTest {
             ImmutableSet.of(
                     "Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]",
                     "TaqMan® Array Human MicroRNA A+B Cards Set v3.0");
+
+    static final List<ArrayDesign> arrayDesigns = ImmutableList.of(
+            ArrayDesign.create("A-AFFY-44", "Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]"),
+            ArrayDesign.create("A-GEOD-20277", "TaqMan® Array Human MicroRNA A+B Cards Set v3.0")
+            );
+
     static final String PUBMEDID = "PUBMEDID";
 
     AssayGroup g1 = new AssayGroup("id", "assay 1","assay 2");
@@ -47,7 +52,7 @@ public class MicroarrayExperimentTest {
     MicroarrayExperiment subject;
 
     public static MicroarrayExperiment get(String accession, ExperimentType type, List<Contrast> contrasts,
-                                           Set<String> arrayDesignAccessions, Set<String> arrayDesignNames) {
+                                           Set<String> arrayDesignAccessions, Set<String> arrayDesignNames, List<ArrayDesign> arrayDesigns) {
 
         ImmutableMap<String, String> genomeBrowser =
                 ImmutableMap.of("type", "genome_browser", "name", "Ensembl",
@@ -60,16 +65,15 @@ public class MicroarrayExperimentTest {
                 type, accession, new Date(),
                 contrasts.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
                 "description", new Species("Homo sapiens", speciesProperties),
-                arrayDesignAccessions, arrayDesignNames,
                 mock(ExperimentDesign.class),
-                Sets.newHashSet(PUBMEDID));
+                Sets.newHashSet(PUBMEDID), arrayDesigns);
     }
 
     @Before
     public void setUp() throws Exception {
         subject =
                 get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(contrast),
-                        ARRAY_DESIGN_ACCESSIONS, ARRAY_DESIGN_NAMES);
+                        ARRAY_DESIGN_ACCESSIONS, ARRAY_DESIGN_NAMES, arrayDesigns);
     }
 
     @Test
@@ -86,7 +90,7 @@ public class MicroarrayExperimentTest {
     public void microRnaExperimentsHaveNoGenomeBrowsers() throws Exception {
         MicroarrayExperiment miRnaSubject =
                 get("accession", ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL, ImmutableList.of(contrast),
-                        ARRAY_DESIGN_ACCESSIONS, ARRAY_DESIGN_NAMES);
+                        ARRAY_DESIGN_ACCESSIONS, ARRAY_DESIGN_NAMES,arrayDesigns);
 
         assertThat(subject.getGenomeBrowserNames(), hasSize(1));
         assertThat(miRnaSubject.getGenomeBrowserNames(), hasSize(0));

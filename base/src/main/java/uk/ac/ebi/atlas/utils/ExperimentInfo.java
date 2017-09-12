@@ -1,9 +1,11 @@
 
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -28,8 +30,8 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
     private String species;
     private String kingdom;
     private SortedSet<String> experimentalFactors = Sets.newTreeSet();
-    private SortedSet<String> arrayDesigns = Sets.newTreeSet();
-    private SortedSet<String> arrayDesignNames = Sets.newTreeSet();
+    private List<String> arrayDesigns = ImmutableList.of();
+    private List<String> arrayDesignNames = ImmutableList.of();
 
     public ExperimentType getExperimentType() {
         return experimentType;
@@ -95,20 +97,20 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
         this.experimentalFactors = Sets.newTreeSet(experimentalFactors);
     }
 
-    public SortedSet<String> getArrayDesigns() {
+    public List<String> getArrayDesigns() {
         return arrayDesigns;
     }
 
-    public void setArrayDesigns(Set<String> arrayDesigns) {
-        this.arrayDesigns = Sets.newTreeSet(arrayDesigns);
+    public void setArrayDesigns(List<String> arrayDesigns) {
+        this.arrayDesigns = arrayDesigns;
     }
 
-    public SortedSet<String> getArrayDesignNames() {
+    public List<String> getArrayDesignNames() {
         return arrayDesignNames;
     }
 
-    public void setArrayDesignNames(Set<String> arrayDesignNames) {
-        this.arrayDesignNames = Sets.newTreeSet(arrayDesignNames);
+    public void setArrayDesignNames(List<String> arrayDesignNames) {
+        this.arrayDesignNames = arrayDesignNames;
     }
 
     @Override

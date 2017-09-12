@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -13,48 +13,45 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 
 public class MicroarrayExperiment extends DifferentialExperiment {
 
-    private SortedSet<String> arrayDesignAccessions;
-    private SortedSet<String> arrayDesignNames;
+    private final List<ArrayDesign> arrayDesigns;
 
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate,
                                 List<Pair<Contrast, Boolean>> contrasts,
                                 String description, Species species,
-                                Set<String> arrayDesignAccessions,
-                                Set<String> arrayDesignNames,
                                 ExperimentDesign experimentDesign,
-                                Set<String> pubMedIds) {
+                                Set<String> pubMedIds, List<ArrayDesign> arrayDesigns) {
         super(type, accession, lastUpdate, contrasts, description, species, pubMedIds, experimentDesign);
-        this.arrayDesignAccessions = Sets.newTreeSet(arrayDesignAccessions);
-        this.arrayDesignNames =  Sets.newTreeSet(arrayDesignNames);
+        this.arrayDesigns = arrayDesigns;
     }
 
-    public SortedSet<String> getArrayDesignAccessions() {
-        return arrayDesignAccessions;
+    public List<String> getArrayDesignAccessions() {
+        return arrayDesigns.stream().map(a -> a.accession()).collect(Collectors.toList());
     }
 
-    public SortedSet<String> getArrayDesignNames() {return arrayDesignNames;}
+    public List<String> getArrayDesignNames() {
+        return arrayDesigns.stream().map(a -> a.name()).collect(Collectors.toList());
+    }
 
 
     @Override
-    public HashMap<String, Object> getAttributes(){
+    public HashMap<String, Object> getAttributes() {
         HashMap<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
-        //For showing the QC REPORTS button in the header
-        result.put("qcArrayDesigns", getArrayDesignAccessions());
-        result.put("allArrayDesigns", getArrayDesignNames());
+        result.put("arrayDesignAccessions", getArrayDesignAccessions());
+        result.put("arrayDesignNames", getArrayDesignNames());
         return result;
     }
 
     @Override
-    public ExperimentInfo buildExperimentInfo(){
+    public ExperimentInfo buildExperimentInfo() {
         ExperimentInfo experimentInfo = super.buildExperimentInfo();
-        experimentInfo.setArrayDesigns(arrayDesignAccessions);
-        experimentInfo.setArrayDesignNames(arrayDesignNames);
+        experimentInfo.setArrayDesigns(getArrayDesignAccessions());
+        experimentInfo.setArrayDesignNames(getArrayDesignNames());
         return experimentInfo;
     }
 }

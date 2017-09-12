@@ -2,12 +2,12 @@ package uk.ac.ebi.atlas.profiles.stream;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSortedSet;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -37,7 +37,7 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
     MicroarrayExperiment experiment =
             MicroarrayExperimentTest.get(
                     "accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(g1_g2, g1_g3),
-                    ImmutableSet.of("A-AFFY-1"), ImmutableSet.of());
+                    ImmutableSet.of("A-AFFY-1"), ImmutableSet.of(), ImmutableList.of(ArrayDesign.createForUnknownName("array-design-accession")));
 
     String id = "id";
     String name = "name";
