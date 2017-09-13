@@ -62,8 +62,6 @@
         <url-pattern>/resources/*</url-pattern>
         <url-pattern>/rest/*</url-pattern>
         <url-pattern>/json/*</url-pattern>
-        <url-pattern>/widgets/*</url-pattern>
-        <url-pattern>/search/differential/json</url-pattern>
     </filter-mapping>
 
     <security-role>

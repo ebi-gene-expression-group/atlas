@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.widget;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
@@ -18,7 +16,6 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
-import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
@@ -26,16 +23,16 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @Scope("request")
 public final class JsonBaselineExperimentsController extends JsonExceptionHandlingController {
 
-    public static final String url = "/json/baseline_experiments";
+    public static final String URL = "/json/baseline_experiments";
     private final AnatomogramFactory anatomogramFactory;
     private final SpeciesInferrer speciesInferrer;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
@@ -52,15 +49,8 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
     }
 
     @RequestMapping(
-            value = "/widgets/heatmap/baselineAnalytics",
-            produces = "application/json;charset=UTF-8")
-    @Deprecated
-    public String analyticsJson() {
-        return "forward:"+url;
-    }
-
-    @RequestMapping(
-            value = url,
+            value = URL,
+            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String jsonBaselineExperiments(
@@ -89,19 +79,13 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
         result.add(
                 "anatomogram",
-                anatomogramFactory.get(source, species,
-                        FluentIterable.from(dataColumns).transformAndConcat(
-                                new Function<FactorAcrossExperiments, Iterable<? extends OntologyTerm>>() {
-                                    @Nullable
-                                    @Override
-                                    public Iterable<? extends OntologyTerm>
-                                    apply(@Nullable FactorAcrossExperiments factorAcrossExperiments) {
-                                        return factorAcrossExperiments.getValueOntologyTerms();
-                                    }
-                                }
-                        )
-                ).orElse(JsonNull.INSTANCE)
-        );
+                anatomogramFactory.get(
+                        source,
+                        species,
+                        dataColumns.stream().flatMap(
+                                factorAcrossExperiments -> factorAcrossExperiments.getValueOntologyTerms().stream())
+                                .collect(Collectors.toList()))
+                        .orElse(JsonNull.INSTANCE));
 
         if(!experimentProfiles.isEmpty()){
             result.add("columnHeaders", constructColumnHeaders(dataColumns));
@@ -130,7 +114,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
     }
 
     //see also: similar method in ExperimentPageService
-    JsonObject configAsJsonObject(Map<String, Object> model) {
+    private JsonObject configAsJsonObject(Map<String, Object> model) {
         JsonObject config = new JsonObject();
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
