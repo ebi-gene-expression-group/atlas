@@ -2142,8 +2142,8 @@ expression-atlas-disclaimers@latest:
     urijs "^1.18.10"
 
 expression-atlas-experiment-page@latest:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.12.tgz#03aea75ccd96702b2fada63148610914308cdf80"
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.1.1.tgz#e8ca75212831b7d4d9e6b03b6b88bf0f09c9d8ac"
   dependencies:
     expression-atlas-disclaimers latest
     expression-atlas-heatmap-highcharts latest
@@ -2993,8 +2993,8 @@ internal-ip@^2.0.2:
     ipaddr.js "^1.5.1"
 
 interpret@^1.0.0:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.4.tgz#820cdd588b868ffb191a809506d6c9c8f212b1b0"
 
 invariant@^2.0.0, invariant@^2.1.0, invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
@@ -5954,8 +5954,8 @@ webpack-dev-middleware@^1.11.0:
     time-stamp "^2.0.0"
 
 webpack-dev-server@^2.6.1:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.8.0.tgz#bc3072d699fd367078c67f90410f4028b3d008fe"
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.8.1.tgz#344e312bf560498ee0c518f2fcc709951630f667"
   dependencies:
     ansi-html "0.0.7"
     array-includes "^3.0.3"
