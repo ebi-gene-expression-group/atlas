@@ -43,18 +43,15 @@ public class SearchController extends HtmlExceptionHandlingController {
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final SpeciesFactory speciesFactory;
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private final SpeciesInferrer speciesInferrer;
 
     @Inject
     public SearchController(AnalyticsSearchService analyticsSearchService,
                             BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                            SpeciesFactory speciesFactory,
-                            SpeciesInferrer speciesInferrer) {
+                            SpeciesFactory speciesFactory) {
 
         this.analyticsSearchService = analyticsSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.speciesFactory = speciesFactory;
-        this.speciesInferrer = speciesInferrer;
     }
 
     @RequestMapping(value = "/search")
@@ -104,11 +101,6 @@ public class SearchController extends HtmlExceptionHandlingController {
 
         // Resolves to a single Gene ID -> Gene page
         if (isEmpty(conditionQuery) && geneIds.size() == 1) {
-            if (species.getName().isEmpty()) {
-                Species inferSpeciesForGeneQuery = speciesInferrer.inferSpeciesForGeneQuery(geneQuery);
-                model.addAttribute("species", inferSpeciesForGeneQuery.getName());
-            }
-
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
             return "redirect:/genes/" + geneIds.iterator().next();
         }

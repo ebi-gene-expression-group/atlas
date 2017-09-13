@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchSer
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
+import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -29,6 +30,7 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
     protected AnalyticsSearchService analyticsSearchService;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     protected BioEntityPropertyDao bioentityPropertyDao;
+    protected SpeciesInferrer speciesInferrer;
 
     @Inject
     public void setAnalyticsSearchService(AnalyticsSearchService analyticsSearchService) {
@@ -60,6 +62,11 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
         this.bioentityPropertyDao = bioentityPropertyDao;
     }
 
+    @Inject
+    public void setSpeciesInferrer(SpeciesInferrer speciesInferrer) {
+        this.speciesInferrer = speciesInferrer;
+    }
+
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
     public String showBioentityPage(String identifier,
@@ -81,8 +88,7 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
         model.addAttribute("hasBaselineResults", hasBaselineResults);
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
 
-        String speciesInferred = (speciesReferenceName.isEmpty() ? model.asMap().get("species").toString() : speciesReferenceName);
-        Species species = speciesFactory.create(speciesInferred);
+        Species species = speciesFactory.create(speciesReferenceName);
         model.addAttribute("species", species.getName());
 
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();

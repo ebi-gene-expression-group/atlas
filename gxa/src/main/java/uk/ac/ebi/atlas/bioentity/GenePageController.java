@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 
 import java.text.MessageFormat;
@@ -30,6 +31,8 @@ public class GenePageController extends BioentityPageController {
             }
         }
 
+        Species speciesReferenceName = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(identifier));
+
         Map<BioentityPropertyName, Set<String>> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier);
         Set<String> symbols =
                 bioentityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL);
@@ -39,7 +42,7 @@ public class GenePageController extends BioentityPageController {
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, "", geneName, model, experimentTypes,
+        return super.showBioentityPage(identifier, speciesReferenceName.getName(), geneName, model, experimentTypes,
                 BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType);
     }
 
