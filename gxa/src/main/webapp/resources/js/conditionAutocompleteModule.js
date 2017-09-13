@@ -2,7 +2,7 @@
 
 var conditionAutocompleteModule = (function ($) {
 
-    function initConditionAutocomplete (element, contextPath, onChange) {
+    function initConditionAutocomplete (element, onChange) {
 
         var autoCompleteFixSet = function() {
             $(this).attr('arrayExpressAutocomplete', 'off');
@@ -23,12 +23,12 @@ var conditionAutocompleteModule = (function ($) {
             .jsonTagEditor({
                 autocomplete: {
                     plugin: 'arrayExpressAutocomplete',
-                    urlOrData:  contextPath + 'efowords.txt',
+                    urlOrData:  'https://www.ebi.ac.uk/arrayexpress/efowords.txt',
                     matchContains: false,
                     selectFirst: false,
                     scroll: true,
                     max: 50,
-                    requestTreeUrl: contextPath + 'efotree.txt',
+                    requestTreeUrl: 'https://www.ebi.ac.uk/arrayexpress/efotree.txt',
                     width: 300
                 },
                 onChange: onChange,
