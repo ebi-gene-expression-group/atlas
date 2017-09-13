@@ -9,17 +9,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,12 +33,11 @@ public class JsonBaselineExperimentsControllerWIT {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-
     @Test
     public void baselineExperiments() throws Exception {
         String geneQuery = SemanticQuery.create(SemanticQueryTerm.create("zinc finger")).toUrlEncodedJson();
         this.mockMvc.perform(
-                get(JsonBaselineExperimentsController.url)
+                get(JsonBaselineExperimentsController.URL)
                         .param("geneQuery", geneQuery)
                         .param("species", "caenorhabditis elegans"))
                 .andExpect(status().isOk())
@@ -54,9 +49,10 @@ public class JsonBaselineExperimentsControllerWIT {
     @Test
     public void baselineExperimentsFailsWithoutQuery() throws Exception {
         this.mockMvc.perform(
-                get(JsonBaselineExperimentsController.url))
+                get(JsonBaselineExperimentsController.URL))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(Matchers.containsString("error")));
 
     }
+
 }
