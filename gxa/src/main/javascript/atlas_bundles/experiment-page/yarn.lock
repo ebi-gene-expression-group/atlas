@@ -208,8 +208,8 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
 
 etag@~1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.0.tgz#6f631aef336d6c46362b51764044ce216be3c051"
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
 express@^4.15.2:
   version "4.15.4"
@@ -254,8 +254,8 @@ expression-atlas-disclaimers@latest:
     urijs "^1.18.10"
 
 expression-atlas-experiment-page@latest:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.11.tgz#b439adcf6747cee38a2a0758432da451b77d2869"
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.12.tgz#03aea75ccd96702b2fada63148610914308cdf80"
   dependencies:
     expression-atlas-disclaimers latest
     expression-atlas-heatmap-highcharts latest
@@ -276,8 +276,8 @@ expression-atlas-experiment-page@latest:
     urijs "^1.18.10"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.5.5"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.5.5.tgz#a7f2cda74958b5f2defd67b8fc2f9e149a01488e"
+  version "3.5.10"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.5.10.tgz#60977355a4127d7beca725b2a1c4ab90d07882c8"
   dependencies:
     anatomogram latest
     color "^2.0.0"
