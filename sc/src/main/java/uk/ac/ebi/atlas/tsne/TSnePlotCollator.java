@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 @Named
 public class TSnePlotCollator {
 
+    // TODO This class will change a lot (and very probably won’t be necessary) when all data is available in the DB
+    // TODO and we can do a JOIN on the cell ID field
+
     private final TSnePlotDao tSnePlotDao;
     private final ClusterDao clusterDao;
     private final GeneExpressionDao geneExpressionDao;

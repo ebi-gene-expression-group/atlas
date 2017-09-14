@@ -105,4 +105,6 @@ public class TSnePlotCollatorTest {
         });
     }
 
+    // TODO There will be cases in which gene expression cells is a superset of cells shown in the t-SNE plot but not
+    // TODO the other way around, add tests for that
 }
