@@ -6,7 +6,7 @@ import ExpressionAtlasHeatmap from 'expression-atlas-heatmap-highcharts'
 const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
 
 const BaselineHeatmapWidget = (props) =>
-  <div className="row column margin-top-large margin-bottom-xlarge">
+  <div className="row column expanded margin-top-large margin-bottom-xlarge">
       <h5>{(props.showHeatmapLabel ? `${capitalizeFirstLetter(props.species)} — ` : '') + props.factor.value}</h5>
       <ExpressionAtlasHeatmap atlasUrl={props.atlasUrl}
                               query={{

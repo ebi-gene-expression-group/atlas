@@ -2142,8 +2142,8 @@ expression-atlas-disclaimers@latest:
     urijs "^1.18.10"
 
 expression-atlas-experiment-page@latest:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.1.1.tgz#e8ca75212831b7d4d9e6b03b6b88bf0f09c9d8ac"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.2.0.tgz#b46a152d3d7f4516e2fc2999c656c9991dc2b743"
   dependencies:
     expression-atlas-disclaimers latest
     expression-atlas-heatmap-highcharts latest
@@ -2176,8 +2176,8 @@ expression-atlas-feedback@./atlas_modules/expression-atlas-feedback-v1.3.0.tgz:
     react-timer-mixin "^0.13.3"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.5.13"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.5.13.tgz#5c98acd92697c662aa71f013be9ddc68de8ef255"
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.6.1.tgz#9802b899b0c35beefb5a6d492e66c8d8fff1cc0e"
   dependencies:
     anatomogram latest
     color "^2.0.0"
