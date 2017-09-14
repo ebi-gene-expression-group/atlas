@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 public class BaselineProfilesListBuilder implements GeneProfilesListBuilder<BaselineProfilesList> {
 
     @Override
-    public BaselineProfilesList create() {
+    public BaselineProfilesList get() {
         return new BaselineProfilesList();
     }
 }

@@ -10,7 +10,7 @@ import javax.inject.Named;
 public class DifferentialProfilesListBuilder<P extends DifferentialProfile> implements GeneProfilesListBuilder<DifferentialProfilesList<P>> {
 
     @Override
-    public DifferentialProfilesList<P> create() {
+    public DifferentialProfilesList<P> get() {
         return new DifferentialProfilesList<>();
     }
 }

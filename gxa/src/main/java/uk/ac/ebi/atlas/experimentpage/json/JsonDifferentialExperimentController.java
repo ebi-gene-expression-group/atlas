@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.json;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -14,12 +16,16 @@ import uk.ac.ebi.atlas.experimentpage.differential.DifferentialExperimentPageSer
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialRequestPreferencesValidator;
 import uk.ac.ebi.atlas.experimentpage.differential.evidence.EvidenceService;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
@@ -30,9 +36,15 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
+import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.alreadyForwardedButNoOtherControllerHandledTheRequest;
+import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.buildForwardURL;
 
 @Controller
 @Scope("request")
@@ -121,11 +133,20 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             produces = "application/json-seq;charset=UTF-8",
             params = "type=MICROARRAY_ANY")
     public void differentialMicroarrayExperimentEvidence(
-            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
+            @RequestParam(defaultValue = "0") Double logFoldChangeCutoff,
+            @RequestParam(defaultValue = "1") Double pValueCutoff,
+            @RequestParam(defaultValue = "1000") Integer maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-        for( JsonElement e: diffMicroarrayEvidenceService.evidenceForExperiment(experiment,new MicroarrayRequestContext(preferences, experiment))){
+        for( JsonElement e: diffMicroarrayEvidenceService.evidenceForExperiment(experiment,contrast -> {
+            MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
+            requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
+            requestPreferences.setCutoff(pValueCutoff);
+            requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
+            requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
+            return new MicroarrayRequestContext(requestPreferences, experiment);
+        })){
             response.getWriter().println(gson.toJson(e));
         }
     }
@@ -134,12 +155,21 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             produces = "application/json-seq;charset=UTF-8",
             params = "type=RNASEQ_MRNA_DIFFERENTIAL")
     public void differentialRnaSeqExperimentEvidence(
-            @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
+            @RequestParam(defaultValue = "0") Double logFoldChangeCutoff,
+            @RequestParam(defaultValue = "1") Double pValueCutoff,
+            @RequestParam(defaultValue = "1000") Integer maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        for( JsonElement e: diffRnaSeqEvidenceService.evidenceForExperiment(experiment, new RnaSeqRequestContext(preferences, experiment))){
+        for( JsonElement e: diffRnaSeqEvidenceService.evidenceForExperiment(experiment, contrast -> {
+            DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
+            requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
+            requestPreferences.setCutoff(pValueCutoff);
+            requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
+            requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
+            return new RnaSeqRequestContext(requestPreferences, experiment);
+        })){
             response.getWriter().println(gson.toJson(e));
         }
     }

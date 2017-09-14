@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.model.Profile;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PrescribedOrderProfileSelection<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T, L> {
 
@@ -35,7 +34,7 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
 
         }
 
-        L result = geneProfilesListBuilder.create();
+        L result = geneProfilesListBuilder.get();
 
 
         int i = 0;

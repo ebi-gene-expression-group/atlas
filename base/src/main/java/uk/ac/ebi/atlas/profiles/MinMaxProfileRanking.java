@@ -9,12 +9,12 @@ import java.util.Comparator;
 
 public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T,L> {
 
-    private Comparator<T> comparator;
-    private GeneProfilesListBuilder<L> geneProfilesListBuilder;
+    private final Comparator<T> comparator;
+    private final java.util.function.Supplier<L> newList;
 
-    public MinMaxProfileRanking(Comparator<T> comparator, GeneProfilesListBuilder<L> geneProfilesListBuilder) {
+    public MinMaxProfileRanking(Comparator<T> comparator, java.util.function.Supplier<L> newList) {
         this.comparator = comparator;
-        this.geneProfilesListBuilder = geneProfilesListBuilder;
+        this.newList = newList;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<
             count++;
         }
 
-        L list = geneProfilesListBuilder.create();
+        L list = newList.get();
         list.addAll(rankingQueue);
         list.setTotalResultCount(count);
         return list;

@@ -11,10 +11,7 @@ import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -23,16 +20,14 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
+import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.ProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -51,7 +46,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         this.expressionAtlasVersion = expressionAtlasVersion;
     }
 
-    public JsonArray evidenceForExperiment(E experiment, StreamOptions streamOptions) {
+    public JsonArray evidenceForExperiment(E experiment, Function<Contrast, StreamOptions> queryForOneContrast) {
         if(shouldSkip(experiment)){
             return new JsonArray();
         }
@@ -67,8 +62,10 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
         JsonArray result = new JsonArray();
 
-        for (Prof profile : new IterableObjectInputStream<>(differentialProfileStreamFactory.create(experiment, streamOptions))) {
-            for (Contrast contrast : diseaseAssociations.keySet()) {
+        for(Contrast contrast : diseaseAssociations.keySet()){
+            for(Prof profile : differentialProfileStreamFactory.select(experiment, queryForOneContrast.apply(contrast), p -> p.getExpression(contrast)!=null, new MinMaxProfileRanking<>(
+                    Comparator.comparing(p -> - Math.abs(p.getExpressionLevel(contrast))), () -> new GeneProfilesList<>())
+            ) ){
                 Expr expression = profile.getExpression(contrast);
                 if (expression != null) {
                     result.addAll(piecesOfEvidence(
