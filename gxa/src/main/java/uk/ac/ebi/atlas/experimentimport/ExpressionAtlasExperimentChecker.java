@@ -1,12 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -20,6 +17,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -27,7 +26,6 @@ import static com.google.common.base.Preconditions.checkState;
 Does not close TSV files! :(
  */
 @Named
-@Scope("prototype")
 public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
 
     private final DataFileHub dataFileHub;
@@ -85,7 +83,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         }
     }
 
-    String[] rnaSeqIdsFromHeader(String[] header) {
+    private String[] rnaSeqIdsFromHeader(String[] header) {
         return ArrayUtils.subarray(header, 2, header.length);
     }
 
@@ -100,32 +98,28 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         return StringArrayUtil.substringBefore(StringArrayUtil.filterBySubstring(header, "WithInSampleAbundance"), ".");
     }
 
-    void headerIdsMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
-
-        Preconditions.checkState(ImmutableSet.copyOf(assayGroupIds).equals(FluentIterable.from(configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups()).transform(new Function<AssayGroup, String>() {
-            @Nullable
-            @Override
-            public String apply(@Nullable AssayGroup assayGroup) {
-                return assayGroup.getId();
-            }
-        }).toSet()), MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
-
+    private void headerIdsMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+        Preconditions.checkState(
+                ImmutableSet.copyOf(assayGroupIds).equals(
+                        configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
+                                .map(AssayGroup::getId)
+                                .collect(Collectors.toSet())),
+                MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
     }
 
 
-    void checkBaselineFiles(DataFileHub.BaselineExperimentFiles experimentFiles) {
+    private void checkBaselineFiles(DataFileHub.BaselineExperimentFiles experimentFiles) {
         checkResourceExistsAndIsReadable(experimentFiles.factors);
     }
 
-    void checkDifferentialFiles(String experimentAccession) {
+    private void checkDifferentialFiles(String experimentAccession) {
         DataFileHub.RnaSeqDifferentialExperimentFiles experimentFiles =
                 dataFileHub.getRnaSeqDifferentialExperimentFiles(experimentAccession);
         checkResourceExistsAndIsReadable(experimentFiles.analytics);
         checkResourceExistsAndIsReadable(experimentFiles.rawCounts);
     }
 
-    void checkMicroarray1ColourFiles(String experimentAccession, Set<String> arrayDesigns) {
-
+    private void checkMicroarray1ColourFiles(String experimentAccession, Set<String> arrayDesigns) {
         for (String arrayDesign : arrayDesigns) {
             DataFileHub.MicroarrayExperimentFiles experimentFiles =
                     dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesign);
@@ -135,8 +129,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         }
     }
 
-    void checkMicroarray2ColourFiles(String experimentAccession, Set<String> arrayDesigns) {
-
+    private void checkMicroarray2ColourFiles(String experimentAccession, Set<String> arrayDesigns) {
         for (String arrayDesign : arrayDesigns) {
             DataFileHub.MicroarrayExperimentFiles experimentFiles =
                     dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesign);
@@ -146,7 +139,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         }
     }
 
-    void checkConfigurationFile(String accession) {
+    private void checkConfigurationFile(String accession) {
         checkResourceExistsAndIsReadable(dataFileHub.getExperimentFiles(accession).configuration);
     }
 
