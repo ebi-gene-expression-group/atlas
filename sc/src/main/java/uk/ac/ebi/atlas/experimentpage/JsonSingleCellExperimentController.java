@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
@@ -32,10 +33,10 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
     }
 
     @RequestMapping(
-            value = "/json/experiments/{experimentAccession}/tsneplot",
+            value = "/json/experiments/{experimentAccession}/tsneplot/clusters",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String tSnePlotCoordinates(@PathVariable String experimentAccession,
+    public String tSnePlotDefaultClusters(@PathVariable String experimentAccession,
                                       @RequestParam(defaultValue = "") String accessKey) throws IOException {
         return tSnePlotClusters(experimentAccession, 2, accessKey);
     }
@@ -57,8 +58,17 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
 
         return gson.toJson(
                 clusterPoints.keySet().stream()
-                        .map(key -> ImmutableMap.of("name", key, "data", clusterPoints.get(key)))
+                        .map(key -> ImmutableMap.of("name", Integer.toString(key), "data", clusterPoints.get(key)))
                         .collect(Collectors.toList()));
+    }
+
+    @RequestMapping(value = "/json/experiments/{experimentAccession}/tsneplot/expression",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String tSnePlotDefaultExpression(
+            @PathVariable String experimentAccession,
+            @RequestParam(defaultValue = "") String accessKey) throws IOException {
+        return tSnePlotExpression(experimentAccession, "", accessKey);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/tsneplot/expression/{geneId}",
@@ -71,8 +81,9 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
         // Return hard-coded t-SNE plot data: coordinates
         experimentTrader.getExperiment(experimentAccession, accessKey);
 
+        // Wrapped in a list to have a one-element array (required by Highcharts)
         return gson.toJson(
-                ImmutableMap.of("data", tSnePlotCollator.getTSnePlotWithExpression(experimentAccession, geneId)));
+                ImmutableList.of(ImmutableMap.of("data", tSnePlotCollator.getTSnePlotWithExpression(experimentAccession, geneId))));
     }
 
 }
