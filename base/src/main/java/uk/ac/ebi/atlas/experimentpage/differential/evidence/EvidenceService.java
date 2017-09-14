@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.differential.evidence;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
@@ -33,6 +32,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class EvidenceService<Expr extends DifferentialExpression,
         E extends DifferentialExperiment, StreamOptions extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr, Prof>> {
@@ -50,9 +52,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     }
 
     public JsonArray evidenceForExperiment(E experiment, StreamOptions streamOptions) {
-        if(! experiment.getSpecies().isUs()
-                || experiment.getType().isMicroRna()
-                || cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign())){
+        if(shouldSkip(experiment)){
             return new JsonArray();
         }
 
@@ -86,6 +86,12 @@ public class EvidenceService<Expr extends DifferentialExpression,
         }
 
         return result;
+    }
+
+    public boolean shouldSkip(E experiment){
+        return ! experiment.getSpecies().isUs()
+                || experiment.getType().isMicroRna()
+                || cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign());
     }
 
     JsonArray piecesOfEvidence(E experiment, String methodDescription,
@@ -296,7 +302,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     JsonObject biosampleInfo(SampleCharacteristic biosampleInfo) {
         JsonObject result = new JsonObject();
         result.addProperty("name", biosampleInfo.value());
-        Optional<OntologyTerm> ontologyTerm = FluentIterable.from(biosampleInfo.valueOntologyTerms()).first();
+        Optional<OntologyTerm> ontologyTerm = biosampleInfo.valueOntologyTerms().stream().findFirst();
         if (ontologyTerm.isPresent()) {
             result.addProperty("id", ontologyTerm.get().uri());
         }
@@ -350,20 +356,14 @@ public class EvidenceService<Expr extends DifferentialExpression,
     Map<Contrast, DiseaseAssociation> getDiseaseAssociations(DifferentialExperiment experiment) {
         Map<Contrast, DiseaseAssociation> result = new HashMap<>();
         for (Contrast contrast : experiment.getDataColumnDescriptors()) {
-            Optional<SampleCharacteristic> biosampleInfo = getBiosampleInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
-            Optional<SampleCharacteristic> diseaseInfo = getDiseaseInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
-
-            if (biosampleInfo.isPresent() && diseaseInfo.isPresent()) {
-                result.put(
-                        contrast,
-                        DiseaseAssociation.create(
-                                biosampleInfo.get(), experiment.getExperimentDesign(), contrast, experiment.doesContrastHaveCttvPrimaryAnnotation(contrast), diseaseInfo.get()
-                        )
-                );
-            }
+            DiseaseAssociation.tryCreate(experiment, contrast).ifPresent(diseaseAssociation -> {
+                result.put(contrast, diseaseAssociation);
+            });
         }
         return result;
     }
+
+
 
     @AutoValue
     static abstract class DiseaseAssociation {
@@ -385,13 +385,28 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
         public abstract SampleCharacteristic organismPart();
 
+        public static java.util.Optional<DiseaseAssociation> tryCreate(DifferentialExperiment experiment, Contrast contrast){
+            Optional<SampleCharacteristic> biosampleInfo = getBiosampleInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
+            Optional<SampleCharacteristic> diseaseInfo = getDiseaseInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
+
+            if (biosampleInfo.isPresent() && diseaseInfo.isPresent()) {
+                return Optional.of(
+                        DiseaseAssociation.create(
+                                biosampleInfo.get(), experiment.getExperimentDesign(), contrast, experiment.doesContrastHaveCttvPrimaryAnnotation(contrast), diseaseInfo.get()
+                        )
+                );
+            } else {
+                return Optional.empty();
+            }
+        }
+
 
         public static DiseaseAssociation create(SampleCharacteristic biosampleInfo, ExperimentDesign experimentDesign, Contrast contrast,
                                                 boolean isCttvPrimary, SampleCharacteristic diseaseInfo){
             String referenceSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getReferenceAssayGroup());
             String testSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getTestAssayGroup());
             DiseaseAssociation.CONFIDENCE confidence = determineStudyConfidence(experimentDesign, diseaseInfo, contrast.getTestAssayGroup(), isCttvPrimary);
-            SampleCharacteristic organismPart = Optional.fromNullable(experimentDesign.getSampleCharacteristic(contrast.getTestAssayGroup().getFirstAssayAccession(), "organism part")).or(SampleCharacteristic.create("organism part", ""));
+            SampleCharacteristic organismPart = Optional.ofNullable(experimentDesign.getSampleCharacteristic(contrast.getTestAssayGroup().getFirstAssayAccession(), "organism part")).orElse(SampleCharacteristic.create("organism part", ""));
             return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo, referenceSampleLabel, testSampleLabel, diseaseInfo, confidence, isCttvPrimary, organismPart);
         }
     }
@@ -411,14 +426,13 @@ public class EvidenceService<Expr extends DifferentialExpression,
     This will either be an organism part, a cell line, or a cell type.
     When we couldn't determine this we used to issue a warning asking curators to curate this.
      */
-    Optional<SampleCharacteristic> getBiosampleInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
-        return FluentIterable.from(
-                new SampleCharacteristic[]{
-                        experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), "organism part"),
-                        experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), "cell line"),
-                        experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), "cell type")
+    static Optional<SampleCharacteristic> getBiosampleInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
+        return Stream.of("organism part", "cell line", "cell type").flatMap(
+                x -> {
+                    SampleCharacteristic s = experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), x);
+                    return s == null ? Stream.empty() : Stream.of(s);
                 }
-        ).firstMatch(Predicates.<SampleCharacteristic>notNull());
+        ).findFirst();
     }
 
     /*
@@ -426,12 +440,12 @@ public class EvidenceService<Expr extends DifferentialExpression,
     Original comment:
     # Go through the types (should probably always only be one)...
      */
-    Optional<SampleCharacteristic> getDiseaseInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
-        return FluentIterable.from(experimentDesign.getSampleCharacteristics(testAssayGroup.getFirstAssayAccession())).filter(
+    static Optional<SampleCharacteristic> getDiseaseInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
+        return experimentDesign.getSampleCharacteristics(testAssayGroup.getFirstAssayAccession()).stream().filter(
                 sampleCharacteristic -> sampleCharacteristic.header().toLowerCase().contains("disease")
                         && !StringUtils.containsAny(sampleCharacteristic.value().toLowerCase(),
                         "normal", "healthy", "control")
-        ).first();
+        ).findFirst();
     }
 
     /*

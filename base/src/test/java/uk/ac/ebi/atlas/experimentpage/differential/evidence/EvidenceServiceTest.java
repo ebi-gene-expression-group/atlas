@@ -15,13 +15,13 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class EvidenceServiceTest {
 
     String accession = "E-GEOD-59612";
 
-    EvidenceService<DifferentialExpression,DifferentialExperiment,?,?> subject;
+    EvidenceService<DifferentialExpression, DifferentialExperiment, ?, ?> subject;
 
     MockDataFileHub mockDataFileHub;
 
@@ -38,10 +38,10 @@ public class EvidenceServiceTest {
 
     DifferentialExperiment experiment = DifferentialExperimentTest.mockExperiment(accession,
             ImmutableList.of(c1, c2)
-            );
+    );
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         mockDataFileHub = new MockDataFileHub();
         this.subject = new EvidenceService(differentialProfileStreamFactory, mockDataFileHub, "expressionAtlasVersion");
     }
@@ -81,7 +81,7 @@ public class EvidenceServiceTest {
     }
 
     @Test
-    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorExcludeTypicalExperimentUsingDiseaseCellLinesForSomething(){
+    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorExcludeTypicalExperimentUsingDiseaseCellLinesForSomething() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
         experimentDesign.putSampleCharacteristic("g1", "cell line", "A1");
@@ -97,7 +97,7 @@ public class EvidenceServiceTest {
     }
 
     @Test
-    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorDoNotExcludeExperimentStudyingDiseases(){
+    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorDoNotExcludeExperimentStudyingDiseases() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
         experimentDesign.putSampleCharacteristic("g1", "cell line", "A1");
@@ -112,7 +112,7 @@ public class EvidenceServiceTest {
     }
 
     @Test
-    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorDoNotExcludeTypicalExperiment(){
+    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorDoNotExcludeTypicalExperiment() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
         experimentDesign.putSampleCharacteristic("g1", "disease", "cancer");
