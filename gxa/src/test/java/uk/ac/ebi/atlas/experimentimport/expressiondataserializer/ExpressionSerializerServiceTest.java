@@ -4,35 +4,28 @@ import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.io.IOException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionSerializerServiceTest {
-
     String accession = "accession";
 
     MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
@@ -41,13 +34,11 @@ public class ExpressionSerializerServiceTest {
     ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory;
     MockDataFileHub dataFileHub;
 
-
     ExpressionSerializerService subject;
-
 
     @Before
     public void setUp() throws IOException {
-        dataFileHub = MockDataFileHub.get();
+        dataFileHub = new MockDataFileHub();
         microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
         rnaSeqProfileStreamFactory = new RnaSeqProfileStreamFactory(dataFileHub);
         rnaSeqBaselineProfileStreamFactory = Mockito.spy(new RnaSeqBaselineProfileStreamFactory(dataFileHub));
@@ -63,7 +54,6 @@ public class ExpressionSerializerServiceTest {
 
     @Test
     public void persistTwoFilesForRnaSeqBaseline(){
-
         dataFileHub.addTpmsExpressionFile(accession, ImmutableList.of(
                 new String[]{"Gene ID", "Gene name", "g1"},
                 new String[]{"id_1", "name_1", "1.23"}
@@ -82,8 +72,6 @@ public class ExpressionSerializerServiceTest {
         when(experiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
         subject.kryoSerializeExpressionData(experiment);
 
-        verify(rnaSeqBaselineProfileStreamFactory, times(2)).persist(eq(experiment), Matchers.any(BaselineProfileStreamOptions.class));
-
+        verify(rnaSeqBaselineProfileStreamFactory, times(2)).persist(eq(experiment), any());
     }
-
 }

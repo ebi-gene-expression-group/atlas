@@ -14,26 +14,20 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.stream.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
-import static org.hamcrest.Matchers.any;
-import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HistogramServiceTest {
-
-
-    MockDataFileHub dataFileHub = MockDataFileHub.get();
-
+    MockDataFileHub dataFileHub;
     @Spy
     RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory = new RnaSeqBaselineProfileStreamFactory(dataFileHub);
 
@@ -48,7 +42,9 @@ public class HistogramServiceTest {
     HistogramService subject;
 
     @Before
-    public void setUp(){
+    public void setUp() throws Exception {
+        MockDataFileHub dataFileHub = new MockDataFileHub();
+
         subject = new HistogramService(rnaSeqBaselineProfileStreamFactory, experimentTrader, cutoffScale.get());
 
         when(experiment.getAccession()).thenReturn("accession");
@@ -58,11 +54,7 @@ public class HistogramServiceTest {
 
         dataFileHub.addTpmsExpressionFile("accession", ImmutableList.of( new String[]{"Gene ID", "Gene name"},
                 new String[]{"id_1", "name_1"}));
-
     }
-
-
-
 
     @Test
     public void testGet() throws Exception {
@@ -72,7 +64,6 @@ public class HistogramServiceTest {
         assertThat(result.has("bins"), is(true));
         Mockito.verify(rnaSeqBaselineProfileStreamFactory).histogram(experiment, baselineProfileStreamOptions, cutoffScale.get());
     }
-
 
     @Test
     public void cachingWorks() throws Exception {

@@ -1,18 +1,15 @@
 package uk.ac.ebi.atlas.resource;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
-
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
+// I belong in the test dir, but here I can be shared among different modules without the need of creating a test jar
 public class MockDataFileHub extends DataFileHub {
 
     public MockDataFileHub() throws IOException {
@@ -25,18 +22,15 @@ public class MockDataFileHub extends DataFileHub {
         new File(dataFilesLocation).deleteOnExit();
     }
 
-    private void addTemporaryTsv(String where, Collection<String[]> lines){
-        addTemporaryFile( where,
-                FluentIterable.from(lines).transform(new Function<String[], String>() {
-                    @Nullable
-                    @Override
-                    public String apply(String[] strings) {
-                        return Joiner.on('\t').join(strings);
-                    }
-                }).toList());
+    private void addTemporaryTsv(String where, Collection<String[]> lines) {
+        addTemporaryFile(
+                where,
+                lines.stream()
+                        .map(line -> Arrays.stream(line).collect(Collectors.joining("\t")))
+                        .collect(Collectors.toList()));
     }
 
-    public void addTemporaryFile(String where, Collection<String> lines){
+    public void addTemporaryFile(String where, Collection<String> lines) {
         File f = new File(dataFilesLocation + where);
         f.deleteOnExit();
         f.getParentFile().mkdirs();
@@ -48,8 +42,12 @@ public class MockDataFileHub extends DataFileHub {
         }
     }
 
-    public void addTpmsExpressionFile(String accession, Collection<String[]> lines){
+    public void addTpmsExpressionFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addFpkmsExpressionFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, accession), lines);
     }
 
     public void addExperimentDesignFile(String accession, Collection<String[]> lines) {
@@ -79,10 +77,6 @@ public class MockDataFileHub extends DataFileHub {
 
     public void addFactorsFile(String accession, Collection<String> lines) {
         addTemporaryFile(MessageFormat.format(FACTORS_FILE_PATH_TEMPLATE, accession), lines);
-    }
-
-    public String getFactorsFilePathTemplate() {
-        return FileSystems.getDefault().getPath(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE).toString();
     }
 
     public void addSpeciesJsonFile(Collection<String> lines) {

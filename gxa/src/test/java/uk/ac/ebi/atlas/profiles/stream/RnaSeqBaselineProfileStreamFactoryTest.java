@@ -52,7 +52,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
         when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g2")).thenReturn(secondAssayGroup);
 
-        dataFileHub = MockDataFileHub.get();
+        dataFileHub = new MockDataFileHub();
 
         subject = new RnaSeqBaselineProfileStreamFactory.Impl(dataFileHub);
     }
