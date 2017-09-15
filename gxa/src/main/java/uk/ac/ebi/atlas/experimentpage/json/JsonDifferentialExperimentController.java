@@ -40,6 +40,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 
@@ -139,16 +141,16 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-        for( JsonElement e: diffMicroarrayEvidenceService.evidenceForExperiment(experiment,contrast -> {
+        PrintWriter w = response.getWriter();
+        diffMicroarrayEvidenceService.evidenceForExperiment(experiment,contrast -> {
             MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
             requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
             requestPreferences.setCutoff(pValueCutoff);
             requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
             requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
             return new MicroarrayRequestContext(requestPreferences, experiment);
-        })){
-            response.getWriter().println(gson.toJson(e));
-        }
+        }, o -> w.println(gson.toJson(o)));
+
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
@@ -161,16 +163,14 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-
-        for( JsonElement e: diffRnaSeqEvidenceService.evidenceForExperiment(experiment, contrast -> {
+        PrintWriter w = response.getWriter();
+        diffRnaSeqEvidenceService.evidenceForExperiment(experiment, contrast -> {
             DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
             requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
             requestPreferences.setCutoff(pValueCutoff);
             requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
             requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
             return new RnaSeqRequestContext(requestPreferences, experiment);
-        })){
-            response.getWriter().println(gson.toJson(e));
-        }
+        }, o-> w.println(gson.toJson(o)));
     }
 }

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.differential.evidence;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
@@ -28,6 +27,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -46,21 +46,19 @@ public class EvidenceService<Expr extends DifferentialExpression,
         this.expressionAtlasVersion = expressionAtlasVersion;
     }
 
-    public JsonArray evidenceForExperiment(E experiment, Function<Contrast, StreamOptions> queryForOneContrast) {
+    public void evidenceForExperiment(E experiment, Function<Contrast, StreamOptions> queryForOneContrast, Consumer<JsonObject> yield) {
         if(shouldSkip(experiment)){
-            return new JsonArray();
+            return;
         }
 
         Map<Contrast, DiseaseAssociation> diseaseAssociations = getDiseaseAssociations(experiment);
         if (diseaseAssociations.size() == 0) {
-            return new JsonArray();
+            return;
         }
 
         String methodDescription = getMethodDescriptionFromAnalysisMethodsFile(experiment);
 
         Map<String, Map<Contrast, Integer>> rankPerContrastPerGene = getPercentileRanks(experiment);
-
-        JsonArray result = new JsonArray();
 
         for(Contrast contrast : diseaseAssociations.keySet()){
             for(Prof profile : differentialProfileStreamFactory.select(experiment, queryForOneContrast.apply(contrast), p -> p.getExpression(contrast)!=null, new MinMaxProfileRanking<>(
@@ -68,21 +66,20 @@ public class EvidenceService<Expr extends DifferentialExpression,
             ) ){
                 Expr expression = profile.getExpression(contrast);
                 if (expression != null) {
-                    result.addAll(piecesOfEvidence(
+                    piecesOfEvidence(
                             experiment,
                             methodDescription,
                             diseaseAssociations.get(contrast),
                             expression,
                             rankPerContrastPerGene.get(profile.getId()).get(contrast),
                             profile.getId(),
-                            contrast
-                            )
-                    );
+                            contrast,
+                            yield
+                            );
                 }
             }
         }
 
-        return result;
     }
 
     public boolean shouldSkip(E experiment){
@@ -91,13 +88,13 @@ public class EvidenceService<Expr extends DifferentialExpression,
                 || cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign());
     }
 
-    JsonArray piecesOfEvidence(E experiment, String methodDescription,
+    void piecesOfEvidence(E experiment, String methodDescription,
                                DiseaseAssociation linkToDisease,
                                Expr expression, Integer foldChangeRank,
-                               String ensemblGeneId, Contrast contrast) {
-        JsonArray result = new JsonArray();
+                               String ensemblGeneId, Contrast contrast,
+                          Consumer<JsonObject> yield) {
         for (OntologyTerm diseaseUri : linkToDisease.diseaseInfo().valueOntologyTerms()) {
-            result.add(pieceOfEvidence(
+            yield.accept(pieceOfEvidence(
                     experiment,
                     methodDescription,
                     diseaseUri,
@@ -112,7 +109,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
                     linkToDisease.organismPart())
             );
         }
-        return result;
     }
 
     JsonObject pieceOfEvidence(E experiment, String methodDescription,
