@@ -21,11 +21,9 @@ public class BaselineAnalyticsInputStreamFactory {
         this.dataFileHub = dataFileHub;
     }
 
-
-
     public ObjectInputStream<BaselineAnalytics> create(String experimentAccession, ExperimentType experimentType) throws IOException {
         Preconditions.checkArgument(experimentType.isBaseline());
-        if(experimentType.isProteomicsBaseline()){
+        if (experimentType.isProteomicsBaseline()) {
             AtlasResource<?> resource = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession).main;
             return new ProteomicsBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
         } else {

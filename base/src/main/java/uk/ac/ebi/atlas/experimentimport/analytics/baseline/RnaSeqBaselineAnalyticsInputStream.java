@@ -45,7 +45,6 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
     private final String name;
     private int lineNumber = 0;
 
-
     public RnaSeqBaselineAnalyticsInputStream(Reader reader, String name) throws IOException {
         this.name = name;
         this.csvReader = new CSVReader(reader, '\t');
@@ -53,12 +52,10 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
         this.assayGroupIds = ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
     }
 
-
     @Override
     public void close() throws IOException {
         csvReader.close();
     }
-
 
     private String[] readCsvLine() {
         lineNumber++;
@@ -69,7 +66,6 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
             throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
-
 
     @Override
     public BaselineAnalytics readNext() {
@@ -86,7 +82,6 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
 
         return queue.remove();
     }
-
 
     private ImmutableList<BaselineAnalytics> readNextNonZeroLine() {
 
@@ -107,10 +102,12 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
         return baselineAnalytics;
     }
 
-
     private ImmutableList<BaselineAnalytics> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
         checkArgument(StringUtils.isNotBlank(geneId), "Cannot load baseline analytics - gene id is blank");
-        checkArgument(assayGroupIds.length == expressionLevels.length, String.format("Cannot load baseline analytics - expecting [%s] expressions but got [%s] instead.", Joiner.on(", ").join(assayGroupIds), Joiner.on(", ").join(expressionLevels)));
+        checkArgument(assayGroupIds.length ==
+                expressionLevels.length, String.format(
+                        "Cannot load baseline analytics - expecting [%s] expressions but got [%s] instead.",
+                        Joiner.on(", ").join(assayGroupIds), Joiner.on(", ").join(expressionLevels)));
 
         ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
 
@@ -121,8 +118,7 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
                 builder.add(new BaselineAnalytics(
                         geneId,
                         assayGroupIds[i],
-                        baselineExpression.getLevel(),
-                        baselineExpression.getQuartiles()
+                        baselineExpression.getLevel()
                 ));
             }
         }
