@@ -21,13 +21,16 @@ public class BaselineAnalyticsInputStreamFactory {
         this.dataFileHub = dataFileHub;
     }
 
-    public ObjectInputStream<BaselineAnalytics> create(String experimentAccession, ExperimentType experimentType) throws IOException {
+    public ObjectInputStream<BaselineAnalytics> create(String experimentAccession, ExperimentType experimentType)
+            throws IOException {
         Preconditions.checkArgument(experimentType.isBaseline());
         if (experimentType.isProteomicsBaseline()) {
             AtlasResource<?> resource = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession).main;
             return new ProteomicsBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
         } else {
-            AtlasResource<?> resource = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFile(ExpressionUnit.Absolute.Rna.TPM);
+            AtlasResource<?> resource =
+                    dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession)
+                            .dataFile(ExpressionUnit.Absolute.Rna.TPM);
             return new RnaSeqBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
         }
     }

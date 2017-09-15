@@ -62,7 +62,6 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, accession), lines);
     }
 
-
 //    public void addRawCountsFile(String accession, Collection<String[]> lines) {
 //        addTemporaryTsv(MessageFormat.format(DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, accession), lines);
 //    }
@@ -71,9 +70,10 @@ public class MockDataFileHub extends DataFileHub {
 //        addTemporaryTsv(MessageFormat.format(ANALYSIS_METHODS_FILE_PATH_TEMPLATE, accession), lines);
 //    }
 //
-//    public void addProteomicsExpressionFile(String accession, Collection<String[]> lines) {
-//        addTemporaryTsv(MessageFormat.format(PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
-//    }
+
+    public void addProteomicsExpressionFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
+    }
 
     public void addFactorsFile(String accession, Collection<String> lines) {
         addTemporaryFile(MessageFormat.format(FACTORS_FILE_PATH_TEMPLATE, accession), lines);

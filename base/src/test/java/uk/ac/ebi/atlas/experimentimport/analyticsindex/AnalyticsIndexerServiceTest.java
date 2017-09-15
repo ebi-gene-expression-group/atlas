@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,8 +105,8 @@ public class AnalyticsIndexerServiceTest {
         subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
-    @Test
-    public void exceptionsFromSolrAreLoggedButTheCodeProceeds() throws Exception{
+    @Test(expected=RuntimeException.class)
+    public void exceptionsFromSolrAreWrappedAndThrown() throws Exception{
         when(solrClient.add(anyCollection())).thenThrow(new IOException(""));
 
         final BaselineExperimentDataPoint baselineExperimentDataPointMock =
@@ -118,9 +119,27 @@ public class AnalyticsIndexerServiceTest {
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
         int batchSize = 1;
 
-        int response = subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
+        subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
+    }
 
-        assertThat(response, is(0));
+    @Test(expected=RuntimeException.class)
+    public void exceptionsFromFilesAreWrappedAndThrown() throws Exception{
+        when(experimentDataPointStreamFactory.stream(experiment))
+                .thenThrow(new NoSuchFileException(String.format("%s-tpms.tsv not found", experiment.getAccession())));
+
+        // The mock above is redundant for the test to throw an exception, uncomment the following to make it fail
+        // final BaselineExperimentDataPoint experimentDataPoint1 = Mockito.mock(BaselineExperimentDataPoint.class);
+        // when(experimentDataPoint1.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList.of());
+        // final BaselineExperimentDataPoint experimentDataPoint2 = Mockito.mock(BaselineExperimentDataPoint.class);
+        // when(experimentDataPoint2.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList.of());
+        // mockExperimentDataPointStreamFactory(
+        //        experimentDataPointStreamFactory, experiment, experimentDataPoint1, experimentDataPoint2, null);
+
+
+        Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
+        int batchSize = 1;
+
+        subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
     private void mockExperimentDataPointStreamFactory(ExperimentDataPointStreamFactory experimentDataPointStreamFactory,

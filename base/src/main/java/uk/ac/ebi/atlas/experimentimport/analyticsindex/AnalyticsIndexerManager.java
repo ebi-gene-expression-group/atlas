@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Observable;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

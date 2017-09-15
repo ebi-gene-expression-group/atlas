@@ -34,17 +34,19 @@ public class AnalyticsIndexerService {
         this.analyticsIndexDocumentValidator = analyticsIndexDocumentValidator;
     }
 
-    public int index(Experiment experiment, Map<String,
-            Map<BioentityPropertyName, Set<String>>> bioentityIdToProperties, int batchSize) {
+    public int index(
+            Experiment experiment,
+            Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToProperties, int batchSize) {
 
         List<SolrInputDocument> toLoad = new ArrayList<>(batchSize);
         int addedIntoThisBatch = 0;
         int addedInTotal = 0;
 
         try (SolrInputDocumentInputStream solrInputDocumentInputStream =
-                     new SolrInputDocumentInputStream(
-                             experimentDataPointStreamFactory.stream(experiment),
-                             bioentityIdToProperties)) {
+                new SolrInputDocumentInputStream(
+                        experimentDataPointStreamFactory.stream(experiment),
+                        bioentityIdToProperties)) {
+
             Iterator<SolrInputDocument> it = new IterableObjectInputStream<>(solrInputDocumentInputStream).iterator();
             while (it.hasNext()) {
                 while (addedIntoThisBatch < batchSize && it.hasNext()) {
@@ -63,8 +65,10 @@ public class AnalyticsIndexerService {
                     toLoad = new ArrayList<>(batchSize);
                 }
             }
-        } catch (IOException| SolrServerException e) {
+
+        } catch (IOException | SolrServerException e) {
             LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException(e);
         }
         LOGGER.info("Finished: " + experiment.getAccession());
         return addedInTotal;
