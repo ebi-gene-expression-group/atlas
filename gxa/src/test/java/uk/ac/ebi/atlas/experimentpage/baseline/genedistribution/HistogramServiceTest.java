@@ -8,9 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
@@ -28,8 +28,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class HistogramServiceTest {
     MockDataFileHub dataFileHub;
-    @Spy
-    RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory = new RnaSeqBaselineProfileStreamFactory(dataFileHub);
+
+    RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory;
 
     @Mock
     ExperimentTrader experimentTrader;
@@ -39,13 +39,14 @@ public class HistogramServiceTest {
 
     CutoffScale.Scaled cutoffScale = new CutoffScale.Scaled();
 
-    HistogramService subject;
+    HistogramService<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>, BaselineExperiment> subject;
 
     @Before
     public void setUp() throws Exception {
-        MockDataFileHub dataFileHub = new MockDataFileHub();
+        dataFileHub = new MockDataFileHub();
+        rnaSeqBaselineProfileStreamFactory = Mockito.spy(new RnaSeqBaselineProfileStreamFactory(dataFileHub));
 
-        subject = new HistogramService(rnaSeqBaselineProfileStreamFactory, experimentTrader, cutoffScale.get());
+        subject = new HistogramService<>(rnaSeqBaselineProfileStreamFactory, experimentTrader, cutoffScale.get());
 
         when(experiment.getAccession()).thenReturn("accession");
         when(experiment.getDisplayDefaults()).thenReturn(ExperimentDisplayDefaults.simpleDefaults());
@@ -58,18 +59,25 @@ public class HistogramServiceTest {
 
     @Test
     public void testGet() throws Exception {
-        BaselineProfileStreamOptions baselineProfileStreamOptions = new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment);
+        BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> baselineProfileStreamOptions =
+                new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment);
         JsonObject result = subject.get("accession", "", baselineProfileStreamOptions).asJson();
 
         assertThat(result.has("bins"), is(true));
-        Mockito.verify(rnaSeqBaselineProfileStreamFactory).histogram(experiment, baselineProfileStreamOptions, cutoffScale.get());
+        Mockito.verify(rnaSeqBaselineProfileStreamFactory)
+                .histogram(experiment, baselineProfileStreamOptions, cutoffScale.get());
     }
 
     @Test
     public void cachingWorks() throws Exception {
-        subject.get("accession", "", new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment)).asJson();
-        subject.get("accession", "", new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment)).asJson();
+        subject.get(
+                "accession", "",
+                new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment)).asJson();
+        subject.get(
+                "accession", "",
+                new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment)).asJson();
 
-        Mockito.verify(rnaSeqBaselineProfileStreamFactory, times(1)).histogram(eq(experiment), ArgumentMatchers.any(), eq(cutoffScale.get()));
+        Mockito.verify(rnaSeqBaselineProfileStreamFactory, times(1))
+                .histogram(eq(experiment), ArgumentMatchers.any(), eq(cutoffScale.get()));
     }
 }
