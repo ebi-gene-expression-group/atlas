@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfile
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 
@@ -32,7 +33,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -70,8 +70,8 @@ public class ExperimentOpsTest {
     private ExperimentOpLogWriter experimentOpLogWriter;
 
     @Before
-    public void setUp() {
-        experimentOpLogWriter = new ExperimentOpLogWriter(MockDataFileHub.get());
+    public void setUp() throws Exception {
+        experimentOpLogWriter = new ExperimentOpLogWriter(new MockDataFileHub());
 
         subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
@@ -95,7 +95,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void allOpsReturnTheSameKindOfJson() {
+    public void allOpsReturnTheSameKindOfJson() throws Exception {
         Random rand = new Random();
 
         for (Op op : Op.values()) {
@@ -124,7 +124,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void aggregateOpsInANeatFashion() {
+    public void aggregateOpsInANeatFashion() throws Exception {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         doThrow(new RuntimeException("Woosh!")).when(experimentCrud).deleteExperiment(accession);
         List<Op> ops= new ArrayList<>();
@@ -169,7 +169,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void statefulOpsModifyTheOpLog() {
+    public void statefulOpsModifyTheOpLog() throws Exception {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
             if (!op.equals(Op.CLEAR_LOG)) {
@@ -188,7 +188,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void errorLeavesLogDirty() {
+    public void errorLeavesLogDirty() throws Exception {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         doThrow(new RuntimeException("Woosh!")).when(experimentCrud).deleteExperiment(accession);
 
