@@ -60,6 +60,7 @@
     <filter-mapping>
         <filter-name>cors-headers</filter-name>
         <url-pattern>/resources/*</url-pattern>
+        <url-pattern>/das/*</url-pattern>
         <url-pattern>/rest/*</url-pattern>
         <url-pattern>/json/*</url-pattern>
     </filter-mapping>
