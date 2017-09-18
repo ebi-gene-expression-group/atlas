@@ -25,7 +25,7 @@ public class ReactomeClient {
 
     @Nullable
     public String fetchPathwayNameFailSafe(String reactomeId) {
-        String reactomeURL = "http://www.reactome.org/ContentService/data/query/{0}/displayName";
+        String reactomeURL = "https://www.reactome.org/ContentService/data/query/{0}/displayName";
         String url = MessageFormat.format(reactomeURL, reactomeId);
 
         try {
