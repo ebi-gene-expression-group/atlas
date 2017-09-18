@@ -1,11 +1,10 @@
+<?xml version="1.0" standalone="no"?>
 <%@ page contentType="application/xml;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="baseURL" value="http://www.ebi.ac.uk${pageContext.request.contextPath}" />
 <c:set var="geneUrl" value="${baseURL}/genes/${geneId}"/>
 <c:set var="geneFactorTypeUrl" value="${baseURL}/query?geneQuery=${geneId}&amp;condition="/>
-
-<?xml version="1.0" standalone="no"?>
 <DASGFF>
     <GFF href="${baseURL}/das/s4/features?segment=${geneId}">
         <SEGMENT id="${geneId}" start="1" stop="1" total="11" version="1.0" label="Expression Atlas annotation for ${geneId}">
