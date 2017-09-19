@@ -50,7 +50,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
     @RequestMapping(
             value = URL,
-            method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String jsonBaselineExperiments(
