@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-33</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="Alzheimers disease">
+                <assay>Incipient AD 702</assay>
+                <assay>Incipient AD 733</assay>
+                <assay>Incipient AD 385</assay>
+                <assay>Incipient AD 224</assay>
+                <assay>Incipient AD 678</assay>
+            </assay_group>
+            <assay_group id="g2" label="normal">
+                <assay>Control 530</assay>
+                <assay>Control 585</assay>
+                <assay>Control 405</assay>
+                <assay>Control 715</assay>
+                <assay>Control 688</assay>
+                <assay>Control 679</assay>
+                <assay>Control 564</assay>
+                <assay>Control 632</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1" cttv_primary="1">
+                <name>'Alzheimers disease' vs 'normal'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

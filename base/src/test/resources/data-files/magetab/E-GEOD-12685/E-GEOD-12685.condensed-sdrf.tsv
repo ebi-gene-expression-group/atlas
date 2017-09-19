@@ -1,0 +1,126 @@
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	clinical information	Mini-Mental Status Examination 29
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	individual	Control 405
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 405	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 405	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	clinical information	Mini-Mental Status Examination 28
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	individual	Control 530
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 530	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 530	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	clinical information	Mini-Mental Status Examination 27
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	individual	Control 564
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 564	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 564	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	clinical information	Mini-Mental Status Examination 29
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	individual	Control 585
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 585	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 585	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	clinical information	Mini-Mental Status Examination 29
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	individual	Control 632
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 632	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 632	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	clinical information	Mini-Mental Status Examination 28
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	individual	Control 679
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 679	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 679	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	clinical information	Mini-Mental Status Examination 25
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	individual	Control 688
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 688	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 688	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	clinical information	Mini-Mental Status Examination 28
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	disease staging	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	individual	Control 715
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Control 715	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Control 715	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	clinical information	Mini-Mental Status Examination 26
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	disease staging	incipient
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	individual	Incipient AD 224
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Incipient AD 224	factor	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	clinical information	Mini-Mental Status Examination 21
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	disease staging	incipient
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	individual	Incipient AD 385
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Incipient AD 385	factor	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	clinical information	Mini-Mental Status Examination 26
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	disease staging	incipient
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	individual	Incipient AD 606
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Incipient AD 606	factor	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	clinical information	Mini-Mental Status Examination 25
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	disease staging	incipient
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	individual	Incipient AD 678
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Incipient AD 678	factor	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	clinical information	Mini-Mental Status Examination 26
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	disease staging	incipient
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	individual	Incipient AD 702
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Incipient AD 702	factor	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	clinical information	Mini-Mental Status Examination 27
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	disease staging	incipient
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	individual	Incipient AD 733
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	organism status	post-mortem	http://purl.obolibrary.org/obo/PATO_0001422
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	characteristic	protocol	synaptoneurosome isolation
+E-GEOD-12685	A-AFFY-33	Incipient AD 733	factor	disease	Alzheimers disease	http://www.ebi.ac.uk/efo/EFO_0000249
