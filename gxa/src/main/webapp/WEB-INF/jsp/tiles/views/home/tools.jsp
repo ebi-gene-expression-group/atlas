@@ -3,7 +3,7 @@
 <div class="callout tools" data-equalizer-watch>
     <h4>Tools</h4>
 
-        <a href="https://nunofonseca.github.io/irap/" target="_blank">
+        <a href="https://github.com/nunofonseca/irap" target="_blank">
             <div class="media-object">
                 <div class="media-object-section middle">
                     <h3><span class="icon icon-generic" data-icon=":"></span></h3>

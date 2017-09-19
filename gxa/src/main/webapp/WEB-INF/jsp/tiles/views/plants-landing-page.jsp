@@ -33,7 +33,7 @@
                     The <i>baseline</i> experiments, are either RNA-seq or proteomics, and display expression levels of
                     gene products under 'normal' conditions (e.g. normal rice tissues). Each experiment is manually curated
                     to a high standard, and RNA expression levels are calculated using the
-                    <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
+                    <a href="https://github.com/nunofonseca/irap">iRAP</a> pipeline.
                 </p>
                 <p>
                     The <i>differential</i> experiments in Atlas, containing both microarray and RNA-seq data, allows users

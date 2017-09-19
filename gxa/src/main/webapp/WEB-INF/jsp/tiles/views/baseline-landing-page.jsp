@@ -17,7 +17,7 @@
             species,from human and mouse to Arabidopsis and maize. In Expression Atlas, "baseline" expression is the
             expression level ofeach gene in normal, untreated conditions. All baseline experiments are either RNA-seq
             or proteomics data. Each experiment is manuallycurated to a high standard, and RNA expression levels are
-            calculated using the <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
+            calculated using the <a href="https://github.com/nunofonseca/irap">iRAP</a> pipeline.
         </p>
 
         <div class="row small-up-1 medium-up-2 large-up-3">
