@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.species.Species;
@@ -14,6 +13,7 @@ import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
+import java.util.Optional;
 import java.util.Set;
 
 @Named
@@ -45,7 +45,7 @@ public class BioEntityPropertyLinkBuilder {
         Optional<String> linkText = fetchLinkText(propertyName, propertyValue);
 
         if (!linkText.isPresent()) {
-            return Optional.absent();
+            return Optional.empty();
         }
 
         String linkTemplate = BioEntityCardProperties.linkTemplates.get(propertyName);
@@ -66,13 +66,13 @@ public class BioEntityPropertyLinkBuilder {
             case ORTHOLOG:
                 return Optional.of(fetchSymbolAndSpeciesForOrtholog(propertyValue));
             case REACTOME:
-                return Optional.fromNullable(reactomeClient.fetchPathwayNameFailSafe(propertyValue));
+                return Optional.ofNullable(reactomeClient.fetchPathwayNameFailSafe(propertyValue));
             case GO:
-                return Optional.fromNullable(goPoTermTrader.getTermName(propertyValue));
+                return Optional.ofNullable(goPoTermTrader.getTermName(propertyValue));
             case INTERPRO:
-                return Optional.fromNullable(interProTermTrader.getTermName(propertyValue));
+                return Optional.ofNullable(interProTermTrader.getTermName(propertyValue));
             case PO:
-                return Optional.fromNullable(goPoTermTrader.getTermName(propertyValue));
+                return Optional.ofNullable(goPoTermTrader.getTermName(propertyValue));
             default:
                 return Optional.of(propertyValue);
         }

@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
@@ -28,8 +26,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Named
 public class BioEntityPropertyService {
@@ -91,10 +91,13 @@ public class BioEntityPropertyService {
             List<BioentityPropertyName> desiredOrderOfPropertyNames,
             final Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-        return FluentIterable.from(desiredOrderOfPropertyNames).filter(propertyName -> !DISPLAYED_PROPERTY_LIST.contains(propertyName) &&
-                propertyValuesByType.containsKey(propertyName)).toList();
-
+        return desiredOrderOfPropertyNames.stream()
+                .filter(propertyName ->
+                        !DISPLAYED_PROPERTY_LIST.contains(propertyName) &&
+                                propertyValuesByType.containsKey(propertyName))
+                .collect(Collectors.toList());
     }
+
     private JsonArray bioentityProperties(String identifier, Species species,
                                           List<BioentityPropertyName> desiredOrderOfPropertyNames,
                                           Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
@@ -136,9 +139,7 @@ public class BioEntityPropertyService {
                             identifier, bioentityPropertyName, propertyValue, species,
                             assessRelevance(bioentityPropertyName, propertyValue));
 
-            if (link.isPresent()) {
-                propertyLinks.add(link.get());
-            }
+            link.ifPresent(propertyLinks::add);
         }
 
         return propertyLinks;

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import com.google.common.base.Optional;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +10,10 @@ import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
