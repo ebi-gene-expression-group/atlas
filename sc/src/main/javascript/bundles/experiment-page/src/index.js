@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import ExperimentPage from './experimentPage.js'
+import ExperimentPageRouter from './ExperimentPageRouter'
 
-const render = function (options, mountNodeId) {
-  ReactDOM.render(<ExperimentPage {...options} />, document.getElementById(mountNodeId))
+const render = (options, mountNodeId) => {
+  ReactDOM.render(<ExperimentPageRouter {...options} />, document.getElementById(mountNodeId))
 }
 
-export {ExperimentPage as default, render}
+export {ExperimentPageRouter as default, render}
