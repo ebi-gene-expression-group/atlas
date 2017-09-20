@@ -3,21 +3,22 @@
   "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
-  "author": "Elisabet Barrera Casanova <barrera@ebi.ac.uk>",
-  "license": "MIT",
-  "scripts": {
-    "build": "babel src -d lib --ignore '**/*.less' --copy-files",
-    "prepublish": "npm run build"
-  },
+  "author": "Expression Atlas developers <arrayexpress-atlas@ebi.ac.uk>",
+  "collaborators": [
+    "Elisabet Barrera <barrera@ebi.ac.uk>",
+    "Wojciech Bażant <wbazant@ebi.ac.uk>",
+    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
+  ],
+  "license": "Apache-2.0",
   "dependencies": {
+    "atlas-autocomplete": "latest",
+    "expression-atlas-tsne-plot": "latest",
     "prop-types": "^15.5.10",
     "query-string": "^4.3.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.0.0",
-    "single-cell-gene-tsne-plot": "latest",
-    "single-cell-tsne-plot": "latest",
     "urijs": "^1.18.11"
   },
   "devDependencies": {
@@ -25,15 +26,14 @@
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.23.1",
+    "file-loader": "^0.11.2",
     "image-webpack-loader": "^1.6.3",
-    "less": "^2.7.1",
-    "less-loader": "^2.2.3",
-    "react-hot-loader": "^3.0.0-beta.7",
-    "webpack": "^2.6.0",
+    "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1",
     "whatwg-fetch": "^2.0.3"
   }
