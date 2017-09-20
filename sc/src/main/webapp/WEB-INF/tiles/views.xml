@@ -41,34 +41,5 @@
             </definition>
         </put-attribute>
     </definition>
-
-    <!--<definition name="experiment-reference-plot" extends="experiment-base">-->
-        <!--<put-attribute name="body">-->
-            <!--<definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">-->
-                <!--<put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>-->
-                <!--<put-attribute name="react-container"-->
-                               <!--value="/WEB-INF/jsp/tiles/experiment/react-reference-plot-experiment-page.jsp"/>-->
-            <!--</definition>-->
-        <!--</put-attribute>-->
-    <!--</definition>-->
-
-    <!--<definition name="experiment-tsne-plot" extends="experiment-base">-->
-        <!--<put-attribute name="body">-->
-            <!--<definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">-->
-                <!--<put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>-->
-                <!--<put-attribute name="react-container"-->
-                               <!--value="/WEB-INF/jsp/tiles/experiment/react-tsne-plot-experiment-page.jsp"/>-->
-            <!--</definition>-->
-        <!--</put-attribute>-->
-    <!--</definition>-->
-
-    <!--<definition name="experiment-spatial" extends="experiment-base">-->
-        <!--<put-attribute name="body">-->
-            <!--<definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">-->
-                <!--<put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>-->
-                <!--<put-attribute name="react-container" value="/WEB-INF/jsp/tiles/experiment/react-bw3d-experiment-page.jsp"/>-->
-            <!--</definition>-->
-        <!--</put-attribute>-->
-    <!--</definition>-->
     
 </tiles-definitions>
