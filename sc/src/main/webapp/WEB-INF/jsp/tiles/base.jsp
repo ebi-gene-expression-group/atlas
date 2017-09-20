@@ -53,11 +53,13 @@
     <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
     <!-- also inform ES so we can host your colour palette file -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme-atlas.css" type="text/css" media="all">
+    <!-- end CSS-->
 
-  <!-- All JavaScript at the bottom, except for jQuery -->
+    <!-- All JavaScript at the bottom, except for jQuery -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
-    <!-- end CSS-->
+
+    <script src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>
 </head>
 
 <body>
@@ -85,14 +87,9 @@
 
 <!-- JavaScript -->
 
-<!-- Grab jQuery from CDN -->
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-
 <!-- Your custom JavaScript file scan go here... change names accordingly -->
-<!--
-<script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/plugins.js"></script>
-<script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/script.js"></script>
--->
+<%--<script defer="defer" src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>--%>
+<%--<script defer="defer" src="${pageContext.request.contextPath}/resources/js/lib/fetch-polyfill.js"></script>--%>
 
 <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/script.js"></script>
 
