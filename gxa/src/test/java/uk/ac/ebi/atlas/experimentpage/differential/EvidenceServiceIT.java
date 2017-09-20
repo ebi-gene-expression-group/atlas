@@ -23,6 +23,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -63,7 +64,7 @@ public class EvidenceServiceIT {
         for (JsonObject jsonObject : listBuilder.build()) {
             assertThat(
                     jsonObject.get("evidence").getAsJsonObject().get("organism_part").getAsString(),
-                    (isEmptyString()));
+                    not(isEmptyString()));
         }
     }
 }
