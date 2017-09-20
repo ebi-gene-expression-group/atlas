@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.junit.Test;
@@ -10,16 +8,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -41,20 +40,14 @@ public class ExperimentGroupingsForHeatmapIT {
 
     /*
     For differential experiments, a few groupings repeat and we might need something else for them.
-
      */
 
     public void outputInFineFormatForExperiment(String accession){
         Experiment<DescribesDataColumns> experiment = experimentTrader.getPublicExperiment(accession);
 
-        List<String> allDescriptorIds = FluentIterable.from(experiment.getDataColumnDescriptors()).transform(
-                new Function<DescribesDataColumns, String>() {
-                    @Nullable
-                    @Override
-                    public String apply(@Nullable DescribesDataColumns describesDataColumns) {
-                        return describesDataColumns.getId();
-                    }
-                }).toList();
+        List<String> allDescriptorIds = experiment.getDataColumnDescriptors().stream()
+                .map(DescribesDataColumns::getId)
+                .collect(Collectors.toList());
 
         JsonArray result = experiment.groupingsForHeatmap();
 
