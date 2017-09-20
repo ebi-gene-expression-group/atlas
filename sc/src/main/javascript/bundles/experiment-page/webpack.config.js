@@ -7,8 +7,8 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        experimentPage: ['whatwg-fetch','./src/index.js'],
-        dependencies: ['prop-types', 'react', 'react-dom', 'react-router-dom', 'urijs']
+        experimentPage: ['whatwg-fetch', 'babel-polyfill', './src/index.js'],
+        dependencies: ['color', 'prop-types', 'react', 'react-dom', 'react-router-dom', 'recompose', 'urijs']
     },
 
     output: {
@@ -24,11 +24,7 @@ module.exports = {
             name: 'dependencies',
             filename: 'vendorCommons.bundle.js',
             minChunks: Infinity    // Explicit definition-based split, see dependencies entry
-        }),
-        // new webpack.HotModuleReplacementPlugin(),
-        // enable HMR globally, necessary along with devServer.hot: true (see below) for HMR to work as expected 🤔
-        // new webpack.NamedModulesPlugin()
-        // prints more readable module names in the browser console on HMR updates
+        })
     ],
 
     module: {
@@ -73,21 +69,10 @@ module.exports = {
                     }
                 ]
             },
-            {
-                test: /\.(svg)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            query: {
-                                name: '[hash].[ext]',
-                                hash: 'sha512',
-                                digest: 'hex'
-                            }
-                        }
-                    }
-                ]
-            },
+          {
+            test: /\.svg$/i,
+            use: 'file-loader'
+          },
             {
                 test: /\.js$/i,
                 exclude: /node_modules\//,
@@ -97,9 +82,6 @@ module.exports = {
     },
 
     devServer: {
-        // hot: true,      // CLI --hot is equivalent to this option, but it also enables the HMR plugin (see above)
-        // hotOnly: true,  // Won’t inject modules if there’s a compilation error (without this a full page reload is
-        // done after a successful build and we lose state)
         historyApiFallback: true,
         contentBase: "html",
         port: 9000
