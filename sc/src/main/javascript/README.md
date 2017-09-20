@@ -7,7 +7,7 @@ Development mode
 To build source-mapped bundles into `webapp/resources/js-bundles`:
 
 ```
-$ npm run dev
+npm run ci
 ```
 
 Production mode
@@ -16,5 +16,5 @@ Production mode
 To build production bundles into `webapp/resources/js-bundles`:
 
 ```
-$ npm run prod
+npm run prod
 ```
