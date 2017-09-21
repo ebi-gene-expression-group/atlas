@@ -4,19 +4,24 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.XmlReaderMock;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -49,20 +54,20 @@ public class ExperimentConfigurationTest {
                     "            </assay_group>\n" +
                     "            <assay_group id=\"g4\">\n" +
                     "                <assay>A</assay>\n" +
-                    "                <assay technical_replicate_id=\"t1\">B</assay>\n" +
-                    "                <assay technical_replicate_id=\"t1\">C</assay>\n" +
+                    "                <assay technical_replicate_id=\"t2\">B</assay>\n" +
+                    "                <assay technical_replicate_id=\"t2\">C</assay>\n" +
                     "                <assay>D</assay>\n" +
-                    "                <assay technical_replicate_id=\"t1\">E</assay>\n" +
+                    "                <assay technical_replicate_id=\"t2\">E</assay>\n" +
                     "            </assay_group>\n" +
                     "            <assay_group id=\"g5\">\n" +
                     "                <assay>A</assay>\n" +
-                    "                <assay technical_replicate_id=\"t1\">B</assay>\n" +
-                    "                <assay technical_replicate_id=\"t1\">C</assay>\n" +
+                    "                <assay technical_replicate_id=\"t3\">B</assay>\n" +
+                    "                <assay technical_replicate_id=\"t3\">C</assay>\n" +
                     "                <assay>D</assay>\n" +
-                    "                <assay technical_replicate_id=\"t1\">E</assay>\n" +
+                    "                <assay technical_replicate_id=\"t3\">E</assay>\n" +
                     "                <assay>F</assay>\n" +
-                    "                <assay technical_replicate_id=\"t2\">G</assay>\n" +
-                    "                <assay technical_replicate_id=\"t2\">H</assay>\n" +
+                    "                <assay technical_replicate_id=\"t4\">G</assay>\n" +
+                    "                <assay technical_replicate_id=\"t4\">H</assay>\n" +
                     "            </assay_group>\n" +
                     "        </assay_groups>\n" +
                     "        <contrasts>\n" +
@@ -81,8 +86,35 @@ public class ExperimentConfigurationTest {
                     "</configuration>\n";
 
 
+    private static final String BASELINE_RNASEQ_CONFIGURATION_XML = "" +
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "\n" +
+            "<configuration experimentType=\"rnaseq_mrna_baseline\" r_data=\"1\">\n" +
+            "    <analytics>\n" +
+            "        <assay_groups>\n" +
+            "            <assay_group id=\"g7\" label=\"hematopoietic stem cell\">\n" +
+            "                <assay technical_replicate_id=\"t15\">ERR409784</assay>\n" +
+            "                <assay technical_replicate_id=\"t15\">ERR409785</assay>\n" +
+            "                <assay technical_replicate_id=\"t15\">ERR409783</assay>\n" +
+            "                <assay technical_replicate_id=\"t9\">ERR324395</assay>\n" +
+            "                <assay technical_replicate_id=\"t9\">ERR324394</assay>\n" +
+            "            </assay_group>\n" +
+            "            <assay_group id=\"g6\" label=\"hematopoietic multipotent progenitor cell\">\n" +
+            "                <assay>ERR168855</assay>\n" +
+            "                <assay>ERR179761</assay>\n" +
+            "                <assay technical_replicate_id=\"t12\">ERR324396</assay>\n" +
+            "                <assay technical_replicate_id=\"t12\">ERR409751</assay>\n" +
+            "            </assay_group>\n" +
+            "            <assay_group id=\"g8\" label=\"megakaryocyte-erythroid progenitor cell\">\n" +
+            "                <assay>ERR179758</assay>\n" +
+            "                <assay>ERR168854</assay>\n" +
+            "                <assay>ERR409781</assay>\n" +
+            "                <assay>ERR168858</assay>\n" +
+            "            </assay_group>\n" +
+            "        </assay_groups>\n" +
+            "    </analytics>\n" +
+            "</configuration>";
 
-    private ExperimentConfiguration subject;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -97,9 +129,25 @@ public class ExperimentConfigurationTest {
         Files.delete(tmpFilePath);
     }
 
-    @Before
-    public void setUp() throws Exception {
-        InputStream inputStream = new ByteArrayInputStream(MICROARRAY_CONFIGURATION_XML.getBytes(StandardCharsets.UTF_8));
+    public ExperimentConfiguration testConfiguration(String xml) {
+        class XmlReaderMock extends XmlReader {
+
+            private Document document;
+
+            public XmlReaderMock(XMLConfiguration xmlConfiguration) {
+                super(xmlConfiguration);
+            }
+
+            public void setDocument(Document document) {
+                this.document = document;
+            }
+
+            @Override
+            public Document getDocument() {
+                return document;
+            }
+        }
+        InputStream inputStream = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
 
         Parameters params = new Parameters();
         FileBasedConfigurationBuilder<XMLConfiguration> fileBuilder =
@@ -108,29 +156,36 @@ public class ExperimentConfigurationTest {
                                 .setPath(tmpFilePath.toString())
                                 .setExpressionEngine(new XPathExpressionEngine()));
 
-        XMLConfiguration xmlConfiguration = fileBuilder.getConfiguration();
-        xmlConfiguration.read(inputStream);
+        XMLConfiguration xmlConfiguration;
+        Document document ;
+        try {
+            xmlConfiguration = fileBuilder.getConfiguration();
+            xmlConfiguration.read(inputStream);
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        inputStream.reset();
-        Document document = builder.parse(inputStream);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            inputStream.reset();
+            document = builder.parse(inputStream);
+        } catch (ConfigurationException | IOException | SAXException | ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+
 
         XmlReaderMock xmlReaderMock = new XmlReaderMock(xmlConfiguration);
         xmlReaderMock.setDocument(document);
 
-        subject = new ExperimentConfiguration(xmlReaderMock);
+        return new ExperimentConfiguration(xmlReaderMock);
     }
 
     @Test
     public void testGetAssayGroups()  {
-        List<AssayGroup> assayGroups = subject.getAssayGroups();
+        List<AssayGroup> assayGroups = testConfiguration(MICROARRAY_CONFIGURATION_XML).getAssayGroups();
         assertThat(assayGroups, hasSize(5));
     }
 
     @Test
     public void replicatesIsSumOfUniqueTechnicalReplicatesAndUnqualifiedAssays() {
-        List<AssayGroup> assayGroups = subject.getAssayGroups();
+        List<AssayGroup> assayGroups = testConfiguration(MICROARRAY_CONFIGURATION_XML).getAssayGroups();
         assertThat(assayGroups.get(0).getId(), is("g1"));
         assertThat(assayGroups.get(1).getId(), is("g2"));
         assertThat(assayGroups.get(2).getId(), is("g3"));
@@ -146,7 +201,7 @@ public class ExperimentConfigurationTest {
 
     @Test
     public void testGetContrasts()  {
-        List<Contrast> contrasts = subject.getContrasts();
+        List<Contrast> contrasts = testConfiguration(MICROARRAY_CONFIGURATION_XML).getContrasts();
         assertThat(contrasts, hasSize(2));
         Contrast contrast = contrasts.get(0);
         assertThat(contrast.getId(), is("g1_g2"));
@@ -161,6 +216,7 @@ public class ExperimentConfigurationTest {
 
     @Test
     public void testGetExperimentType() {
-        assertThat(subject.getExperimentType(), is(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
+        assertThat(testConfiguration(MICROARRAY_CONFIGURATION_XML).getExperimentType(), is(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
+        assertThat(testConfiguration(BASELINE_RNASEQ_CONFIGURATION_XML).getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 }
