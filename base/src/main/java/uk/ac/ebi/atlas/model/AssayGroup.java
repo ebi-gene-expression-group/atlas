@@ -28,15 +28,7 @@ public class AssayGroup extends DescribesDataColumns {
         this.replicates = replicates;
         this.assayAccessions = Sets.newHashSet(assayAccessions);
     }
-
-    public Collection<String> assays(){
-        return assayAccessions;
-    }
-
-    public Iterator<String> iterater() {
-        return assayAccessions.iterator();
-    }
-
+    
     public int getReplicates() {
         return replicates;
     }

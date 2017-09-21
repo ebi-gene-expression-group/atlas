@@ -12,7 +12,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -42,8 +44,8 @@ public class MicroarrayExperimentConfigurationIT {
         for(Contrast contrast: contrasts){
             assertNotNull(contrast.getId());
             assertNotNull(contrast.getDisplayName());
-            assertTrue(contrast.getReferenceAssayGroup().iterater().hasNext());
-            assertTrue(contrast.getTestAssayGroup().iterater().hasNext());
+            assertThat(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn(), not(empty()));
+            assertThat(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn(), not(empty()));
         }
     }
 }

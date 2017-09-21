@@ -7,14 +7,12 @@ import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.XmlReaderMock;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -206,8 +204,8 @@ public class ExperimentConfigurationTest {
         Contrast contrast = contrasts.get(0);
         assertThat(contrast.getId(), is("g1_g2"));
         assertThat(contrast.getDisplayName(), is("'g1' vs 'g2'"));
-        assertThat(contrast.getReferenceAssayGroup().assays(), contains("A"));
-        assertThat(contrast.getTestAssayGroup().assays(), contains("A", "B"));
+        assertThat(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn(), contains("A"));
+        assertThat(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn(), contains("A", "B"));
         Contrast otherContrast = contrasts.get(1);
         assertThat(otherContrast.getId(), not(is(contrast.getId())));
     }
