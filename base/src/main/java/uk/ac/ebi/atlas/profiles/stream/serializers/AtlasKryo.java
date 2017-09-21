@@ -21,46 +21,6 @@ public class AtlasKryo {
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
 
-        kryo.register(AssayGroup.class,
-                new Serializer<AssayGroup>() {
-                    @Override
-                    public void write(Kryo kryo, Output output, AssayGroup assayGroup) {
-                        output.writeString(assayGroup.getId());
-                        output.writeInt(assayGroup.getReplicates());
-                        output.writeString(Joiner.on("\n").join(assayGroup.assaysAnalyzedForThisDataColumn()));
-                    }
-
-                    @Override
-                    public AssayGroup read(Kryo kryo, Input input, Class<AssayGroup> aClass) {
-                        String id = input.readString();
-                        int replicates = input.readInt();
-                        return new AssayGroup(id, replicates, input.readString().split("\n"));
-                    }
-                });
-
-        kryo.register(Contrast.class,
-                new Serializer<Contrast>(){
-
-                    @Override
-                    public void write(Kryo kryo, Output output, Contrast contrast) {
-                        output.writeString(contrast.getId());
-                        output.writeString(contrast.getArrayDesignAccession());
-                        kryo.writeObject(output, contrast.getReferenceAssayGroup());
-                        kryo.writeObject(output, contrast.getTestAssayGroup());
-                        output.writeString(contrast.getDisplayName());
-                    }
-
-                    @Override
-                    public Contrast read(Kryo kryo, Input input, Class<Contrast> aClass) {
-                        return new Contrast(
-                                input.readString(),
-                                input.readString(),
-                                kryo.readObject(input, AssayGroup.class),
-                                kryo.readObject(input, AssayGroup.class),
-                                input.readString());
-                    }
-                });
-
         kryo.register(BaselineExpression.class,
                 new Serializer<BaselineExpression>() {
             @Override
