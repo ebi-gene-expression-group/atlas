@@ -42,8 +42,8 @@ public class MicroarrayExperimentConfigurationIT {
         for(Contrast contrast: contrasts){
             assertNotNull(contrast.getId());
             assertNotNull(contrast.getDisplayName());
-            assertTrue(contrast.getReferenceAssayGroup().iterator().hasNext());
-            assertTrue(contrast.getTestAssayGroup().iterator().hasNext());
+            assertTrue(contrast.getReferenceAssayGroup().iterater().hasNext());
+            assertTrue(contrast.getTestAssayGroup().iterater().hasNext());
         }
     }
 }

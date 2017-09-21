@@ -5,13 +5,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class AssayGroup extends DescribesDataColumns implements Iterable<String> {
+public class AssayGroup extends DescribesDataColumns {
 
     private Set<String> assayAccessions;
     private int replicates;
@@ -28,8 +29,11 @@ public class AssayGroup extends DescribesDataColumns implements Iterable<String>
         this.assayAccessions = Sets.newHashSet(assayAccessions);
     }
 
-    @Override
-    public Iterator<String> iterator() {
+    public Collection<String> assays(){
+        return assayAccessions;
+    }
+
+    public Iterator<String> iterater() {
         return assayAccessions.iterator();
     }
 

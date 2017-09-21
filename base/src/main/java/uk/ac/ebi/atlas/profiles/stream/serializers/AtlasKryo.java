@@ -27,7 +27,7 @@ public class AtlasKryo {
                     public void write(Kryo kryo, Output output, AssayGroup assayGroup) {
                         output.writeString(assayGroup.getId());
                         output.writeInt(assayGroup.getReplicates());
-                        output.writeString(Joiner.on("\n").join(assayGroup));
+                        output.writeString(Joiner.on("\n").join(assayGroup.assays()));
                     }
 
                     @Override

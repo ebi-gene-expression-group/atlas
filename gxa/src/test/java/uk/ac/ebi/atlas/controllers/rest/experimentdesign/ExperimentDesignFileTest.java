@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ExperimentDesignFileTest {
 
-    ExperimentDesignFile<?> subject = new ExperimentDesignFile.Baseline(null);
+    ExperimentDesignFile<?, ?> subject = new ExperimentDesignFile.Baseline(null);
 
     @Test
     public void test(){

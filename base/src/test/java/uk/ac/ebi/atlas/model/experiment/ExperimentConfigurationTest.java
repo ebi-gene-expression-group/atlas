@@ -206,8 +206,8 @@ public class ExperimentConfigurationTest {
         Contrast contrast = contrasts.get(0);
         assertThat(contrast.getId(), is("g1_g2"));
         assertThat(contrast.getDisplayName(), is("'g1' vs 'g2'"));
-        assertThat(contrast.getReferenceAssayGroup(), contains("A"));
-        assertThat(contrast.getTestAssayGroup(), contains("A", "B"));
+        assertThat(contrast.getReferenceAssayGroup().assays(), contains("A"));
+        assertThat(contrast.getTestAssayGroup().assays(), contains("A", "B"));
         Contrast otherContrast = contrasts.get(1);
         assertThat(otherContrast.getId(), not(is(contrast.getId())));
     }
