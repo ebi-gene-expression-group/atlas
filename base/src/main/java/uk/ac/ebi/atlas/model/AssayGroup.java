@@ -5,17 +5,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class AssayGroup extends DescribesDataColumns {
 
-    private Set<String> assayAccessions;
-    private int replicates;
+    private final Set<String> assayAccessions;
+    private final int replicates;
 
     public AssayGroup(String id, String... assayAccessions) {
         this(id, assayAccessions.length, assayAccessions);
@@ -28,24 +27,20 @@ public class AssayGroup extends DescribesDataColumns {
         this.replicates = replicates;
         this.assayAccessions = Sets.newHashSet(assayAccessions);
     }
-    
+
+    public AssayGroup(String id, BiologicalReplicate... biologicalReplicates){
+        super(id);
+        checkArgument(biologicalReplicates.length > 0 );
+        this.assayAccessions = Arrays.asList(biologicalReplicates).stream().flatMap(b -> b.assaysAnalyzedForThisDataColumn().stream()).collect(Collectors.toSet());
+        this.replicates = biologicalReplicates.length;
+    }
+
     public int getReplicates() {
         return replicates;
     }
 
     public String getFirstAssayAccession() {
         return assayAccessions.iterator().next();
-    }
-
-    @Override
-    public int hashCode() {return id.hashCode();}
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
-        final AssayGroup other = (AssayGroup) obj;
-        return Objects.equals(this.id, other.id);
     }
 
     public JsonObject toJson(){

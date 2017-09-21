@@ -40,11 +40,6 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
         return displayName;
     }
 
-    public Set<String> getAssayAccessions(){
-        return Sets.newHashSet(getReferenceAssayGroup().getFirstAssayAccession()
-                                , getTestAssayGroup().getFirstAssayAccession());
-    }
-
     @Override
     public String toString() {
         return "Contrast{" +
@@ -54,16 +49,6 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
                 ", testAssayGroup=" + testAssayGroup +
                 ", displayName='" + displayName + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other instanceof Contrast && Objects.equal(id, ((Contrast) other).id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 
     @Override

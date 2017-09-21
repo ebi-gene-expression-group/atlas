@@ -31,18 +31,6 @@ public class FactorAcrossExperiments extends DescribesDataColumns implements Com
         return ImmutableSet.of();
     }
 
-
-    @Override
-    public int hashCode() {return id.hashCode();}
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
-        final FactorAcrossExperiments other = (FactorAcrossExperiments) obj;
-        return Objects.equals(this.id, other.id);
-    }
-
     @Override
     public String toString(){
         return "FactorAcrossExperiments id "+id;
