@@ -83,37 +83,6 @@ public class ExperimentConfigurationTest {
                     "    </analytics>\n" +
                     "</configuration>\n";
 
-
-    private static final String BASELINE_RNASEQ_CONFIGURATION_XML = "" +
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "\n" +
-            "<configuration experimentType=\"rnaseq_mrna_baseline\" r_data=\"1\">\n" +
-            "    <analytics>\n" +
-            "        <assay_groups>\n" +
-            "            <assay_group id=\"g7\" label=\"hematopoietic stem cell\">\n" +
-            "                <assay technical_replicate_id=\"t15\">ERR409784</assay>\n" +
-            "                <assay technical_replicate_id=\"t15\">ERR409785</assay>\n" +
-            "                <assay technical_replicate_id=\"t15\">ERR409783</assay>\n" +
-            "                <assay technical_replicate_id=\"t9\">ERR324395</assay>\n" +
-            "                <assay technical_replicate_id=\"t9\">ERR324394</assay>\n" +
-            "            </assay_group>\n" +
-            "            <assay_group id=\"g6\" label=\"hematopoietic multipotent progenitor cell\">\n" +
-            "                <assay>ERR168855</assay>\n" +
-            "                <assay>ERR179761</assay>\n" +
-            "                <assay technical_replicate_id=\"t12\">ERR324396</assay>\n" +
-            "                <assay technical_replicate_id=\"t12\">ERR409751</assay>\n" +
-            "            </assay_group>\n" +
-            "            <assay_group id=\"g8\" label=\"megakaryocyte-erythroid progenitor cell\">\n" +
-            "                <assay>ERR179758</assay>\n" +
-            "                <assay>ERR168854</assay>\n" +
-            "                <assay>ERR409781</assay>\n" +
-            "                <assay>ERR168858</assay>\n" +
-            "            </assay_group>\n" +
-            "        </assay_groups>\n" +
-            "    </analytics>\n" +
-            "</configuration>";
-
-
     @BeforeClass
     public static void setUpClass() throws Exception {
         // In Commons Configuration 2, XMLConfiguration needs at least a well-formed XML file:
@@ -215,6 +184,7 @@ public class ExperimentConfigurationTest {
     @Test
     public void testGetExperimentType() {
         assertThat(testConfiguration(MICROARRAY_CONFIGURATION_XML).getExperimentType(), is(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
-        assertThat(testConfiguration(BASELINE_RNASEQ_CONFIGURATION_XML).getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
+        assertThat(testConfiguration("<configuration experimentType=\"rnaseq_mrna_baseline\">\n" +
+                 "</configuration>").getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 }

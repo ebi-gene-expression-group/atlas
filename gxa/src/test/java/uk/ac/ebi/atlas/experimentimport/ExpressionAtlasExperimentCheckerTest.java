@@ -11,6 +11,10 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+/*
+TODO since ExpressionAtlasExperimentChecker defines the contract of the webapp with the pipeline,
+it would be good for this component to have tests.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionAtlasExperimentCheckerTest {
 
@@ -34,5 +38,10 @@ public class ExpressionAtlasExperimentCheckerTest {
                 "g3", "g4", "g5",
                 "g6", "g7", "g8", "g9",
                 "g10", "g11", "g12", "g13", "g14", "g15", "g16", "g17", "g18", "g19", "g20", "g21", "g22", "g23", "g24", "g25", "g26", "g27", "g28", "g29", "g30"}));
+    }
+
+    @Test
+    public void checkBaselineRnaSeqFile(){
+        //subject.checkRnaSeqBaselineFiles("E-MOCK-1");
     }
 }

@@ -20,6 +20,8 @@ public abstract class DescribesDataColumns {
 
     public abstract Set<String> assaysAnalyzedForThisDataColumn();
 
+    public abstract Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn();
+
     @Override
     public int hashCode() {return id.hashCode();}
 

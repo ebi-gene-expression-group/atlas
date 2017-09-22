@@ -32,6 +32,11 @@ public class FactorAcrossExperiments extends DescribesDataColumns implements Com
     }
 
     @Override
+    public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
+        return ImmutableSet.of();
+    }
+
+    @Override
     public String toString(){
         return "FactorAcrossExperiments id "+id;
     }

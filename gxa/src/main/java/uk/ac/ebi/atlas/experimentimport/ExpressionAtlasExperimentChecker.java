@@ -4,7 +4,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.ArrayUtils;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
@@ -12,12 +14,10 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -79,8 +79,14 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         Preconditions.checkState(dataFiles.size()> 0, MessageFormat.format("No data files (FPKM/TPM) present for {0}!", experimentAccession));
         for(ExpressionUnit.Absolute.Rna dataFile: dataFiles){
             checkResourceExistsAndIsReadable(experimentFiles.dataFile(dataFile));
-            headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(dataFile).get().readNext()), experimentAccession);
+            assayGroupIdsInHeaderMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(dataFile).get().readNext()), experimentAccession);
         }
+
+        AtlasResource<ObjectInputStream<String[]>> transcripts = experimentFiles.transcriptsTpms;
+        if(transcripts.exists()){
+            biologicalReplicateIdsInHeaderMatchConfigurationXml(rnaSeqIdsFromHeader(transcripts.get().readNext()), experimentAccession);
+        }
+
     }
 
     private String[] rnaSeqIdsFromHeader(String[] header) {
@@ -91,18 +97,28 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         DataFileHub.ProteomicsBaselineExperimentFiles experimentFiles = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession);
         checkBaselineFiles(experimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.main);
-        headerIdsMatchConfigurationXml(proteomicsIdsFromHeader(experimentFiles.main.get().readNext()), experimentAccession);
+        assayGroupIdsInHeaderMatchConfigurationXml(proteomicsIdsFromHeader(experimentFiles.main.get().readNext()), experimentAccession);
     }
 
     String[] proteomicsIdsFromHeader(String[] header) {
         return StringArrayUtil.substringBefore(StringArrayUtil.filterBySubstring(header, "WithInSampleAbundance"), ".");
     }
 
-    private void headerIdsMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+    private void biologicalReplicateIdsInHeaderMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
         Preconditions.checkState(
                 ImmutableSet.copyOf(assayGroupIds).equals(
                         configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
-                                .map(AssayGroup::getId)
+                                .flatMap(a -> a.biologicalReplicatesForThisDataColumn().stream())
+                                .map(DescribesDataColumns::getId)
+                                .collect(Collectors.toSet())),
+                MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
+    }
+
+    private void assayGroupIdsInHeaderMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+        Preconditions.checkState(
+                ImmutableSet.copyOf(assayGroupIds).equals(
+                        configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
+                                .map(DescribesDataColumns::getId)
                                 .collect(Collectors.toSet())),
                 MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
     }

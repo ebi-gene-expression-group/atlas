@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 
 import java.util.Set;
@@ -75,6 +76,14 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
         return ImmutableSet.<String>builder()
                 .addAll(testAssayGroup.assaysAnalyzedForThisDataColumn())
                 .addAll(referenceAssayGroup.assaysAnalyzedForThisDataColumn())
+                .build();
+    }
+
+    @Override
+    public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
+        return ImmutableSet.<BiologicalReplicate>builder()
+                .addAll(testAssayGroup.biologicalReplicatesForThisDataColumn())
+                .addAll(referenceAssayGroup.biologicalReplicatesForThisDataColumn())
                 .build();
     }
 }

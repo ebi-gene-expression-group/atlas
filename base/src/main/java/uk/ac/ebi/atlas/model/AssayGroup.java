@@ -49,4 +49,8 @@ public class AssayGroup extends DescribesDataColumns {
     public Set<String> assaysAnalyzedForThisDataColumn() {
         return biologicalReplicates.stream().flatMap(b -> b.assaysAnalyzedForThisDataColumn().stream()).collect(Collectors.toSet());
     }
+
+    public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
+        return biologicalReplicates;
+    }
 }
