@@ -104,23 +104,23 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         return StringArrayUtil.substringBefore(StringArrayUtil.filterBySubstring(header, "WithInSampleAbundance"), ".");
     }
 
-    private void biologicalReplicateIdsInHeaderMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+    private void biologicalReplicateIdsInHeaderMatchConfigurationXml(String[] biologicalRepliateIds, String experimentAccession) {
+        Set<String> idsInConfiguration=configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
+                .flatMap(a -> a.biologicalReplicatesForThisDataColumn().stream())
+                .map(DescribesDataColumns::getId)
+                .collect(Collectors.toSet());
         Preconditions.checkState(
-                ImmutableSet.copyOf(assayGroupIds).equals(
-                        configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
-                                .flatMap(a -> a.biologicalReplicatesForThisDataColumn().stream())
-                                .map(DescribesDataColumns::getId)
-                                .collect(Collectors.toSet())),
-                MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
+                ImmutableSet.copyOf(biologicalRepliateIds).equals(idsInConfiguration),
+                MessageFormat.format("Biological replicate ids in data file (#:{1}) not matching ids in {0}-configuration.xml (#:{2})", experimentAccession, biologicalRepliateIds.length, idsInConfiguration.size()));
     }
 
     private void assayGroupIdsInHeaderMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+        Set<String> idsInConfiguration=configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
+                .map(DescribesDataColumns::getId)
+                .collect(Collectors.toSet());
         Preconditions.checkState(
-                ImmutableSet.copyOf(assayGroupIds).equals(
-                        configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
-                                .map(DescribesDataColumns::getId)
-                                .collect(Collectors.toSet())),
-                MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
+                ImmutableSet.copyOf(assayGroupIds).equals(idsInConfiguration),
+                MessageFormat.format("Assay group ids in data file (#:{1}) not matching ids in {0}-configuration.xml (#:{2})", experimentAccession, assayGroupIds.length, idsInConfiguration.size()));
     }
 
 

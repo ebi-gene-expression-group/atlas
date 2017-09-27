@@ -1,34 +1,42 @@
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
-/*
-TODO since ExpressionAtlasExperimentChecker defines the contract of the webapp with the pipeline,
-it would be good for this component to have tests.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionAtlasExperimentCheckerTest {
 
-    @Mock
-    DataFileHub dataFileHub;
+    MockDataFileHub dataFileHub;
 
-    @Mock
-    ConfigurationTrader configurationTrader;
+    static String accession = "E-MOCK-1";
 
     ExpressionAtlasExperimentChecker subject;
 
     @Before
-    public void setUp(){
-        subject = new ExpressionAtlasExperimentChecker(dataFileHub, configurationTrader);
+    public void setUp() throws Exception{
+        dataFileHub = new MockDataFileHub();
+        subject = new ExpressionAtlasExperimentChecker(dataFileHub, new ConfigurationTrader(dataFileHub));
     }
 
     @Test
@@ -40,8 +48,171 @@ public class ExpressionAtlasExperimentCheckerTest {
                 "g10", "g11", "g12", "g13", "g14", "g15", "g16", "g17", "g18", "g19", "g20", "g21", "g22", "g23", "g24", "g25", "g26", "g27", "g28", "g29", "g30"}));
     }
 
-    @Test
-    public void checkBaselineRnaSeqFile(){
-        //subject.checkRnaSeqBaselineFiles("E-MOCK-1");
+
+    Collection<String> configurationWithAssayGroups(Collection<String> assayGroupList){
+        ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
+        ImmutableList.Builder<String> b = ImmutableList.builder();
+        b.add(MessageFormat.format("<configuration experimentType=\"{0}\" r_data=\"1\">", experimentType.getDescription()),
+                "<analytics>",
+                "<assay_groups>");
+
+        b.addAll(assayGroupList);
+
+        b.add(
+                "</assay_groups>",
+                "</analytics>",
+                "</configuration>"
+        );
+        return b.build();
     }
+
+    void setup(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile,
+                            String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2){
+        dataFileHub.addConfigurationFile(accession, configurationWithAssayGroups(ImmutableList.of(
+                assayGroupXml
+        )));
+        dataFileHub.addFactorsFile(accession, ImmutableList.of("<factors-definition>", "</factors-definition>"));
+        addFile.accept(accession, ImmutableList.of(fileHeader));
+        addFile2.accept(accession,ImmutableList.of(fileHeader2));
+
+    }
+
+    void setup(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile){
+        dataFileHub.addConfigurationFile(accession, configurationWithAssayGroups(ImmutableList.of(
+                assayGroupXml
+        )));
+        dataFileHub.addFactorsFile(accession, ImmutableList.of("<factors-definition>", "</factors-definition>"));
+        addFile.accept(accession, ImmutableList.of(fileHeader));
+
+    }
+    void assertPasses(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile){
+        setup(assayGroupXml, fileHeader, addFile);
+        subject.checkRnaSeqBaselineFiles(accession);
+    }
+
+    void assertFails(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile){
+        setup(assayGroupXml, fileHeader, addFile);
+        try{
+            subject.checkRnaSeqBaselineFiles(accession);
+            fail("Should fail with IllegalStateException");
+        } catch (IllegalStateException e){
+            //yum
+        }
+    }
+
+    void assertPasses(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile,
+                      String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2){
+        setup(assayGroupXml, fileHeader, addFile, fileHeader2, addFile2);
+        subject.checkRnaSeqBaselineFiles(accession);
+    }
+
+    void assertFails(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile,
+                     String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2){
+        setup(assayGroupXml, fileHeader, addFile, fileHeader2, addFile2);
+        try{
+            subject.checkRnaSeqBaselineFiles(accession);
+            fail("Should fail with IllegalStateException");
+        } catch (IllegalStateException e){
+            //yum
+        }
+    }
+
+    @Test
+    public void baselineRnaSeqFileNeedsAtLeastOneDataFile(){
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{}, (a,b)-> {});
+    }
+
+
+
+
+    void fileMatchesHeaderBasedOnAssayGroups(BiConsumer<String, List<String[]>> addFile){
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "g1"}, addFile);
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "g1", "g2"},addFile);
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "g2", "g1"},addFile);
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "g1"}, addFile);
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "g1", "g2"},addFile);
+    }
+
+    @Test
+    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup1(){
+        fileMatchesHeaderBasedOnAssayGroups(dataFileHub::addFpkmsExpressionFile);
+    }
+
+    @Test
+    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup2(){
+        fileMatchesHeaderBasedOnAssayGroups(dataFileHub::addTpmsExpressionFile);
+    }
+
+    @Test
+    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup3(){
+        fileMatchesHeaderBasedOnAssayGroups((a,b)-> {
+            dataFileHub.addTpmsExpressionFile(a,b);
+            dataFileHub.addFpkmsExpressionFile(a,b);
+        });
+    }
+
+    @Test
+    public void checkBaselineRnaSeqFileCheckTranscriptsFile(){
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "A"},dataFileHub::addTranscriptsTpmsExpressionFile,
+                new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "A", "B"},dataFileHub::addTranscriptsTpmsExpressionFile,
+                new String[]{"","", "g1", "g2"}, dataFileHub:: addTpmsExpressionFile);
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "A"},
+                dataFileHub::addTranscriptsTpmsExpressionFile, new String[]{"","", "g1", "g2"}, dataFileHub::addTpmsExpressionFile);
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "A", "B"},
+                dataFileHub::addTranscriptsTpmsExpressionFile,new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+    }
+
+
+    void technicalReplicatesInOneAssayGroupPasses(List<String> assayTags,String [] header){
+        assertPasses("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
+                ImmutableList.builder().add("","").addAll(Arrays.asList(header)).build().toArray(new String[]{})
+                ,dataFileHub::addTranscriptsTpmsExpressionFile,
+                new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+    }
+
+    void technicalReplicatesInOneAssayGroupFails(List<String> assayTags,String [] header){
+        assertFails("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
+                ImmutableList.builder().add("","").addAll(Arrays.asList(header)).build().toArray(new String[]{}),
+                dataFileHub::addTranscriptsTpmsExpressionFile,
+                new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+    }
+
+    @Test
+    public void technicalReplicatesGetVerified(){
+        technicalReplicatesInOneAssayGroupPasses(ImmutableList.of(
+                "<assay technical_replicate_id=\"t1\">A</assay>" ,
+                "<assay technical_replicate_id=\"t1\">B</assay>"
+        ), new String[]{"t1"});
+        technicalReplicatesInOneAssayGroupFails(ImmutableList.of(
+                "<assay technical_replicate_id=\"t1\">A</assay>" ,
+                "<assay technical_replicate_id=\"t1\">B</assay>"
+        ), new String[]{"A","B"});
+        technicalReplicatesInOneAssayGroupPasses(ImmutableList.of(
+                "<assay technical_replicate_id=\"t1\">A</assay>" ,
+                "<assay technical_replicate_id=\"t1\">B</assay>",
+                "<assay>C</assay>"
+        ), new String[]{"t1", "C"});
+        technicalReplicatesInOneAssayGroupPasses(ImmutableList.of(
+                "<assay technical_replicate_id=\"t1\">A</assay>" ,
+                "<assay technical_replicate_id=\"t1\">B</assay>",
+                "<assay technical_replicate_id=\"t2\">C</assay>" ,
+                "<assay technical_replicate_id=\"t2\">D</assay>",
+                "<assay>E</assay>"
+        ), new String[]{"t1", "t2", "E"});
+        technicalReplicatesInOneAssayGroupPasses(ImmutableList.of(
+                "<assay technical_replicate_id=\"t1\">A</assay>" ,
+                "<assay>E</assay>",
+                "<assay technical_replicate_id=\"t2\">C</assay>" ,
+                "<assay technical_replicate_id=\"t1\">B</assay>",
+                "<assay technical_replicate_id=\"t2\">D</assay>"
+        ), new String[]{"t1", "t2", "E"});
+    }
+
+
 }

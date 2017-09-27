@@ -50,6 +50,10 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, accession), lines);
     }
 
+    public void addTranscriptsTpmsExpressionFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
     public void addExperimentDesignFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(MessageFormat.format(EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, accession), lines);
     }
@@ -77,6 +81,10 @@ public class MockDataFileHub extends DataFileHub {
 
     public void addFactorsFile(String accession, Collection<String> lines) {
         addTemporaryFile(MessageFormat.format(FACTORS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addConfigurationFile(String accession,Collection<String> lines){
+        addTemporaryFile(MessageFormat.format(CONFIGURATION_FILE_PATH_TEMPLATE, accession), lines);
     }
 
     public void addSpeciesJsonFile(Collection<String> lines) {
