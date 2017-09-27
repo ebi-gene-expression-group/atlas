@@ -41,10 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -109,7 +106,7 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             GeneQueryResponse geneQueryResponse =
                     solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
             baselineProfileStreamFactory.write(experiment, requestContext,
-                    new ProfileStreamFilter<AssayGroup, BaselineProfileStreamOptions<Unit>, BaselineProfile>(requestContext, geneQueryResponse),
+                    geneQueryResponse.asGeneIdsToKeep(), ProfileStreamFilter.create(requestContext),
                     baselineProfilesWriterFactory.create(writer, requestContext));
         }
     }
@@ -176,7 +173,7 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
                 microarrayProfileStreamFactory.write(
                         experiment,
                         context,
-                        new ProfileStreamFilter<>(context, geneQueryResponse),
+                        geneQueryResponse.asGeneIdsToKeep(), ProfileStreamFilter.create(context),
                         microarrayProfilesWriterFactory.create(writer, context));
                 return null;
             };
@@ -235,11 +232,12 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
         protected void write(Writer responseWriter, DifferentialRequestPreferences differentialRequestPreferences, DifferentialExperiment experiment) {
             RnaSeqRequestContext context =
                     new DifferentialRequestContextFactory.RnaSeq().create(experiment, differentialRequestPreferences);
+            GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies());
             rnaSeqProfileStreamFactory.write(
                     experiment,
                     context,
-                    new ProfileStreamFilter<>(context,
-                            solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies())),
+                    geneQueryResponse.asGeneIdsToKeep(),
+                    ProfileStreamFilter.create(context),
                     rnaSeqDifferentialProfilesWriterFactory.create(responseWriter, context));
         }
 

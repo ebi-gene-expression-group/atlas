@@ -59,7 +59,7 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
     public void setUp() throws Exception {
         dataFileHub = new MockDataFileHub();
         subject = new MicroarrayProfileStreamFactory.Impl(dataFileHub);
-        profileFromTsvLine = subject.howToReadLineStream(experiment, microarrayExpression -> true).apply(
+        profileFromTsvLine = subject.howToReadLine(experiment, microarrayExpression -> true).apply(
                 ("Gene ID\tGene Name\tDesign element\tg1_g2.p-value\tg1_g2.tstat\tg1_g2.log2foldchange" +
                         "\tg1_g3.p-value\tg1_g3.tstat\tg1_g3.log2foldchange")
                         .split("\t"));

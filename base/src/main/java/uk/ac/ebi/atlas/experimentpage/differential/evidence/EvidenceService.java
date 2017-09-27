@@ -70,9 +70,9 @@ public class EvidenceService<Expr extends DifferentialExpression,
         Map<String, Map<Contrast, Integer>> rankPerContrastPerGene = getPercentileRanks(experiment);
 
         for(Contrast contrast : diseaseAssociations.keySet()){
-            for(Prof profile : differentialProfileStreamFactory.select(experiment, queryForOneContrast.apply(contrast), p -> p.getExpression(contrast)!=null, new MinMaxProfileRanking<>(
-                    Comparator.comparing((Prof p) -> - Math.abs(p.getExpressionLevel(contrast))), GeneProfilesList::new))) {
-
+            for(Prof profile : differentialProfileStreamFactory.select(experiment, queryForOneContrast.apply(contrast), Optional.empty(), p -> p.getExpression(contrast)!=null, new MinMaxProfileRanking<>(
+                    Comparator.comparing(p -> - Math.abs(p.getExpressionLevel(contrast))), () -> new GeneProfilesList<>())
+            ) ){
                 Expr expression = profile.getExpression(contrast);
                 if (expression != null) {
                     piecesOfEvidence(

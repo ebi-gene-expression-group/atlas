@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
 import com.esotericsoftware.kryo.io.UnsafeInput;
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Profile;
@@ -28,6 +30,9 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -38,10 +43,7 @@ import static org.mockito.Mockito.*;
 public class ProfileStreamKryoLayerTest {
     MockDataFileHub dataFileHub;
 
-    @Mock
     CreatesProfilesFromTsvFiles source;
-
-    ProfileStreamKryoLayer subject;
 
     @Mock
     Experiment experiment;
@@ -53,8 +55,8 @@ public class ProfileStreamKryoLayerTest {
 
     @Before
     public void setUp() throws IOException {
-        subject = new ProfileStreamKryoLayer(source);
         dataFileHub = Mockito.spy(new MockDataFileHub());
+        source = mock(CreatesProfilesFromTsvFiles.class);
         source.dataFileHub = dataFileHub;
 
         when(experiment.getAccession()).thenReturn(accession);
@@ -63,7 +65,7 @@ public class ProfileStreamKryoLayerTest {
 
     @Test
     public void createAsksDataFileHubForFiles() throws Exception {
-        subject.create(experiment, profileStreamOptions);
+        new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Optional.empty());
 
         verify(dataFileHub).getKryoFile(experiment.getAccession(), profileStreamOptions);
     }
@@ -71,9 +73,10 @@ public class ProfileStreamKryoLayerTest {
     @Test
     public void createDelegatesToSourceIfNoFilesPresent() throws Exception {
         ObjectInputStream objectInputStream = mock(ObjectInputStream.class);
-        when(source.create(experiment, profileStreamOptions)).thenReturn(objectInputStream);
+        Optional<Collection<String>> keepGeneIds = Optional.empty();
+        when(source.create(experiment, profileStreamOptions,keepGeneIds)).thenReturn(objectInputStream);
 
-        assertThat(subject.create(experiment, profileStreamOptions), is(objectInputStream));
+        assertThat(new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions,keepGeneIds), is(objectInputStream));
     }
 
     @Test
@@ -93,7 +96,8 @@ public class ProfileStreamKryoLayerTest {
 
         when(mockHub.getKryoFile(experiment.getAccession(), profileStreamOptions)).thenReturn(kryoFile);
 
-        subject.create(experiment, profileStreamOptions);
+        source = Mockito.spy(source);
+        new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Optional.empty());
 
         verify(source).filterExpressions(experiment, profileStreamOptions);
         verifyNoMoreInteractions(source);
@@ -103,14 +107,7 @@ public class ProfileStreamKryoLayerTest {
     public void persistPersistsSomething() throws Exception {
         assertThat(dataFileHub.getKryoFile(experiment.getAccession(), profileStreamOptions).exists(), is(false));
 
-        when(source.create(experiment, profileStreamOptions))
-                .thenThrow(new RuntimeException("Should call the one with the predicate instead"));
-
-        ObjectInputStream objectInputStream = mock(ObjectInputStream.class);
-        when(source.create(eq(experiment), eq(profileStreamOptions), any(Predicate.class)))
-                .thenReturn(objectInputStream);
-
-        subject.persist(experiment, profileStreamOptions);
+        new ProfileStreamKryoLayer(source).persist(experiment, profileStreamOptions);
 
         assertThat(dataFileHub.getKryoFile(experiment.getAccession(), profileStreamOptions).exists(), is(true));
     }
@@ -119,10 +116,6 @@ public class ProfileStreamKryoLayerTest {
     public void kryoPersistsAllOurObjectsAndWeGetThemBack() {
 
         ObjectInputStream objectInputStream = mock(ObjectInputStream.class);
-
-        when(source.create(eq(experiment), eq(profileStreamOptions), any(Predicate.class))).thenReturn(
-                objectInputStream
-        );
 
         when(source.filterExpressions(experiment, profileStreamOptions)).thenReturn(Predicates.alwaysTrue());
 
@@ -141,10 +134,13 @@ public class ProfileStreamKryoLayerTest {
                 .willReturn(p3)
                 .willReturn(null);
 
-        subject.persist(experiment, profileStreamOptions);
+        when(source.create(experiment, profileStreamOptions,Optional.empty())).thenReturn(objectInputStream);
+
+
+        new ProfileStreamKryoLayer(source).persist(experiment, profileStreamOptions);
 
         assertThat(
-                ImmutableList.copyOf(new IterableObjectInputStream<>(subject.create(experiment, profileStreamOptions))),
+                ImmutableList.copyOf(new IterableObjectInputStream<>(new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Optional.empty()))),
                 is(ImmutableList.<Object>of(p1, p2, p3))
         );
 

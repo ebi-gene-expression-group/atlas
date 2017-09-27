@@ -35,7 +35,7 @@ public class RnaSeqProfileStreamFactory extends ProfileStreamKryoLayer<Contrast,
         }
 
         @Override
-        protected Function<String[], ProfileFromTsvLine> howToReadLineStream(final DifferentialExperiment experiment, final Predicate<DifferentialExpression> expressionFilter) {
+        protected Function<String[], ProfileFromTsvLine> howToReadLine(final DifferentialExperiment experiment, final Predicate<DifferentialExpression> expressionFilter) {
             return new Function<String[], ProfileFromTsvLine>() {
                 @Nullable
                 @Override

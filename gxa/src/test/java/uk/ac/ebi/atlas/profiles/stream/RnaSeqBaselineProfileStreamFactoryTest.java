@@ -17,8 +17,14 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -75,9 +81,9 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
         RnaSeqBaselineRequestPreferences rnaSeqBaselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
         rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
-        ObjectInputStream<BaselineProfile> resultTpms = subject.create(baselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment));
+        ObjectInputStream<BaselineProfile> resultTpms = subject.create(baselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment), Optional.empty());
         rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
-        ObjectInputStream<BaselineProfile> resultFpkms = subject.create(baselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment));
+        ObjectInputStream<BaselineProfile> resultFpkms = subject.create(baselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment), Optional.empty());
 
         assertThat(resultTpms.readNext().getExpressionLevel(assayGroup), is(42.0));
 
@@ -97,10 +103,33 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         rnaSeqBaselineRequestPreferences.setUnit(unit);
         ObjectInputStream<BaselineProfile> result =
                 new RnaSeqBaselineProfileStreamFactory(dataFileHub).create(baselineExperiment,
-                        new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment));
+                        new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment), Optional.empty());
 
 
         assertThat(result.readNext().getExpressionLevel(assayGroup), is(13.37));
+    }
+
+    @Test
+    public void canFilterThroughDataFile(){
+        dataFileHub.addTpmsExpressionFile(baselineExperiment.getAccession(), ImmutableList.of(
+                new String[]{"Gene ID", "Gene name", "g1"},
+                new String[]{"id_1", "name_1", "1.0"},
+                new String[]{"id_2", "name_2", "2.0"},
+                new String[]{"id_3", "name_3", "3.0"}
+                ));
+
+        Function<Optional<Collection<String>>,List<BaselineProfile>> testWithGeneIds =
+                geneIdsToKeep -> ImmutableList.copyOf(new IterableObjectInputStream<>(
+                subject.create(baselineExperiment, new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), baselineExperiment),geneIdsToKeep)
+        ));
+
+        assertThat(testWithGeneIds.apply(Optional.empty()).size(), is(3));
+        assertThat(testWithGeneIds.apply(Optional.of(ImmutableList.of())).size(), is(0));
+        assertThat(testWithGeneIds.apply(Optional.of(ImmutableList.of("id_1", "id_2","id_3"))), is(testWithGeneIds.apply(Optional.empty())));
+        assertThat(testWithGeneIds.apply(Optional.of(ImmutableList.of("id_1"))).size(), is(1));
+        assertThat(testWithGeneIds.apply(Optional.of(ImmutableList.of("id_1", "other_id"))), is(testWithGeneIds.apply(Optional.of(ImmutableList.of("id_1")))));
+
+        assertThat(testWithGeneIds.apply(Optional.of(ImmutableList.of("id_1", "id_2"))).size(), is(2));
     }
 
     @Test
@@ -116,9 +145,9 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
         RnaSeqBaselineRequestPreferences rnaSeqBaselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
         rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
-        BaselineProfile resultTpms = subject.create(twoAssayGroupBaselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, twoAssayGroupBaselineExperiment)).readNext();
+        BaselineProfile resultTpms = subject.create(twoAssayGroupBaselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, twoAssayGroupBaselineExperiment), Optional.empty()).readNext();
         rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
-        BaselineProfile resultFpkms = subject.create(twoAssayGroupBaselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, twoAssayGroupBaselineExperiment)).readNext();
+        BaselineProfile resultFpkms = subject.create(twoAssayGroupBaselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, twoAssayGroupBaselineExperiment), Optional.empty()).readNext();
 
 
         assertThat(resultTpms.getExpressionLevel(assayGroup), is(1.0));
@@ -131,7 +160,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
     @Test
     public void canProvideQuartiles(){
-        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(twoAssayGroupBaselineExperiment, Predicates.alwaysTrue())
+        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLine(twoAssayGroupBaselineExperiment, Predicates.alwaysTrue())
                 .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()});
 
         assertThat(

@@ -36,7 +36,7 @@ public class MicroarrayProfileStreamFactory
         }
 
         @Override
-        protected Function<String[], ProfileFromTsvLine> howToReadLineStream(final MicroarrayExperiment experiment, final Predicate<MicroarrayExpression> expressionFilter) {
+        protected Function<String[], ProfileFromTsvLine> howToReadLine(final MicroarrayExperiment experiment, final Predicate<MicroarrayExpression> expressionFilter) {
             return new Function<String[], ProfileFromTsvLine>() {
                 @Nullable
                 @Override

@@ -36,7 +36,7 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
         //gene name and gene id gets removed somewhere else
         //future proteomics headers will not even have the extra SpectralCount
         CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine =
-                subject.howToReadLineStream(baselineExperiment, baselineExpression -> true)
+                subject.howToReadLine(baselineExperiment, baselineExpression -> true)
                 .apply(
                         "id name g1.SpectralCount g2.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance"
                                 .split(" "));

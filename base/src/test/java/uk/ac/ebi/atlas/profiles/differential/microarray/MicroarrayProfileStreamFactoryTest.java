@@ -26,6 +26,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -124,7 +125,7 @@ public class MicroarrayProfileStreamFactoryTest {
         MicroarrayRequestContext microarrayRequestContext = new MicroarrayRequestContext(microarrayRequestPreferences,experiment);
 
         return microarrayProfileStreamFactory.select(experiment,
-                microarrayRequestContext, x -> true, (SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>) (profiles, maxSize) -> new DifferentialProfilesList<>( Lists.newArrayList(new IterableObjectInputStream<>(profiles))));
+                microarrayRequestContext, Optional.empty(), x -> true, (SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>) (profiles, maxSize) -> new DifferentialProfilesList<>( Lists.newArrayList(new IterableObjectInputStream<>(profiles))));
     }
 
 }

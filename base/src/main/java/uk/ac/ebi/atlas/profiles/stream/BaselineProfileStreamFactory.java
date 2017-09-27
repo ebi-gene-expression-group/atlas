@@ -21,7 +21,7 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
     }
 
     @Override
-    protected Function<String[], ProfileFromTsvLine> howToReadLineStream(final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
+    protected Function<String[], ProfileFromTsvLine> howToReadLine(final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
         return strings -> new ProfileFromTsvLine(rowPositionsToDataColumns(experiment, strings), expressionFilter) {
             @Nullable
             @Override

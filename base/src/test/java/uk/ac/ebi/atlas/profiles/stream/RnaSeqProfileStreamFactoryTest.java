@@ -48,7 +48,7 @@ public class RnaSeqProfileStreamFactoryTest {
     public void setUp() throws Exception {
         dataFileHub = new MockDataFileHub();
         subject = new RnaSeqProfileStreamFactory.Impl(dataFileHub);
-        profileFromTsvLine = subject.howToReadLineStream(differentialExperiment, Predicates.alwaysTrue()).apply(
+        profileFromTsvLine = subject.howToReadLine(differentialExperiment, Predicates.alwaysTrue()).apply(
                 "Gene ID\tGene Name\tg1_g2.p-value\tg1_g2.log2foldchange\tg1_g3.p-value\tg1_g3.log2foldchange".split("\t")
         );
     }
