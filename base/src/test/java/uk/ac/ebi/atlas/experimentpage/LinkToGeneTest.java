@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class LinkToGeneTest {
 
@@ -22,7 +23,7 @@ public class LinkToGeneTest {
     }
 
     // Not comprehensive, if gene IDs need to use any of the following chars we need to use a URLEncoder
-    String[] ILLEGAL_CHARS = {"%", "ˆ", "|", "<", ">", "`", "#", "\"", "\\", "[", "]", "{", "}"};
+    String[] ILLEGAL_CHARS = {"%", "|", "<", ">", "`", "#", "\"", "\\", "[", "]", "{", "}"};
 
     LinkToGene<DummyProfile> subject = new LinkToGene<>();
 
@@ -31,10 +32,16 @@ public class LinkToGeneTest {
         assertThat(subject.apply(new DummyProfile("geneId", "geneName")).toString(), endsWith("#information"));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void uriSyntaxExceptionsAreWrapped() throws Exception {
-        String randomIllegalChar = ILLEGAL_CHARS[ThreadLocalRandom.current().nextInt(0, ILLEGAL_CHARS.length)];
-        subject.apply(new DummyProfile(randomIllegalChar, ""));
+    @Test
+    public void uriSyntaxExceptionsAreWrapped() {
+        for(String illegalChar: ILLEGAL_CHARS){
+            try {
+                subject.apply(new DummyProfile(illegalChar, ""));
+                fail("Did not throw:" +illegalChar);
+            } catch (RuntimeException e){
+                //yum
+            }
+        }
     }
 
 }
