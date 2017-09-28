@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
@@ -20,6 +23,8 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -86,7 +91,6 @@ public class MicroarrayProfilesHeatMapIT {
         testNoResultsWithStrictCutoff(accession);
     }
 
-
     private void testDefaultParameters(String accession) throws Exception {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -117,7 +121,7 @@ public class MicroarrayProfilesHeatMapIT {
         DifferentialProfilesList profilesUp = subject.fetch(requestContext);
 
         assertThat(
-                profilesAll.size() == 50 || profilesAll.extractGeneNames().containsAll(profilesUp.extractGeneNames()),
+                profilesAll.size() == 50 || extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesUp)),
                 is(true));
 
         requestPreferences.setRegulation(Regulation.DOWN);
@@ -125,7 +129,7 @@ public class MicroarrayProfilesHeatMapIT {
 
         DifferentialProfilesList profilesDown = subject.fetch(requestContext);
         assertThat(
-                profilesAll.size() == 50 || profilesAll.extractGeneNames().containsAll(profilesDown.extractGeneNames()),
+                profilesAll.size() == 50 || extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesDown)),
                 is(true));
 
         setUp();
@@ -134,7 +138,7 @@ public class MicroarrayProfilesHeatMapIT {
         DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
         assertThat(
                 profilesAll.size() == 50 ||
-                        profilesAll.extractGeneNames().containsAll(profilesQueryFactorValues.extractGeneNames()),
+                        extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesQueryFactorValues)),
                 is(true));
         assertAbout(requestContext.getExperiment(), profilesQueryFactorValues);
     }
@@ -145,21 +149,28 @@ public class MicroarrayProfilesHeatMapIT {
 
         DifferentialProfilesList profiles = subject.fetch(requestContext);
 
-        assertThat(profiles.extractGeneNames().isEmpty(), is(true));
+        assertThat(profiles.isEmpty(), is(true));
     }
 
 
-    private void assertAbout(DifferentialExperiment experiment, DifferentialProfilesList profiles){
+    private void assertAbout(DifferentialExperiment experiment, List<MicroarrayProfile> profiles){
 
-        for(Object o: profiles){
-            MicroarrayProfile profile = (MicroarrayProfile) o;
+        for(MicroarrayProfile profile: profiles){
             assertThat(profile.getSpecificity(experiment.getDataColumnDescriptors()) > 0, is(true));
             assertThat(profile.getId().isEmpty(), is(false));
             assertThat(profile.getName().isEmpty(), is(false));
         }
 
-        assertThat(experiment.getAccession(), profiles.getTotalResultCount(), greaterThan(0));
-        assertThat(profiles.size(), is(profiles.extractGeneNames().size()));
+        assertThat(experiment.getAccession(), profiles.size(), greaterThan(0));
+        assertThat(experiment.getAccession(), profiles.size(), is(profiles.stream().map(p -> Joiner.on("").join(p.identifiers())).collect(Collectors.toSet()).size()));
+    }
+
+    static <T extends Profile> ImmutableList<String> extractGeneNames(List<T> profiles) {
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+        for (T profile : profiles) {
+            builder.add(profile.getName());
+        }
+        return builder.build();
     }
 
 
