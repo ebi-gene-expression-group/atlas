@@ -18,15 +18,10 @@ EXPERIMENTS=${ATLAS_ROOT_URL}/json/experiments
 EXPERIMENTS_RESULTS=$(curl ${EXPERIMENTS})
 len=$(echo "$EXPERIMENTS_RESULTS" | jq .[] | jq length)
 
-for((i=0; i<$len; i++)) {
-    experimentAccession=$(echo "$EXPERIMENTS_RESULTS" | jq -r .aaData["$i"].experimentAccession)
-    experimentType=$(echo "$EXPERIMENTS_RESULTS" | jq -r .aaData["$i"].experimentType)
-
-    if [ "${experimentType}" == "RNASEQ_MRNA_BASELINE" ]
-    then
-        GENE_DISTRIBUTION=${ATLAS_ROOT_URL}/json/experiments/${experimentAccession}/genedistribution
-        curl -s -o /dev/null -w "HTTP status code: %{http_code} Size: %{size_download} Time: %{time_total}\\n" ${GENE_DISTRIBUTION}
-    fi
+curl ${ATLAS_ROOT_URL}/json/experiments | jq -r '.aaData | map(select(.experimentType=="RNASEQ_MRNA_BASELINE")) | map(.experimentAccession)[]' | while read -r experimentAccession; do {
+	GENE_DISTRIBUTION=${ATLAS_ROOT_URL}/json/experiments/${experimentAccession}/genedistribution
+	curl -s -o /dev/null -w "HTTP status code: %{http_code} Size: %{size_download} Time: %{time_total}\\n" ${GENE_DISTRIBUTION}
 }
+done
 
 echo "Finished"
