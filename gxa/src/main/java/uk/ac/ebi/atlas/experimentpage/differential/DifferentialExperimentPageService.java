@@ -16,8 +16,7 @@ import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DifferentialExperimentPageService
         <Expr extends DifferentialExpression, E extends DifferentialExperiment,
