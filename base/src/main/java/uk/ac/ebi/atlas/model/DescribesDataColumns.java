@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
+import java.text.MessageFormat;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,5 +32,10 @@ public abstract class DescribesDataColumns {
         if (obj == null || getClass() != obj.getClass()) {return false;}
         final DescribesDataColumns other = (DescribesDataColumns) obj;
         return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public String toString(){
+        return MessageFormat.format("{0} '{'id={1}'}'", this.getClass().getSimpleName() , id);
     }
 }

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -18,6 +17,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
@@ -65,12 +65,22 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
 
     }
 
-    abstract class ProfileFromTsvLine implements Function<String[], Prof> {
+    abstract class SplitTsvLineThenConstructExpressions implements Function<String[], Prof> {
+
+        /*
+        needs:
+        line id -> biological replicate
+
+         */
+    }
+
+
+    abstract class GoThroughTsvLineAndPickUpExpressionsByIndex implements Function<String[], Prof> {
 
         protected final Map<Integer, DataColumnDescriptor> lookUpIndices;
         private final Predicate<Expr> expressionFilter;
 
-        protected ProfileFromTsvLine(Map<Integer, DataColumnDescriptor> lookUpIndices, Predicate<Expr> expressionFilter) {
+        protected GoThroughTsvLineAndPickUpExpressionsByIndex(Map<Integer, DataColumnDescriptor> lookUpIndices, Predicate<Expr> expressionFilter) {
             this.lookUpIndices = lookUpIndices;
             this.expressionFilter = expressionFilter;
         }
@@ -94,14 +104,14 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
         }
     }
 
-    protected abstract Function<String[], ProfileFromTsvLine> howToReadLine(E experiment, Predicate<Expr> expressionFilter);
+    protected abstract Function<String[], Function<String[], Prof>> howToReadLine(E experiment, Predicate<Expr> expressionFilter);
 
     protected abstract Collection<ObjectInputStream<String[]>> getDataFiles(E experiment, StreamOptions options);
 
-    protected ObjectInputStream<Prof> readNextLineStream(Function<String[], ProfileFromTsvLine> howToReadLine,
+    protected ObjectInputStream<Prof> readNextLineStream(Function<String[], Function<String[], Prof>> howToReadLine,
                                                          Optional<Predicate<String[]>> keepLines,
                                                          final ObjectInputStream<String[]> lines) {
-        final ProfileFromTsvLine readLine = howToReadLine.apply(lines.readNext());
+        final Function<String[], Prof> readLine = howToReadLine.apply(lines.readNext());
 
         if (keepLines.isPresent()) {
             final Predicate<String[]> keep = keepLines.get();

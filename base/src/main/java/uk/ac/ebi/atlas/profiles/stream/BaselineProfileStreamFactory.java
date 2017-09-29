@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -12,6 +11,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.function.Function;
 
 public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends CreatesProfilesFromTsvFiles<AssayGroup, BaselineExpression,
         BaselineExperiment, StreamOptions, BaselineProfile> {
@@ -21,8 +21,8 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
     }
 
     @Override
-    protected Function<String[], ProfileFromTsvLine> howToReadLine(final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
-        return strings -> new ProfileFromTsvLine(rowPositionsToDataColumns(experiment, strings), expressionFilter) {
+    protected Function<String[], Function<String[], BaselineProfile>> howToReadLine(final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
+        return strings -> new GoThroughTsvLineAndPickUpExpressionsByIndex(rowPositionsToDataColumns(experiment, strings), expressionFilter) {
             @Nullable
             @Override
             protected BaselineExpression nextExpression(Integer index, AssayGroup assayGroup, String[] currentLine) {

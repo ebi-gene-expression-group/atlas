@@ -5,6 +5,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +16,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpressionPerBiologicalReplicate;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpressionPerReplicateProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
@@ -55,7 +60,7 @@ public class ProfileStreamKryoLayerTest {
 
     @Before
     public void setUp() throws IOException {
-        dataFileHub = Mockito.spy(new MockDataFileHub());
+        dataFileHub = Mockito.spy(MockDataFileHub.create());
         source = mock(CreatesProfilesFromTsvFiles.class);
         source.dataFileHub = dataFileHub;
 
@@ -128,10 +133,14 @@ public class ProfileStreamKryoLayerTest {
         Profile p3 = new MicroarrayProfile("id_3", "name_3", "design_element");
         p3.add(ContrastTest.get(1).get(0), new MicroarrayExpression(0.05, 1.3,1.4));
 
+        Profile p4 = new BaselineExpressionPerReplicateProfile("id_4","id_4");
+        p4.add(new AssayGroup("g1", "assay") , new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(new BiologicalReplicate("assay"), new BaselineExpression(1.2))));
+
         given(objectInputStream.readNext())
                 .willReturn(p1)
                 .willReturn(p2)
                 .willReturn(p3)
+                .willReturn(p4)
                 .willReturn(null);
 
         when(source.create(experiment, profileStreamOptions,Optional.empty())).thenReturn(objectInputStream);
@@ -141,7 +150,7 @@ public class ProfileStreamKryoLayerTest {
 
         assertThat(
                 ImmutableList.copyOf(new IterableObjectInputStream<>(new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Optional.empty()))),
-                is(ImmutableList.<Object>of(p1, p2, p3))
+                is(ImmutableList.<Object>of(p1, p2, p3, p4))
         );
 
 

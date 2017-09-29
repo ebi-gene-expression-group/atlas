@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
@@ -16,6 +15,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.function.Function;
 
 @Named
 public class RnaSeqProfileStreamFactory extends ProfileStreamKryoLayer<Contrast, DifferentialExpression, DifferentialExperiment, RnaSeqRequestContext, RnaSeqProfile>  {
@@ -35,12 +35,12 @@ public class RnaSeqProfileStreamFactory extends ProfileStreamKryoLayer<Contrast,
         }
 
         @Override
-        protected Function<String[], ProfileFromTsvLine> howToReadLine(final DifferentialExperiment experiment, final Predicate<DifferentialExpression> expressionFilter) {
-            return new Function<String[], ProfileFromTsvLine>() {
+        protected Function<String[], Function<String[], RnaSeqProfile>> howToReadLine(final DifferentialExperiment experiment, final Predicate<DifferentialExpression> expressionFilter) {
+            return new Function<String[], Function<String[], RnaSeqProfile>>() {
                 @Nullable
                 @Override
-                public ProfileFromTsvLine apply(@Nullable String[] strings) {
-                    return new DifferentialProfileFromTsvLine(strings, experiment, expressionFilter) {
+                public Function<String[], RnaSeqProfile> apply(@Nullable String[] strings) {
+                    return new DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(strings, experiment, expressionFilter) {
                         @Nullable
                         @Override
                         protected DifferentialExpression nextExpression(Integer index, Contrast correspondingColumn, String[] currentLine) {

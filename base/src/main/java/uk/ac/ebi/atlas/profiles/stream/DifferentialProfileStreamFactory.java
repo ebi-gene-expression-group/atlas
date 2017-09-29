@@ -44,9 +44,9 @@ public abstract class DifferentialProfileStreamFactory<Expr extends Differential
         return b.build();
     }
 
-    protected abstract class DifferentialProfileFromTsvLine extends ProfileFromTsvLine {
+    protected abstract class DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex extends GoThroughTsvLineAndPickUpExpressionsByIndex {
 
-        protected DifferentialProfileFromTsvLine(String [] header, E experiment, Predicate<Expr> filterExpressions) {
+        protected DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(String [] header, E experiment, Predicate<Expr> filterExpressions) {
             super(lookUpIndices(header, experiment), filterExpressions);
         }
 

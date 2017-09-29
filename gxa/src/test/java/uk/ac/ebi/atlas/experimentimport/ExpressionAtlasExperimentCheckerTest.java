@@ -35,7 +35,7 @@ public class ExpressionAtlasExperimentCheckerTest {
 
     @Before
     public void setUp() throws Exception{
-        dataFileHub = new MockDataFileHub();
+        dataFileHub = MockDataFileHub.create();
         subject = new ExpressionAtlasExperimentChecker(dataFileHub, new ConfigurationTrader(dataFileHub));
     }
 

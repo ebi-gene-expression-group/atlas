@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 // I belong in the test dir, but here I can be shared among different modules without the need of creating a test jar
 public class MockDataFileHub extends DataFileHub {
 
-    public MockDataFileHub() throws IOException {
+    private MockDataFileHub() throws IOException {
         super(Files.createTempDirectory("").toString());
         new File(dataFilesLocation, "admin").mkdir();
         new File(dataFilesLocation, "magetab").mkdir();
@@ -20,6 +20,14 @@ public class MockDataFileHub extends DataFileHub {
         new File(dataFilesLocation, "species").mkdir();
         new File(dataFilesLocation, "serialized_expression").mkdir();
         new File(dataFilesLocation).deleteOnExit();
+    }
+
+    public static MockDataFileHub create(){
+        try {
+            return new MockDataFileHub();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
     private void addTemporaryTsv(String where, Collection<String[]> lines) {

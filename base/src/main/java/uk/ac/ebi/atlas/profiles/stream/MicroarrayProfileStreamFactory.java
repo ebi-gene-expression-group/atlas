@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Function;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.Vector;
+import java.util.function.Function;
 
 @Named
 public class MicroarrayProfileStreamFactory
@@ -36,12 +37,12 @@ public class MicroarrayProfileStreamFactory
         }
 
         @Override
-        protected Function<String[], ProfileFromTsvLine> howToReadLine(final MicroarrayExperiment experiment, final Predicate<MicroarrayExpression> expressionFilter) {
-            return new Function<String[], ProfileFromTsvLine>() {
+        protected Function<String[], Function<String[], MicroarrayProfile>> howToReadLine(final MicroarrayExperiment experiment, final Predicate<MicroarrayExpression> expressionFilter) {
+            return new Function<String[], Function<String[], MicroarrayProfile>>() {
                 @Nullable
                 @Override
-                public ProfileFromTsvLine apply(@Nullable String[] strings) {
-                    return new DifferentialProfileFromTsvLine(strings, experiment, expressionFilter) {
+                public Function<String[], MicroarrayProfile> apply(@Nullable String[] strings) {
+                    return new DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(strings, experiment, expressionFilter) {
                         @Nullable
                         @Override
                         protected MicroarrayExpression nextExpression(Integer index, Contrast correspondingColumn, String[] currentLine) {

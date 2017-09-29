@@ -104,12 +104,7 @@ public class MicroarrayProfileStreamFactoryTest {
 
     public static GeneProfilesList<MicroarrayProfile> loadProfiles(List<Contrast> contrasts, List<String> sequenceLines) {
 
-        MockDataFileHub dataFileHub;
-        try {
-            dataFileHub = new MockDataFileHub();
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
+        MockDataFileHub dataFileHub =  MockDataFileHub.create();
 
         dataFileHub.addTemporaryFile("/magetab/accession/accession_array-design-accession-analytics.tsv", sequenceLines);
         MicroarrayProfileStreamFactory microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);

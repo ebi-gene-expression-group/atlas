@@ -58,7 +58,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
         when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g2")).thenReturn(secondAssayGroup);
 
-        dataFileHub = new MockDataFileHub();
+        dataFileHub = MockDataFileHub.create();
 
         subject = new RnaSeqBaselineProfileStreamFactory.Impl(dataFileHub);
     }
@@ -160,16 +160,17 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
     @Test
     public void canProvideQuartiles(){
-        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLine(twoAssayGroupBaselineExperiment, Predicates.alwaysTrue())
-                .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()});
-
         assertThat(
-                profileFromTsvLine.apply(new String[]{"id", "name", "1.0", "2.0"}).getExpression(assayGroup),
+                subject.howToReadLine(twoAssayGroupBaselineExperiment, Predicates.alwaysTrue())
+                        .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()})
+                        .apply(new String[]{"id", "name", "1.0", "2.0"}).getExpression(assayGroup),
                 Matchers.is(new BaselineExpression(1.0))
         );
 
         assertThat(
-                profileFromTsvLine.apply(new String[]{"id", "name", "0.1,0.2,0.3,0.4,0.5", "2.0"}).getExpression(assayGroup).toJson().get("quartiles").getAsJsonObject().size(),
+                subject.howToReadLine(twoAssayGroupBaselineExperiment, Predicates.alwaysTrue())
+                        .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()})
+                        .apply(new String[]{"id", "name", "0.1,0.2,0.3,0.4,0.5", "2.0"}).getExpression(assayGroup).toJson().get("quartiles").getAsJsonObject().size(),
                 is(5));
     }
 
