@@ -130,10 +130,10 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(getAnyExperimentWithAdminAccess(accession)));
                 break;
             case DELETE:
+                expressionSerializerService.removeKryoFile(getAnyExperimentWithAdminAccess(accession));
                 experimentTrader.removeExperimentFromCache(accession);
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 experimentCrud.deleteExperiment(accession);
-                expressionSerializerService.removeKryoFile(getAnyExperimentWithAdminAccess(accession));
                 break;
             case COEXPRESSION_UPDATE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
