@@ -108,14 +108,14 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         return StringArrayUtil.substringBefore(StringArrayUtil.filterBySubstring(header, "WithInSampleAbundance"), ".");
     }
 
-    private void biologicalReplicateIdsInHeaderMatchConfigurationXml(String[] biologicalRepliateIds, String experimentAccession) {
+    private void biologicalReplicateIdsInHeaderMatchConfigurationXml(String[] biologicalReplicateIds, String experimentAccession) {
         Set<String> idsInConfiguration=configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
                 .flatMap(a -> a.biologicalReplicatesForThisDataColumn().stream())
                 .map(DescribesDataColumns::getId)
                 .collect(Collectors.toSet());
         Preconditions.checkState(
-                ImmutableSet.copyOf(biologicalRepliateIds).equals(idsInConfiguration),
-                MessageFormat.format("Biological replicate ids in data file (#:{1}) not matching ids in {0}-configuration.xml (#:{2})", experimentAccession, biologicalRepliateIds.length, idsInConfiguration.size()));
+                ImmutableSet.copyOf(biologicalReplicateIds).equals(idsInConfiguration),
+                MessageFormat.format("Biological replicate ids in data file (#:{1}) not matching ids in {0}-configuration.xml (#:{2})", experimentAccession, biologicalReplicateIds.length, idsInConfiguration.size()));
     }
 
     private void assayGroupIdsInHeaderMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
