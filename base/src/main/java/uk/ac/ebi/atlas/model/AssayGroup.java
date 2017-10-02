@@ -16,7 +16,7 @@ public class AssayGroup extends DescribesDataColumns {
 
     //convenience constructor for tests
     public AssayGroup(String id, String... assayAccessions) {
-        this(id, Arrays.asList(assayAccessions).stream().map(a -> new BiologicalReplicate(a)).collect(Collectors.toSet()));
+        this(id, Arrays.stream(assayAccessions).map(BiologicalReplicate::new).collect(Collectors.toSet()));
     }
 
     public AssayGroup(String id, Set<BiologicalReplicate> biologicalReplicates) {
@@ -47,7 +47,8 @@ public class AssayGroup extends DescribesDataColumns {
 
     @Override
     public Set<String> assaysAnalyzedForThisDataColumn() {
-        return biologicalReplicates.stream().flatMap(b -> b.assaysAnalyzedForThisDataColumn().stream()).collect(Collectors.toSet());
+        return biologicalReplicates.stream()
+                .flatMap(b -> b.assaysAnalyzedForThisDataColumn().stream()).collect(Collectors.toSet());
     }
 
     public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
