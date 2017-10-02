@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
 # @author: barrera
 # @date:   27 Sept 2017
 
@@ -20,8 +22,15 @@ len=$(echo "$EXPERIMENTS_RESULTS" | jq .[] | jq length)
 
 curl ${ATLAS_ROOT_URL}/json/experiments | jq -r '.aaData | map(select(.experimentType=="RNASEQ_MRNA_BASELINE")) | map(.experimentAccession)[]' | while read -r experimentAccession; do {
 	GENE_DISTRIBUTION=${ATLAS_ROOT_URL}/json/experiments/${experimentAccession}/genedistribution
-	curl -s -o /dev/null -w "HTTP status code: %{http_code} Size: %{size_download} Time: %{time_total}\\n" ${GENE_DISTRIBUTION}
+
+    STATUS=$(curl -s -S -o /dev/null -w '%{http_code}' ${GENE_DISTRIBUTION})
+    if [ $STATUS -eq 200 ]; then
+        echo "Finished"
+        break
+    else
+        echo "Got $STATUS (error while processing" ${experimentAccession} ")"
+    fi
+  sleep 10
+
 }
 done
-
-echo "Finished"
