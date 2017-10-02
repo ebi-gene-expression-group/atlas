@@ -28,7 +28,11 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+
 
 public class ExperimentConfigurationTest {
 
@@ -176,15 +180,18 @@ public class ExperimentConfigurationTest {
         assertThat(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn(), contains("A"));
         assertThat(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn(), contains("A", "B"));
         Contrast otherContrast = contrasts.get(1);
-        assertThat(otherContrast.getId(), not(is(contrast.getId())));
+        assertThat(otherContrast.getId(), is(not(contrast.getId())));
     }
 
 
 
     @Test
     public void testGetExperimentType() {
-        assertThat(testConfiguration(MICROARRAY_CONFIGURATION_XML).getExperimentType(), is(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
-        assertThat(testConfiguration("<configuration experimentType=\"rnaseq_mrna_baseline\">\n" +
-                 "</configuration>").getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
+        assertThat(
+                testConfiguration(MICROARRAY_CONFIGURATION_XML).getExperimentType(),
+                is(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
+        assertThat(testConfiguration(
+                "<configuration experimentType=\"rnaseq_mrna_baseline\"></configuration>").getExperimentType(),
+                is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 }
