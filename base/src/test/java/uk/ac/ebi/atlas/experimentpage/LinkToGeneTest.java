@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.experimentpage;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.Profile;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -23,7 +21,7 @@ public class LinkToGeneTest {
     }
 
     // Not comprehensive, if gene IDs need to use any of the following chars we need to use a URLEncoder
-    String[] ILLEGAL_CHARS = {"%", "|", "<", ">", "`", "#", "\"", "\\", "[", "]", "{", "}"};
+    String[] ILLEGAL_CHARS = {"%", "^", "|", "<", ">", "`", "#", "\"", "\\", "[", "]", "{", "}"};
 
     LinkToGene<DummyProfile> subject = new LinkToGene<>();
 
@@ -34,11 +32,11 @@ public class LinkToGeneTest {
 
     @Test
     public void uriSyntaxExceptionsAreWrapped() {
-        for(String illegalChar: ILLEGAL_CHARS){
+        for (String illegalChar: ILLEGAL_CHARS) {
             try {
                 subject.apply(new DummyProfile(illegalChar, ""));
-                fail("Did not throw:" +illegalChar);
-            } catch (RuntimeException e){
+                fail("Did not throw:" + illegalChar);
+            } catch (RuntimeException e) {
                 //yum
             }
         }
