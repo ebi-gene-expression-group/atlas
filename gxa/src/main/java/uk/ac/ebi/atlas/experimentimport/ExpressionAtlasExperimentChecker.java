@@ -84,13 +84,17 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
 
         AtlasResource<ObjectInputStream<String[]>> transcripts = experimentFiles.transcriptsTpms;
         if(transcripts.exists()){
-            biologicalReplicateIdsInHeaderMatchConfigurationXml(rnaSeqIdsFromHeader(transcripts.get().readNext()), experimentAccession);
+            biologicalReplicateIdsInHeaderMatchConfigurationXml(transcriptIdsFromHeader(transcripts.get().readNext()), experimentAccession);
         }
 
     }
 
     private String[] rnaSeqIdsFromHeader(String[] header) {
         return ArrayUtils.subarray(header, 2, header.length);
+    }
+
+    private String[] transcriptIdsFromHeader(String[] header) {
+        return ArrayUtils.subarray(header, 3, header.length);
     }
 
     void checkProteomicsBaselineFiles(String experimentAccession) {
