@@ -3,12 +3,10 @@ package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 import au.com.bytecode.opencsv.CSVWriter;
 import uk.ac.ebi.atlas.experimentpage.ExternallyAvailableContentController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -21,13 +19,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class ExperimentDesignFile<DataColumnDescriptor extends DescribesDataColumns, E extends Experiment<DataColumnDescriptor>> extends CanStreamSupplier<E> {
+public abstract class ExperimentDesignFile<E extends Experiment<? extends DescribesDataColumns>>
+        extends CanStreamSupplier<E> {
 
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
@@ -46,14 +44,16 @@ public abstract class ExperimentDesignFile<DataColumnDescriptor extends Describe
     }
 
     public static String makeUrl(String experimentAccession, String accessKey){
-        return ExternallyAvailableContentController.streamResourcesUrl(experimentAccession, accessKey, "experiment-design");
+        return ExternallyAvailableContentController.streamResourcesUrl(
+                experimentAccession, accessKey, "experiment-design");
     }
 
     public Collection<ExternallyAvailableContent> get(final E experiment){
         return Collections.singleton(
                 new ExternallyAvailableContent(
                         makeUri("experiment-design"),
-                        ExternallyAvailableContent.Description.create("icon-experiment-design", "Experiment Design (tsv)"),
+                        ExternallyAvailableContent.Description.create(
+                                "icon-experiment-design", "Experiment Design (tsv)"),
                         streamFile(experiment.getAccession() + "-experiment-design.tsv", new Function<Writer, Void>() {
                             @Nullable
                             @Override
@@ -66,11 +66,15 @@ public abstract class ExperimentDesignFile<DataColumnDescriptor extends Describe
         );
     }
 
-    protected void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer){
-        List<String[]> newCsvLines = getLines(analysedRowsAccessions, dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get().readAll());
+    private void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer){
+        List<String[]> newCsvLines =
+                getLines(
+                        analysedRowsAccessions,
+                        dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get().readAll());
 
         try {
-            CSVWriter csvWriter = new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER);
+            CSVWriter csvWriter =
+                    new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER);
             csvWriter.writeAll(newCsvLines);
 
             csvWriter.flush();
@@ -105,14 +109,14 @@ public abstract class ExperimentDesignFile<DataColumnDescriptor extends Describe
     }
 
 
-    protected Set<String> getAnalysedRowsAccessions(E experiment){
-        return experiment.getDataColumnDescriptors().stream().flatMap(c -> c.assaysAnalyzedForThisDataColumn().stream()).collect(Collectors.toSet());
+    private Set<String> getAnalysedRowsAccessions(E experiment){
+        return experiment.getDataColumnDescriptors().stream()
+                .flatMap(c -> c.assaysAnalyzedForThisDataColumn().stream())
+                .collect(Collectors.toSet());
     }
 
-
     @Named
-    public static class Baseline extends ExperimentDesignFile<AssayGroup, BaselineExperiment> {
-
+    public static class Baseline extends ExperimentDesignFile<BaselineExperiment> {
         @Inject
         public Baseline(DataFileHub dataFileHub){
             super(dataFileHub);
@@ -120,8 +124,7 @@ public abstract class ExperimentDesignFile<DataColumnDescriptor extends Describe
     }
 
     @Named
-    public static class RnaSeq extends ExperimentDesignFile<Contrast, DifferentialExperiment>{
-
+    public static class RnaSeq extends ExperimentDesignFile<DifferentialExperiment>{
         @Inject
         public RnaSeq(DataFileHub dataFileHub) {
             super(dataFileHub);
@@ -129,11 +132,11 @@ public abstract class ExperimentDesignFile<DataColumnDescriptor extends Describe
     }
 
     @Named
-    public static class Microarray extends ExperimentDesignFile<Contrast, MicroarrayExperiment>{
-
+    public static class Microarray extends ExperimentDesignFile<MicroarrayExperiment>{
         @Inject
         public Microarray(DataFileHub dataFileHub) {
             super(dataFileHub);
         }
     }
+
 }
