@@ -22,10 +22,10 @@ public class MockDataFileHub extends DataFileHub {
         new File(dataFilesLocation).deleteOnExit();
     }
 
-    public static MockDataFileHub create(){
+    public static MockDataFileHub create() {
         try {
             return new MockDataFileHub();
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

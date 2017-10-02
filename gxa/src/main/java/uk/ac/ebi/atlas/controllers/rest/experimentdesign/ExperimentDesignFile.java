@@ -27,28 +27,52 @@ import java.util.stream.Collectors;
 public abstract class ExperimentDesignFile<E extends Experiment<? extends DescribesDataColumns>>
         extends CanStreamSupplier<E> {
 
+    private final DataFileHub dataFileHub;
+
+    private ExperimentDesignFile(DataFileHub dataFileHub) {
+        this.dataFileHub = dataFileHub;
+    }
+
+    @Named
+    public static class Baseline extends ExperimentDesignFile<BaselineExperiment> {
+        @Inject
+        public Baseline(DataFileHub dataFileHub){
+            super(dataFileHub);
+        }
+    }
+
+    @Named
+    public static class RnaSeq extends ExperimentDesignFile<DifferentialExperiment> {
+        @Inject
+        public RnaSeq(DataFileHub dataFileHub) {
+            super(dataFileHub);
+        }
+    }
+
+    @Named
+    public static class Microarray extends ExperimentDesignFile<MicroarrayExperiment> {
+        @Inject
+        public Microarray(DataFileHub dataFileHub) {
+            super(dataFileHub);
+        }
+    }
+
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
         return ExternallyAvailableContent.ContentType.DATA;
     }
-
-    private final DataFileHub dataFileHub;
-    public ExperimentDesignFile(DataFileHub dataFileHub){
-        this.dataFileHub = dataFileHub;
-    }
-
 
     @Override
     protected Collection<String> reservedUris(){
         return Collections.singleton("experiment-design");
     }
 
-    public static String makeUrl(String experimentAccession, String accessKey){
+    public static String makeUrl(String experimentAccession, String accessKey) {
         return ExternallyAvailableContentController.streamResourcesUrl(
                 experimentAccession, accessKey, "experiment-design");
     }
 
-    public Collection<ExternallyAvailableContent> get(final E experiment){
+    public Collection<ExternallyAvailableContent> get(final E experiment) {
         return Collections.singleton(
                 new ExternallyAvailableContent(
                         makeUri("experiment-design"),
@@ -66,7 +90,7 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
         );
     }
 
-    private void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer){
+    private void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer) {
         List<String[]> newCsvLines =
                 getLines(
                         analysedRowsAccessions,
@@ -79,12 +103,12 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
 
             csvWriter.flush();
             csvWriter.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    List<String[]> getLines(Set<String> analysedRowsAccessions, List<String[]> csvLines){
+    private List<String[]> getLines(Set<String> analysedRowsAccessions, List<String[]> csvLines) {
 
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
@@ -109,34 +133,10 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
     }
 
 
-    private Set<String> getAnalysedRowsAccessions(E experiment){
+    private Set<String> getAnalysedRowsAccessions(E experiment) {
         return experiment.getDataColumnDescriptors().stream()
                 .flatMap(c -> c.assaysAnalyzedForThisDataColumn().stream())
                 .collect(Collectors.toSet());
-    }
-
-    @Named
-    public static class Baseline extends ExperimentDesignFile<BaselineExperiment> {
-        @Inject
-        public Baseline(DataFileHub dataFileHub){
-            super(dataFileHub);
-        }
-    }
-
-    @Named
-    public static class RnaSeq extends ExperimentDesignFile<DifferentialExperiment>{
-        @Inject
-        public RnaSeq(DataFileHub dataFileHub) {
-            super(dataFileHub);
-        }
-    }
-
-    @Named
-    public static class Microarray extends ExperimentDesignFile<MicroarrayExperiment>{
-        @Inject
-        public Microarray(DataFileHub dataFileHub) {
-            super(dataFileHub);
-        }
     }
 
 }
