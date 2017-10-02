@@ -16,16 +16,15 @@ import java.util.HashSet;
 
 public class AtlasKryo {
 
-    private AtlasKryo(){
+    private AtlasKryo() {
     }
 
-    public static Kryo get(){
+    public static Kryo get() {
         Kryo kryo = new Kryo();
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
 
-        kryo.register(BaselineExpression.class,
-                new Serializer<BaselineExpression>() {
+        kryo.register(BaselineExpression.class, new Serializer<BaselineExpression>() {
             @Override
             public void write(Kryo kryo, Output output, BaselineExpression baselineExpression) {
                 double[] quartiles = baselineExpression.getQuartiles();
@@ -54,7 +53,6 @@ public class AtlasKryo {
         });
 
         kryo.register(DifferentialExpression.class, new Serializer<DifferentialExpression>() {
-
             @Override
             public void write(Kryo kryo, Output output, DifferentialExpression differentialExpression) {
                 output.writeDouble(differentialExpression.getPValue());
@@ -67,8 +65,7 @@ public class AtlasKryo {
             }
         });
 
-        kryo.register(MicroarrayExpression.class, new Serializer<MicroarrayExpression>(){
-
+        kryo.register(MicroarrayExpression.class, new Serializer<MicroarrayExpression>() {
             @Override
             public void write(Kryo kryo, Output output, MicroarrayExpression microarrayExpression) {
                 output.writeDouble(microarrayExpression.getPValue());
@@ -82,33 +79,29 @@ public class AtlasKryo {
             }
         });
 
-        kryo.register(BaselineExpressionPerBiologicalReplicate.class, new Serializer<BaselineExpressionPerBiologicalReplicate>(){
-
+        kryo.register(BaselineExpressionPerBiologicalReplicate.class, new Serializer<BaselineExpressionPerBiologicalReplicate>() {
             @Override
-            public void write(Kryo kryo, Output output, BaselineExpressionPerBiologicalReplicate baselineExpressionPerBiologicalReplicate) {
+            public void write(
+                    Kryo kryo, Output output,
+                    BaselineExpressionPerBiologicalReplicate baselineExpressionPerBiologicalReplicate) {
                 kryo.writeObject(output, new HashMap<>(baselineExpressionPerBiologicalReplicate.data));
             }
 
             @Override
-            public BaselineExpressionPerBiologicalReplicate read(Kryo kryo, Input input, Class<BaselineExpressionPerBiologicalReplicate> aClass) {
-                return new BaselineExpressionPerBiologicalReplicate(
-                        kryo.readObject(input, HashMap.class)
-                );
+            public BaselineExpressionPerBiologicalReplicate read(
+                    Kryo kryo, Input input, Class<BaselineExpressionPerBiologicalReplicate> aClass) {
+                return new BaselineExpressionPerBiologicalReplicate(kryo.readObject(input, HashMap.class));
             }
         });
 
-        /*
-        not currently used since profile stores Strings for IDs:
-        AssayGroup.class
-        Contrast.class
-         */
+        // not currently used since profile stores Strings for IDs: AssayGroup.class, Contrast.class
         kryo.register(BiologicalReplicate.class, new Serializer<BiologicalReplicate>() {
             @Override
             public void write(Kryo kryo, Output output, BiologicalReplicate biologicalReplicate) {
                 output.writeString(biologicalReplicate.getId());
                 boolean b = biologicalReplicate.assaysAnalyzedForThisDataColumn().size() > 1;
                 output.writeBoolean(b);
-                if(b){
+                if (b) {
                     kryo.writeObject(output, Sets.newHashSet(biologicalReplicate.assaysAnalyzedForThisDataColumn()));
                 }
             }
@@ -117,7 +110,7 @@ public class AtlasKryo {
             public BiologicalReplicate read(Kryo kryo, Input input, Class<BiologicalReplicate> aClass) {
                 String id = input.readString();
                 boolean b = input.readBoolean();
-                if(b){
+                if (b) {
                     return new BiologicalReplicate(id, kryo.readObject(input, HashSet.class));
                 } else {
                     return new BiologicalReplicate(id);
