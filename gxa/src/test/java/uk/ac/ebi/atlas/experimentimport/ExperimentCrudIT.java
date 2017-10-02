@@ -76,9 +76,11 @@ public class ExperimentCrudIT {
 
     }
 
+    public static final String accession_rnaseq_baseline = "TEST-RNASEQ-BASELINE";
+
     @After
     public void tryCleanUp() {
-        tryDelete("TEST-RNASEQ-BASELINE");
+        tryDelete(accession_rnaseq_baseline);
         tryDelete("TEST-RNASEQ-DIFFERENTIAL");
         tryDelete("TEST-MICROARRAY-1COLOUR-MRNA-DIFFERENTIAL");
         tryDelete("TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL");
@@ -104,8 +106,8 @@ public class ExperimentCrudIT {
 
     @Test
     public void importReloadDeleteRnaSeqBaselineExperiment() throws IOException, SolrServerException {
-        testImportNewImportExistingAndDelete("TEST-RNASEQ-BASELINE", ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentCheckerSpy, times(2)).checkRnaSeqBaselineFiles("TEST-RNASEQ-BASELINE");
+        testImportNewImportExistingAndDelete(accession_rnaseq_baseline, ExperimentType.RNASEQ_MRNA_BASELINE);
+        verify(experimentCheckerSpy, times(2)).checkRnaSeqBaselineFiles(accession_rnaseq_baseline);
     }
 
     @Test
