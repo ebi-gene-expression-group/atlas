@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import com.google.common.base.Predicate;
 import org.apache.solr.common.SolrInputDocument;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
@@ -9,6 +8,7 @@ import uk.ac.ebi.atlas.profiles.baseline.IsBaselineExpressionAboveCutoffAndForFi
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 
 import javax.inject.Named;
+import java.util.function.Predicate;
 
 @Named
 public class AnalyticsIndexDocumentValidator {
@@ -27,7 +27,7 @@ public class AnalyticsIndexDocumentValidator {
                         .setCutoff(PROTEOMICS_BASELINE_EXPRESSION_CUTOFF);
 
     private final Predicate<DifferentialExpression> differentialExpressionAboveDefaultCutoff =
-            new IsDifferentialExpressionAboveCutOff()
+            new IsDifferentialExpressionAboveCutOff<>()
                         .setFoldChangeCutOff(DIFFERENTIAL_FOLD_CHANGE_CUTOFF)
                         .setPValueCutoff(DIFFERENTIAL_P_VALUE_CUTOFF);
 
@@ -35,15 +35,15 @@ public class AnalyticsIndexDocumentValidator {
         ExperimentType experimentType = ExperimentType.valueOf((String) analyticsInputDocument.getFieldValue("experiment_type"));
 
         return (experimentType.isRnaSeqBaseline() &&
-                rnaSeqBaselineExpressionAboveDefaultCutoff.apply(new BaselineExpression(
+                rnaSeqBaselineExpressionAboveDefaultCutoff.test(new BaselineExpression(
                         (Double) analyticsInputDocument.getFieldValue("expression_level"))) ||
 
                 experimentType.isProteomicsBaseline() &&
-                proteomicsBaselineExpressionAboveDefaultCutoff.apply(new BaselineExpression(
+                proteomicsBaselineExpressionAboveDefaultCutoff.test(new BaselineExpression(
                         (Double) analyticsInputDocument.getFieldValue("expression_level"))) ||
 
                 experimentType.isDifferential() &&
-                differentialExpressionAboveDefaultCutoff.apply(new DifferentialExpression(
+                differentialExpressionAboveDefaultCutoff.test(new DifferentialExpression(
                         (Double) analyticsInputDocument.getFieldValue("p_value"),
                         (Double) analyticsInputDocument.getFieldValue("fold_change")
                 )));
