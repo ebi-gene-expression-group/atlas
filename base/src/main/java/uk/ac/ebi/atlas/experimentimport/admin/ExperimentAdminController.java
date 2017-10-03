@@ -96,11 +96,9 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
     }
 
     private JsonElement errorMessage(String accessionParameter, Exception e){
-        JsonArray result = new JsonArray();
-        JsonObject messageObject = new JsonObject();
-        messageObject.addProperty("accession", accessionParameter);
-        messageObject.addProperty("error", e.getMessage()!=null? e.getMessage() : e.toString());
-        result.add(messageObject);
+        JsonObject result = new JsonObject();
+        result.addProperty("accession", accessionParameter);
+        result.addProperty("error", e.getMessage()!=null? e.getMessage() : e.toString());
         return result;
     }
 

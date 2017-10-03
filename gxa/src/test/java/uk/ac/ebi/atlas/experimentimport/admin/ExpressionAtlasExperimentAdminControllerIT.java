@@ -91,7 +91,7 @@ public class ExpressionAtlasExperimentAdminControllerIT {
     }
 
     void isError(String messageAboutWhatIsExpected, String result){
-        isError(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonArray().get(0).getAsJsonObject());
+        isError(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
     }
 
     void isOk(String message, JsonObject object){
