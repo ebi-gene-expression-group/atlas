@@ -8,7 +8,6 @@ import org.apache.commons.math.stat.descriptive.rank.Percentile;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.Expression;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -16,18 +15,12 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
 
     public final Map<BiologicalReplicate, BaselineExpression> data;
 
-    public BaselineExpressionPerBiologicalReplicate(Map<BiologicalReplicate, BaselineExpression> data){
+    public BaselineExpressionPerBiologicalReplicate(Map<BiologicalReplicate, BaselineExpression> data) {
         this.data = data;
     }
 
-    double[] expressionValuesSorted(){
-        double[] result = new double[data.size()];
-        int i = 0;
-        for(BaselineExpression baselineExpression : data.values()){
-            result[i++]=baselineExpression.getLevel();
-        }
-        Arrays.sort(result);
-        return result;
+    private double[] expressionValuesSorted() {
+        return data.values().stream().mapToDouble(BaselineExpression::getLevel).sorted().toArray();
     }
 
     @Override
@@ -49,21 +42,19 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
         stats.addProperty("lower_quartile", new Percentile(0.25).evaluate(expressionValuesSorted));
         stats.addProperty("median", new Median().evaluate(expressionValuesSorted));
         stats.addProperty("upper_quartile", new Percentile(0.75).evaluate(expressionValuesSorted));
-        stats.addProperty("max", expressionValuesSorted[expressionValuesSorted.length-1]);
+        stats.addProperty("max", expressionValuesSorted[expressionValuesSorted.length - 1]);
         result.add("stats", stats);
 
         JsonArray values = new JsonArray();
-        data.entrySet().stream().map(e-> {
+        data.entrySet().stream().map(e -> {
             JsonObject o = new JsonObject();
             o.addProperty("id", e.getKey().getId());
             JsonArray assays = new JsonArray();
-            e.getKey().assaysAnalyzedForThisDataColumn().stream().forEach(assay -> assays.add(assay));
+            e.getKey().assaysAnalyzedForThisDataColumn().forEach(assays::add);
             o.add("assays", assays);
             o.addProperty("value", e.getValue().getLevel());
             return o;
-        }).forEach(o -> {
-            values.add(o);
-        });
+        }).forEach(values::add);
         result.add("values", values);
 
         return result;
@@ -84,8 +75,6 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
 
     @Override
     public String toString() {
-        return "BaselineExpressionPerBiologicalReplicate{" +
-                "data=" + data +
-                '}';
+        return "BaselineExpressionPerBiologicalReplicate{data=" + data + "}";
     }
 }
