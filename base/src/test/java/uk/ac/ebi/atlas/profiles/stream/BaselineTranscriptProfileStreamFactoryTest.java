@@ -20,6 +20,7 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
     }
 
 
-    void testCase(List<String[]> dataLines, Optional<Collection<String>> getGeneIds, List<BaselineExpressionPerReplicateProfile> expected) {
+    void testCase(List<String[]> dataLines, Collection<String> getGeneIds, List<BaselineExpressionPerReplicateProfile> expected) {
         dataFileHub.addTranscriptsTpmsExpressionFile(experiment.getAccession(), dataLines);
         assertThat(
                 ImmutableList.copyOf(
@@ -81,14 +82,14 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                 ImmutableList.of(
                         header
                 ),
-                Optional.empty(),
+                Collections.emptySet(),
                 ImmutableList.of()
         );
         testCase(
                 ImmutableList.of(
                         header
                 ),
-                Optional.of(ImmutableList.of("id_1")),
+                ImmutableList.of("id_1"),
                 ImmutableList.of()
         );
         testCase(
@@ -96,7 +97,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "NA", "NA"}
                 ),
-                Optional.of(ImmutableList.of("different_id")),
+                ImmutableList.of("different_id"),
                 ImmutableList.of()
         );
     }
@@ -108,7 +109,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "NA", "NA", "NA"}
                 ),
-                Optional.of(ImmutableList.of("id_1")),
+                ImmutableList.of("id_1"),
                 ImmutableList.of(profile("transcript_1_1", null, null))
         );
         testCase(
@@ -116,7 +117,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "NA", "NA"}
                 ),
-                Optional.of(ImmutableList.of("id_1")),
+                ImmutableList.of("id_1"),
                 ImmutableList.of(profile("transcript_1_1", new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
                         assay_1, new BaselineExpression(1.0)
                 )), null))
@@ -126,7 +127,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "NA", "NA"}
                 ),
-                Optional.empty(),
+                Collections.emptySet(),
                 ImmutableList.of(profile("transcript_1_1", new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
                         assay_1, new BaselineExpression(1.0)
                 )), null))
@@ -136,7 +137,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "2.0", "NA"}
                 ),
-                Optional.of(ImmutableList.of("id_1")),
+                ImmutableList.of("id_1"),
                 ImmutableList.of(profile("transcript_1_1", new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
                         assay_1, new BaselineExpression(1.0)
                 )), new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
@@ -148,7 +149,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "2.0", "NA"}
                 ),
-                Optional.empty(),
+                Collections.emptySet(),
                 ImmutableList.of(profile("transcript_1_1", new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
                         assay_1, new BaselineExpression(1.0)
                 )), new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
@@ -160,7 +161,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "2.0", "3.0"}
                 ),
-                Optional.of(ImmutableList.of("id_1")),
+                ImmutableList.of("id_1"),
                 ImmutableList.of(profile("transcript_1_1", new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
                         assay_1, new BaselineExpression(1.0)
                 )), new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
@@ -173,7 +174,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         header,
                         new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "2.0", "3.0"}
                 ),
-                Optional.empty(),
+                Collections.emptySet(),
                 ImmutableList.of(profile("transcript_1_1", new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
                         assay_1, new BaselineExpression(1.0)
                 )), new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
@@ -192,7 +193,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         new String[]{"id_1", "name_1", "transcript_1_2", "4.0", "NA", "NA"},
                         new String[]{"id_2", "name_2", "transcript_2_1", "5.0", "NA", "NA"}
                 ),
-                Optional.of(ImmutableList.of("id_1")),
+                ImmutableList.of("id_1"),
                 ImmutableList.of(
                         profile("transcript_1_1", new BaselineExpressionPerBiologicalReplicate(ImmutableMap.of(
                                 assay_1, new BaselineExpression(1.0)
@@ -233,7 +234,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                                 new IterableObjectInputStream<>(subject.create(
                                         experiment,
                                         requestContext,
-                                        Optional.of(ImmutableSet.of(geneId))
+                                        ImmutableSet.of(geneId)
                                 ))
                         )),
                         new LinkToGene<>(),

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Predicate;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
@@ -15,9 +14,9 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Vector;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
@@ -35,27 +34,25 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
     /*
     Assumption: all Atlas data files have ids in the first column.
     If this is no longer true or you have other means of filtering unparsed lines,
-    push Optional<Predicate<String[]>> higher into the interface.
+    push Predicate<String[]> higher into the interface.
      */
-    protected final Optional<Predicate<String[]>> keepLine(Optional<Collection<String>> keepGeneIds) {
-        return keepGeneIds.map(geneIds -> line -> geneIds.contains(line[0]));
+    protected final Predicate<String[]> keepLine(Collection<String> keepGeneIds) {
+        return keepGeneIds.isEmpty() ?
+                x -> true :
+                line -> keepGeneIds.contains(line[0]);
     }
 
-
-    protected final Pair<Optional<Predicate<String[]>>, Predicate<Expr>> filter(E experiment, StreamOptions options, Optional<Collection<String>> keepGeneIds) {
+    protected final Pair<Predicate<String[]>, Predicate<Expr>> filter(E experiment, StreamOptions options, Collection<String>keepGeneIds) {
         return Pair.of(keepLine(keepGeneIds), filterExpressions(experiment, options));
     }
 
-    public ObjectInputStream<Prof> create(E experiment, StreamOptions options, Optional<Collection<String>> keepGeneIds) {
+    public ObjectInputStream<Prof> create(E experiment, StreamOptions options, Collection<String> keepGeneIds) {
 
         Vector<ObjectInputStream<Prof>> outputs =
                 getDataFiles(experiment, options)
                         .stream()
                         .map(dataFile -> readNextLineStream(
-                                howToReadLine(
-                                        experiment,
-                                        filterExpressions(experiment, options)
-                                ),
+                                howToReadLine(experiment, filterExpressions(experiment, options)),
                                 keepLine(keepGeneIds),
                                 dataFile
                         ))
@@ -65,18 +62,7 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
 
     }
 
-    abstract class SplitTsvLineThenConstructExpressions implements Function<String[], Prof> {
-
-        /*
-        needs:
-        line id -> biological replicate
-
-         */
-    }
-
-
     abstract class GoThroughTsvLineAndPickUpExpressionsByIndex implements Function<String[], Prof> {
-
         protected final Map<Integer, DataColumnDescriptor> lookUpIndices;
         private final Predicate<Expr> expressionFilter;
 
@@ -96,7 +82,7 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
             for (Integer index : lookUpIndices.keySet()) {
                 DataColumnDescriptor correspondingColumn = lookUpIndices.get(index);
                 Expr nextExpression = nextExpression(index, correspondingColumn, currentLine);
-                if (nextExpression != null && nextExpression.getLevel() != 0.0 && expressionFilter.apply(nextExpression)) {
+                if (nextExpression != null && nextExpression.getLevel() != 0.0 && expressionFilter.test(nextExpression)) {
                     profile.add(correspondingColumn, nextExpression);
                 }
             }
@@ -108,38 +94,24 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
 
     protected abstract Collection<ObjectInputStream<String[]>> getDataFiles(E experiment, StreamOptions options);
 
-    protected ObjectInputStream<Prof> readNextLineStream(Function<String[], Function<String[], Prof>> howToReadLine,
-                                                         Optional<Predicate<String[]>> keepLines,
+    private ObjectInputStream<Prof> readNextLineStream(Function<String[], Function<String[], Prof>> howToReadLine,
+                                                         final Predicate<String[]> keepLines,
                                                          final ObjectInputStream<String[]> lines) {
+
         final Function<String[], Prof> readLine = howToReadLine.apply(lines.readNext());
+        return new ObjectInputStream<Prof>() {
+            @Override
+            public Prof readNext() {
+                String[] next = lines.readNext();
+                return next == null ? null : keepLines.test(next) ? readLine.apply(next): readNext();
+            }
 
-        if (keepLines.isPresent()) {
-            final Predicate<String[]> keep = keepLines.get();
-            return new ObjectInputStream<Prof>() {
-                @Override
-                public Prof readNext() {
-                    String[] next = lines.readNext();
-                    return next == null ? null : keep.apply(next) ? readLine.apply(next): readNext();
-                }
+            @Override
+            public void close() throws IOException {
+                lines.close();
+            }
+        };
 
-                @Override
-                public void close() throws IOException {
-                    lines.close();
-                }
-            };
-        } else {
-            return new ObjectInputStream<Prof>() {
-                @Override
-                public Prof readNext() {
-                    String[] next = lines.readNext();
-                    return next == null ? null : readLine.apply(next);
-                }
-
-                @Override
-                public void close() throws IOException {
-                    lines.close();
-                }
-            };
-        }
     }
+
 }

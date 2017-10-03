@@ -41,12 +41,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs extends ExperimentPageRequestPreferences> extends CanStreamSupplier<E> {
-
 
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
@@ -89,11 +91,11 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             extends ExperimentDownloadFileSupplier<BaselineExperiment, Prefs> {
 
 
-        private final BaselineProfilesWriterFactory baselineProfilesWriterFactory;
+        private final BaselineProfilesWriterFactory<Unit> baselineProfilesWriterFactory;
         private final SolrQueryService solrQueryService;
         private final ProfileStreamFactory<AssayGroup, BaselineExpression, BaselineExperiment, BaselineProfileStreamOptions<Unit>, BaselineProfile> baselineProfileStreamFactory;
 
-        protected Baseline(BaselineProfilesWriterFactory baselineProfilesWriterFactory, SolrQueryService solrQueryService,
+        protected Baseline(BaselineProfilesWriterFactory<Unit> baselineProfilesWriterFactory, SolrQueryService solrQueryService,
                            ProfileStreamFactory<AssayGroup, BaselineExpression, BaselineExperiment, BaselineProfileStreamOptions<Unit>, BaselineProfile> baselineProfileStreamFactory) {
             this.baselineProfilesWriterFactory = baselineProfilesWriterFactory;
             this.solrQueryService = solrQueryService;
@@ -106,7 +108,7 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             GeneQueryResponse geneQueryResponse =
                     solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
             baselineProfileStreamFactory.write(experiment, requestContext,
-                    geneQueryResponse.asGeneIdsToKeep(), ProfileStreamFilter.create(requestContext),
+                    geneQueryResponse.getAllGeneIds(), ProfileStreamFilter.create(requestContext),
                     baselineProfilesWriterFactory.create(writer, requestContext));
         }
     }
@@ -115,7 +117,7 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
     public static class Proteomics extends Baseline<ExpressionUnit.Absolute.Protein, BaselineRequestPreferences<ExpressionUnit.Absolute.Protein>> {
 
         @Inject
-        public Proteomics(BaselineProfilesWriterFactory baselineProfilesWriterFactory, SolrQueryService solrQueryService,
+        public Proteomics(BaselineProfilesWriterFactory<ExpressionUnit.Absolute.Protein> baselineProfilesWriterFactory, SolrQueryService solrQueryService,
                           ProteomicsBaselineProfileStreamFactory baselineProfileStreamFactory) {
             super(baselineProfilesWriterFactory, solrQueryService, baselineProfileStreamFactory);
         }
@@ -132,7 +134,7 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
         private final DataFileHub dataFileHub;
 
         @Inject
-        public RnaSeqBaseline(BaselineProfilesWriterFactory baselineProfilesWriterFactory, SolrQueryService solrQueryService,
+        public RnaSeqBaseline(BaselineProfilesWriterFactory<ExpressionUnit.Absolute.Rna> baselineProfilesWriterFactory, SolrQueryService solrQueryService,
                               RnaSeqBaselineProfileStreamFactory baselineProfileStreamFactory,
                               DataFileHub dataFileHub) {
             super(baselineProfilesWriterFactory, solrQueryService, baselineProfileStreamFactory);
@@ -173,7 +175,7 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
                 microarrayProfileStreamFactory.write(
                         experiment,
                         context,
-                        geneQueryResponse.asGeneIdsToKeep(), ProfileStreamFilter.create(context),
+                        geneQueryResponse.getAllGeneIds(), ProfileStreamFilter.create(context),
                         microarrayProfilesWriterFactory.create(writer, context));
                 return null;
             };
@@ -236,7 +238,7 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             rnaSeqProfileStreamFactory.write(
                     experiment,
                     context,
-                    geneQueryResponse.asGeneIdsToKeep(),
+                    geneQueryResponse.getAllGeneIds(),
                     ProfileStreamFilter.create(context),
                     rnaSeqDifferentialProfilesWriterFactory.create(responseWriter, context));
         }

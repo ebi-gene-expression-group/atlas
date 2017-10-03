@@ -1,19 +1,14 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
@@ -70,7 +65,7 @@ public class ProfileStreamKryoLayerTest {
 
     @Test
     public void createAsksDataFileHubForFiles() throws Exception {
-        new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Optional.empty());
+        new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Collections.emptySet());
 
         verify(dataFileHub).getKryoFile(experiment.getAccession(), profileStreamOptions);
     }
@@ -78,8 +73,8 @@ public class ProfileStreamKryoLayerTest {
     @Test
     public void createDelegatesToSourceIfNoFilesPresent() throws Exception {
         ObjectInputStream objectInputStream = mock(ObjectInputStream.class);
-        Optional<Collection<String>> keepGeneIds = Optional.empty();
-        when(source.create(experiment, profileStreamOptions,keepGeneIds)).thenReturn(objectInputStream);
+        Collection<String> keepGeneIds = Collections.emptySet();
+        when(source.create(experiment, profileStreamOptions, keepGeneIds)).thenReturn(objectInputStream);
 
         assertThat(new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions,keepGeneIds), is(objectInputStream));
     }
@@ -102,7 +97,7 @@ public class ProfileStreamKryoLayerTest {
         when(mockHub.getKryoFile(experiment.getAccession(), profileStreamOptions)).thenReturn(kryoFile);
 
         source = Mockito.spy(source);
-        new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Optional.empty());
+        new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Collections.emptySet());
 
         verify(source).filterExpressions(experiment, profileStreamOptions);
         verifyNoMoreInteractions(source);
@@ -122,7 +117,7 @@ public class ProfileStreamKryoLayerTest {
 
         ObjectInputStream objectInputStream = mock(ObjectInputStream.class);
 
-        when(source.filterExpressions(experiment, profileStreamOptions)).thenReturn(Predicates.alwaysTrue());
+        when(source.filterExpressions(experiment, profileStreamOptions)).thenReturn(x -> true);
 
         Profile p1 = new BaselineProfile("id_1", "name_1");
         p1.add(new AssayGroup("g1", "r1"), new BaselineExpression(1.2));
@@ -143,13 +138,13 @@ public class ProfileStreamKryoLayerTest {
                 .willReturn(p4)
                 .willReturn(null);
 
-        when(source.create(experiment, profileStreamOptions,Optional.empty())).thenReturn(objectInputStream);
+        when(source.create(experiment, profileStreamOptions, Collections.emptySet())).thenReturn(objectInputStream);
 
 
         new ProfileStreamKryoLayer(source).persist(experiment, profileStreamOptions);
 
         assertThat(
-                ImmutableList.copyOf(new IterableObjectInputStream<>(new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Optional.empty()))),
+                ImmutableList.copyOf(new IterableObjectInputStream<>(new ProfileStreamKryoLayer(source).create(experiment, profileStreamOptions, Collections.emptySet()))),
                 is(ImmutableList.<Object>of(p1, p2, p3, p4))
         );
 

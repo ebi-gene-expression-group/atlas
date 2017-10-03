@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -45,10 +44,6 @@ public class GeneQueryResponse {
 
     public Collection<String> getIds(String queryTerm) {
         return geneIdsByQueryTerm.get(queryTerm);
-    }
-
-    public Optional<Collection<String>> asGeneIdsToKeep(){
-        return isEmpty() ? Optional.empty() : Optional.of(getAllGeneIds());
     }
 
 }

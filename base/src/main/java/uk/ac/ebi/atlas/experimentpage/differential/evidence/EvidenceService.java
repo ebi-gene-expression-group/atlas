@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -40,16 +41,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class EvidenceService<Expr extends DifferentialExpression,
-        E extends DifferentialExperiment, StreamOptions extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr, Prof>> {
-
+public class EvidenceService<
+        Expr extends DifferentialExpression, E extends DifferentialExperiment,
+        StreamOptions extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr, Prof>> {
 
     private final ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory;
     private final DataFileHub dataFileHub;
     private final String expressionAtlasVersion;
 
 
-    public EvidenceService(ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory, DataFileHub dataFileHub, String expressionAtlasVersion) {
+    public EvidenceService(
+            ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory,
+            DataFileHub dataFileHub, String expressionAtlasVersion) {
         this.differentialProfileStreamFactory = differentialProfileStreamFactory;
         this.dataFileHub = dataFileHub;
         this.expressionAtlasVersion = expressionAtlasVersion;
@@ -69,10 +72,15 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
         Map<String, Map<Contrast, Integer>> rankPerContrastPerGene = getPercentileRanks(experiment);
 
-        for(Contrast contrast : diseaseAssociations.keySet()){
-            for(Prof profile : differentialProfileStreamFactory.select(experiment, queryForOneContrast.apply(contrast), Optional.empty(), p -> p.getExpression(contrast)!=null, new MinMaxProfileRanking<>(
-                    Comparator.comparing(p -> - Math.abs(p.getExpressionLevel(contrast))), () -> new GeneProfilesList<>())
-            ) ){
+        for(Contrast contrast : diseaseAssociations.keySet()) {
+            for(Prof profile :
+                    differentialProfileStreamFactory.select(
+                            experiment, queryForOneContrast.apply(contrast), Collections.emptySet(),
+                            p -> p.getExpression(contrast) != null,
+                            new MinMaxProfileRanking<>(
+                                    Comparator.comparing(p -> - Math.abs(p.getExpressionLevel(contrast))),
+                                    GeneProfilesList::new))) {
+
                 Expr expression = profile.getExpression(contrast);
                 if (expression != null) {
                     piecesOfEvidence(
@@ -83,8 +91,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
                             rankPerContrastPerGene.get(profile.getId()).get(contrast),
                             profile.getId(),
                             contrast,
-                            yield
-                            );
+                            yield);
                 }
 
             }
@@ -471,7 +478,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
             }
         }
     }
-
 
     Map<String, Map<Contrast, Integer>> getPercentileRanks(E experiment) {
         return readPercentileRanks(experiment, dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).percentileRanks.get());

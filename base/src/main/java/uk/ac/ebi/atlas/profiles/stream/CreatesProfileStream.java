@@ -8,12 +8,11 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface CreatesProfileStream<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
         E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
         Prof extends Profile<DataColumnDescriptor, Expr, Prof>>  {
 
-    ObjectInputStream<Prof> create(E experiment, StreamOptions options, Optional<Collection<String>> keepGeneIds);
+    ObjectInputStream<Prof> create(E experiment, StreamOptions options, Collection<String> keepGeneIds);
 
 }
