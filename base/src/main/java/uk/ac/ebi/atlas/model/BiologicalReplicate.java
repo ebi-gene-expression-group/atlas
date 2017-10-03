@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.JsonObject;
 
 import java.util.Set;
 
