@@ -28,7 +28,7 @@ public class BioEntityPropertyLinkBuilderIT {
     @Test
     public void createValidReactomeLink() throws Exception {
         Optional<PropertyLink> propertyLink =
-                subject.createLink("ENSG00000001", BioentityPropertyName.REACTOME, "R-HSA-15869",
+                subject.createLink("ENSG00000001", BioentityPropertyName.PATHWAYID, "R-HSA-15869",
                                    speciesFactory.create("Homo sapiens"), 0);
         assertThat(propertyLink.isPresent(), is(true));
     }
@@ -36,7 +36,7 @@ public class BioEntityPropertyLinkBuilderIT {
     @Test
     public void createInvalidReactomeLink() throws Exception {
         Optional<PropertyLink> propertyLink =
-                subject.createLink("ENSG00000066279", BioentityPropertyName.REACTOME, "R-HSA-FOOBAR",
+                subject.createLink("ENSG00000066279", BioentityPropertyName.PATHWAYID, "R-HSA-FOOBAR",
                                    speciesFactory.create("Homo sapiens"), 0);
         assertThat(propertyLink.isPresent(), is(false));
     }

@@ -61,7 +61,6 @@ public class BioEntityPropertyService {
                                                List<BioentityPropertyName> orderedPropertyNames, String entityName,
                                                Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-//        addReactomePropertyValues(propertyValuesByType);
         addDesignElements(identifier, propertyValuesByType);
 
         Map<String, Object> result = new HashMap<>();
@@ -98,7 +97,7 @@ public class BioEntityPropertyService {
                 .collect(Collectors.toList());
     }
 
-    private JsonArray bioentityProperties(String identifier, Species species,
+    JsonArray bioentityProperties(String identifier, Species species,
                                           List<BioentityPropertyName> desiredOrderOfPropertyNames,
                                           Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
@@ -181,29 +180,5 @@ public class BioEntityPropertyService {
         return CollectionUtils.isNotEmpty(properties) ? properties.iterator().next() : "";
 
     }
-
-    private void addReactomePropertyValues(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
-
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
-        // When we update to Java 1.8 we’ll be able to use .getOrDefault instead of having this check
-        if (propertyValuesByType.get(BioentityPropertyName.UNIPROT) != null) {
-            Set<String> reactomeIds = new HashSet<>();
-
-            Collection<String> uniProtIds = propertyValuesByType.get(BioentityPropertyName.UNIPROT);
-
-            for (String uniProtId : uniProtIds) {
-                reactomeIds.addAll(uniProtClient.fetchReactomeIds(uniProtId));
-            }
-
-            if (reactomeIds.size() > 0) {
-                propertyValuesByType.put(BioentityPropertyName.REACTOME, reactomeIds);
-            }
-        }
-
-        LOGGER.debug("addReactomePropertyValues: {} seconds", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS) / 1000F);
-
-    }
-
 }
 

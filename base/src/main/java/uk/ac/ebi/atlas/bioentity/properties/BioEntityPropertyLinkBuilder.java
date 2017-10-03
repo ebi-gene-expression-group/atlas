@@ -65,7 +65,7 @@ public class BioEntityPropertyLinkBuilder {
         switch (propertyName) {
             case ORTHOLOG:
                 return Optional.of(fetchSymbolAndSpeciesForOrtholog(propertyValue));
-            case REACTOME:
+            case PATHWAYID:
                 return Optional.ofNullable(reactomeClient.fetchPathwayNameFailSafe(propertyValue));
             case GO:
                 return Optional.ofNullable(goPoTermTrader.getTermName(propertyValue));
