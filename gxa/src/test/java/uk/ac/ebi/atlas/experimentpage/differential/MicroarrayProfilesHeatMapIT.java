@@ -11,7 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
@@ -27,7 +29,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -95,7 +98,7 @@ public class MicroarrayProfilesHeatMapIT {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
-        DifferentialProfilesList profiles = subject.fetch(requestContext);
+        DifferentialProfilesList<MicroarrayProfile> profiles = subject.fetch(requestContext);
 
         assertAbout(experiment, profiles);
     }
@@ -105,7 +108,7 @@ public class MicroarrayProfilesHeatMapIT {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
-        DifferentialProfilesList profiles = subject.fetch(requestContext);
+        DifferentialProfilesList<MicroarrayProfile> profiles = subject.fetch(requestContext);
 
         assertAbout(experiment, profiles);
     }
@@ -118,7 +121,7 @@ public class MicroarrayProfilesHeatMapIT {
         requestPreferences.setRegulation(Regulation.UP);
         requestContext = populateRequestContext(accession);
 
-        DifferentialProfilesList profilesUp = subject.fetch(requestContext);
+        DifferentialProfilesList<MicroarrayProfile> profilesUp = subject.fetch(requestContext);
 
         assertThat(
                 profilesAll.size() == 50 || extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesUp)),
@@ -127,7 +130,7 @@ public class MicroarrayProfilesHeatMapIT {
         requestPreferences.setRegulation(Regulation.DOWN);
         requestContext = populateRequestContext(accession);
 
-        DifferentialProfilesList profilesDown = subject.fetch(requestContext);
+        DifferentialProfilesList<MicroarrayProfile> profilesDown = subject.fetch(requestContext);
         assertThat(
                 profilesAll.size() == 50 || extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesDown)),
                 is(true));
@@ -135,7 +138,7 @@ public class MicroarrayProfilesHeatMapIT {
         setUp();
         requestContext = populateRequestContext(accession);
 
-        DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
+        DifferentialProfilesList<MicroarrayProfile> profilesQueryFactorValues = subject.fetch(requestContext);
         assertThat(
                 profilesAll.size() == 50 ||
                         extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesQueryFactorValues)),
@@ -165,13 +168,12 @@ public class MicroarrayProfilesHeatMapIT {
         assertThat(experiment.getAccession(), profiles.size(), is(profiles.stream().map(p -> Joiner.on("").join(p.identifiers())).collect(Collectors.toSet()).size()));
     }
 
-    static <T extends Profile> ImmutableList<String> extractGeneNames(List<T> profiles) {
+    private static <T extends Profile> ImmutableList<String> extractGeneNames(List<T> profiles) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (T profile : profiles) {
             builder.add(profile.getName());
         }
         return builder.build();
     }
-
 
 }
