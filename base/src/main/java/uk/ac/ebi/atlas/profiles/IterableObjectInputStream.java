@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
