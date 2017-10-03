@@ -4,7 +4,7 @@ import org.apache.solr.common.SolrInputDocument;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.profiles.baseline.IsBaselineExpressionAboveCutoffAndForFilterFactors;
+import uk.ac.ebi.atlas.profiles.baseline.IsBaselineExpressionAboveCutoff;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 
 import javax.inject.Named;
@@ -19,11 +19,11 @@ public class AnalyticsIndexDocumentValidator {
     private final double DIFFERENTIAL_P_VALUE_CUTOFF = 0.1;
 
     private final Predicate<BaselineExpression> rnaSeqBaselineExpressionAboveDefaultCutoff =
-            new IsBaselineExpressionAboveCutoffAndForFilterFactors()
+            new IsBaselineExpressionAboveCutoff()
                         .setCutoff(RNA_SEQ_BASELINE_EXPRESSION_CUTOFF);
 
     private final Predicate<BaselineExpression> proteomicsBaselineExpressionAboveDefaultCutoff =
-            new IsBaselineExpressionAboveCutoffAndForFilterFactors()
+            new IsBaselineExpressionAboveCutoff()
                         .setCutoff(PROTEOMICS_BASELINE_EXPRESSION_CUTOFF);
 
     private final Predicate<DifferentialExpression> differentialExpressionAboveDefaultCutoff =
