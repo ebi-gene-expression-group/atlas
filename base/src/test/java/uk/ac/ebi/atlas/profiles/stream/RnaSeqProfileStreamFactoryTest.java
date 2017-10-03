@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -51,7 +50,7 @@ public class RnaSeqProfileStreamFactoryTest {
     public void setUp() throws Exception {
         dataFileHub = MockDataFileHub.create();
         subject = new RnaSeqProfileStreamFactory.Impl(dataFileHub);
-        goThroughTsvLineAndPickUpExpressionsByIndex = subject.howToReadLine(differentialExperiment, Predicates.alwaysTrue()).apply(
+        goThroughTsvLineAndPickUpExpressionsByIndex = subject.howToReadLine(differentialExperiment, x -> true).apply(
                 "Gene ID\tGene Name\tg1_g2.p-value\tg1_g2.log2foldchange\tg1_g3.p-value\tg1_g3.log2foldchange".split("\t")
         );
     }

@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
@@ -22,8 +20,8 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /*
@@ -48,7 +46,7 @@ public class BaselineTranscriptProfileStreamFactory extends ProfileStreamKryoLay
         /*
         We don't want to do that for now.
          */
-            return Predicates.alwaysTrue();
+            return x -> true;
         }
 
         @Override
@@ -75,7 +73,7 @@ public class BaselineTranscriptProfileStreamFactory extends ProfileStreamKryoLay
                     for (int i = 3; i < line.length; i++) {
                         BaselineExpression nextExpression = BaselineExpression.create(line[i]);
 
-                        Pair<BiologicalReplicate, AssayGroup> p = whatIsInEachPosition.get(new Integer(i));
+                        Pair<BiologicalReplicate, AssayGroup> p = whatIsInEachPosition.get(i);
 
                         if (p != null && nextExpression != null && nextExpression.getLevel() != 0.0) {
                             expressionsPerAssayGroup.put(p.getRight(), Pair.of(p.getLeft(), nextExpression));
