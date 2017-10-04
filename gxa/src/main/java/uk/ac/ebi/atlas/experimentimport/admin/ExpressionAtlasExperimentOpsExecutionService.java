@@ -67,6 +67,9 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
                 return Optional.of(gson.toJsonTree(getAnyExperimentWithAdminAccess(accession).getAttributes()));
+            case CACHE_REMOVE:
+                experimentTrader.removeExperimentFromCache(accession);
+                return Optional.of(ExperimentOps.DEFAULT_SUCCESS_RESULT);
             default:
                 return Optional.empty();
         }
@@ -130,10 +133,10 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(getAnyExperimentWithAdminAccess(accession)));
                 break;
             case DELETE:
+                expressionSerializerService.removeKryoFile(getAnyExperimentWithAdminAccess(accession));
                 experimentTrader.removeExperimentFromCache(accession);
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 experimentCrud.deleteExperiment(accession);
-                expressionSerializerService.removeKryoFile(getAnyExperimentWithAdminAccess(accession));
                 break;
             case COEXPRESSION_UPDATE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
@@ -156,9 +159,6 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 break;
             case ANALYTICS_DELETE:
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
-                break;
-            case CACHE_REMOVE:
-                experimentTrader.removeExperimentFromCache(accession);
                 break;
             default:
                 throw new RuntimeException("Op not supported in Expression Atlas: " + op.name());
