@@ -15,13 +15,13 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class BioEntityPropertyLinkBuilderIT {
+public class BioEntityPropertyServiceIT {
 
     @Inject
     private SpeciesFactory speciesFactory;
 
     @Inject
-    private BioEntityPropertyLinkBuilder subject;
+    private BioEntityPropertyService subject;
 
     @Test
     public void textIsFetchedFromReactomeWhenValid() throws Exception {

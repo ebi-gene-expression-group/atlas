@@ -30,7 +30,7 @@ public class BioEntityPropertyServiceTest {
     @Mock
     ArrayDesignDAO arrayDesignDAO;
     @Mock
-    BioEntityPropertyLinkBuilder linkBuilder;
+    BioEntityPropertyLinkTextService linkBuilder;
     @Mock GoPoTrader goPoTermTrader;
 
     BioEntityPropertyService subject;

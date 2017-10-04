@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Named
-public class BioEntityPropertyLinkBuilder {
+public class BioEntityPropertyLinkTextService {
 
     private SpeciesInferrer speciesInferrer;
     private BioEntityPropertyDao bioEntityPropertyDao;
@@ -27,9 +27,9 @@ public class BioEntityPropertyLinkBuilder {
     private InterProTrader interProTermTrader;
 
     @Inject
-    public BioEntityPropertyLinkBuilder(SpeciesInferrer speciesInferrer,
-                                        BioEntityPropertyDao bioEntityPropertyDao, ReactomeClient reactomeClient,
-                                        GoPoTrader goPoTermTrader, InterProTrader interProTermTrader) {
+    public BioEntityPropertyLinkTextService(SpeciesInferrer speciesInferrer,
+                                            BioEntityPropertyDao bioEntityPropertyDao, ReactomeClient reactomeClient,
+                                            GoPoTrader goPoTermTrader, InterProTrader interProTermTrader) {
 
         this.speciesInferrer = speciesInferrer;
         this.bioEntityPropertyDao = bioEntityPropertyDao;
@@ -39,25 +39,8 @@ public class BioEntityPropertyLinkBuilder {
 
     }
 
-    public PropertyLink createLink(String identifier, BioentityPropertyName propertyName,
-                                   String propertyValue, Species species, int relevance) {
-        return new PropertyLink(
-                Optional.ofNullable(fetchLinkText(propertyName, propertyValue)).orElse(propertyValue),
-                Optional.ofNullable(BioEntityCardProperties.linkTemplates.get(propertyName)).map(
-                        linkTemplate -> MessageFormat.format(
-                                linkTemplate,
-                                getEncodedString(propertyName, propertyValue),
-                                species.getEnsemblName(),
-                                identifier
-                        )
-                ).orElse(""),
-                relevance
-        );
-    }
-
-
     @Nullable
-    private String fetchLinkText(BioentityPropertyName propertyName, String propertyValue) {
+    public String getLinkTextOrNull(BioentityPropertyName propertyName, String propertyValue) {
 
         switch (propertyName) {
             case ORTHOLOG:
@@ -96,20 +79,6 @@ public class BioEntityPropertyLinkBuilder {
         }
 
         return identifier + speciesToken;
-
-    }
-
-    private String getEncodedString(BioentityPropertyName propertyName, String value) {
-
-        try {
-            if (propertyName == BioentityPropertyName.GO || propertyName == BioentityPropertyName.PO) {
-                return URLEncoder.encode(value.replaceAll(":", "_"), "UTF-8");
-            } else {
-                return URLEncoder.encode(value, "UTF-8");
-            }
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException("Cannot create URL from " + value, e);
-        }
 
     }
 

@@ -15,12 +15,10 @@ import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Named
@@ -30,12 +28,12 @@ public class BioEntityPropertyService {
             ImmutableList.of(BioentityPropertyName.DESCRIPTION, BioentityPropertyName.SYMBOL);
 
     private final ArrayDesignDAO arrayDesignDAO;
-    private final BioEntityPropertyLinkBuilder linkBuilder;
+    private final BioEntityPropertyLinkTextService linkBuilder;
     private final GoPoTrader goPoTermTrader;
     private final Gson gson = new Gson();
 
     @Inject
-    public BioEntityPropertyService(BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDAO arrayDesignDAO,
+    public BioEntityPropertyService(BioEntityPropertyLinkTextService linkBuilder, ArrayDesignDAO arrayDesignDAO,
                                     GoPoTrader goPoTermTrader) {
 
         this.arrayDesignDAO = arrayDesignDAO;
@@ -116,7 +114,7 @@ public class BioEntityPropertyService {
     private List<PropertyLink> fetchPropertyLinks(String identifier, Species species,
                                                   BioentityPropertyName bioentityPropertyName,
                                                   Set<String> propertyValues) {
-        return propertyValues.stream().map(propertyValue -> linkBuilder.createLink(
+        return propertyValues.stream().map(propertyValue -> createLink(
                 identifier, bioentityPropertyName, propertyValue, species,
                 assessRelevance(bioentityPropertyName, propertyValue))).collect(Collectors.toList());
     }
@@ -156,5 +154,36 @@ public class BioEntityPropertyService {
         return CollectionUtils.isNotEmpty(properties) ? properties.iterator().next() : "";
 
     }
+
+    public PropertyLink createLink(String identifier, BioentityPropertyName propertyName,
+                                   String propertyValue, Species species, int relevance) {
+        return new PropertyLink(
+                Optional.ofNullable(linkBuilder.getLinkTextOrNull(propertyName, propertyValue)).orElse(propertyValue),
+                Optional.ofNullable(BioEntityCardProperties.linkTemplates.get(propertyName)).map(
+                        linkTemplate -> MessageFormat.format(
+                                linkTemplate,
+                                getEncodedString(propertyName, propertyValue),
+                                species.getEnsemblName(),
+                                identifier
+                        )
+                ).orElse(""),
+                relevance
+        );
+    }
+
+    private String getEncodedString(BioentityPropertyName propertyName, String value) {
+
+        try {
+            if (propertyName == BioentityPropertyName.GO || propertyName == BioentityPropertyName.PO) {
+                return URLEncoder.encode(value.replaceAll(":", "_"), "UTF-8");
+            } else {
+                return URLEncoder.encode(value, "UTF-8");
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException("Cannot create URL from " + value, e);
+        }
+
+    }
+
 }
 
