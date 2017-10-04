@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.bioentity.properties;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -66,17 +67,20 @@ public class BioEntityPropertyServiceTest {
         );
     }
 
-    /*
-    won't work because BioEntityPropertyLinkBuilder is mocked out.
-    in actual code: maybe will work.
-    We want BioEntityPropertyLinkBuilder not to make more queries, though!
-     */
-    @Ignore
     @Test
-    public void somethingAboutProperties() throws Exception {
+    public void outputLooksRight() throws Exception {
         assertThat(
                 subject.bioentityProperties(identifier, species, ImmutableList.of(BioentityPropertyName.GO), ImmutableMap.of(BioentityPropertyName.GO, ImmutableSet.of("value"))),
-                not(is(new JsonArray()))
+                is(new Gson().fromJson("[{\n" +
+                        "    \"type\": \"go\",\n" +
+                        "    \"name\": \"Gene Ontology\",\n" +
+                        "    \"values\": [{\n" +
+                        "        \"text\": \"value\",\n" +
+                        "        \"url\": \"http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value\",\n" +
+                        "        \"relevance\": 0\n" +
+                        "    }]\n" +
+                        "}]", JsonArray.class)
+                )
         );
     }
 
