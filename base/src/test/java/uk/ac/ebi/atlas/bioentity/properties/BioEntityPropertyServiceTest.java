@@ -41,7 +41,7 @@ public class BioEntityPropertyServiceTest {
 
     @Before
     public void setUp(){
-        subject = new BioEntityPropertyService(uniProtClient,linkBuilder, arrayDesignDAO, goPoTermTrader);
+        subject = new BioEntityPropertyService(linkBuilder, arrayDesignDAO, goPoTermTrader);
     }
 
 

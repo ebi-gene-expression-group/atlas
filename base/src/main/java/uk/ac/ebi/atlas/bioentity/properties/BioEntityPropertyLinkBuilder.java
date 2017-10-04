@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
@@ -38,46 +39,43 @@ public class BioEntityPropertyLinkBuilder {
 
     }
 
-    public Optional<PropertyLink> createLink(String identifier, BioentityPropertyName propertyName,
-                                             String propertyValue, Species species, int relevance) {
-
-        String linkSpecies = species.getEnsemblName();
-        Optional<String> linkText = fetchLinkText(propertyName, propertyValue);
-
-        if (!linkText.isPresent()) {
-            return Optional.empty();
-        }
-
-        String linkTemplate = BioEntityCardProperties.linkTemplates.get(propertyName);
-
-        if (linkTemplate != null) {
-            String linkValue = getEncodedString(propertyName, propertyValue);
-            String href = MessageFormat.format(linkTemplate, linkValue, linkSpecies, identifier);
-            return Optional.of(new PropertyLink(linkText.get(), href, relevance));
-        } else {
-            return Optional.of(new PropertyLink(linkText.get(), relevance));
-        }
-
+    public PropertyLink createLink(String identifier, BioentityPropertyName propertyName,
+                                   String propertyValue, Species species, int relevance) {
+        return new PropertyLink(
+                Optional.ofNullable(fetchLinkText(propertyName, propertyValue)).orElse(propertyValue),
+                Optional.ofNullable(BioEntityCardProperties.linkTemplates.get(propertyName)).map(
+                        linkTemplate -> MessageFormat.format(
+                                linkTemplate,
+                                getEncodedString(propertyName, propertyValue),
+                                species.getEnsemblName(),
+                                identifier
+                        )
+                ).orElse(""),
+                relevance
+        );
     }
 
-    private Optional<String> fetchLinkText(BioentityPropertyName propertyName, String propertyValue) {
+
+    @Nullable
+    private String fetchLinkText(BioentityPropertyName propertyName, String propertyValue) {
 
         switch (propertyName) {
             case ORTHOLOG:
-                return Optional.of(fetchSymbolAndSpeciesForOrtholog(propertyValue));
+                return fetchSymbolAndSpeciesForOrtholog(propertyValue);
             case PATHWAYID:
-                return Optional.ofNullable(reactomeClient.fetchPathwayNameFailSafe(propertyValue));
+                return reactomeClient.fetchPathwayNameFailSafe(propertyValue);
             case GO:
-                return Optional.ofNullable(goPoTermTrader.getTermName(propertyValue));
+                return goPoTermTrader.getTermName(propertyValue);
             case INTERPRO:
-                return Optional.ofNullable(interProTermTrader.getTermName(propertyValue));
+                return interProTermTrader.getTermName(propertyValue);
             case PO:
-                return Optional.ofNullable(goPoTermTrader.getTermName(propertyValue));
+                return goPoTermTrader.getTermName(propertyValue);
             default:
-                return Optional.of(propertyValue);
+                return propertyValue;
         }
 
     }
+
 
     private String fetchSymbolAndSpeciesForOrtholog(String identifier) {
 
