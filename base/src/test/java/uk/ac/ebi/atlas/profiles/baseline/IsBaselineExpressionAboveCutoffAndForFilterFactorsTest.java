@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -8,23 +9,31 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IsBaselineExpressionAboveCutoffTest {
+public class IsBaselineExpressionAboveCutoffAndForFilterFactorsTest {
+
+    private IsBaselineExpressionAboveCutoffAndForFilterFactors subject;
 
     @Mock
     private BaselineExpression expressionMock;
 
+    @Before
+    public void init(){
+    }
+
     @Test
     public void applyShouldSucceedIfLevelIsGreaterThanCutoff() throws Exception {
-        IsBaselineExpressionAboveCutoff subject =
-                new IsBaselineExpressionAboveCutoff();
+
+        //given
+        subject = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         subject.setCutoff(1d);
 
-        when(expressionMock.isGreaterThanOrEqual(1d)).thenReturn(true);
+        given(expressionMock.isGreaterThanOrEqual(1d)).willReturn(true);
 
-        assertThat(subject.test(expressionMock), is(true));
+        //then
+        assertThat(subject.apply(expressionMock), is(true));
     }
 
 }

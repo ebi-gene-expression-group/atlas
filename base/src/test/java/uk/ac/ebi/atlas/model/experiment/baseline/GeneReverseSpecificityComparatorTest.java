@@ -21,9 +21,11 @@ public class GeneReverseSpecificityComparatorTest {
 
     private BaselineProfileComparator subject;
 
-    private BaselineProfile profileWithOneExpression;
+    @Mock
+    private BaselineProfile geneWithSpecificity1;
 
-    private BaselineProfile profileWithTwoExpressions;
+    @Mock
+    private BaselineProfile geneWithSpecificity16;
 
     AssayGroup g1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
     AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
@@ -32,11 +34,10 @@ public class GeneReverseSpecificityComparatorTest {
 
     @Before
     public void initGeneExpressions() {
-        profileWithOneExpression = new BaselineProfile("profileWithOneExpression","profileWithOneExpression");
-        profileWithOneExpression.add(g1, BaselineExpression.create("1"));
-        profileWithTwoExpressions = new BaselineProfile("profileWithTwoExpressions","profileWithTwoExpressions");
-        profileWithTwoExpressions.add(g1, BaselineExpression.create("1"));
-        profileWithTwoExpressions.add(g2, BaselineExpression.create("1"));
+        when(geneWithSpecificity1.getId()).thenReturn("Gene with specificity 1");
+
+        when(geneWithSpecificity16.getId()).thenReturn("Gene with specificity 16");
+        when(geneWithSpecificity16.getAverageExpressionLevelOn(assayGroups)).thenReturn(10D);
     }
 
     @Before
@@ -47,12 +48,12 @@ public class GeneReverseSpecificityComparatorTest {
     @Test
     public void lowSpecificityShouldFollowHighSpecificity() {
         //when
-        int comparison = subject.compare(profileWithTwoExpressions, profileWithOneExpression);
+        int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
         //then
         assertThat(comparison, is(lessThan(0)));
 
         //when
-        comparison = subject.compare(profileWithOneExpression, profileWithTwoExpressions);
+        comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
         //then
         assertThat(comparison, is(greaterThan(0)));
     }

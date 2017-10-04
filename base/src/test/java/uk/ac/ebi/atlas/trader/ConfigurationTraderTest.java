@@ -27,7 +27,7 @@ public class ConfigurationTraderTest {
 
     @Before
     public void setUp() throws Exception {
-        mockDataFileHub = MockDataFileHub.create();
+        mockDataFileHub = new MockDataFileHub();
         subject = new ConfigurationTrader(mockDataFileHub);
 
     }

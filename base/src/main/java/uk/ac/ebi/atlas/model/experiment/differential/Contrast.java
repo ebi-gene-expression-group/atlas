@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 
 import java.util.Set;
@@ -41,6 +40,11 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
         return displayName;
     }
 
+    public Set<String> getAssayAccessions(){
+        return Sets.newHashSet(getReferenceAssayGroup().getFirstAssayAccession()
+                                , getTestAssayGroup().getFirstAssayAccession());
+    }
+
     @Override
     public String toString() {
         return "Contrast{" +
@@ -50,6 +54,16 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
                 ", testAssayGroup=" + testAssayGroup +
                 ", displayName='" + displayName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Contrast && Objects.equal(id, ((Contrast) other).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     @Override
@@ -76,14 +90,6 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
         return ImmutableSet.<String>builder()
                 .addAll(testAssayGroup.assaysAnalyzedForThisDataColumn())
                 .addAll(referenceAssayGroup.assaysAnalyzedForThisDataColumn())
-                .build();
-    }
-
-    @Override
-    public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
-        return ImmutableSet.<BiologicalReplicate>builder()
-                .addAll(testAssayGroup.biologicalReplicatesForThisDataColumn())
-                .addAll(referenceAssayGroup.biologicalReplicatesForThisDataColumn())
                 .build();
     }
 }

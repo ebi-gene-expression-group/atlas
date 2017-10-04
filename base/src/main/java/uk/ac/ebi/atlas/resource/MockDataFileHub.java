@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 // I belong in the test dir, but here I can be shared among different modules without the need of creating a test jar
 public class MockDataFileHub extends DataFileHub {
 
-    private MockDataFileHub() throws IOException {
+    public MockDataFileHub() throws IOException {
         super(Files.createTempDirectory("").toString());
         new File(dataFilesLocation, "admin").mkdir();
         new File(dataFilesLocation, "magetab").mkdir();
@@ -20,14 +20,6 @@ public class MockDataFileHub extends DataFileHub {
         new File(dataFilesLocation, "species").mkdir();
         new File(dataFilesLocation, "serialized_expression").mkdir();
         new File(dataFilesLocation).deleteOnExit();
-    }
-
-    public static MockDataFileHub create() {
-        try {
-            return new MockDataFileHub();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void addTemporaryTsv(String where, Collection<String[]> lines) {
@@ -58,10 +50,6 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, accession), lines);
     }
 
-    public void addTranscriptsTpmsExpressionFile(String accession, Collection<String[]> lines) {
-        addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, accession), lines);
-    }
-
     public void addExperimentDesignFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(MessageFormat.format(EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, accession), lines);
     }
@@ -89,10 +77,6 @@ public class MockDataFileHub extends DataFileHub {
 
     public void addFactorsFile(String accession, Collection<String> lines) {
         addTemporaryFile(MessageFormat.format(FACTORS_FILE_PATH_TEMPLATE, accession), lines);
-    }
-
-    public void addConfigurationFile(String accession,Collection<String> lines){
-        addTemporaryFile(MessageFormat.format(CONFIGURATION_FILE_PATH_TEMPLATE, accession), lines);
     }
 
     public void addSpeciesJsonFile(Collection<String> lines) {

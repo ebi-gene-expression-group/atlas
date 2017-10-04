@@ -43,7 +43,7 @@ public class HistogramServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        dataFileHub = MockDataFileHub.create();
+        dataFileHub = new MockDataFileHub();
         rnaSeqBaselineProfileStreamFactory = Mockito.spy(new RnaSeqBaselineProfileStreamFactory(dataFileHub));
 
         subject = new HistogramService<>(rnaSeqBaselineProfileStreamFactory, experimentTrader, cutoffScale.get());

@@ -20,9 +20,8 @@ import java.util.zip.ZipOutputStream;
 
 public abstract class CanStreamSupplier<E extends Experiment> extends ExternallyAvailableContent.Supplier<E> {
 
-    protected Function<HttpServletResponse, Void> streamFolder(
-            final String folderName, final List<Pair<String, Function<Writer, Void>>> documents) {
-
+    protected Function<HttpServletResponse, Void> streamFolder(final String folderName,
+                                                               final List<Pair<String, Function<Writer, Void>>> documents){
         return response -> {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + folderName + ".zip\"");
             response.setContentType("application/octet-stream");
@@ -40,16 +39,13 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
             }
             return null;
         };
-
     }
 
     protected Function<HttpServletResponse, Void> streamFile(Pair<String,Function<Writer, Void>> p) {
         return streamFile(p.getLeft(), p.getRight());
     }
 
-    protected Function<HttpServletResponse, Void> streamFile(
-            final String fileName, final Function<Writer, Void> document) {
-
+    protected Function<HttpServletResponse, Void> streamFile(final String fileName, final Function<Writer, Void> document){
         return response -> {
             response.setHeader("Content-Disposition", "attachment; filename=\""+fileName + "\"");
             response.setContentType("text/plain; charset=utf-8");
@@ -61,18 +57,14 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
             }
             return null;
         };
-
     }
 
 
-    protected Function<Writer, Void> readFromStreamAndWriteTsv(
-            final AtlasResource<ObjectInputStream<String[]>> resource,
-            final Function<String[], String[]> whatToDoWithTheHeaders) {
-
+    protected Function<Writer, Void> readFromStreamAndWriteTsv(final AtlasResource<ObjectInputStream<String[]>> resource,
+                                                                 final Function<String[], String[]> whatToDoWithTheHeaders){
         return writer -> {
             try (ObjectInputStream<String[]> stream = resource.get();
-                 CSVWriter csvWriter =
-                         new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
+                 CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
                 String[] headers = whatToDoWithTheHeaders.apply(stream.readNext());
 
                 csvWriter.writeNext(headers);
@@ -87,18 +79,14 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
             }
             return null;
         };
-
     }
 
 
-    protected Function<Writer, Void> readFromResourceAndWriteTsv(
-            final AtlasResource<TsvReader> resource,
-            final Function<String[], String[]> whatToDoWithTheHeaders) {
-
+    protected Function<Writer, Void> readFromResourceAndWriteTsv(final AtlasResource<TsvReader> resource,
+                                                                 final Function<String[], String[]> whatToDoWithTheHeaders){
         return writer -> {
             try (CSVReader csvReader = new CSVReader(resource.getReader(), '\t');
-                 CSVWriter csvWriter =
-                         new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
+                 CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
                 String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
 
                 csvWriter.writeNext(headers);
@@ -113,6 +101,5 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
             }
             return null;
         };
-
     }
 }

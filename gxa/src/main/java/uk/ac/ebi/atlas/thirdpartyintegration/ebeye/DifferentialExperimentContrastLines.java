@@ -22,12 +22,12 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
 
     private LinkedHashSet<ImmutableList<String>> buildContrastDetails(DifferentialExperiment experiment) {
         for (Contrast contrast : experiment.getDataColumnDescriptors()) {
-            for (String assayAccession : contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn()) {
+            for (String assayAccession : contrast.getReferenceAssayGroup()) {
                 this.populateSamples(experiment, assayAccession, contrast, "reference");
                 this.populateFactors(experiment, assayAccession, contrast, "reference");
             }
 
-            for (String assayAccession : contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn()) {
+            for (String assayAccession : contrast.getTestAssayGroup()) {
                 this.populateSamples(experiment, assayAccession, contrast, "test");
                 this.populateFactors(experiment, assayAccession, contrast, "test");
             }

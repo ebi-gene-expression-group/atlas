@@ -2,12 +2,15 @@ package uk.ac.ebi.atlas.profiles.differential;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+@RunWith(MockitoJUnitRunner.class)
 public class IsDifferentialExpressionAboveCutOffTest {
 
     IsDifferentialExpressionAboveCutOff<DifferentialExpression> subject;
@@ -25,36 +28,36 @@ public class IsDifferentialExpressionAboveCutOffTest {
 
     @Test
     public void testApply() throws Exception {
-        assertThat(subject.test(expression1), is(true));
-        assertThat(subject.test(expression2), is(true));
+        assertThat(subject.apply(expression1), is(true));
+        assertThat(subject.apply(expression2), is(true));
     }
 
     @Test
     public void setPValueCutoff() throws Exception {
         subject.setPValueCutoff(0.0001);
 
-        assertThat(subject.test(expression1), is(false));
-        assertThat(subject.test(expression2), is(true));
+        assertThat(subject.apply(expression1), is(false));
+        assertThat(subject.apply(expression2), is(true));
     }
 
     @Test
     public void setFoldChangeCutoff() throws Exception {
         subject.setFoldChangeCutOff(50);
 
-        assertThat(subject.test(expression1), is(false));
-        assertThat(subject.test(expression2), is(false));
+        assertThat(subject.apply(expression1), is(false));
+        assertThat(subject.apply(expression2), is(false));
     }
 
     @Test
     public void testSetRegulation() throws Exception {
         subject.setRegulation(Regulation.DOWN);
 
-        assertThat(subject.test(expression1), is(false));
-        assertThat(subject.test(expression2), is(true));
+        assertThat(subject.apply(expression1), is(false));
+        assertThat(subject.apply(expression2), is(true));
 
         subject.setRegulation(Regulation.UP);
 
-        assertThat(subject.test(expression1), is(true));
-        assertThat(subject.test(expression2), is(false));
+        assertThat(subject.apply(expression1), is(true));
+        assertThat(subject.apply(expression2), is(false));
     }
 }

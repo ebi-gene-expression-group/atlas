@@ -48,9 +48,8 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
 
                         dataColumnsToBeReturned().transform(experiment::getFactors)
                 );
-
         return typesWhoseValuesVaryAcrossSelectedDescriptors.isEmpty()
-                ? experiment.getDisplayDefaults().prescribedOrderOfFilters().subList(0, Math.min(1, experiment.getDisplayDefaults().prescribedOrderOfFilters().size()))
+                ? experiment.getDisplayDefaults().prescribedOrderOfFilters().subList(0, 1)
                 : typesWhoseValuesVaryAcrossSelectedDescriptors;
     }
 
