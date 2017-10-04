@@ -8,6 +8,7 @@ import org.apache.commons.math.stat.descriptive.rank.Percentile;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.Expression;
 
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 
@@ -75,6 +76,6 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
 
     @Override
     public String toString() {
-        return "BaselineExpressionPerBiologicalReplicate{data=" + data + "}";
+        return MessageFormat.format("BaselineExpressionPerBiologicalReplicate{data={0}}", data);
     }
 }
