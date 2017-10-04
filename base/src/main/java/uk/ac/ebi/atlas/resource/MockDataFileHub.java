@@ -83,4 +83,8 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryFile(SPECIES_PROPERTIES_FILE_PATH, lines);
     }
 
+    public void addReactomePathwaysFile(String accession, String comparison, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(REACTOME_PATHWAYS_FILE_PATH_TEMPLATE, accession, comparison), lines);
+    }
+
 }
