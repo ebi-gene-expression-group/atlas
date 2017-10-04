@@ -31,6 +31,7 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
                                                  ConfigurationTrader configurationTrader,
                                                  DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory,
                                                  DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap) {
+
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
         this.dataFileHub = dataFileHub;
