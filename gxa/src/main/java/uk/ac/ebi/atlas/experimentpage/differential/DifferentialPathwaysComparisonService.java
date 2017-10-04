@@ -96,27 +96,27 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
 
                 DifferentialProfilesList<P> differentialProfiles = profilesHeatMap.fetch(requestContext);
 
-                for (int i=0; i< differentialProfiles.getTotalResultCount(); i++) {
-                    String geneId = differentialProfiles.get(i).getId();
-                    DifferentialExpression differentialExpression = differentialProfiles.get(i).getExpression(comparison.getKey());
+                if (!differentialProfiles.isEmpty()) {
+                    for (int i = 0; i < differentialProfiles.getTotalResultCount(); i++) {
+                        String geneId = differentialProfiles.get(i).getId();
+                        DifferentialExpression differentialExpression = differentialProfiles.get(i).getExpression(comparison.getKey());
 
-                    if (differentialExpression != null && pathwayGeneExpressionMap.get(pathwayId).isEmpty()) {
-                        pathwayGeneExpressionMap.put(pathwayId, Pair.of(geneId, differentialExpression));
-                    }
-                    else if (!pathwayGeneExpressionMap.get(pathwayId).isEmpty() && differentialExpression != null) {
-                        for (Pair<String, DifferentialExpression> geneExpressionInfo : pathwayGeneExpressionMap.get(pathwayId)) {
-                            if (geneExpressionInfo.getLeft().equals(geneId)) {
-                                DifferentialExpression highestExpression = geneExpressionInfo.getRight().getAbsoluteFoldChange() <
-                                        differentialExpression.getAbsoluteFoldChange() ? differentialExpression : geneExpressionInfo.getRight();
-                                pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, highestExpression));
+                        if (differentialExpression != null && pathwayGeneExpressionMap.get(pathwayId).isEmpty()) {
+                            pathwayGeneExpressionMap.put(pathwayId, Pair.of(geneId, differentialExpression));
+                        } else if (!pathwayGeneExpressionMap.get(pathwayId).isEmpty() && differentialExpression != null) {
+                            for (Pair<String, DifferentialExpression> geneExpressionInfo : pathwayGeneExpressionMap.get(pathwayId)) {
+                                if (geneExpressionInfo.getLeft().equals(geneId)) {
+                                    DifferentialExpression highestExpression = geneExpressionInfo.getRight().getAbsoluteFoldChange() <
+                                            differentialExpression.getAbsoluteFoldChange() ? differentialExpression : geneExpressionInfo.getRight();
+                                    pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, highestExpression));
 
-                            }
-                            else {
-                                pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, differentialExpression));
+                                } else {
+                                    pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, differentialExpression));
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
             }
 

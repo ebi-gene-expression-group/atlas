@@ -1,19 +1,20 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.collect.SetMultimap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -28,9 +29,11 @@ import static org.mockito.Mockito.when;
 public class DifferentialPathwaysComparisonServiceTest {
 
     @Mock
-    private DifferentialRequestContextFactory mockdifferentialRequestContextFactory;
+    private DifferentialRequestContextFactory mockDifferentialRequestContextFactory;
     @Mock
-    private DifferentialRequestPreferences mockdifferentialRequestPreferences;
+    private DifferentialRequestContext mockRequestContext;
+    @Mock
+    private DifferentialRequestPreferences mockDifferentialRequestPreferences;
     @Mock
     private ConfigurationTrader mockConfigurationTrader;
     @Mock
@@ -40,10 +43,7 @@ public class DifferentialPathwaysComparisonServiceTest {
     @Mock
     private DifferentialExperiment mockDifferentialExperiment;
 
-    private MockDataFileHub mockDataFileHub;
     private DifferentialPathwaysComparisonService subject;
-
-    private String accession = "E-GEOD-54351";
 
     private AssayGroup referenceAssay1 = new AssayGroup("g1", "assay1");
     private AssayGroup testAssay1 = new AssayGroup("g2", "assay2");
@@ -80,19 +80,23 @@ public class DifferentialPathwaysComparisonServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        mockDataFileHub = new MockDataFileHub();
+        MockDataFileHub mockDataFileHub = new MockDataFileHub();
+
+        String accession = "E-GEOD-54351";
+
         mockDataFileHub.addReactomePathwaysFile(accession, c1.getId(),
-                ImmutableList.of(c1s1, c1s2, c1s3, c1s4, c1s5, c1s6, c1s7, c1s8, c1s9, c1s10, c1s11));
+                Lists.newArrayList(c1s1, c1s2, c1s3, c1s4, c1s5, c1s6, c1s7, c1s8, c1s9, c1s10, c1s11));
         mockDataFileHub.addReactomePathwaysFile(accession, c2.getId(),
-                ImmutableList.of(c2s1, c2s2, c2s3, c2s4, c2s5, c2s6, c2s7, c2s8, c2s9, c2s10, c2s11));
+                Lists.newArrayList(c2s1, c2s2, c2s3, c2s4, c2s5, c2s6, c2s7, c2s8, c2s9, c2s10, c2s11));
 
         this.subject = new DifferentialPathwaysComparisonService<>(mockDataFileHub, mockConfigurationTrader,
-                mockdifferentialRequestContextFactory, mockDifferentialProfilesHeatMap);
+                mockDifferentialRequestContextFactory, mockDifferentialProfilesHeatMap);
 
         when(mockDifferentialExperiment.getAccession()).thenReturn(accession);
         when(mockConfigurationTrader.getMicroarrayExperimentConfiguration(accession)).thenReturn(mockMicroarrayExperimentConfiguration);
         when(mockConfigurationTrader.getMicroarrayExperimentConfiguration(accession).getContrasts()).thenReturn(Lists.newArrayList(c1,c2));
 
+        setUpDataTest();
     }
 
     @Test
@@ -110,10 +114,82 @@ public class DifferentialPathwaysComparisonServiceTest {
 
     }
 
-//    @Test
-//    public void testConstructPathwaysByComparison() throws Exception {
-//
-//        assertNotNull(subject.constructPathwaysByComparison(mockDifferentialExperiment, mockdifferentialRequestPreferences));
-//
-//    }
+    @Test
+    public void testConstructPathwaysByComparison() throws Exception {
+
+        Map result = subject.constructPathwaysByComparison(mockDifferentialExperiment, mockDifferentialRequestPreferences);
+
+        assertNotNull(result);
+
+    }
+
+    public void setUpDataTest () {
+        //R-MMU-416482
+        MicroarrayProfile p1 = new MicroarrayProfile("ENSMUSG00000002489", "Tiam1", "10440738" );
+        p1.add(c1, new MicroarrayExpression(0.00106066313805208, -1.3, -9.62450495107545));
+        p1.add(c2, new MicroarrayExpression(9.6990163222472E-5, 12.9595151130145, 12.9595151130145));
+
+        DifferentialProfilesList<MicroarrayProfile> profile1 = new DifferentialProfilesList<>();
+        profile1.add(p1);
+
+        //R-MMU-2132295 profiles = 0
+        DifferentialProfilesList<MicroarrayProfile> profile2 = new DifferentialProfilesList<>();
+        //R-MMU-5620924 profiles = 0
+        DifferentialProfilesList<MicroarrayProfile> profile3 = new DifferentialProfilesList<>();
+
+        //R-MMU-397014
+        MicroarrayProfile p2 = new MicroarrayProfile("ENSMUSG00000004988", "Fxyd4", "10547206" );
+        p2.add(c1, new MicroarrayExpression(0.0472977321050985, 1.5, 3.2390476812278));
+        p2.add(c2, new MicroarrayExpression(9.21199754501842E-4, 1.8, 7.89282725675418));
+
+        DifferentialProfilesList<MicroarrayProfile> profile4 = new DifferentialProfilesList<>();
+        profile4.add(p2);
+
+        //R-MMU-193648
+        MicroarrayProfile p3 = new MicroarrayProfile("ENSMUSG00000002489", "Tiam1", "10440738" );
+        p3.add(c1, new MicroarrayExpression(0.00106066313805208, -1.3, -9.62450495107545));
+        p3.add(c2, new MicroarrayExpression(9.6990163222472E-5, 1.9, 12.9595151130145));
+
+        DifferentialProfilesList<MicroarrayProfile> profile5 = new DifferentialProfilesList<>();
+        profile5.add(p3);
+
+        //R-MMU-373760 profiles = 0
+        DifferentialProfilesList<MicroarrayProfile> profile6 = new DifferentialProfilesList<>();
+
+        //R-MMU-199418
+        MicroarrayProfile p4 = new MicroarrayProfile("ENSMUSG00000005534", "Insr", "10576692" );
+        p4.add(c2, new MicroarrayExpression(3.49771991467334E-4, -1.6, -9.81644391683006));
+        MicroarrayProfile p5 = new MicroarrayProfile("ENSMUSG00000005534", "Insr", "10576696" );
+        p5.add(c2, new MicroarrayExpression(3.44661129727514E-4, -1.4, -9.8473138195065));
+        MicroarrayProfile p6 = new MicroarrayProfile("ENSMUSG00000003541", "Ier3", "10444890" );
+        p6.add(c1, new MicroarrayExpression(0.00221450787547184, 1.1, 8.05959759149795));
+
+        DifferentialProfilesList<MicroarrayProfile> profile7 = new DifferentialProfilesList<>();
+        profile7.add(p4);
+        profile7.add(p5);
+        profile7.add(p6);
+
+        //R-MMU-2029480
+        DifferentialProfilesList<MicroarrayProfile> profile8 = new DifferentialProfilesList<>();
+        //R-MMU-5654741
+        DifferentialProfilesList<MicroarrayProfile> profile9 = new DifferentialProfilesList<>();
+
+        //R-MMU-1483206
+        MicroarrayProfile p7 = new MicroarrayProfile("ENSMUSG00000001211", "Agpat3", "10370471" );
+        p7.add(c2, new MicroarrayExpression(3.79115384690853E-4, -1.2, -9.63904617660614));
+        MicroarrayProfile p8 = new MicroarrayProfile("ENSMUSG00000002475", "Abhd3", "10457475" );
+        p8.add(c1, new MicroarrayExpression(9.80641472323071E-4, -1.5, -9.82105668776165));
+        MicroarrayProfile p9 = new MicroarrayProfile("ENSMUSG00000002475", "Abhd3", "10457475" );
+        p9.add(c2, new MicroarrayExpression(1.63591283639218E-4, -1.3, -11.5703820776891));
+
+        DifferentialProfilesList<MicroarrayProfile> profile10 = new DifferentialProfilesList<>();
+        profile10.add(p7);
+        profile10.add(p8);
+        profile10.add(p9);
+
+        when(mockDifferentialRequestContextFactory.create(mockDifferentialExperiment, mockDifferentialRequestPreferences)).thenReturn(mockRequestContext);
+        when(mockDifferentialProfilesHeatMap.fetch(mockRequestContext)).thenReturn(profile1,profile4,profile2,profile5,profile6,profile3,
+                profile9,profile7,profile8,profile10);
+
+    }
 }
