@@ -42,4 +42,26 @@ public class GeneProfilesListTest {
     public void testList() throws Exception {
         assertThat(subject, contains(profile_5, profile_3, profile_4, profile_1, profile_2));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void sublistShouldThrowIllegalArguemntExceptionWhenUpperIndexIsLessThanZero() throws Exception {
+        //when
+        List<BaselineProfile> e = subject.subList(0, -1);
+        assertThat(e, is(nullValue()));
+    }
+
+    public void sublistTest() throws Exception {
+        //when
+        List<BaselineProfile> geneProfiles = subject.subList(0, 3);
+        //then
+        assertThat(geneProfiles, contains(profile_5, profile_3, profile_4));
+    }
+
+    public void sublistShouldReturnEntireListWhenTopIndexLargerThanListSize() throws Exception {
+        //when
+        List<BaselineProfile> geneProfiles = subject.subList(0, 7);
+        //then
+        assertThat(geneProfiles, hasSize(5));
+    }
+
 }

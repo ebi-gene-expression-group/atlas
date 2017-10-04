@@ -36,7 +36,6 @@ public class DataFileHub {
     final static String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
     final static String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-fpkms.tsv";
     final static String RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-tpms.tsv";
-    final static String RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-transcripts-tpms.tsv";
 
 
 
@@ -143,7 +142,6 @@ public class DataFileHub {
     public class RnaSeqBaselineExperimentFiles extends BaselineExperimentFiles {
         private final AtlasResource<ObjectInputStream<String[]>> fpkms;
         private final AtlasResource<ObjectInputStream<String[]>> tpms;
-        public final AtlasResource<ObjectInputStream<String[]>> transcriptsTpms;
         RnaSeqBaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.fpkms =
@@ -152,9 +150,6 @@ public class DataFileHub {
             this.tpms =
                     new TsvFile.ReadAsStream(
                             dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.transcriptsTpms =
-                    new TsvFile.ReadAsStream(
-                            dataFilesLocation, RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
         }
 
         public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit) {

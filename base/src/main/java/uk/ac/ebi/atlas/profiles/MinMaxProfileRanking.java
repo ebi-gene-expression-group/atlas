@@ -30,10 +30,7 @@ public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<
         }
 
         L list = newList.get();
-        T profile;
-        while ((profile = rankingQueue.poll()) != null) {
-            list.add(profile);
-        }
+        list.addAll(rankingQueue);
         list.setTotalResultCount(count);
         return list;
     }

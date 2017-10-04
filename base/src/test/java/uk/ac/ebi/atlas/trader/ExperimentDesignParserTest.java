@@ -49,7 +49,7 @@ public class ExperimentDesignParserTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        dataFileHub = MockDataFileHub.create();
+        dataFileHub = new MockDataFileHub();
     }
 
     @Before

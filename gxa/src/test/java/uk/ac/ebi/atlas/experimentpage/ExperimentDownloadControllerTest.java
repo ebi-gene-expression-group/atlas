@@ -5,6 +5,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import static org.junit.Assert.*;

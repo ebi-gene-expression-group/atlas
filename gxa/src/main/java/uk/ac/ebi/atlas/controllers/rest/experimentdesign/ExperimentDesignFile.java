@@ -3,10 +3,11 @@ package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 import au.com.bytecode.opencsv.CSVWriter;
 import uk.ac.ebi.atlas.experimentpage.ExternallyAvailableContentController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
-import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -19,65 +20,38 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
-public abstract class ExperimentDesignFile<E extends Experiment<? extends DescribesDataColumns>>
-        extends CanStreamSupplier<E> {
-
-    private final DataFileHub dataFileHub;
-
-    private ExperimentDesignFile(DataFileHub dataFileHub) {
-        this.dataFileHub = dataFileHub;
-    }
-
-    @Named
-    public static class Baseline extends ExperimentDesignFile<BaselineExperiment> {
-        @Inject
-        public Baseline(DataFileHub dataFileHub){
-            super(dataFileHub);
-        }
-    }
-
-    @Named
-    public static class RnaSeq extends ExperimentDesignFile<DifferentialExperiment> {
-        @Inject
-        public RnaSeq(DataFileHub dataFileHub) {
-            super(dataFileHub);
-        }
-    }
-
-    @Named
-    public static class Microarray extends ExperimentDesignFile<MicroarrayExperiment> {
-        @Inject
-        public Microarray(DataFileHub dataFileHub) {
-            super(dataFileHub);
-        }
-    }
+public abstract class ExperimentDesignFile<E extends Experiment> extends CanStreamSupplier<E> {
 
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
         return ExternallyAvailableContent.ContentType.DATA;
     }
 
+    private final DataFileHub dataFileHub;
+    public ExperimentDesignFile(DataFileHub dataFileHub){
+        this.dataFileHub = dataFileHub;
+    }
+
+
     @Override
     protected Collection<String> reservedUris(){
         return Collections.singleton("experiment-design");
     }
 
-    public static String makeUrl(String experimentAccession, String accessKey) {
-        return ExternallyAvailableContentController.streamResourcesUrl(
-                experimentAccession, accessKey, "experiment-design");
+    public static String makeUrl(String experimentAccession, String accessKey){
+        return ExternallyAvailableContentController.streamResourcesUrl(experimentAccession, accessKey, "experiment-design");
     }
 
-    public Collection<ExternallyAvailableContent> get(final E experiment) {
+    public Collection<ExternallyAvailableContent> get(final E experiment){
         return Collections.singleton(
                 new ExternallyAvailableContent(
                         makeUri("experiment-design"),
-                        ExternallyAvailableContent.Description.create(
-                                "icon-experiment-design", "Experiment Design (tsv)"),
+                        ExternallyAvailableContent.Description.create("icon-experiment-design", "Experiment Design (tsv)"),
                         streamFile(experiment.getAccession() + "-experiment-design.tsv", new Function<Writer, Void>() {
                             @Nullable
                             @Override
@@ -90,25 +64,21 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
         );
     }
 
-    private void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer) {
-        List<String[]> newCsvLines =
-                getLines(
-                        analysedRowsAccessions,
-                        dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get().readAll());
+    protected void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer){
+        List<String[]> newCsvLines = getLines(analysedRowsAccessions, dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get().readAll());
 
         try {
-            CSVWriter csvWriter =
-                    new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER);
+            CSVWriter csvWriter = new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER);
             csvWriter.writeAll(newCsvLines);
 
             csvWriter.flush();
             csvWriter.close();
-        } catch (IOException e) {
+        } catch (IOException e){
             throw new RuntimeException(e);
         }
     }
 
-    private List<String[]> getLines(Set<String> analysedRowsAccessions, List<String[]> csvLines) {
+    List<String[]> getLines(Set<String> analysedRowsAccessions, List<String[]> csvLines){
 
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
@@ -133,10 +103,65 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
     }
 
 
-    private Set<String> getAnalysedRowsAccessions(E experiment) {
-        return experiment.getDataColumnDescriptors().stream()
-                .flatMap(c -> c.assaysAnalyzedForThisDataColumn().stream())
-                .collect(Collectors.toSet());
+    protected abstract Set<String> getAnalysedRowsAccessions(E experiment);
+
+
+    @Named
+    public static class Baseline extends ExperimentDesignFile<BaselineExperiment> {
+
+        @Inject
+        public Baseline(DataFileHub dataFileHub){
+            super(dataFileHub);
+        }
+
+        @Override
+        protected Set<String> getAnalysedRowsAccessions(BaselineExperiment experiment) {
+            Set<String> result = new HashSet<>();
+            for(AssayGroup assayGroup: experiment.getDataColumnDescriptors()){
+                for(String assay: assayGroup){
+                    result.add(assay);
+                }
+            }
+            return result;
+        }
     }
 
+    @Named
+    public static class RnaSeq extends Differential<DifferentialExperiment>{
+
+        @Inject
+        public RnaSeq(DataFileHub dataFileHub) {
+            super(dataFileHub);
+        }
+    }
+
+    @Named
+    public static class Microarray extends Differential<MicroarrayExperiment>{
+
+        @Inject
+        public Microarray(DataFileHub dataFileHub) {
+            super(dataFileHub);
+        }
+    }
+
+    public static abstract class Differential<E extends DifferentialExperiment> extends ExperimentDesignFile<E> {
+
+        public Differential(DataFileHub dataFileHub){
+            super(dataFileHub);
+        }
+
+        @Override
+        protected Set<String> getAnalysedRowsAccessions(E experiment) {
+            Set<String> result = new HashSet<>();
+            for(Contrast contrast: experiment.getDataColumnDescriptors()){
+                for(String assay: contrast.getReferenceAssayGroup()){
+                    result.add(assay);
+                }
+                for(String assay: contrast.getTestAssayGroup()){
+                    result.add(assay);
+                }
+            }
+            return result;
+        }
+    }
 }

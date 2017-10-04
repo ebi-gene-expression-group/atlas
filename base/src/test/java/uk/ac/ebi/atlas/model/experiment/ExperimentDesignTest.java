@@ -56,7 +56,7 @@ public class ExperimentDesignTest {
         for(AssayGroup assayGroup: assayGroups){
             String value1 = RandomStringUtils.random(5);
             String value2 = RandomStringUtils.random(5);
-            for(String assay: assayGroup.assaysAnalyzedForThisDataColumn()){
+            for(String assay: assayGroup){
                 experimentDesign.putFactor(assay, "type1", value1);
                 experimentDesign.putFactor(assay, "type2", value2);
             }

@@ -23,7 +23,7 @@ public class BaselineAnalyticsInputStreamFactoryTest {
 
     @Before
     public void setUp() throws Exception {
-        MockDataFileHub dataFileHub = MockDataFileHub.create();
+        MockDataFileHub dataFileHub = new MockDataFileHub();
         // “Contents” of files aren’t read
         dataFileHub.addTpmsExpressionFile(EXPERIMENT_ACCESSION_RNASEQ_TPMS, ImmutableList.of(
                 new String[]{"Gene ID", "Gene name", "g1"},

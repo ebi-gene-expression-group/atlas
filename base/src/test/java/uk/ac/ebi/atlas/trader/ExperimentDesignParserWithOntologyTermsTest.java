@@ -71,7 +71,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        dataFileHub = MockDataFileHub.create();
+        dataFileHub = new MockDataFileHub();
     }
 
     @Before
