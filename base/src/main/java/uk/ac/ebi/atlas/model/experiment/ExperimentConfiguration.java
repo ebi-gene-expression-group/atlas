@@ -91,7 +91,9 @@ public class ExperimentConfiguration {
             }
 
             technicalReplicatesPerId.asMap().forEach((biologicalReplicateId, assays) ->
-               biologicalReplicates.add(new BiologicalReplicate(biologicalReplicateId, ImmutableSet.copyOf(assays)))
+               biologicalReplicates.add(assays.size() > 1
+                       ? new BiologicalReplicate(biologicalReplicateId, ImmutableSet.copyOf(assays))
+                       : new BiologicalReplicate(assays.iterator().next()))
             );
             return new AssayGroup(id,biologicalReplicates.build());
 
