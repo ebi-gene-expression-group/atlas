@@ -95,8 +95,8 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
     protected abstract Collection<ObjectInputStream<String[]>> getDataFiles(E experiment, StreamOptions options);
 
     private ObjectInputStream<Prof> readNextLineStream(Function<String[], Function<String[], Prof>> howToReadLine,
-                                                         final Predicate<String[]> keepLines,
-                                                         final ObjectInputStream<String[]> lines) {
+                                                       final Predicate<String[]> keepLines,
+                                                       final ObjectInputStream<String[]> lines) {
 
         final Function<String[], Prof> readLine = howToReadLine.apply(lines.readNext());
         return new ObjectInputStream<Prof>() {

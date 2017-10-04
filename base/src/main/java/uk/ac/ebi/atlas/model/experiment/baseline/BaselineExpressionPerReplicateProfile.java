@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.model.Profile;
 
 public class BaselineExpressionPerReplicateProfile extends Profile<AssayGroup, BaselineExpressionPerBiologicalReplicate, BaselineExpressionPerReplicateProfile> {
 
-
+    // For Kryo serialization
     private BaselineExpressionPerReplicateProfile() {
     }
 

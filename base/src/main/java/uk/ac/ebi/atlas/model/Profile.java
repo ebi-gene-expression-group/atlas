@@ -23,8 +23,8 @@ import static java.util.stream.Collectors.toList;
 
 public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
                               Expr extends Expression,
-                              Self extends Profile<DataColumnDescriptor, Expr, Self>>
-implements KryoSerializable {
+                              Self extends Profile<DataColumnDescriptor, Expr, Self>> implements
+        KryoSerializable {
 
     protected Map<String, Expr> expressionsByCondition = new HashMap<>();
     private String id;

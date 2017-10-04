@@ -13,20 +13,25 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends CreatesProfilesFromTsvFiles<AssayGroup, BaselineExpression,
-        BaselineExperiment, StreamOptions, BaselineProfile> {
+public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends
+        CreatesProfilesFromTsvFiles<
+                AssayGroup, BaselineExpression, BaselineExperiment, StreamOptions, BaselineProfile> {
 
     BaselineProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
     }
 
     @Override
-    protected Function<String[], Function<String[], BaselineProfile>> howToReadLine(final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
-        return strings -> new GoThroughTsvLineAndPickUpExpressionsByIndex(rowPositionsToDataColumns(experiment, strings), expressionFilter) {
+    protected Function<String[], Function<String[], BaselineProfile>> howToReadLine(
+            final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
+
+        return strings ->
+                new GoThroughTsvLineAndPickUpExpressionsByIndex(
+                        rowPositionsToDataColumns(experiment, strings),
+                        expressionFilter) {
             @Nullable
             @Override
             protected BaselineExpression nextExpression(Integer index, AssayGroup assayGroup, String[] currentLine) {
-
                 return BaselineExpression.create(currentLine[index]);
             }
 
@@ -35,6 +40,7 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
                 return new BaselineProfile(currentLine[0], currentLine[1]);
             }
         };
+
     }
 
     @Override
@@ -48,6 +54,7 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
         return baselineExpressionFilter;
     }
 
-    protected abstract Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers);
+    protected abstract Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment,
+                                                                          String[] headers);
 
 }
