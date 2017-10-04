@@ -4,7 +4,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.ArrayUtils;
-import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
@@ -12,12 +13,10 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -73,13 +72,23 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
     }
 
     void checkRnaSeqBaselineFiles(String experimentAccession) {
-        DataFileHub.RnaSeqBaselineExperimentFiles experimentFiles = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
+        DataFileHub.RnaSeqBaselineExperimentFiles experimentFiles =
+                dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
         checkBaselineFiles(experimentFiles);
         ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles = experimentFiles.dataFiles();
-        Preconditions.checkState(dataFiles.size()> 0, MessageFormat.format("No data files (FPKM/TPM) present for {0}!", experimentAccession));
-        for(ExpressionUnit.Absolute.Rna dataFile: dataFiles){
+        Preconditions.checkState(
+                dataFiles.size()> 0,
+                MessageFormat.format("No data files (FPKM/TPM) present for {0}!", experimentAccession));
+        for (ExpressionUnit.Absolute.Rna dataFile: dataFiles) {
             checkResourceExistsAndIsReadable(experimentFiles.dataFile(dataFile));
-            headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(dataFile).get().readNext()), experimentAccession);
+            assayGroupIdsInHeaderMatchConfigurationXml(
+                    rnaSeqIdsFromHeader(experimentFiles.dataFile(dataFile).get().readNext()), experimentAccession);
+        }
+
+        AtlasResource<ObjectInputStream<String[]>> transcripts = experimentFiles.transcriptsTpms;
+        if (transcripts.exists()) {
+            biologicalReplicateIdsInHeaderMatchConfigurationXml(
+                    transcriptIdsFromHeader(transcripts.get().readNext()), experimentAccession);
         }
     }
 
@@ -87,24 +96,49 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         return ArrayUtils.subarray(header, 2, header.length);
     }
 
+    private String[] transcriptIdsFromHeader(String[] header) {
+        return ArrayUtils.subarray(header, 3, header.length);
+    }
+
     void checkProteomicsBaselineFiles(String experimentAccession) {
-        DataFileHub.ProteomicsBaselineExperimentFiles experimentFiles = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession);
+        DataFileHub.ProteomicsBaselineExperimentFiles experimentFiles =
+                dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession);
         checkBaselineFiles(experimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.main);
-        headerIdsMatchConfigurationXml(proteomicsIdsFromHeader(experimentFiles.main.get().readNext()), experimentAccession);
+        assayGroupIdsInHeaderMatchConfigurationXml(
+                proteomicsIdsFromHeader(experimentFiles.main.get().readNext()), experimentAccession);
     }
 
     String[] proteomicsIdsFromHeader(String[] header) {
         return StringArrayUtil.substringBefore(StringArrayUtil.filterBySubstring(header, "WithInSampleAbundance"), ".");
     }
 
-    private void headerIdsMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+    private void biologicalReplicateIdsInHeaderMatchConfigurationXml(String[] biologicalReplicateIds,
+                                                                     String experimentAccession) {
+        Set<String> idsInConfiguration =
+                configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
+                        .flatMap(a -> a.biologicalReplicatesForThisDataColumn().stream())
+                        .map(DescribesDataColumns::getId)
+                        .collect(Collectors.toSet());
         Preconditions.checkState(
-                ImmutableSet.copyOf(assayGroupIds).equals(
-                        configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
-                                .map(AssayGroup::getId)
-                                .collect(Collectors.toSet())),
-                MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
+                ImmutableSet.copyOf(biologicalReplicateIds).equals(idsInConfiguration),
+                MessageFormat.format(
+                        "Biological replicate ids in data file (#:{1}) not matching ids in " +
+                        "{0}-configuration.xml (#:{2})",
+                        experimentAccession, biologicalReplicateIds.length, idsInConfiguration.size()));
+    }
+
+    private void assayGroupIdsInHeaderMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+        Set<String> idsInConfiguration =
+                configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups().stream()
+                        .map(DescribesDataColumns::getId)
+                        .collect(Collectors.toSet());
+        Preconditions.checkState(
+                ImmutableSet.copyOf(assayGroupIds).equals(idsInConfiguration),
+                MessageFormat.format(
+                        "Assay group ids in data file (#:{1}) not matching ids in " +
+                        "{0}-configuration.xml (#:{2})",
+                        experimentAccession, assayGroupIds.length, idsInConfiguration.size()));
     }
 
 

@@ -1,71 +1,57 @@
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class AssayGroup extends DescribesDataColumns implements Iterable<String> {
+public class AssayGroup extends DescribesDataColumns {
 
-    private Set<String> assayAccessions;
-    private int replicates;
+    private final Set<BiologicalReplicate> biologicalReplicates;
 
+    //convenience constructor for tests
     public AssayGroup(String id, String... assayAccessions) {
-        this(id, assayAccessions.length, assayAccessions);
+        this(id, Arrays.stream(assayAccessions).map(BiologicalReplicate::new).collect(Collectors.toSet()));
     }
 
-    public AssayGroup(String id, int replicates, String... assayAccessions) {
+    public AssayGroup(String id, Set<BiologicalReplicate> biologicalReplicates) {
         super(id);
-        checkArgument(assayAccessions.length > 0 );
-
-        this.replicates = replicates;
-        this.assayAccessions = Sets.newHashSet(assayAccessions);
-    }
-
-    @Override
-    public Iterator<String> iterator() {
-        return assayAccessions.iterator();
+        checkArgument(biologicalReplicates.size() > 0);
+        this.biologicalReplicates = biologicalReplicates;
     }
 
     public int getReplicates() {
-        return replicates;
+        return biologicalReplicates.size();
     }
 
     public String getFirstAssayAccession() {
-        return assayAccessions.iterator().next();
+        return assaysAnalyzedForThisDataColumn().iterator().next();
     }
 
-    @Override
-    public int hashCode() {return id.hashCode();}
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
-        final AssayGroup other = (AssayGroup) obj;
-        return Objects.equals(this.id, other.id);
-    }
-
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject o = new JsonObject();
         o.addProperty("id", id);
         JsonArray a = new JsonArray();
-        for(String assayAccession: assayAccessions){
+        for (String assayAccession : assaysAnalyzedForThisDataColumn()) {
             a.add(new JsonPrimitive(assayAccession));
         }
         o.add("assayAccessions", a);
-        o.addProperty("replicates", replicates);
+        o.addProperty("replicates", getReplicates());
         return o;
     }
 
     @Override
     public Set<String> assaysAnalyzedForThisDataColumn() {
-        return assayAccessions;
+        return biologicalReplicates.stream()
+                .flatMap(b -> b.assaysAnalyzedForThisDataColumn().stream()).collect(Collectors.toSet());
+    }
+
+    public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
+        return biologicalReplicates;
     }
 }
