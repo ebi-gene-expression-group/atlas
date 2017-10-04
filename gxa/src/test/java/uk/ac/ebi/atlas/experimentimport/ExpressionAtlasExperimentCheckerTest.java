@@ -156,29 +156,29 @@ public class ExpressionAtlasExperimentCheckerTest {
 
     @Test
     public void checkBaselineRnaSeqFileCheckTranscriptsFile(){
-        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "A"},dataFileHub::addTranscriptsTpmsExpressionFile,
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "", "A"},dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
         assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
-                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "A", "B"},dataFileHub::addTranscriptsTpmsExpressionFile,
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "", "A", "B"},dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[]{"","", "g1", "g2"}, dataFileHub:: addTpmsExpressionFile);
         assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
-                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "A"},
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "", "A"},
                 dataFileHub::addTranscriptsTpmsExpressionFile, new String[]{"","", "g1", "g2"}, dataFileHub::addTpmsExpressionFile);
-        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "A", "B"},
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "", "A", "B"},
                 dataFileHub::addTranscriptsTpmsExpressionFile,new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
     }
 
 
-    void technicalReplicatesInOneAssayGroupPasses(List<String> assayTags,String [] header){
+    private void technicalReplicatesInOneAssayGroupPasses(List<String> assayTags,String [] header){
         assertPasses("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
-                ImmutableList.builder().add("","").addAll(Arrays.asList(header)).build().toArray(new String[]{})
+                ImmutableList.builder().add("","", "").addAll(Arrays.asList(header)).build().toArray(new String[]{})
                 ,dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
     }
 
-    void technicalReplicatesInOneAssayGroupFails(List<String> assayTags,String [] header){
+    private void technicalReplicatesInOneAssayGroupFails(List<String> assayTags,String [] header){
         assertFails("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
-                ImmutableList.builder().add("","").addAll(Arrays.asList(header)).build().toArray(new String[]{}),
+                ImmutableList.builder().add("","", "").addAll(Arrays.asList(header)).build().toArray(new String[]{}),
                 dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
     }
