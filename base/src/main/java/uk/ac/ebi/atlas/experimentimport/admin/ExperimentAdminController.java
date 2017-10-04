@@ -1,13 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -71,8 +68,10 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
                     ? ImmutableList.of()
                     : ImmutableList.copyOf(readAccessions(accessionParameter));
 
-            Iterable<JsonElement> result = maybeOps(opParameter)
-                    .transform(ops -> experimentOps.dispatchAndPerform(accessions, ops)).or(ImmutableList.of(usageMessage(opParameter)));
+            Iterable<JsonElement> result =
+                    maybeOps(opParameter)
+                            .map(ops -> experimentOps.dispatchAndPerform(accessions, ops))
+                            .orElse(ImmutableList.of(usageMessage(opParameter)));
 
             for (JsonElement element : result) {
                 gson.toJson(element, writer);
@@ -91,7 +90,7 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
         try{
             return Optional.of(Op.opsForParameter(opParameter));
         } catch (IllegalArgumentException e){
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
