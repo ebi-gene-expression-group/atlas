@@ -1,26 +1,18 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
-import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.base.Predicate;
+import com.google.common.collect.*;
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
-
-import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -78,7 +70,7 @@ public class AnalyticsSolrQueryTree {
         @Override
         public String toString() {
             return  String.format("%s:(%s)", searchField,
-                    searchValue.contains(":") || searchValue.trim().contains(" ")? StringUtils.wrap(searchValue, "\"") : searchValue);
+                    searchValueNeedsQuotes(searchValue) ? StringUtils.wrap(searchValue, "\"") : searchValue);
         }
 
         @Override
@@ -248,5 +240,19 @@ public class AnalyticsSolrQueryTree {
         });
         b.add(BioentityPropertyName.BIOENTITY_IDENTIFIER.name);
         return b.build();
+    }
+
+    /*
+    Quotes differentiate between searching for a term or for a phrase.
+    https://lucene.apache.org/solr/guide/6_6/the-standard-query-parser.html#TheStandardQueryParser-SpecifyingTermsfortheStandardQueryParser
+
+    If the term has spaces inside, like "zinc finger" we don't want zinc OR finger, but two tokens : zinc and then finger.
+
+    If the query term has bits of syntax inside, quote it too.
+
+    Possibly we could quote everything, and I'm not sure why we're not.
+     */
+    static boolean searchValueNeedsQuotes(String searchValue){
+        return !StringUtils.isAlphanumeric(searchValue.trim());
     }
 }
