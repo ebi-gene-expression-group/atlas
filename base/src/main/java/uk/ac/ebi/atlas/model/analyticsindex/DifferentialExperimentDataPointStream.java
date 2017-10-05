@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnaly
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,12 +24,12 @@ public class DifferentialExperimentDataPointStream implements ObjectInputStream<
     protected final DifferentialExperiment experiment;
     protected final Map<String, Integer> numReplicatesByContrastId;
     protected final ObjectInputStream<? extends DifferentialAnalytics> inputStream;
-    protected final SetMultimap<String, String> conditionSearchTermsByContrastId;
+    protected final Multimap<String, String> conditionSearchTermsByContrastId;
     protected final Set<String> assaysSeen = Sets.newHashSet();
 
     public DifferentialExperimentDataPointStream(DifferentialExperiment experiment,
                                                  ObjectInputStream<? extends DifferentialAnalytics> inputStream,
-                                                 SetMultimap<String, String> conditionSearchTermsByContrastId,
+                                                 Multimap<String, String> conditionSearchTermsByContrastId,
                                                  Map<String, Integer> numReplicatesByContrastId) {
         this.experiment = experiment;
         this.inputStream = inputStream;
@@ -42,8 +43,8 @@ public class DifferentialExperimentDataPointStream implements ObjectInputStream<
 
         if (analytics != null) {
             return new DifferentialExperimentDataPoint(experiment, analytics, getConditionSearchTerms(analytics
-                    .getContrastId(), experiment.getExperimentDesign().getFactorHeaders()),getNumReplicates(analytics
-                    .getContrastId()) );
+                    .getContrastId(), experiment.getExperimentDesign().getFactorHeaders()), getNumReplicates(analytics
+                    .getContrastId()));
         } else {
             return null;
         }
@@ -61,7 +62,7 @@ public class DifferentialExperimentDataPointStream implements ObjectInputStream<
     }
 
     private String getConditionSearchTerms(String contrastId, Set<String> factors) {
-        Set<String> searchTerms = conditionSearchTermsByContrastId.get(contrastId);
+        Collection<String> searchTerms = conditionSearchTermsByContrastId.get(contrastId);
 
         if (searchTerms.isEmpty() && !assaysSeen.contains(contrastId)) {
             assaysSeen.add(contrastId);
