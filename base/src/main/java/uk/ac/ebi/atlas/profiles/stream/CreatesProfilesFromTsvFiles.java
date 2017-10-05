@@ -102,8 +102,13 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
         return new ObjectInputStream<Prof>() {
             @Override
             public Prof readNext() {
-                String[] next = lines.readNext();
-                return next == null ? null : keepLines.test(next) ? readLine.apply(next): readNext();
+                String[] next;
+                while ((next = lines.readNext())!= null) {
+                    if (keepLines.test(next)) {
+                        return readLine.apply(next);
+                    }
+                }
+                return null;
             }
 
             @Override

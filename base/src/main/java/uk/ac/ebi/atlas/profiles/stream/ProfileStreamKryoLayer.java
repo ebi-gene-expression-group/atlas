@@ -46,16 +46,13 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
             return new ObjectInputStream<Prof>() {
                 @Override
                 public Prof readNext() {
-                    if (input.eof()) {
-                        return null;
-                    } else {
+                    while (!input.eof()) {
                         Prof p = ((Prof) kryo.readClassAndObject(input));
                         if (keepGeneIds.contains(p.getId())) {
                             return p.filter(keepExpressions);
-                        } else {
-                            return readNext();
                         }
                     }
+                    return null;
                 }
 
                 @Override
