@@ -87,7 +87,7 @@ public class RnaSeqProfilesHeatMapIT {
 
         testNotSpecific(accession);
 
-        testUpAndDownRegulatedAndAlsoQueryFactorValues(accession);
+        testUpAndDownRegulated(accession);
 
         testNoResultsWithStrictCutoff(accession);
     }
@@ -112,7 +112,7 @@ public class RnaSeqProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) throws Exception {
+    private void testUpAndDownRegulated(String accession) throws Exception {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList<RnaSeqProfile> profilesAll = subject.fetch(requestContext);
@@ -134,15 +134,7 @@ public class RnaSeqProfilesHeatMapIT {
                 profilesAll.size() == 50 || extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesDown)),
                 is(true));
 
-        requestContext = populateRequestContext(accession);
-
-        DifferentialProfilesList<RnaSeqProfile> profilesQueryFactorValues = subject.fetch(requestContext);
-        assertThat(
-                profilesAll.size() ==50 ||
-                        extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesQueryFactorValues)),
-                is(true));
-
-        assertAbout(requestContext.getExperiment(), profilesQueryFactorValues);
+        assertAbout(requestContext.getExperiment(), profilesAll);
     }
 
 

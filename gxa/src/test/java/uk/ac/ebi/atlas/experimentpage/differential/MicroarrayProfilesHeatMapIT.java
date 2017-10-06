@@ -89,7 +89,7 @@ public class MicroarrayProfilesHeatMapIT {
 
         testNotSpecific(accession);
 
-        testUpAndDownRegulatedAndAlsoQueryFactorValues(accession);
+        testUpAndDownRegulated(accession);
 
         testNoResultsWithStrictCutoff(accession);
     }
@@ -113,7 +113,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) throws Exception {
+    private void testUpAndDownRegulated(String accession) throws Exception {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList<MicroarrayProfile> profilesAll = subject.fetch(requestContext);
@@ -135,15 +135,7 @@ public class MicroarrayProfilesHeatMapIT {
                 profilesAll.size() == 50 || extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesDown)),
                 is(true));
 
-        setUp();
-        requestContext = populateRequestContext(accession);
-
-        DifferentialProfilesList<MicroarrayProfile> profilesQueryFactorValues = subject.fetch(requestContext);
-        assertThat(
-                profilesAll.size() == 50 ||
-                        extractGeneNames(profilesAll).containsAll(extractGeneNames(profilesQueryFactorValues)),
-                is(true));
-        assertAbout(requestContext.getExperiment(), profilesQueryFactorValues);
+        assertAbout(requestContext.getExperiment(), profilesAll);
     }
 
 
