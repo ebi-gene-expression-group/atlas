@@ -39,21 +39,19 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
     }
 
     public  Map<Contrast, List<String>> getPathwaysListPerComparison(DifferentialExperiment experiment) {
-        Map<Contrast, List<String>> comparisonPathwaysMap = new HashMap<>();
+        Map<Contrast, List<String>> comparisonsPathwaysMap = new HashMap<>();
 
-        //get experiment accession
         String experimentAccession = experiment.getAccession();
-        //extract comparisons (contrastIds) per experiment using the configuration trader
         List<Contrast> comparisons = configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession).getContrasts();
 
-        //read pathwaysId file for each comparison
+        //fetch pathwaysId from file for each comparison
         for (Contrast comparison : comparisons) {
             List<String> pathwaysValues = fetchPathwaysFromFile(experimentAccession, comparison);
 
-            comparisonPathwaysMap.put(comparison, pathwaysValues);
+            comparisonsPathwaysMap.put(comparison, pathwaysValues);
         }
 
-        return comparisonPathwaysMap;
+        return comparisonsPathwaysMap;
     }
 
     private List<String> fetchPathwaysFromFile (String experimentAccession, Contrast comparison) {
@@ -101,17 +99,20 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
                         String geneId = differentialProfiles.get(i).getId();
                         DifferentialExpression differentialExpression = differentialProfiles.get(i).getExpression(comparison.getKey());
 
-                        if (differentialExpression != null && pathwayGeneExpressionMap.get(pathwayId).isEmpty()) {
-                            pathwayGeneExpressionMap.put(pathwayId, Pair.of(geneId, differentialExpression));
-                        } else if (!pathwayGeneExpressionMap.get(pathwayId).isEmpty() && differentialExpression != null) {
-                            for (Pair<String, DifferentialExpression> geneExpressionInfo : pathwayGeneExpressionMap.get(pathwayId)) {
-                                if (geneExpressionInfo.getLeft().equals(geneId)) {
-                                    DifferentialExpression highestExpression = geneExpressionInfo.getRight().getAbsoluteFoldChange() <
-                                            differentialExpression.getAbsoluteFoldChange() ? differentialExpression : geneExpressionInfo.getRight();
-                                    pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, highestExpression));
+                        if (differentialExpression != null) {
+                            if (pathwayGeneExpressionMap.get(pathwayId).isEmpty()) {
+                                pathwayGeneExpressionMap.put(pathwayId, Pair.of(geneId, differentialExpression));
+                            }
+                            else {
+                                for (Pair<String, DifferentialExpression> geneExpressionInfo : pathwayGeneExpressionMap.get(pathwayId)) {
+                                    if (geneExpressionInfo.getLeft().equals(geneId)) {
+                                        DifferentialExpression highestExpression = geneExpressionInfo.getRight().getAbsoluteFoldChange() <
+                                                differentialExpression.getAbsoluteFoldChange() ? differentialExpression : geneExpressionInfo.getRight();
+                                        pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, highestExpression));
 
-                                } else {
-                                    pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, differentialExpression));
+                                    } else {
+                                        pathwayGeneExpressionMap.get(pathwayId).add(Pair.of(geneId, differentialExpression));
+                                    }
                                 }
                             }
                         }

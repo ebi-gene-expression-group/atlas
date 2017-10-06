@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.*;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.*;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
@@ -96,7 +96,7 @@ public class DifferentialPathwaysComparisonServiceTest {
         when(mockConfigurationTrader.getMicroarrayExperimentConfiguration(accession)).thenReturn(mockMicroarrayExperimentConfiguration);
         when(mockConfigurationTrader.getMicroarrayExperimentConfiguration(accession).getContrasts()).thenReturn(Lists.newArrayList(c1,c2));
 
-        setUpDataTest();
+        setUpDataForTest();
     }
 
     @Test
@@ -117,13 +117,51 @@ public class DifferentialPathwaysComparisonServiceTest {
     @Test
     public void testConstructPathwaysByComparison() throws Exception {
 
-        Map result = subject.constructPathwaysByComparison(mockDifferentialExperiment, mockDifferentialRequestPreferences);
+        Map multimap = subject.constructPathwaysByComparison(mockDifferentialExperiment, mockDifferentialRequestPreferences);
+        assertNotNull(multimap);
+        assertThat(multimap.size(), is(1));
 
-        assertNotNull(result);
+        //Contrast 2
+        HashMultimap values = (HashMultimap) multimap.get(c2);
+        Map map = values.asMap();
 
+        Set<String> expectedPathways = Sets.newHashSet("R-MMU-416482", "R-MMU-397014", "R-MMU-199418", "R-MMU-193648", "R-MMU-1483206");
+        assertThat(map.keySet(), is(expectedPathways));
+
+        Collection<Pair<String, DifferentialExpression>> pairCollection1 = (Collection<Pair<String, DifferentialExpression>>) map.get("R-MMU-416482");
+        assertThat(pairCollection1.size(), is(1));
+        assertThat(pairCollection1.iterator().next().getLeft(), is("ENSMUSG00000002489"));
+        assertThat(pairCollection1.iterator().next().getRight().getAbsoluteFoldChange(), is(12.9595151130145));
+
+        Collection<Pair<String, DifferentialExpression>> pairCollection2 = (Collection<Pair<String, DifferentialExpression>>) map.get("R-MMU-397014");
+        assertThat(pairCollection2.size(), is(1));
+        assertThat(pairCollection2.iterator().next().getLeft(), is("ENSMUSG00000004988"));
+        assertThat(pairCollection2.iterator().next().getRight().getAbsoluteFoldChange(), is(1.8));
+
+        Collection<Pair<String, DifferentialExpression>> pairCollection3 = (Collection<Pair<String, DifferentialExpression>>) map.get("R-MMU-199418");
+        assertThat(pairCollection3.size(), is(1));
+        assertThat(pairCollection3.iterator().next().getLeft(), is("ENSMUSG00000005534"));
+        assertThat(pairCollection3.iterator().next().getRight().getAbsoluteFoldChange(), is(1.6));
+
+        Collection<Pair<String, DifferentialExpression>> pairCollection4 = (Collection<Pair<String, DifferentialExpression>>) map.get("R-MMU-193648");
+        assertThat(pairCollection4.size(), is(1));
+        assertThat(pairCollection4.iterator().next().getLeft(), is("ENSMUSG00000002489"));
+        assertThat(pairCollection4.iterator().next().getRight().getAbsoluteFoldChange(), is(1.9));
+
+        Pair<String, DifferentialExpression> pair1 = new ImmutablePair<>("ENSMUSG00000001211",
+                new MicroarrayExpression(3.79115384690853E-4, -1.2, -9.63904617660614));
+        Pair<String, DifferentialExpression> pair2 = new ImmutablePair<>("ENSMUSG00000002475",
+                new MicroarrayExpression(1.63591283639218E-4, -1.3, -11.5703820776891));
+        Collection<Pair<String, DifferentialExpression>> expectedCollection = new HashSet<>();
+        expectedCollection.add(pair1);
+        expectedCollection.add(pair2);
+
+        Collection<Pair<String, DifferentialExpression>> pairCollection5 = (Collection<Pair<String, DifferentialExpression>>) map.get("R-MMU-1483206");
+        assertThat(pairCollection5.size(), is(2));
+        assertThat(pairCollection5, is(expectedCollection));
     }
 
-    public void setUpDataTest () {
+    public void setUpDataForTest() {
         //R-MMU-416482
         MicroarrayProfile p1 = new MicroarrayProfile("ENSMUSG00000002489", "Tiam1", "10440738" );
         p1.add(c1, new MicroarrayExpression(0.00106066313805208, -1.3, -9.62450495107545));
@@ -131,11 +169,15 @@ public class DifferentialPathwaysComparisonServiceTest {
 
         DifferentialProfilesList<MicroarrayProfile> profile1 = new DifferentialProfilesList<>();
         profile1.add(p1);
+        profile1.setTotalResultCount(1);
 
         //R-MMU-2132295 profiles = 0
         DifferentialProfilesList<MicroarrayProfile> profile2 = new DifferentialProfilesList<>();
+        profile2.setTotalResultCount(0);
+
         //R-MMU-5620924 profiles = 0
         DifferentialProfilesList<MicroarrayProfile> profile3 = new DifferentialProfilesList<>();
+        profile3.setTotalResultCount(0);
 
         //R-MMU-397014
         MicroarrayProfile p2 = new MicroarrayProfile("ENSMUSG00000004988", "Fxyd4", "10547206" );
@@ -144,6 +186,8 @@ public class DifferentialPathwaysComparisonServiceTest {
 
         DifferentialProfilesList<MicroarrayProfile> profile4 = new DifferentialProfilesList<>();
         profile4.add(p2);
+        profile4.setTotalResultCount(1);
+
 
         //R-MMU-193648
         MicroarrayProfile p3 = new MicroarrayProfile("ENSMUSG00000002489", "Tiam1", "10440738" );
@@ -152,9 +196,11 @@ public class DifferentialPathwaysComparisonServiceTest {
 
         DifferentialProfilesList<MicroarrayProfile> profile5 = new DifferentialProfilesList<>();
         profile5.add(p3);
+        profile5.setTotalResultCount(1);
 
         //R-MMU-373760 profiles = 0
         DifferentialProfilesList<MicroarrayProfile> profile6 = new DifferentialProfilesList<>();
+        profile6.setTotalResultCount(0);
 
         //R-MMU-199418
         MicroarrayProfile p4 = new MicroarrayProfile("ENSMUSG00000005534", "Insr", "10576692" );
@@ -168,11 +214,15 @@ public class DifferentialPathwaysComparisonServiceTest {
         profile7.add(p4);
         profile7.add(p5);
         profile7.add(p6);
+        profile7.setTotalResultCount(3);
 
         //R-MMU-2029480
         DifferentialProfilesList<MicroarrayProfile> profile8 = new DifferentialProfilesList<>();
+        profile8.setTotalResultCount(0);
+
         //R-MMU-5654741
         DifferentialProfilesList<MicroarrayProfile> profile9 = new DifferentialProfilesList<>();
+        profile9.setTotalResultCount(0);
 
         //R-MMU-1483206
         MicroarrayProfile p7 = new MicroarrayProfile("ENSMUSG00000001211", "Agpat3", "10370471" );
@@ -186,6 +236,8 @@ public class DifferentialPathwaysComparisonServiceTest {
         profile10.add(p7);
         profile10.add(p8);
         profile10.add(p9);
+        profile10.setTotalResultCount(3);
+
 
         when(mockDifferentialRequestContextFactory.create(mockDifferentialExperiment, mockDifferentialRequestPreferences)).thenReturn(mockRequestContext);
         when(mockDifferentialProfilesHeatMap.fetch(mockRequestContext)).thenReturn(profile1,profile4,profile2,profile5,profile6,profile3,
