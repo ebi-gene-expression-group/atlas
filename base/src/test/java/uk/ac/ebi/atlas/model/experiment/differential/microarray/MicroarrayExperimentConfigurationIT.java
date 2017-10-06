@@ -12,9 +12,11 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -42,8 +44,8 @@ public class MicroarrayExperimentConfigurationIT {
         for(Contrast contrast: contrasts){
             assertNotNull(contrast.getId());
             assertNotNull(contrast.getDisplayName());
-            assertTrue(contrast.getReferenceAssayGroup().iterator().hasNext());
-            assertTrue(contrast.getTestAssayGroup().iterator().hasNext());
+            assertThat(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn(), is(not(empty())));
+            assertThat(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn(), is(not(empty())));
         }
     }
 }

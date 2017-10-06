@@ -39,9 +39,14 @@ public class BaselineProfilesHeatMap<StreamOptions extends BaselineProfileStream
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        BaselineProfilesList profiles = baselineProfileStreamFactory.select(experiment, options,
-                new ProfileStreamFilter<>(options, geneQueryResponse),
-                new MinMaxProfileRanking<>(BaselineProfileComparator.create(options), new BaselineProfilesListBuilder()));
+        BaselineProfilesList profiles =
+                baselineProfileStreamFactory.select(
+                        experiment,
+                        options,
+                        geneQueryResponse.getAllGeneIds(),
+                        ProfileStreamFilter.create(options),
+                        new MinMaxProfileRanking<>(
+                                BaselineProfileComparator.create(options), new BaselineProfilesListBuilder()));
 
         stopwatch.stop();
 
@@ -52,14 +57,19 @@ public class BaselineProfilesHeatMap<StreamOptions extends BaselineProfileStream
         return profiles;
     }
 
-    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder, BaselineExperiment experiment, StreamOptions options,
+    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder,
+                                                       BaselineExperiment experiment,
+                                                       StreamOptions options,
                                                        GeneQueryResponse geneQueryResponse) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        BaselineProfilesList profiles = baselineProfileStreamFactory.select(experiment, options,
-                new ProfileStreamFilter<>(options, geneQueryResponse),
-                new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder()));
+        BaselineProfilesList profiles =
+                baselineProfileStreamFactory.select(
+                        experiment,
+                        options,
+                        geneQueryResponse.getAllGeneIds(), ProfileStreamFilter.create(options),
+                        new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder()));
 
         stopwatch.stop();
 

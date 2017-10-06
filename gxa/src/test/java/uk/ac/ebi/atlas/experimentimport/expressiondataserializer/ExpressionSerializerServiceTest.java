@@ -38,7 +38,7 @@ public class ExpressionSerializerServiceTest {
 
     @Before
     public void setUp() throws IOException {
-        dataFileHub = new MockDataFileHub();
+        dataFileHub = MockDataFileHub.create();
         microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
         rnaSeqProfileStreamFactory = new RnaSeqProfileStreamFactory(dataFileHub);
         rnaSeqBaselineProfileStreamFactory = Mockito.spy(new RnaSeqBaselineProfileStreamFactory(dataFileHub));

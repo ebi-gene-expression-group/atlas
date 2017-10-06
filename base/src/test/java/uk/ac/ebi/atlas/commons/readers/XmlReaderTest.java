@@ -39,7 +39,7 @@ public class XmlReaderTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        dataFileHub = new MockDataFileHub();
+        dataFileHub = MockDataFileHub.create();
         dataFileHub.addFactorsFile(E_MTAB_2812, E_MTAB_2812_FACTORS_XML);
 //        dataFileHub.addConfigurationFile(E_MTAB_2812, E_MTAB_2812_FACTORS_XML);
     }

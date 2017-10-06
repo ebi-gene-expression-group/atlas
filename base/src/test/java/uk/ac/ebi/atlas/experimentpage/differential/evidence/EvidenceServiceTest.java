@@ -42,7 +42,7 @@ public class EvidenceServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        mockDataFileHub = new MockDataFileHub();
+        mockDataFileHub = MockDataFileHub.create();
         this.subject = new EvidenceService(differentialProfileStreamFactory, mockDataFileHub, "expressionAtlasVersion");
     }
 

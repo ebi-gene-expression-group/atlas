@@ -1,32 +1,37 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.IsBaselineExpressionAboveCutoffAndForFilterFactors;
+import uk.ac.ebi.atlas.profiles.baseline.IsBaselineExpressionAboveCutoff;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends CreatesProfilesFromTsvFiles<AssayGroup, BaselineExpression,
-        BaselineExperiment, StreamOptions, BaselineProfile> {
+public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends
+        CreatesProfilesFromTsvFiles<
+                AssayGroup, BaselineExpression, BaselineExperiment, StreamOptions, BaselineProfile> {
 
     BaselineProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
     }
 
     @Override
-    protected Function<String[], ProfileFromTsvLine> howToReadLineStream(final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
-        return strings -> new ProfileFromTsvLine(rowPositionsToDataColumns(experiment, strings), expressionFilter) {
+    protected Function<String[], Function<String[], BaselineProfile>> howToReadLine(
+            final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
+
+        return strings ->
+                new GoThroughTsvLineAndPickUpExpressionsByIndex(
+                        rowPositionsToDataColumns(experiment, strings),
+                        expressionFilter) {
             @Nullable
             @Override
             protected BaselineExpression nextExpression(Integer index, AssayGroup assayGroup, String[] currentLine) {
-
                 return BaselineExpression.create(currentLine[index]);
             }
 
@@ -35,11 +40,12 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
                 return new BaselineProfile(currentLine[0], currentLine[1]);
             }
         };
+
     }
 
     @Override
     protected Predicate<BaselineExpression> filterExpressions(BaselineExperiment experiment, StreamOptions options) {
-        IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
+        IsBaselineExpressionAboveCutoff baselineExpressionFilter = new IsBaselineExpressionAboveCutoff();
         baselineExpressionFilter.setCutoff(options.getCutoff());
         //TODO pay attention to other options
         // we used to only pick up expressions that will later be retrieved
@@ -48,6 +54,7 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
         return baselineExpressionFilter;
     }
 
-    protected abstract Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers);
+    protected abstract Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment,
+                                                                          String[] headers);
 
 }

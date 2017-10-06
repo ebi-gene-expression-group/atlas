@@ -27,7 +27,7 @@ public class SpeciesPropertiesTraderTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        dataFileHub = new MockDataFileHub();
+        dataFileHub = MockDataFileHub.create();
     }
 
     @Before

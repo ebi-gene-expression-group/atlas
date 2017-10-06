@@ -21,7 +21,7 @@ public class AssayGroupSummaryBuilderTest {
     private static final String FACTOR_HEADER2 = "factor header 2";
     private static final String FACTOR_VALUE2 = "factor value 2";
 
-    private static final AssayGroup ASSAY_GROUP = new AssayGroup(ASSAY1, ASSAY2);
+    private static final AssayGroup ASSAY_GROUP = new AssayGroup("id", ASSAY1, ASSAY2);
     private static final String SAMPLE_HEADER = "sample header";
     private static final String SAMPLE_VALUE1 = "sample value 2";
     private static final String SAMPLE_VALUE2 = "sample value 2";
