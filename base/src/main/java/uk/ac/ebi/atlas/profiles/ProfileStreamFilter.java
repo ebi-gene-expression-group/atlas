@@ -17,6 +17,6 @@ public class ProfileStreamFilter {
             StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
             Prof extends Profile<DataColumnDescriptor, ?, Prof>> Predicate<Prof> create(final StreamOptions options) {
         final List<DataColumnDescriptor> dataColumnsToReturn = options.getDataColumnsToReturn();
-        return prof -> prof.getSpecificity(dataColumnsToReturn) > 0;
+        return prof -> prof.isExpressedAnywhereOn(dataColumnsToReturn);
     }
 }

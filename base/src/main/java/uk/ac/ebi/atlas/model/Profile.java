@@ -76,6 +76,17 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
                 .count();
     }
 
+    public boolean isExpressedAnywhereOn(Collection<DataColumnDescriptor> conditions){
+        return expressionsByCondition.size() > 0 && conditions.stream().anyMatch(this::isExpressedOn);
+    }
+
+    private boolean isExpressedOn(DataColumnDescriptor condition){
+        Expression expression = getExpression(condition);
+        if (expression != null) {
+            return expression.getLevel() > 0 ;
+        }
+        return false;
+    }
 
     @Nullable
     public Double getExpressionLevel(DataColumnDescriptor condition) {
