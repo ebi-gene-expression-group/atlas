@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Named;
 import java.util.List;
+import java.util.Optional;
 
 @Named
 @Scope("request")
@@ -28,9 +29,7 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
 
     @Override
     public String displayNameForColumn(AssayGroup assayGroup) {
-            return dataColumnsToBeReturned().contains(assayGroup) ?
-                    displayNamePerSelectedAssayGroup.get().get(assayGroup) :
-                    "";
+            return Optional.ofNullable(displayNamePerSelectedAssayGroup.get().get(assayGroup)).orElse("") ;
     }
 
     LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
