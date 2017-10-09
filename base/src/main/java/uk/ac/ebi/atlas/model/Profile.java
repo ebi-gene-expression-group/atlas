@@ -83,7 +83,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     private boolean isExpressedOn(DataColumnDescriptor condition){
         Expression expression = getExpression(condition);
         if (expression != null) {
-            return expression.getLevel() > 0 ;
+            return expression.getLevel() != 0 ;
         }
         return false;
     }
