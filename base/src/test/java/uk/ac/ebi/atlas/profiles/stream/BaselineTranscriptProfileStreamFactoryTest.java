@@ -59,7 +59,6 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                 ),
                 is(expected)
         );
-
     }
 
     BaselineExpressionPerReplicateProfile profile(String id,
@@ -73,7 +72,6 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                 profile.add(g2, e)
         );
         return profile;
-
     }
 
     @Test

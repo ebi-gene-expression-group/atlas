@@ -70,8 +70,12 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(CONDENSED_SDRF_FILE_PATH_TEMPLATE, accession), lines);
     }
 
-    public void addTemporaryPercentileRanksFile(String accession, Collection<String[]> lines){
+    public void addPercentileRanksFile(String accession, Collection<String[]> lines){
         addTemporaryTsv(MessageFormat.format(DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addRnaSeqAnalyticsFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, accession), lines);
     }
 
 //    public void addRawCountsFile(String accession, Collection<String[]> lines) {

@@ -49,7 +49,7 @@ public class EvidenceServiceTest {
     @Test
     public void testGetPercentileRanks() throws Exception {
 
-        mockDataFileHub.addTemporaryPercentileRanksFile(accession, ImmutableList.of(
+        mockDataFileHub.addPercentileRanksFile(accession, ImmutableList.of(
                 "GeneId g1_g2 g3_g4".split(" "),
                 "ENSG00000000003 89 97".split(" "),
                 "ENSG00000000005 56 53".split(" ")
@@ -62,7 +62,7 @@ public class EvidenceServiceTest {
     @Test
     public void understand_NA_AsLackOfValue() throws Exception {
 
-        mockDataFileHub.addTemporaryPercentileRanksFile(accession, ImmutableList.of(
+        mockDataFileHub.addPercentileRanksFile(accession, ImmutableList.of(
                 "GeneId g1_g2 g3_g4".split(" "),
                 "ENSG00000000003 89 NA".split(" ")
         ));
