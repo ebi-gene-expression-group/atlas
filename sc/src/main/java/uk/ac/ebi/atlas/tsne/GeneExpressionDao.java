@@ -7,6 +7,8 @@ import javax.inject.Named;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Named
 public class GeneExpressionDao {
 
@@ -23,6 +25,8 @@ public class GeneExpressionDao {
                         .values().stream()
                         .collect(
                                 Collectors.toMap(
-                                        TSnePoint::name, p -> ThreadLocalRandom.current().nextDouble(0.0, 10000.0))));
+                                        TSnePoint::name,
+                                        p -> isBlank(geneId) ?
+                                                0.0 : ThreadLocalRandom.current().nextDouble(0.0, 10000.0))));
     }
 }
