@@ -150,7 +150,7 @@ var foundationExperimentsPageModule = (function ($) {
                     } },
                 { "title":"Assays", "data":"numberOfAssays", "className":"center", "type":"title-numeric", "width":"5%",
                     "render": function (data, type, full) {
-                        return replaceZeroAndLinkExpDesign(data, type, full);
+                        return replaceZeroAndLinkExpDesign(data, full);
                     } },
                 { "title":"Comparisons", "data":"numberOfContrasts", "className":"center", "type":"title-numeric", "width":"5%",
                     "render": function (data, type, full) {
