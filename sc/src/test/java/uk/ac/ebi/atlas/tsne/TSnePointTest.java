@@ -15,6 +15,9 @@ public class TSnePointTest {
 
     @Test
     public void compareTo() throws Exception {
-        assertThat(TSnePoint.create(0.0, 0.0, 0.0, "B").compareTo(TSnePoint.create(1.0, 1.0, 1.0, "A")), is(greaterThan(0)));
+        assertThat(
+                TSnePoint.create(0.0, 0.0, 0.0, "B").compareTo(TSnePoint.create(1.0, 1.0, 1.0, "A")),
+                is(greaterThan(0))
+        );
     }
 }
