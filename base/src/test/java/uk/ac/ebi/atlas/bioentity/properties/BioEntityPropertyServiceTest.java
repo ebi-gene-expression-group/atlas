@@ -25,9 +25,6 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class BioEntityPropertyServiceTest {
 
-
-    @Mock
-    UniProtClient uniProtClient;
     @Mock
     ArrayDesignDAO arrayDesignDAO;
     @Mock
@@ -44,7 +41,6 @@ public class BioEntityPropertyServiceTest {
     public void setUp(){
         subject = new BioEntityPropertyService(linkBuilder, arrayDesignDAO, goPoTermTrader);
     }
-
 
 
     @Test

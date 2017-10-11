@@ -155,7 +155,7 @@ public class BioEntityPropertyService {
 
     }
 
-    public PropertyLink createLink(String identifier, BioentityPropertyName propertyName,
+    PropertyLink createLink(String identifier, BioentityPropertyName propertyName,
                                    String propertyValue, Species species, int relevance) {
         return new PropertyLink(
                 Optional.ofNullable(linkBuilder.getLinkTextOrNull(propertyName, propertyValue)).orElse(propertyValue),
