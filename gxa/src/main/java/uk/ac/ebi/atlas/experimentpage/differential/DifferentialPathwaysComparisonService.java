@@ -81,12 +81,13 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
 
     public Map<Contrast, SetMultimap<String, Pair<String, DifferentialExpression>>> constructPathwaysByComparison (E experiment,
                                                                                                                    K preferences) {
-        //Read pathwaysId per comparison from file
+        //Read pathwaysId per comparison from file ({comparison}-reactome.gsea.tsv)
         Map<Contrast, List<String>> contrastPathwaysListMap = getPathwaysListPerComparison(experiment);
         SetMultimap<String, Pair<String, DifferentialExpression>> pathwayGeneExpressionMap = HashMultimap.create();
 
-        Map<Contrast, SetMultimap<String, Pair<String, DifferentialExpression>>> contrastMapMap = new HashMap<>();
+        Map<Contrast, SetMultimap<String, Pair<String, DifferentialExpression>>> result = new HashMap<>();
 
+        //For each comparison and each pathway get differential profiles (geneIds and differential expressions)
         for (Map.Entry<Contrast, List<String>> comparison : contrastPathwaysListMap.entrySet()) {
             for (String pathwayId : comparison.getValue()) {
                 preferences.setGeneQuery(SemanticQuery.create(pathwayId));
@@ -122,11 +123,11 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
             }
 
             if (!pathwayGeneExpressionMap.isEmpty()) {
-                contrastMapMap.put(comparison.getKey(), pathwayGeneExpressionMap);
+                result.put(comparison.getKey(), pathwayGeneExpressionMap);
             }
         }
 
-        return contrastMapMap;
+        return result;
     }
 
 }
