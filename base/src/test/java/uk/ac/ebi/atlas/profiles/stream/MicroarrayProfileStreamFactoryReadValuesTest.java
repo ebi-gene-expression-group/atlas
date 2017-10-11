@@ -14,7 +14,10 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
+
+import java.util.function.Function;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -32,7 +35,7 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
 
     MockDataFileHub dataFileHub;
 
-    CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine;
+    Function<String[], MicroarrayProfile> goThroughTsvLineAndPickUpExpressionsByIndex;
 
     MicroarrayExperiment experiment =
             MicroarrayExperimentTest.get(
@@ -57,9 +60,9 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
 
     @Before
     public void setUp() throws Exception {
-        dataFileHub = new MockDataFileHub();
+        dataFileHub = MockDataFileHub.create();
         subject = new MicroarrayProfileStreamFactory.Impl(dataFileHub);
-        profileFromTsvLine = subject.howToReadLineStream(experiment, microarrayExpression -> true).apply(
+        goThroughTsvLineAndPickUpExpressionsByIndex = subject.howToReadLine(experiment, microarrayExpression -> true).apply(
                 ("Gene ID\tGene Name\tDesign element\tg1_g2.p-value\tg1_g2.tstat\tg1_g2.log2foldchange" +
                         "\tg1_g3.p-value\tg1_g3.tstat\tg1_g3.log2foldchange")
                         .split("\t"));
@@ -68,14 +71,14 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
     @Test
     public void shouldReadValuesRight() {
         assertThat(
-                profileFromTsvLine.apply(TWO_CONTRASTS).getExpression(g1_g2),
+                goThroughTsvLineAndPickUpExpressionsByIndex.apply(TWO_CONTRASTS).getExpression(g1_g2),
                 Matchers.is(
                         new MicroarrayExpression(Double.parseDouble(P_VAL_1),
                         Double.parseDouble(FOLD_CHANGE_1), Double.parseDouble(T_VAL_1)))
         );
 
         assertThat(
-                profileFromTsvLine.apply(TWO_CONTRASTS).getExpression(g1_g3),
+                goThroughTsvLineAndPickUpExpressionsByIndex.apply(TWO_CONTRASTS).getExpression(g1_g3),
                 Matchers.is(
                         new MicroarrayExpression(
                                 Double.parseDouble(P_VAL_2),
@@ -85,17 +88,17 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
 
     @Test
     public void skipNAValues(){
-        assertThat(profileFromTsvLine.apply(TWO_CONTRASTS).getSpecificity(), is(2L));
+        assertThat(goThroughTsvLineAndPickUpExpressionsByIndex.apply(TWO_CONTRASTS).getSpecificity(), is(2L));
 
         assertThat(
-                profileFromTsvLine.apply(
+                goThroughTsvLineAndPickUpExpressionsByIndex.apply(
                         new String[]{
                                 id, name, designElement, P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", T_VAL_2, FOLD_CHANGE_2})
                         .getSpecificity(),
                 is(1L));
 
         assertThat(
-                profileFromTsvLine.apply(
+                goThroughTsvLineAndPickUpExpressionsByIndex.apply(
                         new String[]{id, name, designElement, P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", "NA", "NA"})
                         .getSpecificity(),
                 is(1L));

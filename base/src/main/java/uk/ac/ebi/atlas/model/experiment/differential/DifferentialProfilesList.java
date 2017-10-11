@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import uk.ac.ebi.atlas.model.GeneProfilesList;

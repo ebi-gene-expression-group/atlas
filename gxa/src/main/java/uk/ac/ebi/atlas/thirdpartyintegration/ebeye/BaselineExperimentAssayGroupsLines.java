@@ -24,7 +24,7 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     private LinkedHashSet<ImmutableList<String>> buildAssayGroupsDetails(BaselineExperiment experiment) {
 
         for(AssayGroup assayGroupById : experiment.getDataColumnDescriptors()) {
-            for(String assayAccession : assayGroupById) {
+            for(String assayAccession : assayGroupById.assaysAnalyzedForThisDataColumn()) {
                 this.populateSamples(experiment, assayAccession, assayGroupById);
                 this.populateFactors(experiment, assayAccession, assayGroupById);
             }

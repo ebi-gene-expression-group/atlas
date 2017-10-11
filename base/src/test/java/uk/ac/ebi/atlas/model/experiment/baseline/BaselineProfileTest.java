@@ -1,16 +1,17 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -75,5 +76,20 @@ public class BaselineProfileTest {
 
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(g1, g3, g4));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
+    }
+
+    @Test
+    public void isExpressedAnywhereIsLikeSpecificityGreaterThanZeroButPossiblyFaster(){
+        List<AssayGroup> assayGroups = new ArrayList<>();
+        if(RandomUtils.nextBoolean()) assayGroups.add(g1);
+        if(RandomUtils.nextBoolean()) assayGroups.add(g2);
+        if(RandomUtils.nextBoolean()) assayGroups.add(g3);
+        if(RandomUtils.nextBoolean()) assayGroups.add(g4);
+        Collections.shuffle(assayGroups);
+
+        assertThat(
+                subject.isExpressedAnywhereOn(assayGroups),
+                is(subject.getSpecificity() > 0)
+        );
     }
 }

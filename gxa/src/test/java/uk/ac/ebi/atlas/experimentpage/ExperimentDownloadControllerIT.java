@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.web.*;
 
@@ -363,6 +364,7 @@ public class ExperimentDownloadControllerIT {
 
         MockHttpServletResponse response = new MockHttpServletResponse();
         subject.rnaSeqBaselineExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
 
         String queryLine = headersAndBody.getLeft().get(1);
@@ -385,8 +387,10 @@ public class ExperimentDownloadControllerIT {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(0.0);
+        requestPreferences.setGeneQuery(SemanticQuery.create());
         MockHttpServletResponse response = new MockHttpServletResponse();
         subject.rnaSeqBaselineExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
 
 
@@ -404,10 +408,12 @@ public class ExperimentDownloadControllerIT {
 
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
         requestPreferences.setUnit(unit);
+        requestPreferences.setGeneQuery(SemanticQuery.create());
 
         requestPreferences.setCutoff(10000000D);
         MockHttpServletResponse response = new MockHttpServletResponse();
         subject.rnaSeqBaselineExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
 
         assertEquals(1, headersAndBody.getRight().size());

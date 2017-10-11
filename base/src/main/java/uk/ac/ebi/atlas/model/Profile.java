@@ -6,9 +6,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,7 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.function.Predicate;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
@@ -25,8 +23,8 @@ import static java.util.stream.Collectors.toList;
 
 public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
                               Expr extends Expression,
-                              Self extends Profile<DataColumnDescriptor, Expr, Self>>
-implements KryoSerializable {
+                              Self extends Profile<DataColumnDescriptor, Expr, Self>> implements
+        KryoSerializable {
 
     protected Map<String, Expr> expressionsByCondition = new HashMap<>();
     private String id;
@@ -78,6 +76,17 @@ implements KryoSerializable {
                 .count();
     }
 
+    public boolean isExpressedAnywhereOn(Collection<DataColumnDescriptor> conditions){
+        return expressionsByCondition.size() > 0 && conditions.stream().anyMatch(this::isExpressedOn);
+    }
+
+    private boolean isExpressedOn(DataColumnDescriptor condition){
+        Expression expression = getExpression(condition);
+        if (expression != null) {
+            return expression.getLevel() != 0 ;
+        }
+        return false;
+    }
 
     @Nullable
     public Double getExpressionLevel(DataColumnDescriptor condition) {
@@ -134,7 +143,7 @@ implements KryoSerializable {
     public Self filter(Predicate<Expr> keepExpressions){
         Self result = createEmptyCopy();
 
-        expressionsByCondition.entrySet().stream().filter(e -> keepExpressions.apply(e.getValue())).forEach(e -> {
+        expressionsByCondition.entrySet().stream().filter(e -> keepExpressions.test(e.getValue())).forEach(e -> {
             result.expressionsByCondition.put(e.getKey(), e.getValue());
         });
 

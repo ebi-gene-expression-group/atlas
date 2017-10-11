@@ -29,7 +29,7 @@ public class BaselineProfileStreamFactoryTest {
 
     @Before
     public void setUp() throws Exception {
-        mockDataFileHub = new MockDataFileHub();
+        mockDataFileHub = MockDataFileHub.create();
         subject = new RnaSeqBaselineProfileStreamFactory(mockDataFileHub);
     }
 

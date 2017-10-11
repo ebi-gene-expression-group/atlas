@@ -77,7 +77,7 @@ public class ConditionsLookupService {
             super(experimentAccession, experimentDesign);
         }
         public void addCondition(AssayGroup assayGroup){
-            for(String assayAccession: assayGroup){
+            for(String assayAccession: assayGroup.assaysAnalyzedForThisDataColumn()){
                 builder.add(new Condition(
                         experimentAccession,
                         assayGroup.getId(),
@@ -96,7 +96,7 @@ public class ConditionsLookupService {
         }
 
         private void addDifferentialCondition(String contrastId, AssayGroup assayGroup) {
-            for(String assayAccession: assayGroup) {
+            for(String assayAccession: assayGroup.assaysAnalyzedForThisDataColumn()) {
                 builder.add(new DifferentialCondition(
                         experimentAccession,
                         assayGroup.getId(),

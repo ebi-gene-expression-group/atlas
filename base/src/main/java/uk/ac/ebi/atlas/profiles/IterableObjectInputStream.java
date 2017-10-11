@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 
 /* Used to make ObjectInputStream iterable
@@ -26,7 +28,7 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ObjectInputStreamIterator();
+        return inputStream == null ? Collections.emptyIterator() : new ObjectInputStreamIterator();
     }
 
     // buffers next object from inputStream result so we can provide a hasNext method

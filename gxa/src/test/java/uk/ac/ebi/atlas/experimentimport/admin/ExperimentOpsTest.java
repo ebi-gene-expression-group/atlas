@@ -71,7 +71,7 @@ public class ExperimentOpsTest {
 
     @Before
     public void setUp() throws Exception {
-        experimentOpLogWriter = new ExperimentOpLogWriter(new MockDataFileHub());
+        experimentOpLogWriter = new ExperimentOpLogWriter(MockDataFileHub.create());
 
         subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
