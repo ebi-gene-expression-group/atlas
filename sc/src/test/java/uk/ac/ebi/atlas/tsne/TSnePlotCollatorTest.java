@@ -81,28 +81,8 @@ public class TSnePlotCollatorTest {
     }
 
     @Test
-    public void getTSnePlotWithClusters() throws Exception {
-        ImmutableMap<String, TSnePoint> tSnePlot = tSnePlotDaoMock.fetchTSnePlotPoints(EXPERIMENT_ACCESSION);
-        ImmutableMultimap<Integer, String> clusters = clusterDaoMock.fetchClusters(EXPERIMENT_ACCESSION, NUM_CLUSTERS);
-
-        TreeMultimap<Integer, TSnePoint> results = subject.getTSnePlotWithClusters(EXPERIMENT_ACCESSION, NUM_CLUSTERS);
-        results.entries().forEach(entry -> {
-            assertThat(clusters.get(entry.getKey()), hasItem(entry.getValue().name()));
-            assertThat(tSnePlot.get(entry.getValue().name()), is(entry.getValue()));
-        });
-    }
-
-    @Test
-    public void getTSnePlotWithExpression() throws Exception {
-        ImmutableMap<String, TSnePoint> tSnePlot = tSnePlotDaoMock.fetchTSnePlotPoints(EXPERIMENT_ACCESSION);
-        ImmutableMap<String, Double> geneExpression = geneExpressionDaoMock.fetchGeneExpression(EXPERIMENT_ACCESSION, GENE_ID);
-
-        ImmutableList<TSnePoint> results = subject.getTSnePlotWithExpression(EXPERIMENT_ACCESSION, GENE_ID);
-
-        results.forEach(point -> {
-            assertThat(TSnePoint.create(point.x(), point.y(), point.name()), is(tSnePlot.get(point.name())));
-            assertThat(point.z(), is(geneExpression.get(point.name())));
-        });
+    public void getTsnePlotWithClustersAndExpression() throws Exception {
+        assertThat(true, is(false));
     }
 
     // TODO There will be cases in which gene expression cells is a superset of cells shown in the t-SNE plot but not
