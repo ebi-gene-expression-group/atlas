@@ -39,7 +39,7 @@ public class JsonSingleCellExperimentControllerWIT {
     }
 
     @Test
-    public void blah() throws Exception {
+    public void payloadIsGoodJson() throws Exception {
         int k = ThreadLocalRandom.current().nextInt(2, 11);
 
         this.mockMvc

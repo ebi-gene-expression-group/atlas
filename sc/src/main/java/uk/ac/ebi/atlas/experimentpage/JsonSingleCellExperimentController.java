@@ -34,52 +34,6 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
         this.tSnePlotCollator = tSnePlotCollator;
     }
 
-//    @RequestMapping(value = "/json/experiments/{experimentAccession}/tsneplot/clusters/{k}",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String tSnePlotClusters(
-//            @PathVariable String experimentAccession,
-//            @PathVariable int k,
-//            @RequestParam(defaultValue = "") String accessKey) throws IOException, InterruptedException {
-//
-//        if (!"E-RANDOM".equalsIgnoreCase(experimentAccession)) {
-//            experimentTrader.getExperiment(experimentAccession, accessKey);
-//        }
-//
-//        TreeMultimap<Integer, TSnePoint> clusterPoints =
-//                tSnePlotCollator.getTSnePlotWithClusters(experimentAccession, k);
-//
-//        return gson.toJson(
-//                clusterPoints.keySet().stream()
-//                        .map(key -> ImmutableMap.of("name", Integer.toString(key), "data", clusterPoints.get(key)))
-//                        .collect(Collectors.toList()));
-//    }
-
-//    @RequestMapping(value = "/json/experiments/{experimentAccession}/tsneplot/expression/",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String tSnePlotDefaultExpression(
-//            @PathVariable String experimentAccession,
-//            @RequestParam(defaultValue = "") String accessKey) throws IOException, InterruptedException {
-//        return tSnePlotExpression(experimentAccession, "", accessKey);
-//    }
-//
-//    @RequestMapping(value = "/json/experiments/{experimentAccession}/tsneplot/expression/{geneId}",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String tSnePlotExpression(
-//            @PathVariable String experimentAccession,
-//            @PathVariable String geneId,
-//            @RequestParam(defaultValue = "") String accessKey) throws IOException, InterruptedException {
-//
-//        // Return hard-coded t-SNE plot data: coordinates
-//        experimentTrader.getExperiment(experimentAccession, accessKey);
-//
-//        // Wrapped in a list to have a one-element array (required by Highcharts)
-//        return gson.toJson(
-//                ImmutableList.of(ImmutableMap.of("data", tSnePlotCollator.getTSnePlotWithExpression(experimentAccession, geneId))));
-//    }
-
     @RequestMapping(
             value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/{k}/expression",
             method = RequestMethod.GET,
