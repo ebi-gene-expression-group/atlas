@@ -51,7 +51,7 @@ public class GeneSetPropertyServiceTest {
     public void propertyValuesByTypeReactome() throws Exception {
         assertThat(
                 subject.propertyValuesByType("R-HSA-0000000"),
-                hasEntry(is(BioentityPropertyName.REACTOME), isA(Set.class)));
+                hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
 
         verify(reactomeClientMock).fetchPathwayNameFailSafe(anyString());
         verifyZeroInteractions(goPoTermTraderMock, interProTermTraderMock);
@@ -91,7 +91,7 @@ public class GeneSetPropertyServiceTest {
     public void typeIsCaseInsensitive() throws Exception {
         assertThat(
                 subject.propertyValuesByType("r-hsa-0000000"),
-                hasEntry(is(BioentityPropertyName.REACTOME), isA(Set.class)));
+                hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
         assertThat(
                 subject.propertyValuesByType("go:0000000"),
                 hasEntry(is(BioentityPropertyName.GO), isA(Set.class)));

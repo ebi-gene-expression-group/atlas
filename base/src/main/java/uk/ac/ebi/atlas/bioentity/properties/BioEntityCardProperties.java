@@ -42,7 +42,7 @@ public class BioEntityCardProperties {
                 "http://www.emouseatlas.org/emagewebapp/pages/emage_general_query_result.jsf?genes={0}")
         .put(GENE_BIOTYPE,
                 "http://www.ensembl.org/Help/Glossary?id=275")
-        .put(REACTOME,
+        .put(PATHWAYID,
                 "http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID={0}")
         .put(MIRBASE_ACCESSION,
                 "http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc={0}")
@@ -57,7 +57,7 @@ public class BioEntityCardProperties {
     public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
             DESCRIPTION, SYMBOL, //not displayed in the table but useful for other things
             SYNONYM,
-//            ORTHOLOG,
+            ORTHOLOG,
             GO,
             PO,
             INTERPRO,
@@ -69,12 +69,12 @@ public class BioEntityCardProperties {
             WBPSTRANSCRIPT,
             WBPSPROTEIN,
             ENTREZGENE,
-//            UNIPROT,
+            UNIPROT,
             MGI_ID,
             MGI_DESCRIPTION,
             GENE_BIOTYPE,
             DESIGN_ELEMENT,
-//            REACTOME,
+            PATHWAYID,
             MIRBASE_ID,
             MIRBASE_ACCESSION,
             MIRBASE_SEQUENCE

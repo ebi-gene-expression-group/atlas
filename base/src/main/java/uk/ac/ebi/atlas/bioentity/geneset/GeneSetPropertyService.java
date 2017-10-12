@@ -33,12 +33,12 @@ public class GeneSetPropertyService {
     }
 
     public static final List<BioentityPropertyName> all =
-            ImmutableList.of(REACTOME, GO, PO, INTERPRO);
+            ImmutableList.of(PATHWAYID, GO, PO, INTERPRO);
 
     public Map<BioentityPropertyName, Set<String>> propertyValuesByType(String identifier) {
         identifier = identifier.toUpperCase();
         if (GeneSetUtil.matchesReactomeID(identifier)) {
-            return propertyValuesByType(REACTOME, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier));
+            return propertyValuesByType(PATHWAYID, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier));
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
             return propertyValuesByType(GO, identifier, goPoTermTrader.getTermName(identifier));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {

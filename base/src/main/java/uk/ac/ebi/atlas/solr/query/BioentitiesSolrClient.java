@@ -112,5 +112,4 @@ public class BioentitiesSolrClient {
 
         return result;
     }
-
 }

@@ -1,56 +1,41 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.utils.UniProtClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Named
 public class BioEntityPropertyService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(BioEntityPropertyService.class);
-
     private final static ImmutableList<BioentityPropertyName> DISPLAYED_PROPERTY_LIST =
             ImmutableList.of(BioentityPropertyName.DESCRIPTION, BioentityPropertyName.SYMBOL);
 
-    private final UniProtClient uniProtClient;
     private final ArrayDesignDAO arrayDesignDAO;
-    private final BioEntityPropertyLinkBuilder linkBuilder;
+    private final BioEntityPropertyLinkTextService linkBuilder;
     private final GoPoTrader goPoTermTrader;
     private final Gson gson = new Gson();
 
     @Inject
-    public BioEntityPropertyService(UniProtClient uniProtClient,
-                                    BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDAO arrayDesignDAO,
+    public BioEntityPropertyService(BioEntityPropertyLinkTextService linkBuilder, ArrayDesignDAO arrayDesignDAO,
                                     GoPoTrader goPoTermTrader) {
 
-        this.uniProtClient = uniProtClient;
         this.arrayDesignDAO = arrayDesignDAO;
         this.linkBuilder = linkBuilder;
         this.goPoTermTrader = goPoTermTrader;
@@ -61,7 +46,6 @@ public class BioEntityPropertyService {
                                                List<BioentityPropertyName> orderedPropertyNames, String entityName,
                                                Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-//        addReactomePropertyValues(propertyValuesByType);
         addDesignElements(identifier, propertyValuesByType);
 
         Map<String, Object> result = new HashMap<>();
@@ -98,7 +82,7 @@ public class BioEntityPropertyService {
                 .collect(Collectors.toList());
     }
 
-    private JsonArray bioentityProperties(String identifier, Species species,
+    JsonArray bioentityProperties(String identifier, Species species,
                                           List<BioentityPropertyName> desiredOrderOfPropertyNames,
                                           Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
@@ -130,20 +114,9 @@ public class BioEntityPropertyService {
     private List<PropertyLink> fetchPropertyLinks(String identifier, Species species,
                                                   BioentityPropertyName bioentityPropertyName,
                                                   Set<String> propertyValues) {
-
-        List<PropertyLink> propertyLinks = Lists.newArrayList();
-
-        for (String propertyValue : propertyValues) {
-            Optional<PropertyLink> link =
-                    linkBuilder.createLink(
-                            identifier, bioentityPropertyName, propertyValue, species,
-                            assessRelevance(bioentityPropertyName, propertyValue));
-
-            link.ifPresent(propertyLinks::add);
-        }
-
-        return propertyLinks;
-
+        return propertyValues.stream().map(propertyValue -> createLink(
+                identifier, bioentityPropertyName, propertyValue, species,
+                assessRelevance(bioentityPropertyName, propertyValue))).collect(Collectors.toList());
     }
 
     private int assessRelevance(BioentityPropertyName bioentityPropertyName, String propertyValue) {
@@ -182,26 +155,33 @@ public class BioEntityPropertyService {
 
     }
 
-    private void addReactomePropertyValues(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
+    PropertyLink createLink(String identifier, BioentityPropertyName propertyName,
+                                   String propertyValue, Species species, int relevance) {
+        return new PropertyLink(
+                Optional.ofNullable(linkBuilder.getLinkTextOrNull(propertyName, propertyValue)).orElse(propertyValue),
+                Optional.ofNullable(BioEntityCardProperties.linkTemplates.get(propertyName)).map(
+                        linkTemplate -> MessageFormat.format(
+                                linkTemplate,
+                                getEncodedString(propertyName, propertyValue),
+                                species.getEnsemblName(),
+                                identifier
+                        )
+                ).orElse(""),
+                relevance
+        );
+    }
 
-        Stopwatch stopwatch = Stopwatch.createStarted();
+    private String getEncodedString(BioentityPropertyName propertyName, String value) {
 
-        // When we update to Java 1.8 we’ll be able to use .getOrDefault instead of having this check
-        if (propertyValuesByType.get(BioentityPropertyName.UNIPROT) != null) {
-            Set<String> reactomeIds = new HashSet<>();
-
-            Collection<String> uniProtIds = propertyValuesByType.get(BioentityPropertyName.UNIPROT);
-
-            for (String uniProtId : uniProtIds) {
-                reactomeIds.addAll(uniProtClient.fetchReactomeIds(uniProtId));
+        try {
+            if (propertyName == BioentityPropertyName.GO || propertyName == BioentityPropertyName.PO) {
+                return URLEncoder.encode(value.replaceAll(":", "_"), "UTF-8");
+            } else {
+                return URLEncoder.encode(value, "UTF-8");
             }
-
-            if (reactomeIds.size() > 0) {
-                propertyValuesByType.put(BioentityPropertyName.REACTOME, reactomeIds);
-            }
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException("Cannot create URL from " + value, e);
         }
-
-        LOGGER.debug("addReactomePropertyValues: {} seconds", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS) / 1000F);
 
     }
 

@@ -26,7 +26,7 @@ public class BioEntityPropertyDao {
 
         return FluentIterable.concat(solrClient.getMap(_identifier, ImmutableList.of(propertyName)).values()).toSet();
     }
-
+    
     public Set<String> fetchGeneIdsForPropertyValue(BioentityPropertyName bioentityPropertyName, String
             bioentityPropertyValue){
         return solrClient.getBioentityIdentifiers(bioentityPropertyName, bioentityPropertyValue);
