@@ -96,9 +96,9 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
                 DifferentialProfilesList<P> differentialProfiles = profilesHeatMap.fetch(requestContext);
 
                 if (!differentialProfiles.isEmpty()) {
-                    for (int i = 0; i < differentialProfiles.getTotalResultCount(); i++) {
-                        String geneId = differentialProfiles.get(i).getId();
-                        DifferentialExpression differentialExpression = differentialProfiles.get(i).getExpression(comparison.getKey());
+                    for (P differentialProfile: differentialProfiles) {
+                        String geneId = differentialProfile.getId();
+                        DifferentialExpression differentialExpression = differentialProfile.getExpression(comparison.getKey());
 
                         if (differentialExpression != null) {
                             if (pathwayGeneExpressionMap.get(pathwayId).isEmpty()) {
