@@ -12,7 +12,9 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
+import javax.inject.Named;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -57,7 +59,7 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
     private List<String> fetchPathwaysFromFile (String experimentAccession, Contrast comparison) {
         Map<String, Double> result = new HashMap<>();
 
-        List<String[]> lines = dataFileHub.getReactomePathwaysCFiles(experimentAccession, comparison.getId()).reactomePathways.get().readAll();
+        List<String[]> lines = dataFileHub.getReactomePathwaysCFiles(experimentAccession, comparison.getId()).get().readAll();
 
         for(int i = 1; i < lines.size(); i++) {
             String[] strings = lines.get(i);
@@ -69,14 +71,12 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
             }
         }
 
-        Map<String, Double> ordered = result.entrySet()
+        return result.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
                 .limit(10)
-                .collect(toMap(Map.Entry::getKey,
-                        Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-
-        return new ArrayList<>(ordered.keySet());
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     public Map<Contrast, SetMultimap<String, Pair<String, DifferentialExpression>>> constructPathwaysByComparison (E experiment,
