@@ -59,7 +59,7 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
     private List<String> fetchPathwaysFromFile (String experimentAccession, Contrast comparison) {
         Map<String, Double> result = new HashMap<>();
 
-        List<String[]> lines = dataFileHub.getReactomePathwaysCFiles(experimentAccession, comparison.getId()).get().readAll();
+        List<String[]> lines = dataFileHub.getReactomePathwaysFiles(experimentAccession, comparison.getId()).get().readAll();
 
         for(int i = 1; i < lines.size(); i++) {
             String[] strings = lines.get(i);

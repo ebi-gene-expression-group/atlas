@@ -93,8 +93,10 @@ public class DataFileHub {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
     }
 
-    public DifferentialExperimentFiles getReactomePathwaysCFiles(String experimentAccession, String comparison) {
-        return new DifferentialExperimentFiles(experimentAccession, comparison);
+    public AtlasResource<TsvReader> getReactomePathwaysFiles(String experimentAccession, String comparison) {
+        return new TsvFile.ReadOnly(
+                dataFilesLocation, REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
+                experimentAccession, comparison);
     }
 
     public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
@@ -205,7 +207,6 @@ public class DataFileHub {
 
     public class DifferentialExperimentFiles extends ExperimentFiles {
         public AtlasResource<ObjectInputStream<String[]>> percentileRanks;
-        public AtlasResource<TsvReader> reactomePathways;
 
         DifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
@@ -216,13 +217,6 @@ public class DataFileHub {
 
         }
 
-        DifferentialExperimentFiles(String experimentAccession, String comparison) {
-            this(experimentAccession);
-            this.reactomePathways =
-                    new TsvFile.ReadOnly(
-                            dataFilesLocation, REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
-                            experimentAccession, comparison);
-        }
     }
 
     public class RnaSeqDifferentialExperimentFiles extends DifferentialExperimentFiles {
