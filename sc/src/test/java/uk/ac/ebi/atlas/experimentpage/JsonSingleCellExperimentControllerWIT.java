@@ -41,9 +41,12 @@ public class JsonSingleCellExperimentControllerWIT {
     @Test
     public void payloadIsGoodJson() throws Exception {
         int k = ThreadLocalRandom.current().nextInt(2, 11);
+        int perplexity = ThreadLocalRandom.current().nextInt(1, 7);
 
         this.mockMvc
-                .perform(get("/json/experiments/E-MTAB-4388/tsneplot/5/clusters/" + k + "/expression/ENSFOOBAR"))
+                .perform(get(
+                        "/json/experiments/E-MTAB-4388/tsneplot/" + perplexity +
+                        "/clusters/" + k + "/expression/ENSFOOBAR"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min", isA(Double.class)))

@@ -43,7 +43,7 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
             @PathVariable int perplexity,
             @PathVariable int k,
             @RequestParam(defaultValue = "") String accessKey) throws IOException, InterruptedException {
-        return tSnePlotClustersWithExpression(experimentAccession, k, perplexity, "", accessKey);
+        return tSnePlotClustersWithExpression(experimentAccession, perplexity, k, "", accessKey);
     }
 
     @RequestMapping(
@@ -52,8 +52,8 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String tSnePlotClustersWithExpression(
             @PathVariable String experimentAccession,
-            @PathVariable int k,
             @PathVariable int perplexity,
+            @PathVariable int k,
             @PathVariable String geneId,
             @RequestParam(defaultValue = "") String accessKey) throws IOException, InterruptedException {
 
