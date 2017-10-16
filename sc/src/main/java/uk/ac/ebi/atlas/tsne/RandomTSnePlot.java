@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.tsne;
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.collect.TreeMultimap;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
@@ -36,7 +37,7 @@ public class RandomTSnePlot {
                 cutPoints.add(ThreadLocalRandom.current().nextInt(1, RANDOM_EXPERIMENT_DATA_POINTS_COUNT));
             }
 
-            TreeMultimap<Integer, TSnePoint> points = TreeMultimap.create();
+            TreeMultimap<Integer, TSnePoint> points = TreeMultimap.create(Comparator.<Integer> naturalOrder(), TSnePoint.getNameComparator());
             int previousCutPoint = 0;
             int clusterId = 0;
             for (int cutPoint : cutPoints) {

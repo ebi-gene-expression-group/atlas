@@ -5,6 +5,7 @@ import com.google.common.collect.TreeMultimap;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Comparator;
 import java.util.Map;
 
 @Named
@@ -28,10 +29,12 @@ public class TSnePlotCollator {
     public TreeMultimap<Integer, TSnePoint> getTsnePlotWithClustersAndExpression(String experimentAccession,
                                                                                  int k,
                                                                                  String geneId) {
-        TreeMultimap<Integer, TSnePoint> clusters = this.getTSnePlotWithClusters(experimentAccession, k);
+        TreeMultimap<Integer, TSnePoint> clusters = getTSnePlotWithClusters(experimentAccession, k);
         Map<String, Double> expression = geneExpressionDao.fetchGeneExpression(experimentAccession, geneId);
 
-        TreeMultimap<Integer, TSnePoint> clusterPointsWithExpression = TreeMultimap.create();
+        TreeMultimap<Integer, TSnePoint> clusterPointsWithExpression =
+                TreeMultimap.create(Comparator.<Integer> naturalOrder(), TSnePoint.getNameComparator());
+
         clusters.entries().forEach(
                 entry ->
                         clusterPointsWithExpression.put(
@@ -56,9 +59,11 @@ public class TSnePlotCollator {
         Map<String, TSnePoint> points = tSnePlotDao.fetchTSnePlotPoints(experimentAccession);
         Multimap<Integer, String> clusters = clusterDao.fetchClusters(experimentAccession, k);
 
-        TreeMultimap<Integer, TSnePoint> clusterPoints = TreeMultimap.create();
+        TreeMultimap<Integer, TSnePoint> clusterPoints =
+                TreeMultimap.create(Comparator.<Integer> naturalOrder(), TSnePoint.getNameComparator());
         clusters.entries().forEach(entry -> clusterPoints.put(entry.getKey(), points.get(entry.getValue())));
 
         return clusterPoints;
     }
+
 }
