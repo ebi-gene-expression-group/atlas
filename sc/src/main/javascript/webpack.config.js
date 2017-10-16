@@ -11,7 +11,8 @@ module.exports = {
     experimentPage: ['./bundles/experiment-page/src/index.js'],
     // Put dependencies one line per package
     dependencies: [
-      'prop-types', 'react', 'react-autocomplete', 'react-dom', 'react-refetch', 'urijs'  // autocomplete, marker-genes
+        //'react-autocomplete', shared by atlasAutocomplete and experimentPage
+      'prop-types', 'react', 'react-dom', 'react-refetch', 'urijs'  // autocomplete, marker-genes
     ]
   },
 
