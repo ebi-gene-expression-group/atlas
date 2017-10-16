@@ -2,13 +2,10 @@ package uk.ac.ebi.atlas.experimentpage.json;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.LinkToGene;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
@@ -17,10 +14,12 @@ import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidat
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.HistogramService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpressionPerReplicateProfile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.profiles.stream.BaselineTranscriptProfileStreamFactory;
@@ -93,7 +92,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                 ));
     }
 
-    @RequestMapping(value = "/debug/json/experiments/{experimentAccession}/genes/{geneId}/transcripts",
+    @RequestMapping(value = "/json/debug-experiments/{experimentAccession}/genes/{geneId}/transcripts",
             produces = "application/json;charset=UTF-8",
             params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineRnaSeqTranscriptsDataWithVeryTemporaryImplementation(
@@ -116,20 +115,34 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
          */
         preferences.setCutoff(0.0);
         BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext = new BaselineRequestContext<>(preferences, experiment);
-        return gson.toJson(
-                new ExternallyViewableProfilesList<>(
-                        new GeneProfilesList<>(ImmutableList.copyOf(
-                                new IterableObjectInputStream<>(baselineTranscriptProfileStreamFactory.create(
-                                        experiment,
-                                        requestContext,
-                                        ImmutableSet.of(geneId)
-                                ))
-                        )),
-                        new LinkToGene<>(),
-                        requestContext.getDataColumnsToReturn(),
-                        p -> requestContext.getExpressionUnit()
-                ).asJson()
-        );
+
+        return gson.toJson(toJson(new GeneProfilesList<>(ImmutableList.copyOf(
+                new IterableObjectInputStream<>(baselineTranscriptProfileStreamFactory.create(
+                        experiment,
+                        requestContext,
+                        ImmutableSet.of(geneId)
+                ))
+        )), requestContext));
+    }
+
+    static JsonObject toJson(GeneProfilesList<BaselineExpressionPerReplicateProfile> profiles, BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext){
+        JsonObject result = new JsonObject();
+
+        result.add("profiles", new ExternallyViewableProfilesList<>(
+                profiles,
+                new LinkToGene<>(),
+                requestContext.getDataColumnsToReturn(),
+                p -> requestContext.getExpressionUnit()
+        ).asJson());
+
+        JsonArray columnHeaders = new JsonArray();
+        for (AssayGroup assayGroup : requestContext.getDataColumnsToReturn()) {
+            columnHeaders.add(assayGroup.toJson());
+        }
+
+        result.add("columnHeaders", columnHeaders);
+
+        return result;
 
     }
 
