@@ -38,13 +38,13 @@ public class GeneSetPropertyService {
     public Map<BioentityPropertyName, Set<String>> propertyValuesByType(String identifier) {
         identifier = identifier.toUpperCase();
         if (GeneSetUtil.matchesReactomeID(identifier)) {
-            return propertyValuesByType(PATHWAYID, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier));
+            return propertyValuesByType(PATHWAYID, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier).orElse(""));
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
-            return propertyValuesByType(GO, identifier, goPoTermTrader.getTermName(identifier));
+            return propertyValuesByType(GO, identifier, goPoTermTrader.getTermName(identifier).orElse(""));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
-            return propertyValuesByType(PO, identifier, goPoTermTrader.getTermName(identifier));
+            return propertyValuesByType(PO, identifier, goPoTermTrader.getTermName(identifier).orElse(""));
         }else if (GeneSetUtil.matchesInterProAccession(identifier)) {
-            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.getTermName(identifier));
+            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.getTermName(identifier).orElse(""));
         } else {
             return ImmutableMap.of();
         }

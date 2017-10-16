@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasEntry;
@@ -40,10 +41,10 @@ public class GeneSetPropertyServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        when(reactomeClientMock.fetchPathwayNameFailSafe(startsWith("R-"))).thenReturn("some pathway name");
-        when(goPoTermTraderMock.getTermName(startsWith("GO:"))).thenReturn("some GO term name");
-        when(goPoTermTraderMock.getTermName(startsWith("PO:"))).thenReturn("some PO term name");
-        when(interProTermTraderMock.getTermName(startsWith("IPR"))).thenReturn("some InterPro term name");
+        when(reactomeClientMock.fetchPathwayNameFailSafe(startsWith("R-"))).thenReturn(Optional.of("some pathway name"));
+        when(goPoTermTraderMock.getTermName(startsWith("GO:"))).thenReturn(Optional.of("some GO term name"));
+        when(goPoTermTraderMock.getTermName(startsWith("PO:"))).thenReturn(Optional.of("some PO term name"));
+        when(interProTermTraderMock.getTermName(startsWith("IPR"))).thenReturn(Optional.of("some InterPro term name"));
         subject = new GeneSetPropertyService(goPoTermTraderMock, interProTermTraderMock, reactomeClientMock);
     }
 

@@ -7,7 +7,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import static org.hamcrest.Matchers.isEmptyString;
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -26,6 +28,6 @@ public class ReactomeClientTest {
       when(restTemplateMock.getForObject(anyString(), any())).thenThrow(new RestClientException("Timeout!"));
       subject = new ReactomeClient(restTemplateMock);
 
-      assertThat(subject.fetchPathwayNameFailSafe("foobar"), isEmptyString());
+      assertThat(subject.fetchPathwayNameFailSafe("foobar"), is(Optional.empty()));
   }
 }
