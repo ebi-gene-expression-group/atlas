@@ -7,6 +7,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
+import java.util.Optional;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -20,12 +22,12 @@ public class ReactomeClientEIT {
 
     @Test
     public void parseReactomeId() throws Exception {
-        assertThat(subject.fetchPathwayNameFailSafe("R-HSA-15869"), is("Metabolism of nucleotides"));
-        assertThat(subject.fetchPathwayNameFailSafe("R-HSA-73887"), is("Death Receptor Signalling"));
+        assertThat(subject.fetchPathwayNameFailSafe("R-HSA-15869"), is(Optional.of("Metabolism of nucleotides")));
+        assertThat(subject.fetchPathwayNameFailSafe("R-HSA-73887"), is(Optional.of("Death Receptor Signalling")));
     }
 
     @Test
     public void unmatchedIdReturnsNull() throws Exception {
-        assertThat(subject.fetchPathwayNameFailSafe("foobar"), is(nullValue()));
+        assertThat(subject.fetchPathwayNameFailSafe("foobar"), is(Optional.empty()));
     }
 }

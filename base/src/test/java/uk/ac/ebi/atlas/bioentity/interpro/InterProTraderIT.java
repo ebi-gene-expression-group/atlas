@@ -7,6 +7,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
+import java.util.Optional;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
@@ -25,16 +27,16 @@ public class InterProTraderIT {
 
     @Test
     public void hasFirstTerm() {
-        assertThat(subject.getTermName(IPR000001), is(KRINGLE_DOMAIN));
+        assertThat(subject.getTermName(IPR000001), is(Optional.of(KRINGLE_DOMAIN)));
     }
 
     @Test
     public void hasLastTerm() {
-        assertThat(subject.getTermName(IPR029787), is(NUCLEOTIDE_CYCLASE_DOMAIN));
+        assertThat(subject.getTermName(IPR029787), is(Optional.of(NUCLEOTIDE_CYCLASE_DOMAIN)));
     }
 
     @Test
     public void unknownTermsReturnNull() {
-        assertThat(subject.getTermName("IPRFOOBAR"), is(nullValue()));
+        assertThat(subject.getTermName("IPRFOOBAR"), is(Optional.empty()));
     }
 }

@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Optional;
 
 @Named
 public class GoPoTrader {
@@ -28,18 +29,16 @@ public class GoPoTrader {
         }
     }
 
-    @Nullable
-    public OntologyTerm getTerm(String accession) {
-        return accessionToTerm.get(accession);
+    public Optional<OntologyTerm> getTerm(String accession) {
+        return Optional.ofNullable(accessionToTerm.get(accession));
     }
 
-    @Nullable
-    public String getTermName(String accession) {
+    public Optional<String> getTermName(String accession) {
         try {
-            return accessionToTerm.get(accession).name();
+            return Optional.of(accessionToTerm.get(accession).name());
         } catch (NullPointerException e) {
             LOGGER.warn("Unknown name for GO/PO term with ID {}", accession);
-            return null;
+            return Optional.empty();
         }
     }
 }

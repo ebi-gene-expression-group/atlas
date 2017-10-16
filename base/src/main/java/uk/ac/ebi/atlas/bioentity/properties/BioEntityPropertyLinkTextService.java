@@ -8,12 +8,8 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.Set;
 
@@ -39,12 +35,11 @@ public class BioEntityPropertyLinkTextService {
 
     }
 
-    @Nullable
-    public String getLinkTextOrNull(BioentityPropertyName propertyName, String propertyValue) {
+    public Optional<String> getLinkText(BioentityPropertyName propertyName, String propertyValue) {
 
         switch (propertyName) {
             case ORTHOLOG:
-                return fetchSymbolAndSpeciesForOrtholog(propertyValue);
+                return Optional.of(fetchSymbolAndSpeciesForOrtholog(propertyValue));
             case PATHWAYID:
                 return reactomeClient.fetchPathwayNameFailSafe(propertyValue);
             case GO:
@@ -54,7 +49,7 @@ public class BioEntityPropertyLinkTextService {
             case PO:
                 return goPoTermTrader.getTermName(propertyValue);
             default:
-                return propertyValue;
+                return Optional.of(propertyValue);
         }
 
     }

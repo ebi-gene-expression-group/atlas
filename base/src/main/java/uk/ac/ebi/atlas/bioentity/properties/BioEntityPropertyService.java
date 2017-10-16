@@ -18,7 +18,12 @@ import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Named
@@ -122,8 +127,7 @@ public class BioEntityPropertyService {
     private int assessRelevance(BioentityPropertyName bioentityPropertyName, String propertyValue) {
 
         if (ImmutableList.of(BioentityPropertyName.GO, BioentityPropertyName.PO).contains(bioentityPropertyName)) {
-            OntologyTerm o = goPoTermTrader.getTerm(propertyValue);
-            return o != null ? o.depth() : 0;
+            return goPoTermTrader.getTerm(propertyValue).map(OntologyTerm::depth).orElse(0);
         } else {
             return 0;
         }
@@ -158,7 +162,7 @@ public class BioEntityPropertyService {
     PropertyLink createLink(String identifier, BioentityPropertyName propertyName,
                                    String propertyValue, Species species, int relevance) {
         return new PropertyLink(
-                Optional.ofNullable(linkBuilder.getLinkTextOrNull(propertyName, propertyValue)).orElse(propertyValue),
+                linkBuilder.getLinkText(propertyName, propertyValue).orElse(propertyValue),
                 Optional.ofNullable(BioEntityCardProperties.linkTemplates.get(propertyName)).map(
                         linkTemplate -> MessageFormat.format(
                                 linkTemplate,
