@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;

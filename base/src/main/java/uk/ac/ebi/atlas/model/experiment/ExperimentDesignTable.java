@@ -9,6 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 
 import javax.annotation.Nullable;
 import java.util.Collection;

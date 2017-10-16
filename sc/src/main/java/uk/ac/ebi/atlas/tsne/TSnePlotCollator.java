@@ -1,13 +1,12 @@
 package uk.ac.ebi.atlas.tsne;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Comparator;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Named
 public class TSnePlotCollator {
@@ -27,7 +26,32 @@ public class TSnePlotCollator {
         this.geneExpressionDao = geneExpressionDao;
     }
 
-    public TreeMultimap<Integer, TSnePoint> getTSnePlotWithClusters(String experimentAccession, int k) {
+    public TreeMultimap<Integer, TSnePoint> getTsnePlotWithClustersAndExpression(String experimentAccession,
+                                                                                 int k,
+                                                                                 String geneId) {
+        TreeMultimap<Integer, TSnePoint> clusters = getTSnePlotWithClusters(experimentAccession, k);
+        Map<String, Double> expression = geneExpressionDao.fetchGeneExpression(experimentAccession, geneId);
+
+        TreeMultimap<Integer, TSnePoint> clusterPointsWithExpression =
+                TreeMultimap.create(Comparator.<Integer> naturalOrder(), TSnePoint.getNameComparator());
+
+        clusters.entries().forEach(
+                entry ->
+                        clusterPointsWithExpression.put(
+                                entry.getKey(),
+                                TSnePoint.create(
+                                        entry.getValue().x(),
+                                        entry.getValue().y(),
+                                        expression.get(entry.getValue().name()),
+                                        entry.getValue().name()
+                                )
+                        )
+        );
+
+        return clusterPointsWithExpression;
+    }
+
+    private TreeMultimap<Integer, TSnePoint> getTSnePlotWithClusters(String experimentAccession, int k) {
         if ("E-RANDOM".equalsIgnoreCase(experimentAccession)) {
             return randomTSnePlot.getTSnePlotWithClusters(k);
         }
@@ -35,21 +59,11 @@ public class TSnePlotCollator {
         Map<String, TSnePoint> points = tSnePlotDao.fetchTSnePlotPoints(experimentAccession);
         Multimap<Integer, String> clusters = clusterDao.fetchClusters(experimentAccession, k);
 
-        TreeMultimap<Integer, TSnePoint> clusterPoints = TreeMultimap.create();
+        TreeMultimap<Integer, TSnePoint> clusterPoints =
+                TreeMultimap.create(Comparator.<Integer> naturalOrder(), TSnePoint.getNameComparator());
         clusters.entries().forEach(entry -> clusterPoints.put(entry.getKey(), points.get(entry.getValue())));
 
         return clusterPoints;
-    }
-
-    public ImmutableList<TSnePoint> getTSnePlotWithExpression(String experimentAccession, String geneId) {
-        Map<String, TSnePoint> points = tSnePlotDao.fetchTSnePlotPoints(experimentAccession);
-        Map<String, Double> expression = geneExpressionDao.fetchGeneExpression(experimentAccession, geneId);
-
-        return ImmutableList.copyOf(
-                points.values().stream()
-                        .map(point ->
-                                TSnePoint.create(point.x(), point.y(), expression.get(point.name()), point.name()))
-                        .collect(Collectors.toList()));
     }
 
 }
