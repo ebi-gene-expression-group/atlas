@@ -52,7 +52,7 @@ public class GeneSetPropertyService {
 
     private Map<BioentityPropertyName, Set<String>> propertyValuesByType(BioentityPropertyName which,
                                                                          String identifier, String value) {
-        return ImmutableMap.of(which, (Set<String>)ImmutableSet.of(identifier), DESCRIPTION, ImmutableSet.of(value));
+        return ImmutableMap.of(which, ImmutableSet.of(identifier), DESCRIPTION, ImmutableSet.of(value));
     }
 
 }
