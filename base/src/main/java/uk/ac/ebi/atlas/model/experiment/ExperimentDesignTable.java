@@ -20,10 +20,10 @@ One idea: pass in a function to the constructor of experiment design, made from 
  */
 public class ExperimentDesignTable {
 
-    private final Experiment<DescribesDataColumns> experiment;
+    private final Experiment<? extends DescribesDataColumns> experiment;
     private final Gson gson = new Gson();
 
-    public ExperimentDesignTable(Experiment<DescribesDataColumns> experiment){
+    public ExperimentDesignTable(Experiment<? extends DescribesDataColumns> experiment){
         this.experiment = experiment;
     }
 

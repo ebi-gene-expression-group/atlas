@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.json.JsonBaselineExperimentController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
@@ -48,7 +49,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                      @PathVariable String experimentAccession,
                                      @RequestParam(defaultValue = "") String accessKey) {
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
         model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, accessKey)));
@@ -56,7 +57,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return "experiment-page";
     }
 
-    private JsonObject experimentPageContentForExperiment(final Experiment experiment, final String accessKey){
+    private JsonObject experimentPageContentForExperiment(final Experiment<? extends DescribesDataColumns> experiment, final String accessKey){
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
