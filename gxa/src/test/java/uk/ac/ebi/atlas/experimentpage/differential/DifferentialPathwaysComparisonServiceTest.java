@@ -80,7 +80,7 @@ public class DifferentialPathwaysComparisonServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        MockDataFileHub mockDataFileHub = new MockDataFileHub();
+        MockDataFileHub mockDataFileHub = MockDataFileHub.create();
 
         String accession = "E-GEOD-54351";
 
