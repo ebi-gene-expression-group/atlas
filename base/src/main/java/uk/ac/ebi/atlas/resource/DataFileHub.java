@@ -51,6 +51,8 @@ public class DataFileHub {
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
     final static String COEXPRESSION_FILE_TEMPLATE = "/magetab/{0}/{0}-coexpressions.tsv.gz";
 
+    final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.{1}.reactome.gsea.tsv";
+
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
         Validate.notNull(
@@ -90,6 +92,12 @@ public class DataFileHub {
 
     public MicroarrayExperimentFiles getMicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
+    }
+
+    public AtlasResource<TsvReader> getReactomePathwaysFiles(String experimentAccession, String comparison) {
+        return new TsvFile.ReadOnly(
+                dataFilesLocation, REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
+                experimentAccession, comparison);
     }
 
     public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
@@ -203,14 +211,17 @@ public class DataFileHub {
     }
 
     public class DifferentialExperimentFiles extends ExperimentFiles {
-        public final AtlasResource<ObjectInputStream<String[]>> percentileRanks;
+        public AtlasResource<ObjectInputStream<String[]>> percentileRanks;
 
         DifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.percentileRanks =
                     new TsvFile.ReadAsStream(
                             dataFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
+
+
         }
+
     }
 
     public class RnaSeqDifferentialExperimentFiles extends DifferentialExperimentFiles {
@@ -226,6 +237,7 @@ public class DataFileHub {
                     new TsvFile.ReadOnly(
                             dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
         }
+
     }
 
     public class MicroarrayExperimentFiles extends DifferentialExperimentFiles {
