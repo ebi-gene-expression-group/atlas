@@ -32,7 +32,7 @@ public class ReactomeClient {
             return StringUtils.trim(restTemplate.getForObject(url, String.class));
         } catch (RestClientException e) {
             LOGGER.warn("Reactome ID \"{}\" could not be found", reactomeId);
-            return null;
+            return "";
         }
 
     }
