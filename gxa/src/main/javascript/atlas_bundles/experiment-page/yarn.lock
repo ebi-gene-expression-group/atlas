@@ -253,9 +253,9 @@ expression-atlas-disclaimers@latest:
     react-dom "^15.6.1"
     urijs "^1.18.10"
 
-expression-atlas-experiment-page@latest:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.2.0.tgz#b46a152d3d7f4516e2fc2999c656c9991dc2b743"
+expression-atlas-experiment-page@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.2.1.tgz#b7c06bdc93d54c639b8f0249f709298b363b7b4a"
   dependencies:
     expression-atlas-disclaimers latest
     expression-atlas-heatmap-highcharts latest

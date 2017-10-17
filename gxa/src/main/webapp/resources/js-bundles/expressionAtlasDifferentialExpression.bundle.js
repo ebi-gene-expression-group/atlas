@@ -1459,7 +1459,8 @@ exports.default = function (e, target, node, place, effect, offset) {
 
 
     if (result && outsideHorizontal().result) {
-      return { result: false }; // No need to change, if change to vertical will out of space
+      return { result: false // No need to change, if change to vertical will out of space
+      };
     }
     if (!result && getTipOffsetLeft('left') < 0 && getTipOffsetRight('right') <= windowWidth) {
       result = true; // If vertical ok, but let out of side and right won't out of side
@@ -1473,7 +1474,8 @@ exports.default = function (e, target, node, place, effect, offset) {
         newPlace = _outsideVertical2.newPlace;
 
     if (result && outsideHorizontal().result) {
-      return { result: false }; // No need to change, if change to vertical will out of space
+      return { result: false // No need to change, if change to vertical will out of space
+      };
     }
     if (!result && getTipOffsetRight('right') > windowWidth && getTipOffsetLeft('left') >= 0) {
       result = true;
@@ -7214,7 +7216,7 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
       // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
       var switchToSolid = e instanceof window.FocusEvent || isGlobalCall;
 
-      // if it need to skip adding hide listener to scroll
+      // if it needs to skip adding hide listener to scroll
       var scrollHide = true;
       if (e.currentTarget.getAttribute('data-scroll-hide')) {
         scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
@@ -7282,17 +7284,15 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
       if (isEmptyTip || disable) return; // if the tooltip is empty, disable the tooltip
       var updateState = function updateState() {
         if (Array.isArray(placeholder) && placeholder.length > 0 || placeholder) {
-          (function () {
-            var isInvisible = !_this6.state.show;
-            _this6.setState({
-              currentEvent: e,
-              currentTarget: eventTarget,
-              show: true
-            }, function () {
-              _this6.updatePosition();
-              if (isInvisible && afterShow) afterShow();
-            });
-          })();
+          var isInvisible = !_this6.state.show;
+          _this6.setState({
+            currentEvent: e,
+            currentTarget: eventTarget,
+            show: true
+          }, function () {
+            _this6.updatePosition();
+            if (isInvisible && afterShow) afterShow();
+          });
         }
       };
 
