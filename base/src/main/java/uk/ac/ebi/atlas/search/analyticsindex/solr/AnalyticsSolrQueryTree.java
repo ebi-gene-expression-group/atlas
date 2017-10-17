@@ -69,8 +69,7 @@ public class AnalyticsSolrQueryTree {
 
         @Override
         public String toString() {
-            return  String.format("%s:(%s)", searchField,
-                    searchValueNeedsQuotes(searchValue) ? StringUtils.wrap(searchValue, "\"") : searchValue);
+            return  String.format("%s:\"%s\"", searchField, searchValue);
         }
 
         @Override
@@ -240,19 +239,5 @@ public class AnalyticsSolrQueryTree {
         });
         b.add(BioentityPropertyName.BIOENTITY_IDENTIFIER.name);
         return b.build();
-    }
-
-    /*
-    Quotes differentiate between searching for a term or for a phrase.
-    https://lucene.apache.org/solr/guide/6_6/the-standard-query-parser.html#TheStandardQueryParser-SpecifyingTermsfortheStandardQueryParser
-
-    If the term has spaces inside, like "zinc finger" we don't want zinc OR finger, but two tokens : zinc and then finger.
-
-    If the query term has bits of syntax inside, quote it too.
-
-    Possibly we could quote everything, and I'm not sure why we're not.
-     */
-    static boolean searchValueNeedsQuotes(String searchValue){
-        return !StringUtils.isAlphanumeric(searchValue.trim());
     }
 }
