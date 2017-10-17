@@ -49,7 +49,7 @@ public class DifferentialExperimentTest {
         }).toList()));
     }
 
-    static DifferentialExperiment mockExperiment(String accession, List<Contrast> contrasts, ExperimentDesign experimentDesign){
+    public static DifferentialExperiment mockExperiment(String accession, List<Contrast> contrasts, ExperimentDesign experimentDesign){
         return new DifferentialExperiment(accession, new Date(), FluentIterable.from(contrasts).transform(contrast -> Pair.of(contrast, true)).toList(),
                 "description", new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
                 experimentDesign);

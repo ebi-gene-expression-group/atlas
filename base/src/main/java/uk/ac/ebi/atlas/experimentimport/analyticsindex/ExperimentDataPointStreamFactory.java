@@ -70,14 +70,14 @@ public class ExperimentDataPointStreamFactory {
         return new BaselineExperimentDataPointStream(
                 experiment,
                 baselineAnalyticsInputStreamFactory.create(experiment.getAccession(), experiment.getType()),
-                buildAssayGroupIdToConditionsSearchTerms(experiment));
+                conditionsLookupService.conditionsPerDataColumnDescriptor(experiment));
     }
 
     private ObjectInputStream<DifferentialExperimentDataPoint> stream(DifferentialExperiment experiment) throws IOException {
         return new DifferentialExperimentDataPointStream(
                 experiment,
                 rnaSeqDifferentialAnalyticsInputStreamFactory.create(experiment.getAccession()),
-                buildConditionSearchTermsByAssayGroupId(experiment),
+                conditionsLookupService.conditionsPerDataColumnDescriptor(experiment),
                 buildNumReplicatesByContrastId(experiment));
     }
 
@@ -91,7 +91,7 @@ public class ExperimentDataPointStreamFactory {
         return new MicroarrayExperimentDataPointStream(
                 experiment,
                 builder.build(),
-                buildConditionSearchTermsByAssayGroupId(experiment),
+                conditionsLookupService.conditionsPerDataColumnDescriptor(experiment),
                 buildNumReplicatesByContrastId(experiment));
     }
 
@@ -101,33 +101,6 @@ public class ExperimentDataPointStreamFactory {
         for (Contrast contrast : experiment.getDataColumnDescriptors()) {
             int numReplicates = Math.min(contrast.getReferenceAssayGroup().getReplicates(), contrast.getTestAssayGroup().getReplicates());
             builder.put(contrast.getId(), numReplicates);
-        }
-
-        return builder.build();
-    }
-
-    private ImmutableSetMultimap<String, String> buildAssayGroupIdToConditionsSearchTerms(BaselineExperiment experiment) {
-        Collection<Condition> conditions = conditionsLookupService.buildPropertiesForBaselineExperiment(experiment
-                .getAccession(),
-                experiment.getExperimentDesign(), experiment.getDataColumnDescriptors());
-        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
-
-        for (Condition condition : conditions) {
-            builder.putAll(condition.getAssayGroupId(), condition.getValues());
-        }
-
-        return builder.build();
-    }
-
-    private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(DifferentialExperiment experiment) {
-        Collection<DifferentialCondition> conditions = conditionsLookupService.buildPropertiesForDifferentialExperiment
-                (experiment.getAccession(), experiment
-                .getExperimentDesign(), experiment.getDataColumnDescriptors());
-
-        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
-
-        for (DifferentialCondition condition : conditions) {
-            builder.putAll(condition.getContrastId(), condition.getValues());
         }
 
         return builder.build();
