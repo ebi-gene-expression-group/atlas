@@ -8174,6 +8174,10 @@ var selectedColumnIdsFromInitialGroups = function selectedColumnIdsFromInitialGr
   return _lodash.intersection.apply([], initialFilters.map(idsSelectedInInitialFilter));
 };
 
+var allColumnIdsFromInitialGroups = function allColumnIdsFromInitialGroups(initialFilters) {
+  return _lodash.intersection.apply([], initialFilters.map(idsSelectedInInitialFilter));
+};
+
 var copyWithOnePropertyDifferent = function copyWithOnePropertyDifferent(objectToCopy, newPropertyName, newPropertyValue) {
   var result = Object.assign({}, objectToCopy);
   result[newPropertyName] = newPropertyValue;
@@ -8225,7 +8229,6 @@ var decode = function decode(encodedV, defaultV, validateV) {
   var precondition = typeof validateV === 'function' ? validateV : function (v) {
     return !!v;
   };
-
   var s = encodedV ? decodeURIComponent(encodedV) : "";
 
   if (precondition(s)) {
@@ -8280,6 +8283,15 @@ var makeIntoGeneQueryFormat = function makeIntoGeneQueryFormat(v) {
   var strippedV = v.replace(/\W/g, '');
   return strippedV ? [{ value: strippedV }] : [];
 };
+
+var makeIntoArray = function makeIntoArray(v) {
+  var strippedV = v.replace(/\W/g, '');
+  return strippedV ? [strippedV] : [];
+};
+
+var _validateOrElse = function _validateOrElse(condition, defaultValue, value) {
+  return condition(value) ? value : defaultValue;
+};
 var looksLikeEncodedArray = function looksLikeEncodedArray(v) {
   return v.match(/\[.*\]/);
 };
@@ -8288,8 +8300,9 @@ var fromConfigAndQuery = function fromConfigAndQuery(config, query) {
   return {
     specific: decode(query.specific, true),
     geneQuery: decode(query.geneQuery, makeIntoGeneQueryFormat, looksLikeEncodedArray),
-    selectedColumnIds: (0, _lodash.isEmpty)(query.filterFactors) ? selectedColumnIdsFromInitialGroups(config.groups) : selectedIdsFromFilterFactors(config.groups, decode(query.filterFactors)),
-
+    selectedColumnIds: (0, _lodash.uniq)(_validateOrElse(function (ids) {
+      return Array.isArray(ids) && ids.length && (0, _lodash.uniq)(ids).length === (0, _lodash.intersection)(ids, allColumnIdsFromInitialGroups(config.groups)).length;
+    }, (0, _lodash.isEmpty)(query.filterFactors) ? selectedColumnIdsFromInitialGroups(config.groups) : selectedIdsFromFilterFactors(config.groups, decode(query.filterFactors)), decode(query.selectedColumnIds, makeIntoArray, looksLikeEncodedArray))),
     cutoff: decode(query.cutoff, defaultCutoff(config)),
     regulation: decode(query.regulation, defaultRegulation(config)),
     unit: decode(query.unit, defaultUnit(config))

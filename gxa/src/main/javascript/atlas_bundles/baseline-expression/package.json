@@ -12,7 +12,7 @@
   "private": true,
   "dependencies": {
     "expression-atlas-feedback": "../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz",
-    "expression-atlas-heatmap-highcharts": "latest",
+    "expression-atlas-heatmap-highcharts": "^3.7.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"

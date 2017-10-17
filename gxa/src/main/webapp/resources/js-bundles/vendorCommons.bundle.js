@@ -32692,10 +32692,6 @@ var _ContainerLoader = __webpack_require__(/*! ./layout/ContainerLoader.js */ 55
 
 var _ContainerLoader2 = _interopRequireDefault(_ContainerLoader);
 
-var _Container = __webpack_require__(/*! ./layout/Container.js */ 676);
-
-var _Container2 = _interopRequireDefault(_Container);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -32717,8 +32713,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {{value: string, category: string}[]} options.query.gene
  * @param {{value: string, category: string}[]} options.query.condition
  * @param {string}                              options.query.source
- * @param {Object}          [unsupported] options.payload - optional, instead of query. It is left undocumented what this optional parameter could be, or when you would want to use it.
-
  */
 var DEFAULT_OPTIONS = {
     showAnatomogram: true,
@@ -32736,7 +32730,7 @@ var ExpressionAtlasHeatmap = function ExpressionAtlasHeatmap(options) {
         _react2.default.createElement(
             'div',
             { className: 'gxaHeatmapContainer' },
-            options.payload ? _react2.default.createElement(_Container2.default, _extends({}, DEFAULT_OPTIONS, options, { data: options.payload })) : _react2.default.createElement(_ContainerLoader2.default, _extends({}, DEFAULT_OPTIONS, options, {
+            _react2.default.createElement(_ContainerLoader2.default, _extends({}, DEFAULT_OPTIONS, options, {
                 source: typeof options.query == 'string' ? {
                     endpoint: options.query,
                     params: {}
@@ -32748,9 +32742,6 @@ var ExpressionAtlasHeatmap = function ExpressionAtlasHeatmap(options) {
                     }).reduce(function (acc, o) {
                         acc[o[0]] = o[1];return acc;
                     }, {})
-                },
-                render: function render(fetchedData) {
-                    return _react2.default.createElement(_Container2.default, _extends({}, DEFAULT_OPTIONS, options, { data: fetchedData }));
                 } }))
         )
     );
@@ -72477,6 +72468,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -72490,6 +72483,10 @@ var _reactRefetch = __webpack_require__(/*! react-refetch */ 86);
 var _urijs = __webpack_require__(/*! urijs */ 19);
 
 var _urijs2 = _interopRequireDefault(_urijs);
+
+var _Container = __webpack_require__(/*! ./Container.js */ 676);
+
+var _Container2 = _interopRequireDefault(_Container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72532,12 +72529,11 @@ var showMessage = function showMessage(message) {
   });
 };
 
-var ContainerLoader = function ContainerLoader(_ref3) {
-  var inProxy = _ref3.inProxy,
-      atlasUrl = _ref3.atlasUrl,
-      fail = _ref3.fail,
-      sourceUrlFetch = _ref3.sourceUrlFetch,
-      render = _ref3.render;
+var ContainerLoader = function ContainerLoader(props) {
+  var inProxy = props.inProxy,
+      atlasUrl = props.atlasUrl,
+      fail = props.fail,
+      sourceUrlFetch = props.sourceUrlFetch;
 
 
   if (sourceUrlFetch.pending) {
@@ -72561,7 +72557,7 @@ var ContainerLoader = function ContainerLoader(_ref3) {
     } else if (!sourceUrlFetch.value.profiles) {
       return showMessage('Sorry, no results could be found matching your query.');
     } else {
-      return render(sourceUrlFetch.value);
+      return _react2.default.createElement(_Container2.default, _extends({}, props, { data: sourceUrlFetch.value }));
     }
   }
 };
@@ -72573,7 +72569,6 @@ ContainerLoader.propTypes = {
     endpoint: _propTypes2.default.string.isRequired,
     params: _propTypes2.default.object.isRequired
   }).isRequired,
-  render: _propTypes2.default.func.isRequired,
   fail: _propTypes2.default.func
 };
 
@@ -107287,6 +107282,38 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 (0, _highchartsMore2.default)(_reactHighcharts2.default.Highcharts);
 
+// Taken from http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/yaxis/type-log-negative/
+var allowNegativeLog = function allowNegativeLog(H) {
+    H.Axis.prototype.allowNegativeLog = true;
+
+    // Override conversions
+    H.Axis.prototype.log2lin = function (num) {
+        var isNegative = num < 0;
+        var adjustedNum = Math.abs(num);
+
+        if (adjustedNum < 10) {
+            adjustedNum += (10 - adjustedNum) / 10;
+        }
+
+        var result = Math.log(adjustedNum) / Math.LN10;
+        return isNegative ? -result : result;
+    };
+
+    H.Axis.prototype.lin2log = function (num) {
+        var isNegative = num < 0;
+        var absNum = Math.abs(num);
+        var result = Math.pow(10, absNum);
+
+        if (result < 10) {
+            result = 10 * (result - 1) / (10 - 1);
+        }
+
+        return isNegative ? -result : result;
+    };
+};
+
+allowNegativeLog(_reactHighcharts2.default.Highcharts);
+
 var BoxplotCanvas = function BoxplotCanvas(_ref) {
     var title = _ref.title,
         xAxisCategories = _ref.xAxisCategories,
@@ -107373,6 +107400,7 @@ var BoxplotCanvas = function BoxplotCanvas(_ref) {
             } },
 
         yAxis: {
+            type: 'logarithmic',
             title: {
                 text: 'Expression' + (unit ? ' (' + unit + ')' : '')
             },
