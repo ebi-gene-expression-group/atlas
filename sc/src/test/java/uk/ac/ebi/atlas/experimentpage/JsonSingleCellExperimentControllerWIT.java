@@ -49,9 +49,9 @@ public class JsonSingleCellExperimentControllerWIT {
                         "/clusters/" + k + "/expression/ENSFOOBAR"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.min", isA(Double.class)))
+                .andExpect(jsonPath("$.min", isA(Number.class)))
                 .andExpect(jsonPath("$.min", is(greaterThan(0.0))))
-                .andExpect(jsonPath("$.max", isA(Double.class)))
+                .andExpect(jsonPath("$.max", isA(Number.class)))
                 .andExpect(jsonPath("$.max", is(greaterThan(0.0))))
                 .andExpect(jsonPath("$.unit", isOneOf("TPM")))
                 .andExpect(jsonPath("$.series", hasSize(k)));
