@@ -2,7 +2,7 @@
 
 <footer>
     <div id="global-footer" class="global-footer">
-        <nav id="global-nav-expanded" class="global-nav-expanded row">
+        <nav id="global-nav-expanded" class="global-nav row">
             <!-- Footer will be automatically inserted by footer.js -->
         </nav>
         <section id="ebi-footer-meta" class="ebi-footer-meta row">

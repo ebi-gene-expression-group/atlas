@@ -1,15 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
-<section id="gxaExperimentHeader">
-    <div class="row">
-        <div class="small-12 columns">
-            <tiles:insertAttribute name="description-blurb"/>
-        </div>
+<%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">--%>
+
+<%@ include file="experiment-page/experiment-description.jsp" %>
+
+<div class="row margin-top-large">
+    <div class="small-12 columns">
+        <div id="experiment-page"></div>
     </div>
-</section>
-<section>
-    <div class="row column margin-bottom-large">
-        <tiles:insertAttribute name="react-container"/>
-    </div>
-</section>
+</div>
+
+<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPage.bundle.js"></script>
+
+<script type="text/javascript">
+    experimentPage.render({
+        atlasUrl: '${pageContext.request.contextPath}/',
+        resourcesUrl: '${pageContext.request.contextPath}/resources/js-bundles/',
+        content: ${content},
+    }, 'experiment-page');
+</script>

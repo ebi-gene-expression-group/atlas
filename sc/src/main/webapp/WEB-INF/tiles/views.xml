@@ -32,14 +32,9 @@
     </definition>
 
     <definition name="experiment-page" extends="base">
-        <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/tiles/views/experiment-page.jsp">
-                <put-attribute name="description-blurb"
-                               value="/WEB-INF/jsp/tiles/views/experiment-page/description.jsp"/>
-                <put-attribute name="react-container"
-                               value="/WEB-INF/jsp/tiles/views/experiment-page/react-container-experiment-page.jsp"/>
-            </definition>
-        </put-attribute>
+        <put-attribute name="title" value="Experiment &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/experiment-page.jsp"/>
     </definition>
+
     
 </tiles-definitions>

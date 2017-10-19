@@ -9,12 +9,18 @@
 
 /***Overwriting Foundation***/
 
-.tabs {border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;}
-
+.tabs-title > a {
+    font-size: 0.9rem;
+    color: #3e3e3e;
+}
 .tabs-title > a:hover {
-    background-color:aliceblue ;
+    background: aliceblue;
+    color: #0a0a0a;
+}
+.tabs-title > a:focus,
+.tabs-title > a[aria-selected='true'] {
+    color: #0a0a0a;
+       background: #e6e6e6;
 }
 
 /*Local style*/
