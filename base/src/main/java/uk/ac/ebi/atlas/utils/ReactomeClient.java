@@ -1,12 +1,13 @@
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Streams;
-import com.jayway.jsonpath.InvalidJsonException;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ReadContext;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
@@ -14,11 +15,11 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Named
@@ -26,8 +27,11 @@ public class ReactomeClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactomeClient.class);
 
-    private static final String JSON_PATH_IDS = "$[*].stId";
-    private static final String JSON_PATH_NAMES = "$[*].displayName";
+    static final String URL = "https://reactome.org/ContentService/data/query/ids";
+    static final int QUERY_MAX_SIZE = 20;  // https://reactome.org/ContentService/#!/query/findByIdsUsingPOST
+    private static final Gson GSON = new Gson();
+    private static final String STATIC_ID_FIELD = "stId";
+    private static final String DISPLAY_NAME_FIELD = "displayName";
 
     private final RestTemplate restTemplate;
 
@@ -36,44 +40,69 @@ public class ReactomeClient {
         this.restTemplate = restTemplate;
     }
 
-    public Set<Pair<String, String>> fetchPathwayNames(Collection<String> reactomeIds) {
-        String url = "https://reactome.org/ContentService/data/query/ids";
-        String body = reactomeIds.stream().collect(Collectors.joining(","));
+    public Optional<String> getPathwayName(String reactomeId) {
+        return Optional.ofNullable(getPathwayNames(ImmutableList.of(reactomeId)).get(reactomeId));
+    }
+
+    public Map<String, String> getPathwayNames(Collection<String> stableIds) {
+        List<List<String>> partitions = Lists.partition(ImmutableList.copyOf(stableIds), QUERY_MAX_SIZE);
+
+        ImmutableMap.Builder<String, String> mappedStableIdsBuilder = ImmutableMap.builder();
+        for (List<String> partition : partitions) {
+            mappedStableIdsBuilder.putAll(fetchPathwayNames(partition));
+        }
+
+        Map<String, String> mappedStableIds = mappedStableIdsBuilder.build();
+        logMissingIds(stableIds, mappedStableIds);
+
+        return mappedStableIds;
+    }
+
+    private Map<String, String> fetchPathwayNames(Collection<String> stableIds) {
+        String postData = stableIds.stream().collect(Collectors.joining(","));
 
         try {
-
-            String response = restTemplate.postForObject(url, body, String.class);
-
-            ReadContext jsonReadContext = JsonPath.parse(response);
-            Collection<String> ids = jsonReadContext.read(JSON_PATH_IDS);
-            Collection<String> displayNames = jsonReadContext.read(JSON_PATH_NAMES);
-
-            Preconditions.checkArgument(ids.size() == displayNames.size(), "Retrieved pathway IDs did not match retrieved pathway names");
-
-            return Streams.zip(ids.stream(), displayNames.stream(), Pair::of).collect(Collectors.toSet());
-
-        } catch (InvalidJsonException e) {
-            LOGGER.warn("Invalid JSON returned from Reactome API");
-            return Collections.emptySet();
+            return parseJsonResponse(restTemplate.postForObject(URL, postData, String.class), stableIds);
+        } catch (JsonSyntaxException e) {
+            LOGGER.error("Invalid JSON returned from Reactome API");
+            return Collections.emptyMap();
         } catch (RestClientException e) {
-            LOGGER.error("There was an error retrieving pathway names from Reactome API");
-            return Collections.emptySet();
+            LOGGER.error("There was an error retrieving pathway names from Reactome");
+            return Collections.emptyMap();
         }
     }
 
-    // Use fetchPathwayNames above instead
-    @Deprecated
-    public Optional<String> fetchPathwayNameFailSafe(String reactomeId) {
-        String reactomeURL = "https://reactome.org/ContentService/data/query/{0}/displayName";
-        String url = MessageFormat.format(reactomeURL, reactomeId);
+    private Map<String, String> parseJsonResponse(String response, Collection<String> stableIds) {
+        ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.builder();
 
-        try {
-            return Optional.of(StringUtils.trim(restTemplate.getForObject(url, String.class)));
-        } catch (RestClientException e) {
-            LOGGER.warn("Reactome ID \"{}\" could not be found", reactomeId);
-            return Optional.empty();
+        JsonArray jsonArray = GSON.fromJson(response, JsonArray.class);
+        if (jsonArray != null) {
+            for (JsonElement jsonElement : jsonArray) {
+                if (jsonElement.isJsonObject()) {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+                    if (jsonObject.has(STATIC_ID_FIELD) &&
+                            jsonObject.get(STATIC_ID_FIELD).isJsonPrimitive() &&
+                            stableIds.contains(jsonObject.get(STATIC_ID_FIELD).getAsString()) &&
+                            jsonObject.has(DISPLAY_NAME_FIELD) &&
+                            jsonObject.get(DISPLAY_NAME_FIELD).isJsonPrimitive()) {
+                        mapBuilder.put(
+                                jsonObject.get(STATIC_ID_FIELD).getAsString(),
+                                jsonObject.get(DISPLAY_NAME_FIELD).getAsString());
+                    }
+                }
+            }
         }
 
+        return mapBuilder.build();
+    }
+
+    private void logMissingIds(Collection<String> stableIds, Map<String, String> mappedIds) {
+        for (String stableId : stableIds) {
+            if (!mappedIds.keySet().contains(stableId)) {
+                LOGGER.warn("Name of Reactome stable ID {} could not be found", stableId);
+            }
+        }
     }
 
 }
