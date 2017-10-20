@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
@@ -38,13 +39,13 @@ public class GeneSetPropertyService {
     public Map<BioentityPropertyName, Set<String>> propertyValuesByType(String identifier) {
         identifier = identifier.toUpperCase();
         if (GeneSetUtil.matchesReactomeID(identifier)) {
-            return propertyValuesByType(PATHWAYID, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier).orElse(""));
+            return propertyValuesByType(PATHWAYID, identifier, reactomeClient.getPathwayName(identifier).orElse(""));
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
-            return propertyValuesByType(GO, identifier, goPoTermTrader.getTermName(identifier).orElse(""));
+            return propertyValuesByType(GO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
-            return propertyValuesByType(PO, identifier, goPoTermTrader.getTermName(identifier).orElse(""));
+            return propertyValuesByType(PO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         }else if (GeneSetUtil.matchesInterProAccession(identifier)) {
-            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.getTermName(identifier).orElse(""));
+            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         } else {
             return ImmutableMap.of();
         }
