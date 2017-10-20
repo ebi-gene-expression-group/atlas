@@ -70,7 +70,7 @@ public class BioEntityPropertyService {
         result.put("propertyNames", propertiesWeWillDisplay(orderedPropertyNames, propertyValuesByType));
 
         result.put("bioentityProperties",
-                gson.toJson(bioentityProperties(identifier, species, orderedPropertyNames,propertyValuesByType)));
+                gson.toJson(bioentityProperties(identifier, species, orderedPropertyNames, propertyValuesByType)));
 
         return result;
 
@@ -114,6 +114,50 @@ public class BioEntityPropertyService {
         }
         return result;
 
+    }
+
+    public Map<String, Object> addAtributesToModel(String identifier, Species species,
+                                                   List<BioentityPropertyName> orderedPropertyNames, String entityName,
+                                                   Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
+        Map<String, Object> result = new HashMap<>();
+
+        addDesignElements(identifier, propertyValuesByType);
+
+        result.put("entityBriefName",
+                StringUtils.isEmpty(entityName)
+                        ? identifier
+                        : entityName);
+
+        result.put("entityFullName",
+                StringUtils.isEmpty(entityName)
+                        ? identifier
+                        : MessageFormat.format("{0} ({1})", identifier, entityName));
+
+        result.put("bioEntityDescription",getBioEntityDescription(propertyValuesByType));
+
+        result.put("propertyNames", propertiesWeWillDisplay(orderedPropertyNames, propertyValuesByType));
+
+        result.put("bioentityProperties", addBioentityProperties(identifier, species, orderedPropertyNames, propertyValuesByType));
+
+        return result;
+    }
+
+    private Map<BioentityPropertyName, List<PropertyLink>> addBioentityProperties (String identifier, Species species,
+                                                               List<BioentityPropertyName> desiredOrderOfPropertyNames,
+                                                               Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
+        Map<BioentityPropertyName, List<PropertyLink>> result = new HashMap<>();
+
+        List<BioentityPropertyName> propertiesToDisplay = propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType);
+        for(BioentityPropertyName bioentityPropertyName : propertiesToDisplay) {
+
+            List<PropertyLink> propertyLinkList = fetchPropertyLinks(identifier, species, bioentityPropertyName,
+                    propertyValuesByType.get(bioentityPropertyName));
+
+            result.put(bioentityPropertyName, propertyLinkList);
+
+        }
+
+        return result;
     }
 
     private List<PropertyLink> fetchPropertyLinks(String identifier, Species species,
