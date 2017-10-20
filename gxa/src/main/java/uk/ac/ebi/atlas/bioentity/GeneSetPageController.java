@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.bioentity.geneset.GeneSetPropertyService;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
@@ -52,10 +51,10 @@ public class GeneSetPageController extends BioentityPageController {
         String s = "Expression summary for " + (StringUtils.isEmpty(entityName) ? identifier : entityName) +
                 (StringUtils.isNotBlank(speciesString) ?
                         " - " + StringUtils.capitalize(speciesString) : "");
-        return ImmutableMap.<String, Object>of(
+        return ImmutableMap.of(
                 "mainTitle", s,
                 "pageDescription", s,
-                "pageKeywords", "geneset,"+identifier
+                "pageKeywords", "geneset," + identifier
         );
     }
 
