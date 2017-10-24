@@ -27,8 +27,8 @@ public class BioEntityPropertyDao {
                 .collect(Collectors.toSet());
     }
     
-    public Set<String> fetchGeneIdsForPropertyValue(BioentityPropertyName bioentityPropertyName, String
-            bioentityPropertyValue){
+    public Set<String> fetchGeneIdsForPropertyValue(BioentityPropertyName bioentityPropertyName,
+                                                    String bioentityPropertyValue) {
         return solrClient.getBioentityIdentifiers(bioentityPropertyName, bioentityPropertyValue);
     }
 
