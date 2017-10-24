@@ -16,7 +16,7 @@ public enum BioentityPropertyName {
     ENSPROTEIN("ensprotein", true, "Ensembl Protein"),
     ENSTRANSCRIPT("enstranscript", true, "Ensembl Transcript"),
     ENTREZGENE("entrezgene", false, "Entrez"),
-    FLYBASENAME_GENE("flybasename_gene", false),
+    FLYBASE_GENE_ID("flybase_gene_id", false),
     GENE_BIOTYPE("gene_biotype", true),
     GO("go", true,"Gene Ontology"),
     GOTERM("goterm", false, "Gene Ontology"),
