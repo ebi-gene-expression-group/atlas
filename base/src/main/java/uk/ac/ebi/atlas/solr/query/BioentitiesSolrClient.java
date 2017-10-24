@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -52,23 +51,19 @@ public class BioentitiesSolrClient {
         }
     }
 
-    public Set<String> query(SolrQuery solrQuery, boolean returnUppercaseValues, String field){
+    public Set<String> query(SolrQuery solrQuery, boolean returnUppercaseValues, String field) {
+        solrQuery.setFields(field);
         QueryResponse queryResponse = query(solrQuery);
 
         Set<String> results = Sets.newHashSet();
-
         for (SolrDocument doc : queryResponse.getResults()) {
-            String fieldValue = returnUppercaseValues ?
-                    StringUtils.upperCase(doc.getFieldValue(field).toString()) :
-                    doc.getFieldValue(field).toString();
-            results.add(fieldValue);
+            results.add(returnUppercaseValues ? doc.get(field).toString().toUpperCase() : doc.get(field).toString());
         }
         return results;
     }
 
-    public Set<String> getBioentityIdentifiers(BioentityPropertyName
-                                                       bioentityPropertyName, String
-                                                       bioentityPropertyValue){
+    public Set<String> getBioentityIdentifiers(BioentityPropertyName bioentityPropertyName,
+                                               String bioentityPropertyValue) {
         SolrQuery query = new SolrQuery();
         query.setRows(ROWS);
         query.setQuery(MessageFormat.format("property_name:\"{0}\" AND property_value:\"{1}\"",
