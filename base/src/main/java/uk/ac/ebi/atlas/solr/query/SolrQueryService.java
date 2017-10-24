@@ -6,7 +6,7 @@ import com.google.common.base.Stopwatch;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
+import uk.ac.ebi.atlas.solr.query.builders.BioentityIdentifierQueryBuilder;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
@@ -24,13 +24,10 @@ public class SolrQueryService {
 
     private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     private final BioentitiesSolrClient solrClient;
-    private final SolrQueryBuilderFactory solrQueryBuilderFactory;
 
     @Inject
-    public SolrQueryService(BioentitiesSolrClient solrClient,
-                            SolrQueryBuilderFactory solrQueryBuilderFactory) {
+    public SolrQueryService(BioentitiesSolrClient solrClient) {
         this.solrClient = solrClient;
-        this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
     private GeneQueryResponse fetchGeneIdsGroupedByGeneQueryToken(SemanticQuery geneQuery, Species species) {
@@ -45,7 +42,7 @@ public class SolrQueryService {
     private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, Species species) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
+        SolrQuery solrQuery = new BioentityIdentifierQueryBuilder()
                 .forTerm(queryTerm)
                 .withSpecies(species)
                 .build();
