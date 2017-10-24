@@ -44,7 +44,7 @@ public class ReactomeClient {
         return Optional.ofNullable(getPathwayNames(ImmutableList.of(reactomeId)).get(reactomeId));
     }
 
-    public Map<String, String> getPathwayNames(Collection<String> stableIds) {
+    public ImmutableMap<String, String> getPathwayNames(Collection<String> stableIds) {
         List<List<String>> partitions = Lists.partition(ImmutableList.copyOf(stableIds), QUERY_MAX_SIZE);
 
         ImmutableMap.Builder<String, String> mappedStableIdsBuilder = ImmutableMap.builder();
@@ -52,27 +52,27 @@ public class ReactomeClient {
             mappedStableIdsBuilder.putAll(fetchPathwayNames(partition));
         }
 
-        Map<String, String> mappedStableIds = mappedStableIdsBuilder.build();
+        ImmutableMap<String, String> mappedStableIds = mappedStableIdsBuilder.build();
         logMissingIds(stableIds, mappedStableIds);
 
         return mappedStableIds;
     }
 
-    private Map<String, String> fetchPathwayNames(Collection<String> stableIds) {
+    private ImmutableMap<String, String> fetchPathwayNames(Collection<String> stableIds) {
         String postData = stableIds.stream().collect(Collectors.joining(","));
 
         try {
             return parseJsonResponse(restTemplate.postForObject(URL, postData, String.class), stableIds);
         } catch (JsonSyntaxException e) {
             LOGGER.error("Invalid JSON returned from Reactome API");
-            return Collections.emptyMap();
+            return ImmutableMap.of();
         } catch (RestClientException e) {
             LOGGER.error("There was an error retrieving pathway names from Reactome");
-            return Collections.emptyMap();
+            return ImmutableMap.of();
         }
     }
 
-    private Map<String, String> parseJsonResponse(String response, Collection<String> stableIds) {
+    private ImmutableMap<String, String> parseJsonResponse(String response, Collection<String> stableIds) {
         ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.builder();
 
         JsonArray jsonArray = GSON.fromJson(response, JsonArray.class);
