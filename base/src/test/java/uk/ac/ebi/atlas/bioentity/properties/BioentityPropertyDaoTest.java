@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.query.BioentitiesSolrClient;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -20,15 +20,15 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SolrQueryServiceTest {
+public class BioentityPropertyDaoTest {
 
     private static final String BIOENTITY_IDENTIFIER = "ENSG00000132604";
     private static final String GENE_SYMBOL = "TERF2";
 
-    private BioEntityPropertyDao subject;
-
     @Mock
     private BioentitiesSolrClient gxaSolrClientMock;
+
+    private BioEntityPropertyDao subject;
 
     @Before
     public void setUp() throws Exception {
