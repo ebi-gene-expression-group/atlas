@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardModelBuilder;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
@@ -24,7 +24,7 @@ import java.util.Set;
 public abstract class BioentityPageController extends HtmlExceptionHandlingController {
 
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
-    private BioEntityPropertyService bioEntityPropertyService;
+    private BioEntityCardModelBuilder bioEntityCardModelBuilder;
 
     protected SpeciesFactory speciesFactory;
     protected AnalyticsSearchService analyticsSearchService;
@@ -38,8 +38,8 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
     }
 
     @Inject
-    public void setBioEntityPropertyService(BioEntityPropertyService bioEntityPropertyService) {
-        this.bioEntityPropertyService = bioEntityPropertyService;
+    public void setBioEntityCardModelBuilder(BioEntityCardModelBuilder bioEntityCardModelBuilder) {
+        this.bioEntityCardModelBuilder = bioEntityCardModelBuilder;
     }
 
     @Inject
@@ -103,7 +103,7 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
         TODO For now the callback might match slightly too much which is a bug.
          */
         model.addAttribute("geneQuery", SemanticQuery.create(identifier).toUrlEncodedJson());
-        model.addAllAttributes(bioEntityPropertyService.modelAttributes(identifier, species,desiredOrderOfPropertyNames,
+        model.addAllAttributes(bioEntityCardModelBuilder.modelAttributes(identifier, species, desiredOrderOfPropertyNames,
                 entityName, propertyValuesByType));
 
 
