@@ -10,8 +10,7 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -26,6 +25,7 @@ public class SpeciesInferrerIT {
     static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
     static final SemanticQuery PLANT_CONDITION_QUERY = SemanticQuery.create(LEAF_TERM);
     static final SemanticQuery HUMAN_GENE_QUERY = SemanticQuery.create(HUMAN_REACTOME_TERM);
+    static final SemanticQuery MIXED_SPECIES_GENE_QUERY = SemanticQuery.create(SemanticQueryTerm.create("OS03G0852700", "ensgene"), SemanticQueryTerm.create("ENSMUSG00000002055", "ensgene"));
 
     @Inject
     SpeciesInferrer subject;
@@ -42,8 +42,13 @@ public class SpeciesInferrerIT {
     @Test
     public void conflictingSearch() throws Exception {
         assertThat(subject.inferSpecies(HUMAN_GENE_QUERY, EMPTY_QUERY, "").isUnknown(), is(false));
-        assertThat(subject.inferSpecies(EMPTY_QUERY, PLANT_CONDITION_QUERY, "").isUnknown(), is(false));
+        assertThat(subject.inferSpecies(EMPTY_QUERY, PLANT_CONDITION_QUERY, "").isUnknown(), is(true));
         assertThat(subject.inferSpecies(HUMAN_GENE_QUERY, PLANT_CONDITION_QUERY, "").isUnknown(), is(true));
+    }
+
+    @Test
+    public void mixedSpeciesGeneQueryIsUnknown() throws Exception {
+        assertThat(subject.inferSpeciesForGeneQuery(MIXED_SPECIES_GENE_QUERY).isUnknown(), is(true));
     }
 
     @Test
@@ -68,4 +73,13 @@ public class SpeciesInferrerIT {
         assertThat(species2.getReferenceName(), is(ARABIDOPSIS_THALIANA));
     }
 
+    @Test
+    public void blah() throws Exception {
+        assertThat(
+                subject.inferSpeciesForGeneQuery(SemanticQuery.create("ENSMUSG00000019082")).getReferenceName(),
+                is("mus musculus"));
+        assertThat(
+                subject.inferSpeciesForGeneQuery(SemanticQuery.create("FBgn0260743")).getReferenceName(),
+                is("drosophila melanogaster"));
+    }
 }
