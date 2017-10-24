@@ -174,8 +174,8 @@ module.exports = isObjectLike;
 "use strict";
 
 
-var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ 307),
-    getValue = __webpack_require__(/*! ./_getValue */ 310);
+var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ 306),
+    getValue = __webpack_require__(/*! ./_getValue */ 309);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -209,8 +209,8 @@ module.exports = getNative;
 
 
 var _Symbol = __webpack_require__(/*! ./_Symbol */ 20),
-    getRawTag = __webpack_require__(/*! ./_getRawTag */ 300),
-    objectToString = __webpack_require__(/*! ./_objectToString */ 301);
+    getRawTag = __webpack_require__(/*! ./_getRawTag */ 299),
+    objectToString = __webpack_require__(/*! ./_objectToString */ 300);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -457,11 +457,11 @@ module.exports = nativeCreate;
 "use strict";
 
 
-var listCacheClear = __webpack_require__(/*! ./_listCacheClear */ 315),
-    listCacheDelete = __webpack_require__(/*! ./_listCacheDelete */ 316),
-    listCacheGet = __webpack_require__(/*! ./_listCacheGet */ 317),
-    listCacheHas = __webpack_require__(/*! ./_listCacheHas */ 318),
-    listCacheSet = __webpack_require__(/*! ./_listCacheSet */ 319);
+var listCacheClear = __webpack_require__(/*! ./_listCacheClear */ 314),
+    listCacheDelete = __webpack_require__(/*! ./_listCacheDelete */ 315),
+    listCacheGet = __webpack_require__(/*! ./_listCacheGet */ 316),
+    listCacheHas = __webpack_require__(/*! ./_listCacheHas */ 317),
+    listCacheSet = __webpack_require__(/*! ./_listCacheSet */ 318);
 
 /**
  * Creates an list cache object.
@@ -536,7 +536,7 @@ module.exports = assocIndexOf;
 "use strict";
 
 
-var isKeyable = __webpack_require__(/*! ./_isKeyable */ 321);
+var isKeyable = __webpack_require__(/*! ./_isKeyable */ 320);
 
 /**
  * Gets the data for `map`.
@@ -804,11 +804,11 @@ module.exports = isKey;
 "use strict";
 
 
-var mapCacheClear = __webpack_require__(/*! ./_mapCacheClear */ 304),
-    mapCacheDelete = __webpack_require__(/*! ./_mapCacheDelete */ 320),
-    mapCacheGet = __webpack_require__(/*! ./_mapCacheGet */ 322),
-    mapCacheHas = __webpack_require__(/*! ./_mapCacheHas */ 323),
-    mapCacheSet = __webpack_require__(/*! ./_mapCacheSet */ 324);
+var mapCacheClear = __webpack_require__(/*! ./_mapCacheClear */ 303),
+    mapCacheDelete = __webpack_require__(/*! ./_mapCacheDelete */ 319),
+    mapCacheGet = __webpack_require__(/*! ./_mapCacheGet */ 321),
+    mapCacheHas = __webpack_require__(/*! ./_mapCacheHas */ 322),
+    mapCacheSet = __webpack_require__(/*! ./_mapCacheSet */ 323);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -1003,7 +1003,7 @@ module.exports = arrayMap;
 "use strict";
 
 
-var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ 326),
+var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ 325),
     isObjectLike = __webpack_require__(/*! ./isObjectLike */ 13);
 
 /** Used for built-in method references. */
@@ -1134,12 +1134,12 @@ module.exports = isLength;
 
 
 var baseSetData = __webpack_require__(/*! ./_baseSetData */ 138),
-    createBind = __webpack_require__(/*! ./_createBind */ 333),
-    createCurry = __webpack_require__(/*! ./_createCurry */ 334),
+    createBind = __webpack_require__(/*! ./_createBind */ 332),
+    createCurry = __webpack_require__(/*! ./_createCurry */ 333),
     createHybrid = __webpack_require__(/*! ./_createHybrid */ 141),
-    createPartial = __webpack_require__(/*! ./_createPartial */ 353),
+    createPartial = __webpack_require__(/*! ./_createPartial */ 352),
     getData = __webpack_require__(/*! ./_getData */ 145),
-    mergeData = __webpack_require__(/*! ./_mergeData */ 354),
+    mergeData = __webpack_require__(/*! ./_mergeData */ 353),
     setData = __webpack_require__(/*! ./_setData */ 147),
     setWrapToString = __webpack_require__(/*! ./_setWrapToString */ 149),
     toInteger = __webpack_require__(/*! ./toInteger */ 153);
@@ -1463,7 +1463,7 @@ module.exports = replaceHolders;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var root = __webpack_require__(/*! ./_root */ 4),
-    stubFalse = __webpack_require__(/*! ./stubFalse */ 358);
+    stubFalse = __webpack_require__(/*! ./stubFalse */ 357);
 
 /** Detect free variable `exports`. */
 var freeExports = ( false ? 'undefined' : _typeof(exports)) == 'object' && exports && !exports.nodeType && exports;
@@ -1549,17 +1549,17 @@ var Stack = __webpack_require__(/*! ./_Stack */ 75),
     arrayEach = __webpack_require__(/*! ./_arrayEach */ 70),
     assignValue = __webpack_require__(/*! ./_assignValue */ 155),
     baseAssign = __webpack_require__(/*! ./_baseAssign */ 154),
-    baseAssignIn = __webpack_require__(/*! ./_baseAssignIn */ 369),
-    cloneBuffer = __webpack_require__(/*! ./_cloneBuffer */ 372),
+    baseAssignIn = __webpack_require__(/*! ./_baseAssignIn */ 368),
+    cloneBuffer = __webpack_require__(/*! ./_cloneBuffer */ 371),
     copyArray = __webpack_require__(/*! ./_copyArray */ 41),
-    copySymbols = __webpack_require__(/*! ./_copySymbols */ 373),
-    copySymbolsIn = __webpack_require__(/*! ./_copySymbolsIn */ 375),
+    copySymbols = __webpack_require__(/*! ./_copySymbols */ 372),
+    copySymbolsIn = __webpack_require__(/*! ./_copySymbolsIn */ 374),
     getAllKeys = __webpack_require__(/*! ./_getAllKeys */ 165),
     getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ 167),
     getTag = __webpack_require__(/*! ./_getTag */ 168),
-    initCloneArray = __webpack_require__(/*! ./_initCloneArray */ 379),
-    initCloneByTag = __webpack_require__(/*! ./_initCloneByTag */ 380),
-    initCloneObject = __webpack_require__(/*! ./_initCloneObject */ 389),
+    initCloneArray = __webpack_require__(/*! ./_initCloneArray */ 378),
+    initCloneByTag = __webpack_require__(/*! ./_initCloneByTag */ 379),
+    initCloneObject = __webpack_require__(/*! ./_initCloneObject */ 388),
     isArray = __webpack_require__(/*! ./isArray */ 6),
     isBuffer = __webpack_require__(/*! ./isBuffer */ 72),
     isObject = __webpack_require__(/*! ./isObject */ 11),
@@ -1697,11 +1697,11 @@ module.exports = baseClone;
 
 
 var ListCache = __webpack_require__(/*! ./_ListCache */ 36),
-    stackClear = __webpack_require__(/*! ./_stackClear */ 364),
-    stackDelete = __webpack_require__(/*! ./_stackDelete */ 365),
-    stackGet = __webpack_require__(/*! ./_stackGet */ 366),
-    stackHas = __webpack_require__(/*! ./_stackHas */ 367),
-    stackSet = __webpack_require__(/*! ./_stackSet */ 368);
+    stackClear = __webpack_require__(/*! ./_stackClear */ 363),
+    stackDelete = __webpack_require__(/*! ./_stackDelete */ 364),
+    stackGet = __webpack_require__(/*! ./_stackGet */ 365),
+    stackHas = __webpack_require__(/*! ./_stackHas */ 366),
+    stackSet = __webpack_require__(/*! ./_stackSet */ 367);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -1736,7 +1736,7 @@ module.exports = Stack;
 "use strict";
 
 
-var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 374),
+var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 373),
     stubArray = __webpack_require__(/*! ./stubArray */ 163);
 
 /** Used for built-in method references. */
@@ -1959,7 +1959,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 286)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 285)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -2501,8 +2501,8 @@ exports.default = PromiseState;
 "use strict";
 
 
-var baseHasIn = __webpack_require__(/*! ./_baseHasIn */ 298),
-    hasPath = __webpack_require__(/*! ./_hasPath */ 299);
+var baseHasIn = __webpack_require__(/*! ./_baseHasIn */ 297),
+    hasPath = __webpack_require__(/*! ./_hasPath */ 298);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -2568,7 +2568,7 @@ module.exports = freeGlobal;
 "use strict";
 
 
-var memoizeCapped = __webpack_require__(/*! ./_memoizeCapped */ 302);
+var memoizeCapped = __webpack_require__(/*! ./_memoizeCapped */ 301);
 
 /** Used to match property names within property paths. */
 var reLeadingDot = /^\./,
@@ -2648,7 +2648,7 @@ module.exports = toSource;
 "use strict";
 
 
-var baseToString = __webpack_require__(/*! ./_baseToString */ 325);
+var baseToString = __webpack_require__(/*! ./_baseToString */ 324);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -2779,11 +2779,11 @@ module.exports = WeakMap;
 
 var composeArgs = __webpack_require__(/*! ./_composeArgs */ 142),
     composeArgsRight = __webpack_require__(/*! ./_composeArgsRight */ 143),
-    countHolders = __webpack_require__(/*! ./_countHolders */ 335),
+    countHolders = __webpack_require__(/*! ./_countHolders */ 334),
     createCtor = __webpack_require__(/*! ./_createCtor */ 39),
     createRecurry = __webpack_require__(/*! ./_createRecurry */ 144),
     getHolder = __webpack_require__(/*! ./_getHolder */ 152),
-    reorder = __webpack_require__(/*! ./_reorder */ 352),
+    reorder = __webpack_require__(/*! ./_reorder */ 351),
     replaceHolders = __webpack_require__(/*! ./_replaceHolders */ 71),
     root = __webpack_require__(/*! ./_root */ 4);
 
@@ -2985,7 +2985,7 @@ module.exports = composeArgsRight;
 "use strict";
 
 
-var isLaziable = __webpack_require__(/*! ./_isLaziable */ 336),
+var isLaziable = __webpack_require__(/*! ./_isLaziable */ 335),
     setData = __webpack_require__(/*! ./_setData */ 147),
     setWrapToString = __webpack_require__(/*! ./_setWrapToString */ 149);
 
@@ -3052,7 +3052,7 @@ module.exports = createRecurry;
 
 
 var metaMap = __webpack_require__(/*! ./_metaMap */ 139),
-    noop = __webpack_require__(/*! ./noop */ 337);
+    noop = __webpack_require__(/*! ./noop */ 336);
 
 /**
  * Gets metadata for `func`.
@@ -3197,10 +3197,10 @@ module.exports = shortOut;
 "use strict";
 
 
-var getWrapDetails = __webpack_require__(/*! ./_getWrapDetails */ 342),
-    insertWrapDetails = __webpack_require__(/*! ./_insertWrapDetails */ 343),
+var getWrapDetails = __webpack_require__(/*! ./_getWrapDetails */ 341),
+    insertWrapDetails = __webpack_require__(/*! ./_insertWrapDetails */ 342),
     setToString = __webpack_require__(/*! ./_setToString */ 150),
-    updateWrapDetails = __webpack_require__(/*! ./_updateWrapDetails */ 346);
+    updateWrapDetails = __webpack_require__(/*! ./_updateWrapDetails */ 345);
 
 /**
  * Sets the `toString` method of `wrapper` to mimic the source of `reference`
@@ -3231,7 +3231,7 @@ module.exports = setWrapToString;
 "use strict";
 
 
-var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ 344),
+var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ 343),
     shortOut = __webpack_require__(/*! ./_shortOut */ 148);
 
 /**
@@ -3308,7 +3308,7 @@ module.exports = getHolder;
 "use strict";
 
 
-var toFinite = __webpack_require__(/*! ./toFinite */ 355);
+var toFinite = __webpack_require__(/*! ./toFinite */ 354);
 
 /**
  * Converts `value` to an integer.
@@ -3465,7 +3465,7 @@ module.exports = baseAssignValue;
 "use strict";
 
 
-var baseTimes = __webpack_require__(/*! ./_baseTimes */ 357),
+var baseTimes = __webpack_require__(/*! ./_baseTimes */ 356),
     isArguments = __webpack_require__(/*! ./isArguments */ 62),
     isArray = __webpack_require__(/*! ./isArray */ 6),
     isBuffer = __webpack_require__(/*! ./isBuffer */ 72),
@@ -3525,9 +3525,9 @@ module.exports = arrayLikeKeys;
 "use strict";
 
 
-var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ 359),
-    baseUnary = __webpack_require__(/*! ./_baseUnary */ 360),
-    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ 361);
+var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ 358),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ 359),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ 360);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -3566,7 +3566,7 @@ module.exports = isTypedArray;
 
 
 var isPrototype = __webpack_require__(/*! ./_isPrototype */ 73),
-    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ 362);
+    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ 361);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3683,7 +3683,7 @@ module.exports = isArrayLike;
 
 
 var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ 157),
-    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ 370),
+    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ 369),
     isArrayLike = __webpack_require__(/*! ./isArrayLike */ 161);
 
 /**
@@ -3893,10 +3893,10 @@ module.exports = getAllKeysIn;
 "use strict";
 
 
-var DataView = __webpack_require__(/*! ./_DataView */ 376),
+var DataView = __webpack_require__(/*! ./_DataView */ 375),
     Map = __webpack_require__(/*! ./_Map */ 60),
-    Promise = __webpack_require__(/*! ./_Promise */ 377),
-    Set = __webpack_require__(/*! ./_Set */ 378),
+    Promise = __webpack_require__(/*! ./_Promise */ 376),
+    Set = __webpack_require__(/*! ./_Set */ 377),
     WeakMap = __webpack_require__(/*! ./_WeakMap */ 140),
     baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 19),
     toSource = __webpack_require__(/*! ./_toSource */ 135);
@@ -4085,7 +4085,7 @@ module.exports = setToArray;
 "use strict";
 
 
-var baseIsEqualDeep = __webpack_require__(/*! ./_baseIsEqualDeep */ 395),
+var baseIsEqualDeep = __webpack_require__(/*! ./_baseIsEqualDeep */ 394),
     isObjectLike = __webpack_require__(/*! ./isObjectLike */ 13);
 
 /**
@@ -4126,9 +4126,9 @@ module.exports = baseIsEqual;
 "use strict";
 
 
-var SetCache = __webpack_require__(/*! ./_SetCache */ 396),
-    arraySome = __webpack_require__(/*! ./_arraySome */ 399),
-    cacheHas = __webpack_require__(/*! ./_cacheHas */ 400);
+var SetCache = __webpack_require__(/*! ./_SetCache */ 395),
+    arraySome = __webpack_require__(/*! ./_arraySome */ 398),
+    cacheHas = __webpack_require__(/*! ./_cacheHas */ 399);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -4276,8 +4276,8 @@ module.exports = matchesStrictComparable;
 "use strict";
 
 
-var flatten = __webpack_require__(/*! ./flatten */ 410),
-    overRest = __webpack_require__(/*! ./_overRest */ 413),
+var flatten = __webpack_require__(/*! ./flatten */ 409),
+    overRest = __webpack_require__(/*! ./_overRest */ 412),
     setToString = __webpack_require__(/*! ./_setToString */ 150);
 
 /**
@@ -5409,8 +5409,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* 278 */,
 /* 279 */,
 /* 280 */,
-/* 281 */,
-/* 282 */
+/* 281 */
 /*!************************************!*\
   !*** multi ./bundles/marker-genes ***!
   \************************************/
@@ -5418,11 +5417,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/marker-genes */283);
+module.exports = __webpack_require__(/*! ./bundles/marker-genes */282);
 
 
 /***/ }),
-/* 283 */
+/* 282 */
 /*!***************************************!*\
   !*** ./bundles/marker-genes/index.js ***!
   \***************************************/
@@ -5446,7 +5445,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 18);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _atlasMarkerGenesSearchResults = __webpack_require__(/*! atlas-marker-genes-search-results */ 284);
+var _atlasMarkerGenesSearchResults = __webpack_require__(/*! atlas-marker-genes-search-results */ 283);
 
 var _atlasMarkerGenesSearchResults2 = _interopRequireDefault(_atlasMarkerGenesSearchResults);
 
@@ -5459,7 +5458,7 @@ var render = function render(options, target) {
 exports.render = render;
 
 /***/ }),
-/* 284 */
+/* 283 */
 /*!******************************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/atlas-marker-genes-search-results/lib/index.js ***!
   \******************************************************************************************/
@@ -5474,7 +5473,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _MarkerGeneSearchResults = __webpack_require__(/*! ./MarkerGeneSearchResults.js */ 285);
+var _MarkerGeneSearchResults = __webpack_require__(/*! ./MarkerGeneSearchResults.js */ 284);
 
 var _MarkerGeneSearchResults2 = _interopRequireDefault(_MarkerGeneSearchResults);
 
@@ -5485,7 +5484,7 @@ function _interopRequireDefault(obj) {
 exports.default = _MarkerGeneSearchResults2.default;
 
 /***/ }),
-/* 285 */
+/* 284 */
 /*!************************************************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/atlas-marker-genes-search-results/lib/MarkerGeneSearchResults.js ***!
   \************************************************************************************************************/
@@ -5508,17 +5507,17 @@ var _propTypes = __webpack_require__(/*! prop-types */ 124);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRefetch = __webpack_require__(/*! react-refetch */ 289);
+var _reactRefetch = __webpack_require__(/*! react-refetch */ 288);
 
-var _urijs = __webpack_require__(/*! urijs */ 422);
+var _urijs = __webpack_require__(/*! urijs */ 421);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _FlaskLoaderIcon = __webpack_require__(/*! ./FlaskLoaderIcon.js */ 423);
+var _FlaskLoaderIcon = __webpack_require__(/*! ./FlaskLoaderIcon.js */ 422);
 
 var _FlaskLoaderIcon2 = _interopRequireDefault(_FlaskLoaderIcon);
 
-var _MarkerGeneProfile = __webpack_require__(/*! ./MarkerGeneProfile.js */ 424);
+var _MarkerGeneProfile = __webpack_require__(/*! ./MarkerGeneProfile.js */ 423);
 
 var _MarkerGeneProfile2 = _interopRequireDefault(_MarkerGeneProfile);
 
@@ -5552,7 +5551,7 @@ exports.default = (0, _reactRefetch.connect)(function (props) {
 })(MarkerGeneSearchResults);
 
 /***/ }),
-/* 286 */
+/* 285 */
 /*!*********************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \*********************************************************************************/
@@ -5575,10 +5574,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 125);
 var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 126);
 var warning = __webpack_require__(/*! fbjs/lib/warning */ 127);
-var assign = __webpack_require__(/*! object-assign */ 287);
+var assign = __webpack_require__(/*! object-assign */ 286);
 
 var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 128);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 288);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 287);
 
 module.exports = function (isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -6081,7 +6080,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 };
 
 /***/ }),
-/* 287 */
+/* 286 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/object-assign/index.js ***!
   \******************************************************************/
@@ -6182,7 +6181,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 };
 
 /***/ }),
-/* 288 */
+/* 287 */
 /*!************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/prop-types/checkPropTypes.js ***!
   \************************************************************************/
@@ -6254,7 +6253,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 /***/ }),
-/* 289 */
+/* 288 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/react-refetch/lib/index.js ***!
   \**********************************************************************/
@@ -6268,7 +6267,7 @@ module.exports = checkPropTypes;
 exports.__esModule = true;
 exports.PromiseState = exports.connect = undefined;
 
-var _connect = __webpack_require__(/*! ./components/connect */ 290);
+var _connect = __webpack_require__(/*! ./components/connect */ 289);
 
 var _connect2 = _interopRequireDefault(_connect);
 
@@ -6284,7 +6283,7 @@ exports.connect = _connect2.default;
 exports.PromiseState = _PromiseState2.default;
 
 /***/ }),
-/* 290 */
+/* 289 */
 /*!***********************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/react-refetch/lib/components/connect.js ***!
   \***********************************************************************************/
@@ -6317,19 +6316,19 @@ var _isPlainObject = __webpack_require__(/*! ../utils/isPlainObject */ 129);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 291);
+var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 290);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-var _handleResponse = __webpack_require__(/*! ../utils/handleResponse */ 292);
+var _handleResponse = __webpack_require__(/*! ../utils/handleResponse */ 291);
 
 var _handleResponse2 = _interopRequireDefault(_handleResponse);
 
-var _buildRequest = __webpack_require__(/*! ../utils/buildRequest */ 294);
+var _buildRequest = __webpack_require__(/*! ../utils/buildRequest */ 293);
 
 var _buildRequest2 = _interopRequireDefault(_buildRequest);
 
-var _checkTypes = __webpack_require__(/*! ../utils/checkTypes */ 295);
+var _checkTypes = __webpack_require__(/*! ../utils/checkTypes */ 294);
 
 var _checkTypes2 = _interopRequireDefault(_checkTypes);
 
@@ -6337,7 +6336,7 @@ var _PromiseState = __webpack_require__(/*! ../PromiseState */ 131);
 
 var _PromiseState2 = _interopRequireDefault(_PromiseState);
 
-var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 296);
+var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 295);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
@@ -6345,7 +6344,7 @@ var _invariant = __webpack_require__(/*! invariant */ 130);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _warning = __webpack_require__(/*! warning */ 297);
+var _warning = __webpack_require__(/*! warning */ 296);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -6353,7 +6352,7 @@ var _hasIn = __webpack_require__(/*! lodash/hasIn */ 132);
 
 var _hasIn2 = _interopRequireDefault(_hasIn);
 
-var _omit = __webpack_require__(/*! lodash/fp/omit */ 327);
+var _omit = __webpack_require__(/*! lodash/fp/omit */ 326);
 
 var _omit2 = _interopRequireDefault(_omit);
 
@@ -6799,7 +6798,7 @@ function connect(mapPropsToRequestsToProps, defaults, options) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 9)))
 
 /***/ }),
-/* 291 */
+/* 290 */
 /*!***********************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/react-refetch/lib/utils/shallowEqual.js ***!
   \***********************************************************************************/
@@ -6849,7 +6848,7 @@ function shallowEqual(objA, objB) {
 }
 
 /***/ }),
-/* 292 */
+/* 291 */
 /*!*************************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/react-refetch/lib/utils/handleResponse.js ***!
   \*************************************************************************************/
@@ -6863,7 +6862,7 @@ function shallowEqual(objA, objB) {
 exports.__esModule = true;
 exports.default = handleResponse;
 
-var _errors = __webpack_require__(/*! ./errors */ 293);
+var _errors = __webpack_require__(/*! ./errors */ 292);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -6889,7 +6888,7 @@ function handleResponse(response) {
 }
 
 /***/ }),
-/* 293 */
+/* 292 */
 /*!*****************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/react-refetch/lib/utils/errors.js ***!
   \*****************************************************************************/
@@ -6922,7 +6921,7 @@ function parse(cause) {
 }
 
 /***/ }),
-/* 294 */
+/* 293 */
 /*!***********************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/react-refetch/lib/utils/buildRequest.js ***!
   \***********************************************************************************/
@@ -6946,7 +6945,7 @@ function buildRequest(mapping) {
 }
 
 /***/ }),
-/* 295 */
+/* 294 */
 /*!*********************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/react-refetch/lib/utils/checkTypes.js ***!
   \*********************************************************************************/
@@ -7042,7 +7041,7 @@ function checkTypes(mapping) {
 }
 
 /***/ }),
-/* 296 */
+/* 295 */
 /*!****************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/hoist-non-react-statics/index.js ***!
   \****************************************************************************/
@@ -7102,7 +7101,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 };
 
 /***/ }),
-/* 297 */
+/* 296 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/warning/browser.js ***!
   \**************************************************************/
@@ -7166,7 +7165,7 @@ if (true) {
 module.exports = warning;
 
 /***/ }),
-/* 298 */
+/* 297 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseHasIn.js ***!
   \****************************************************************/
@@ -7192,7 +7191,7 @@ function baseHasIn(object, key) {
 module.exports = baseHasIn;
 
 /***/ }),
-/* 299 */
+/* 298 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_hasPath.js ***!
   \**************************************************************/
@@ -7243,7 +7242,7 @@ function hasPath(object, path, hasFunc) {
 module.exports = hasPath;
 
 /***/ }),
-/* 300 */
+/* 299 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_getRawTag.js ***!
   \****************************************************************/
@@ -7302,7 +7301,7 @@ function getRawTag(value) {
 module.exports = getRawTag;
 
 /***/ }),
-/* 301 */
+/* 300 */
 /*!*********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_objectToString.js ***!
   \*********************************************************************/
@@ -7337,7 +7336,7 @@ function objectToString(value) {
 module.exports = objectToString;
 
 /***/ }),
-/* 302 */
+/* 301 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_memoizeCapped.js ***!
   \********************************************************************/
@@ -7348,7 +7347,7 @@ module.exports = objectToString;
 "use strict";
 
 
-var memoize = __webpack_require__(/*! ./memoize */ 303);
+var memoize = __webpack_require__(/*! ./memoize */ 302);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -7376,7 +7375,7 @@ function memoizeCapped(func) {
 module.exports = memoizeCapped;
 
 /***/ }),
-/* 303 */
+/* 302 */
 /*!*************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/memoize.js ***!
   \*************************************************************/
@@ -7462,7 +7461,7 @@ memoize.Cache = MapCache;
 module.exports = memoize;
 
 /***/ }),
-/* 304 */
+/* 303 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_mapCacheClear.js ***!
   \********************************************************************/
@@ -7473,7 +7472,7 @@ module.exports = memoize;
 "use strict";
 
 
-var Hash = __webpack_require__(/*! ./_Hash */ 305),
+var Hash = __webpack_require__(/*! ./_Hash */ 304),
     ListCache = __webpack_require__(/*! ./_ListCache */ 36),
     Map = __webpack_require__(/*! ./_Map */ 60);
 
@@ -7496,7 +7495,7 @@ function mapCacheClear() {
 module.exports = mapCacheClear;
 
 /***/ }),
-/* 305 */
+/* 304 */
 /*!***********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_Hash.js ***!
   \***********************************************************/
@@ -7507,11 +7506,11 @@ module.exports = mapCacheClear;
 "use strict";
 
 
-var hashClear = __webpack_require__(/*! ./_hashClear */ 306),
-    hashDelete = __webpack_require__(/*! ./_hashDelete */ 311),
-    hashGet = __webpack_require__(/*! ./_hashGet */ 312),
-    hashHas = __webpack_require__(/*! ./_hashHas */ 313),
-    hashSet = __webpack_require__(/*! ./_hashSet */ 314);
+var hashClear = __webpack_require__(/*! ./_hashClear */ 305),
+    hashDelete = __webpack_require__(/*! ./_hashDelete */ 310),
+    hashGet = __webpack_require__(/*! ./_hashGet */ 311),
+    hashHas = __webpack_require__(/*! ./_hashHas */ 312),
+    hashSet = __webpack_require__(/*! ./_hashSet */ 313);
 
 /**
  * Creates a hash object.
@@ -7541,7 +7540,7 @@ Hash.prototype.set = hashSet;
 module.exports = Hash;
 
 /***/ }),
-/* 306 */
+/* 305 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_hashClear.js ***!
   \****************************************************************/
@@ -7569,7 +7568,7 @@ function hashClear() {
 module.exports = hashClear;
 
 /***/ }),
-/* 307 */
+/* 306 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIsNative.js ***!
   \*******************************************************************/
@@ -7581,7 +7580,7 @@ module.exports = hashClear;
 
 
 var isFunction = __webpack_require__(/*! ./isFunction */ 58),
-    isMasked = __webpack_require__(/*! ./_isMasked */ 308),
+    isMasked = __webpack_require__(/*! ./_isMasked */ 307),
     isObject = __webpack_require__(/*! ./isObject */ 11),
     toSource = __webpack_require__(/*! ./_toSource */ 135);
 
@@ -7626,7 +7625,7 @@ function baseIsNative(value) {
 module.exports = baseIsNative;
 
 /***/ }),
-/* 308 */
+/* 307 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_isMasked.js ***!
   \***************************************************************/
@@ -7637,7 +7636,7 @@ module.exports = baseIsNative;
 "use strict";
 
 
-var coreJsData = __webpack_require__(/*! ./_coreJsData */ 309);
+var coreJsData = __webpack_require__(/*! ./_coreJsData */ 308);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = function () {
@@ -7659,7 +7658,7 @@ function isMasked(func) {
 module.exports = isMasked;
 
 /***/ }),
-/* 309 */
+/* 308 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_coreJsData.js ***!
   \*****************************************************************/
@@ -7678,7 +7677,7 @@ var coreJsData = root['__core-js_shared__'];
 module.exports = coreJsData;
 
 /***/ }),
-/* 310 */
+/* 309 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_getValue.js ***!
   \***************************************************************/
@@ -7704,7 +7703,7 @@ function getValue(object, key) {
 module.exports = getValue;
 
 /***/ }),
-/* 311 */
+/* 310 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_hashDelete.js ***!
   \*****************************************************************/
@@ -7734,7 +7733,7 @@ function hashDelete(key) {
 module.exports = hashDelete;
 
 /***/ }),
-/* 312 */
+/* 311 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_hashGet.js ***!
   \**************************************************************/
@@ -7777,7 +7776,7 @@ function hashGet(key) {
 module.exports = hashGet;
 
 /***/ }),
-/* 313 */
+/* 312 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_hashHas.js ***!
   \**************************************************************/
@@ -7813,7 +7812,7 @@ function hashHas(key) {
 module.exports = hashHas;
 
 /***/ }),
-/* 314 */
+/* 313 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_hashSet.js ***!
   \**************************************************************/
@@ -7849,7 +7848,7 @@ function hashSet(key, value) {
 module.exports = hashSet;
 
 /***/ }),
-/* 315 */
+/* 314 */
 /*!*********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_listCacheClear.js ***!
   \*********************************************************************/
@@ -7875,7 +7874,7 @@ function listCacheClear() {
 module.exports = listCacheClear;
 
 /***/ }),
-/* 316 */
+/* 315 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_listCacheDelete.js ***!
   \**********************************************************************/
@@ -7923,7 +7922,7 @@ function listCacheDelete(key) {
 module.exports = listCacheDelete;
 
 /***/ }),
-/* 317 */
+/* 316 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_listCacheGet.js ***!
   \*******************************************************************/
@@ -7955,7 +7954,7 @@ function listCacheGet(key) {
 module.exports = listCacheGet;
 
 /***/ }),
-/* 318 */
+/* 317 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_listCacheHas.js ***!
   \*******************************************************************/
@@ -7984,7 +7983,7 @@ function listCacheHas(key) {
 module.exports = listCacheHas;
 
 /***/ }),
-/* 319 */
+/* 318 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_listCacheSet.js ***!
   \*******************************************************************/
@@ -8023,7 +8022,7 @@ function listCacheSet(key, value) {
 module.exports = listCacheSet;
 
 /***/ }),
-/* 320 */
+/* 319 */
 /*!*********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_mapCacheDelete.js ***!
   \*********************************************************************/
@@ -8054,7 +8053,7 @@ function mapCacheDelete(key) {
 module.exports = mapCacheDelete;
 
 /***/ }),
-/* 321 */
+/* 320 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_isKeyable.js ***!
   \****************************************************************/
@@ -8082,7 +8081,7 @@ function isKeyable(value) {
 module.exports = isKeyable;
 
 /***/ }),
-/* 322 */
+/* 321 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_mapCacheGet.js ***!
   \******************************************************************/
@@ -8111,7 +8110,7 @@ function mapCacheGet(key) {
 module.exports = mapCacheGet;
 
 /***/ }),
-/* 323 */
+/* 322 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_mapCacheHas.js ***!
   \******************************************************************/
@@ -8140,7 +8139,7 @@ function mapCacheHas(key) {
 module.exports = mapCacheHas;
 
 /***/ }),
-/* 324 */
+/* 323 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_mapCacheSet.js ***!
   \******************************************************************/
@@ -8175,7 +8174,7 @@ function mapCacheSet(key, value) {
 module.exports = mapCacheSet;
 
 /***/ }),
-/* 325 */
+/* 324 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseToString.js ***!
   \*******************************************************************/
@@ -8225,7 +8224,7 @@ function baseToString(value) {
 module.exports = baseToString;
 
 /***/ }),
-/* 326 */
+/* 325 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIsArguments.js ***!
   \**********************************************************************/
@@ -8256,7 +8255,7 @@ function baseIsArguments(value) {
 module.exports = baseIsArguments;
 
 /***/ }),
-/* 327 */
+/* 326 */
 /*!*************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/fp/omit.js ***!
   \*************************************************************/
@@ -8267,14 +8266,14 @@ module.exports = baseIsArguments;
 "use strict";
 
 
-var convert = __webpack_require__(/*! ./convert */ 328),
-    func = convert('omit', __webpack_require__(/*! ../omit */ 415));
+var convert = __webpack_require__(/*! ./convert */ 327),
+    func = convert('omit', __webpack_require__(/*! ../omit */ 414));
 
 func.placeholder = __webpack_require__(/*! ./placeholder */ 137);
 module.exports = func;
 
 /***/ }),
-/* 328 */
+/* 327 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/fp/convert.js ***!
   \****************************************************************/
@@ -8285,8 +8284,8 @@ module.exports = func;
 "use strict";
 
 
-var baseConvert = __webpack_require__(/*! ./_baseConvert */ 329),
-    util = __webpack_require__(/*! ./_util */ 331);
+var baseConvert = __webpack_require__(/*! ./_baseConvert */ 328),
+    util = __webpack_require__(/*! ./_util */ 330);
 
 /**
  * Converts `func` of `name` to an immutable auto-curried iteratee-first data-last
@@ -8305,7 +8304,7 @@ function convert(name, func, options) {
 module.exports = convert;
 
 /***/ }),
-/* 329 */
+/* 328 */
 /*!*********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/fp/_baseConvert.js ***!
   \*********************************************************************/
@@ -8316,7 +8315,7 @@ module.exports = convert;
 "use strict";
 
 
-var mapping = __webpack_require__(/*! ./_mapping */ 330),
+var mapping = __webpack_require__(/*! ./_mapping */ 329),
     fallbackHolder = __webpack_require__(/*! ./placeholder */ 137);
 
 /** Built-in value reference. */
@@ -8879,7 +8878,7 @@ function baseConvert(util, name, func, options) {
 module.exports = baseConvert;
 
 /***/ }),
-/* 330 */
+/* 329 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/fp/_mapping.js ***!
   \*****************************************************************/
@@ -9218,7 +9217,7 @@ exports.skipRearg = {
 };
 
 /***/ }),
-/* 331 */
+/* 330 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/fp/_util.js ***!
   \**************************************************************/
@@ -9230,22 +9229,22 @@ exports.skipRearg = {
 
 
 module.exports = {
-  'ary': __webpack_require__(/*! ../ary */ 332),
+  'ary': __webpack_require__(/*! ../ary */ 331),
   'assign': __webpack_require__(/*! ../_baseAssign */ 154),
-  'clone': __webpack_require__(/*! ../clone */ 363),
-  'curry': __webpack_require__(/*! ../curry */ 390),
+  'clone': __webpack_require__(/*! ../clone */ 362),
+  'curry': __webpack_require__(/*! ../curry */ 389),
   'forEach': __webpack_require__(/*! ../_arrayEach */ 70),
   'isArray': __webpack_require__(/*! ../isArray */ 6),
   'isFunction': __webpack_require__(/*! ../isFunction */ 58),
-  'iteratee': __webpack_require__(/*! ../iteratee */ 391),
+  'iteratee': __webpack_require__(/*! ../iteratee */ 390),
   'keys': __webpack_require__(/*! ../_baseKeys */ 159),
-  'rearg': __webpack_require__(/*! ../rearg */ 409),
+  'rearg': __webpack_require__(/*! ../rearg */ 408),
   'toInteger': __webpack_require__(/*! ../toInteger */ 153),
-  'toPath': __webpack_require__(/*! ../toPath */ 414)
+  'toPath': __webpack_require__(/*! ../toPath */ 413)
 };
 
 /***/ }),
-/* 332 */
+/* 331 */
 /*!*********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/ary.js ***!
   \*********************************************************/
@@ -9287,7 +9286,7 @@ function ary(func, n, guard) {
 module.exports = ary;
 
 /***/ }),
-/* 333 */
+/* 332 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_createBind.js ***!
   \*****************************************************************/
@@ -9328,7 +9327,7 @@ function createBind(func, bitmask, thisArg) {
 module.exports = createBind;
 
 /***/ }),
-/* 334 */
+/* 333 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_createCurry.js ***!
   \******************************************************************/
@@ -9383,7 +9382,7 @@ function createCurry(func, bitmask, arity) {
 module.exports = createCurry;
 
 /***/ }),
-/* 335 */
+/* 334 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_countHolders.js ***!
   \*******************************************************************/
@@ -9417,7 +9416,7 @@ function countHolders(array, placeholder) {
 module.exports = countHolders;
 
 /***/ }),
-/* 336 */
+/* 335 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_isLaziable.js ***!
   \*****************************************************************/
@@ -9430,8 +9429,8 @@ module.exports = countHolders;
 
 var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 68),
     getData = __webpack_require__(/*! ./_getData */ 145),
-    getFuncName = __webpack_require__(/*! ./_getFuncName */ 338),
-    lodash = __webpack_require__(/*! ./wrapperLodash */ 340);
+    getFuncName = __webpack_require__(/*! ./_getFuncName */ 337),
+    lodash = __webpack_require__(/*! ./wrapperLodash */ 339);
 
 /**
  * Checks if `func` has a lazy counterpart.
@@ -9458,7 +9457,7 @@ function isLaziable(func) {
 module.exports = isLaziable;
 
 /***/ }),
-/* 337 */
+/* 336 */
 /*!**********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/noop.js ***!
   \**********************************************************/
@@ -9488,7 +9487,7 @@ function noop() {
 module.exports = noop;
 
 /***/ }),
-/* 338 */
+/* 337 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_getFuncName.js ***!
   \******************************************************************/
@@ -9499,7 +9498,7 @@ module.exports = noop;
 "use strict";
 
 
-var realNames = __webpack_require__(/*! ./_realNames */ 339);
+var realNames = __webpack_require__(/*! ./_realNames */ 338);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -9532,7 +9531,7 @@ function getFuncName(func) {
 module.exports = getFuncName;
 
 /***/ }),
-/* 339 */
+/* 338 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_realNames.js ***!
   \****************************************************************/
@@ -9549,7 +9548,7 @@ var realNames = {};
 module.exports = realNames;
 
 /***/ }),
-/* 340 */
+/* 339 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/wrapperLodash.js ***!
   \*******************************************************************/
@@ -9565,7 +9564,7 @@ var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 68),
     baseLodash = __webpack_require__(/*! ./_baseLodash */ 69),
     isArray = __webpack_require__(/*! ./isArray */ 6),
     isObjectLike = __webpack_require__(/*! ./isObjectLike */ 13),
-    wrapperClone = __webpack_require__(/*! ./_wrapperClone */ 341);
+    wrapperClone = __webpack_require__(/*! ./_wrapperClone */ 340);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -9709,7 +9708,7 @@ lodash.prototype.constructor = lodash;
 module.exports = lodash;
 
 /***/ }),
-/* 341 */
+/* 340 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_wrapperClone.js ***!
   \*******************************************************************/
@@ -9745,7 +9744,7 @@ function wrapperClone(wrapper) {
 module.exports = wrapperClone;
 
 /***/ }),
-/* 342 */
+/* 341 */
 /*!*********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_getWrapDetails.js ***!
   \*********************************************************************/
@@ -9775,7 +9774,7 @@ function getWrapDetails(source) {
 module.exports = getWrapDetails;
 
 /***/ }),
-/* 343 */
+/* 342 */
 /*!************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_insertWrapDetails.js ***!
   \************************************************************************/
@@ -9811,7 +9810,7 @@ function insertWrapDetails(source, details) {
 module.exports = insertWrapDetails;
 
 /***/ }),
-/* 344 */
+/* 343 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseSetToString.js ***!
   \**********************************************************************/
@@ -9822,7 +9821,7 @@ module.exports = insertWrapDetails;
 "use strict";
 
 
-var constant = __webpack_require__(/*! ./constant */ 345),
+var constant = __webpack_require__(/*! ./constant */ 344),
     defineProperty = __webpack_require__(/*! ./_defineProperty */ 151),
     identity = __webpack_require__(/*! ./identity */ 66);
 
@@ -9846,7 +9845,7 @@ var baseSetToString = !defineProperty ? identity : function (func, string) {
 module.exports = baseSetToString;
 
 /***/ }),
-/* 345 */
+/* 344 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/constant.js ***!
   \**************************************************************/
@@ -9885,7 +9884,7 @@ function constant(value) {
 module.exports = constant;
 
 /***/ }),
-/* 346 */
+/* 345 */
 /*!************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_updateWrapDetails.js ***!
   \************************************************************************/
@@ -9897,7 +9896,7 @@ module.exports = constant;
 
 
 var arrayEach = __webpack_require__(/*! ./_arrayEach */ 70),
-    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 347);
+    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 346);
 
 /** Used to compose bitmasks for function metadata. */
 var WRAP_BIND_FLAG = 1,
@@ -9934,7 +9933,7 @@ function updateWrapDetails(details, bitmask) {
 module.exports = updateWrapDetails;
 
 /***/ }),
-/* 347 */
+/* 346 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_arrayIncludes.js ***!
   \********************************************************************/
@@ -9945,7 +9944,7 @@ module.exports = updateWrapDetails;
 "use strict";
 
 
-var baseIndexOf = __webpack_require__(/*! ./_baseIndexOf */ 348);
+var baseIndexOf = __webpack_require__(/*! ./_baseIndexOf */ 347);
 
 /**
  * A specialized version of `_.includes` for arrays without support for
@@ -9964,7 +9963,7 @@ function arrayIncludes(array, value) {
 module.exports = arrayIncludes;
 
 /***/ }),
-/* 348 */
+/* 347 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIndexOf.js ***!
   \******************************************************************/
@@ -9975,9 +9974,9 @@ module.exports = arrayIncludes;
 "use strict";
 
 
-var baseFindIndex = __webpack_require__(/*! ./_baseFindIndex */ 349),
-    baseIsNaN = __webpack_require__(/*! ./_baseIsNaN */ 350),
-    strictIndexOf = __webpack_require__(/*! ./_strictIndexOf */ 351);
+var baseFindIndex = __webpack_require__(/*! ./_baseFindIndex */ 348),
+    baseIsNaN = __webpack_require__(/*! ./_baseIsNaN */ 349),
+    strictIndexOf = __webpack_require__(/*! ./_strictIndexOf */ 350);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -9995,7 +9994,7 @@ function baseIndexOf(array, value, fromIndex) {
 module.exports = baseIndexOf;
 
 /***/ }),
-/* 349 */
+/* 348 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseFindIndex.js ***!
   \********************************************************************/
@@ -10032,7 +10031,7 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
 module.exports = baseFindIndex;
 
 /***/ }),
-/* 350 */
+/* 349 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIsNaN.js ***!
   \****************************************************************/
@@ -10057,7 +10056,7 @@ function baseIsNaN(value) {
 module.exports = baseIsNaN;
 
 /***/ }),
-/* 351 */
+/* 350 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_strictIndexOf.js ***!
   \********************************************************************/
@@ -10093,7 +10092,7 @@ function strictIndexOf(array, value, fromIndex) {
 module.exports = strictIndexOf;
 
 /***/ }),
-/* 352 */
+/* 351 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_reorder.js ***!
   \**************************************************************/
@@ -10135,7 +10134,7 @@ function reorder(array, indexes) {
 module.exports = reorder;
 
 /***/ }),
-/* 353 */
+/* 352 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_createPartial.js ***!
   \********************************************************************/
@@ -10191,7 +10190,7 @@ function createPartial(func, bitmask, thisArg, partials) {
 module.exports = createPartial;
 
 /***/ }),
-/* 354 */
+/* 353 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_mergeData.js ***!
   \****************************************************************/
@@ -10291,7 +10290,7 @@ function mergeData(data, source) {
 module.exports = mergeData;
 
 /***/ }),
-/* 355 */
+/* 354 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/toFinite.js ***!
   \**************************************************************/
@@ -10302,7 +10301,7 @@ module.exports = mergeData;
 "use strict";
 
 
-var toNumber = __webpack_require__(/*! ./toNumber */ 356);
+var toNumber = __webpack_require__(/*! ./toNumber */ 355);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -10346,7 +10345,7 @@ function toFinite(value) {
 module.exports = toFinite;
 
 /***/ }),
-/* 356 */
+/* 355 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/toNumber.js ***!
   \**************************************************************/
@@ -10423,7 +10422,7 @@ function toNumber(value) {
 module.exports = toNumber;
 
 /***/ }),
-/* 357 */
+/* 356 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseTimes.js ***!
   \****************************************************************/
@@ -10456,7 +10455,7 @@ function baseTimes(n, iteratee) {
 module.exports = baseTimes;
 
 /***/ }),
-/* 358 */
+/* 357 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/stubFalse.js ***!
   \***************************************************************/
@@ -10487,7 +10486,7 @@ function stubFalse() {
 module.exports = stubFalse;
 
 /***/ }),
-/* 359 */
+/* 358 */
 /*!***********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIsTypedArray.js ***!
   \***********************************************************************/
@@ -10548,7 +10547,7 @@ function baseIsTypedArray(value) {
 module.exports = baseIsTypedArray;
 
 /***/ }),
-/* 360 */
+/* 359 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseUnary.js ***!
   \****************************************************************/
@@ -10575,7 +10574,7 @@ function baseUnary(func) {
 module.exports = baseUnary;
 
 /***/ }),
-/* 361 */
+/* 360 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_nodeUtil.js ***!
   \***************************************************************/
@@ -10613,7 +10612,7 @@ module.exports = nodeUtil;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
-/* 362 */
+/* 361 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_nativeKeys.js ***!
   \*****************************************************************/
@@ -10632,7 +10631,7 @@ var nativeKeys = overArg(Object.keys, Object);
 module.exports = nativeKeys;
 
 /***/ }),
-/* 363 */
+/* 362 */
 /*!***********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/clone.js ***!
   \***********************************************************/
@@ -10681,7 +10680,7 @@ function clone(value) {
 module.exports = clone;
 
 /***/ }),
-/* 364 */
+/* 363 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_stackClear.js ***!
   \*****************************************************************/
@@ -10709,7 +10708,7 @@ function stackClear() {
 module.exports = stackClear;
 
 /***/ }),
-/* 365 */
+/* 364 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_stackDelete.js ***!
   \******************************************************************/
@@ -10740,7 +10739,7 @@ function stackDelete(key) {
 module.exports = stackDelete;
 
 /***/ }),
-/* 366 */
+/* 365 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_stackGet.js ***!
   \***************************************************************/
@@ -10767,7 +10766,7 @@ function stackGet(key) {
 module.exports = stackGet;
 
 /***/ }),
-/* 367 */
+/* 366 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_stackHas.js ***!
   \***************************************************************/
@@ -10794,7 +10793,7 @@ function stackHas(key) {
 module.exports = stackHas;
 
 /***/ }),
-/* 368 */
+/* 367 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_stackSet.js ***!
   \***************************************************************/
@@ -10841,7 +10840,7 @@ function stackSet(key, value) {
 module.exports = stackSet;
 
 /***/ }),
-/* 369 */
+/* 368 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseAssignIn.js ***!
   \*******************************************************************/
@@ -10871,7 +10870,7 @@ function baseAssignIn(object, source) {
 module.exports = baseAssignIn;
 
 /***/ }),
-/* 370 */
+/* 369 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseKeysIn.js ***!
   \*****************************************************************/
@@ -10884,7 +10883,7 @@ module.exports = baseAssignIn;
 
 var isObject = __webpack_require__(/*! ./isObject */ 11),
     isPrototype = __webpack_require__(/*! ./_isPrototype */ 73),
-    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ 371);
+    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ 370);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -10917,7 +10916,7 @@ function baseKeysIn(object) {
 module.exports = baseKeysIn;
 
 /***/ }),
-/* 371 */
+/* 370 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_nativeKeysIn.js ***!
   \*******************************************************************/
@@ -10950,7 +10949,7 @@ function nativeKeysIn(object) {
 module.exports = nativeKeysIn;
 
 /***/ }),
-/* 372 */
+/* 371 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cloneBuffer.js ***!
   \******************************************************************/
@@ -11001,7 +11000,7 @@ module.exports = cloneBuffer;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
-/* 373 */
+/* 372 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_copySymbols.js ***!
   \******************************************************************/
@@ -11030,7 +11029,7 @@ function copySymbols(source, object) {
 module.exports = copySymbols;
 
 /***/ }),
-/* 374 */
+/* 373 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_arrayFilter.js ***!
   \******************************************************************/
@@ -11068,7 +11067,7 @@ function arrayFilter(array, predicate) {
 module.exports = arrayFilter;
 
 /***/ }),
-/* 375 */
+/* 374 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_copySymbolsIn.js ***!
   \********************************************************************/
@@ -11097,7 +11096,7 @@ function copySymbolsIn(source, object) {
 module.exports = copySymbolsIn;
 
 /***/ }),
-/* 376 */
+/* 375 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_DataView.js ***!
   \***************************************************************/
@@ -11117,7 +11116,7 @@ var DataView = getNative(root, 'DataView');
 module.exports = DataView;
 
 /***/ }),
-/* 377 */
+/* 376 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_Promise.js ***!
   \**************************************************************/
@@ -11137,7 +11136,7 @@ var Promise = getNative(root, 'Promise');
 module.exports = Promise;
 
 /***/ }),
-/* 378 */
+/* 377 */
 /*!**********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_Set.js ***!
   \**********************************************************/
@@ -11157,7 +11156,7 @@ var Set = getNative(root, 'Set');
 module.exports = Set;
 
 /***/ }),
-/* 379 */
+/* 378 */
 /*!*********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_initCloneArray.js ***!
   \*********************************************************************/
@@ -11196,7 +11195,7 @@ function initCloneArray(array) {
 module.exports = initCloneArray;
 
 /***/ }),
-/* 380 */
+/* 379 */
 /*!*********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_initCloneByTag.js ***!
   \*********************************************************************/
@@ -11208,12 +11207,12 @@ module.exports = initCloneArray;
 
 
 var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ 79),
-    cloneDataView = __webpack_require__(/*! ./_cloneDataView */ 381),
-    cloneMap = __webpack_require__(/*! ./_cloneMap */ 382),
-    cloneRegExp = __webpack_require__(/*! ./_cloneRegExp */ 384),
-    cloneSet = __webpack_require__(/*! ./_cloneSet */ 385),
-    cloneSymbol = __webpack_require__(/*! ./_cloneSymbol */ 387),
-    cloneTypedArray = __webpack_require__(/*! ./_cloneTypedArray */ 388);
+    cloneDataView = __webpack_require__(/*! ./_cloneDataView */ 380),
+    cloneMap = __webpack_require__(/*! ./_cloneMap */ 381),
+    cloneRegExp = __webpack_require__(/*! ./_cloneRegExp */ 383),
+    cloneSet = __webpack_require__(/*! ./_cloneSet */ 384),
+    cloneSymbol = __webpack_require__(/*! ./_cloneSymbol */ 386),
+    cloneTypedArray = __webpack_require__(/*! ./_cloneTypedArray */ 387);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -11289,7 +11288,7 @@ function initCloneByTag(object, tag, cloneFunc, isDeep) {
 module.exports = initCloneByTag;
 
 /***/ }),
-/* 381 */
+/* 380 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cloneDataView.js ***!
   \********************************************************************/
@@ -11318,7 +11317,7 @@ function cloneDataView(dataView, isDeep) {
 module.exports = cloneDataView;
 
 /***/ }),
-/* 382 */
+/* 381 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cloneMap.js ***!
   \***************************************************************/
@@ -11329,7 +11328,7 @@ module.exports = cloneDataView;
 "use strict";
 
 
-var addMapEntry = __webpack_require__(/*! ./_addMapEntry */ 383),
+var addMapEntry = __webpack_require__(/*! ./_addMapEntry */ 382),
     arrayReduce = __webpack_require__(/*! ./_arrayReduce */ 170),
     mapToArray = __webpack_require__(/*! ./_mapToArray */ 171);
 
@@ -11353,7 +11352,7 @@ function cloneMap(map, isDeep, cloneFunc) {
 module.exports = cloneMap;
 
 /***/ }),
-/* 383 */
+/* 382 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_addMapEntry.js ***!
   \******************************************************************/
@@ -11381,7 +11380,7 @@ function addMapEntry(map, pair) {
 module.exports = addMapEntry;
 
 /***/ }),
-/* 384 */
+/* 383 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cloneRegExp.js ***!
   \******************************************************************/
@@ -11411,7 +11410,7 @@ function cloneRegExp(regexp) {
 module.exports = cloneRegExp;
 
 /***/ }),
-/* 385 */
+/* 384 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cloneSet.js ***!
   \***************************************************************/
@@ -11422,7 +11421,7 @@ module.exports = cloneRegExp;
 "use strict";
 
 
-var addSetEntry = __webpack_require__(/*! ./_addSetEntry */ 386),
+var addSetEntry = __webpack_require__(/*! ./_addSetEntry */ 385),
     arrayReduce = __webpack_require__(/*! ./_arrayReduce */ 170),
     setToArray = __webpack_require__(/*! ./_setToArray */ 172);
 
@@ -11446,7 +11445,7 @@ function cloneSet(set, isDeep, cloneFunc) {
 module.exports = cloneSet;
 
 /***/ }),
-/* 386 */
+/* 385 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_addSetEntry.js ***!
   \******************************************************************/
@@ -11474,7 +11473,7 @@ function addSetEntry(set, value) {
 module.exports = addSetEntry;
 
 /***/ }),
-/* 387 */
+/* 386 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cloneSymbol.js ***!
   \******************************************************************/
@@ -11505,7 +11504,7 @@ function cloneSymbol(symbol) {
 module.exports = cloneSymbol;
 
 /***/ }),
-/* 388 */
+/* 387 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cloneTypedArray.js ***!
   \**********************************************************************/
@@ -11534,7 +11533,7 @@ function cloneTypedArray(typedArray, isDeep) {
 module.exports = cloneTypedArray;
 
 /***/ }),
-/* 389 */
+/* 388 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_initCloneObject.js ***!
   \**********************************************************************/
@@ -11563,7 +11562,7 @@ function initCloneObject(object) {
 module.exports = initCloneObject;
 
 /***/ }),
-/* 390 */
+/* 389 */
 /*!***********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/curry.js ***!
   \***********************************************************/
@@ -11633,7 +11632,7 @@ curry.placeholder = {};
 module.exports = curry;
 
 /***/ }),
-/* 391 */
+/* 390 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/iteratee.js ***!
   \**************************************************************/
@@ -11645,7 +11644,7 @@ module.exports = curry;
 
 
 var baseClone = __webpack_require__(/*! ./_baseClone */ 74),
-    baseIteratee = __webpack_require__(/*! ./_baseIteratee */ 392);
+    baseIteratee = __webpack_require__(/*! ./_baseIteratee */ 391);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1;
@@ -11699,7 +11698,7 @@ function iteratee(func) {
 module.exports = iteratee;
 
 /***/ }),
-/* 392 */
+/* 391 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIteratee.js ***!
   \*******************************************************************/
@@ -11712,11 +11711,11 @@ module.exports = iteratee;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var baseMatches = __webpack_require__(/*! ./_baseMatches */ 393),
-    baseMatchesProperty = __webpack_require__(/*! ./_baseMatchesProperty */ 404),
+var baseMatches = __webpack_require__(/*! ./_baseMatches */ 392),
+    baseMatchesProperty = __webpack_require__(/*! ./_baseMatchesProperty */ 403),
     identity = __webpack_require__(/*! ./identity */ 66),
     isArray = __webpack_require__(/*! ./isArray */ 6),
-    property = __webpack_require__(/*! ./property */ 406);
+    property = __webpack_require__(/*! ./property */ 405);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -11743,7 +11742,7 @@ function baseIteratee(value) {
 module.exports = baseIteratee;
 
 /***/ }),
-/* 393 */
+/* 392 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseMatches.js ***!
   \******************************************************************/
@@ -11754,8 +11753,8 @@ module.exports = baseIteratee;
 "use strict";
 
 
-var baseIsMatch = __webpack_require__(/*! ./_baseIsMatch */ 394),
-    getMatchData = __webpack_require__(/*! ./_getMatchData */ 403),
+var baseIsMatch = __webpack_require__(/*! ./_baseIsMatch */ 393),
+    getMatchData = __webpack_require__(/*! ./_getMatchData */ 402),
     matchesStrictComparable = __webpack_require__(/*! ./_matchesStrictComparable */ 176);
 
 /**
@@ -11778,7 +11777,7 @@ function baseMatches(source) {
 module.exports = baseMatches;
 
 /***/ }),
-/* 394 */
+/* 393 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIsMatch.js ***!
   \******************************************************************/
@@ -11847,7 +11846,7 @@ function baseIsMatch(object, source, matchData, customizer) {
 module.exports = baseIsMatch;
 
 /***/ }),
-/* 395 */
+/* 394 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseIsEqualDeep.js ***!
   \**********************************************************************/
@@ -11860,8 +11859,8 @@ module.exports = baseIsMatch;
 
 var Stack = __webpack_require__(/*! ./_Stack */ 75),
     equalArrays = __webpack_require__(/*! ./_equalArrays */ 174),
-    equalByTag = __webpack_require__(/*! ./_equalByTag */ 401),
-    equalObjects = __webpack_require__(/*! ./_equalObjects */ 402),
+    equalByTag = __webpack_require__(/*! ./_equalByTag */ 400),
+    equalObjects = __webpack_require__(/*! ./_equalObjects */ 401),
     getTag = __webpack_require__(/*! ./_getTag */ 168),
     isArray = __webpack_require__(/*! ./isArray */ 6),
     isBuffer = __webpack_require__(/*! ./isBuffer */ 72),
@@ -11941,7 +11940,7 @@ function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
 module.exports = baseIsEqualDeep;
 
 /***/ }),
-/* 396 */
+/* 395 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_SetCache.js ***!
   \***************************************************************/
@@ -11953,8 +11952,8 @@ module.exports = baseIsEqualDeep;
 
 
 var MapCache = __webpack_require__(/*! ./_MapCache */ 57),
-    setCacheAdd = __webpack_require__(/*! ./_setCacheAdd */ 397),
-    setCacheHas = __webpack_require__(/*! ./_setCacheHas */ 398);
+    setCacheAdd = __webpack_require__(/*! ./_setCacheAdd */ 396),
+    setCacheHas = __webpack_require__(/*! ./_setCacheHas */ 397);
 
 /**
  *
@@ -11981,7 +11980,7 @@ SetCache.prototype.has = setCacheHas;
 module.exports = SetCache;
 
 /***/ }),
-/* 397 */
+/* 396 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_setCacheAdd.js ***!
   \******************************************************************/
@@ -12013,7 +12012,7 @@ function setCacheAdd(value) {
 module.exports = setCacheAdd;
 
 /***/ }),
-/* 398 */
+/* 397 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_setCacheHas.js ***!
   \******************************************************************/
@@ -12040,7 +12039,7 @@ function setCacheHas(value) {
 module.exports = setCacheHas;
 
 /***/ }),
-/* 399 */
+/* 398 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_arraySome.js ***!
   \****************************************************************/
@@ -12076,7 +12075,7 @@ function arraySome(array, predicate) {
 module.exports = arraySome;
 
 /***/ }),
-/* 400 */
+/* 399 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_cacheHas.js ***!
   \***************************************************************/
@@ -12102,7 +12101,7 @@ function cacheHas(cache, key) {
 module.exports = cacheHas;
 
 /***/ }),
-/* 401 */
+/* 400 */
 /*!*****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_equalByTag.js ***!
   \*****************************************************************/
@@ -12225,7 +12224,7 @@ function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
 module.exports = equalByTag;
 
 /***/ }),
-/* 402 */
+/* 401 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_equalObjects.js ***!
   \*******************************************************************/
@@ -12319,7 +12318,7 @@ function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
 module.exports = equalObjects;
 
 /***/ }),
-/* 403 */
+/* 402 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_getMatchData.js ***!
   \*******************************************************************/
@@ -12356,7 +12355,7 @@ function getMatchData(object) {
 module.exports = getMatchData;
 
 /***/ }),
-/* 404 */
+/* 403 */
 /*!**************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseMatchesProperty.js ***!
   \**************************************************************************/
@@ -12368,7 +12367,7 @@ module.exports = getMatchData;
 
 
 var baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ 173),
-    get = __webpack_require__(/*! ./get */ 405),
+    get = __webpack_require__(/*! ./get */ 404),
     hasIn = __webpack_require__(/*! ./hasIn */ 132),
     isKey = __webpack_require__(/*! ./_isKey */ 56),
     isStrictComparable = __webpack_require__(/*! ./_isStrictComparable */ 175),
@@ -12400,7 +12399,7 @@ function baseMatchesProperty(path, srcValue) {
 module.exports = baseMatchesProperty;
 
 /***/ }),
-/* 405 */
+/* 404 */
 /*!*********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/get.js ***!
   \*********************************************************/
@@ -12446,7 +12445,7 @@ function get(object, path, defaultValue) {
 module.exports = get;
 
 /***/ }),
-/* 406 */
+/* 405 */
 /*!**************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/property.js ***!
   \**************************************************************/
@@ -12457,8 +12456,8 @@ module.exports = get;
 "use strict";
 
 
-var baseProperty = __webpack_require__(/*! ./_baseProperty */ 407),
-    basePropertyDeep = __webpack_require__(/*! ./_basePropertyDeep */ 408),
+var baseProperty = __webpack_require__(/*! ./_baseProperty */ 406),
+    basePropertyDeep = __webpack_require__(/*! ./_basePropertyDeep */ 407),
     isKey = __webpack_require__(/*! ./_isKey */ 56),
     toKey = __webpack_require__(/*! ./_toKey */ 21);
 
@@ -12491,7 +12490,7 @@ function property(path) {
 module.exports = property;
 
 /***/ }),
-/* 407 */
+/* 406 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseProperty.js ***!
   \*******************************************************************/
@@ -12518,7 +12517,7 @@ function baseProperty(key) {
 module.exports = baseProperty;
 
 /***/ }),
-/* 408 */
+/* 407 */
 /*!***********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_basePropertyDeep.js ***!
   \***********************************************************************/
@@ -12547,7 +12546,7 @@ function basePropertyDeep(path) {
 module.exports = basePropertyDeep;
 
 /***/ }),
-/* 409 */
+/* 408 */
 /*!***********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/rearg.js ***!
   \***********************************************************/
@@ -12593,7 +12592,7 @@ var rearg = flatRest(function (func, indexes) {
 module.exports = rearg;
 
 /***/ }),
-/* 410 */
+/* 409 */
 /*!*************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/flatten.js ***!
   \*************************************************************/
@@ -12604,7 +12603,7 @@ module.exports = rearg;
 "use strict";
 
 
-var baseFlatten = __webpack_require__(/*! ./_baseFlatten */ 411);
+var baseFlatten = __webpack_require__(/*! ./_baseFlatten */ 410);
 
 /**
  * Flattens `array` a single level deep.
@@ -12628,7 +12627,7 @@ function flatten(array) {
 module.exports = flatten;
 
 /***/ }),
-/* 411 */
+/* 410 */
 /*!******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseFlatten.js ***!
   \******************************************************************/
@@ -12640,7 +12639,7 @@ module.exports = flatten;
 
 
 var arrayPush = __webpack_require__(/*! ./_arrayPush */ 77),
-    isFlattenable = __webpack_require__(/*! ./_isFlattenable */ 412);
+    isFlattenable = __webpack_require__(/*! ./_isFlattenable */ 411);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -12679,7 +12678,7 @@ function baseFlatten(array, depth, predicate, isStrict, result) {
 module.exports = baseFlatten;
 
 /***/ }),
-/* 412 */
+/* 411 */
 /*!********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_isFlattenable.js ***!
   \********************************************************************/
@@ -12711,7 +12710,7 @@ function isFlattenable(value) {
 module.exports = isFlattenable;
 
 /***/ }),
-/* 413 */
+/* 412 */
 /*!***************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_overRest.js ***!
   \***************************************************************/
@@ -12760,7 +12759,7 @@ function overRest(func, start, transform) {
 module.exports = overRest;
 
 /***/ }),
-/* 414 */
+/* 413 */
 /*!************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/toPath.js ***!
   \************************************************************/
@@ -12806,7 +12805,7 @@ function toPath(value) {
 module.exports = toPath;
 
 /***/ }),
-/* 415 */
+/* 414 */
 /*!**********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/omit.js ***!
   \**********************************************************/
@@ -12819,10 +12818,10 @@ module.exports = toPath;
 
 var arrayMap = __webpack_require__(/*! ./_arrayMap */ 61),
     baseClone = __webpack_require__(/*! ./_baseClone */ 74),
-    baseUnset = __webpack_require__(/*! ./_baseUnset */ 416),
+    baseUnset = __webpack_require__(/*! ./_baseUnset */ 415),
     castPath = __webpack_require__(/*! ./_castPath */ 34),
     copyObject = __webpack_require__(/*! ./_copyObject */ 27),
-    customOmitClone = __webpack_require__(/*! ./_customOmitClone */ 420),
+    customOmitClone = __webpack_require__(/*! ./_customOmitClone */ 419),
     flatRest = __webpack_require__(/*! ./_flatRest */ 177),
     getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ 167);
 
@@ -12876,7 +12875,7 @@ var omit = flatRest(function (object, paths) {
 module.exports = omit;
 
 /***/ }),
-/* 416 */
+/* 415 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseUnset.js ***!
   \****************************************************************/
@@ -12888,8 +12887,8 @@ module.exports = omit;
 
 
 var castPath = __webpack_require__(/*! ./_castPath */ 34),
-    last = __webpack_require__(/*! ./last */ 417),
-    parent = __webpack_require__(/*! ./_parent */ 418),
+    last = __webpack_require__(/*! ./last */ 416),
+    parent = __webpack_require__(/*! ./_parent */ 417),
     toKey = __webpack_require__(/*! ./_toKey */ 21);
 
 /**
@@ -12909,7 +12908,7 @@ function baseUnset(object, path) {
 module.exports = baseUnset;
 
 /***/ }),
-/* 417 */
+/* 416 */
 /*!**********************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/last.js ***!
   \**********************************************************/
@@ -12942,7 +12941,7 @@ function last(array) {
 module.exports = last;
 
 /***/ }),
-/* 418 */
+/* 417 */
 /*!*************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_parent.js ***!
   \*************************************************************/
@@ -12954,7 +12953,7 @@ module.exports = last;
 
 
 var baseGet = __webpack_require__(/*! ./_baseGet */ 80),
-    baseSlice = __webpack_require__(/*! ./_baseSlice */ 419);
+    baseSlice = __webpack_require__(/*! ./_baseSlice */ 418);
 
 /**
  * Gets the parent value at `path` of `object`.
@@ -12971,7 +12970,7 @@ function parent(object, path) {
 module.exports = parent;
 
 /***/ }),
-/* 419 */
+/* 418 */
 /*!****************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_baseSlice.js ***!
   \****************************************************************/
@@ -13015,7 +13014,7 @@ function baseSlice(array, start, end) {
 module.exports = baseSlice;
 
 /***/ }),
-/* 420 */
+/* 419 */
 /*!**********************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/_customOmitClone.js ***!
   \**********************************************************************/
@@ -13026,7 +13025,7 @@ module.exports = baseSlice;
 "use strict";
 
 
-var isPlainObject = __webpack_require__(/*! ./isPlainObject */ 421);
+var isPlainObject = __webpack_require__(/*! ./isPlainObject */ 420);
 
 /**
  * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
@@ -13044,7 +13043,7 @@ function customOmitClone(value) {
 module.exports = customOmitClone;
 
 /***/ }),
-/* 421 */
+/* 420 */
 /*!*******************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/lodash/isPlainObject.js ***!
   \*******************************************************************/
@@ -13118,7 +13117,7 @@ function isPlainObject(value) {
 module.exports = isPlainObject;
 
 /***/ }),
-/* 422 */
+/* 421 */
 /*!************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/urijs/src/URI.js ***!
   \************************************************************/
@@ -15441,7 +15440,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
-/* 423 */
+/* 422 */
 /*!****************************************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/atlas-marker-genes-search-results/lib/FlaskLoaderIcon.js ***!
   \****************************************************************************************************/
@@ -15476,7 +15475,7 @@ FlaskLoaderIcon.defaultProps = {
 exports.default = FlaskLoaderIcon;
 
 /***/ }),
-/* 424 */
+/* 423 */
 /*!******************************************************************************************************!*\
   !*** ./bundles/marker-genes/node_modules/atlas-marker-genes-search-results/lib/MarkerGeneProfile.js ***!
   \******************************************************************************************************/
@@ -15520,5 +15519,5 @@ MarkerGeneProfile.propTypes = {
 exports.default = MarkerGeneProfile;
 
 /***/ })
-],[282]);
+],[281]);
 //# sourceMappingURL=markerGenesSearchResults.bundle.js.map

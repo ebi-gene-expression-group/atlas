@@ -32,10 +32,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   if (( false ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 193), __webpack_require__(/*! ./IPv6 */ 194), __webpack_require__(/*! ./SecondLevelDomains */ 195));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 192), __webpack_require__(/*! ./IPv6 */ 193), __webpack_require__(/*! ./SecondLevelDomains */ 194));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 193), __webpack_require__(/*! ./IPv6 */ 194), __webpack_require__(/*! ./SecondLevelDomains */ 195)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 192), __webpack_require__(/*! ./IPv6 */ 193), __webpack_require__(/*! ./SecondLevelDomains */ 194)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2513,108 +2513,6 @@ module.exports = warning;
 /***/ }),
 
 /***/ 184:
-/*!*********************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/object-assign/index.js ***!
-  \*********************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-/***/ }),
-
-/***/ 185:
 /*!*************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \*************************************************************************************/
@@ -2638,7 +2536,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 186:
+/***/ 185:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/resolve-pathname/index.js ***!
   \************************************************************************/
@@ -2725,7 +2623,7 @@ exports.default = resolvePathname;
 
 /***/ }),
 
-/***/ 187:
+/***/ 186:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/value-equal/index.js ***!
   \*******************************************************************/
@@ -2787,7 +2685,7 @@ exports.default = valueEqual;
 
 /***/ }),
 
-/***/ 188:
+/***/ 187:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/DOMUtils.js ***!
   \******************************************************************/
@@ -2854,7 +2752,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 
 /***/ }),
 
-/***/ 189:
+/***/ 188:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Link.js ***!
   \**************************************************************************/
@@ -3004,7 +2902,7 @@ exports.default = Link;
 
 /***/ }),
 
-/***/ 190:
+/***/ 189:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Route.js ***!
   \***************************************************************************/
@@ -3019,7 +2917,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Route = __webpack_require__(/*! react-router/es/Route */ 191);
+var _Route = __webpack_require__(/*! react-router/es/Route */ 190);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -3029,7 +2927,7 @@ exports.default = _Route2.default; // Written in this round about way for babel-
 
 /***/ }),
 
-/***/ 191:
+/***/ 190:
 /*!***********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Route.js ***!
   \***********************************************************************/
@@ -3218,7 +3116,7 @@ exports.default = Route;
 
 /***/ }),
 
-/***/ 192:
+/***/ 191:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/DOMUtils.js ***!
   \*********************************************************************/
@@ -3287,7 +3185,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 
 /***/ }),
 
-/***/ 193:
+/***/ 192:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/punycode.js ***!
   \********************************************************************/
@@ -3830,7 +3728,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 194:
+/***/ 193:
 /*!****************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/IPv6.js ***!
   \****************************************************************/
@@ -4037,7 +3935,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 195:
+/***/ 194:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/SecondLevelDomains.js ***!
   \******************************************************************************/
@@ -4305,7 +4203,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 196:
+/***/ 195:
 /*!*************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color/index.js ***!
   \*************************************************************/
@@ -4316,8 +4214,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 "use strict";
 
 
-var colorString = __webpack_require__(/*! color-string */ 463);
-var convert = __webpack_require__(/*! color-convert */ 466);
+var colorString = __webpack_require__(/*! color-string */ 461);
+var convert = __webpack_require__(/*! color-convert */ 464);
 
 var _slice = [].slice;
 
@@ -4789,7 +4687,7 @@ module.exports = Color;
 
 /***/ }),
 
-/***/ 197:
+/***/ 196:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-name/index.js ***!
   \******************************************************************/
@@ -4953,7 +4851,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 198:
+/***/ 197:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/conversions.js ***!
   \***************************************************************************/
@@ -4965,7 +4863,7 @@ module.exports = {
 
 
 /* MIT license */
-var cssKeywords = __webpack_require__(/*! color-name */ 197);
+var cssKeywords = __webpack_require__(/*! color-name */ 196);
 
 // NOTE: conversions should only return primitive values (i.e. arrays, or
 //       values that give correct `typeof` results).
@@ -5809,7 +5707,7 @@ convert.rgb.gray = function (rgb) {
 
 /***/ }),
 
-/***/ 199:
+/***/ 198:
 /*!**********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/PlotLoader.js ***!
   \**********************************************************************************************************************/
@@ -5836,15 +5734,15 @@ var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _LoadingOverlay = __webpack_require__(/*! ./LoadingOverlay */ 468);
+var _LoadingOverlay = __webpack_require__(/*! ./LoadingOverlay */ 466);
 
 var _LoadingOverlay2 = _interopRequireDefault(_LoadingOverlay);
 
-var _ScatterPlot = __webpack_require__(/*! ./ScatterPlot */ 470);
+var _ScatterPlot = __webpack_require__(/*! ./ScatterPlot */ 468);
 
 var _ScatterPlot2 = _interopRequireDefault(_ScatterPlot);
 
-var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 201);
+var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 200);
 
 var _SeriesPropTypes2 = _interopRequireDefault(_SeriesPropTypes);
 
@@ -5892,46 +5790,7 @@ exports.default = PlotLoader;
 
 /***/ }),
 
-/***/ 2:
-/*!******************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/prop-types/index.js ***!
-  \******************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (true) {
-  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
-
-  var isValidElement = function isValidElement(object) {
-    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 428)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = require('./factoryWithThrowingShims')();
-}
-
-/***/ }),
-
-/***/ 200:
+/***/ 199:
 /*!***********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/highcharts.js ***!
   \***********************************************************************/
@@ -10228,7 +10087,46 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 201:
+/***/ 2:
+/*!******************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/prop-types/index.js ***!
+  \******************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (true) {
+  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
+
+  var isValidElement = function isValidElement(object) {
+    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 427)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = require('./factoryWithThrowingShims')();
+}
+
+/***/ }),
+
+/***/ 200:
 /*!***************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/SeriesPropTypes.js ***!
   \***************************************************************************************************************************/
@@ -10478,7 +10376,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 425:
+/***/ 424:
 /*!****************************************************!*\
   !*** multi ./bundles/experiment-page/src/index.js ***!
   \****************************************************/
@@ -10486,12 +10384,12 @@ module.exports = warning;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/experiment-page/src/index.js */426);
+module.exports = __webpack_require__(/*! ./bundles/experiment-page/src/index.js */425);
 
 
 /***/ }),
 
-/***/ 426:
+/***/ 425:
 /*!**********************************************!*\
   !*** ./bundles/experiment-page/src/index.js ***!
   \**********************************************/
@@ -10515,7 +10413,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 18);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _ExperimentPageRouter = __webpack_require__(/*! ./ExperimentPageRouter */ 427);
+var _ExperimentPageRouter = __webpack_require__(/*! ./ExperimentPageRouter */ 426);
 
 var _ExperimentPageRouter2 = _interopRequireDefault(_ExperimentPageRouter);
 
@@ -10536,7 +10434,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 427:
+/***/ 426:
 /*!*************************************************************!*\
   !*** ./bundles/experiment-page/src/ExperimentPageRouter.js ***!
   \*************************************************************/
@@ -10703,7 +10601,7 @@ exports.default = ExperimentPageRouter;
 
 /***/ }),
 
-/***/ 428:
+/***/ 427:
 /*!************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \************************************************************************************/
@@ -10726,9 +10624,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 181);
 var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 182);
 var warning = __webpack_require__(/*! fbjs/lib/warning */ 183);
-var assign = __webpack_require__(/*! object-assign */ 184);
+var assign = __webpack_require__(/*! object-assign */ 428);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 185);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 184);
 var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 429);
 
 module.exports = function (isValidElement, throwOnDirectAccess) {
@@ -11233,6 +11131,108 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
+/***/ 428:
+/*!*********************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/object-assign/index.js ***!
+  \*********************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+/***/ }),
+
 /***/ 429:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/checkPropTypes.js ***!
@@ -11256,7 +11256,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 if (true) {
   var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 182);
   var warning = __webpack_require__(/*! fbjs/lib/warning */ 183);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 185);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 184);
   var loggedTypeFailures = {};
 }
 
@@ -11322,11 +11322,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.locationsAreEqual = exports.createLocation = undefined;
 
-var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 186);
+var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 185);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(/*! value-equal */ 187);
+var _valueEqual = __webpack_require__(/*! value-equal */ 186);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -11430,7 +11430,7 @@ var _HashRouter2 = __webpack_require__(/*! ./HashRouter */ 433);
 
 var _HashRouter3 = _interopRequireDefault(_HashRouter2);
 
-var _Link2 = __webpack_require__(/*! ./Link */ 189);
+var _Link2 = __webpack_require__(/*! ./Link */ 188);
 
 var _Link3 = _interopRequireDefault(_Link2);
 
@@ -11450,7 +11450,7 @@ var _Redirect2 = __webpack_require__(/*! ./Redirect */ 443);
 
 var _Redirect3 = _interopRequireDefault(_Redirect2);
 
-var _Route2 = __webpack_require__(/*! ./Route */ 190);
+var _Route2 = __webpack_require__(/*! ./Route */ 189);
 
 var _Route3 = _interopRequireDefault(_Route2);
 
@@ -11638,7 +11638,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 188);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 187);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -12060,7 +12060,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 188);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 187);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -12712,11 +12712,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Route = __webpack_require__(/*! ./Route */ 190);
+var _Route = __webpack_require__(/*! ./Route */ 189);
 
 var _Route2 = _interopRequireDefault(_Route);
 
-var _Link = __webpack_require__(/*! ./Link */ 189);
+var _Link = __webpack_require__(/*! ./Link */ 188);
 
 var _Link2 = _interopRequireDefault(_Link);
 
@@ -13669,7 +13669,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 192);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 191);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13999,7 +13999,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 192);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 191);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14988,7 +14988,7 @@ var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 4
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _Route = __webpack_require__(/*! ./Route */ 191);
+var _Route = __webpack_require__(/*! ./Route */ 190);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -15138,15 +15138,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _queryString = __webpack_require__(/*! query-string */ 458);
-
-var _queryString2 = _interopRequireDefault(_queryString);
-
 var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _expressionAtlasExperimentPageTsnePlot = __webpack_require__(/*! expression-atlas-experiment-page-tsne-plot */ 460);
+var _expressionAtlasExperimentPageTsnePlot = __webpack_require__(/*! expression-atlas-experiment-page-tsne-plot */ 458);
 
 var _expressionAtlasExperimentPageTsnePlot2 = _interopRequireDefault(_expressionAtlasExperimentPageTsnePlot);
 
@@ -15157,7 +15153,7 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       history = props.history;
 
 
-  var _updateUrl = function _updateUrl(parameter) {
+  var updateUrlSearch = function updateUrlSearch(parameter) {
     history.push((0, _urijs2.default)(location.search).setSearch(parameter.name, parameter.value).toString());
   };
 
@@ -15182,13 +15178,13 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
     height: 600,
     resourcesUrl: resourcesUrl,
     onSelectGeneId: function onSelectGeneId(geneId) {
-      _updateUrl({ name: 'geneId', value: geneId });
+      updateUrlSearch({ name: 'geneId', value: geneId });
     },
     onChangeK: function onChangeK(k) {
-      _updateUrl({ name: 'k', value: k });
+      updateUrlSearch({ name: 'k', value: k });
     },
     onChangePerplexity: function onChangePerplexity(perplexity) {
-      _updateUrl({ name: 'perplexity', value: perplexity });
+      updateUrlSearch({ name: 'perplexity', value: perplexity });
     }
   });
 };
@@ -15210,226 +15206,6 @@ exports.default = TSnePlotViewRoute;
 /***/ }),
 
 /***/ 458:
-/*!********************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/query-string/index.js ***!
-  \********************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var strictUriEncode = __webpack_require__(/*! strict-uri-encode */ 459);
-var objectAssign = __webpack_require__(/*! object-assign */ 184);
-
-function encoderForArrayFormat(opts) {
-	switch (opts.arrayFormat) {
-		case 'index':
-			return function (key, value, index) {
-				return value === null ? [encode(key, opts), '[', index, ']'].join('') : [encode(key, opts), '[', encode(index, opts), ']=', encode(value, opts)].join('');
-			};
-
-		case 'bracket':
-			return function (key, value) {
-				return value === null ? encode(key, opts) : [encode(key, opts), '[]=', encode(value, opts)].join('');
-			};
-
-		default:
-			return function (key, value) {
-				return value === null ? encode(key, opts) : [encode(key, opts), '=', encode(value, opts)].join('');
-			};
-	}
-}
-
-function parserForArrayFormat(opts) {
-	var result;
-
-	switch (opts.arrayFormat) {
-		case 'index':
-			return function (key, value, accumulator) {
-				result = /\[(\d*)\]$/.exec(key);
-
-				key = key.replace(/\[\d*\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = {};
-				}
-
-				accumulator[key][result[1]] = value;
-			};
-
-		case 'bracket':
-			return function (key, value, accumulator) {
-				result = /(\[\])$/.exec(key);
-				key = key.replace(/\[\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				} else if (accumulator[key] === undefined) {
-					accumulator[key] = [value];
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-
-		default:
-			return function (key, value, accumulator) {
-				if (accumulator[key] === undefined) {
-					accumulator[key] = value;
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-	}
-}
-
-function encode(value, opts) {
-	if (opts.encode) {
-		return opts.strict ? strictUriEncode(value) : encodeURIComponent(value);
-	}
-
-	return value;
-}
-
-function keysSorter(input) {
-	if (Array.isArray(input)) {
-		return input.sort();
-	} else if ((typeof input === 'undefined' ? 'undefined' : _typeof(input)) === 'object') {
-		return keysSorter(Object.keys(input)).sort(function (a, b) {
-			return Number(a) - Number(b);
-		}).map(function (key) {
-			return input[key];
-		});
-	}
-
-	return input;
-}
-
-exports.extract = function (str) {
-	return str.split('?')[1] || '';
-};
-
-exports.parse = function (str, opts) {
-	opts = objectAssign({ arrayFormat: 'none' }, opts);
-
-	var formatter = parserForArrayFormat(opts);
-
-	// Create an object with no prototype
-	// https://github.com/sindresorhus/query-string/issues/47
-	var ret = Object.create(null);
-
-	if (typeof str !== 'string') {
-		return ret;
-	}
-
-	str = str.trim().replace(/^(\?|#|&)/, '');
-
-	if (!str) {
-		return ret;
-	}
-
-	str.split('&').forEach(function (param) {
-		var parts = param.replace(/\+/g, ' ').split('=');
-		// Firefox (pre 40) decodes `%3D` to `=`
-		// https://github.com/sindresorhus/query-string/pull/37
-		var key = parts.shift();
-		var val = parts.length > 0 ? parts.join('=') : undefined;
-
-		// missing `=` should be `null`:
-		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-		val = val === undefined ? null : decodeURIComponent(val);
-
-		formatter(decodeURIComponent(key), val, ret);
-	});
-
-	return Object.keys(ret).sort().reduce(function (result, key) {
-		var val = ret[key];
-		if (Boolean(val) && (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' && !Array.isArray(val)) {
-			// Sort object keys, not values
-			result[key] = keysSorter(val);
-		} else {
-			result[key] = val;
-		}
-
-		return result;
-	}, Object.create(null));
-};
-
-exports.stringify = function (obj, opts) {
-	var defaults = {
-		encode: true,
-		strict: true,
-		arrayFormat: 'none'
-	};
-
-	opts = objectAssign(defaults, opts);
-
-	var formatter = encoderForArrayFormat(opts);
-
-	return obj ? Object.keys(obj).sort().map(function (key) {
-		var val = obj[key];
-
-		if (val === undefined) {
-			return '';
-		}
-
-		if (val === null) {
-			return encode(key, opts);
-		}
-
-		if (Array.isArray(val)) {
-			var result = [];
-
-			val.slice().forEach(function (val2) {
-				if (val2 === undefined) {
-					return;
-				}
-
-				result.push(formatter(key, val2, result.length));
-			});
-
-			return result.join('&');
-		}
-
-		return encode(key, opts) + '=' + encode(val, opts);
-	}).filter(function (x) {
-		return x.length > 0;
-	}).join('&') : '';
-};
-
-/***/ }),
-
-/***/ 459:
-/*!*************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/strict-uri-encode/index.js ***!
-  \*************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (str) {
-	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
-		return '%' + c.charCodeAt(0).toString(16).toUpperCase();
-	});
-};
-
-/***/ }),
-
-/***/ 460:
 /*!******************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/index.js ***!
   \******************************************************************************************************/
@@ -15444,7 +15220,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _TSnePlotView = __webpack_require__(/*! ./TSnePlotView */ 461);
+var _TSnePlotView = __webpack_require__(/*! ./TSnePlotView */ 459);
 
 var _TSnePlotView2 = _interopRequireDefault(_TSnePlotView);
 
@@ -15456,7 +15232,7 @@ exports.default = _TSnePlotView2.default;
 
 /***/ }),
 
-/***/ 461:
+/***/ 459:
 /*!*************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/TSnePlotView.js ***!
   \*************************************************************************************************************/
@@ -15495,11 +15271,11 @@ var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _ClusterTSnePlot = __webpack_require__(/*! ./ClusterTSnePlot */ 462);
+var _ClusterTSnePlot = __webpack_require__(/*! ./ClusterTSnePlot */ 460);
 
 var _ClusterTSnePlot2 = _interopRequireDefault(_ClusterTSnePlot);
 
-var _GeneExpressionTSnePlot = __webpack_require__(/*! ./GeneExpressionTSnePlot */ 475);
+var _GeneExpressionTSnePlot = __webpack_require__(/*! ./GeneExpressionTSnePlot */ 473);
 
 var _GeneExpressionTSnePlot2 = _interopRequireDefault(_GeneExpressionTSnePlot);
 
@@ -15699,7 +15475,7 @@ var ExperimentPageView = function (_React$Component) {
         suggesterEndpoint: suggesterEndpoint,
         onSelectGeneId: onSelectGeneId,
         geneId: geneId,
-        highlightClusters: highlightClusters,
+        highlightClusters: [],
         loading: loadingGeneExpression,
         resourcesUrl: resourcesUrl,
         errorMessage: errorMessage
@@ -15747,7 +15523,7 @@ exports.default = ExperimentPageView;
 
 /***/ }),
 
-/***/ 462:
+/***/ 460:
 /*!****************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/ClusterTSnePlot.js ***!
   \****************************************************************************************************************/
@@ -15781,11 +15557,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _color = __webpack_require__(/*! color */ 196);
+var _color = __webpack_require__(/*! color */ 195);
 
 var _color2 = _interopRequireDefault(_color);
 
-var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 199);
+var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 198);
 
 var _PlotLoader2 = _interopRequireDefault(_PlotLoader);
 
@@ -15844,6 +15620,9 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
     colors: ['rgba(178, 95, 188, 0.7)', 'rgba(118, 179, 65, 0.7)', 'rgba(104, 130, 207, 0.7)', 'rgba(206, 155, 68, 0.7)', 'rgba(200, 87, 123, 0.7)', 'rgba(79, 174, 132, 0.7)', 'rgba(201, 92, 63, 0.7)', 'rgba(124, 127, 57, 0.7)'],
     chart: {
       height: height
+    },
+    title: {
+      text: 'Clusters'
     }
   };
 
@@ -15855,7 +15634,7 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
     return _react2.default.createElement('option', { key: k, value: k }, k);
   });
 
-  return [_react2.default.createElement('div', { key: 'perplexity-k-select', className: 'row' }, _react2.default.createElement('div', { className: 'column medium-6' }, _react2.default.createElement('label', null, 'Perplexity'), _react2.default.createElement('select', { value: perplexity, onChange: function onChange(event) {
+  return [_react2.default.createElement('div', { key: 'perplexity-k-select', className: 'row' }, _react2.default.createElement('div', { className: 'column medium-6' }, _react2.default.createElement('label', null, 't-SNE Perplexity'), _react2.default.createElement('select', { value: perplexity, onChange: function onChange(event) {
       onChangePerplexity(Number(event.target.value));
     } }, perplexityOptions)), _react2.default.createElement('div', { className: 'column medium-6' }, _react2.default.createElement('label', null, 'Number of clusters, ', _react2.default.createElement('i', null, 'k')), _react2.default.createElement('select', { value: k, onChange: function onChange(event) {
       onChangeK(Number(event.target.value));
@@ -15895,7 +15674,7 @@ exports._colourizeClusters = _colourizeClusters;
 
 /***/ }),
 
-/***/ 463:
+/***/ 461:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-string/index.js ***!
   \********************************************************************/
@@ -15907,8 +15686,8 @@ exports._colourizeClusters = _colourizeClusters;
 
 
 /* MIT license */
-var colorNames = __webpack_require__(/*! color-name */ 197);
-var swizzle = __webpack_require__(/*! simple-swizzle */ 464);
+var colorNames = __webpack_require__(/*! color-name */ 196);
+var swizzle = __webpack_require__(/*! simple-swizzle */ 462);
 
 var reverseNames = {};
 
@@ -16128,7 +15907,7 @@ function hexDouble(num) {
 
 /***/ }),
 
-/***/ 464:
+/***/ 462:
 /*!**********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/simple-swizzle/index.js ***!
   \**********************************************************************/
@@ -16139,7 +15918,7 @@ function hexDouble(num) {
 "use strict";
 
 
-var isArrayish = __webpack_require__(/*! is-arrayish */ 465);
+var isArrayish = __webpack_require__(/*! is-arrayish */ 463);
 
 var concat = Array.prototype.concat;
 var slice = Array.prototype.slice;
@@ -16169,7 +15948,7 @@ swizzle.wrap = function (fn) {
 
 /***/ }),
 
-/***/ 465:
+/***/ 463:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/is-arrayish/index.js ***!
   \*******************************************************************/
@@ -16190,7 +15969,7 @@ module.exports = function isArrayish(obj) {
 
 /***/ }),
 
-/***/ 466:
+/***/ 464:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/index.js ***!
   \*********************************************************************/
@@ -16203,8 +15982,8 @@ module.exports = function isArrayish(obj) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var conversions = __webpack_require__(/*! ./conversions */ 198);
-var route = __webpack_require__(/*! ./route */ 467);
+var conversions = __webpack_require__(/*! ./conversions */ 197);
+var route = __webpack_require__(/*! ./route */ 465);
 
 var convert = {};
 
@@ -16284,7 +16063,7 @@ module.exports = convert;
 
 /***/ }),
 
-/***/ 467:
+/***/ 465:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/route.js ***!
   \*********************************************************************/
@@ -16295,7 +16074,7 @@ module.exports = convert;
 "use strict";
 
 
-var conversions = __webpack_require__(/*! ./conversions */ 198);
+var conversions = __webpack_require__(/*! ./conversions */ 197);
 
 /*
 	this function routes a model to all other models.
@@ -16395,7 +16174,7 @@ module.exports = function (fromModel) {
 
 /***/ }),
 
-/***/ 468:
+/***/ 466:
 /*!**************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/LoadingOverlay.js ***!
   \**************************************************************************************************************************/
@@ -16434,7 +16213,7 @@ var LoadingOverlay = function LoadingOverlay(props) {
       background: 'rgba(255,255,255,0.8)',
       alignItems: 'center',
       justifyContent: 'center'
-    } }, _react2.default.createElement('div', { style: { textAlign: 'center' } }, _react2.default.createElement('p', null, 'Loading, please wait...'), _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 469), props.resourcesUrl).toString() }), _react2.default.createElement('p', null, _react2.default.createElement('small', null, 'Powered by ', _react2.default.createElement('a', { href: 'https://loading.io' }, 'loading.io')))));
+    } }, _react2.default.createElement('div', { style: { textAlign: 'center' } }, _react2.default.createElement('p', null, 'Loading, please wait...'), _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 467), props.resourcesUrl).toString() }), _react2.default.createElement('p', null, _react2.default.createElement('small', null, 'Powered by ', _react2.default.createElement('a', { href: 'https://loading.io' }, 'loading.io')))));
 };
 
 LoadingOverlay.propTypes = {
@@ -16450,7 +16229,7 @@ exports.default = LoadingOverlay;
 
 /***/ }),
 
-/***/ 469:
+/***/ 467:
 /*!*****************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/svg/flask-loader.svg ***!
   \*****************************************************************************************************************************/
@@ -16462,7 +16241,7 @@ module.exports = __webpack_require__.p + "bbe30b27d9320f575e5452cf2b930c40.svg";
 
 /***/ }),
 
-/***/ 470:
+/***/ 468:
 /*!***********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/ScatterPlot.js ***!
   \***********************************************************************************************************************/
@@ -16485,23 +16264,23 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 471);
+var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 469);
 
 var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
 
-var _exporting = __webpack_require__(/*! highcharts/modules/exporting */ 472);
+var _exporting = __webpack_require__(/*! highcharts/modules/exporting */ 470);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _boost = __webpack_require__(/*! highcharts/modules/boost */ 473);
+var _boost = __webpack_require__(/*! highcharts/modules/boost */ 471);
 
 var _boost2 = _interopRequireDefault(_boost);
 
-var _deepmerge = __webpack_require__(/*! deepmerge */ 474);
+var _deepmerge = __webpack_require__(/*! deepmerge */ 472);
 
 var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
-var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 201);
+var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 200);
 
 var _SeriesPropTypes2 = _interopRequireDefault(_SeriesPropTypes);
 
@@ -16608,7 +16387,7 @@ exports.default = ScatterPlot;
 
 /***/ }),
 
-/***/ 471:
+/***/ 469:
 /*!***************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-highcharts/dist/ReactHighcharts.js ***!
   \***************************************************************************************/
@@ -16622,7 +16401,7 @@ exports.default = ScatterPlot;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function webpackUniversalModuleDefinition(root, factory) {
-  if (( false ? 'undefined' : _typeof(exports)) === 'object' && ( false ? 'undefined' : _typeof(module)) === 'object') module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 200));else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 200)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+  if (( false ? 'undefined' : _typeof(exports)) === 'object' && ( false ? 'undefined' : _typeof(module)) === 'object') module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 199));else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 199)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') exports["ReactHighcharts"] = factory(require("react"), require("highcharts"));else root["ReactHighcharts"] = factory(root["React"], root["Highcharts"]);
@@ -18779,7 +18558,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 472:
+/***/ 470:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/modules/exporting.js ***!
   \******************************************************************************/
@@ -18976,7 +18755,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 473:
+/***/ 471:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/modules/boost.js ***!
   \**************************************************************************/
@@ -19369,7 +19148,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 474:
+/***/ 472:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/deepmerge/dist/es.js ***!
   \*******************************************************************/
@@ -19473,7 +19252,7 @@ exports.default = deepmerge_1;
 
 /***/ }),
 
-/***/ 475:
+/***/ 473:
 /*!***********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/GeneExpressionTSnePlot.js ***!
   \***********************************************************************************************************************/
@@ -19507,19 +19286,19 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _color = __webpack_require__(/*! color */ 196);
+var _color = __webpack_require__(/*! color */ 195);
 
 var _color2 = _interopRequireDefault(_color);
 
-var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 199);
+var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 198);
 
 var _PlotLoader2 = _interopRequireDefault(_PlotLoader);
 
-var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 476);
+var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 474);
 
 var _expressionAtlasAutocomplete2 = _interopRequireDefault(_expressionAtlasAutocomplete);
 
-__webpack_require__(/*! ./util/MathRound */ 483);
+__webpack_require__(/*! ./util/MathRound */ 481);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -19586,6 +19365,9 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
     },
     chart: {
       height: height
+    },
+    title: {
+      text: 'Gene expression'
     }
   };
 
@@ -19655,7 +19437,7 @@ exports._colourizeExpressionLevel = _colourizeExpressionLevel;
 
 /***/ }),
 
-/***/ 476:
+/***/ 474:
 /*!*****************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/index.js ***!
   \*****************************************************************************************/
@@ -19670,7 +19452,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 477);
+var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 475);
 
 var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
 
@@ -19682,7 +19464,7 @@ exports.default = _AtlasAutocomplete2.default;
 
 /***/ }),
 
-/***/ 477:
+/***/ 475:
 /*!*****************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
   \*****************************************************************************************************/
@@ -19717,7 +19499,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 478);
+var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 476);
 
 var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
@@ -19725,7 +19507,7 @@ var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 482);
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 480);
 
 var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
 
@@ -19873,7 +19655,7 @@ exports.default = AtlasAutocomplete;
 
 /***/ }),
 
-/***/ 478:
+/***/ 476:
 /*!*******************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
   \*******************************************************************************************/
@@ -19930,7 +19712,7 @@ var PropTypes = __webpack_require__(/*! prop-types */ 2);
 var _require = __webpack_require__(/*! react-dom */ 18),
     findDOMNode = _require.findDOMNode;
 
-var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 479);
+var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 477);
 
 var IMPERATIVE_API = ['blur', 'checkValidity', 'click', 'focus', 'select', 'setCustomValidity', 'setSelectionRange', 'setRangeText'];
 
@@ -20517,7 +20299,7 @@ module.exports = Autocomplete;
 
 /***/ }),
 
-/***/ 479:
+/***/ 477:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/index.js ***!
   \****************************************************************************/
@@ -20528,11 +20310,11 @@ module.exports = Autocomplete;
 "use strict";
 
 
-module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 480);
+module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 478);
 
 /***/ }),
 
-/***/ 480:
+/***/ 478:
 /*!***********************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
   \***********************************************************************************************/
@@ -20543,7 +20325,7 @@ module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 480);
 "use strict";
 
 
-var util = __webpack_require__(/*! ./util */ 481);
+var util = __webpack_require__(/*! ./util */ 479);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -20660,7 +20442,7 @@ module.exports = scrollIntoView;
 
 /***/ }),
 
-/***/ 481:
+/***/ 479:
 /*!*******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/lib/util.js ***!
   \*******************************************************************************/
@@ -21105,7 +20887,7 @@ mix(utils, domUtils);
 
 /***/ }),
 
-/***/ 482:
+/***/ 480:
 /*!*************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/SpeciesSelect.js ***!
   \*************************************************************************************************/
@@ -21291,7 +21073,7 @@ exports.default = SpeciesSelect;
 
 /***/ }),
 
-/***/ 483:
+/***/ 481:
 /*!***************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/util/MathRound.js ***!
   \***************************************************************************************************************/
@@ -21445,11 +21227,11 @@ var _extends = Object.assign || function (target) {
   }return target;
 };
 
-var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 186);
+var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 185);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(/*! value-equal */ 187);
+var _valueEqual = __webpack_require__(/*! value-equal */ 186);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -21991,5 +21773,5 @@ exports.default = createTransitionManager;
 
 /***/ })
 
-},[425]);
+},[424]);
 //# sourceMappingURL=experimentPage.bundle.js.map

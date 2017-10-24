@@ -9,12 +9,7 @@
     "ci": "webpack --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
     "prod": "NODE_ENV=production webpack --debug --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
-  "author": "Expression Atlas developers <arrayexpress-atlas@ebi.ac.uk>",
-  "collaborators": [
-    "Elisabet Barrera <barrera@ebi.ac.uk>",
-    "Wojciech Bażant <wbazant@ebi.ac.uk>",
-    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
-  ],
+  "author": "Wojciech Bażant <wbazant@ebi.ac.uk>, Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> and Elisabet Barrera <barrera@ebi.ac.uk>",
   "license": "Apache-2.0",
   "private": true,
   "devDependencies": {
@@ -23,16 +18,16 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "file-loader": "^1.1.5",
-    "webpack": "^3.7.1",
-    "webpack-shell-plugin": "^0.5.0"
+    "webpack": "^3.8.1"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
+    "react-autocomplete": "^1.7.2",
     "react-dom": "^16.0.0",
     "react-refetch": "^1.0.1",
     "urijs": "^1.19.0",

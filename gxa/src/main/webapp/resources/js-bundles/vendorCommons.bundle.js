@@ -93647,19 +93647,33 @@ var xInfo = function xInfo(_ref2) {
   return _div(xAxisLegendName || config.xAxisLegendName, xLabel);
 };
 
+var tooltipValueMaxLength = 30;
+var trimEllipsify = function trimEllipsify(str) {
+  if (str.length > tooltipValueMaxLength) {
+    var words = str.slice(0, tooltipValueMaxLength).split(' ');
+    if (words.length > 1) {
+      return words.slice(0, -1).join(' ') + '\u2026';
+    } else {
+      return words[0].slice(0, -1) + '\u2026';
+    }
+  }
+
+  return str;
+};
+
 var _comparisonDiv = function _comparisonDiv(name, v1, v2, format) {
   return name && v1 && v2 ? _react2.default.createElement(
     'div',
     { key: name + ' ' + v1 + ' ' + v2 },
     name + ': ',
-    v1.length + v2.length > 50 ? _react2.default.createElement('br', null) : null,
-    (format || _bold)(v1),
+    v1.length + v2.length > tooltipValueMaxLength * 2 ? _react2.default.createElement('br', null) : null,
+    (format || _bold)(trimEllipsify(v1)),
     _react2.default.createElement(
       'i',
       { style: { margin: '0.25rem' } },
       'vs'
     ),
-    (format || _bold)(v2)
+    (format || _bold)(trimEllipsify(v2))
   ) : null;
 };
 

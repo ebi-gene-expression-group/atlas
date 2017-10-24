@@ -14,7 +14,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "expression-atlas-experiment-page-tsne-plot": "^1.5.0",
+    "expression-atlas-experiment-page-tsne-plot": "^1.6.1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -28,14 +28,14 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.5",
     "image-webpack-loader": "^3.4.2",
-    "webpack": "^3.7.1",
-    "webpack-dev-server": "^2.9.2",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3",
     "whatwg-fetch": "^2.0.3"
   }
 }
