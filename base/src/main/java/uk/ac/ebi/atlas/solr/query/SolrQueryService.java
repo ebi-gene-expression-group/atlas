@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -70,5 +71,16 @@ public class SolrQueryService {
         }
 
         return geneQueryResponse;
+    }
+
+    public Set<String> fetchSpecies(SemanticQueryTerm geneQueryTerm) {
+        SolrQuery query = new SolrQuery();
+        query.setRows(1);
+        query.setQuery(
+                geneQueryTerm.hasNoCategory() ?
+                        MessageFormat.format("bioentity_identifier:\"{0}\"", geneQueryTerm.value()) :
+                        geneQueryTerm.asGxaIndexQueryLiteral());
+
+        return solrClient.query(query, false, "species");
     }
 }
