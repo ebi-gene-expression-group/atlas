@@ -9,6 +9,62 @@
         <h4>Data statistics</h4>
 
         <ul>
+            <li><p>Ensembl <strong>90</strong> / Ensembl Genomes <strong>37</strong> / WormBase ParaSite <strong>WBPS9</strong> gene annotations and array design probe set mappings.</p></li>
+            <li>This release contains <strong>3,166</strong> datasets (<strong>118,209</strong> assays), in particular:
+                <ul>
+                    <li><strong>565</strong> RNA-seq and <strong>4</strong> proteomics
+                        datasets, of which <strong>134</strong> report <a
+                                href="baseline/experiments">baseline</a> gene
+                        expression, across a total of <strong>32</strong> different
+                        organisms;</li>
+                    <li><strong>734</strong> datasets reporting expression in <a href="plant/experiments">plants</a>;</li>
+                    <li><strong>3,035</strong> datasets studying samples in <strong>8,488</strong>
+                        <a href="help/differential-atlas.html">differential</a> comparisons across <strong>32</strong> different organisms.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>New experiments</h4>
+
+        <ul>
+            <li>New cancer data set from the Sanger Institute <a href="http://www.sanger.ac.uk/science/tools/gdsc-genomics-drug-sensitivity-cancer">Genomics of Drug Sensitivity in Cancer (GDSC)</a>:
+                <ul>
+                    <li><a href="experiments/E-MTAB-3983">Sanger Genomics of Drug Sensitivity in Cancer Project (GDSC) RNA-seq cancer cell line gene expression data</a></li>
+                </ul>
+            </li>
+
+            <li> New non–small-cell lung cancer data
+                <ul>
+                    <li><a href="experiments/E-GEOD-81089">RNA-seq of 199 non-small cell lung carcinoma patients and 19 paired normal lung tissues/a></li>
+                    <li><a href="experiments/E-GEOD-60052">RNA-seq of primary tumors from 79 small cell lung cancer patients and 7 normal lung tissue/a></li>
+
+                </ul>
+            </li>
+        </ul>
+
+        <h4>New features</h4>
+
+        <ul>
+            <li>All RNA-Seq baseline experiments are displayed using TPMs by default where available. There is a new radio button to switch to FPKMs if desired.</li>
+                <ul>
+                    <li>Example: <a href="experiments/E-MTAB-4101/Results">Open Targets RNA-seq analysis of six cell lines in TPM</a> cf. <a href="experiments/E-MTAB-4101/Results?unit=%2522FPKM%2522">the same experiment in FPKM</a>.</li>
+                </ul>
+            <li>You can download results from the Gene Set Enrichment results page by clicking on the <em>Download results</em> button on the top right.</li>
+            <li>Now you can choose what data to download in the experiment page: the highest expressed genes as displayed in the heatmap, or all results matching your query.</li>
+                <ul>
+                    <li>Example: click on the down-pointing arrow in the <em>Download</em> button, located to the right above the heatmap, to download e.g. <a href="experiments/E-MTAB-513/Results?specific=true&geneQuery=%255B%255D&filterFactors=%257B%257D&cutoff=%257B%2522value%2522%253A10%257D&unit=%2522TPM%2522">all genes with expression level above 10 TPM in <em>Illumina Body Map</em>, <em>Download all data</em> or only the top 50 genes sorted by expression level</a>, <em>Download table content</em>.</li>
+                </ul>
+        </ul>
+
+    </div>
+
+    <div class="margin-bottom-xxlarge">
+        <!-- Beginning of main text section -->
+        <h3><img src="resources/images/help/atlas_release_icon.png" alt="Atlas release" align="bottom" />14 August 2017</h3>
+
+        <h4>Data statistics</h4>
+
+        <ul>
             <li><p>Ensembl <strong>89</strong> / Ensembl Genomes <strong>36</strong> / WormBase ParaSite <strong>WBPS9</strong> gene annotations and array design probe set mappings.</p></li>
             <li>This release contains <strong>3,126</strong> datasets (<strong>113,148</strong> assays), in particular:
                 <ul>
