@@ -9,6 +9,8 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import static org.hamcrest.Matchers.is;
@@ -26,22 +28,18 @@ public class JsonBaselineExperimentControllerTest {
 
         when(experiment.getDisplayDefaults()).thenReturn(ExperimentDisplayDefaults.simpleDefaults());
 
-        when(experiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(new AssayGroup("assay_group_id", "run_1")));
+        AssayGroup assayGroup = new AssayGroup("assay_group_id", "run_1");
+
+        when(experiment.getFactors(assayGroup)).thenReturn(new FactorSet().add(new Factor("organism_part", "bladder")));
+
+        when(experiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroup));
 
 
 
         assertThat(JsonBaselineExperimentController.toJson(
                 new GeneProfilesList<>(), new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment)
-        ), is(new Gson().fromJson("{\n" +
-                "    \"profiles\": {\n" +
-                "        \"searchResultTotal\": \"0\",\n" +
-                "        \"rows\": []\n" +
-                "    },\n" +
-                "    \"columnHeaders\": [{\n" +
-                "        \"id\": \"assay_group_id\",\n" +
-                "        \"assayAccessions\": [\"run_1\"],\n" +
-                "        \"replicates\": 1\n" +
-                "    }]\n" +
-                "}", JsonObject.class)));
+        ), is(new Gson().fromJson(
+                "{\"profiles\":{\"searchResultTotal\":\"0\",\"rows\":[]},\"columnHeaders\":[{\"id\":\"assay_group_id\",\"assayAccessions\":[\"run_1\"],\"replicates\":1,\"name\":\"\"}]}",
+                JsonObject.class)));
     }
 }
