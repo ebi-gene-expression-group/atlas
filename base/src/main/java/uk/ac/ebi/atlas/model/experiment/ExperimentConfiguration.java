@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.experiment;
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
 import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Element;
@@ -14,6 +15,7 @@ import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.xml.xpath.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -65,6 +67,10 @@ public class ExperimentConfiguration {
         String name = configuration.getString("name");
         String reference = configuration.getString("reference_assay_group");
         String test = configuration.getString("test_assay_group");
+        Validate.noNullElements(
+                new String[]{name, reference, test},
+                MessageFormat.format("Contrast id {0} requires: name, reference assay group, test assay group", id)
+        );
 
         return Pair.of(new Contrast(id, arrayDesignAccession, getAssayGroup(reference), getAssayGroup(test), name),
                 new Integer(1).equals(configuration.getInt("cttv_primary", -1)));
