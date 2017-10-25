@@ -22,8 +22,8 @@ public abstract class SemanticQueryTerm {
 
     public String asGxaIndexQueryLiteral() {
         return hasNoCategory()
-                ? String.format("property_value:\"%s\"", value())
-                : String.format("property_name:\"%s\" AND property_value:\"%s\"", category(), value());
+                ? String.format("property_value:\"%s\"", value().replace("\"", "\\\""))
+                : String.format("property_name:\"%s\" AND property_value:\"%s\"", category(), value().replace("\"", "\\\""));
     }
 
     public boolean hasNoCategory() {
