@@ -22,7 +22,7 @@ public class BioentityIdentifierQueryBuilder {
     private String queryString;
 
     public BioentityIdentifierQueryBuilder forTerm(SemanticQueryTerm term){
-        this.queryString = term.asGxaIndexQueryLiteral();
+        this.queryString = term.asBioentitiesIndexQueryLiteral();
         return this;
     }
 

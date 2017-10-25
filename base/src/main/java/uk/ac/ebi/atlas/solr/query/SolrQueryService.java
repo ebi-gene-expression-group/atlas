@@ -76,11 +76,17 @@ public class SolrQueryService {
     public Set<String> fetchSpecies(SemanticQueryTerm geneQueryTerm) {
         SolrQuery query = new SolrQuery();
         query.setRows(1);
-        query.setQuery(
-                geneQueryTerm.hasNoCategory() ?
-                        MessageFormat.format("bioentity_identifier:\"{0}\"", geneQueryTerm.value()) :
-                        geneQueryTerm.asGxaIndexQueryLiteral());
 
+        if (geneQueryTerm.hasNoCategory()) {
+            query.setQuery(MessageFormat.format("bioentity_identifier:\"{0}\"", geneQueryTerm.value()));
+        }
+
+        Set<String> queryResults = solrClient.query(query, false, "species");
+        if (!queryResults.isEmpty()) {
+            return queryResults;
+        }
+
+        query.setQuery(geneQueryTerm.asBioentitiesIndexQueryLiteral());
         return solrClient.query(query, false, "species");
     }
 }

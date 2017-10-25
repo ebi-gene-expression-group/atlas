@@ -9,10 +9,10 @@ public class SemanticQueryTermTest {
     @Test
     public void doubleQuotesAreEscaped() throws Exception {
         assertThat(
-                SemanticQueryTerm.create("\"this\"").asGxaIndexQueryLiteral(),
+                SemanticQueryTerm.create("\"this\"").asBioentitiesIndexQueryLiteral(),
                 is("property_value:\"\\\"this\\\"\""));
         assertThat(
-                SemanticQueryTerm.create("\"this\"", "that").asGxaIndexQueryLiteral(),
+                SemanticQueryTerm.create("\"this\"", "that").asBioentitiesIndexQueryLiteral(),
                 is("property_name:\"that\" AND property_value:\"\\\"this\\\"\""));
     }
 

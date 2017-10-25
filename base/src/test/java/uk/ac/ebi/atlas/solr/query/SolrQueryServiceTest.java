@@ -36,7 +36,15 @@ public class SolrQueryServiceTest {
     @Test
     public void getKnownSpeciesWithoutCategory() throws Exception {
         assertThat(
-                subject.fetchSpecies(SemanticQueryTerm.create("ENSMUSG00000019082")), hasItem(equalToIgnoringCase("mus_musculus")));
+                subject.fetchSpecies(SemanticQueryTerm.create("ENSMUSG00000019082")),
+                hasItem(equalToIgnoringCase("mus_musculus")));
+    }
+
+    @Test
+    public void queryWithoutCategoryFallsBackToProperties() throws Exception {
+        assertThat(
+                subject.fetchSpecies(SemanticQueryTerm.create("OBP3-responsive gene 4")),
+                hasItem(equalToIgnoringCase("arabidopsis_lyrata")));
     }
 
     @Test

@@ -20,7 +20,7 @@ public abstract class SemanticQueryTerm {
         return new AutoValue_SemanticQueryTerm(value, category);
     }
 
-    public String asGxaIndexQueryLiteral() {
+    public String asBioentitiesIndexQueryLiteral() {
         return hasNoCategory()
                 ? String.format("property_value:\"%s\"", value().replace("\"", "\\\""))
                 : String.format("property_name:\"%s\" AND property_value:\"%s\"", category(), value().replace("\"", "\\\""));
