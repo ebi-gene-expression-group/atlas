@@ -29,7 +29,7 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
 
     @Override
     public String displayNameForColumn(AssayGroup assayGroup) {
-            return Optional.ofNullable(displayNamePerSelectedAssayGroup.get().get(assayGroup)).orElse("") ;
+            return Optional.ofNullable(displayNamePerSelectedAssayGroup.get().get(assayGroup)).orElse(assayGroup.getId()) ;
     }
 
     LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
