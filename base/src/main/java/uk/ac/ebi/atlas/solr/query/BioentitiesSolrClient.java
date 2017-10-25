@@ -1,10 +1,6 @@
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -16,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -56,44 +51,41 @@ public class BioentitiesSolrClient {
         }
     }
 
-    public Set<String> query(SolrQuery solrQuery, boolean returnUppercaseValues, String field){
+    public Set<String> query(SolrQuery solrQuery, boolean returnUppercaseValues, String field) {
+        solrQuery.setFields(field);
         QueryResponse queryResponse = query(solrQuery);
 
         Set<String> results = Sets.newHashSet();
-
         for (SolrDocument doc : queryResponse.getResults()) {
-            String fieldValue = returnUppercaseValues ? StringUtils.upperCase(doc.getFieldValue(field).toString()) : doc.getFieldValue(field).toString();
-            results.add(fieldValue);
+            results.add(returnUppercaseValues ? doc.get(field).toString().toUpperCase() : doc.get(field).toString());
         }
         return results;
     }
 
-    public Set<String> getBioentityIdentifiers(BioentityPropertyName
-                                                       bioentityPropertyName, String
-                                                       bioentityPropertyValue){
+    public Set<String> getBioentityIdentifiers(BioentityPropertyName bioentityPropertyName,
+                                               String bioentityPropertyValue) {
         SolrQuery query = new SolrQuery();
         query.setRows(ROWS);
         query.setQuery(MessageFormat.format("property_name:\"{0}\" AND property_value:\"{1}\"",
                 bioentityPropertyName.name, bioentityPropertyValue));
         query.setFields("bioentity_identifier");
 
-        Set<String> result = query(query).getResults().stream().map(d -> d.getFieldValue("bioentity_identifier").toString()).collect(Collectors.toSet());
-        return result;
+        return query(query).getResults().stream()
+                .map(d -> d.getFieldValue("bioentity_identifier").toString()).collect(Collectors.toSet());
     }
 
-    public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier, Collection<BioentityPropertyName> bioentityPropertyNames) {
+    public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier,
+                                                          Collection<BioentityPropertyName> bioentityPropertyNames) {
         SolrQuery query = new SolrQuery();
 
         query.setRows(ROWS);
+
         query.setFilterQueries("property_name:(\"" +
-                Joiner.on("\" OR \"").join(FluentIterable.from(bioentityPropertyNames).transform(
-                        new Function<BioentityPropertyName, String>() {
-                            @Nullable
-                            @Override
-                            public String apply(@Nullable BioentityPropertyName bioentityPropertyName) {
-                                return bioentityPropertyName.name().toLowerCase();
-                            }
-                        })) + "\")");
+                bioentityPropertyNames.stream()
+                        .map(bioentityPropertyName -> bioentityPropertyName.name().toLowerCase())
+                        .collect(Collectors.joining("\" OR \""))
+                + "\")"
+        );
         query.setFields("property_name", "property_value");
         query.setQuery(MessageFormat.format("bioentity_identifier:\"{0}\"", bioentityIdentifier));
 
@@ -101,7 +93,8 @@ public class BioentitiesSolrClient {
         QueryResponse queryResponse = query(query);
 
         for (SolrDocument document : queryResponse.getResults()) {
-            BioentityPropertyName key = BioentityPropertyName.getByName(document.getFieldValue("property_name").toString());
+            BioentityPropertyName key =
+                    BioentityPropertyName.getByName(document.getFieldValue("property_name").toString());
             String value = document.getFieldValue("property_value").toString();
 
             if(!result.containsKey(key)){

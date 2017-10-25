@@ -10,9 +10,8 @@ import javax.inject.Inject;
 
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -32,41 +31,26 @@ public class GoPoTraderIT {
 
     @Test
     public void hasGO_0000001() throws Exception {
-        assertThat(subject.getTerm(GO_0000001), is(Optional.of(GO_0000001_TERM)));
+        assertThat(subject.get(GO_0000001), is(Optional.of(GO_0000001_TERM)));
     }
 
     @Test
     public void hasGO_2001317() throws Exception {
-        assertThat(subject.getTerm(GO_2001317), is(Optional.of(GO_2001317_TERM)));
+        assertThat(subject.get(GO_2001317), is(Optional.of(GO_2001317_TERM)));
     }
 
     @Test
     public void hasPO_0000001() throws Exception {
-        assertThat(subject.getTerm(PO_0000001), is(Optional.of(PO_0000001_TERM)));
+        assertThat(subject.get(PO_0000001), is(Optional.of(PO_0000001_TERM)));
     }
 
     @Test
     public void hasPO_0030087() throws Exception {
-        assertThat(subject.getTerm(PO_0030087), is(Optional.of(PO_0030087_TERM)));
+        assertThat(subject.get(PO_0030087), is(Optional.of(PO_0030087_TERM)));
     }
 
     @Test
-    public void goTermName() throws Exception {
-        assertThat(subject.getTermName(GO_0000001), is(Optional.of(GO_0000001_TERM.name())));
-    }
-
-    @Test
-    public void poTermName() throws Exception {
-        assertThat(subject.getTermName(PO_0030087), is(Optional.of(PO_0030087_TERM.name())));
-    }
-
-    @Test
-    public void noTerm() throws Exception {
-        assertThat(subject.getTerm("FO:OBAR"), is(Optional.empty()));
-    }
-
-    @Test
-    public void noTermName() throws Exception {
-        assertThat(subject.getTermName("FO:OBAR"), is(Optional.empty()));
+    public void returnEmptyIfTermNotfound() throws Exception {
+        assertThat(subject.get("FO:OBAR"), is(Optional.empty()));
     }
 }

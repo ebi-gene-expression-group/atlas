@@ -70,4 +70,5 @@ public class GoPoTSVParser {
             return DEFAULT_DEPTH;
         }
     }
+
 }

@@ -36,13 +36,13 @@ public class BioEntityPropertyDaoIT {
         assertThat(numberOfValues(properties), greaterThan(50));
         assertThat(properties.get(BioentityPropertyName.SYNONYM).size(), is(3));
         assertThat(properties.get(BioentityPropertyName.SYNONYM), containsInAnyOrder("DC-HIL", "Dchil", "Osteoactivin"));
-//        assertThat(properties.get(BioentityPropertyName.ORTHOLOG).size(), is(65));
+        assertThat(properties.get(BioentityPropertyName.ORTHOLOG).size(), is(greaterThan(20)));
         assertThat(properties.get(BioentityPropertyName.GO).size(), is(greaterThan(20)));
         assertThat(properties.get(BioentityPropertyName.INTERPRO), containsInAnyOrder("IPR000601", "IPR022409"));
         assertThat(properties.get(BioentityPropertyName.ENSFAMILY_DESCRIPTION), containsInAnyOrder("PRECURSOR"));
         assertThat(properties.get(BioentityPropertyName.ENSGENE), containsInAnyOrder("ENSMUSG00000029816"));
         assertThat(properties.get(BioentityPropertyName.ENTREZGENE), containsInAnyOrder("93695"));
-//        assertThat(properties.get(BioentityPropertyName.UNIPROT), containsInAnyOrder("A0A0N4SVG5", "Q8BVA0", "Q99P91"));
+        assertThat(properties.get(BioentityPropertyName.UNIPROT), containsInAnyOrder("A0A0N4SVG5", "Q8BVA0", "Q99P91"));
         assertThat(properties.get(BioentityPropertyName.MGI_ID), containsInAnyOrder("MGI:1934765"));
         assertThat(properties.get(BioentityPropertyName.MGI_DESCRIPTION), containsInAnyOrder("glycoprotein (transmembrane) nmb"));
         assertThat(properties.get(BioentityPropertyName.GENE_BIOTYPE), containsInAnyOrder("protein_coding"));

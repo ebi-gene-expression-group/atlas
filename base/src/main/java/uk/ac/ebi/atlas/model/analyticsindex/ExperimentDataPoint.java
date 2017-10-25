@@ -14,7 +14,7 @@ public abstract class ExperimentDataPoint {
         BioentityPropertyName.GENE_BIOTYPE,
         BioentityPropertyName.HGNC_SYMBOL,
         BioentityPropertyName.RGD_SYMBOL,
-        BioentityPropertyName.FLYBASENAME_GENE,
+        BioentityPropertyName.FLYBASE_GENE_ID,
         BioentityPropertyName.SYMBOL,
         BioentityPropertyName.MIRBASE_NAME,
         BioentityPropertyName.SYNONYM,

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
@@ -10,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Named
 public class BioEntityPropertyDao {
@@ -22,13 +22,13 @@ public class BioEntityPropertyDao {
     }
 
     public Set<String> fetchPropertyValuesForGeneId(String identifier, BioentityPropertyName propertyName) {
-        String _identifier = identifier.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
-
-        return FluentIterable.concat(solrClient.getMap(_identifier, ImmutableList.of(propertyName)).values()).toSet();
+        return solrClient.getMap(identifier, ImmutableList.of(propertyName)).values().stream()
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
     }
     
-    public Set<String> fetchGeneIdsForPropertyValue(BioentityPropertyName bioentityPropertyName, String
-            bioentityPropertyValue){
+    public Set<String> fetchGeneIdsForPropertyValue(BioentityPropertyName bioentityPropertyName,
+                                                    String bioentityPropertyValue) {
         return solrClient.getBioentityIdentifiers(bioentityPropertyName, bioentityPropertyValue);
     }
 

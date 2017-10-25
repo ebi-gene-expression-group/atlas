@@ -4,39 +4,37 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class InterProTraderIT {
 
-    private static final String IPR000001 = "IPR000001";
-    private static final String KRINGLE_DOMAIN = "Kringle (domain)";
-    private static final String IPR029787 = "IPR029787";
-    private static final String NUCLEOTIDE_CYCLASE_DOMAIN = "Nucleotide cyclase (domain)";
+    private static final OntologyTerm FIRST_TERM = OntologyTerm.create("IPR000001", "Kringle (domain)");
+    private static final OntologyTerm LAST_TERM = OntologyTerm.create("IPR029787", "Nucleotide cyclase (domain)");
 
     @Inject
     InterProTrader subject;
 
     @Test
     public void hasFirstTerm() {
-        assertThat(subject.getTermName(IPR000001), is(Optional.of(KRINGLE_DOMAIN)));
+        assertThat(subject.get(FIRST_TERM.accession()), is(Optional.of(FIRST_TERM)));
     }
 
     @Test
     public void hasLastTerm() {
-        assertThat(subject.getTermName(IPR029787), is(Optional.of(NUCLEOTIDE_CYCLASE_DOMAIN)));
+        assertThat(subject.get(LAST_TERM.accession()), is(Optional.of(LAST_TERM)));
     }
 
     @Test
-    public void unknownTermsReturnNull() {
-        assertThat(subject.getTermName("IPRFOOBAR"), is(Optional.empty()));
+    public void returnEmptyIfTermNotfound() {
+        assertThat(subject.get("IPRFOOBAR"), is(Optional.empty()));
     }
 }

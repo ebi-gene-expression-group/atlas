@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.species.Species;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class GenePageController extends BioentityPageController {
@@ -33,12 +34,12 @@ public class GenePageController extends BioentityPageController {
 
         Species speciesReferenceName = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(identifier));
 
-        Map<BioentityPropertyName, Set<String>> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier);
-        Set<String> symbols =
-                bioentityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL);
-        String geneName = symbols == null || symbols.isEmpty()
-                ? ""
-                : Joiner.on("/").join(symbols);
+        String geneName =
+                bioentityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL).stream()
+                        .collect(Collectors.joining("/"));
+
+        Map<BioentityPropertyName, Set<String>> propertyValuesByType =
+                bioentityPropertyDao.fetchGenePageProperties(identifier);
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
