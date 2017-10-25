@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BioEntityCardModelBuilderTest {
+public class BioEntityCardModelFactoryTest {
 
     @Mock
     ArrayDesignDAO arrayDesignDAO;
@@ -28,7 +28,7 @@ public class BioEntityCardModelBuilderTest {
     @Mock
     BioEntityPropertyService linkBuilder;
 
-    BioEntityCardModelBuilder subject;
+    BioEntityCardModelFactory subject;
 
     String identifier = "identifier";
 
@@ -36,7 +36,7 @@ public class BioEntityCardModelBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BioEntityCardModelBuilder(linkBuilder, arrayDesignDAO);
+        subject = new BioEntityCardModelFactory(linkBuilder, arrayDesignDAO);
     }
 
 

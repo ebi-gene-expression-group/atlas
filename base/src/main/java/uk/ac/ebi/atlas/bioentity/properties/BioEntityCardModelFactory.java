@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Named
-public class BioEntityCardModelBuilder {
+public class BioEntityCardModelFactory {
 
     // These are displayed in the header, so we don’t show them in the card table
     private final static ImmutableList<BioentityPropertyName> SKIP_PROPERTY_LIST =
@@ -36,7 +36,7 @@ public class BioEntityCardModelBuilder {
     private final BioEntityPropertyService bioEntityPropertyService;
 
     @Inject
-    public BioEntityCardModelBuilder(BioEntityPropertyService bioEntityPropertyService, ArrayDesignDAO arrayDesignDao) {
+    public BioEntityCardModelFactory(BioEntityPropertyService bioEntityPropertyService, ArrayDesignDAO arrayDesignDao) {
         this.arrayDesignDao = arrayDesignDao;
         this.bioEntityPropertyService = bioEntityPropertyService;
     }
