@@ -1,52 +1,57 @@
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
-import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
-import java.util.HashMap;
-import java.util.Set;
+import javax.inject.Inject;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.BDDMockito.given;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
 public class SolrQueryServiceTest {
 
-    private static final String BIOENTITY_IDENTIFIER = "ENSG00000132604";
-    private static final String GENE_SYMBOL = "TERF2";
+    @Inject
+    SolrQueryService subject;
 
-    private BioEntityPropertyDao subject;
+    @Test
+    public void getKnownSpeciesWithCategory() throws Exception {
+        assertThat(
+                subject.fetchSpecies(SemanticQueryTerm.create("ENSMUSG00000019082", BioentityPropertyName.ENSGENE.name())),
+                hasItem(equalToIgnoringCase("mus_musculus")));
 
-    @Mock
-    private BioentitiesSolrClient gxaSolrClientMock;
-
-    @Before
-    public void setUp() throws Exception {
-        HashMap<BioentityPropertyName, Set<String>> propertiesMap = Maps.newHashMap();
-        propertiesMap.put(BioentityPropertyName.SYMBOL, Sets.newHashSet(GENE_SYMBOL));
-        given(gxaSolrClientMock.getMap(BIOENTITY_IDENTIFIER, ImmutableList.of(BioentityPropertyName.SYMBOL))).willReturn(propertiesMap);
-
-        subject = new BioEntityPropertyDao(gxaSolrClientMock);
-    }
-
-    @Test(expected = BioentityNotFoundException.class)
-    public void shouldThrowException() throws Exception {
-        subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER);
+        assertThat(
+                subject.fetchSpecies(SemanticQueryTerm.create("FBgn0260743", BioentityPropertyName.FLYBASE_GENE_ID.name())),
+                hasItem(equalToIgnoringCase("drosophila_melanogaster")));
     }
 
     @Test
-    public void testFindPropertyValuesForGeneId() throws Exception {
-        assertThat(subject.fetchPropertyValuesForGeneId(BIOENTITY_IDENTIFIER, BioentityPropertyName.SYMBOL), hasItem(GENE_SYMBOL));
+    public void getKnownSpeciesWithoutCategory() throws Exception {
+        assertThat(
+                subject.fetchSpecies(SemanticQueryTerm.create("ENSMUSG00000019082")),
+                hasItem(equalToIgnoringCase("mus_musculus")));
     }
 
+    @Test
+    public void queryWithoutCategoryFallsBackToProperties() throws Exception {
+        assertThat(
+                subject.fetchSpecies(SemanticQueryTerm.create("OBP3-responsive gene 4")),
+                hasItem(equalToIgnoringCase("arabidopsis_lyrata")));
+    }
+
+    @Test
+    public void unknownSpeciesReturnsEmpty() throws Exception {
+        // Escherichia coli
+        assertThat(
+                subject.fetchSpecies(SemanticQueryTerm.create(BioentityPropertyName.ENSGENE.name(), "ECBD_0176")),
+                is(empty()));
+    }
 }

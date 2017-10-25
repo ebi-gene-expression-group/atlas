@@ -9,6 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -20,10 +21,10 @@ One idea: pass in a function to the constructor of experiment design, made from 
  */
 public class ExperimentDesignTable {
 
-    private final Experiment<DescribesDataColumns> experiment;
+    private final Experiment<? extends DescribesDataColumns> experiment;
     private final Gson gson = new Gson();
 
-    public ExperimentDesignTable(Experiment<DescribesDataColumns> experiment){
+    public ExperimentDesignTable(Experiment<? extends DescribesDataColumns> experiment){
         this.experiment = experiment;
     }
 

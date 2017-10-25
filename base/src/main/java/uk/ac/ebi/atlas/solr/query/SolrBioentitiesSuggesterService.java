@@ -20,7 +20,7 @@ public class SolrBioentitiesSuggesterService {
     }
 
     public List<SemanticQueryTerm> fetchPropertySuggestions(String query, Species species, int numberOfSuggestions) {
-        return fetchSuggestions("propertySuggester", query, species,numberOfSuggestions);
+        return fetchSuggestions("propertySuggester", query, species, numberOfSuggestions);
     }
 
     public List<SemanticQueryTerm> fetchBioentitySuggestions(String query, Species species, int numberOfSuggestions) {

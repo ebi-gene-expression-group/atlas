@@ -20,10 +20,10 @@ do
     pushd . > /dev/null
     echo "Upgrading $dir:"
     cd $dir
-    yarn upgrade
+    yarn install
     popd > /dev/null
 done
 
-yarn upgrade
+yarn install
 yarn run $1
 

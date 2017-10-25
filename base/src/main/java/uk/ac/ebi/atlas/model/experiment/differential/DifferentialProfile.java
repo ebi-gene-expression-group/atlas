@@ -44,8 +44,4 @@ extends Profile<Contrast, T, Self> {
         return pValueTotal / contrasts.size();
     }
 
-    public String getDesignElementName(){
-        return "";
-    }
-
 }

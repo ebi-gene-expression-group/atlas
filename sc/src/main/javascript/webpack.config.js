@@ -1,7 +1,6 @@
 var webpack = require('webpack')
 var path = require('path')
 var CleanWebpackPlugin = require('clean-webpack-plugin')
-var WebpackShellPlugin = require('webpack-shell-plugin')
 
 module.exports = {
   // define the bundles we want
@@ -11,7 +10,8 @@ module.exports = {
     experimentPage: ['./bundles/experiment-page/src/index.js'],
     // Put dependencies one line per package
     dependencies: [
-      'prop-types', 'react', 'react-autocomplete', 'react-dom', 'react-refetch', 'urijs'  // autocomplete, marker-genes
+        //'react-autocomplete', shared by atlasAutocomplete and experimentPage
+      'prop-types', 'react', 'react-dom', 'react-refetch', 'urijs'  // autocomplete, marker-genes
     ]
   },
 

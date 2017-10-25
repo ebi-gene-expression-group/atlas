@@ -14,10 +14,6 @@ public class PropertyLink {
         this.relevance = relevance;
     }
 
-    PropertyLink(String text, int relevance) {
-        this(text, "", relevance);
-    }
-
     public String getText() {
         return text;
     }

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <header id="masthead-black-bar" class="clearfix masthead-black-bar">
-    <nav class="row expanded">
+    <nav class="row">
         <ul id="global-nav" class="menu">
             <!-- set active class as appropriate -->
             <li class="home-mobile"><a href="//www.ebi.ac.uk"></a></li>

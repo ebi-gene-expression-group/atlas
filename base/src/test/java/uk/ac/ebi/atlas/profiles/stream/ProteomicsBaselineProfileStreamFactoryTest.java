@@ -10,7 +10,10 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
+
+import java.util.function.Function;
 
 import static org.junit.Assert.assertThat;
 
@@ -28,21 +31,21 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new ProteomicsBaselineProfileStreamFactory.Impl(new MockDataFileHub());
+        subject = new ProteomicsBaselineProfileStreamFactory.Impl(MockDataFileHub.create());
     }
 
     @Test
     public void proteomicsHeadersCanHaveSpectraclCountStuff(){
         //gene name and gene id gets removed somewhere else
         //future proteomics headers will not even have the extra SpectralCount
-        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine =
-                subject.howToReadLineStream(baselineExperiment, baselineExpression -> true)
+        Function<String[], BaselineProfile> goThroughTsvLineAndPickUpExpressionsByIndex =
+                subject.howToReadLine(baselineExperiment, baselineExpression -> true)
                 .apply(
                         "id name g1.SpectralCount g2.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance"
                                 .split(" "));
 
         assertThat(
-                profileFromTsvLine.apply(new String[]{"id", "name", "_", "_", "1.0", "2.0"}).getExpression(g1),
+                goThroughTsvLineAndPickUpExpressionsByIndex.apply(new String[]{"id", "name", "_", "_", "1.0", "2.0"}).getExpression(g1),
                 Matchers.is(new BaselineExpression(1.0)));
     }
 

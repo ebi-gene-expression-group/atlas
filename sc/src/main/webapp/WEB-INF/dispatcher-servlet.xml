@@ -28,8 +28,8 @@
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg>
             <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
-                  p:readTimeout="120000"
-                  p:connectTimeout="120000" />
+                  p:readTimeout="20000"
+                  p:connectTimeout="20000" />
         </constructor-arg>
     </bean>
 

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <title>React Router demo</title>
+
+    <meta charset="utf-8">
+    <title>Expression Atlas &lt; Demo pages</title>
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
+
+    <!-- CSS: implied media=all -->
+    <!-- CSS concatenated and minified via ant build script-->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/css/foundation.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/ebi-global.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all">
+
+    <!-- Use this CSS file for any custom styling -->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+
+    <script src="/gxa_sc/vendorCommons.bundle.js"></script>
+    <script src="/gxa_sc/experimentPage.bundle.js"></script>
+</head>
+
+<body>
+    <div id="content" class="row column">
+      <div id="container"></div>
+    </div>
+</body>
+
+<script>
+    var tabs = [
+      {
+        type: 't-sne-plot',
+        name: 'Results',
+        props: {
+          ks: [2, 3, 4, 5, 6, 7, 8, 9],
+          perplexities: [1, 2, 3, 4, 5, 6],
+          suggesterEndpoint: 'json/suggestions'
+        }
+      },
+      {
+        type: 'experiment-design',
+        name: 'Experiment Design',
+        props: {}
+      },
+      {
+        type: '',
+        name: 'Supplementary Information',
+        props: {}
+      },
+      {
+        type: '',
+        name: 'Downloads',
+        props: {}
+      }
+    ]
+
+    experimentPage.render({
+        atlasUrl: 'http://localhost:8080/gxa_sc/',
+        content: {
+          experimentAccession: 'E-MTAB-4388',
+          tabs: tabs
+        }
+    }, 'container');
+</script>
+
+</html>

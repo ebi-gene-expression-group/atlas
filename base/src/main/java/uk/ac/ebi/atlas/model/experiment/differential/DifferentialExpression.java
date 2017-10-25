@@ -94,6 +94,6 @@ public class DifferentialExpression implements Expression {
 
     @Override
     public String toString(){
-        return MessageFormat.format("DifferentialExpression foldChange={1} pValue={2}", foldChange, pValue);
+        return MessageFormat.format("DifferentialExpression foldChange={0} pValue={1}", foldChange, pValue);
     }
 }

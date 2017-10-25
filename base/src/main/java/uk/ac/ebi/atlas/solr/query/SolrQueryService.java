@@ -6,12 +6,13 @@ import com.google.common.base.Stopwatch;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
+import uk.ac.ebi.atlas.solr.query.builders.BioentityIdentifierQueryBuilder;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -24,13 +25,10 @@ public class SolrQueryService {
 
     private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     private final BioentitiesSolrClient solrClient;
-    private final SolrQueryBuilderFactory solrQueryBuilderFactory;
 
     @Inject
-    public SolrQueryService(BioentitiesSolrClient solrClient,
-                            SolrQueryBuilderFactory solrQueryBuilderFactory) {
+    public SolrQueryService(BioentitiesSolrClient solrClient) {
         this.solrClient = solrClient;
-        this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
     private GeneQueryResponse fetchGeneIdsGroupedByGeneQueryToken(SemanticQuery geneQuery, Species species) {
@@ -45,7 +43,7 @@ public class SolrQueryService {
     private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, Species species) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
+        SolrQuery solrQuery = new BioentityIdentifierQueryBuilder()
                 .forTerm(queryTerm)
                 .withSpecies(species)
                 .build();
@@ -73,5 +71,22 @@ public class SolrQueryService {
         }
 
         return geneQueryResponse;
+    }
+
+    public Set<String> fetchSpecies(SemanticQueryTerm geneQueryTerm) {
+        SolrQuery query = new SolrQuery();
+        query.setRows(1);
+
+        if (geneQueryTerm.hasNoCategory()) {
+            query.setQuery(MessageFormat.format("bioentity_identifier:\"{0}\"", geneQueryTerm.value()));
+        }
+
+        Set<String> queryResults = solrClient.query(query, false, "species");
+        if (!queryResults.isEmpty()) {
+            return queryResults;
+        }
+
+        query.setQuery(geneQueryTerm.asBioentitiesIndexQueryLiteral());
+        return solrClient.query(query, false, "species");
     }
 }

@@ -1,17 +1,28 @@
 package uk.ac.ebi.atlas.experimentpage.json;
 
-import org.springframework.stereotype.Controller;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.LinkToGene;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatmapsWranglerFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.HistogramService;
+import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpressionPerReplicateProfile;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
+import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
+import uk.ac.ebi.atlas.profiles.stream.BaselineTranscriptProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -30,7 +41,7 @@ import javax.validation.Valid;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-@Controller
+@RestController
 public class JsonBaselineExperimentController extends JsonExperimentController {
 
     @InitBinder("preferences")
@@ -40,6 +51,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
 
     private final BaselineExperimentPageService rnaSeqBaselineExperimentPageService;
     private final BaselineExperimentPageService proteomicsBaselineExperimentPageService;
+    private final BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory;
     private final SpeciesInferrer speciesInferrer;
     private final HistogramService.RnaSeq rnaSeqHistograms;
     private final HistogramService.Proteomics proteomicsHistograms;
@@ -51,6 +63,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             SolrQueryService solrQueryService,
             RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
             ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory,
+            BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory,
             SpeciesInferrer speciesInferrer) {
         super(experimentTrader);
         this.rnaSeqBaselineExperimentPageService = new BaselineExperimentPageService(new BaselineProfilesHeatmapsWranglerFactory(
@@ -59,6 +72,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         this.proteomicsBaselineExperimentPageService = new BaselineExperimentPageService(new BaselineProfilesHeatmapsWranglerFactory(
                 proteomicsBaselineProfileStreamFactory, solrQueryService, coexpressedGenesService)
         );
+        this.baselineTranscriptProfileStreamFactory = baselineTranscriptProfileStreamFactory;
         this.speciesInferrer = speciesInferrer;
         this.rnaSeqHistograms = new HistogramService.RnaSeq(rnaSeqBaselineProfileStreamFactory, experimentTrader);
         this.proteomicsHistograms = new HistogramService.Proteomics(proteomicsBaselineProfileStreamFactory, experimentTrader);
@@ -67,7 +81,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
             produces = "application/json;charset=UTF-8",
             params = "type=RNASEQ_MRNA_BASELINE")
-    @ResponseBody
     public String baselineRnaSeqExperimentData(
             @Valid RnaSeqBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
@@ -79,10 +92,63 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                 ));
     }
 
+    @RequestMapping(value = "/json/debug-experiments/{experimentAccession}/genes/{geneId}/transcripts",
+            produces = "application/json;charset=UTF-8",
+            params = "type=RNASEQ_MRNA_BASELINE")
+    public String baselineRnaSeqTranscriptsDataWithVeryTemporaryImplementation(
+            @Valid RnaSeqBaselineRequestPreferences preferences,
+            @PathVariable String experimentAccession,
+            @PathVariable String geneId,
+            @RequestParam(defaultValue = "") String accessKey) {
+
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        /*
+        NOTE: incredibly obscure hack
+        Reusing RnaSeqBaselineRequestPreferences is NOT okay
+        there's a clash on what the kryo file should be
+        setting cutoff to 0.0d makes the look somewhere else where we won't serialize the file
+        and it all works :)
+        It's enough to test this endpoint, there's no way to make a transcripts kryo file
+        I think we possibly don't want one, and that the new code that reads first column without parsing makes reading tsv's
+        >faster< than kryo's
+        TODO: test this on a large experiment and baseline data
+         */
+        preferences.setCutoff(0.0);
+        BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext = new BaselineRequestContext<>(preferences, experiment);
+
+        return gson.toJson(toJson(new GeneProfilesList<>(ImmutableList.copyOf(
+                new IterableObjectInputStream<>(baselineTranscriptProfileStreamFactory.create(
+                        experiment,
+                        requestContext,
+                        ImmutableSet.of(geneId)
+                ))
+        )), requestContext));
+    }
+
+    static JsonObject toJson(GeneProfilesList<BaselineExpressionPerReplicateProfile> profiles, BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext){
+        JsonObject result = new JsonObject();
+
+        result.add("profiles", new ExternallyViewableProfilesList<>(
+                profiles,
+                new LinkToGene<>(),
+                requestContext.getDataColumnsToReturn(),
+                p -> requestContext.getExpressionUnit()
+        ).asJson());
+
+        JsonArray columnHeaders = new JsonArray();
+        for (AssayGroup assayGroup : requestContext.getDataColumnsToReturn()) {
+            columnHeaders.add(assayGroup.toJson());
+        }
+
+        result.add("columnHeaders", columnHeaders);
+
+        return result;
+
+    }
+
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
             produces = "application/json;charset=UTF-8",
             params = "type=PROTEOMICS_BASELINE")
-    @ResponseBody
     public String baselineProteomicsExperimentData(
             @Valid ProteomicsBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
@@ -97,7 +163,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     @RequestMapping(
             value = "/json/baseline_refexperiment",
             produces = "application/json;charset=UTF-8")
-    @ResponseBody
     public String jsonBaselineRefExperiment(
             @RequestParam(value = "geneQuery") SemanticQuery geneQuery,
             @RequestParam(value = "species", required = false) String speciesString,
@@ -131,7 +196,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     @RequestMapping(value = GENE_DISTRIBUTION_URL,
             produces = "application/json;charset=UTF-8",
             params = "type=RNASEQ_MRNA_BASELINE")
-    @ResponseBody
     public String baselineRnaSeqHistogram(
             @Valid RnaSeqBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
@@ -145,7 +209,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     @RequestMapping(value = GENE_DISTRIBUTION_URL,
             produces = "application/json;charset=UTF-8",
             params = "type=PROTEOMICS_BASELINE")
-    @ResponseBody
     public String baselineProteomicsHistogram(
             @Valid ProteomicsBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,

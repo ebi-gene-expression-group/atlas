@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
@@ -33,18 +34,18 @@ public class GeneSetPropertyService {
     }
 
     public static final List<BioentityPropertyName> all =
-            ImmutableList.of(REACTOME, GO, PO, INTERPRO);
+            ImmutableList.of(PATHWAYID, GO, PO, INTERPRO);
 
     public Map<BioentityPropertyName, Set<String>> propertyValuesByType(String identifier) {
         identifier = identifier.toUpperCase();
         if (GeneSetUtil.matchesReactomeID(identifier)) {
-            return propertyValuesByType(REACTOME, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier));
+            return propertyValuesByType(PATHWAYID, identifier, reactomeClient.getPathwayName(identifier).orElse(""));
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
-            return propertyValuesByType(GO, identifier, goPoTermTrader.getTermName(identifier));
+            return propertyValuesByType(GO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
-            return propertyValuesByType(PO, identifier, goPoTermTrader.getTermName(identifier));
+            return propertyValuesByType(PO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         }else if (GeneSetUtil.matchesInterProAccession(identifier)) {
-            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.getTermName(identifier));
+            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         } else {
             return ImmutableMap.of();
         }
@@ -52,7 +53,7 @@ public class GeneSetPropertyService {
 
     private Map<BioentityPropertyName, Set<String>> propertyValuesByType(BioentityPropertyName which,
                                                                          String identifier, String value) {
-        return ImmutableMap.of(which, (Set<String>)ImmutableSet.of(identifier), DESCRIPTION, ImmutableSet.of(value));
+        return ImmutableMap.of(which, ImmutableSet.of(identifier), DESCRIPTION, ImmutableSet.of(value));
     }
 
 }

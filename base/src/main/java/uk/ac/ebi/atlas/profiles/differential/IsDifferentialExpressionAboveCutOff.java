@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import javax.inject.Named;
+import java.util.function.Predicate;
 
 @Named
 @Scope("prototype")
@@ -16,7 +16,7 @@ public class IsDifferentialExpressionAboveCutOff<Expr extends DifferentialExpres
     private double foldChangeCutOff;
 
     @Override
-    public boolean apply(Expr differentialExpression) {
+    public boolean test(Expr differentialExpression) {
 
         if (Regulation.UP == regulation){
             return isOverExpressed(differentialExpression);
@@ -38,17 +38,17 @@ public class IsDifferentialExpressionAboveCutOff<Expr extends DifferentialExpres
     }
 
 
-    public IsDifferentialExpressionAboveCutOff setPValueCutoff(double pValueCutOff){
+    public IsDifferentialExpressionAboveCutOff<Expr> setPValueCutoff(double pValueCutOff){
         this.pValueCutOff = pValueCutOff;
         return this;
     }
 
-    public IsDifferentialExpressionAboveCutOff setFoldChangeCutOff(double foldChangeCutOff) {
+    public IsDifferentialExpressionAboveCutOff<Expr> setFoldChangeCutOff(double foldChangeCutOff) {
         this.foldChangeCutOff = foldChangeCutOff;
         return this;
     }
 
-    public IsDifferentialExpressionAboveCutOff setRegulation(Regulation regulation){
+    public IsDifferentialExpressionAboveCutOff<Expr> setRegulation(Regulation regulation){
         this.regulation = regulation;
         return this;
     }

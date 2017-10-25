@@ -71,7 +71,7 @@ public class ExperimentOpsTest {
 
     @Before
     public void setUp() throws Exception {
-        experimentOpLogWriter = new ExperimentOpLogWriter(new MockDataFileHub());
+        experimentOpLogWriter = new ExperimentOpLogWriter(MockDataFileHub.create());
 
         subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
@@ -181,7 +181,7 @@ public class ExperimentOpsTest {
         String logResult = ImmutableList.copyOf(subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(Op.LOG))).toString();
 
         for(Op op: Op.values()){
-            boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ).contains(op);
+            boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ, Op.CACHE_REMOVE).contains(op);
             assertThat(op.toString(), logResult.contains( op.name()), is(isStateful));
         }
 

@@ -30,9 +30,9 @@ public class BaselineExperimentTest {
     private static final String RUN_ACCESSION2 = "run2";
     private static final String PUBMEDID = "PUBMEDID";
 
-    static List<AssayGroup> assayGroups = ImmutableList.of(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup
-            ("g2",
-            RUN_ACCESSION2));
+    static List<AssayGroup> assayGroups = ImmutableList.of(
+            new AssayGroup("g1", RUN_ACCESSION1),
+            new AssayGroup("g2", RUN_ACCESSION2));
 
 
     private BaselineExperiment subject;

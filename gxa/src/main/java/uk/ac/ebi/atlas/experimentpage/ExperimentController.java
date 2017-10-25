@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.json.JsonBaselineExperimentController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
@@ -48,7 +48,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                      @PathVariable String experimentAccession,
                                      @RequestParam(defaultValue = "") String accessKey) {
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
         model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, accessKey)));
@@ -56,7 +56,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return "experiment-page";
     }
 
-    private JsonObject experimentPageContentForExperiment(final Experiment experiment, final String accessKey){
+    private JsonObject experimentPageContentForExperiment(final Experiment<? extends DescribesDataColumns> experiment, final String accessKey){
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!

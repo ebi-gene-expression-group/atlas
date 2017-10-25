@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import AtlasAutocomplete from 'atlas-autocomplete'
+import AtlasAutocomplete from 'expression-atlas-autocomplete'
 
 const render = function (options, target) {
   ReactDOM.render(<AtlasAutocomplete {...options} />, document.getElementById(target))

@@ -84,18 +84,18 @@
                     </a>
                 </div>
                 <div class="small-4 columns combo text-center padding-top-medium">
-                    <a href="${pageContext.request.contextPath}/baseline/experiments">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/baseline.png" />
+                    <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
+                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/pcawg_logo.png" />
                         <h6>
-                            <a href="${pageContext.request.contextPath}/baseline/experiments">All baseline experiments</a>
+                            <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5200">PCAWG by disease</a><br>
                         </h6>
                     </a>
                 </div>
                 <div class="small-4 columns combo text-center padding-top-medium">
-                    <a href="${pageContext.request.contextPath}/plant/experiments">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/gramene_logo_big.png" />
+                    <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
+                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/wtsi_mgh_cancerrxgene_logo.png" />
                         <h6>
-                            <a href="${pageContext.request.contextPath}/plant/experiments">Plant experiments</a>
+                            <a href="${pageContext.request.contextPath}/experiments/E-MTAB-3983">Genomics of Drug Sensitivity in Cancer Project – Cell lines</a><br>
                         </h6>
                     </a>
                 </div>
@@ -103,10 +103,18 @@
 
             <div class="row">
                 <div class="small-4 columns combo text-center padding-top-medium">
-                    <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/pcawg_logo.png" />
+                    <a href="${pageContext.request.contextPath}/baseline/experiments">
+                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/baseline.png" />
                         <h6>
-                            <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5200">PCAWG by disease</a><br>
+                            <a href="${pageContext.request.contextPath}/baseline/experiments">All baseline experiments</a>
+                        </h6>
+                    </a>
+                </div>
+                <div class="small-4 columns combo text-center padding-top-medium end">
+                    <a href="${pageContext.request.contextPath}/plant/experiments">
+                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/gramene_logo_big.png" />
+                        <h6>
+                            <a href="${pageContext.request.contextPath}/plant/experiments">Plant experiments</a>
                         </h6>
                     </a>
                 </div>

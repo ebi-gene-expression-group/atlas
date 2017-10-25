@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Set;
 
 public class BaselineExperimentDataPointStream implements ObjectInputStream<BaselineExperimentDataPoint> {
@@ -18,12 +20,12 @@ public class BaselineExperimentDataPointStream implements ObjectInputStream<Base
 
     private final BaselineExperiment experiment;
     private final ObjectInputStream<BaselineAnalytics> inputStream;
-    private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
+    private final Multimap<String, String> conditionSearchTermsByAssayAccessionId;
     private final Set<String> assaysSeen = Sets.newHashSet();
 
     public BaselineExperimentDataPointStream(BaselineExperiment experiment,
                                              ObjectInputStream<BaselineAnalytics> inputStream,
-                                             SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
+                                             Multimap<String, String> conditionSearchTermsByAssayAccessionId) {
         this.experiment = experiment;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
@@ -31,7 +33,7 @@ public class BaselineExperimentDataPointStream implements ObjectInputStream<Base
 
 
     private String getConditionSearchTerms(String assayGroupId) {
-        Set<String> searchTerms = conditionSearchTermsByAssayAccessionId.get(assayGroupId);
+        Collection<String> searchTerms = conditionSearchTermsByAssayAccessionId.get(assayGroupId);
 
         if (searchTerms.isEmpty() && !assaysSeen.contains(assayGroupId)) {
             assaysSeen.add(assayGroupId);

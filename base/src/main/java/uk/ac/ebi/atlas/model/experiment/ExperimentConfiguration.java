@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.*;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -12,10 +10,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.xml.xpath.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -75,24 +75,27 @@ public class ExperimentConfiguration {
             XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group[@id='" + id + "']/assay");
 
             NodeList nl = (NodeList) expr.evaluate(xmlReader.getDocument(), XPathConstants.NODESET);
-            String[] assayAccessions = new String[nl.getLength()];
 
-            ImmutableSet.Builder<String> technicalReplicatesBuilder = ImmutableSet.builder();
-            int soloAssayCount = 0;
+            ImmutableSet.Builder<BiologicalReplicate> biologicalReplicates = ImmutableSet.builder();
+
+            Multimap<String, String> technicalReplicatesPerId = LinkedListMultimap.create();
+
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
                 String technicalReplicateId = getAttribute(node, "technical_replicate_id");
                 if (technicalReplicateId != null) {
-                    technicalReplicatesBuilder.add(technicalReplicateId);
+                    technicalReplicatesPerId.put(technicalReplicateId, node.getTextContent());
                 } else {
-                    soloAssayCount++;
+                    biologicalReplicates.add(new BiologicalReplicate(node.getTextContent()));
                 }
-                assayAccessions[i] = node.getTextContent();
             }
 
-            int technicalReplicates = technicalReplicatesBuilder.build().size();
-            int biologicalReplicates = technicalReplicates + soloAssayCount;
-            return new AssayGroup(id, biologicalReplicates, assayAccessions);
+            technicalReplicatesPerId.asMap().forEach((biologicalReplicateId, assays) ->
+               biologicalReplicates.add(assays.size() > 1
+                       ? new BiologicalReplicate(biologicalReplicateId, ImmutableSet.copyOf(assays))
+                       : new BiologicalReplicate(assays.iterator().next()))
+            );
+            return new AssayGroup(id,biologicalReplicates.build());
 
         } catch (XPathExpressionException e) {
             throw new IllegalStateException("Problem parsing configuration file.", e);

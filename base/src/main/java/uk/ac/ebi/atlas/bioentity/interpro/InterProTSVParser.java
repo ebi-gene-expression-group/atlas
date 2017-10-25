@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.bioentity.interpro;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableMap;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import java.io.IOException;
 
@@ -17,9 +18,9 @@ public class InterProTSVParser {
         this.csvReader = csvReader;
     }
 
-    ImmutableMap<String, String> parse() throws IOException {
+    ImmutableMap<String, OntologyTerm> parse() throws IOException {
 
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, OntologyTerm> builder = ImmutableMap.builder();
         String[] line;
         while ((line = csvReader.readNext()) != null) {
             if (line.length > 2) {
@@ -27,11 +28,12 @@ public class InterProTSVParser {
                 String accession = line[ACCESSION_COLUMN_INDEX];
                 String type = line[TYPE_COLUMN_INDEX];
                 if (accession.matches("^IPR.+")) {
-                    builder.put(accession, name + " (" + type.toLowerCase() + ")");
+                    builder.put(accession, OntologyTerm.create(accession, name + " (" + type.toLowerCase() + ")"));
                 }
             }
         }
 
         return builder.build();
     }
+
 }

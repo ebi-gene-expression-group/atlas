@@ -36,6 +36,7 @@ public class DataFileHub {
     final static String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
     final static String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-fpkms.tsv";
     final static String RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-tpms.tsv";
+    final static String RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-transcripts-tpms.tsv";
 
 
 
@@ -49,6 +50,8 @@ public class DataFileHub {
             "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
     final static String COEXPRESSION_FILE_TEMPLATE = "/magetab/{0}/{0}-coexpressions.tsv.gz";
+
+    final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.{1}.reactome.gsea.tsv";
 
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
@@ -89,6 +92,12 @@ public class DataFileHub {
 
     public MicroarrayExperimentFiles getMicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
+    }
+
+    public AtlasResource<TsvReader> getReactomePathwaysFiles(String experimentAccession, String comparison) {
+        return new TsvFile.ReadOnly(
+                dataFilesLocation, REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
+                experimentAccession, comparison);
     }
 
     public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
@@ -142,6 +151,7 @@ public class DataFileHub {
     public class RnaSeqBaselineExperimentFiles extends BaselineExperimentFiles {
         private final AtlasResource<ObjectInputStream<String[]>> fpkms;
         private final AtlasResource<ObjectInputStream<String[]>> tpms;
+        public final AtlasResource<ObjectInputStream<String[]>> transcriptsTpms;
         RnaSeqBaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.fpkms =
@@ -150,6 +160,9 @@ public class DataFileHub {
             this.tpms =
                     new TsvFile.ReadAsStream(
                             dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.transcriptsTpms =
+                    new TsvFile.ReadAsStream(
+                            dataFilesLocation, RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
         }
 
         public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit) {
@@ -198,14 +211,17 @@ public class DataFileHub {
     }
 
     public class DifferentialExperimentFiles extends ExperimentFiles {
-        public final AtlasResource<ObjectInputStream<String[]>> percentileRanks;
+        public AtlasResource<ObjectInputStream<String[]>> percentileRanks;
 
         DifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.percentileRanks =
                     new TsvFile.ReadAsStream(
                             dataFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
+
+
         }
+
     }
 
     public class RnaSeqDifferentialExperimentFiles extends DifferentialExperimentFiles {
@@ -221,6 +237,7 @@ public class DataFileHub {
                     new TsvFile.ReadOnly(
                             dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
         }
+
     }
 
     public class MicroarrayExperimentFiles extends DifferentialExperimentFiles {

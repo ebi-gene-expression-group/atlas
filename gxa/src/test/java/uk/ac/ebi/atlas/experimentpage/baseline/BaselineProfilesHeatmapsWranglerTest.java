@@ -15,7 +15,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -23,8 +22,6 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
-
-import java.util.TreeSet;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;

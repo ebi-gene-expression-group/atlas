@@ -10,7 +10,7 @@ var foundationExperimentsPageModule = (function ($) {
             return '<span title="' + data + '"/>';
         }
         return '<span title="' + data + '">' +
-            '<a href="experiments/' + full.experimentAccession + '/experiment-design" title="View experiment design in Expression Atlas">' + data +
+            '<a href="experiments/' + full.experimentAccession + '/Experiment Design" title="View experiment design in Expression Atlas">' + data +
             '</a></span>';
     }
 
@@ -150,7 +150,7 @@ var foundationExperimentsPageModule = (function ($) {
                     } },
                 { "title":"Assays", "data":"numberOfAssays", "className":"center", "type":"title-numeric", "width":"5%",
                     "render": function (data, type, full) {
-                        return replaceZeroAndLinkExpDesign(data, type, full);
+                        return replaceZeroAndLinkExpDesign(data, full);
                     } },
                 { "title":"Comparisons", "data":"numberOfContrasts", "className":"center", "type":"title-numeric", "width":"5%",
                     "render": function (data, type, full) {

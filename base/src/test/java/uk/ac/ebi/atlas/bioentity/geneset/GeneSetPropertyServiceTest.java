@@ -8,10 +8,12 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasEntry;
@@ -27,6 +29,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GeneSetPropertyServiceTest {
 
+    private final static OntologyTerm GO_TERM = OntologyTerm.create("GO:FOOBAR", "some GO term name");
+    private final static OntologyTerm PO_TERM = OntologyTerm.create("PO:FOOBAR", "some PO term name");
+    private final static OntologyTerm INTERPRO_TERM = OntologyTerm.create("IPR3117", "some InterPro term name");
+
     @Mock
     GoPoTrader goPoTermTraderMock;
 
@@ -40,10 +46,10 @@ public class GeneSetPropertyServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        when(reactomeClientMock.fetchPathwayNameFailSafe(startsWith("R-"))).thenReturn("some pathway name");
-        when(goPoTermTraderMock.getTermName(startsWith("GO:"))).thenReturn("some GO term name");
-        when(goPoTermTraderMock.getTermName(startsWith("PO:"))).thenReturn("some PO term name");
-        when(interProTermTraderMock.getTermName(startsWith("IPR"))).thenReturn("some InterPro term name");
+        when(reactomeClientMock.getPathwayName(startsWith("R-"))).thenReturn(Optional.of("some pathway name"));
+        when(goPoTermTraderMock.get(startsWith("GO:"))).thenReturn(Optional.of(GO_TERM));
+        when(goPoTermTraderMock.get(startsWith("PO:"))).thenReturn(Optional.of(PO_TERM));
+        when(interProTermTraderMock.get(startsWith("IPR"))).thenReturn(Optional.of(INTERPRO_TERM));
         subject = new GeneSetPropertyService(goPoTermTraderMock, interProTermTraderMock, reactomeClientMock);
     }
 
@@ -51,9 +57,9 @@ public class GeneSetPropertyServiceTest {
     public void propertyValuesByTypeReactome() throws Exception {
         assertThat(
                 subject.propertyValuesByType("R-HSA-0000000"),
-                hasEntry(is(BioentityPropertyName.REACTOME), isA(Set.class)));
+                hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
 
-        verify(reactomeClientMock).fetchPathwayNameFailSafe(anyString());
+        verify(reactomeClientMock).getPathwayName(anyString());
         verifyZeroInteractions(goPoTermTraderMock, interProTermTraderMock);
     }
 
@@ -63,7 +69,7 @@ public class GeneSetPropertyServiceTest {
                 subject.propertyValuesByType("GO:0000000"),
                 hasEntry(is(BioentityPropertyName.GO), isA(Set.class)));
 
-        verify(goPoTermTraderMock).getTermName("GO:0000000");
+        verify(goPoTermTraderMock).get("GO:0000000");
         verifyZeroInteractions(reactomeClientMock, interProTermTraderMock);
     }
 
@@ -73,7 +79,7 @@ public class GeneSetPropertyServiceTest {
                 subject.propertyValuesByType("PO:0000000"),
                 hasEntry(is(BioentityPropertyName.PO), isA(Set.class)));
 
-        verify(goPoTermTraderMock).getTermName("PO:0000000");
+        verify(goPoTermTraderMock).get("PO:0000000");
         verifyZeroInteractions(reactomeClientMock, interProTermTraderMock);
     }
 
@@ -83,7 +89,7 @@ public class GeneSetPropertyServiceTest {
                 subject.propertyValuesByType("IPR0000000"),
                 hasEntry(is(BioentityPropertyName.INTERPRO), isA(Set.class)));
 
-        verify(interProTermTraderMock).getTermName("IPR0000000");
+        verify(interProTermTraderMock).get("IPR0000000");
         verifyZeroInteractions(reactomeClientMock, goPoTermTraderMock);
     }
 
@@ -91,7 +97,7 @@ public class GeneSetPropertyServiceTest {
     public void typeIsCaseInsensitive() throws Exception {
         assertThat(
                 subject.propertyValuesByType("r-hsa-0000000"),
-                hasEntry(is(BioentityPropertyName.REACTOME), isA(Set.class)));
+                hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
         assertThat(
                 subject.propertyValuesByType("go:0000000"),
                 hasEntry(is(BioentityPropertyName.GO), isA(Set.class)));

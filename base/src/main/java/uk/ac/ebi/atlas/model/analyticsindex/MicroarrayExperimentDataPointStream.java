@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.Microa
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -25,14 +26,14 @@ public class MicroarrayExperimentDataPointStream implements ObjectInputStream<Mi
     private final MicroarrayExperiment experiment;
     private final Map<String, Integer> numReplicatesByContrastId;
     private final ImmutableCollection<ObjectInputStream<? extends MicroarrayDifferentialAnalytics>> inputStreams;
-    private final SetMultimap<String, String> conditionSearchTermsByContrastId;
+    private final Multimap<String, String> conditionSearchTermsByContrastId;
     private final Set<String> assaysSeen = Sets.newHashSet();
     private final Iterator<ObjectInputStream<? extends MicroarrayDifferentialAnalytics>> arrayDesignStreamIterator;
     private ObjectInputStream<? extends MicroarrayDifferentialAnalytics> currentInputStream;
 
     public MicroarrayExperimentDataPointStream(MicroarrayExperiment experiment,
                                                ImmutableCollection<ObjectInputStream<? extends MicroarrayDifferentialAnalytics>> inputStreams,
-                                               SetMultimap<String, String> conditionSearchTermsByContrastId,
+                                               Multimap<String, String> conditionSearchTermsByContrastId,
                                                Map<String, Integer> numReplicatesByContrastId) {
         this.experiment = experiment;
         this.inputStreams = inputStreams;
@@ -50,8 +51,7 @@ public class MicroarrayExperimentDataPointStream implements ObjectInputStream<Mi
             if (arrayDesignStreamIterator.hasNext()) {
                 currentInputStream = arrayDesignStreamIterator.next();
                 return readNext();
-            }
-            else {
+            } else {
                 return null;
             }
         } else {
@@ -76,7 +76,7 @@ public class MicroarrayExperimentDataPointStream implements ObjectInputStream<Mi
     }
 
     private String getConditionSearchTerms(String contrastId, Set<String> factors) {
-        Set<String> searchTerms = conditionSearchTermsByContrastId.get(contrastId);
+        Collection<String> searchTerms = conditionSearchTermsByContrastId.get(contrastId);
 
         if (searchTerms.isEmpty() && !assaysSeen.contains(contrastId)) {
             assaysSeen.add(contrastId);

@@ -1,11 +1,15 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,8 +26,34 @@ public class ConditionsLookupService {
         this.efoLookupService = efoLookupService;
     }
 
-    public ImmutableSet<DifferentialCondition>
-    buildPropertiesForDifferentialExperiment(String experimentAccession,
+    public Multimap<String, String> conditionsPerDataColumnDescriptor(BaselineExperiment experiment) {
+        Collection<Condition> conditions = buildPropertiesForBaselineExperiment(experiment
+                        .getAccession(),
+                experiment.getExperimentDesign(), experiment.getDataColumnDescriptors());
+        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+
+        for (Condition condition : conditions) {
+            builder.putAll(condition.getAssayGroupId(), condition.getValues());
+        }
+
+        return builder.build();
+    }
+
+    public Multimap<String, String> conditionsPerDataColumnDescriptor(DifferentialExperiment experiment) {
+        Collection<DifferentialCondition> conditions = buildPropertiesForDifferentialExperiment
+                (experiment.getAccession(), experiment
+                        .getExperimentDesign(), experiment.getDataColumnDescriptors());
+
+        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+
+        for (DifferentialCondition condition : conditions) {
+            builder.putAll(condition.getContrastId(), condition.getValues());
+        }
+
+        return builder.build();
+    }
+
+    ImmutableSet<DifferentialCondition> buildPropertiesForDifferentialExperiment(String experimentAccession,
                                              ExperimentDesign experimentDesign,
                                              Collection<Contrast> contrasts) {
         DifferentialConditionsBuilder b = new DifferentialConditionsBuilder(experimentAccession,experimentDesign);
@@ -31,7 +61,7 @@ public class ConditionsLookupService {
         return b.build();
     }
 
-    public ImmutableSet<Condition> buildPropertiesForBaselineExperiment(String experimentAccession,
+    ImmutableSet<Condition> buildPropertiesForBaselineExperiment(String experimentAccession,
                                                                         ExperimentDesign experimentDesign,
                                                                         Collection<AssayGroup> assayGroups) {
         BaselineConditionsBuilder b = new BaselineConditionsBuilder(experimentAccession,experimentDesign);
@@ -77,7 +107,7 @@ public class ConditionsLookupService {
             super(experimentAccession, experimentDesign);
         }
         public void addCondition(AssayGroup assayGroup){
-            for(String assayAccession: assayGroup){
+            for(String assayAccession: assayGroup.assaysAnalyzedForThisDataColumn()){
                 builder.add(new Condition(
                         experimentAccession,
                         assayGroup.getId(),
@@ -96,7 +126,7 @@ public class ConditionsLookupService {
         }
 
         private void addDifferentialCondition(String contrastId, AssayGroup assayGroup) {
-            for(String assayAccession: assayGroup) {
+            for(String assayAccession: assayGroup.assaysAnalyzedForThisDataColumn()) {
                 builder.add(new DifferentialCondition(
                         experimentAccession,
                         assayGroup.getId(),
