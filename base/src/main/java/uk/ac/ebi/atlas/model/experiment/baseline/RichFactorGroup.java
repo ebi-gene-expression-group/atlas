@@ -50,6 +50,7 @@ public class RichFactorGroup {
         return result;
     }
 
+
     public static Set<String> typesWithCommonValues(Iterable<FactorGroup> factorGroups){
         Multimap<String, String> allValuesPerType = LinkedListMultimap.create();
         for(FactorGroup factorGroup: factorGroups){
@@ -57,7 +58,7 @@ public class RichFactorGroup {
                 allValuesPerType.put(factor.getType(), factor.getValue());
             }
         }
-       return FluentIterable.from(allValuesPerType.asMap().entrySet()).filter(stringCollectionEntry -> ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2).transform(Map.Entry::getKey).toSet();
+       return FluentIterable.from(allValuesPerType.asMap().entrySet()).filter(stringCollectionEntry -> stringCollectionEntry.getValue().size() >=2 && ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2).transform(Map.Entry::getKey).toSet();
     }
 
     public static List<String> filterOutTypesWithCommonValues(List<String> types, Iterable<FactorGroup> factorGroups){

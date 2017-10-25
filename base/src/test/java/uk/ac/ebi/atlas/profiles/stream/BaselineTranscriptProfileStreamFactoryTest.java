@@ -239,26 +239,12 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                         requestContext.getDataColumnsToReturn(),
                         p -> requestContext.getExpressionUnit()
                 ).asJson()
-        , is(new Gson().fromJson(
-                        "{\n" +
+        , is(new Gson().fromJson("{\n" +
                                 "    \"searchResultTotal\": \"0\",\n" +
                                 "    \"rows\": [{\n" +
                                 "        \"id\": \"transcript_1_1\",\n" +
                                 "        \"name\": \"transcript_1_1\",\n" +
                                 "        \"expressions\": [{\n" +
-                                "            \"stats\": {\n" +
-                                "                \"min\": 1.0,\n" +
-                                "                \"lower_quartile\": 1.0,\n" +
-                                "                \"median\": 1.0,\n" +
-                                "                \"upper_quartile\": 1.0,\n" +
-                                "                \"max\": 1.0\n" +
-                                "            },\n" +
-                                "            \"values\": [{\n" +
-                                "                \"id\": \"assay_1\",\n" +
-                                "                \"assays\": [\"assay_1\"],\n" +
-                                "                \"value\": 1.0\n" +
-                                "            }]\n" +
-                                "        }, {\n" +
                                 "            \"stats\": {\n" +
                                 "                \"min\": 2.0,\n" +
                                 "                \"lower_quartile\": 2.0,\n" +
@@ -274,6 +260,19 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                                 "                \"id\": \"assay_3\",\n" +
                                 "                \"assays\": [\"assay_3\"],\n" +
                                 "                \"value\": 3.0\n" +
+                                "            }]\n" +
+                                "        }, {\n" +
+                                "            \"stats\": {\n" +
+                                "                \"min\": 1.0,\n" +
+                                "                \"lower_quartile\": 1.0,\n" +
+                                "                \"median\": 1.0,\n" +
+                                "                \"upper_quartile\": 1.0,\n" +
+                                "                \"max\": 1.0\n" +
+                                "            },\n" +
+                                "            \"values\": [{\n" +
+                                "                \"id\": \"assay_1\",\n" +
+                                "                \"assays\": [\"assay_1\"],\n" +
+                                "                \"value\": 1.0\n" +
                                 "            }]\n" +
                                 "        }],\n" +
                                 "        \"uri\": \"genes/transcript_1_1#information\",\n" +

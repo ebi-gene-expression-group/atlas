@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.context;
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -17,6 +18,8 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Named
 @Scope("request")
@@ -41,11 +44,17 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
 
     private List<String> typesWhoseValuesToDisplay() {
 
+        List<FactorGroup> factorGroups = dataColumnsToBeReturned().transform(experiment::getFactors).toList();
+
+        List<String> typesInOrderWeWant = Stream.concat(
+                experiment.getDisplayDefaults().prescribedOrderOfFilters().stream(),
+                factorGroups.stream().flatMap(factors -> ImmutableList.copyOf(factors).stream().map(Factor::getType)).sorted()
+            ).map(Factor::normalize).distinct().collect(Collectors.toList());
+
         List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
                 RichFactorGroup.filterOutTypesWithCommonValues(
-                        FluentIterable.from(experiment.getDisplayDefaults().prescribedOrderOfFilters()).transform(Factor::normalize).toList(),
-
-                        dataColumnsToBeReturned().transform(experiment::getFactors)
+                        typesInOrderWeWant,
+                        factorGroups
                 );
 
         return typesWhoseValuesVaryAcrossSelectedDescriptors.isEmpty()

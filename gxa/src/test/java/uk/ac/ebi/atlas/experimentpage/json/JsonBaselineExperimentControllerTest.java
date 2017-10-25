@@ -39,7 +39,7 @@ public class JsonBaselineExperimentControllerTest {
         assertThat(JsonBaselineExperimentController.toJson(
                 new GeneProfilesList<>(), new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment)
         ), is(new Gson().fromJson(
-                "{\"profiles\":{\"searchResultTotal\":\"0\",\"rows\":[]},\"columnHeaders\":[{\"id\":\"assay_group_id\",\"assayAccessions\":[\"run_1\"],\"replicates\":1,\"name\":\"\"}]}",
+                "{\"profiles\":{\"searchResultTotal\":\"0\",\"rows\":[]},\"columnHeaders\":[{\"id\":\"assay_group_id\",\"assayAccessions\":[\"run_1\"],\"replicates\":1,\"name\":\"bladder\"}]}",
                 JsonObject.class)));
     }
 }
