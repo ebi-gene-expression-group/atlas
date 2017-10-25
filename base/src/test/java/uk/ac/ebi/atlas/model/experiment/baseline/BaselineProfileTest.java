@@ -81,10 +81,12 @@ public class BaselineProfileTest {
     @Test
     public void isExpressedAnywhereIsLikeSpecificityGreaterThanZeroButPossiblyFaster(){
         List<AssayGroup> assayGroups = new ArrayList<>();
-        if(RandomUtils.nextBoolean()) assayGroups.add(g1);
-        if(RandomUtils.nextBoolean()) assayGroups.add(g2);
-        if(RandomUtils.nextBoolean()) assayGroups.add(g3);
-        if(RandomUtils.nextBoolean()) assayGroups.add(g4);
+        while (assayGroups.isEmpty()) {
+            if(RandomUtils.nextBoolean()) assayGroups.add(g1);
+            if(RandomUtils.nextBoolean()) assayGroups.add(g2);
+            if(RandomUtils.nextBoolean()) assayGroups.add(g3);
+            if(RandomUtils.nextBoolean()) assayGroups.add(g4);
+        }
         Collections.shuffle(assayGroups);
 
         assertThat(
