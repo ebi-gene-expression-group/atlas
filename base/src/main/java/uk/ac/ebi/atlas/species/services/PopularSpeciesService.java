@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.species.services;
 
 import com.atlassian.util.concurrent.LazyReference;
-import com.google.common.collect.FluentIterable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 public class PopularSpeciesService {
@@ -14,7 +14,9 @@ public class PopularSpeciesService {
     private final LazyReference<List<PopularSpeciesInfo>> sortedList = new LazyReference<List<PopularSpeciesInfo>>() {
         @Override
         protected List<PopularSpeciesInfo> create() throws Exception {
-            return FluentIterable.from(popularSpeciesDao.popularSpecies()).toSortedList(PopularSpeciesInfo.ReverseComparator);
+            return popularSpeciesDao.popularSpecies().stream()
+                    .sorted(PopularSpeciesInfo.ReverseComparator)
+                    .collect(Collectors.toList());
         }
     };
 
@@ -33,9 +35,9 @@ public class PopularSpeciesService {
 
     public List<PopularSpeciesInfo> getPopularSpecies(final String kingdom, int howMany) {
         List<PopularSpeciesInfo> filteredList =
-                FluentIterable.from(sortedList.get()).filter(input -> {
-                    return kingdom.equalsIgnoreCase(input.kingdom());
-                }).toList();
+                sortedList.get().stream()
+                        .filter(speciesInfo -> kingdom.equalsIgnoreCase(speciesInfo.kingdom()))
+                        .collect(Collectors.toList());
 
         return filteredList.subList(0, Math.min(filteredList.size(), howMany));
     }
