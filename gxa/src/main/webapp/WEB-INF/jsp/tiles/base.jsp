@@ -154,12 +154,17 @@
     $('#home-search-atlas-form').submit(function(event) {
         var $atlasSearchInput = $('#home-search-gene-query-input'),
             atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
-        console.log(JSON.stringify(atlasSearchTags));
         $atlasSearchInput.val(JSON.stringify(atlasSearchTags));
 
         var $conditionQuery = $('#home-search-condition-query-input'),
             conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
         $conditionQuery.val(JSON.stringify(conditionQueryTags));
+    });
+
+    $('#local-search').submit(function(event) {
+        var $atlasSearchInput = $('#local-searchbox'),
+            atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
+        $atlasSearchInput.val(JSON.stringify(atlasSearchTags));
     });
 </script>
 
