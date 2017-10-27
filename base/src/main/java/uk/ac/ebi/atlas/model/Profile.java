@@ -143,9 +143,9 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     public Self filter(Predicate<Expr> keepExpressions){
         Self result = createEmptyCopy();
 
-        expressionsByCondition.entrySet().stream().filter(e -> keepExpressions.test(e.getValue())).forEach(e -> {
-            result.expressionsByCondition.put(e.getKey(), e.getValue());
-        });
+        expressionsByCondition.entrySet().stream()
+                .filter(e -> keepExpressions.test(e.getValue()))
+                .forEach(e -> result.expressionsByCondition.put(e.getKey(), e.getValue()));
 
         return result;
     }

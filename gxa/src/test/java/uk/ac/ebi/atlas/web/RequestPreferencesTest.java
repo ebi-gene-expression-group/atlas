@@ -1,30 +1,42 @@
 package uk.ac.ebi.atlas.web;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.beans.BeanWrapperImpl;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertThat;
 
 public class RequestPreferencesTest {
 
-    public RnaSeqBaselineRequestPreferences rnaSeqBaselineDefault = (RnaSeqBaselineRequestPreferences) new BeanWrapperImpl(new RnaSeqBaselineRequestPreferences()).getRootInstance();
-    public ProteomicsBaselineRequestPreferences proteomicsBaselineDefault = (ProteomicsBaselineRequestPreferences) new BeanWrapperImpl(new ProteomicsBaselineRequestPreferences()).getRootInstance();
-    public DifferentialRequestPreferences differentialDefault = (DifferentialRequestPreferences) new BeanWrapperImpl(new
-            DifferentialRequestPreferences()).getRootInstance();
-    public MicroarrayRequestPreferences microarrayDefault = (MicroarrayRequestPreferences) new BeanWrapperImpl(new
-            MicroarrayRequestPreferences()).getRootInstance();
+    RnaSeqBaselineRequestPreferences rnaSeqBaselineDefault =
+            (RnaSeqBaselineRequestPreferences)
+                    new BeanWrapperImpl(new RnaSeqBaselineRequestPreferences()).getRootInstance();
+
+    ProteomicsBaselineRequestPreferences proteomicsBaselineDefault =
+            (ProteomicsBaselineRequestPreferences)
+                    new BeanWrapperImpl(new ProteomicsBaselineRequestPreferences()).getRootInstance();
+
+    DifferentialRequestPreferences differentialDefault =
+            (DifferentialRequestPreferences)
+                    new BeanWrapperImpl(new DifferentialRequestPreferences()).getRootInstance();
+
+    MicroarrayRequestPreferences microarrayDefault =
+            (MicroarrayRequestPreferences)
+                    new BeanWrapperImpl(new MicroarrayRequestPreferences()).getRootInstance();
 
     @Test
     public void testDefaultGeneQuery(){
-        assertEquals(new RnaSeqBaselineRequestPreferences().getDefaultGeneQuery(), rnaSeqBaselineDefault.getGeneQuery());
-        assertThat(rnaSeqBaselineDefault.getGeneQuery().description(), Matchers.containsString("protein_coding"));
+        assertThat(
+                new RnaSeqBaselineRequestPreferences().getDefaultGeneQuery(),
+                is(rnaSeqBaselineDefault.getGeneQuery()));
+        assertThat(rnaSeqBaselineDefault.getGeneQuery().description(), containsString("protein_coding"));
 
-        assertEquals(new ProteomicsBaselineRequestPreferences().getDefaultGeneQuery(), proteomicsBaselineDefault.getGeneQuery());
-        assertThat(proteomicsBaselineDefault.getGeneQuery().description(), Matchers.containsString("protein_coding"));
+        assertThat(
+                new ProteomicsBaselineRequestPreferences().getDefaultGeneQuery(),
+                is(proteomicsBaselineDefault.getGeneQuery()));
+        assertThat(proteomicsBaselineDefault.getGeneQuery().description(), containsString("protein_coding"));
 
         assertThat(differentialDefault.getGeneQuery().size(), is(0));
         assertThat(microarrayDefault.getGeneQuery().size(), is(0));
@@ -32,7 +44,7 @@ public class RequestPreferencesTest {
 
     @Test
     public void testDefaultUnit(){
-        assertEquals(new RnaSeqBaselineRequestPreferences().getDefaultUnit(), rnaSeqBaselineDefault.getUnit());
+        assertThat(new RnaSeqBaselineRequestPreferences().getDefaultUnit(), is(rnaSeqBaselineDefault.getUnit()));
         assertThat(rnaSeqBaselineDefault.getUnit(), is(ExpressionUnit.Absolute.Rna.TPM));
     }
 
