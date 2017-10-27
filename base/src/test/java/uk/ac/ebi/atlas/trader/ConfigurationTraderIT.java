@@ -17,7 +17,6 @@ public class ConfigurationTraderIT {
     @Inject
     ConfigurationTrader subject;
 
-
     @Test
     public void EProtOneHasTwoMenuFilterFactors() throws Exception {
         BaselineExperimentConfiguration bc = subject.getBaselineFactorsConfiguration("E-PROT-1");
