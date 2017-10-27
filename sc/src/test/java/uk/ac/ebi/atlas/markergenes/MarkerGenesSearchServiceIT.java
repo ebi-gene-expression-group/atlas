@@ -24,7 +24,7 @@ import static uk.ac.ebi.atlas.markergenes.MarkerGenesSearchService.DEFAULT_P_THR
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class MarkerGenesSearchServiceIT {
 
     @Inject
