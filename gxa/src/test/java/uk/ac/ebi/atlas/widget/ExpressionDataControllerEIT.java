@@ -16,7 +16,7 @@ import static uk.ac.ebi.atlas.widget.BaselineAndDifferentialAnalyticsServiceIT.N
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExpressionDataControllerEIT extends RestAssuredFixture {
 
     @Test

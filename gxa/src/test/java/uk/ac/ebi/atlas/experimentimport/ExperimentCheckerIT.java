@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentCheckerIT {
 
     private static final String RNA_SEQ_BASELINE_EXPERIMENT_ACCESSION = "E-MTAB-513";
