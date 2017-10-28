@@ -17,13 +17,6 @@
     <name>Atlas base</name>
     <url>https://www.ebi.ac.uk/gxa/</url>
 
-    <properties>
-        <!-- Override parent log settings -->
-        <log.level.root>warn</log.level.root>
-        <log.level.atlas>warn</log.level.atlas>
-        <log.prudent>false</log.prudent>
-    </properties>
-
     <build>
         <testResources>
             <testResource>
