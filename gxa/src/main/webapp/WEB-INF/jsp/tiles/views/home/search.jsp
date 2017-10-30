@@ -86,7 +86,7 @@
 
                     <div class="row expanded">
                         <div class="small-12 columns">
-                            <a href="https://www.ebi.ac.uk/~rpetry/geteam/gsa/gsa_apispec.pdf">Analyse Fisher-exact enrichment through our restful API.</a>
+                            <a href="https://www.ebi.ac.uk/~rpetry/geteam/gsa/gsa_apispec.pdf">Gene Set Enrichment API documentation</a>
                         </div>
                     </div>
                 </form>
