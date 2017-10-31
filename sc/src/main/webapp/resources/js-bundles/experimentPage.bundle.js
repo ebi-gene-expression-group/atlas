@@ -16405,7 +16405,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') exports["ReactHighcharts"] = factory(require("react"), require("highcharts"));else root["ReactHighcharts"] = factory(root["React"], root["Highcharts"]);
-})(undefined, function (__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_17__) {
+})(undefined, function (__WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_17__) {
   return (/******/function (modules) {
       // webpackBootstrap
       /******/ // The module cache
@@ -16689,11 +16689,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       (function (process) {
         /**
         * Copyright (c) 2013-present, Facebook, Inc.
-        * All rights reserved.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
@@ -16752,11 +16750,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /**
        * Copyright (c) 2013-present, Facebook, Inc.
-       * All rights reserved.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        *
        * 
        */
@@ -16796,12 +16792,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2014-2015, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2014-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
@@ -16817,45 +16811,43 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var warning = emptyFunction;
 
         if (process.env.NODE_ENV !== 'production') {
-          (function () {
-            var printWarning = function printWarning(format) {
-              for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                args[_key - 1] = arguments[_key];
+          var printWarning = function printWarning(format) {
+            for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              args[_key - 1] = arguments[_key];
+            }
+
+            var argIndex = 0;
+            var message = 'Warning: ' + format.replace(/%s/g, function () {
+              return args[argIndex++];
+            });
+            if (typeof console !== 'undefined') {
+              console.error(message);
+            }
+            try {
+              // --- Welcome to debugging React ---
+              // This error was thrown as a convenience so that you can use this stack
+              // to find the callsite that caused this warning to fire.
+              throw new Error(message);
+            } catch (x) {}
+          };
+
+          warning = function warning(condition, format) {
+            if (format === undefined) {
+              throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+            }
+
+            if (format.indexOf('Failed Composite propType: ') === 0) {
+              return; // Ignore CompositeComponent proptype check.
+            }
+
+            if (!condition) {
+              for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+                args[_key2 - 2] = arguments[_key2];
               }
 
-              var argIndex = 0;
-              var message = 'Warning: ' + format.replace(/%s/g, function () {
-                return args[argIndex++];
-              });
-              if (typeof console !== 'undefined') {
-                console.error(message);
-              }
-              try {
-                // --- Welcome to debugging React ---
-                // This error was thrown as a convenience so that you can use this stack
-                // to find the callsite that caused this warning to fire.
-                throw new Error(message);
-              } catch (x) {}
-            };
-
-            warning = function warning(condition, format) {
-              if (format === undefined) {
-                throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-              }
-
-              if (format.indexOf('Failed Composite propType: ') === 0) {
-                return; // Ignore CompositeComponent proptype check.
-              }
-
-              if (!condition) {
-                for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-                  args[_key2 - 2] = arguments[_key2];
-                }
-
-                printWarning.apply(undefined, [format].concat(args));
-              }
-            };
-          })();
+              printWarning.apply(undefined, [format].concat(args));
+            }
+          };
         }
 
         module.exports = warning;
@@ -16865,23 +16857,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /***/
     },
     /* 4 */
-    /***/function (module, exports) {
-
-      module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
-
-      /***/
-    },
-    /* 5 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
       /**
-       * Copyright 2013-present, Facebook, Inc.
-       * All rights reserved.
+       * Copyright (c) 2013-present, Facebook, Inc.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        */
 
       var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
@@ -16890,25 +16873,126 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /***/
     },
+    /* 5 */
+    /***/function (module, exports) {
+
+      module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+
+      /***/
+    },
     /* 6 */
+    /***/function (module, exports, __webpack_require__) {
+
+      "use strict";
+      /*
+      object-assign
+      (c) Sindre Sorhus
+      @license MIT
+      */
+
+      /* eslint-disable no-unused-vars */
+
+      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+      var hasOwnProperty = Object.prototype.hasOwnProperty;
+      var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+      function toObject(val) {
+        if (val === null || val === undefined) {
+          throw new TypeError('Object.assign cannot be called with null or undefined');
+        }
+
+        return Object(val);
+      }
+
+      function shouldUseNative() {
+        try {
+          if (!Object.assign) {
+            return false;
+          }
+
+          // Detect buggy property enumeration order in older V8 versions.
+
+          // https://bugs.chromium.org/p/v8/issues/detail?id=4118
+          var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
+          test1[5] = 'de';
+          if (Object.getOwnPropertyNames(test1)[0] === '5') {
+            return false;
+          }
+
+          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+          var test2 = {};
+          for (var i = 0; i < 10; i++) {
+            test2['_' + String.fromCharCode(i)] = i;
+          }
+          var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+            return test2[n];
+          });
+          if (order2.join('') !== '0123456789') {
+            return false;
+          }
+
+          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+          var test3 = {};
+          'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+            test3[letter] = letter;
+          });
+          if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+            return false;
+          }
+
+          return true;
+        } catch (err) {
+          // We don't expect any of the above to throw, but better to be safe.
+          return false;
+        }
+      }
+
+      module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+        var from;
+        var to = toObject(target);
+        var symbols;
+
+        for (var s = 1; s < arguments.length; s++) {
+          from = Object(arguments[s]);
+
+          for (var key in from) {
+            if (hasOwnProperty.call(from, key)) {
+              to[key] = from[key];
+            }
+          }
+
+          if (getOwnPropertySymbols) {
+            symbols = getOwnPropertySymbols(from);
+            for (var i = 0; i < symbols.length; i++) {
+              if (propIsEnumerable.call(from, symbols[i])) {
+                to[symbols[i]] = from[symbols[i]];
+              }
+            }
+          }
+        }
+
+        return to;
+      };
+
+      /***/
+    },
+    /* 7 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
-        var _assign = __webpack_require__(9);
+        var _assign = __webpack_require__(6);
 
-        var emptyObject = __webpack_require__(8);
+        var emptyObject = __webpack_require__(9);
         var _invariant = __webpack_require__(1);
 
         if (process.env.NODE_ENV !== 'production') {
@@ -16964,7 +17048,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
            * @internal
            */
           var ReactClassInterface = {
-
             /**
              * An array of Mixin objects to include when defining your component.
              *
@@ -17055,7 +17138,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
              *   }
              *
              * @return {ReactComponent}
-             * @nosideeffects
              * @required
              */
             render: 'DEFINE_ONCE',
@@ -17183,7 +17265,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
              * @overridable
              */
             updateComponent: 'OVERRIDE_BASE'
-
           };
 
           /**
@@ -17238,14 +17319,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             statics: function statics(Constructor, _statics) {
               mixStaticSpecIntoComponent(Constructor, _statics);
             },
-            autobind: function autobind() {} };
+            autobind: function autobind() {}
+          };
 
           function validateTypeDef(Constructor, typeDef, location) {
             for (var propName in typeDef) {
               if (typeDef.hasOwnProperty(propName)) {
                 // use a warning instead of an _invariant so components
                 // don't show up in prod but only in __DEV__
-                process.env.NODE_ENV !== 'production' ? warning(typeof typeDef[propName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', Constructor.displayName || 'ReactClass', ReactPropTypeLocationNames[location], propName) : void 0;
+                if (process.env.NODE_ENV !== 'production') {
+                  warning(typeof typeDef[propName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', Constructor.displayName || 'ReactClass', ReactPropTypeLocationNames[location], propName);
+                }
               }
             }
           }
@@ -17274,14 +17358,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 var typeofSpec = typeof spec === 'undefined' ? 'undefined' : _typeof(spec);
                 var isMixinValid = typeofSpec === 'object' && spec !== null;
 
-                process.env.NODE_ENV !== 'production' ? warning(isMixinValid, '%s: You\'re attempting to include a mixin that is either null ' + 'or not an object. Check the mixins included by the component, ' + 'as well as any mixins they include themselves. ' + 'Expected object but got %s.', Constructor.displayName || 'ReactClass', spec === null ? null : typeofSpec) : void 0;
+                if (process.env.NODE_ENV !== 'production') {
+                  warning(isMixinValid, "%s: You're attempting to include a mixin that is either null " + 'or not an object. Check the mixins included by the component, ' + 'as well as any mixins they include themselves. ' + 'Expected object but got %s.', Constructor.displayName || 'ReactClass', spec === null ? null : typeofSpec);
+                }
               }
 
               return;
             }
 
-            _invariant(typeof spec !== 'function', 'ReactClass: You\'re attempting to ' + 'use a component class or function as a mixin. Instead, just use a ' + 'regular object.');
-            _invariant(!isValidElement(spec), 'ReactClass: You\'re attempting to ' + 'use a component as a mixin. Instead, just use a regular object.');
+            _invariant(typeof spec !== 'function', "ReactClass: You're attempting to " + 'use a component class or function as a mixin. Instead, just use a ' + 'regular object.');
+            _invariant(!isValidElement(spec), "ReactClass: You're attempting to " + 'use a component as a mixin. Instead, just use a regular object.');
 
             var proto = Constructor.prototype;
             var autoBindPairs = proto.__reactAutoBindPairs;
@@ -17451,9 +17537,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 // ignore the value of "this" that the user is trying to use, so
                 // let's warn.
                 if (newThis !== component && newThis !== null) {
-                  process.env.NODE_ENV !== 'production' ? warning(false, 'bind(): React component methods may only be bound to the ' + 'component instance. See %s', componentName) : void 0;
+                  if (process.env.NODE_ENV !== 'production') {
+                    warning(false, 'bind(): React component methods may only be bound to the ' + 'component instance. See %s', componentName);
+                  }
                 } else if (!args.length) {
-                  process.env.NODE_ENV !== 'production' ? warning(false, 'bind(): You are binding a component method to the component. ' + 'React does this for you automatically in a high-performance ' + 'way, so you can safely remove this call. See %s', componentName) : void 0;
+                  if (process.env.NODE_ENV !== 'production') {
+                    warning(false, 'bind(): You are binding a component method to the component. ' + 'React does this for you automatically in a high-performance ' + 'way, so you can safely remove this call. See %s', componentName);
+                  }
                   return boundMethod;
                 }
                 var reboundMethod = _bind.apply(boundMethod, arguments);
@@ -17480,10 +17570,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
           }
 
-          var IsMountedMixin = {
+          var IsMountedPreMixin = {
             componentDidMount: function componentDidMount() {
               this.__isMounted = true;
-            },
+            }
+          };
+
+          var IsMountedPostMixin = {
             componentWillUnmount: function componentWillUnmount() {
               this.__isMounted = false;
             }
@@ -17494,7 +17587,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
            * therefore not already part of the modern ReactComponent.
            */
           var ReactClassMixin = {
-
             /**
              * TODO: This will be deprecated because state should always keep a consistent
              * type signature and the only use case for this, is to avoid that.
@@ -17511,7 +17603,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
              */
             isMounted: function isMounted() {
               if (process.env.NODE_ENV !== 'production') {
-                process.env.NODE_ENV !== 'production' ? warning(this.__didWarnIsMounted, '%s: isMounted is deprecated. Instead, make sure to clean up ' + 'subscriptions and pending requests in componentWillUnmount to ' + 'prevent memory leaks.', this.constructor && this.constructor.displayName || this.name || 'Component') : void 0;
+                warning(this.__didWarnIsMounted, '%s: isMounted is deprecated. Instead, make sure to clean up ' + 'subscriptions and pending requests in componentWillUnmount to ' + 'prevent memory leaks.', this.constructor && this.constructor.displayName || this.name || 'Component');
                 this.__didWarnIsMounted = true;
               }
               return !!this.__isMounted;
@@ -17538,7 +17630,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               // by mocks to assert on what gets mounted.
 
               if (process.env.NODE_ENV !== 'production') {
-                process.env.NODE_ENV !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory') : void 0;
+                warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory');
               }
 
               // Wire up auto-binding
@@ -17575,8 +17667,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
 
-            mixSpecIntoComponent(Constructor, IsMountedMixin);
+            mixSpecIntoComponent(Constructor, IsMountedPreMixin);
             mixSpecIntoComponent(Constructor, spec);
+            mixSpecIntoComponent(Constructor, IsMountedPostMixin);
 
             // Initialize the defaultProps property after all mixins have been merged.
             if (Constructor.getDefaultProps) {
@@ -17599,8 +17692,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             _invariant(Constructor.prototype.render, 'createClass(...): Class specification must implement a `render` method.');
 
             if (process.env.NODE_ENV !== 'production') {
-              process.env.NODE_ENV !== 'production' ? warning(!Constructor.prototype.componentShouldUpdate, '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', spec.displayName || 'A component') : void 0;
-              process.env.NODE_ENV !== 'production' ? warning(!Constructor.prototype.componentWillRecieveProps, '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', spec.displayName || 'A component') : void 0;
+              warning(!Constructor.prototype.componentShouldUpdate, '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', spec.displayName || 'A component');
+              warning(!Constructor.prototype.componentWillRecieveProps, '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', spec.displayName || 'A component');
             }
 
             // Reduce time spent doing lookups by setting these on the prototype.
@@ -17623,22 +17716,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /***/
     },
-    /* 7 */
+    /* 8 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
       /**
-       * Copyright 2013-present, Facebook, Inc.
-       * All rights reserved.
+       * Copyright (c) 2013-present, Facebook, Inc.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        *
        */
 
-      var React = __webpack_require__(4);
-      var factory = __webpack_require__(6);
+      var React = __webpack_require__(5);
+      var factory = __webpack_require__(7);
+
+      if (typeof React === 'undefined') {
+        throw Error('create-react-class could not find the React object. If you are using script tags, ' + 'make sure that React is being loaded before create-react-class.');
+      }
 
       // Hack to grab NoopUpdateQueue from isomorphic React
       var ReactNoopUpdateQueue = new React.Component().updater;
@@ -17647,7 +17742,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /***/
     },
-    /* 8 */
+    /* 9 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
@@ -17655,11 +17750,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       (function (process) {
         /**
         * Copyright (c) 2013-present, Facebook, Inc.
-        * All rights reserved.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
@@ -17672,102 +17765,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         module.exports = emptyObject;
         /* WEBPACK VAR INJECTION */
       }).call(exports, __webpack_require__(0));
-
-      /***/
-    },
-    /* 9 */
-    /***/function (module, exports, __webpack_require__) {
-
-      "use strict";
-      /*
-      object-assign
-      (c) Sindre Sorhus
-      @license MIT
-      */
-
-      /* eslint-disable no-unused-vars */
-
-      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-      var hasOwnProperty = Object.prototype.hasOwnProperty;
-      var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-      function toObject(val) {
-        if (val === null || val === undefined) {
-          throw new TypeError('Object.assign cannot be called with null or undefined');
-        }
-
-        return Object(val);
-      }
-
-      function shouldUseNative() {
-        try {
-          if (!Object.assign) {
-            return false;
-          }
-
-          // Detect buggy property enumeration order in older V8 versions.
-
-          // https://bugs.chromium.org/p/v8/issues/detail?id=4118
-          var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
-          test1[5] = 'de';
-          if (Object.getOwnPropertyNames(test1)[0] === '5') {
-            return false;
-          }
-
-          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
-          var test2 = {};
-          for (var i = 0; i < 10; i++) {
-            test2['_' + String.fromCharCode(i)] = i;
-          }
-          var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-            return test2[n];
-          });
-          if (order2.join('') !== '0123456789') {
-            return false;
-          }
-
-          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
-          var test3 = {};
-          'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-            test3[letter] = letter;
-          });
-          if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
-            return false;
-          }
-
-          return true;
-        } catch (err) {
-          // We don't expect any of the above to throw, but better to be safe.
-          return false;
-        }
-      }
-
-      module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-        var from;
-        var to = toObject(target);
-        var symbols;
-
-        for (var s = 1; s < arguments.length; s++) {
-          from = Object(arguments[s]);
-
-          for (var key in from) {
-            if (hasOwnProperty.call(from, key)) {
-              to[key] = from[key];
-            }
-          }
-
-          if (getOwnPropertySymbols) {
-            symbols = getOwnPropertySymbols(from);
-            for (var i = 0; i < symbols.length; i++) {
-              if (propIsEnumerable.call(from, symbols[i])) {
-                to[symbols[i]] = from[symbols[i]];
-              }
-            }
-          }
-        }
-
-        return to;
-      };
 
       /***/
     },
@@ -17788,8 +17785,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           }return target;
         };
 
-        var React = __webpack_require__(4);
-        var createReactClass = __webpack_require__(7);
+        var React = __webpack_require__(5);
+        var createReactClass = __webpack_require__(8);
         var PropTypes = __webpack_require__(14);
         var win = typeof global === 'undefined' ? window : global;
 
@@ -17805,12 +17802,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               callback: PropTypes.func,
               domProps: PropTypes.object
             },
-
-            defaultProps: {
-              callback: function callback() {},
-              domProps: {}
+            getDefaultProps: function getDefaultProps() {
+              return {
+                callback: function callback() {},
+                domProps: {}
+              };
             },
-
+            setChartRef: function setChartRef(chartRef) {
+              this.chartRef = chartRef;
+            },
             renderChart: function renderChart(config) {
               var _this = this;
 
@@ -17820,7 +17820,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               var chartConfig = config.chart;
               this.chart = new Highcharts[chartType](_extends({}, config, {
                 chart: _extends({}, chartConfig, {
-                  renderTo: this.refs.chart
+                  renderTo: this.chartRef
                 })
               }), this.props.callback);
 
@@ -17855,7 +17855,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             },
 
             render: function render() {
-              return React.createElement('div', _extends({ ref: 'chart' }, this.props.domProps));
+              return React.createElement('div', _extends({ ref: this.setChartRef }, this.props.domProps));
             }
           });
 
@@ -17877,18 +17877,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         */
 
         if (process.env.NODE_ENV !== 'production') {
           var invariant = __webpack_require__(1);
           var warning = __webpack_require__(3);
-          var ReactPropTypesSecret = __webpack_require__(5);
+          var ReactPropTypesSecret = __webpack_require__(4);
           var loggedTypeFailures = {};
         }
 
@@ -17914,7 +17912,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 try {
                   // This is intentionally an invariant that gets caught. It's the same
                   // behavior as without this statement except with a better message.
-                  invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+                  invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, _typeof(typeSpecs[typeSpecName]));
                   error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
                 } catch (ex) {
                   error = ex;
@@ -17946,27 +17944,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       "use strict";
       /**
-       * Copyright 2013-present, Facebook, Inc.
-       * All rights reserved.
+       * Copyright (c) 2013-present, Facebook, Inc.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        */
 
       var emptyFunction = __webpack_require__(2);
       var invariant = __webpack_require__(1);
+      var ReactPropTypesSecret = __webpack_require__(4);
 
       module.exports = function () {
-        // Important!
-        // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-        function shim() {
+        function shim(props, propName, componentName, location, propFullName, secret) {
+          if (secret === ReactPropTypesSecret) {
+            // It is still safe when called from React.
+            return;
+          }
           invariant(false, 'Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
         };
         shim.isRequired = shim;
         function getShim() {
           return shim;
         };
+        // Important!
+        // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
         var ReactPropTypes = {
           array: shim,
           bool: shim,
@@ -17984,7 +17985,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           objectOf: getShim,
           oneOf: getShim,
           oneOfType: getShim,
-          shape: getShim
+          shape: getShim,
+          exact: getShim
         };
 
         ReactPropTypes.checkPropTypes = emptyFunction;
@@ -18002,19 +18004,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         */
 
         var emptyFunction = __webpack_require__(2);
         var invariant = __webpack_require__(1);
         var warning = __webpack_require__(3);
+        var assign = __webpack_require__(6);
 
-        var ReactPropTypesSecret = __webpack_require__(5);
+        var ReactPropTypesSecret = __webpack_require__(4);
         var checkPropTypes = __webpack_require__(11);
 
         module.exports = function (isValidElement, throwOnDirectAccess) {
@@ -18111,7 +18112,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             objectOf: createObjectOfTypeChecker,
             oneOf: createEnumTypeChecker,
             oneOfType: createUnionTypeChecker,
-            shape: createShapeTypeChecker
+            shape: createShapeTypeChecker,
+            exact: createStrictShapeTypeChecker
           };
 
           /**
@@ -18305,6 +18307,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               return emptyFunction.thatReturnsNull;
             }
 
+            for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+              var checker = arrayOfTypeCheckers[i];
+              if (typeof checker !== 'function') {
+                warning(false, 'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' + 'received %s at index %s.', getPostfixForTypeWarning(checker), i);
+                return emptyFunction.thatReturnsNull;
+              }
+            }
+
             function validate(props, propName, componentName, location, propFullName) {
               for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
                 var checker = arrayOfTypeCheckers[i];
@@ -18347,6 +18357,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
               return null;
             }
+            return createChainableTypeChecker(validate);
+          }
+
+          function createStrictShapeTypeChecker(shapeTypes) {
+            function validate(props, propName, componentName, location, propFullName) {
+              var propValue = props[propName];
+              var propType = getPropType(propValue);
+              if (propType !== 'object') {
+                return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+              }
+              // We need to check all keys in case some are required but missing from
+              // props.
+              var allKeys = assign({}, props[propName], shapeTypes);
+              for (var key in allKeys) {
+                var checker = shapeTypes[key];
+                if (!checker) {
+                  return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' + '\nBad object: ' + JSON.stringify(props[propName], null, '  ') + '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  '));
+                }
+                var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+                if (error) {
+                  return error;
+                }
+              }
+              return null;
+            }
+
             return createChainableTypeChecker(validate);
           }
 
@@ -18437,6 +18473,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // This handles more types than `getPropType`. Only used for error messages.
           // See `createPrimitiveTypeChecker`.
           function getPreciseType(propValue) {
+            if (typeof propValue === 'undefined' || propValue === null) {
+              return '' + propValue;
+            }
             var propType = getPropType(propValue);
             if (propType === 'object') {
               if (propValue instanceof Date) {
@@ -18446,6 +18485,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
             }
             return propType;
+          }
+
+          // Returns a string that is postfixed to a warning about an invalid type.
+          // For example, "undefined" or "of type array"
+          function getPostfixForTypeWarning(value) {
+            var type = getPreciseType(value);
+            switch (type) {
+              case 'array':
+              case 'object':
+                return 'an ' + type;
+              case 'boolean':
+              case 'date':
+              case 'regexp':
+                return 'a ' + type;
+              default:
+                return type;
+            }
           }
 
           // Returns class name of the object, if any.
@@ -18472,12 +18528,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /* WEBPACK VAR INJECTION */(function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         */
 
         if (process.env.NODE_ENV !== 'production') {
@@ -19306,7 +19360,35 @@ function _interopRequireDefault(obj) {
 
 var MAX_WHITE = 90;
 
-var _colourizeExpressionLevel = function _colourizeExpressionLevel(hue, highlightSeries) {
+var _colourize = function _colourize(colourStrings) {
+  var defaultColour = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'blue';
+  var alpha = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.65;
+
+  var colours = colourStrings.map(function (colourStr) {
+    return (0, _color2.default)(colourStr);
+  });
+
+  return function (val) {
+    if (isNaN(val)) {
+      return (0, _color2.default)(defaultColour).alpha(alpha).rgb().toString();
+    }
+
+    var bucket = val <= 0 ? 0 : val >= 1 ? colours.length - 2 : Math.floor(val / (1 / (colours.length - 1)));
+
+    var loColour = colours[bucket];
+    var hiColour = colours[bucket + 1];
+
+    var redDelta = hiColour.red() - loColour.red();
+    var greenDelta = hiColour.green() - loColour.green();
+    var blueDelta = hiColour.blue() - loColour.blue();
+
+    return (0, _color2.default)('rgb(' + (Math.floor(loColour.red() + redDelta * val) + ', ') + (Math.floor(loColour.green() + greenDelta * val) + ', ') + (Math.floor(loColour.blue() + blueDelta * val) + ')')).alpha(alpha).rgb().toString();
+  };
+};
+
+var _colourizeExpressionLevel = function _colourizeExpressionLevel(gradientColours, highlightSeries) {
+  var colourize = _colourize(gradientColours);
+
   return function (plotData) {
     return plotData.series.map(function (aSeries) {
       // I can’t think of a better way to reconcile series.name being a string and highlightSeries being an array of
@@ -19317,10 +19399,9 @@ var _colourizeExpressionLevel = function _colourizeExpressionLevel(hue, highligh
         return {
           name: aSeries.name,
           data: aSeries.data.map(function (point) {
-            var white = plotData.max > plotData.min ? (1 - (point.expressionLevel - plotData.min) / (plotData.max - plotData.min)) * MAX_WHITE : 0;
             return _extends({}, point, {
               expressionLevel: Math.round10(point.expressionLevel, -2),
-              color: (0, _color2.default)('hwb(' + hue + ', ' + white + '%, 0%)').alpha(0.65).rgb().toString()
+              color: colourize(1 - (point.expressionLevel - plotData.min) / (plotData.max - plotData.min))
             });
           })
         };
@@ -19347,7 +19428,7 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
 
   var height = props.height,
       plotData = props.plotData,
-      expressionColourHue = props.expressionColourHue,
+      expressionGradientColours = props.expressionGradientColours,
       highlightClusters = props.highlightClusters; // Chart
 
   var loading = props.loading,
@@ -19373,7 +19454,9 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
 
   var renderGradient = plotData.max && plotData.min && plotData.max > plotData.min;
   var chartClassName = renderGradient ? 'small-10 columns' : 'small-12 columns';
-  var gradient = renderGradient ? _react2.default.createElement(Gradient, { height: height, colourHue: expressionColourHue, plotData: plotData }) : null;
+  var gradient = renderGradient ? _react2.default.createElement(LinearGradient, { height: height,
+    colours: expressionGradientColours,
+    plotData: plotData }) : null;
 
   return [_react2.default.createElement(_expressionAtlasAutocomplete2.default, { key: 'expression-autocomplete',
     wrapperClassName: 'row column',
@@ -19387,7 +19470,7 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
   }), _react2.default.createElement(_PlotLoader2.default, { key: 'expression-plot',
     wrapperClassName: 'row',
     chartClassName: chartClassName,
-    series: _colourizeExpressionLevel(expressionColourHue, highlightClusters)(plotData),
+    series: _colourizeExpressionLevel(expressionGradientColours, highlightClusters)(plotData),
     highchartsConfig: highchartsConfig,
     children: gradient,
     loading: loading,
@@ -19396,15 +19479,26 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
   })];
 };
 
-var Gradient = function Gradient(_ref) {
+var LinearGradient = function LinearGradient(_ref) {
   var height = _ref.height,
-      colourHue = _ref.colourHue,
+      colours = _ref.colours,
       plotData = _ref.plotData;
 
-  var topColour = (0, _color2.default)('hwb(' + colourHue + ', 0%, 0%)').rgb().toString();
-  var bottomColour = (0, _color2.default)('hwb(' + colourHue + ', ' + MAX_WHITE + '%, 0%)').rgb().toString();
+  var background = colours.map(function (colour) {
+    return (0, _color2.default)(colour).rgb().toString();
+  }).join(', ');
 
-  return _react2.default.createElement('div', { className: 'small-2 columns text-center' }, _react2.default.createElement('div', null, _react2.default.createElement('small', null, Math.round10(plotData.max, -2), ' ', plotData.unit)), _react2.default.createElement('div', { style: { width: '20px', height: height - 100 + 'px', background: 'linear-gradient(' + topColour + ', ' + bottomColour + ')', verticalAlign: 'middle', margin: 'auto' } }), _react2.default.createElement('div', null, _react2.default.createElement('small', null, Math.round10(plotData.min, -2), ' ', plotData.unit)));
+  return _react2.default.createElement('div', { className: 'small-2 columns text-center' }, _react2.default.createElement('div', null, _react2.default.createElement('small', null, Math.round10(plotData.max, -2), ' ', plotData.unit)), _react2.default.createElement('div', { style: { width: '20px', height: height - 100 + 'px', background: 'linear-gradient(' + background + ')', verticalAlign: 'middle', margin: 'auto' } }), _react2.default.createElement('div', null, _react2.default.createElement('small', null, Math.round10(plotData.min, -2), ' ', plotData.unit)));
+};
+
+LinearGradient.propTypes = {
+  height: _propTypes2.default.number.isRequired,
+  colours: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+  plotData: _propTypes2.default.shape({
+    min: _propTypes2.default.number.isRequired,
+    max: _propTypes2.default.number.isRequired,
+    unit: _propTypes2.default.string.isRequired
+  })
 };
 
 GeneExpressionScatterPlot.propTypes = {
@@ -19416,7 +19510,7 @@ GeneExpressionScatterPlot.propTypes = {
     max: _propTypes2.default.number,
     min: _propTypes2.default.number
   }),
-  expressionColourHue: _propTypes2.default.number,
+  expressionGradientColours: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
   highlightClusters: _propTypes2.default.array,
 
   atlasUrl: _propTypes2.default.string.isRequired,
@@ -19429,7 +19523,7 @@ GeneExpressionScatterPlot.propTypes = {
 };
 
 GeneExpressionScatterPlot.defaultProps = {
-  expressionColourHue: 240
+  expressionGradientColours: ['rgb(0, 0, 115)', 'rgb(0, 85, 225)', 'rgb(128, 255, 255)', 'rgb(215, 255, 255)']
 };
 
 exports.default = GeneExpressionScatterPlot;

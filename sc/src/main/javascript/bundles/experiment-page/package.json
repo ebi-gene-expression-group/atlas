@@ -14,7 +14,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "expression-atlas-experiment-page-tsne-plot": "^1.6.1",
+    "expression-atlas-experiment-page-tsne-plot": "^1.7.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

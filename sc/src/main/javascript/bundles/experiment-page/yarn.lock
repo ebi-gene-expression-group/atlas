@@ -2067,9 +2067,9 @@ expression-atlas-autocomplete@^1.1.1:
     react-dom "^16.0.0"
     urijs "^1.19.0"
 
-expression-atlas-experiment-page-tsne-plot@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page-tsne-plot/-/expression-atlas-experiment-page-tsne-plot-1.6.1.tgz#91b3334b1b25a07ab187a4255181efa2eafbc90b"
+expression-atlas-experiment-page-tsne-plot@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page-tsne-plot/-/expression-atlas-experiment-page-tsne-plot-1.7.0.tgz#b70023553b6e12fc9b0fc9cb449be99d5651281d"
   dependencies:
     color "^2.0.0"
     deepmerge "^2.0.0"
@@ -2077,7 +2077,7 @@ expression-atlas-experiment-page-tsne-plot@^1.6.1:
     prop-types "^15.6.0"
     react "^16.0.0"
     react-dom "^16.0.0"
-    react-highcharts "^12.0.0"
+    react-highcharts "^13.0.0"
     seedrandom "^2.4.3"
 
 extend-shallow@^2.0.1:
@@ -4381,9 +4381,9 @@ react-dom@^16.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-highcharts@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-12.0.0.tgz#a7c8b5f5b56b37afe8e7fe02ec8bee72e376158a"
+react-highcharts@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-13.0.0.tgz#141dbae29722f1dfa357f9ef927a94145675a11b"
   dependencies:
     highcharts "^5.0.0"
 
