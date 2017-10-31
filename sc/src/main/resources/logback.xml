@@ -1,5 +1,7 @@
 <configuration>
 
+    <property resource="log.properties" />
+
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${catalina.base}/logs/${tomcat.hostname}/sc-atlas.log</file>
 
