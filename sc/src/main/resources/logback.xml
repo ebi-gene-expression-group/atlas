@@ -14,8 +14,12 @@
         </encoder>
     </appender>
 
-    <root level="${log.level.root}"/>
+    <root level="${log.level.root}">
+        <appender-ref ref="FILE"/>
+    </root>
 
-    <logger name="uk.ac.ebi.atlas" level="${log.level.atlas}" additivity="false"/>
+    <logger name="uk.ac.ebi.atlas" level="${log.level.atlas}" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
 
 </configuration>
