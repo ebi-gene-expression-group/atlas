@@ -23,8 +23,8 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -85,14 +85,14 @@ public class BaselineProfilesHeatmapsWranglerTest {
     @Test
     public void rightQueriesToDataSources() throws Exception{
         GeneQueryResponse response = mock(GeneQueryResponse.class);
-        when(solrQueryServiceMock.fetchResponse(Mockito.any(), any(Species.class)))
+        when(solrQueryServiceMock.fetchResponse(any(), any(Species.class)))
                 .thenReturn(response);
         when(baselineProfilesHeatMapMock.fetch(any(BaselineExperiment.class), any(), eq(response)))
                 .thenReturn(new BaselineProfilesList());
 
         subject.getJsonProfiles();
 
-        verify(solrQueryServiceMock).fetchResponse(Mockito.any(SemanticQuery.class), any(Species.class));
+        verify(solrQueryServiceMock).fetchResponse(any(SemanticQuery.class), any(Species.class));
         verify(baselineProfilesHeatMapMock).fetch(any(BaselineExperiment.class), any(), eq(response)
         );
     }

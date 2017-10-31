@@ -31,11 +31,6 @@
         <org.springframework.version>4.3.9.RELEASE</org.springframework.version>
 
         <solr.version>6.6.0</solr.version>
-
-        <!-- Default log settings -->
-        <log.level.root>warn</log.level.root>
-        <log.level.atlas>info</log.level.atlas>
-        <log.prudent>true</log.prudent>
     </properties>
 
     <build>
@@ -518,9 +513,9 @@
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>YxyR9PKvOAtY</jdbc.password>
                 <solr.host>lime</solr.host>
+                <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
             </properties>
         </profile>
 
@@ -532,9 +527,9 @@
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>atlas3dev</jdbc.password>
                 <solr.host>localhost</solr.host>
+                <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
             </properties>
         </profile>
 
@@ -547,16 +542,16 @@
                 <jdbc.username>atlas3it</jdbc.username>
                 <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
                 <solr.host>lime.ebi.ac.uk</solr.host>
+                <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
             </properties>
         </profile>
 
         <profile>
             <!--build used for staging and production -->
             <id>production</id>
-            <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <!-- jdbc.properties and log.properties are located on the filesystem, see Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
@@ -566,7 +561,7 @@
         <profile>
             <!--build used for staging and production -->
             <id>production-sc</id>
-            <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <!-- jdbc.properties and log.properties are located on the filesystem, see Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
                 <data.files.location>/srv/gxa/data-sc</data.files.location>
@@ -578,15 +573,18 @@
             <id>test</id>
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
+                <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
             </properties>
         </profile>
 
         <profile>
             <id>performance</id>
             <properties>
+                <log.flush>true</log.flush>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
                 <db.context>dbContext.xml</db.context>
             </properties>
             <build>

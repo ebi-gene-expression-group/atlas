@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class DBSolrStatusControllerIT {
 
     @Inject
@@ -25,7 +26,9 @@ public class DBSolrStatusControllerIT {
     @Test
     public void dbAndSolrStatus() throws Exception {
         String message = subject.dbAndSolrStatus();
-        Map<String, String> status = new Gson().fromJson(message, Map.class);
+        Map<String, Object> status = new Gson().fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
+        // Or the unsafer(?) Map status = new Gson().fromJson(message, Map.class);
+
         assertThat(status.get("DB"), is("UP"));
         assertThat(status.get("Solr"), is("UP"));
     }

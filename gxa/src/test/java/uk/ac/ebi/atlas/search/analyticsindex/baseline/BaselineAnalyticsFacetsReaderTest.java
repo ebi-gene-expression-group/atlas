@@ -15,8 +15,6 @@ import static org.junit.Assert.assertThat;
 
 public class BaselineAnalyticsFacetsReaderTest {
 
-    private BaselineAnalyticsFacetsReader subject = new BaselineAnalyticsFacetsReader();
-
     private final static JsonObject RESPONSE_2_JSON_FACETS = new Gson().fromJson(
             "{\n" +
             "  \"homo sapiens\": [\n" +

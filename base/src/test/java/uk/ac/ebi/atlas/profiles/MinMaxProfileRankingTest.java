@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
@@ -11,17 +9,12 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.commons.streams.ObjectInputStreamTest.convert;
 
 public class MinMaxProfileRankingTest {

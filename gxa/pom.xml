@@ -26,6 +26,7 @@
                 <directory>src/main/webapp/WEB-INF</directory>
                 <includes>
                     <include>applicationContext.xml</include>
+                    <include>dispatcher-servlet.xml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>

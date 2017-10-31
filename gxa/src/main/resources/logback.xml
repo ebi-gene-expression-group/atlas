@@ -1,12 +1,5 @@
 <configuration>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${catalina.base}/logs/${tomcat.hostname}/atlas.log</file>
 
@@ -17,44 +10,12 @@
         <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+            <immediateFlush>${log.flush}</immediateFlush>
         </encoder>
     </appender>
 
-    <appender name="PRUDENT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <prudent>true</prudent>
+    <root level="${log.level.root}"/>
 
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${catalina.base}/logs/${tomcat.hostname}/atlas/atlas.%d{yyyy-MM-dd}.log</fileNamePattern>
-        </rollingPolicy>
-
-        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-            <immediateFlush>false</immediateFlush>
-        </encoder>
-    </appender>
-
-
-    <root level="${log.level.root}">
-        <if condition="${log.prudent}">
-            <then>
-                <appender-ref ref="PRUDENT_FILE"/>
-            </then>
-            <else>
-                <appender-ref ref="FILE"/>
-            </else>
-        </if>
-    </root>
-
-    <logger name="uk.ac.ebi.atlas" level="${log.level.atlas}" additivity="false">
-        <if condition="${log.prudent}">
-            <then>
-                <appender-ref ref="PRUDENT_FILE"/>
-            </then>
-            <else>
-                <appender-ref ref="FILE"/>
-            </else>
-        </if>
-    </logger>
+    <logger name="uk.ac.ebi.atlas" level="${log.level.atlas}" additivity="false"/>
 
 </configuration>

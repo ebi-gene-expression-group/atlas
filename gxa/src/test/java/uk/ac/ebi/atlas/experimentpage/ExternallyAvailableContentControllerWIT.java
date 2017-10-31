@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExternallyAvailableContentControllerWIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternallyAvailableContentControllerWIT.class);
@@ -51,7 +51,7 @@ public class ExternallyAvailableContentControllerWIT {
         return new EndPoint(MessageFormat.format("/gxa/json/experiments/{0}/resources/{1}", accession, contentType));
     }
 
-    void testAllResourcesAreNonemptyAndContainValidLinks(String accession, ExternallyAvailableContent.ContentType contentType, boolean expectNonempty) throws Exception {
+    private void testAllResourcesAreNonemptyAndContainValidLinks(String accession, ExternallyAvailableContent.ContentType contentType, boolean expectNonempty) throws Exception {
         JsonArray response = endPointForExperiment(accession, contentType).getJsonResponse().getAsJsonArray();
 
         if(expectNonempty){

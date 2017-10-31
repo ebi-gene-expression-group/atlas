@@ -13,6 +13,7 @@
     <!-- PostgreSQL configuration -->
     <!-- If jdbc.properties isn’t found, inject variables from the profile -->
     <context:property-placeholder location="classpath:jdbc.properties" ignore-resource-not-found="true"/>
+    <context:property-placeholder location="classpath:log.properties" ignore-resource-not-found="true"/>
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="poolName" value="gxaHikari" />

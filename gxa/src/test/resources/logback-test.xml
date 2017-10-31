@@ -11,4 +11,8 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
+    <logger name="uk.ac.ebi.atlas" level="${log.level.atlas}" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
 </configuration>
