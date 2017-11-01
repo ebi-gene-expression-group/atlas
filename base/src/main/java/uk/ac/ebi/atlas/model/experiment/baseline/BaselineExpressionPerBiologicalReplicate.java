@@ -51,7 +51,7 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
             JsonObject o = new JsonObject();
             o.addProperty("id", e.getKey().getId());
             JsonArray assays = new JsonArray();
-            e.getKey().assaysAnalyzedForThisDataColumn().forEach(assays::add);
+            e.getKey().assaysAnalyzedForThisDataColumn().stream().sorted().forEach(assays::add);
             o.add("assays", assays);
             o.addProperty("value", e.getValue().getLevel());
             return o;

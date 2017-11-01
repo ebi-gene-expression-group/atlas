@@ -194,4 +194,11 @@ public class ExperimentConfigurationTest {
                 "<configuration experimentType=\"rnaseq_mrna_baseline\"></configuration>").getExperimentType(),
                 is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testContrastNeedsDisplayName(){
+        testConfiguration(
+                "<configuration experimentType=\"microarray_1colour_mrna_differential\"><analytics><contrasts><contrast id=\"id\"></contrast></contrasts></analytics></configuration>"
+        ).getContrasts();
+    }
 }

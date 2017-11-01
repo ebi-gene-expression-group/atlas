@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
@@ -12,7 +11,13 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /*
 I provide additional behaviour to factorGroup without refactoring.
@@ -23,15 +28,17 @@ public class RichFactorGroup {
 
     private final FactorGroup factorGroup;
 
-    public RichFactorGroup(FactorGroup factorGroup){
+    public RichFactorGroup(FactorGroup factorGroup) {
         this.factorGroup = factorGroup;
     }
 
-    public Set<OntologyTerm> getOntologyTerms(){
-        return FluentIterable.from(factorGroup).transformAndConcat(Factor::getValueOntologyTerms).toSet();
+    public Set<OntologyTerm> getOntologyTerms() {
+        return StreamSupport.stream(factorGroup.spliterator(), false)
+                .flatMap(factor -> factor.getValueOntologyTerms().stream())
+                .collect(Collectors.toSet());
     }
 
-    public String asUrlEncodedJson(){
+    public String asUrlEncodedJson() {
         try {
             return URLEncoder.encode(new Gson().toJson(asJson()), "UTF-8");
         } catch(UnsupportedEncodingException e){
@@ -40,7 +47,7 @@ public class RichFactorGroup {
     }
 
     //Coupled to the experiment page client code - over there we can have multiple factor values per type
-    JsonObject asJson(){
+    JsonObject asJson() {
         JsonObject result = new JsonObject();
         for(Factor factor: factorGroup){
             JsonArray values = new JsonArray();
@@ -50,17 +57,22 @@ public class RichFactorGroup {
         return result;
     }
 
-    public static Set<String> typesWithCommonValues(Iterable<FactorGroup> factorGroups){
+
+    public static Set<String> typesWithCommonValues(Iterable<FactorGroup> factorGroups) {
         Multimap<String, String> allValuesPerType = LinkedListMultimap.create();
         for(FactorGroup factorGroup: factorGroups){
             for(Factor factor: factorGroup){
                 allValuesPerType.put(factor.getType(), factor.getValue());
             }
         }
-       return FluentIterable.from(allValuesPerType.asMap().entrySet()).filter(stringCollectionEntry -> ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2).transform(Map.Entry::getKey).toSet();
+
+        return allValuesPerType.asMap().entrySet().stream()
+                .filter(stringCollectionEntry -> stringCollectionEntry.getValue().size() >= 2 && ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
     }
 
-    public static List<String> filterOutTypesWithCommonValues(List<String> types, Iterable<FactorGroup> factorGroups){
+    public static List<String> filterOutTypesWithCommonValues(List<String> types, Iterable<FactorGroup> factorGroups) {
         return removeAll(types, typesWithCommonValues(factorGroups));
     }
 
@@ -77,7 +89,7 @@ public class RichFactorGroup {
         return list;
     }
 
-    public static boolean isSubgroup(FactorGroup moreSpecificGroup, FactorGroup moreGeneralGroup){
+    public static boolean isSubgroup(FactorGroup moreSpecificGroup, FactorGroup moreGeneralGroup) {
         for(Factor factor: moreGeneralGroup){
             if(! moreSpecificGroup.factorOfType(factor.getType()).equals(factor)){
                 return false;

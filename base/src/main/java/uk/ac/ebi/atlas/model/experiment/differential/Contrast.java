@@ -1,9 +1,7 @@
 
 package uk.ac.ebi.atlas.model.experiment.differential;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
@@ -61,13 +59,13 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
         return this.getDisplayName().compareTo(o.getDisplayName());
     }
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject o = new JsonObject();
         o.addProperty("id", id);
         o.addProperty("arrayDesignAccession", arrayDesignAccession);
         o.add("testAssayGroup", testAssayGroup.toJson());
         o.add("referenceAssayGroup", referenceAssayGroup.toJson());
-        o.addProperty("displayName",displayName);
+        o.addProperty("displayName", displayName);
         return o;
     }
 

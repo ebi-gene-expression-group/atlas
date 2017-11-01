@@ -137,7 +137,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
 
         JsonArray columnHeaders = new JsonArray();
         for (AssayGroup assayGroup : requestContext.getDataColumnsToReturn()) {
-            columnHeaders.add(assayGroup.toJson());
+            JsonObject header = assayGroup.toJson();
+            header.addProperty("name", requestContext.displayNameForColumn(assayGroup));
+            columnHeaders.add(header);
         }
 
         result.add("columnHeaders", columnHeaders);
