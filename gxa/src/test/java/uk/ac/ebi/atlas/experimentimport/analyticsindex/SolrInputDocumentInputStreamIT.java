@@ -49,8 +49,6 @@ public class SolrInputDocumentInputStreamIT {
     @Inject
     private AnalyticsQueryClient analyticsQueryClient;
 
-    private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator = new AnalyticsIndexDocumentValidator();
-
     // TODO The lack of a subject is “code smell” that this class is testing stuff from here and there
     // TODO Split this into isolated tests for ExperimentDataPoint, SolrInputDocumentInputStream, etc.
 
@@ -108,10 +106,8 @@ public class SolrInputDocumentInputStreamIT {
         assertThat(identifiersForThatExperiment, not(empty()));
 
         for(SolrInputDocument solrInputDocument: results) {
-            if (analyticsIndexDocumentValidator.validate(solrInputDocument)) {
-                String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
-                assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
-            }
+            String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
+            assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
          }
 
     }

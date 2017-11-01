@@ -143,7 +143,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         result.add("columnHeaders", columnHeaders);
 
         return result;
-
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -183,7 +182,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         return baselineRnaSeqExperimentData(preferences, experimentAccession, "");
     }
 
-    public static final String GENE_DISTRIBUTION_URL = "json/experiments/{experimentAccession}/genedistribution";
+    private static final String GENE_DISTRIBUTION_URL = "json/experiments/{experimentAccession}/genedistribution";
 
     public static String geneDistributionUrl(String experimentAccession, String accessKey, ExperimentType experimentType) {
         return GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)
@@ -218,6 +217,5 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                 proteomicsHistograms.get(experimentAccession, accessKey, preferences).asJson()
         );
     }
-
 
 }
