@@ -15,6 +15,7 @@ if [ $# -ne 1 ] || [[ $1 -ne "ci" && $1 -ne "prod" ]] ; then
         exit;
 fi
 
+#find atlas_bundles -maxdepth 2 -name '*lock*' | xargs rm
 for dir in atlas_bundles/*
 do
     pushd . > /dev/null
@@ -26,4 +27,3 @@ done
 
 yarn install
 yarn run $1
-
