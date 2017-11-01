@@ -301,8 +301,8 @@ expression-atlas-experiment-page@^1.3.1:
     urijs "^1.18.10"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.7.3"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.7.3.tgz#7e0ac3e7066ee6924677f417c239b1a046b07ee9"
+  version "3.7.4"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.7.4.tgz#64cf1fae030e1fd6ef20dc1500cc350a23d60bd1"
   dependencies:
     anatomogram latest
     color "^2.0.0"

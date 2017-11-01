@@ -107539,6 +107539,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -107741,23 +107743,43 @@ var Chart = function Chart(_ref11) {
 };
 
 var Transcripts = function Transcripts(_ref13) {
-	var columnHeaders = _ref13.columnHeaders,
+	var keepOnlyTheseColumnIds = _ref13.keepOnlyTheseColumnIds,
+	    columnHeaders = _ref13.columnHeaders,
 	    rows = _ref13.profiles.rows;
+
+
+	var ixs = columnHeaders.map(function (e, ix) {
+		return [e, ix];
+	}).filter(function (eix) {
+		return keepOnlyTheseColumnIds.includes(eix[0].id);
+	}).map(function (eix) {
+		return eix[1];
+	});
+
 	return _react2.default.createElement(
 		'div',
 		null,
-		_react2.default.createElement(Chart, { columnHeaders: columnHeaders, rows: rows })
+		_react2.default.createElement(Chart, {
+			columnHeaders: columnHeaders.filter(function (e, ix) {
+				return ixs.includes(ix);
+			}),
+			rows: rows.map(function (row) {
+				return Object.assign(row, { expressions: row.expressions.filter(function (e, ix) {
+						return ixs.includes(ix);
+					}) });
+			})
+		})
 	);
 };
-
 var noData = function noData(msg) {
 	msg && console.log(msg);
 	return _react2.default.createElement('span', null);
 };
 
 var QuietTranscriptsLoader = function QuietTranscriptsLoader(_ref14) {
-	var sourceUrlFetch = _ref14.sourceUrlFetch;
-	return sourceUrlFetch.pending ? noData() : sourceUrlFetch.rejected ? noData(sourceUrlFetch) : !sourceUrlFetch.fulfilled ? noData(sourceUrlFetch) : sourceUrlFetch.value.error ? noData(sourceUrlFetch.value.error) : !sourceUrlFetch.value.profiles || !sourceUrlFetch.value.columnHeaders ? noData(sourceUrlFetch.value) : _react2.default.createElement(Transcripts, sourceUrlFetch.value);
+	var sourceUrlFetch = _ref14.sourceUrlFetch,
+	    keepOnlyTheseColumnIds = _ref14.keepOnlyTheseColumnIds;
+	return sourceUrlFetch.pending ? noData() : sourceUrlFetch.rejected ? noData(sourceUrlFetch) : !sourceUrlFetch.fulfilled ? noData(sourceUrlFetch) : sourceUrlFetch.value.error ? noData(sourceUrlFetch.value.error) : !sourceUrlFetch.value.profiles || !sourceUrlFetch.value.columnHeaders ? noData(sourceUrlFetch.value) : _react2.default.createElement(Transcripts, _extends({ keepOnlyTheseColumnIds: keepOnlyTheseColumnIds }, sourceUrlFetch.value));
 };
 
 exports.default = (0, _reactRefetch.connect)(function (props) {
@@ -108072,7 +108094,14 @@ exports.default = function (_ref) {
     };
 
     var transcriptsData = Array.isArray(data.profiles.rows) && data.profiles.rows.length == 1 && data.experiment && data.experiment.accession ? {
-        url: inProxy + (0, _urijs2.default)('json/debug-experiments/' + data.experiment.accession + '/genes/' + data.profiles.rows[0].id + '/transcripts?type=RNASEQ_MRNA_BASELINE', atlasUrl).toString()
+        url: inProxy + (0, _urijs2.default)('json/debug-experiments/' + data.experiment.accession + '/genes/' + data.profiles.rows[0].id + '/transcripts?type=RNASEQ_MRNA_BASELINE', atlasUrl).toString(),
+        keepOnlyTheseColumnIds: data.columnHeaders.map(function (e) {
+            return e.assayGroupId;
+        }).filter(function (e, ix, self) {
+            return self.indexOf(e) == ix;
+        }).filter(function (e) {
+            return e;
+        })
     } : null;
 
     return {
