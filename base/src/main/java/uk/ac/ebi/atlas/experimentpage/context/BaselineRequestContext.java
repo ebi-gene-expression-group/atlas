@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.atlassian.util.concurrent.LazyReference;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.context.annotation.Scope;
@@ -23,8 +21,16 @@ import java.util.stream.Stream;
 
 @Named
 @Scope("request")
-public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extends RequestContext<AssayGroup,BaselineExperiment, BaselineRequestPreferences<Unit>>
+public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute>
+        extends RequestContext<AssayGroup,BaselineExperiment, BaselineRequestPreferences<Unit>>
         implements BaselineProfileStreamOptions<Unit> {
+
+    private LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
+        @Override
+        protected ImmutableMap<AssayGroup, String> create() throws Exception {
+            return displayNamePerSelectedAssayGroup();
+        }
+    };
 
     public BaselineRequestContext(BaselineRequestPreferences<Unit> requestPreferences, BaselineExperiment experiment) {
         super(requestPreferences, experiment);
@@ -34,13 +40,6 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
     public String displayNameForColumn(AssayGroup assayGroup) {
             return Optional.ofNullable(displayNamePerSelectedAssayGroup.get().get(assayGroup)).orElse(assayGroup.getId()) ;
     }
-
-    LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
-        @Override
-        protected ImmutableMap<AssayGroup, String> create() throws Exception {
-            return displayNamePerSelectedAssayGroup();
-        }
-    };
 
     private List<String> typesWhoseValuesToDisplay() {
 
@@ -63,14 +62,17 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
     }
 
     private ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup() {
-
         ImmutableMap.Builder<AssayGroup, String> b = ImmutableMap.builder();
 
         for (AssayGroup assayGroup : dataColumnsToBeReturned()) {
             final FactorGroup factorGroup = experiment.getFactors(assayGroup);
 
-            b.put(assayGroup, FluentIterable.from
-                    (typesWhoseValuesToDisplay()).transform(type -> factorGroup.factorOfType(Factor.normalize(type)).getValue()).join(Joiner.on(", ")));
+            b.put(
+                    assayGroup,
+                    typesWhoseValuesToDisplay().stream()
+                            .map(type -> factorGroup.factorOfType(Factor.normalize(type)).getValue())
+                            .collect(Collectors.joining(", "))
+            );
         }
 
         return b.build();
@@ -80,4 +82,5 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
     public Unit getExpressionUnit() {
         return requestPreferences.getUnit();
     }
+
 }

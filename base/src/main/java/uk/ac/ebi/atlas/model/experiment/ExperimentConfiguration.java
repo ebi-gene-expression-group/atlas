@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.StringUtils;
@@ -14,12 +17,16 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
-import javax.xml.xpath.*;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExperimentConfiguration {
 
@@ -52,7 +59,7 @@ public class ExperimentConfiguration {
     }
 
     public List<Contrast> getContrasts(){
-        return FluentIterable.from(getContrastAndAnnotationPairs()).transform(Pair::getLeft).toList();
+        return getContrastAndAnnotationPairs().stream().map(Pair::getLeft).collect(Collectors.toList());
     }
 
     private void parseContrastConfiguration(String query, String arrayDesignAccession, List<Pair<Contrast, Boolean>> contrasts) {
