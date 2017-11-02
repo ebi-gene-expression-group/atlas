@@ -405,7 +405,8 @@
          be based on the last SolrCore to be initialized.
          
       -->
-    <maxBooleanClauses>1024</maxBooleanClauses>
+    <!-- Not used by Lucene, see https://issues.apache.org/jira/browse/SOLR-4586 -->
+    <maxBooleanClauses>1000000</maxBooleanClauses>
 
 
     <!-- Solr Internal Query Caches
