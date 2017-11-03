@@ -20,6 +20,7 @@
     "react-dom": "^16.0.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "sc-atlas-bioentity-information": "0.0.4",
     "urijs": "^1.19.0"
   },
   "devDependencies": {
