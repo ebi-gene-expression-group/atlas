@@ -1,0 +1,11 @@
+{
+  "genes": {
+    "type": "terms",
+    "field": "bioentity_identifier",
+    "sort": "count asc",
+    "limit": 100000,
+    "facet": {
+      "max_expression": "max(expression_level)"
+    }
+  }
+}
