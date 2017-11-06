@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.common.SolrInputDocument;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -159,7 +158,7 @@ public class SolrInputDocumentInputStreamIT {
 
         assertThat(
                 MessageFormat.format("Nothing in the index for {0} , {1}", accession, identifierSearch.description()),
-                identifiersForThatExperiment, not(Matchers.<String>empty()));
+                identifiersForThatExperiment, not(empty()));
     }
 
 }
