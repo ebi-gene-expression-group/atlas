@@ -40,9 +40,20 @@ public class FullAnalyticsSearchService {
     // Number of rows in the heatmap
     private static final int DEFAULT_RESULT_SIZE = 50;
 
-    private static final String FQ_TEMPLATE = "experiment_accession:{0} AND expression_level:[{1} TO *]";
-    private static final String SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE = "('{'!terms f=assay_group_id'}'{0})";
-    private static final String NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE = "-('{'!terms f=assay_group_id'}'{0}) AND ('{'!terms f=bioentity_identifier'}'{1})";
+    // Observed a slowdown in the second query if bioentity_identifier terms query has size >50,000 terms
+    private static final int TERMS_QUERY_SIZE_THRESHOLD = 25000;
+
+    private static final String FQ_TEMPLATE = "experiment_accession:{0}";
+
+    // When searching all assay groups we can use these:
+    // private static final String SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE = "expression_level:[{0} TO *]";
+    // private static final String NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE = "('{'!terms f=bioentity_identifier'}'{0}) AND expression_level:[{1} TO *]";
+    // private static final String NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE_ALT = "expression_level:[{1} TO *]";
+
+    private static final String SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE = "('{'!terms f=assay_group_id'}'{0}) AND expression_level:[{1} TO *]";
+    private static final String NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE = "-('{'!terms f=assay_group_id'}'{0}) AND ('{'!terms f=bioentity_identifier'}'{1}) AND expression_level:[{2} TO *]";
+    private static final String NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE_ALT = "-('{'!terms f=assay_group_id'}'{0}) AND expression_level:[{1} TO *]";
+
 
     private final RestTemplate restTemplate;
     private final Resource avgExpressionOverBioentityIdentifiersFacet;
@@ -70,13 +81,13 @@ public class FullAnalyticsSearchService {
                                                  Set<String> assayGroupIds,
                                                  int resultSize) {
 
-        String filterQueries = MessageFormat.format(FQ_TEMPLATE, experimentAccession, expressionThreshold);
+        String filterQueries = MessageFormat.format(FQ_TEMPLATE, experimentAccession);
 
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setRows(0)
                 .setFilterQueries(filterQueries)
                 .setQuery(
-                        MessageFormat.format(SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE, Joiner.on(",").join(assayGroupIds)))
+                        MessageFormat.format(SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE, Joiner.on(",").join(assayGroupIds), expressionThreshold))
                 .set("json.facet", ResourceUtils.readPlainTextResource(avgExpressionOverBioentityIdentifiersFacet));
 
         Stopwatch stopwatch1 = Stopwatch.createStarted();
@@ -95,18 +106,23 @@ public class FullAnalyticsSearchService {
                 .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
 
 
-
-
-        solrQuery.setQuery(
+        String nonSelectedQuery = avgExpressionByGeneId.keySet().size() > TERMS_QUERY_SIZE_THRESHOLD ?
+                MessageFormat.format(
+                        NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE_ALT,
+                        Joiner.on(",").join(assayGroupIds),
+                        expressionThreshold) :
                 MessageFormat.format(
                         NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE,
                         Joiner.on(",").join(assayGroupIds),
-                        Joiner.on(",").join(avgExpressionByGeneId.keySet())))
+                        Joiner.on(",").join(avgExpressionByGeneId.keySet()),
+                        expressionThreshold);
+
+        solrQuery.setQuery(nonSelectedQuery)
                 .set("json.facet", ResourceUtils.readPlainTextResource(maxExpressionOverBioentityIdentifiersFacet));
 
         Stopwatch stopwatch2 = Stopwatch.createStarted();
         LOGGER.debug(
-                "Searching for genes in {} {} across {} assay groups and {} gene IDs...",
+                "Searching for genes in {} {} across inv({}) assay groups and {} gene IDs...",
                 experimentAccession, expressionThreshold, assayGroupIds.size(), avgExpressionByGeneId.keySet().size());
 
         Map<String, Double> maxExpressionByGene =
@@ -178,8 +194,8 @@ public class FullAnalyticsSearchService {
         Iterator<Map<String, Object>> bucketsIterator = buckets.iterator();
 
         int specificity = 0;
-        Map<String, Object> nextBucket;
-        while ((nextBucket = bucketsIterator.next()) != null) {
+        while (bucketsIterator.hasNext()) {
+            Map<String, Object> nextBucket = bucketsIterator.next();
 
             // We must read the full set of genes with same specificity (the most highly expressed may be anywhere)
             if ((int) nextBucket.get("count") > specificity) {
@@ -193,7 +209,8 @@ public class FullAnalyticsSearchService {
             // Keep reading all the buckets with this specificity
             genesBySpecificity.put(
                     specificity,
-                    Pair.of((String) nextBucket.get("val"), (double) nextBucket.get("avg_expression")));
+                    Pair.of((String) nextBucket.get("val"), ((Number) nextBucket.get("avg_expression")).doubleValue()));
+            // avg_expression comes some times as Double and some times as BigDecimal
 
         }
 
