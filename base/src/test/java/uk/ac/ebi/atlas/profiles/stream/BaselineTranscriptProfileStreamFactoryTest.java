@@ -276,7 +276,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                                 "                \"value\": 3.0\n" +
                                 "            }]\n" +
                                 "        }],\n" +
-                                "        \"uri\": \"genes/transcript_1_1#information\",\n" +
+                                "        \"uri\": \"genes/transcript_1_1\",\n" +
                                 "        \"expressionUnit\": \"TPM\"\n" +
                                 "    }]\n" +
                                 "}"

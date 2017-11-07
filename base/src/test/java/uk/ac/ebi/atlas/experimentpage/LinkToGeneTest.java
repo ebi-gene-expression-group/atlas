@@ -21,13 +21,14 @@ public class LinkToGeneTest {
     }
 
     // Not comprehensive, if gene IDs need to use any of the following chars we need to use a URLEncoder
-    String[] ILLEGAL_CHARS = {"%", "^", "|", "<", ">", "`", "#", "\"", "\\", "[", "]", "{", "}"};
+    String[] ILLEGAL_CHARS = {"%", "^", "|", "<", ">", "`", "\"", "\\", "[", "]", "{", "}"};
 
     LinkToGene<DummyProfile> subject = new LinkToGene<>();
 
+    // The hash will be set by the view, see search-results.jsp
     @Test
-    public void linksPointAtTheInformationTab() throws Exception {
-        assertThat(subject.apply(new DummyProfile("geneId", "geneName")).toString(), endsWith("#information"));
+    public void linksAtNoSpecificTab() throws Exception {
+        assertThat(subject.apply(new DummyProfile("geneId", "geneName")).toString(), endsWith("geneId"));
     }
 
     @Test
