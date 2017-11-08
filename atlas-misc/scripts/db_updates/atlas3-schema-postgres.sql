@@ -162,6 +162,29 @@ CREATE TABLE ATLAS_ELIGIBILITY(
     COMMENT VARCHAR(255) NULL -- Any error messages in the case of Atlas eligibility failure (or unexpected system-level exceptions while running the eligibility code)
 );
 
+DROP TABLE REFERENCE_IDS CASCADE;
+CREATE TABLE REFERENCE_IDS (
+    ACC_PREFIX VARCHAR(15) NOT NULL, -- Prefix for the mint-able accession, e.g. 'ERAD'
+    MAX_ID INTEGER NOT NULL -- Maximum number already allocated
+);
+
+-- Initialise the table (based on the output of the following query in AE2 PROD: select max(to_number(replace(acc,'E-ERAD-',''))) from study where acc like 'E-ERAD-%'
+insert into REFERENCE_IDS values ( 'E-ERAD', 610 );
+
+-- Stored function to return the next available accession, for the prefix p_prefix
+CREATE OR REPLACE FUNCTION mint_accession(p_prefix char(15), OUT p_accession varchar(255))
+AS $$
+BEGIN
+UPDATE reference_ids SET max_id = max_id + 1 where acc_prefix = p_prefix;
+SELECT concat(acc_prefix,'-',max_id) into p_accession from reference_ids where acc_prefix = p_prefix;
+END; $$
+LANGUAGE plpgsql;
+
+-- To call the above function do:
+-- \set AUTOCOMMIT off
+-- select p_accession from mint_accession('E-ERAD');
+-- commit;
+
 -- Differential analytics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 and log2fold>=1
 -- Used by the UI
 DROP MATERIALIZED VIEW VW_DIFFANALYTICS CASCADE;
