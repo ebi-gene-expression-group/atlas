@@ -16,7 +16,9 @@ public abstract class ExperimentTrader {
         this.experimentDAO = experimentDAO;
     }
 
-    public abstract Experiment getPublicExperiment(String experimentAccession);
+    public Experiment getPublicExperiment(String experimentAccession) {
+        return getExperiment(experimentAccession, "");
+    }
 
     public abstract Experiment getExperiment(String experimentAccession, String accessKey);
 

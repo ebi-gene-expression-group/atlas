@@ -56,7 +56,7 @@ public class BaselineExperimentsCacheLoaderIT {
         ExperimentDTO experimentDTO = new ExperimentDTO(accession, ExperimentType.RNASEQ_MRNA_BASELINE,
                 "Homo sapiens", pubMedIds, "title", new Date(),
                 false, UUID.randomUUID().toString());
-        when(experimentDao.findExperiment(accession, true)).thenReturn(experimentDTO);
+        when(experimentDao.getExperimentAsAdmin(accession)).thenReturn(experimentDTO);
 
         subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser,experimentDao,
                 rnaSeqBaselineExperimentFactory );

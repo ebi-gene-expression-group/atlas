@@ -26,16 +26,12 @@ public class ExperimentDAO {
 
     private static final String UPDATE_EXPERIMENT = "UPDATE experiment SET private = ? where accession = ?";
 
-    private static final String PING_EXPERIMENT = "SELECT COUNT (1) FROM experiment WHERE accession = ?";
-
-    private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession = ?";
-
-    private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession = ? and private = 'F'";
+    private static final String SELECT_EXPERIMENT_AS_ADMIN_GIVEN_ONLY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession = ?";
 
     private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE = "SELECT accession " +
             "FROM public_experiment WHERE type IN(:experimentTypes)";
 
-    private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION  WHERE accession = ? AND access_key = ?";
+    private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION  WHERE accession = ? AND (private = 'F' OR access_key = ?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -49,7 +45,7 @@ public class ExperimentDAO {
     /**
      * @return All imported experiments, independently from their public and private status
      */
-    public List<ExperimentDTO> findAllExperiments() {
+    public List<ExperimentDTO> getAllExperimentsAsAdmin() {
 
         String query = "SELECT * FROM EXPERIMENT\n" +
                 "LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION";
@@ -63,15 +59,11 @@ public class ExperimentDAO {
             experimentTypeNames.add(experimentType.name());
         }
 
-        MapSqlParameterSource parameters = new MapSqlParameterSource("experimentTypes", experimentTypeNames);
-        List<String> experimentAccessions = namedParameterJdbcTemplate.queryForList(SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE, parameters, String.class);
-
-        return Sets.newHashSet(experimentAccessions);
+        return Sets.newHashSet(namedParameterJdbcTemplate.queryForList(SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE, new MapSqlParameterSource("experimentTypes", experimentTypeNames), String.class));
     }
 
     public UUID addExperiment(ExperimentDTO experimentDTO, Optional<String> accessKey) {
         try {
-
             UUID accessKeyUUID = addExperimentRow(experimentDTO, accessKey);
             addExperimentSpeciesRows(experimentDTO);
             return accessKeyUUID;
@@ -87,11 +79,10 @@ public class ExperimentDAO {
     private UUID addExperimentRow(ExperimentDTO experimentDTO, Optional<String> accessKey) {
         UUID accessKeyUUID = accessKey.isPresent() ? UUID.fromString(accessKey.get()) : UUID.randomUUID();
 
-        String pubmedIds = Joiner.on(", ").join(experimentDTO.getPubmedIds());
 
         jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentDTO.getExperimentAccession(),
-                experimentDTO.getExperimentType().name(), toString(experimentDTO.isPrivate()),
-                accessKeyUUID.toString(), pubmedIds, experimentDTO.getTitle());
+                experimentDTO.getExperimentType().name(), isPrivateAsString(experimentDTO.isPrivate()),
+                accessKeyUUID.toString(), Joiner.on(", ").join(experimentDTO.getPubmedIds()), experimentDTO.getTitle());
         return accessKeyUUID;
     }
 
@@ -104,57 +95,34 @@ public class ExperimentDAO {
     public void deleteExperiment(String experimentAccession) {
 
         int deletedRecordsCount = jdbcTemplate.update(DELETE_EXPERIMENT, experimentAccession);
-
-        if (deletedRecordsCount != 1) {
-            throw new IllegalArgumentException("Experiment not found for accession " + experimentAccession);
-        }
-    }
-
-    public ExperimentDTO findPublicExperiment(String experimentAccession) {
-        return findExperiment(experimentAccession, false);
+        checkState(deletedRecordsCount == 1 , "Experiment not found for accession " + experimentAccession);
     }
 
     public ExperimentDTO findExperiment(String experimentAccession, String accessKey) {
+        return getSingleExperiment(
+                jdbcTemplate.query(SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY, new ExperimentDTOResultSetExtractor(), experimentAccession, accessKey),
+                experimentAccession
+        );
 
-        List<ExperimentDTO> experimentDTOs = jdbcTemplate.query(SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY, new ExperimentDTOResultSetExtractor(), experimentAccession, accessKey);
-
-        return getSingleExperiment(experimentDTOs, experimentAccession);
-
-
-    }
-
-    //TODO: replace this with a one parameter method findExperimentIncludingPrivate
-    public ExperimentDTO findExperiment(String experimentAccession, boolean includePrivates) {
-
-        String findExperimentQuery = includePrivates ? SELECT_EXPERIMENT_BY_ACCESSION : SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION;
-        List<ExperimentDTO> experimentDTOs = jdbcTemplate.query(findExperimentQuery, new ExperimentDTOResultSetExtractor(), experimentAccession);
-
-        return getSingleExperiment(experimentDTOs, experimentAccession);
 
     }
 
-    public void updateExperiment(String experimentAccession, boolean isPrivate) {
+    public ExperimentDTO getExperimentAsAdmin(String experimentAccession) {
+        return getSingleExperiment(
+                jdbcTemplate.query(SELECT_EXPERIMENT_AS_ADMIN_GIVEN_ONLY_ACCESSION, new ExperimentDTOResultSetExtractor(), experimentAccession),
+                experimentAccession
+        );
+    }
 
-        int recordsCount = jdbcTemplate.update(UPDATE_EXPERIMENT, toString(isPrivate), experimentAccession);
+    public void setExperimentPrivacyStatus(String experimentAccession, boolean isPrivate) {
 
-        if (recordsCount == 0) {
-            throw new IllegalArgumentException("Experiment not found for accession " + experimentAccession);
-        }
+        int recordsCount = jdbcTemplate.update(UPDATE_EXPERIMENT, isPrivateAsString(isPrivate), experimentAccession);
+        checkState(recordsCount == 1 , "Experiment not found for accession " + experimentAccession );
 
     }
 
-    private String toString(boolean isPrivate) {
+    private String isPrivateAsString(boolean isPrivate) {
         return isPrivate ? "T" : "F";
-    }
-
-    public boolean isImported(String experimentAccession) {
-
-        int experimentCount = jdbcTemplate.queryForObject(PING_EXPERIMENT, Integer.class, experimentAccession);
-
-        checkState(experimentCount <= 1, "Multiple experiments with experiment accession " + experimentAccession);
-
-        return experimentCount == 1;
-
     }
 
     private ExperimentDTO getSingleExperiment(List<ExperimentDTO> experimentDTOs, String accession) {
@@ -170,8 +138,6 @@ public class ExperimentDAO {
     }
 
     public Integer countExperiments() {
-        String query = "SELECT COUNT(*) FROM EXPERIMENT";
-
-        return jdbcTemplate.queryForObject(query, Integer.class);
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM EXPERIMENT", Integer.class);
     }
 }

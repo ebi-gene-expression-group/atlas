@@ -1,22 +1,19 @@
 package uk.ac.ebi.atlas.trader;
 
-import org.slf4j.Logger;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.PublicExperimentTypesCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
-import com.google.common.util.concurrent.UncheckedExecutionException;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,21 +22,19 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExpressionAtlasExperimentTrader.class);
 
-    private final PublicExperimentTypesCache publicExperimentTypesCache;
     private final ImmutableMap<ExperimentType, ExperimentsCache<? extends Experiment>> experimentCachesPerType;
+
+    private final LoadingCache<Pair<String, String>, ExperimentType> experimentTypes;
 
     @Inject
     public ExpressionAtlasExperimentTrader(ExperimentDAO experimentDAO,
                                            RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache,
                                            RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                            MicroarrayExperimentsCache microarrayExperimentsCache,
-                                           ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
-                                           PublicExperimentTypesCache publicExperimentTypesCache) {
+                                           ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache) {
         super(experimentDAO);
 
-        this.publicExperimentTypesCache = publicExperimentTypesCache;
         ImmutableMap.Builder<ExperimentType, ExperimentsCache<? extends Experiment>> builder = ImmutableMap.builder();
 
         builder.put(ExperimentType.RNASEQ_MRNA_BASELINE, rnaSeqBaselineExperimentsCache)
@@ -52,33 +47,27 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
             }
         }
         experimentCachesPerType = builder.build();
-    }
-
-    @Override
-    public Experiment getPublicExperiment(String experimentAccession) {
-        ExperimentType experimentType;
-        try {
-            experimentType = publicExperimentTypesCache.getExperimentType(experimentAccession);
-            return getExperimentFromCache(experimentAccession, experimentType);
-        } catch (ExecutionException e) {
-            LOGGER.error(e.getMessage());
-            throw new ResourceNotFoundException("Failed to load <em>" + experimentAccession + "</em>.");
-        }
-        catch (UncheckedExecutionException | NullPointerException e) {
-            LOGGER.error(e.getMessage());
-            throw new ResourceNotFoundException("Experiment <em>" + experimentAccession + "</em> not found.");
-        }
+        experimentTypes = CacheBuilder.newBuilder().build(new CacheLoader<Pair<String, String>, ExperimentType>() {
+            @Override
+            public ExperimentType load(Pair<String, String> p) throws Exception {
+                return experimentDAO.findExperiment(p.getLeft(), p.getRight()).getExperimentType();
+            }
+        });
     }
 
     @Override
     public Experiment getExperiment(String experimentAccession, String accessKey) {
-        if (StringUtils.isBlank(accessKey)){
-            return getPublicExperiment(experimentAccession);
-        }
-        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, accessKey);
-
         try {
-            return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
+            return getExperimentFromCache(experimentAccession, experimentTypes.get(Pair.of(experimentAccession, accessKey)));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
+        try {
+            return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -89,13 +78,9 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         for(ExperimentsCache cache: experimentCachesPerType.values()){
             cache.evictExperiment(experimentAccession);
         }
-        publicExperimentTypesCache.evictExperiment(experimentAccession);
+        experimentTypes.invalidateAll();
     }
 
-    @Override
-    public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) throws ExecutionException {
-        return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
-    }
 
     public Set<String> getAllBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE,ExperimentType.PROTEOMICS_BASELINE );

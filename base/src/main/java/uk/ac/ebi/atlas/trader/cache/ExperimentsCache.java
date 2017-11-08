@@ -21,8 +21,4 @@ public abstract class ExperimentsCache<T extends Experiment> {
         experiments.invalidate(experimentAccession);
     }
 
-    public void evictAll() {
-        experiments.invalidateAll();
-    }
-
 }

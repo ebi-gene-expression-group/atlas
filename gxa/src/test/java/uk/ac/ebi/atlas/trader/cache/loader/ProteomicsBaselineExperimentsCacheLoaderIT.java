@@ -67,7 +67,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         ExperimentDTO experimentDTO = new ExperimentDTO(E_PROT_1, ExperimentType.PROTEOMICS_BASELINE,
                                                         "Homo sapiens", pubMedIds, "title", new Date(),
                                                         false, UUID.randomUUID().toString());
-        when(experimentDao.findExperiment(E_PROT_1, true)).thenReturn(experimentDTO);
+        when(experimentDao.getExperimentAsAdmin(E_PROT_1)).thenReturn(experimentDTO);
 
         when(arrayExpressClient.fetchExperimentName(E_PROT_1)).thenReturn("title");
 

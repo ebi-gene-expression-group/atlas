@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -71,7 +70,7 @@ public class ExperimentCrudTest {
 
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
 
-        when(experimentDAOMock.findExperiment(anyString(), anyBoolean())).thenReturn(experimentDTOMock);
+        when(experimentDAOMock.getExperimentAsAdmin(anyString())).thenReturn(experimentDTOMock);
 
         given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(experimentDTOMock.getExperimentType()).willReturn(experimentType);
@@ -96,21 +95,21 @@ public class ExperimentCrudTest {
     public void updateExperimentToPrivateShouldDelegateToDAO() throws Exception {
         ExperimentDTO privateMock = mock(ExperimentDTO.class);
         when(privateMock.isPrivate()).thenReturn(true);
-        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, true)).willReturn(privateMock);
+        given(experimentDAOMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(privateMock);
         subject.makeExperimentPrivate(EXPERIMENT_ACCESSION);
-        verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, true);
-        verify(experimentDAOMock, times(0)).updateExperiment(EXPERIMENT_ACCESSION, false);
+        verify(experimentDAOMock).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, true);
+        verify(experimentDAOMock, times(0)).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
     public void updateExperimentToPublicShouldDelegateToDAO() throws Exception {
         ExperimentDTO publicMock = mock(ExperimentDTO.class);
         when(publicMock.isPrivate()).thenReturn(false);
-        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, false)).willReturn(publicMock);
+        given(experimentDAOMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(publicMock);
 
         subject.makeExperimentPublic(EXPERIMENT_ACCESSION);
-        verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, false);
-        verify(experimentDAOMock, times(0)).updateExperiment(EXPERIMENT_ACCESSION, true);
+        verify(experimentDAOMock).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, false);
+        verify(experimentDAOMock, times(0)).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, true);
 
     }
 
