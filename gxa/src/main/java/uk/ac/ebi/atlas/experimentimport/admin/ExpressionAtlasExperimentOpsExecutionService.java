@@ -70,6 +70,9 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
                 return Optional.of(ExperimentOps.DEFAULT_SUCCESS_RESULT);
+            case CHECK:
+                experimentCrud.checkFiles(accession);
+                return Optional.of(ExperimentOps.DEFAULT_SUCCESS_RESULT);
             default:
                 return Optional.empty();
         }

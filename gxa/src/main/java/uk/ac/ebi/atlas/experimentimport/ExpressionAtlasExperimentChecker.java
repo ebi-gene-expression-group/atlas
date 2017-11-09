@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -37,7 +38,6 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
 
     @Override
     public void checkAllFiles(String experimentAccession, ExperimentType experimentType) {
-
         // every experiment should have configuration, condensed SDRF and analysis methods file
         checkConfigurationFile(experimentAccession);
         checkResourceExistsAndIsReadable(dataFileHub.getExperimentFiles(experimentAccession).analysisMethods);
