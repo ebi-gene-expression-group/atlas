@@ -1404,6 +1404,14 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+create-react-class@^15.6.0:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.2.tgz#cf1ed15f12aad7f14ef5f2dfe05e6c42f91ef02a"
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
 cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -2067,18 +2075,28 @@ expression-atlas-autocomplete@^1.1.1:
     react-dom "^16.0.0"
     urijs "^1.19.0"
 
-expression-atlas-experiment-page-tsne-plot@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page-tsne-plot/-/expression-atlas-experiment-page-tsne-plot-1.7.0.tgz#b70023553b6e12fc9b0fc9cb449be99d5651281d"
+expression-atlas-experiment-page-tsne-plot@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page-tsne-plot/-/expression-atlas-experiment-page-tsne-plot-1.8.0.tgz#53a3787f66086480610d7539629be506ffb8716a"
   dependencies:
     color "^2.0.0"
     deepmerge "^2.0.0"
     expression-atlas-autocomplete "^1.1.1"
+    expression-atlas-number-format "^2.0.2"
     prop-types "^15.6.0"
     react "^16.0.0"
     react-dom "^16.0.0"
     react-highcharts "^13.0.0"
     seedrandom "^2.4.3"
+
+expression-atlas-number-format@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/expression-atlas-number-format/-/expression-atlas-number-format-2.0.2.tgz#a800bfd319565bc21b559035280d83d28bb82141"
+  dependencies:
+    prop-types "^15.5.10"
+    react "^15.6.1"
+    react-dom "^15.6.1"
+    urijs "^1.18.10"
 
 extend-shallow@^2.0.1:
   version "2.0.1"
@@ -2127,7 +2145,7 @@ faye-websocket@~0.11.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.16:
+fbjs@^0.8.16, fbjs@^0.8.9:
   version "0.8.16"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
   dependencies:
@@ -3175,6 +3193,10 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+killable@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.0.tgz#da8b84bd47de5395878f95d64d02f2449fe05e6b"
 
 kind-of@^3.0.2:
   version "3.2.2"
@@ -4372,9 +4394,27 @@ react-autocomplete@^1.7.2:
     dom-scroll-into-view "1.0.1"
     prop-types "^15.5.10"
 
+react-dom@^15.6.1:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
+    prop-types "^15.5.10"
+
 react-dom@^16.0.0:
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0.tgz#9cc3079c3dcd70d4c6e01b84aab2a7e34c303f58"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react-dom@^16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.1.0.tgz#ab6fd2a285096f388aeba51919a573d06c9bdde4"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -4410,9 +4450,28 @@ react-router@^4.2.0:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
+react@^15.6.1:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
+  dependencies:
+    create-react-class "^15.6.0"
+    fbjs "^0.8.9"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
+    prop-types "^15.5.10"
+
 react@^16.0.0:
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.0.0.tgz#ce7df8f1941b036f02b2cca9dbd0cb1f0e855e2d"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react@^16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.1.0.tgz#1c2bdac3c17fe7ee9282fa35aca6cc36387903e1"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -5302,7 +5361,7 @@ unzip-response@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/unzip-response/-/unzip-response-1.0.2.tgz#b984f0877fc0a89c2c773cc1ef7b5b232b5b06fe"
 
-urijs@^1.19.0:
+urijs@^1.18.10, urijs@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.0.tgz#d8aa284d0e7469703a6988ad045c4cbfdf08ada0"
 
@@ -5496,9 +5555,9 @@ webpack-dev-middleware@^1.11.0:
     range-parser "^1.0.3"
     time-stamp "^2.0.0"
 
-webpack-dev-server@^2.9.3:
-  version "2.9.3"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.3.tgz#f0554e88d129e87796a6f74a016b991743ca6f81"
+webpack-dev-server@^2.9.4:
+  version "2.9.4"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.4.tgz#7883e61759c6a4b33e9b19ec4037bd4ab61428d1"
   dependencies:
     ansi-html "0.0.7"
     array-includes "^3.0.3"
@@ -5514,6 +5573,7 @@ webpack-dev-server@^2.9.3:
     import-local "^0.1.1"
     internal-ip "1.2.0"
     ip "^1.1.5"
+    killable "^1.0.0"
     loglevel "^1.4.1"
     opn "^5.1.0"
     portfinder "^1.0.9"
