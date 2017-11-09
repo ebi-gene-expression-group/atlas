@@ -15,15 +15,13 @@ import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkState;
 
-/*
-Does not close TSV files! :(
- */
 @Named
 public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
 
@@ -82,13 +80,13 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         for (ExpressionUnit.Absolute.Rna dataFile: dataFiles) {
             checkResourceExistsAndIsReadable(experimentFiles.dataFile(dataFile));
             assayGroupIdsInHeaderMatchConfigurationXml(
-                    rnaSeqIdsFromHeader(experimentFiles.dataFile(dataFile).get().readNext()), experimentAccession);
+                    rnaSeqIdsFromHeader(extractFirstElement(experimentFiles.dataFile(dataFile))), experimentAccession);
         }
 
         AtlasResource<ObjectInputStream<String[]>> transcripts = experimentFiles.transcriptsTpms;
         if (transcripts.exists()) {
             biologicalReplicateIdsInHeaderMatchConfigurationXml(
-                    transcriptIdsFromHeader(transcripts.get().readNext()), experimentAccession);
+                    transcriptIdsFromHeader(extractFirstElement(transcripts)), experimentAccession);
         }
     }
 
@@ -106,7 +104,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         checkBaselineFiles(experimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.main);
         assayGroupIdsInHeaderMatchConfigurationXml(
-                proteomicsIdsFromHeader(experimentFiles.main.get().readNext()), experimentAccession);
+                proteomicsIdsFromHeader(extractFirstElement(experimentFiles.main)), experimentAccession);
     }
 
     String[] proteomicsIdsFromHeader(String[] header) {
@@ -180,5 +178,16 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
     private void checkResourceExistsAndIsReadable(AtlasResource<?> resource) {
         checkState(resource.exists(), "Required file does not exist: " + resource.toString());
         checkState(resource.isReadable(), "Required file can not be read: " + resource.toString());
+    }
+
+    private <T> T extractFirstElement(AtlasResource<ObjectInputStream<T>> resource){
+        ObjectInputStream<T> stream = resource.get();
+        T first = stream.readNext();
+        try {
+            stream.close();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+        return first;
     }
 }

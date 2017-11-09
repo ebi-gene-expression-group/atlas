@@ -147,12 +147,12 @@ public class ExperimentCrud {
     }
 
     private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO){
-        updateWithNewExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(),experimentDTO.isPrivate(), newDesign);
+        updateWithNewExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(), newDesign);
 
     }
 
-    private void updateWithNewExperimentDesign(String accession, ExperimentType type, boolean isPrivate,
-                                        ExperimentDesign experimentDesign) {
+    private void updateWithNewExperimentDesign(String accession, ExperimentType type,
+                                               ExperimentDesign experimentDesign) {
         try {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
             LOGGER.info("updated design for experiment {}", accession);
