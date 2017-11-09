@@ -19459,7 +19459,7 @@ var _colourize = function _colourize(colourRanges) {
   };
 };
 
-var _colourizeExpressionLevel = function _colourizeExpressionLevel(gradientColours, maxExpressionLevel, minExpressionLevel, highlightSeries) {
+var _colourizeExpressionLevel = function _colourizeExpressionLevel(gradientColours, highlightSeries) {
   var colourize = _colourize(gradientColours);
 
   return function (plotData) {
