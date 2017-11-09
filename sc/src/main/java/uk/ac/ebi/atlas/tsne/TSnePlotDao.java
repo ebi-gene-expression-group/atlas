@@ -14,6 +14,12 @@ import java.util.stream.Collectors;
 
 @Named
 public class TSnePlotDao {
+    private final Gson gson;
+
+    public TSnePlotDao() {
+        gson = new GsonBuilder().registerTypeAdapter(TSnePoint.class, TSnePoint.getGsonTypeAdapter()).create();
+    }
+
     public ImmutableMap<String, TSnePoint> fetchTSnePlotPoints(String experimentAccession) {
         try {
             return hardCodedTSneCoordinates();
@@ -24,7 +30,6 @@ public class TSnePlotDao {
 
     private ImmutableMap<String, TSnePoint> hardCodedTSneCoordinates() throws IOException {
         // TODO Hard-coded until we have real data
-        Gson gson = new GsonBuilder().registerTypeAdapter(TSnePoint.class, TSnePoint.typeAdapter(new Gson())).create();
         String coordinatesJson = IOUtils.readLines(
                 JsonSingleCellExperimentController.class.getResourceAsStream("tsne-coordinates.json"),
                 StandardCharsets.UTF_8)

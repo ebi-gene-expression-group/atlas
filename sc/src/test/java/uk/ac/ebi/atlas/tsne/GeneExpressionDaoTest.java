@@ -51,5 +51,4 @@ public class GeneExpressionDaoTest {
                 expression -> assertThat(expression, is(0.0))
         );
     }
-
 }
