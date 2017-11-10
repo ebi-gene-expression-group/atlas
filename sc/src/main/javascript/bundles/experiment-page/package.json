@@ -14,10 +14,10 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "expression-atlas-experiment-page-tsne-plot": "^1.7.0",
+    "expression-atlas-experiment-page-tsne-plot": "^1.9.0",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "urijs": "^1.19.0"
@@ -35,7 +35,7 @@
     "file-loader": "^1.1.5",
     "image-webpack-loader": "^3.4.2",
     "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.3",
+    "webpack-dev-server": "^2.9.4",
     "whatwg-fetch": "^2.0.3"
   }
 }

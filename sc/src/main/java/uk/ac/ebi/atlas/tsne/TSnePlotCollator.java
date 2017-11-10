@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
 
 @Named
 public class TSnePlotCollator {
@@ -30,7 +31,7 @@ public class TSnePlotCollator {
                                                                                  int k,
                                                                                  String geneId) {
         TreeMultimap<Integer, TSnePoint> clusters = getTSnePlotWithClusters(experimentAccession, k);
-        Map<String, Double> expression = geneExpressionDao.fetchGeneExpression(experimentAccession, geneId);
+        Map<String, Optional<Double>> expression = geneExpressionDao.fetchGeneExpression(experimentAccession, geneId);
 
         TreeMultimap<Integer, TSnePoint> clusterPointsWithExpression =
                 TreeMultimap.create(Comparator.<Integer> naturalOrder(), TSnePoint.getNameComparator());

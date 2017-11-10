@@ -18,20 +18,25 @@ import uk.ac.ebi.atlas.tsne.TSnePoint;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 @RestController
 public class JsonSingleCellExperimentController extends JsonExperimentController {
 
-    private Gson gson = new GsonBuilder().registerTypeAdapter(TSnePoint.class, TSnePoint.typeAdapter(new Gson())).create();
-    private TSnePlotCollator tSnePlotCollator;
+    private final Gson gson;
+    private final TSnePlotCollator tSnePlotCollator;
 
     @Inject
     public JsonSingleCellExperimentController(ExperimentTrader experimentTrader, TSnePlotCollator tSnePlotCollator) {
         super(experimentTrader);
         this.tSnePlotCollator = tSnePlotCollator;
+
+        gson = new GsonBuilder().registerTypeAdapter(TSnePoint.create(0.0, 0.0, "").getClass(), TSnePoint.getGsonTypeAdapter()).create();
     }
 
     @RequestMapping(
@@ -66,10 +71,18 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
         TreeMultimap<Integer, TSnePoint> clusterPointsWithExpression =
                 tSnePlotCollator.getTsnePlotWithClustersAndExpression(experimentAccession, k, geneId);
 
-        OptionalDouble max =
-                clusterPointsWithExpression.values().stream().mapToDouble(TSnePoint::expressionLevel).max();
-        OptionalDouble min =
-                clusterPointsWithExpression.values().stream().mapToDouble(TSnePoint::expressionLevel).min();
+        OptionalDouble max = clusterPointsWithExpression.values().stream()
+                .map(TSnePoint::expressionLevel)
+                .filter(Optional::isPresent)
+                .mapToDouble(Optional::get)
+                .max();
+
+        OptionalDouble min = clusterPointsWithExpression.values().stream()
+                .map(TSnePoint::expressionLevel)
+                .filter(Optional::isPresent)
+                .mapToDouble(Optional::get)
+                .min();
+
         String unit = "TPM"; // Get units from experiment, or from request parameter if more than one is available
 
         List<ImmutableMap<String, Object>> series =
@@ -80,9 +93,17 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
                 )
                 .collect(Collectors.toList());
 
-        return gson.toJson(
-                ImmutableMap.of("series", series, "max", max.orElse(0.0), "min", min.orElse(0.0), "unit", unit)
-        );
+        Map<String, Object> model = new HashMap<>();
+        model.put("series", series);
+        model.put("unit", unit);
+        if (max.isPresent()) {
+            model.put("max", max.getAsDouble());
+        }
+        if (min.isPresent()) {
+            model.put("min", min.getAsDouble());
+        }
+
+        return gson.toJson(model);
     }
 
 }

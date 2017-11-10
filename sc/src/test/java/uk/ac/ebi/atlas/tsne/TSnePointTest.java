@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.tsne;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -16,13 +17,13 @@ public class TSnePointTest {
         return TSnePoint.create(
                 ThreadLocalRandom.current().nextDouble(),
                 ThreadLocalRandom.current().nextDouble(),
-                ThreadLocalRandom.current().nextDouble(),
+                Optional.of(ThreadLocalRandom.current().nextDouble()),
                 name);
     }
 
     @Test
     public void create() throws Exception {
-        assertThat(TSnePoint.create(0.0, 0.0, "A"), is(TSnePoint.create(0.0, 0.0, 0.0, "A")));
+        assertThat(TSnePoint.create(0.0, 0.0, "A"), is(TSnePoint.create(0.0, 0.0, Optional.empty(), "A")));
     }
 
     @Test
