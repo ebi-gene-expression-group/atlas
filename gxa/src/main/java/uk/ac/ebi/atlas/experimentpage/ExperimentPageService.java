@@ -34,12 +34,12 @@ public class ExperimentPageService {
         experimentDescription.addProperty("type", experiment.getType().getDescription());
 
         JsonObject urls = new JsonObject();
-        String mainPageUrl = MessageFormat.format(
-                "experiments/{0}?geneQuery={1}",
-                experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson())
-                + (isBlank(accessKey) ? "" : "&accessKey=" + accessKey);
+
         urls.addProperty("main_page",
-                mainPageUrl
+                MessageFormat.format(
+                        "experiments/{0}?geneQuery={1}",
+                        experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson())
+                        + (isBlank(accessKey) ? "" : "&accessKey=" + accessKey)
         );
         urls.addProperty("genome_browsers",
                 GenomeBrowserController.redirectUrl(experiment.getAccession(), accessKey)
@@ -53,14 +53,6 @@ public class ExperimentPageService {
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
 
-        /*
-        deprecated on 7 Aug 2017
-        accessKey was needed for genome browsers
-        relUrl was a bottom link for "See more data in Expression Atlas"
-        TODO remove after distributing expression-atlas-heatmap-highcharts 3.3
-         */
-        experimentDescription.addProperty("accessKey", accessKey);
-        experimentDescription.addProperty("relUrl", mainPageUrl);
         return experimentDescription;
     }
 
