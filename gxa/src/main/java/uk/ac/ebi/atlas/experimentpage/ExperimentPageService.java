@@ -56,7 +56,7 @@ public class ExperimentPageService {
         return experimentDescription;
     }
 
-    public JsonObject config(Experiment<?> experiment, ExperimentPageRequestPreferences preferences) {
+    private JsonObject config(Experiment<?> experiment, ExperimentPageRequestPreferences preferences) {
         JsonObject config = new JsonObject();
         config.addProperty("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         config.addProperty("species", experiment.getSpecies().getName());
