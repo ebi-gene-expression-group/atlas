@@ -19544,7 +19544,7 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
   }), _react2.default.createElement(_PlotLoader2.default, { key: 'expression-plot',
     wrapperClassName: 'row',
     chartClassName: chartClassName,
-    series: _colourizeExpressionLevel(expressionGradientColours, plotData.max, plotData.min, highlightClusters)(plotData),
+    series: _colourizeExpressionLevel(expressionGradientColours, highlightClusters)(plotData),
     highchartsConfig: highchartsConfig,
     children: gradient,
     loading: loading,
@@ -21290,12 +21290,12 @@ var putInRange = function putInRange(ranges, val) {
   return (ranges[rangeIndex].stopPosition + (ranges[rangeIndex + 1].stopPosition - ranges[rangeIndex].stopPosition) * withinRangeOffset) / 100;
 };
 
-// The +24 adjustment is to account for the line height of the top label
+var lineHeight = 24;
 var Tick = function Tick(_ref) {
   var value = _ref.value,
       colour = _ref.colour,
       top = _ref.top;
-  return _react2.default.createElement('div', { style: { position: 'absolute', height: '2px', width: '20px', background: colour, top: top + 24 + 'px' } }, _react2.default.createElement('div', { style: { position: 'absolute', marginLeft: '24px', marginTop: '-0.75rem' } }, _react2.default.createElement('small', { style: { color: colour } }, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: Math.round10(value, -2) }))));
+  return _react2.default.createElement('div', { style: { position: 'absolute', height: '2px', width: '20px', background: colour, top: top + lineHeight + 'px' } }, _react2.default.createElement('div', { style: { position: 'absolute', marginLeft: '24px', marginTop: '-' + lineHeigh / 2 + 'px' } }, _react2.default.createElement('small', { style: { color: colour } }, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: Math.round10(value, -2) }))));
 };
 
 var MultiStopGradient = function MultiStopGradient(_ref2) {

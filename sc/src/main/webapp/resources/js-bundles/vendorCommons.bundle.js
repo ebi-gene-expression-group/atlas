@@ -5847,7 +5847,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.1.0
+/** @license React v16.1.1
  * react.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -5873,7 +5873,7 @@ if (true) {
 
     // TODO: this is special because it gets imported during build.
 
-    var ReactVersion = '16.1.0';
+    var ReactVersion = '16.1.1';
 
     /**
      * WARNING: DO NOT manually require this module.
@@ -7058,7 +7058,7 @@ if (true) {
       if (!validType) {
         var info = '';
         if (type === undefined || (typeof type === 'undefined' ? 'undefined' : _typeof(type)) === 'object' && type !== null && Object.keys(type).length === 0) {
-          info += ' You likely forgot to export your component from the file ' + "it's defined in.";
+          info += ' You likely forgot to export your component from the file ' + "it's defined in, or you might have mixed up default and named imports.";
         }
 
         var sourceInfo = getSourceInfoErrorAddendum(props);
@@ -7198,7 +7198,7 @@ if (true) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.1.0
+/** @license React v16.1.1
  * react-dom.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -7283,10 +7283,10 @@ return false;}}function getPropertyInfo(name){return properties.hasOwnProperty(n
  */function isReservedProp(name){return RESERVED_PROPS.hasOwnProperty(name);}var injection=DOMPropertyInjection;var MUST_USE_PROPERTY=injection.MUST_USE_PROPERTY;var HAS_BOOLEAN_VALUE=injection.HAS_BOOLEAN_VALUE;var HAS_NUMERIC_VALUE=injection.HAS_NUMERIC_VALUE;var HAS_POSITIVE_NUMERIC_VALUE=injection.HAS_POSITIVE_NUMERIC_VALUE;var HAS_OVERLOADED_BOOLEAN_VALUE=injection.HAS_OVERLOADED_BOOLEAN_VALUE;var HAS_STRING_BOOLEAN_VALUE=injection.HAS_STRING_BOOLEAN_VALUE;var HTMLDOMPropertyConfig={// When adding attributes to this list, be sure to also add them to
 // the `possibleStandardNames` module to ensure casing and incorrect
 // name warnings.
-Properties:{allowFullScreen:HAS_BOOLEAN_VALUE,autoFocus:HAS_STRING_BOOLEAN_VALUE,// specifies target context for links with `preload` type
-async:HAS_BOOLEAN_VALUE,// autoFocus is polyfilled/normalized by AutoFocusUtils
-// autoFocus: HAS_BOOLEAN_VALUE,
-autoPlay:HAS_BOOLEAN_VALUE,capture:HAS_BOOLEAN_VALUE,checked:MUST_USE_PROPERTY|HAS_BOOLEAN_VALUE,cols:HAS_POSITIVE_NUMERIC_VALUE,contentEditable:HAS_STRING_BOOLEAN_VALUE,controls:HAS_BOOLEAN_VALUE,'default':HAS_BOOLEAN_VALUE,defer:HAS_BOOLEAN_VALUE,disabled:HAS_BOOLEAN_VALUE,download:HAS_OVERLOADED_BOOLEAN_VALUE,draggable:HAS_STRING_BOOLEAN_VALUE,formNoValidate:HAS_BOOLEAN_VALUE,hidden:HAS_BOOLEAN_VALUE,loop:HAS_BOOLEAN_VALUE,// Caution; `option.selected` is not updated if `select.multiple` is
+Properties:{allowFullScreen:HAS_BOOLEAN_VALUE,// specifies target context for links with `preload` type
+async:HAS_BOOLEAN_VALUE,// Note: there is a special case that prevents it from being written to the DOM
+// on the client side because the browsers are inconsistent. Instead we call focus().
+autoFocus:HAS_BOOLEAN_VALUE,autoPlay:HAS_BOOLEAN_VALUE,capture:HAS_OVERLOADED_BOOLEAN_VALUE,checked:MUST_USE_PROPERTY|HAS_BOOLEAN_VALUE,cols:HAS_POSITIVE_NUMERIC_VALUE,contentEditable:HAS_STRING_BOOLEAN_VALUE,controls:HAS_BOOLEAN_VALUE,'default':HAS_BOOLEAN_VALUE,defer:HAS_BOOLEAN_VALUE,disabled:HAS_BOOLEAN_VALUE,download:HAS_OVERLOADED_BOOLEAN_VALUE,draggable:HAS_STRING_BOOLEAN_VALUE,formNoValidate:HAS_BOOLEAN_VALUE,hidden:HAS_BOOLEAN_VALUE,loop:HAS_BOOLEAN_VALUE,// Caution; `option.selected` is not updated if `select.multiple` is
 // disabled with `removeAttribute`.
 multiple:MUST_USE_PROPERTY|HAS_BOOLEAN_VALUE,muted:MUST_USE_PROPERTY|HAS_BOOLEAN_VALUE,noValidate:HAS_BOOLEAN_VALUE,open:HAS_BOOLEAN_VALUE,playsInline:HAS_BOOLEAN_VALUE,readOnly:HAS_BOOLEAN_VALUE,required:HAS_BOOLEAN_VALUE,reversed:HAS_BOOLEAN_VALUE,rows:HAS_POSITIVE_NUMERIC_VALUE,rowSpan:HAS_NUMERIC_VALUE,scoped:HAS_BOOLEAN_VALUE,seamless:HAS_BOOLEAN_VALUE,selected:MUST_USE_PROPERTY|HAS_BOOLEAN_VALUE,size:HAS_POSITIVE_NUMERIC_VALUE,start:HAS_NUMERIC_VALUE,// support for projecting regular DOM Elements via V1 named slots ( shadow dom )
 span:HAS_POSITIVE_NUMERIC_VALUE,spellCheck:HAS_STRING_BOOLEAN_VALUE,// Style must be explicitly set in the attribute list. React components
@@ -8535,7 +8535,7 @@ var currentFiber=null;// If we're in the middle of user code, which fiber and me
 var currentPhase=null;var currentPhaseFiber=null;// Did lifecycle hook schedule an update? This is often a performance problem,
 // so we will keep track of it, and include it in the report.
 // Track commits caused by cascading updates.
-var isCommitting=false;var hasScheduledUpdateInCurrentCommit=false;var hasScheduledUpdateInCurrentPhase=false;var commitCountInCurrentWorkLoop=0;var effectCountInCurrentCommit=0;// During commits, we only show a measurement once per method name
+var isCommitting=false;var hasScheduledUpdateInCurrentCommit=false;var hasScheduledUpdateInCurrentPhase=false;var commitCountInCurrentWorkLoop=0;var effectCountInCurrentCommit=0;var isWaitingForCallback=false;// During commits, we only show a measurement once per method name
 // to avoid stretch the commit phase with measurement overhead.
 var labelsInCurrentCommit=new Set();var formatMarkName=function formatMarkName(markName){return reactEmoji+' '+markName;};var formatLabel=function formatLabel(label,warning$$1){var prefix=warning$$1?warningEmoji+' ':reactEmoji+' ';var suffix=warning$$1?' Warning: '+warning$$1:'';return''+prefix+label+suffix;};var beginMark=function beginMark(markName){performance.mark(formatMarkName(markName));};var clearMark=function clearMark(markName){performance.clearMarks(formatMarkName(markName));};var endMark=function endMark(label,markName,warning$$1){var formattedMarkName=formatMarkName(markName);var formattedLabel=formatLabel(label,warning$$1);try{performance.measure(formattedLabel,formattedMarkName);}catch(err){}// If previous mark was missing for some reason, this will throw.
 // This could only happen if React crashed in an unexpected place earlier.
@@ -8551,7 +8551,7 @@ return false;}labelsInCurrentCommit.add(label);var markName=getFiberMarkName(lab
 switch(fiber.tag){case HostRoot:case HostComponent:case HostText:case HostPortal:case ReturnComponent:case Fragment:return true;default:return false;}};var clearPendingPhaseMeasurement=function clearPendingPhaseMeasurement(){if(currentPhase!==null&&currentPhaseFiber!==null){clearFiberMark(currentPhaseFiber,currentPhase);}currentPhaseFiber=null;currentPhase=null;hasScheduledUpdateInCurrentPhase=false;};var pauseTimers=function pauseTimers(){// Stops all currently active measurements so that they can be resumed
 // if we continue in a later deferred loop from the same unit of work.
 var fiber=currentFiber;while(fiber){if(fiber._debugIsCurrentlyTiming){endFiberMark(fiber,null,null);}fiber=fiber['return'];}};var resumeTimersRecursively=function resumeTimersRecursively(fiber){if(fiber['return']!==null){resumeTimersRecursively(fiber['return']);}if(fiber._debugIsCurrentlyTiming){beginFiberMark(fiber,null);}};var resumeTimers=function resumeTimers(){// Resumes all measurements that were active during the last deferred loop.
-if(currentFiber!==null){resumeTimersRecursively(currentFiber);}};function recordEffect(){if(enableUserTimingAPI){effectCountInCurrentCommit++;}}function recordScheduleUpdate(){if(enableUserTimingAPI){if(isCommitting){hasScheduledUpdateInCurrentCommit=true;}if(currentPhase!==null&&currentPhase!=='componentWillMount'&&currentPhase!=='componentWillReceiveProps'){hasScheduledUpdateInCurrentPhase=true;}}}function startWorkTimer(fiber){if(enableUserTimingAPI){if(!supportsUserTiming||shouldIgnoreFiber(fiber)){return;}// If we pause, this is the fiber to unwind from.
+if(currentFiber!==null){resumeTimersRecursively(currentFiber);}};function recordEffect(){if(enableUserTimingAPI){effectCountInCurrentCommit++;}}function recordScheduleUpdate(){if(enableUserTimingAPI){if(isCommitting){hasScheduledUpdateInCurrentCommit=true;}if(currentPhase!==null&&currentPhase!=='componentWillMount'&&currentPhase!=='componentWillReceiveProps'){hasScheduledUpdateInCurrentPhase=true;}}}function startRequestCallbackTimer(){if(enableUserTimingAPI){if(supportsUserTiming&&!isWaitingForCallback){isWaitingForCallback=true;beginMark('(Waiting for async callback...)');}}}function stopRequestCallbackTimer(didExpire){if(enableUserTimingAPI){if(supportsUserTiming){isWaitingForCallback=false;var warning$$1=didExpire?'React was blocked by main thread':null;endMark('(Waiting for async callback...)','(Waiting for async callback...)',warning$$1);}}}function startWorkTimer(fiber){if(enableUserTimingAPI){if(!supportsUserTiming||shouldIgnoreFiber(fiber)){return;}// If we pause, this is the fiber to unwind from.
 currentFiber=fiber;if(!beginFiberMark(fiber,null)){return;}fiber._debugIsCurrentlyTiming=true;}}function cancelWorkTimer(fiber){if(enableUserTimingAPI){if(!supportsUserTiming||shouldIgnoreFiber(fiber)){return;}// Remember we shouldn't complete measurement for this fiber.
 // Otherwise flamechart will be deep even for small updates.
 fiber._debugIsCurrentlyTiming=false;clearFiberMark(fiber,null);}}function stopWorkTimer(fiber){if(enableUserTimingAPI){if(!supportsUserTiming||shouldIgnoreFiber(fiber)){return;}// If we pause, its parent is the fiber to unwind from.
@@ -8635,7 +8635,7 @@ workInProgress.sibling=current.sibling;workInProgress.index=current.index;workIn
 // the current or a workInProgress? When the continuation gets rendered here
 // we don't know if we can reuse that fiber or if we need to clone it.
 // There is probably a clever way to restructure this.
-fiber=type;fiber.pendingProps=element.props;}else{var info='';{if(type===undefined||(typeof type==='undefined'?'undefined':_typeof(type))==='object'&&type!==null&&Object.keys(type).length===0){info+=' You likely forgot to export your component from the file '+"it's defined in.";}var ownerName=owner?getComponentName(owner):null;if(ownerName){info+='\n\nCheck the render method of `'+ownerName+'`.';}}invariant(false,'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s',type==null?type:typeof type==='undefined'?'undefined':_typeof(type),info);}{fiber._debugSource=element._source;fiber._debugOwner=element._owner;}fiber.expirationTime=expirationTime;return fiber;}function createFiberFromFragment(elements,internalContextTag,expirationTime,key){var fiber=createFiber(Fragment,key,internalContextTag);fiber.pendingProps=elements;fiber.expirationTime=expirationTime;return fiber;}function createFiberFromText(content,internalContextTag,expirationTime){var fiber=createFiber(HostText,null,internalContextTag);fiber.pendingProps=content;fiber.expirationTime=expirationTime;return fiber;}function createFiberFromHostInstanceForDeletion(){var fiber=createFiber(HostComponent,null,NoContext);fiber.type='DELETED';return fiber;}function createFiberFromCall(call,internalContextTag,expirationTime){var fiber=createFiber(CallComponent,call.key,internalContextTag);fiber.type=call.handler;fiber.pendingProps=call;fiber.expirationTime=expirationTime;return fiber;}function createFiberFromReturn(returnNode,internalContextTag,expirationTime){var fiber=createFiber(ReturnComponent,null,internalContextTag);fiber.expirationTime=expirationTime;return fiber;}function createFiberFromPortal(portal,internalContextTag,expirationTime){var fiber=createFiber(HostPortal,portal.key,internalContextTag);fiber.pendingProps=portal.children||[];fiber.expirationTime=expirationTime;fiber.stateNode={containerInfo:portal.containerInfo,pendingChildren:null,// Used by persistent updates
+fiber=type;fiber.pendingProps=element.props;}else{var info='';{if(type===undefined||(typeof type==='undefined'?'undefined':_typeof(type))==='object'&&type!==null&&Object.keys(type).length===0){info+=' You likely forgot to export your component from the file '+"it's defined in, or you might have mixed up default and named imports.";}var ownerName=owner?getComponentName(owner):null;if(ownerName){info+='\n\nCheck the render method of `'+ownerName+'`.';}}invariant(false,'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s',type==null?type:typeof type==='undefined'?'undefined':_typeof(type),info);}{fiber._debugSource=element._source;fiber._debugOwner=element._owner;}fiber.expirationTime=expirationTime;return fiber;}function createFiberFromFragment(elements,internalContextTag,expirationTime,key){var fiber=createFiber(Fragment,key,internalContextTag);fiber.pendingProps=elements;fiber.expirationTime=expirationTime;return fiber;}function createFiberFromText(content,internalContextTag,expirationTime){var fiber=createFiber(HostText,null,internalContextTag);fiber.pendingProps=content;fiber.expirationTime=expirationTime;return fiber;}function createFiberFromHostInstanceForDeletion(){var fiber=createFiber(HostComponent,null,NoContext);fiber.type='DELETED';return fiber;}function createFiberFromCall(call,internalContextTag,expirationTime){var fiber=createFiber(CallComponent,call.key,internalContextTag);fiber.type=call.handler;fiber.pendingProps=call;fiber.expirationTime=expirationTime;return fiber;}function createFiberFromReturn(returnNode,internalContextTag,expirationTime){var fiber=createFiber(ReturnComponent,null,internalContextTag);fiber.expirationTime=expirationTime;return fiber;}function createFiberFromPortal(portal,internalContextTag,expirationTime){var fiber=createFiber(HostPortal,portal.key,internalContextTag);fiber.pendingProps=portal.children||[];fiber.expirationTime=expirationTime;fiber.stateNode={containerInfo:portal.containerInfo,pendingChildren:null,// Used by persistent updates
 implementation:portal.implementation};return fiber;}function createFiberRoot(containerInfo,hydrate){// Cyclic construction. This cheats the type system right now because
 // stateNode is any.
 var uninitializedFiber=createHostRootFiber();var root={current:uninitializedFiber,containerInfo:containerInfo,pendingChildren:null,remainingExpirationTime:NoWork,isReadyForCommit:false,finishedWork:null,context:null,pendingContext:null,hydrate:hydrate,nextScheduledRoot:null};uninitializedFiber.stateNode=root;return root;}var onCommitFiberRoot=null;var onCommitFiberUnmount=null;var hasLoggedError=false;function catchErrors(fn){return function(arg){try{return fn(arg);}catch(err){if(true&&!hasLoggedError){hasLoggedError=true;warning(false,'React DevTools encountered an error: %s',err);}}};}function injectInternals(internals){if(typeof __REACT_DEVTOOLS_GLOBAL_HOOK__==='undefined'){// No DevTools
@@ -9294,16 +9294,16 @@ var hydrationParentFiber=null;var nextHydratableInstance=null;var isHydrating=fa
 // Even if we abort and rereconcile the children, that will try to hydrate
 // again and the nodes are still in the host tree so these will be
 // recreated.
-if(returnFiber.lastEffect!==null){returnFiber.lastEffect.nextEffect=childToDelete;returnFiber.lastEffect=childToDelete;}else{returnFiber.firstEffect=returnFiber.lastEffect=childToDelete;}}function insertNonHydratedInstance(returnFiber,fiber){fiber.effectTag|=Placement;{switch(returnFiber.tag){case HostRoot:{var parentContainer=returnFiber.stateNode.containerInfo;switch(fiber.tag){case HostComponent:var type=fiber.type;var props=fiber.pendingProps;didNotFindHydratableContainerInstance(parentContainer,type,props);break;case HostText:var text=fiber.pendingProps;didNotFindHydratableContainerTextInstance(parentContainer,text);break;}break;}case HostComponent:{var parentType=returnFiber.type;var parentProps=returnFiber.memoizedProps;var parentInstance=returnFiber.stateNode;switch(fiber.tag){case HostComponent:var _type=fiber.type;var _props=fiber.pendingProps;didNotFindHydratableInstance(parentType,parentProps,parentInstance,_type,_props);break;case HostText:var _text=fiber.pendingProps;didNotFindHydratableTextInstance(parentType,parentProps,parentInstance,_text);break;}break;}default:return;}}}function canHydrate(fiber,nextInstance){switch(fiber.tag){case HostComponent:{var type=fiber.type;var props=fiber.pendingProps;return canHydrateInstance(nextInstance,type,props);}case HostText:{var text=fiber.pendingProps;return canHydrateTextInstance(nextInstance,text);}default:return false;}}function tryToClaimNextHydratableInstance(fiber){if(!isHydrating){return;}var nextInstance=nextHydratableInstance;if(!nextInstance){// Nothing to hydrate. Make it an insertion.
-insertNonHydratedInstance(hydrationParentFiber,fiber);isHydrating=false;hydrationParentFiber=fiber;return;}if(!canHydrate(fiber,nextInstance)){// If we can't hydrate this instance let's try the next one.
+if(returnFiber.lastEffect!==null){returnFiber.lastEffect.nextEffect=childToDelete;returnFiber.lastEffect=childToDelete;}else{returnFiber.firstEffect=returnFiber.lastEffect=childToDelete;}}function insertNonHydratedInstance(returnFiber,fiber){fiber.effectTag|=Placement;{switch(returnFiber.tag){case HostRoot:{var parentContainer=returnFiber.stateNode.containerInfo;switch(fiber.tag){case HostComponent:var type=fiber.type;var props=fiber.pendingProps;didNotFindHydratableContainerInstance(parentContainer,type,props);break;case HostText:var text=fiber.pendingProps;didNotFindHydratableContainerTextInstance(parentContainer,text);break;}break;}case HostComponent:{var parentType=returnFiber.type;var parentProps=returnFiber.memoizedProps;var parentInstance=returnFiber.stateNode;switch(fiber.tag){case HostComponent:var _type=fiber.type;var _props=fiber.pendingProps;didNotFindHydratableInstance(parentType,parentProps,parentInstance,_type,_props);break;case HostText:var _text=fiber.pendingProps;didNotFindHydratableTextInstance(parentType,parentProps,parentInstance,_text);break;}break;}default:return;}}}function tryHydrate(fiber,nextInstance){switch(fiber.tag){case HostComponent:{var type=fiber.type;var props=fiber.pendingProps;var instance=canHydrateInstance(nextInstance,type,props);if(instance!==null){fiber.stateNode=instance;return true;}return false;}case HostText:{var text=fiber.pendingProps;var textInstance=canHydrateTextInstance(nextInstance,text);if(textInstance!==null){fiber.stateNode=textInstance;return true;}return false;}default:return false;}}function tryToClaimNextHydratableInstance(fiber){if(!isHydrating){return;}var nextInstance=nextHydratableInstance;if(!nextInstance){// Nothing to hydrate. Make it an insertion.
+insertNonHydratedInstance(hydrationParentFiber,fiber);isHydrating=false;hydrationParentFiber=fiber;return;}if(!tryHydrate(fiber,nextInstance)){// If we can't hydrate this instance let's try the next one.
 // We use this as a heuristic. It's based on intuition and not data so it
 // might be flawed or unnecessary.
-nextInstance=getNextHydratableSibling(nextInstance);if(!nextInstance||!canHydrate(fiber,nextInstance)){// Nothing to hydrate. Make it an insertion.
+nextInstance=getNextHydratableSibling(nextInstance);if(!nextInstance||!tryHydrate(fiber,nextInstance)){// Nothing to hydrate. Make it an insertion.
 insertNonHydratedInstance(hydrationParentFiber,fiber);isHydrating=false;hydrationParentFiber=fiber;return;}// We matched the next one, we'll now assume that the first one was
 // superfluous and we'll delete it. Since we can't eagerly delete it
 // we'll have to schedule a deletion. To do that, this node needs a dummy
 // fiber associated with it.
-deleteHydratableInstance(hydrationParentFiber,nextHydratableInstance);}fiber.stateNode=nextInstance;hydrationParentFiber=fiber;nextHydratableInstance=getFirstHydratableChild(nextInstance);}function prepareToHydrateHostInstance(fiber,rootContainerInstance,hostContext){var instance=fiber.stateNode;var updatePayload=hydrateInstance(instance,fiber.type,fiber.memoizedProps,rootContainerInstance,hostContext,fiber);// TODO: Type this specific to this type of component.
+deleteHydratableInstance(hydrationParentFiber,nextHydratableInstance);}hydrationParentFiber=fiber;nextHydratableInstance=getFirstHydratableChild(nextInstance);}function prepareToHydrateHostInstance(fiber,rootContainerInstance,hostContext){var instance=fiber.stateNode;var updatePayload=hydrateInstance(instance,fiber.type,fiber.memoizedProps,rootContainerInstance,hostContext,fiber);// TODO: Type this specific to this type of component.
 fiber.updateQueue=updatePayload;// If the update payload indicates that there is a change or if there
 // is a new ref we mark this as an update.
 if(updatePayload!==null){return true;}return false;}function prepareToHydrateHostTextInstance(fiber){var textInstance=fiber.stateNode;var textContent=fiber.memoizedProps;var shouldUpdate=hydrateTextInstance(textInstance,textContent,fiber);{if(shouldUpdate){// We assume that prepareToHydrateHostTextInstance is called in a context where the
@@ -9544,7 +9544,7 @@ return;}if(isBatchingUpdates){// Flush work at the end of the batch.
 if(isUnbatchingUpdates){// ...unless we're inside unbatchedUpdates, in which case we should
 // flush it now.
 performWorkOnRoot(root,Sync);}return;}// TODO: Get rid of Sync and use current time?
-if(expirationTime===Sync){performWork(Sync,null);}else if(!isCallbackScheduled){isCallbackScheduled=true;scheduleDeferredCallback(performAsyncWork);}}function findHighestPriorityRoot(){var highestPriorityWork=NoWork;var highestPriorityRoot=null;if(lastScheduledRoot!==null){var previousScheduledRoot=lastScheduledRoot;var root=firstScheduledRoot;while(root!==null){var remainingExpirationTime=root.remainingExpirationTime;if(remainingExpirationTime===NoWork){// This root no longer has work. Remove it from the scheduler.
+if(expirationTime===Sync){performWork(Sync,null);}else if(!isCallbackScheduled){isCallbackScheduled=true;startRequestCallbackTimer();scheduleDeferredCallback(performAsyncWork);}}function findHighestPriorityRoot(){var highestPriorityWork=NoWork;var highestPriorityRoot=null;if(lastScheduledRoot!==null){var previousScheduledRoot=lastScheduledRoot;var root=firstScheduledRoot;while(root!==null){var remainingExpirationTime=root.remainingExpirationTime;if(remainingExpirationTime===NoWork){// This root no longer has work. Remove it from the scheduler.
 // TODO: This check is redudant, but Flow is confused by the branch
 // below where we set lastScheduledRoot to null, even though we break
 // from the loop right after.
@@ -9556,13 +9556,13 @@ highestPriorityWork=remainingExpirationTime;highestPriorityRoot=root;}if(root===
 // update. To prevent an infinite loop, increment the nested update count.
 var previousFlushedRoot=nextFlushedRoot;if(previousFlushedRoot!==null&&previousFlushedRoot===highestPriorityRoot){nestedUpdateCount++;}else{// Reset whenever we switch roots.
 nestedUpdateCount=0;}nextFlushedRoot=highestPriorityRoot;nextFlushedExpirationTime=highestPriorityWork;}function performAsyncWork(dl){performWork(NoWork,dl);}function performWork(minExpirationTime,dl){deadline=dl;// Keep working on roots until there's no more work, or until the we reach
-// the deadlne.
-findHighestPriorityRoot();while(nextFlushedRoot!==null&&nextFlushedExpirationTime!==NoWork&&(minExpirationTime===NoWork||nextFlushedExpirationTime<=minExpirationTime)&&!deadlineDidExpire){performWorkOnRoot(nextFlushedRoot,nextFlushedExpirationTime);// Find the next highest priority work.
+// the deadline.
+findHighestPriorityRoot();if(enableUserTimingAPI&&deadline!==null){var didExpire=nextFlushedExpirationTime<recalculateCurrentTime();stopRequestCallbackTimer(didExpire);}while(nextFlushedRoot!==null&&nextFlushedExpirationTime!==NoWork&&(minExpirationTime===NoWork||nextFlushedExpirationTime<=minExpirationTime)&&!deadlineDidExpire){performWorkOnRoot(nextFlushedRoot,nextFlushedExpirationTime);// Find the next highest priority work.
 findHighestPriorityRoot();}// We're done flushing work. Either we ran out of time in this callback,
 // or there's no more work left with sufficient priority.
 // If we're inside a callback, set this to false since we just completed it.
 if(deadline!==null){isCallbackScheduled=false;}// If there's work left over, schedule a new callback.
-if(nextFlushedRoot!==null&&!isCallbackScheduled){isCallbackScheduled=true;scheduleDeferredCallback(performAsyncWork);}// Clean-up.
+if(nextFlushedRoot!==null&&!isCallbackScheduled){isCallbackScheduled=true;startRequestCallbackTimer();scheduleDeferredCallback(performAsyncWork);}// Clean-up.
 deadline=null;deadlineDidExpire=false;nestedUpdateCount=0;if(hasUnhandledError){var _error4=unhandledError;unhandledError=null;hasUnhandledError=false;throw _error4;}}function performWorkOnRoot(root,expirationTime){!!isRendering?invariant(false,'performWorkOnRoot was called recursively. This error is likely caused by a bug in React. Please file an issue.'):void 0;isRendering=true;// Check if this is async work or sync/expired work.
 // TODO: Pass current time as argument to renderRoot, commitRoot
 if(expirationTime<=recalculateCurrentTime()){// Flush sync work.
@@ -9598,7 +9598,7 @@ return null;}return _findFiberByHostInstance(instance);}}));}};};var ReactFiberR
 // TODO: decide on the top-level export form.
 // This is hacky but makes it work with both Rollup and Jest.
 var reactReconciler=ReactFiberReconciler$3['default']?ReactFiberReconciler$3['default']:ReactFiberReconciler$3;// TODO: this is special because it gets imported during build.
-var ReactVersion='16.1.0';// a requestAnimationFrame, storing the time for the start of the frame, then
+var ReactVersion='16.1.1';// a requestAnimationFrame, storing the time for the start of the frame, then
 // scheduling a postMessage which gets scheduled after paint. Within the
 // postMessage handler do as much work as possible until time + frame rate.
 // By separating the idle call into a separate event tick we ensure that
@@ -10164,8 +10164,10 @@ var createElement=createElement$1;var createTextNode=createTextNode$1;var setIni
 var hostContextDev=hostContext;validateDOMNesting$1(type,null,hostContextDev.ancestorInfo);if(typeof props.children==='string'||typeof props.children==='number'){var string=''+props.children;var ownAncestorInfo=updatedAncestorInfo(hostContextDev.ancestorInfo,type,null);validateDOMNesting$1(null,string,ownAncestorInfo);}parentNamespace=hostContextDev.namespace;}var domElement=createElement(type,props,rootContainerInstance,parentNamespace);precacheFiberNode(internalInstanceHandle,domElement);updateFiberProps(domElement,props);return domElement;},appendInitialChild:function appendInitialChild(parentInstance,child){parentInstance.appendChild(child);},finalizeInitialChildren:function finalizeInitialChildren(domElement,type,props,rootContainerInstance){setInitialProperties(domElement,type,props,rootContainerInstance);return shouldAutoFocusHostComponent(type,props);},prepareUpdate:function prepareUpdate(domElement,type,oldProps,newProps,rootContainerInstance,hostContext){{var hostContextDev=hostContext;if(_typeof(newProps.children)!==_typeof(oldProps.children)&&(typeof newProps.children==='string'||typeof newProps.children==='number')){var string=''+newProps.children;var ownAncestorInfo=updatedAncestorInfo(hostContextDev.ancestorInfo,type,null);validateDOMNesting$1(null,string,ownAncestorInfo);}}return diffProperties(domElement,type,oldProps,newProps,rootContainerInstance);},shouldSetTextContent:function shouldSetTextContent(type,props){return type==='textarea'||typeof props.children==='string'||typeof props.children==='number'||_typeof(props.dangerouslySetInnerHTML)==='object'&&props.dangerouslySetInnerHTML!==null&&typeof props.dangerouslySetInnerHTML.__html==='string';},shouldDeprioritizeSubtree:function shouldDeprioritizeSubtree(type,props){return!!props.hidden;},createTextInstance:function createTextInstance(text,rootContainerInstance,hostContext,internalInstanceHandle){{var hostContextDev=hostContext;validateDOMNesting$1(null,text,hostContextDev.ancestorInfo);}var textNode=createTextNode(text,rootContainerInstance);precacheFiberNode(internalInstanceHandle,textNode);return textNode;},now:now,mutation:{commitMount:function commitMount(domElement,type,newProps,internalInstanceHandle){domElement.focus();},commitUpdate:function commitUpdate(domElement,updatePayload,type,oldProps,newProps,internalInstanceHandle){// Update the props handle so that we know which props are the ones with
 // with current event handlers.
 updateFiberProps(domElement,newProps);// Apply the diff to the DOM node.
-updateProperties(domElement,updatePayload,type,oldProps,newProps);},resetTextContent:function resetTextContent(domElement){domElement.textContent='';},commitTextUpdate:function commitTextUpdate(textInstance,oldText,newText){textInstance.nodeValue=newText;},appendChild:function appendChild(parentInstance,child){parentInstance.appendChild(child);},appendChildToContainer:function appendChildToContainer(container,child){if(container.nodeType===COMMENT_NODE){container.parentNode.insertBefore(child,container);}else{container.appendChild(child);}},insertBefore:function insertBefore(parentInstance,child,beforeChild){parentInstance.insertBefore(child,beforeChild);},insertInContainerBefore:function insertInContainerBefore(container,child,beforeChild){if(container.nodeType===COMMENT_NODE){container.parentNode.insertBefore(child,beforeChild);}else{container.insertBefore(child,beforeChild);}},removeChild:function removeChild(parentInstance,child){parentInstance.removeChild(child);},removeChildFromContainer:function removeChildFromContainer(container,child){if(container.nodeType===COMMENT_NODE){container.parentNode.removeChild(child);}else{container.removeChild(child);}}},hydration:{canHydrateInstance:function canHydrateInstance(instance,type,props){return instance.nodeType===ELEMENT_NODE&&type.toLowerCase()===instance.nodeName.toLowerCase();},canHydrateTextInstance:function canHydrateTextInstance(instance,text){if(text===''){// Empty strings are not parsed by HTML so there won't be a correct match here.
-return false;}return instance.nodeType===TEXT_NODE;},getNextHydratableSibling:function getNextHydratableSibling(instance){var node=instance.nextSibling;// Skip non-hydratable nodes.
+updateProperties(domElement,updatePayload,type,oldProps,newProps);},resetTextContent:function resetTextContent(domElement){domElement.textContent='';},commitTextUpdate:function commitTextUpdate(textInstance,oldText,newText){textInstance.nodeValue=newText;},appendChild:function appendChild(parentInstance,child){parentInstance.appendChild(child);},appendChildToContainer:function appendChildToContainer(container,child){if(container.nodeType===COMMENT_NODE){container.parentNode.insertBefore(child,container);}else{container.appendChild(child);}},insertBefore:function insertBefore(parentInstance,child,beforeChild){parentInstance.insertBefore(child,beforeChild);},insertInContainerBefore:function insertInContainerBefore(container,child,beforeChild){if(container.nodeType===COMMENT_NODE){container.parentNode.insertBefore(child,beforeChild);}else{container.insertBefore(child,beforeChild);}},removeChild:function removeChild(parentInstance,child){parentInstance.removeChild(child);},removeChildFromContainer:function removeChildFromContainer(container,child){if(container.nodeType===COMMENT_NODE){container.parentNode.removeChild(child);}else{container.removeChild(child);}}},hydration:{canHydrateInstance:function canHydrateInstance(instance,type,props){if(instance.nodeType!==ELEMENT_NODE||type.toLowerCase()!==instance.nodeName.toLowerCase()){return null;}// This has now been refined to an element node.
+return instance;},canHydrateTextInstance:function canHydrateTextInstance(instance,text){if(text===''||instance.nodeType!==TEXT_NODE){// Empty strings are not parsed by HTML so there won't be a correct match here.
+return null;}// This has now been refined to a text node.
+return instance;},getNextHydratableSibling:function getNextHydratableSibling(instance){var node=instance.nextSibling;// Skip non-hydratable nodes.
 while(node&&node.nodeType!==ELEMENT_NODE&&node.nodeType!==TEXT_NODE){node=node.nextSibling;}return node;},getFirstHydratableChild:function getFirstHydratableChild(parentInstance){var next=parentInstance.firstChild;// Skip non-hydratable nodes.
 while(next&&next.nodeType!==ELEMENT_NODE&&next.nodeType!==TEXT_NODE){next=next.nextSibling;}return next;},hydrateInstance:function hydrateInstance(instance,type,props,rootContainerInstance,hostContext,internalInstanceHandle){precacheFiberNode(internalInstanceHandle,instance);// TODO: Possibly defer this until the commit phase where all the events
 // get attached.
@@ -12009,7 +12011,7 @@ function connect(mapPropsToRequestsToProps, defaults, options) {
         return function (meta) {
           return function (value) {
             var refreshTimeout = null;
-            if (mapping.refreshInterval > 0 && !_this6._unmounted) {
+            if (mapping.refreshInterval > 0 && !_this6._unmounted && _this6.state.mappings[prop] === mapping) {
               refreshTimeout = window.setTimeout(function () {
                 _this6.refetchDatum(prop, Object.assign({}, mapping, { refreshing: true, force: true }));
               }, mapping.refreshInterval);
@@ -12386,29 +12388,47 @@ var KNOWN_STATICS = {
     length: true,
     prototype: true,
     caller: true,
+    callee: true,
     arguments: true,
     arity: true
 };
 
-var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     if (typeof sourceComponent !== 'string') {
         // don't hoist over string (html) components
-        var keys = Object.getOwnPropertyNames(sourceComponent);
 
-        /* istanbul ignore else */
-        if (isGetOwnPropertySymbolsAvailable) {
-            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
         }
 
         for (var i = 0; i < keys.length; ++i) {
-            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
                 try {
-                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-                } catch (error) {}
+                    // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
             }
         }
+
+        return targetComponent;
     }
 
     return targetComponent;
