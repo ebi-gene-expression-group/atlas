@@ -123,7 +123,7 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
      potentially: use the "cutoff", which otherwise doesn't do anything but got selected in the UI, to draw the user something visual
     */
     private JsonObject config(BaselineExperiment experiment, ExperimentPageRequestPreferences preferences) {
-        JsonObject config = gson.toJsonTree(preferences, JsonObject.class).getAsJsonObject();
+        JsonObject config = gson.toJsonTree(preferences).getAsJsonObject();
         config.addProperty("cutoff", preferences.getCutoff());
         config.addProperty("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         config.addProperty("species", experiment.getSpecies().getName());
