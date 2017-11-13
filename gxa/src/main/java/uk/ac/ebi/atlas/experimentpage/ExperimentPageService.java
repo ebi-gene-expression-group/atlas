@@ -60,6 +60,12 @@ public class ExperimentPageService {
 
         theOnlyGeneInResults.ifPresent(gene -> {
             try {
+                if (! experiment.getType().isRnaSeqBaseline()){
+                    /*
+                    We only support that for now - see JsonBaselineGeneInExperimentController.java
+                     */
+                    return;
+                }
                 urls.addProperty("gene_specific_results", geneSpecificResultsLink(experiment, gene, accessKey, requestPreferences).toString());
             } catch (URISyntaxException | IllegalAccessException | NoSuchMethodException | InvocationTargetException  e) {
                 throw new RuntimeException(e);
