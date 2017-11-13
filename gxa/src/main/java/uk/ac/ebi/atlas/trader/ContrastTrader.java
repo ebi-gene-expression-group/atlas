@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
-@Named()
+@Named
 public class ContrastTrader {
 
     private ExperimentTrader experimentTrader;
