@@ -64,10 +64,10 @@ public class SolrQueryService {
         GeneQueryResponse geneQueryResponse = fetchGeneIdsGroupedByGeneQueryToken(geneQuery, species);
 
         if (geneQueryResponse.isEmpty()) {
-            throw new GenesNotFoundException(
-                    String.format(
-                            "No genes found for searchText = %s, species = %s",
-                            geneQuery.toJson(), species.getName()));
+            throw new RuntimeException(
+                    MessageFormat.format(
+                            "No genes found matching query: = {0}, species = {1}",
+                            geneQuery.description(), species.isUnknown() ? "all" : species.getName()));
         }
 
         return geneQueryResponse;

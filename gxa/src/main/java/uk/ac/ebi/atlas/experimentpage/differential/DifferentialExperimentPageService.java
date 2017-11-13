@@ -49,27 +49,13 @@ public class DifferentialExperimentPageService
             result.add(e.getKey(), e.getValue());
         }
 
-        try {
+        result.add("columnGroupings", new JsonArray());
+        result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
+        result.add("profiles", new ExternallyViewableProfilesList<>(
+                profilesHeatMap.fetch(requestContext), new LinkToGene<>(), requestContext.getDataColumnsToReturn(),
+                p -> ExpressionUnit.Relative.FOLD_CHANGE).asJson());
 
-            DifferentialProfilesList<P> differentialProfiles = profilesHeatMap.fetch(requestContext);
-            if (!differentialProfiles.isEmpty()) {
-                result.add("columnGroupings", new JsonArray());
-                result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
-                result.add("profiles", new ExternallyViewableProfilesList<>(
-                        differentialProfiles, new LinkToGene<>(), requestContext.getDataColumnsToReturn(),
-                        p -> ExpressionUnit.Relative.FOLD_CHANGE).asJson());
-
-                return result;
-            } else {
-                return noMatchError(preferences);
-            }
-        } catch (GenesNotFoundException e) {
-            return noMatchError(preferences);
-        }
-    }
-
-    JsonObject noMatchError(K preferences){
-        throw new RuntimeException("No genes found matching query: '" + preferences.getGeneQuery().description() + "'");
+        return result;
     }
 
     private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment

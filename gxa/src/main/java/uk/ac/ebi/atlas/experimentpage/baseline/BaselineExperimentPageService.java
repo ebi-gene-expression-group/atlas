@@ -46,15 +46,11 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         result.add("columnGroupings", new JsonArray());
 
-        try {
-            result.add("profiles", heatmapResults.getJsonProfiles());
+        result.add("profiles", heatmapResults.getJsonProfiles());
 
-            JsonArray jsonCoexpressions = heatmapResults.getJsonCoexpressions();
-            if (jsonCoexpressions.size() > 0) {
-                result.add("coexpressions", jsonCoexpressions);
-            }
-        } catch (GenesNotFoundException e) {
-            throw new RuntimeException(String.format("No genes found for query: '%s'", preferences.getGeneQuery()));
+        JsonArray jsonCoexpressions = heatmapResults.getJsonCoexpressions();
+        if (jsonCoexpressions.size() > 0) {
+            result.add("coexpressions", jsonCoexpressions);
         }
 
         result.add(
