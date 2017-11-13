@@ -87,6 +87,9 @@ public class ExperimentPageService {
                     experiment.getAccession(), gene
         ));
         for(Map.Entry<String, String> e: BeanUtils.describe(requestPreferences).entrySet()) {
+            if(e.getKey().equals("class") || e.getKey().startsWith("default")){
+                continue;
+            }
             builder.addParameter(e.getKey(), e.getValue());
         }
         if(StringUtils.isNotBlank(accessKey)){
