@@ -55,6 +55,10 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
             @PathVariable String geneId,
             @RequestParam(defaultValue = "") String accessKey) {
 
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        JsonObject result = new JsonObject();
+        result.add("config", config(experiment, preferences));
+
         /*
         This code accesses expression files in a somewhat messy way.
         We want all data, no matter the cutoff - so we "set request all data" for gene expression files
@@ -65,14 +69,10 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
          */
         BaselineRequestPreferences.setRequestAllData(preferences);
 
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
         BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext = new BaselineRequestContext<>(preferences, experiment);
-
-        JsonObject result = new JsonObject();
-        result.add("config", config(experiment, preferences));
         result.add("columnHeaders", columnHeaders(requestContext));
-
+        
         GeneProfilesList<BaselineProfile> geneExpression =
                 rnaSeqBaselineProfileStreamFactory.getAllMatchingProfiles(
                         experiment,
@@ -120,7 +120,7 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
 
     /*
      I am not sure if any of these properties are necessary, or useful
-     potentially: use the "cutoff", which otherwise doesn't do anything but got selected in the UI, to draw the user something visual
+     we use the "cutoff", which otherwise doesn't do anything but got selected in the UI, to draw the user something visual
     */
     private JsonObject config(BaselineExperiment experiment, ExperimentPageRequestPreferences preferences) {
         JsonObject config = gson.toJsonTree(preferences).getAsJsonObject();
