@@ -21295,7 +21295,7 @@ var Tick = function Tick(_ref) {
   var value = _ref.value,
       colour = _ref.colour,
       top = _ref.top;
-  return _react2.default.createElement('div', { style: { position: 'absolute', height: '2px', width: '20px', background: colour, top: top + lineHeight + 'px' } }, _react2.default.createElement('div', { style: { position: 'absolute', marginLeft: '24px', marginTop: '-' + lineHeigh / 2 + 'px' } }, _react2.default.createElement('small', { style: { color: colour } }, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: Math.round10(value, -2) }))));
+  return _react2.default.createElement('div', { style: { position: 'absolute', height: '2px', width: '20px', background: colour, top: top + lineHeight + 'px' } }, _react2.default.createElement('div', { style: { position: 'absolute', marginLeft: '24px', marginTop: '-' + lineHeight / 2 + 'px' } }, _react2.default.createElement('small', { style: { color: colour } }, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: Math.round10(value, -2) }))));
 };
 
 var MultiStopGradient = function MultiStopGradient(_ref2) {

@@ -2075,9 +2075,9 @@ expression-atlas-autocomplete@^1.1.1:
     react-dom "^16.0.0"
     urijs "^1.19.0"
 
-expression-atlas-experiment-page-tsne-plot@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page-tsne-plot/-/expression-atlas-experiment-page-tsne-plot-1.10.0.tgz#7cd72ca35448b429602081e331d31e8ab3cf0123"
+expression-atlas-experiment-page-tsne-plot@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page-tsne-plot/-/expression-atlas-experiment-page-tsne-plot-1.11.0.tgz#de6ce49c4b0be4447bdf6b97b1c8553f7013e8e7"
   dependencies:
     color "^2.0.0"
     deepmerge "^2.0.0"
