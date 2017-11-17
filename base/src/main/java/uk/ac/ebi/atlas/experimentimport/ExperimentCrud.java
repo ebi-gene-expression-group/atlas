@@ -115,11 +115,11 @@ public class ExperimentCrud {
     }
 
     public ExperimentDTO findExperiment(String experimentAccession) {
-        return experimentDAO.findExperiment(experimentAccession, true);
+        return experimentDAO.getExperimentAsAdmin(experimentAccession);
     }
 
     public List<ExperimentDTO> findAllExperiments() {
-        return experimentDAO.findAllExperiments();
+        return experimentDAO.getAllExperimentsAsAdmin();
     }
 
     public void makeExperimentPrivate(String experimentAccession) throws IOException {
@@ -132,8 +132,8 @@ public class ExperimentCrud {
 
     private void setExperimentPrivacyStatus(String experimentAccession, boolean newPrivacyStatus){
         ExperimentDesign newDesign = loadAndValidateFiles(experimentAccession).getRight().getExperimentDesign();
-        experimentDAO.updateExperiment(experimentAccession, newPrivacyStatus);
-        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, newPrivacyStatus);
+        experimentDAO.setExperimentPrivacyStatus(experimentAccession, newPrivacyStatus);
+        ExperimentDTO experimentDTO = experimentDAO.getExperimentAsAdmin(experimentAccession);
         Preconditions.checkState(newPrivacyStatus == experimentDTO.isPrivate(), "Failed to change experiment status in the db! (?)");
 
         updateWithNewExperimentDesign(newDesign, experimentDTO);
@@ -142,7 +142,7 @@ public class ExperimentCrud {
     public void updateExperimentDesign(String experimentAccession) {
         updateWithNewExperimentDesign(
                 loadAndValidateFiles(experimentAccession).getRight().getExperimentDesign(),
-                experimentDAO.findExperiment(experimentAccession, true)
+                experimentDAO.getExperimentAsAdmin(experimentAccession)
         );
     }
 

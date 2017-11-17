@@ -64,11 +64,4 @@ public class CacheConfiguration {
 
     }
 
-    @Bean(name="publicExperimentTypesLoadingCache")
-    @Inject
-    public LoadingCache<String, ExperimentType> experimentTypesCache(PublicExperimentTypesCacheLoader experimentFactory) {
-
-        return CacheBuilder.newBuilder().build(experimentFactory);
-
-    }
 }

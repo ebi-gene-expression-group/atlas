@@ -56,7 +56,7 @@ public class DifferentialExperimentsCacheLoaderIT {
         ExperimentDTO experimentDTO = new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
                 species, pubMedIds, "title", new Date(),
                 false, UUID.randomUUID().toString());
-        when(experimentDao.findExperiment(EXPERIMENT_ACCESSION, true)).thenReturn(experimentDTO);
+        when(experimentDao.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).thenReturn(experimentDTO);
 
         subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser,experimentDao,
                 differentialExperimentFactory );
