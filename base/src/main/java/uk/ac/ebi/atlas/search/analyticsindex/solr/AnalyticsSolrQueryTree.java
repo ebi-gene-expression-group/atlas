@@ -8,7 +8,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -33,19 +32,14 @@ public class AnalyticsSolrQueryTree {
     }
 
     private static abstract class TreeNode {
-        //f can't return a Null or you'll mess up the tree
+        // f can't return a Null or you'll mess up the tree
         abstract TreeNode map(final Function<Leaf, TreeNode> f);
-
         abstract TreeNode filter(final Predicate<Leaf> f);
+        abstract String toQuery();
     }
 
-    private static class Null extends TreeNode {
-
-        public static TreeNode INSTANCE = new Null();
-
-        private Null() {
-
-        }
+    private static final class Null extends TreeNode {
+        public static final TreeNode INSTANCE = new Null();
 
         @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
@@ -53,8 +47,13 @@ public class AnalyticsSolrQueryTree {
         }
 
         @Override
-        TreeNode filter(Predicate<Leaf> f) {
+        TreeNode filter(final Predicate<Leaf> f) {
             return this;
+        }
+
+        @Override
+        String toQuery() {
+            return "";
         }
     }
 
@@ -68,11 +67,6 @@ public class AnalyticsSolrQueryTree {
         }
 
         @Override
-        public String toString() {
-            return  String.format("%s:\"%s\"", searchField, searchValue);
-        }
-
-        @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
             return f.apply(this);
         }
@@ -80,6 +74,11 @@ public class AnalyticsSolrQueryTree {
         @Override
         TreeNode filter(final Predicate<Leaf> f) {
             return f.test(this) ? this : Null.INSTANCE;
+        }
+
+        @Override
+        public String toQuery() {
+            return  String.format("%s:\"%s\"", searchField, searchValue);
         }
     }
 
@@ -93,22 +92,12 @@ public class AnalyticsSolrQueryTree {
         }
 
         @Override
-        public String toString() {
-            Function<TreeNode, String> wrapParentsInParenthesis = new Function<TreeNode, String>() {
-                @Nullable
-                @Override
-                public String apply(TreeNode treeNode) {
-                    if (treeNode instanceof Parent) {
-                        return "(" + treeNode.toString() + ")";
-                    } else {
-                        return treeNode.toString();
-                    }
-                }
-            };
+        public String toQuery() {
+            Function<TreeNode, String> wrapParentsInParenthesis =
+                    treeNode -> treeNode instanceof Parent ? "(" + treeNode.toString() + ")" : treeNode.toQuery();
 
             return children.stream().map(wrapParentsInParenthesis).collect(Collectors.joining(this.operator.opString));
         }
-
 
         @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
@@ -134,10 +123,6 @@ public class AnalyticsSolrQueryTree {
 
     private final TreeNode root;
 
-    public String toString() {
-        return root.toString();
-    }
-
     //We want this search field to match at least one of these values
     AnalyticsSolrQueryTree(String searchField, String... searchValues) {
         if (searchValues.length == 1) {
@@ -160,13 +145,13 @@ public class AnalyticsSolrQueryTree {
         root = new Parent(operator, childrenBuilder.build());
     }
 
-    private static String decideOnKeywordField(SemanticQueryTerm term){
-        if(term.hasNoCategory()){
-            if(ensemblIdRegexFromTheInternet.matcher(term.value()).matches()){
+    private static String decideOnKeywordField(SemanticQueryTerm term) {
+        if(term.hasNoCategory()) {
+            if (ensemblIdRegexFromTheInternet.matcher(term.value()).matches()) {
                 return BioentityPropertyName.BIOENTITY_IDENTIFIER.name;
             }
-            //a multiword string cannot be a keyword
-            if(term.value().trim().contains(" ")){
+            // A phrase cannot be a keyword
+            if(term.value().trim().contains(" ")) {
                 return AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name;
             } else {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
@@ -182,7 +167,6 @@ public class AnalyticsSolrQueryTree {
             Pattern.compile(
                     "ENS[A-Z]+[0-9]{11}|[A-Z]{3}[0-9]{3}[A-Za-z](-[A-Za-z])?|CG[0-9]+|[A-Z0-9]+\\.[0-9]+|YM[A-Z][0-9]{3}[a-z][0-9]",
                     Pattern.CASE_INSENSITIVE);
-
 
     //package
     public static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
@@ -202,10 +186,10 @@ public class AnalyticsSolrQueryTree {
         }
     }
 
-
     List<String> toQueryPlan() {
         TreeNode n = root.filter(leaf -> leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE));
-        if(n.equals(Null.INSTANCE)){
+
+        if (n.equals(Null.INSTANCE)) {
             return ImmutableList.of(toString());
         } else {
             /*
@@ -214,7 +198,7 @@ public class AnalyticsSolrQueryTree {
             text.
             */
             Function<Leaf, TreeNode> makeTreeWithKeywordQueriesForIdentifiers = leaf -> {
-                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
+                if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
                     return new Parent(
                             OR,
                             possibleIdentifierKeywords().stream()
@@ -226,22 +210,20 @@ public class AnalyticsSolrQueryTree {
             };
 
             Function<Leaf, TreeNode> makeTreeWithTextSearchForIdentifiers = leaf -> {
-                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
+                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
                     return new Leaf(AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name, leaf.searchValue);
                 } else {
                     return leaf;
                 }
             };
 
-            return ImmutableList.of(root.map(makeTreeWithKeywordQueriesForIdentifiers).toString(), root.map
-                    (makeTreeWithTextSearchForIdentifiers).toString());
-
-
+            return ImmutableList.of(
+                    root.map(makeTreeWithKeywordQueriesForIdentifiers).toQuery(),
+                    root.map(makeTreeWithTextSearchForIdentifiers).toQuery());
         }
-
     }
 
-    private static ImmutableList<String> possibleIdentifierKeywords(){
+    private static ImmutableList<String> possibleIdentifierKeywords() {
         return ImmutableList.copyOf(
                 ExperimentDataPoint.bioentityPropertyNames.stream()
                         .filter(bioentityPropertyName -> bioentityPropertyName.isId)
