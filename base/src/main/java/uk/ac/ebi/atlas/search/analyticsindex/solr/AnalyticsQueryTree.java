@@ -15,9 +15,9 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryTree.Operator.OR;
 
-public class AnalyticsSolrQueryTree {
+public class AnalyticsQueryTree {
     private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
 
     public enum Operator {
@@ -124,7 +124,7 @@ public class AnalyticsSolrQueryTree {
     private final TreeNode root;
 
     //We want this search field to match at least one of these values
-    AnalyticsSolrQueryTree(String searchField, String... searchValues) {
+    AnalyticsQueryTree(String searchField, String... searchValues) {
         if (searchValues.length == 1) {
             root = new Leaf(searchField, searchValues[0]);
         } else {
@@ -136,9 +136,9 @@ public class AnalyticsSolrQueryTree {
         }
     }
 
-    AnalyticsSolrQueryTree(Operator operator, AnalyticsSolrQueryTree... queries) {
+    AnalyticsQueryTree(Operator operator, AnalyticsQueryTree... queries) {
         ImmutableList.Builder<TreeNode> childrenBuilder = new ImmutableList.Builder<>();
-        for (AnalyticsSolrQueryTree query : queries) {
+        for (AnalyticsQueryTree query : queries) {
             childrenBuilder.add(query.root);
         }
 
@@ -169,20 +169,20 @@ public class AnalyticsSolrQueryTree {
                     Pattern.CASE_INSENSITIVE);
 
     //package
-    public static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
+    public static AnalyticsQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
         Multimap<String, String> m = HashMultimap.create();
         geneQuery.terms().stream()
                 .filter(SemanticQueryTerm::hasValue)
                 .forEach(term -> m.put(decideOnKeywordField(term), term.value()));
 
-        List<AnalyticsSolrQueryTree> possibleIdentifiers =
+        List<AnalyticsQueryTree> possibleIdentifiers =
                 m.asMap().entrySet().stream()
-                        .map(e -> new AnalyticsSolrQueryTree(e.getKey(), e.getValue().toArray(new String[0])))
+                        .map(e -> new AnalyticsQueryTree(e.getKey(), e.getValue().toArray(new String[0])))
                         .collect(Collectors.toList());
         if (possibleIdentifiers.size() == 1) {
             return possibleIdentifiers.get(0);
         } else {
-            return new AnalyticsSolrQueryTree(OR, possibleIdentifiers.toArray(new AnalyticsSolrQueryTree[0]));
+            return new AnalyticsQueryTree(OR, possibleIdentifiers.toArray(new AnalyticsQueryTree[0]));
         }
     }
 
