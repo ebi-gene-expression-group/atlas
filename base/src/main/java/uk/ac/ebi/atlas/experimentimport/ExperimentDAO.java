@@ -3,21 +3,17 @@ package uk.ac.ebi.atlas.experimentimport;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import static com.google.common.base.Preconditions.checkState;
 
 @Named
 public class ExperimentDAO {
@@ -62,15 +58,13 @@ public class ExperimentDAO {
         return Sets.newHashSet(namedParameterJdbcTemplate.queryForList(SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE, new MapSqlParameterSource("experimentTypes", experimentTypeNames), String.class));
     }
 
+    /**
+     * Will fail when trying to add experiment already present in database
+     */
     public UUID addExperiment(ExperimentDTO experimentDTO, Optional<String> accessKey) {
-        try {
-            UUID accessKeyUUID = addExperimentRow(experimentDTO, accessKey);
-            addExperimentSpeciesRows(experimentDTO);
-            return accessKeyUUID;
-
-        } catch (DuplicateKeyException e) {
-            throw new IllegalStateException("Experiment with experimentAccession " + experimentDTO.getExperimentAccession() + " has been already imported.", e);
-        }
+        UUID accessKeyUUID = addExperimentRow(experimentDTO, accessKey);
+        addExperimentSpeciesRows(experimentDTO);
+        return accessKeyUUID;
     }
 
     private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
@@ -89,13 +83,15 @@ public class ExperimentDAO {
     private static final String INSERT_EXPERIMENT_SPECIE = "INSERT INTO EXPERIMENT_ORGANISM (EXPERIMENT, ORGANISM) values (?, ?)";
 
     private void addExperimentSpeciesRows(ExperimentDTO experimentDTO) {
-        jdbcTemplate.update(INSERT_EXPERIMENT_SPECIE,  experimentDTO.getExperimentAccession(), experimentDTO.getSpecies());
+        jdbcTemplate.update(INSERT_EXPERIMENT_SPECIE, experimentDTO.getExperimentAccession(), experimentDTO.getSpecies());
     }
 
     public void deleteExperiment(String experimentAccession) {
-
         int deletedRecordsCount = jdbcTemplate.update(DELETE_EXPERIMENT, experimentAccession);
-        checkState(deletedRecordsCount == 1 , "Experiment not found for accession " + experimentAccession);
+        checkExperimentFound(
+                deletedRecordsCount == 1,
+                experimentAccession
+        );
     }
 
     public ExperimentDTO findExperiment(String experimentAccession, String accessKey) {
@@ -103,8 +99,6 @@ public class ExperimentDAO {
                 jdbcTemplate.query(SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY, new ExperimentDTOResultSetExtractor(), experimentAccession, accessKey),
                 experimentAccession
         );
-
-
     }
 
     public ExperimentDTO getExperimentAsAdmin(String experimentAccession) {
@@ -117,8 +111,10 @@ public class ExperimentDAO {
     public void setExperimentPrivacyStatus(String experimentAccession, boolean isPrivate) {
 
         int recordsCount = jdbcTemplate.update(UPDATE_EXPERIMENT, isPrivateAsString(isPrivate), experimentAccession);
-        checkState(recordsCount == 1 , "Experiment not found for accession " + experimentAccession );
-
+        checkExperimentFound(
+                recordsCount == 1,
+                experimentAccession
+        );
     }
 
     private String isPrivateAsString(boolean isPrivate) {
@@ -126,18 +122,20 @@ public class ExperimentDAO {
     }
 
     private ExperimentDTO getSingleExperiment(List<ExperimentDTO> experimentDTOs, String accession) {
-        if (experimentDTOs.size() == 1) {
-            return experimentDTOs.get(0);
-        }
-
-        if (experimentDTOs.size() == 0) {
-            throw new ResourceNotFoundException("Experiment: " + accession + " not found");
-        }
-        throw new IncorrectResultSizeDataAccessException(experimentDTOs.size());
-
+        checkExperimentFound(
+                experimentDTOs.size() == 1,
+                accession
+        );
+        return experimentDTOs.get(0);
     }
 
     public Integer countExperiments() {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM EXPERIMENT", Integer.class);
+    }
+
+    void checkExperimentFound(boolean conditionThatIndicatesExperimentWasFound, String accession) {
+        if (!conditionThatIndicatesExperimentWasFound) {
+            throw new ResourceNotFoundException("Experiment with accession:" + accession + " not found");
+        }
     }
 }
