@@ -1,10 +1,11 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum BioentityPropertyName {
     UNKNOWN,
@@ -43,33 +44,22 @@ public enum BioentityPropertyName {
     WBPSTRANSCRIPT("wbpstranscript", true, "WBPS Transcript"),
     WBPSPROTEIN("wbpsprotein", true, "WBPS Protein");   //not used for analytics index now
 
+    final static private ImmutableMap<String, BioentityPropertyName> PROPERTIES_BY_NAME =
+            ImmutableMap.copyOf(Arrays.stream(values()).collect(Collectors.toMap(v -> v.name, v -> v)));
+
     public final String name;
     public final String label;
     public final boolean isId;
 
-    static private ImmutableMap<String, BioentityPropertyName> propertiesByName;
-
-    static {
-        ImmutableMap.Builder<String, BioentityPropertyName> b = ImmutableMap.builder();
-        for (BioentityPropertyName v : values()) {
-            b.put(v.name, v);
-        }
-        propertiesByName = b.build();
+    public String asAnalyticsIndexKeyword() {
+        return MessageFormat.format("keyword_{0}", name);
     }
 
-    public String asAnalyticsIndexKeyword(){
-        return MessageFormat.format("keyword_{0}",name);
-    }
-
-//    public static BioentityPropertyName getByAnalyticsIndexKeyword(String keywordName){
-//        return getByName(keywordName.replace("keyword_", ""));
-//    }
-
-    public static BioentityPropertyName getByName(String propertyName){
-        if (Strings.isNullOrEmpty(propertyName)){
+    public static BioentityPropertyName getByName(String propertyName) {
+        if (StringUtils.isBlank(propertyName)) {
             return UNKNOWN;
         }
-        BioentityPropertyName n = propertiesByName.get(propertyName.toLowerCase());
+        BioentityPropertyName n = PROPERTIES_BY_NAME.get(propertyName.toLowerCase());
         return n == null ? UNKNOWN : n;
     }
 
@@ -86,5 +76,4 @@ public enum BioentityPropertyName {
         this.isId = isId;
         this.label = label;
     }
-
 }

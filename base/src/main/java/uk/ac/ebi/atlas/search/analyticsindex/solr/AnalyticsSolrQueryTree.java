@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
-import com.google.common.collect.*;
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -13,6 +11,8 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -79,7 +79,7 @@ public class AnalyticsSolrQueryTree {
 
         @Override
         TreeNode filter(final Predicate<Leaf> f) {
-            return f.apply(this) ? this : Null.INSTANCE;
+            return f.test(this) ? this : Null.INSTANCE;
         }
     }
 
@@ -106,21 +106,23 @@ public class AnalyticsSolrQueryTree {
                 }
             };
 
-            return Joiner.on(this.operator.opString).join(FluentIterable.from(children).transform(wrapParentsInParenthesis));
+            return children.stream().map(wrapParentsInParenthesis).collect(Collectors.joining(this.operator.opString));
         }
 
 
         @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
-            return new Parent(operator,
-                    Collections2.transform(children, child -> child.map(f)));
+            return new Parent(operator, children.stream().map(child -> child.map(f)).collect(Collectors.toList()));
         }
 
         @Override
         TreeNode filter(final Predicate<Leaf> f) {
 
-            Collection<TreeNode> newChildren = FluentIterable.from(children)
-                    .transform(child -> child.filter(f)).filter(treeNode -> !treeNode.equals(Null.INSTANCE)).toList();
+            Collection<TreeNode> newChildren =
+                    children.stream()
+                            .map(child -> child.filter(f))
+                            .filter(treeNode -> !treeNode.equals(Null.INSTANCE))
+                            .collect(Collectors.toList());
 
             return newChildren.size() == 0
                     ? Null.INSTANCE
@@ -185,11 +187,14 @@ public class AnalyticsSolrQueryTree {
     //package
     public static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
         Multimap<String, String> m = HashMultimap.create();
-        geneQuery.terms().stream().filter(term -> term.hasValue()).forEach(term -> {
-            m.put(decideOnKeywordField(term), term.value());
-        });
-        List<AnalyticsSolrQueryTree> possibleIdentifiers = m.asMap().entrySet().stream().map(e -> new AnalyticsSolrQueryTree(e.getKey(),
-                ImmutableList.copyOf(e.getValue()).toArray(new String[0]))).collect(Collectors.toList());
+        geneQuery.terms().stream()
+                .filter(SemanticQueryTerm::hasValue)
+                .forEach(term -> m.put(decideOnKeywordField(term), term.value()));
+
+        List<AnalyticsSolrQueryTree> possibleIdentifiers =
+                m.asMap().entrySet().stream()
+                        .map(e -> new AnalyticsSolrQueryTree(e.getKey(), e.getValue().toArray(new String[0])))
+                        .collect(Collectors.toList());
         if (possibleIdentifiers.size() == 1) {
             return possibleIdentifiers.get(0);
         } else {
@@ -206,11 +211,15 @@ public class AnalyticsSolrQueryTree {
             /*
             If there were somehow two identifier search queries, this would be wrong, because we would search for
             both as keywords and then for both as text, missing the case when one matches as keyword and the other as
-             text.
-             */
+            text.
+            */
             Function<Leaf, TreeNode> makeTreeWithKeywordQueriesForIdentifiers = leaf -> {
-                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
-                    return new Parent(OR, Collections2.transform(possibleIdentifierKeywords(), (Function<String, TreeNode>) possibleIdentifierSearch -> new Leaf(possibleIdentifierSearch, leaf.searchValue)));
+                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
+                    return new Parent(
+                            OR,
+                            possibleIdentifierKeywords().stream()
+                                    .map(possibleIdentifierSearch -> new Leaf(possibleIdentifierSearch, leaf.searchValue))
+                                    .collect(Collectors.toList()));
                 } else {
                     return leaf;
                 }
@@ -233,11 +242,10 @@ public class AnalyticsSolrQueryTree {
     }
 
     private static ImmutableList<String> possibleIdentifierKeywords(){
-        ImmutableList.Builder<String> b = ImmutableList.builder();
-        ExperimentDataPoint.bioentityPropertyNames.stream().filter(bioentityPropertyName -> bioentityPropertyName.isId).forEach(bioentityPropertyName -> {
-            b.add(bioentityPropertyName.asAnalyticsIndexKeyword());
-        });
-        b.add(BioentityPropertyName.BIOENTITY_IDENTIFIER.name);
-        return b.build();
+        return ImmutableList.copyOf(
+                ExperimentDataPoint.bioentityPropertyNames.stream()
+                        .filter(bioentityPropertyName -> bioentityPropertyName.isId)
+                        .map(BioentityPropertyName::asAnalyticsIndexKeyword)
+                        .collect(Collectors.toList()));
     }
 }
