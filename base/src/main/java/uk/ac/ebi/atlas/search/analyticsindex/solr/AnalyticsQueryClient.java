@@ -4,6 +4,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.utils.ResourceUtils;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
@@ -23,6 +24,7 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
@@ -35,21 +37,21 @@ public class AnalyticsQueryClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsQueryClient.class);
     private final RestTemplate restTemplate;
     private final String solrBaseUrl;
-    private final Resource baselineFacetsQueryJSON;
-    private final Resource differentialFacetsQueryJSON;
+    private final Resource baselineFacetsQueryJson;
+    private final Resource differentialFacetsQueryJson;
     private final Resource experimentTypesQueryJson;
     private final Resource bioentityIdentifiersQueryJson;
 
     @Inject
     public AnalyticsQueryClient(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl,
-                                @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
-                                @Value("classpath:/solr-queries/differential.facets.query.json") Resource differentialFacetsQueryJSON,
+                                @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json") Resource baselineFacetsQueryJson,
+                                @Value("classpath:/solr-queries/differential.facets.query.json") Resource differentialFacetsQueryJson,
                                 @Value("classpath:/solr-queries/experimentType.query.json") Resource experimentTypesQueryJson,
                                 @Value("classpath:/solr-queries/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
-        this.baselineFacetsQueryJSON = baselineFacetsQueryJSON;
-        this.differentialFacetsQueryJSON = differentialFacetsQueryJSON;
+        this.baselineFacetsQueryJson = baselineFacetsQueryJson;
+        this.differentialFacetsQueryJson = differentialFacetsQueryJson;
         this.experimentTypesQueryJson = experimentTypesQueryJson;
         this.bioentityIdentifiersQueryJson = bioentityIdentifiersQueryJson;
     }
@@ -118,7 +120,7 @@ public class AnalyticsQueryClient {
         }
 
         public Builder baselineFacets() {
-            setFacets(baselineFacetsQueryJSON);
+            setFacets(baselineFacetsQueryJson);
             solrQuery.addFilterQuery("experiment_type:(RNASEQ_MRNA_BASELINE OR PROTEOMICS_BASELINE)");
             return this;
         }
@@ -148,7 +150,7 @@ public class AnalyticsQueryClient {
         }
 
         public Builder differentialFacets() {
-            setFacets(differentialFacetsQueryJSON);
+            setFacets(differentialFacetsQueryJson);
             return differential();
         }
 
@@ -159,8 +161,11 @@ public class AnalyticsQueryClient {
 
         public Builder bioentityIdentifierFacets(int facetLimit) {
             solrQuery.setRows(0);
-            solrQuery.set("json.facet", ResourceUtils.readPlainTextResource(bioentityIdentifiersQueryJson).replace("\"limit\": -1",
-                    MessageFormat.format("\"limit\": {0}", Integer.toString(facetLimit))).replaceAll("\\s+",""));
+            solrQuery.set(
+                    "json.facet",
+                    ResourceUtils.readPlainTextResource(bioentityIdentifiersQueryJson)
+                            .replace("\"limit\": -1", "\"limit\": " + Integer.toString(facetLimit))
+                            .replaceAll("\\s+", ""));
             return this;
         }
 
@@ -171,7 +176,6 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryIdentifierOrConditionsSearch(SemanticQuery query) {
-
             queryClausesBuilder.add(new AnalyticsSolrQueryTree(
                     AnalyticsSolrQueryTree.Operator.OR,
                     AnalyticsSolrQueryTree.createForIdentifierSearch(query),
@@ -188,12 +192,10 @@ public class AnalyticsQueryClient {
         }
 
         private AnalyticsSolrQueryTree conditionsSearchQuery(SemanticQuery conditionQuery) {
-            ImmutableList.Builder<String> b = ImmutableList.builder();
-            conditionQuery.terms().stream().filter(term -> term.hasValue()).forEach(term -> {
-                b.add(term.value());
-            });
-            ImmutableList<String> var = b.build();
-            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), var.toArray(new String[var.size()]));
+            Stream<String> var =
+                    conditionQuery.terms().stream().filter(SemanticQueryTerm::hasValue).map(SemanticQueryTerm::value);
+
+            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), var.toArray(String[]::new));
         }
 
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {
@@ -240,14 +242,15 @@ public class AnalyticsQueryClient {
     }
 
     private static List<String> qsForQueryClauses(List<AnalyticsSolrQueryTree> queryClauses) {
-
         if (queryClauses.isEmpty()) {
             return ImmutableList.of(Builder.DEFAULT_QUERY);
         } else {
-            return new AnalyticsSolrQueryTree(AnalyticsSolrQueryTree.Operator.AND, queryClauses.toArray(new
-                    AnalyticsSolrQueryTree[0])).toQueryPlan();
+            return
+                    new AnalyticsSolrQueryTree(
+                            AnalyticsSolrQueryTree.Operator.AND,
+                            queryClauses.toArray(new AnalyticsSolrQueryTree[0])
+                    ).toQueryPlan();
         }
-
     }
 
     enum Field {
