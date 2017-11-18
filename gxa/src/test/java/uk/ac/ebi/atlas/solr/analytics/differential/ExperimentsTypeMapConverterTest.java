@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.differential;
+package uk.ac.ebi.atlas.solr.analytics.differential;
 
 import org.junit.Test;
 
