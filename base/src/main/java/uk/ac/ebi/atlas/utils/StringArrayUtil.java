@@ -48,34 +48,4 @@ public class StringArrayUtil {
 
         return Arrays.copyOf(result, count);
     }
-
-    public static String[] filterByIndices(String[] strings, int[] indices) {
-        String[] result = new String[indices.length];
-
-        for (int i = 0; i < indices.length; i++) {
-            result[i] = strings[indices[i]];
-        }
-
-        return result;
-    }
-
-    public static String[] removeSurroundingQuotes(String[] strings) {
-        String[] result = new String[strings.length];
-
-        for (int i = 0; i < strings.length; i++) {
-            result[i] = strip(strings[i], "\"");
-        }
-
-        return result;
-    }
-
-    public static String[] quotePhrases(String[] strings) {
-        String[] result = new String[strings.length];
-
-        for (int i = 0; i < strings.length; i++) {
-            result[i] = quoteIfMoreThanOneWord(strings[i]);
-        }
-
-        return result;
-    }
 }
