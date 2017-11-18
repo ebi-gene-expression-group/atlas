@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.query.builders;
+package uk.ac.ebi.atlas.solr.bioentities.query.builders;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrQuery;

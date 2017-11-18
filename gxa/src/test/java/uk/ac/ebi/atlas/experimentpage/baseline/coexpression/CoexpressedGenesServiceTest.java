@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
 
 import java.util.Collection;
 import java.util.HashMap;
