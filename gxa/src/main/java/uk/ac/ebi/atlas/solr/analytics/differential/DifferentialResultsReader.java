@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.differential;
+package uk.ac.ebi.atlas.solr.analytics.differential;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;

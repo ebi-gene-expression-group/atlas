@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.baseline;
+package uk.ac.ebi.atlas.solr.analytics.baseline;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.TreeMultimap;

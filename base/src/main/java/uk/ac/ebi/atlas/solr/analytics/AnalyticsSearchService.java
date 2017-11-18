@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex;
+package uk.ac.ebi.atlas.solr.analytics;
 
 import com.google.common.collect.ImmutableList;
 import net.minidev.json.JSONArray;

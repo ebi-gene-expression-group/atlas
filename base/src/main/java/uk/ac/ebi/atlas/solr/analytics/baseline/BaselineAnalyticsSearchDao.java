@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.baseline;
+package uk.ac.ebi.atlas.solr.analytics.baseline;
 
 import com.jayway.jsonpath.JsonPath;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
