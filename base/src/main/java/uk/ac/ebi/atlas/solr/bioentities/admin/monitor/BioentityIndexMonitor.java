@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin.monitor;
+package uk.ac.ebi.atlas.solr.bioentities.admin.monitor;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
