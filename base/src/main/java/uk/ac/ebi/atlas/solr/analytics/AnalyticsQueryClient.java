@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.solr;
+package uk.ac.ebi.atlas.solr.analytics;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient.Field.*;
+import static uk.ac.ebi.atlas.solr.analytics.AnalyticsQueryClient.Field.*;
 
 @Named
 @Scope("prototype")
@@ -193,13 +193,15 @@ public class AnalyticsQueryClient {
 
         private AnalyticsQueryTree conditionsSearchQuery(SemanticQuery conditionQuery) {
             Stream<String> var =
-                    conditionQuery.terms().stream().filter(SemanticQueryTerm::hasValue).map(SemanticQueryTerm::value);
+                    conditionQuery.terms().stream()
+                            .filter(SemanticQueryTerm::hasValue)
+                            .map(SemanticQueryTerm::value);
 
             return new AnalyticsQueryTree(CONDITIONS_SEARCH.toString(), var.toArray(String[]::new));
         }
 
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {
-            if(isNotEmpty(conditionQuery)){
+            if (isNotEmpty(conditionQuery)) {
                 queryClausesBuilder.add(conditionsSearchQuery(conditionQuery));
             }
             return this;
