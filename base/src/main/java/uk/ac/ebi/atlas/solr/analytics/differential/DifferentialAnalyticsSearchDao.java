@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.differential;
+package uk.ac.ebi.atlas.solr.analytics.differential;
 
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;

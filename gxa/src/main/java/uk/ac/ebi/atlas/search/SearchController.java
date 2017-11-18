@@ -19,11 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.solr.analytics.AnalyticsSearchService;
+import uk.ac.ebi.atlas.solr.analytics.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;

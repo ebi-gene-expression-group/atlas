@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.baseline;
+package uk.ac.ebi.atlas.solr.analytics.baseline;
 
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.search.SemanticQuery;

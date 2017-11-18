@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex;
+package uk.ac.ebi.atlas.solr.analytics;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Joiner;
@@ -17,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.search.analyticsindex.AutoValue_FullAnalyticsSearchService_GeneProfileScore;
 import uk.ac.ebi.atlas.utils.ResourceUtils;
 
 import javax.inject.Inject;
