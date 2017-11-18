@@ -3,7 +3,7 @@
     "type": "terms",
     "field": "bioentity_identifier",
     "sort": "count asc",
-    "limit": 100000,
+    "limit": -1,
     "facet": {
       "avg_expression": "avg(expression_level)"
     }
