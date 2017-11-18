@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin.monitor;
+package uk.ac.ebi.atlas.solr.bioentities.admin.monitor;
 
 import org.junit.Before;
 import org.junit.Test;

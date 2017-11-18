@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.controllers.rest.admin;
 
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
-import uk.ac.ebi.atlas.solr.admin.BioentitiesIndexer;
-import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
+import uk.ac.ebi.atlas.solr.bioentities.admin.BioentitiesIndexer;
+import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.BioentityIndexMonitor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

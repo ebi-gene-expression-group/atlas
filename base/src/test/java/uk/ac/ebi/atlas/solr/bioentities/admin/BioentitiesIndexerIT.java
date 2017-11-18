@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin;
+package uk.ac.ebi.atlas.solr.bioentities.admin;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.RandomStringUtils;
@@ -13,9 +13,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.atlas.solr.BioentityProperty;
-import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
-import uk.ac.ebi.atlas.solr.admin.monitor.IndexingProgress;
+import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
+import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.BioentityIndexMonitor;
+import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.IndexingProgress;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

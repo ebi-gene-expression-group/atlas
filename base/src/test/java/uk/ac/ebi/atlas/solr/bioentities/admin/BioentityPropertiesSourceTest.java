@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin;
+package uk.ac.ebi.atlas.solr.bioentities.admin;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
-import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesDao;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin;
+package uk.ac.ebi.atlas.solr.bioentities.admin;
 
 import com.google.common.collect.Iterators;
 import org.apache.solr.client.solrj.SolrClient;
@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
-import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
+import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.BioentityIndexMonitor;
 
 import javax.inject.Inject;
 import javax.inject.Named;

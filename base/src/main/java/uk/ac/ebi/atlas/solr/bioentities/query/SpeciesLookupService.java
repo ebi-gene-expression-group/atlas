@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.solr.bioentities.query;
 
 import com.google.common.base.Optional;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr;
+package uk.ac.ebi.atlas.solr.bioentities;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;

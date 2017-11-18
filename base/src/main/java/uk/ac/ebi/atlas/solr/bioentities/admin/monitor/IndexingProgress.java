@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin.monitor;
+package uk.ac.ebi.atlas.solr.bioentities.admin.monitor;
 
 import com.google.common.collect.Iterators;
 import org.springframework.context.annotation.Scope;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.solr.bioentities.query;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.solr.bioentities.query;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
