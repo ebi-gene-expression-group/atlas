@@ -1,9 +1,9 @@
-package uk.ac.ebi.atlas.search.analyticsindex.solr;
+package uk.ac.ebi.atlas.search.analyticsindex.solr.query;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.solr.analytics.AnalyticsQueryBuilder;
+import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryBuilder;
 
 import static org.hamcrest.Matchers.isA;
 import static org.junit.Assert.assertThat;

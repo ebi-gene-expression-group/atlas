@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.analytics;
+package uk.ac.ebi.atlas.solr.analytics.query;
 
 import com.google.common.collect.Sets;
 import org.apache.solr.client.solrj.SolrQuery;

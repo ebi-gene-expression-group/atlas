@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.solr;
+package uk.ac.ebi.atlas.search.analyticsindex.solr.query;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.solr.analytics.AnalyticsQueryClient;
+import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -191,7 +191,7 @@ public class AnalyticsQueryClientIT {
         }
 
         @Override
-        boolean responseNonEmpty(String jsonFromSolr){
+        protected boolean responseNonEmpty(String jsonFromSolr){
             return true;
         }
     }
