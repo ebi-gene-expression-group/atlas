@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.analytics;
+package uk.ac.ebi.atlas.solr.analytics.query;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
@@ -16,7 +16,7 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static uk.ac.ebi.atlas.solr.analytics.AnalyticsQueryTree.Operator.OR;
+import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryTree.Operator.OR;
 
 public class AnalyticsQueryTree {
     // https://www.biostars.org/p/99142/#99150, see also https://www.ensembl.org/info/genome/stable_ids/index.html

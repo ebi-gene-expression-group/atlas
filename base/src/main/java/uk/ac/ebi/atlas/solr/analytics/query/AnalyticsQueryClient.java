@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.analytics;
+package uk.ac.ebi.atlas.solr.analytics.query;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
-import static uk.ac.ebi.atlas.solr.analytics.AnalyticsQueryClient.Field.*;
+import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient.Field.*;
 
 @Named
 @Scope("prototype")
@@ -71,7 +71,7 @@ public class AnalyticsQueryClient {
         return result;
     }
 
-    boolean responseNonEmpty(String jsonFromSolr){
+    protected boolean responseNonEmpty(String jsonFromSolr){
         Integer numFound =  JsonPath.read(jsonFromSolr, "$.response.numFound");
         return numFound!= null && numFound>0;
     }

@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 import com.jayway.jsonpath.JsonPath;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.solr.analytics.AnalyticsQueryClient;
+import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
