@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.species;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.analytics.AnalyticsSearchService;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 
 import javax.inject.Inject;
 import javax.inject.Named;

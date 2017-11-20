@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchDao;
-import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient;
+import uk.ac.ebi.atlas.solr.analytics.baseline.BaselineAnalyticsSearchDao;
+import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;
 
 import java.io.IOException;
 import java.io.InputStream;

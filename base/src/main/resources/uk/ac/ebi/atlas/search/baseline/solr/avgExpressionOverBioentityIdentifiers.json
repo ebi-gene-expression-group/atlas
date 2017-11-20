@@ -1,0 +1,11 @@
+{
+  "genes": {
+    "type": "terms",
+    "field": "bioentity_identifier",
+    "sort": "count asc",
+    "limit": 100000,
+    "facet": {
+      "avg_expression": "avg(expression_level)"
+    }
+  }
+}
