@@ -59,19 +59,19 @@ public class AnalyticsQueryClient {
     private String fetchResults(SolrQuery... qs ) {
         String result = "{}";
 
-        for(SolrQuery q: qs){
+        for (SolrQuery q: qs) {
             Stopwatch stopwatch = Stopwatch.createStarted();
-            LOGGER.debug("fetchResults {} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
             result = fetchResponseAsString(MessageFormat.format("{0}query", solrBaseUrl), q);
             stopwatch.stop();
-            if(responseNonEmpty(result)){
+            LOGGER.debug("fetchResults {} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+            if (responseNonEmpty(result)) {
                 break;
             }
         }
         return result;
     }
 
-    protected boolean responseNonEmpty(String jsonFromSolr){
+    protected boolean responseNonEmpty(String jsonFromSolr) {
         Integer numFound =  JsonPath.read(jsonFromSolr, "$.response.numFound");
         return numFound!= null && numFound>0;
     }
@@ -262,7 +262,9 @@ public class AnalyticsQueryClient {
         SPECIES("species"),
         IDENTIFIER_SEARCH("identifier_search"),
         CONDITIONS_SEARCH("conditions_search"),
-        FACTOR_TYPE("default_query_factor_type");
+        FACTOR_TYPE("default_query_factor_type"),
+        ASSAY_GROUP_ID("assay_group_id"),
+        EXPRESSION_LEVEL("expression_level");
         final String name;
 
         Field(String name){
