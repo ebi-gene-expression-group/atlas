@@ -36,10 +36,20 @@ public class AnalyticsQueryBuilder {
     private HashSet<String> queries = Sets.newHashSet();
     private String jsonFacet = "";
 
-    public AnalyticsQueryBuilder filterQueryExperimentAccession(String experimentAccession) {
+    public AnalyticsQueryBuilder() {
+        filterQueries.add("expression_level:{0.0 TO *]");
+    }
+
+    public AnalyticsQueryBuilder filterExperimentAccession(String experimentAccession) {
         filterQueries.add(createSimpleQuery(Field.EXPERIMENT_ACCESSION, experimentAccession));
         return this;
     }
+
+    public AnalyticsQueryBuilder filterAssayGroupIds(Set<String> assayGroupIds) {
+        filterQueries.add(createTermsQuery(Field.ASSAY_GROUP_ID, assayGroupIds));
+        return this;
+    }
+
 
     private String createSimpleQuery(Field searchField, String searchValue) {
         return MessageFormat.format(SIMPLE_QUERY_TEMPLATE, searchField.name, ClientUtils.escapeQueryChars(searchValue));
