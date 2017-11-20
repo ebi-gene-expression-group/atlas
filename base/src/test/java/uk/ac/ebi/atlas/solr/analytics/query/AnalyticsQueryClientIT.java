@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.analyticsindex.solr.query;
+package uk.ac.ebi.atlas.solr.analytics.query;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
