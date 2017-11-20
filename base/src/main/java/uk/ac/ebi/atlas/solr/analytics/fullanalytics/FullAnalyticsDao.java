@@ -13,31 +13,23 @@ import java.util.Set;
 @Named
 public class FullAnalyticsDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FullAnalyticsSearchService.class);
-
-//    private static final String AVG_EXPRESSION_OVER_BIOENTITY_IDENTIFIERS_JSON_FACET =
-//            ResourceUtils.getClassPathResource(
-//                    "classpath:/uk/ac/ebi/atlas/solr/analytics/avgExpressionOverBioentityIdentifiers.json");
-//
-//    private static final String MAX_EXPRESSION_OVER_BIOENTITY_IDENTIFIERS_JSON_FACET =
-//            ResourceUtils.getClassPathResource(
-//                    "classpath:/uk/ac/ebi/atlas/solr/analytics/maxExpressionOverBioentityIdentifiers.json");
+    private static final Logger LOGGER = LoggerFactory.getLogger(FullAnalyticsDao.class);
 
     private final AnalyticsClient analyticsClient;
-    private final String avgExpressionOverBioentityIdentifiersJsonFacet;
+    private final String avgExpressionOverBioentityIdentifiersSortedBySpecificityJsonFacet;
     private final String maxExpressionOverBioentityIdentifiersJsonFacet;
     private final String avgExpressionOverBioentityIdentifiersSortedByExpressionJsonFacet;
 
     @Inject
     public FullAnalyticsDao(AnalyticsClient analyticsClient,
-                            @Value("classpath:/uk/ac/ebi/atlas/solr/avgExpressionOverBioentityIdentifiers.json")
+                            @Value("classpath:/uk/ac/ebi/atlas/solr/analytics/avgExpressionOverBioentityIdentifiers.json")
                                     Resource avgExpressionOverBioentityIdentifiersJson,
-                            @Value("classpath:/uk/ac/ebi/atlas/solr/maxExpressionOverBioentityIdentifiers.json")
+                            @Value("classpath:/uk/ac/ebi/atlas/solr/analytics/maxExpressionOverBioentityIdentifiers.json")
                                     Resource maxExpressionOverBioentityIdentifiersJson,
-                            @Value("classpath:/uk/ac/ebi/atlas/solr/avgExpressionOverBioentityIdentifiersSortedByExpression.json")
+                            @Value("classpath:/uk/ac/ebi/atlas/solr/analytics/avgExpressionOverBioentityIdentifiersSortedByExpression.json")
                                     Resource maxExpressionOverBioentityIdentifiersSortedByExpressionJson) {
         this.analyticsClient = analyticsClient;
-        avgExpressionOverBioentityIdentifiersJsonFacet =
+        avgExpressionOverBioentityIdentifiersSortedBySpecificityJsonFacet =
                 ResourceUtils.readPlainTextResource(avgExpressionOverBioentityIdentifiersJson);
         maxExpressionOverBioentityIdentifiersJsonFacet =
                 ResourceUtils.readPlainTextResource(maxExpressionOverBioentityIdentifiersJson);
@@ -50,7 +42,7 @@ public class FullAnalyticsDao {
     // private static final String NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE = "('{'!terms f=bioentity_identifier'}'{0}) AND expression_level:[{1} TO *]";
     // private static final String NON_SELECTED_ASSAY_GROUP_IDS_Q_TEMPLATE_ALT = "expression_level:[{1} TO *]";
 
-    // Observed a slowdown in terms queries that exceed >50,000 terms
+    // Observed a slowdown in terms queries that exceed 30,000 terms
     // Disclaimer: this is a performance optimisation that needs to be carefully applied so that the modified query
     // doesn’t affect the results of the whole output (see the search service that calls this DAO). Here we’re
     // improving query speed at the expense of a bigger JSON document to parse. We can apply this when we search genes
@@ -59,15 +51,15 @@ public class FullAnalyticsDao {
     // This is a very rough approximation and we need to test consistently to see if it’s actually the case and, most
     // of all, if it’s something that happens in any index and across all queries. In order to be on the safe side it’s
     // left here for the time being.
-    private static final int TERMS_QUERY_SIZE_THRESHOLD = 25000;
+    private static final int TERMS_QUERY_SIZE_THRESHOLD = 30000;
 
-    public String mostSpecificGenesInAllAssayGroupsWithAverageExpression(String experimentAccession,
-                                                                         double expressionLevelThreshold) {
+    public String genesInAllAssayGroupsWithAverageExpressionSortedByCounts(String experimentAccession,
+                                                                           double expressionLevelThreshold) {
         AnalyticsQueryBuilder queryBuilder = new AnalyticsQueryBuilder();
         queryBuilder
-                .filterQueryExperimentAccession(experimentAccession)
+                .filterExperimentAccession(experimentAccession)
                 .queryExpressionLevel(expressionLevelThreshold)
-                .setJsonFacet(avgExpressionOverBioentityIdentifiersJsonFacet);
+                .setJsonFacet(avgExpressionOverBioentityIdentifiersSortedBySpecificityJsonFacet);
 
         LOGGER.debug(
                 "Searching for genes in {} (cutoff={}) across all assay groups...",
@@ -75,40 +67,44 @@ public class FullAnalyticsDao {
         return analyticsClient.fetchResponseAsString(queryBuilder.build());
     }
 
-    public String mostSpecificGenesInSelectedAssayGroupsWithAverageExpression(String experimentAccession,
-                                                                              Set<String> assayGroupIds,
-                                                                              double expressionLevelThreshold) {
+    public String genesInAssayGroupsWithAverageExpressionSortedByCounts(String experimentAccession,
+                                                                        Set<String> sliceAssayGroupIds,
+                                                                        Set<String> selectedAssayGroupIds,
+                                                                        double expressionLevelThreshold) {
         AnalyticsQueryBuilder queryBuilder = new AnalyticsQueryBuilder();
         queryBuilder
-                .filterQueryExperimentAccession(experimentAccession)
+                .filterExperimentAccession(experimentAccession)
+                .filterAssayGroupIds(sliceAssayGroupIds)
                 .queryExpressionLevel(expressionLevelThreshold)
-                .queryAssayGroupIds(assayGroupIds)
-                .setJsonFacet(avgExpressionOverBioentityIdentifiersJsonFacet);
+                .queryAssayGroupIds(selectedAssayGroupIds)
+                .setJsonFacet(avgExpressionOverBioentityIdentifiersSortedBySpecificityJsonFacet);
 
         LOGGER.debug(
-                "Searching for genes in {} {} across {} assay groups...",
-                experimentAccession, expressionLevelThreshold, assayGroupIds.size());
+                "Searching for genes in {} (cutoff={}) across {}/{} assay groups...",
+                experimentAccession, expressionLevelThreshold, selectedAssayGroupIds.size(), sliceAssayGroupIds.size());
         return analyticsClient.fetchResponseAsString(queryBuilder.build());
     }
 
-    public String genesWithMaxExpressionInNonSelectedAssayGroups(String experimentAccession,
-                                                                 Set<String> bioentityIds,
-                                                                 Set<String> assayGroupIds,
-                                                                 double expressionLevelThreshold) {
+    public String genesNotInAssayGroupsWithMaxExpressionSortedByCounts(String experimentAccession,
+                                                                       Set<String> sliceAssayGroupIds,
+                                                                       Set<String> selectedAssayGroupIds,
+                                                                       Set<String> geneIds,
+                                                                       double expressionLevelThreshold) {
         AnalyticsQueryBuilder queryBuilder = new AnalyticsQueryBuilder();
         queryBuilder
-                .filterQueryExperimentAccession(experimentAccession)
+                .filterExperimentAccession(experimentAccession)
+                .filterAssayGroupIds(sliceAssayGroupIds)
                 .queryExpressionLevel(expressionLevelThreshold)
-                .queryNotAssayGroupIds(assayGroupIds)   // IMPORTANT: threshold mustn’t be applied here
+                .queryNotAssayGroupIds(selectedAssayGroupIds)
                 .setJsonFacet(maxExpressionOverBioentityIdentifiersJsonFacet);
 
-        if (bioentityIds.size() < TERMS_QUERY_SIZE_THRESHOLD) {
-            queryBuilder.queryBioentityIdentifiers(bioentityIds);
+        if (geneIds.size() < TERMS_QUERY_SIZE_THRESHOLD) {
+            queryBuilder.queryBioentityIdentifiers(geneIds);
         }
 
         LOGGER.debug(
-                "Searching for max expression in {} (cutoff={}) over {} genes, across {} assay groups...",
-                experimentAccession, expressionLevelThreshold, bioentityIds.size(), assayGroupIds.size());
+                "Searching for max expression in {} (cutoff={}) over {} genes, across {}/{} assay groups...",
+                experimentAccession, expressionLevelThreshold, geneIds.size(), selectedAssayGroupIds.size(), sliceAssayGroupIds.size());
         return analyticsClient.fetchResponseAsString(queryBuilder.build());
     }
 
@@ -117,7 +113,7 @@ public class FullAnalyticsDao {
                                                                          double expressionLevelThreshold) {
         AnalyticsQueryBuilder queryBuilder = new AnalyticsQueryBuilder();
         queryBuilder
-                .filterQueryExperimentAccession(experimentAccession)
+                .filterExperimentAccession(experimentAccession)
                 .queryExpressionLevel(expressionLevelThreshold)
                 .setJsonFacet(avgExpressionOverBioentityIdentifiersSortedByExpressionJsonFacet);
 
