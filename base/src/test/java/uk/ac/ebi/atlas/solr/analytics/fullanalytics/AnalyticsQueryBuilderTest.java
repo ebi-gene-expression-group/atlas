@@ -1,9 +1,8 @@
-package uk.ac.ebi.atlas.search.analyticsindex.solr.query;
+package uk.ac.ebi.atlas.solr.analytics.fullanalytics;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryBuilder;
 
 import static org.hamcrest.Matchers.isA;
 import static org.junit.Assert.assertThat;
@@ -19,5 +18,10 @@ public class AnalyticsQueryBuilderTest {
     @Test
     public void buildsASolrQuery() {
         assertThat(subject.build(), isA(SolrQuery.class));
+    }
+
+    @Test
+    public void queryBuiltFine() {
+
     }
 }
