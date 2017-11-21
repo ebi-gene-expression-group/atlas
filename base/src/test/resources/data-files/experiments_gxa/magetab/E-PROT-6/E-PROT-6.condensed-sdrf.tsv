@@ -1,0 +1,279 @@
+E-PROT-6		CO_C2BBe1	characteristic	cell line	C2BBe1	http://www.ebi.ac.uk/efo/EFO_0006546
+E-PROT-6		CO_C2BBe1	characteristic	cell type	enterocyte	http://purl.obolibrary.org/obo/CL_0000584
+E-PROT-6		CO_C2BBe1	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_C2BBe1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_C2BBe1	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_C2BBe1	factor	cell line	C2BBe1	http://www.ebi.ac.uk/efo/EFO_0006546
+E-PROT-6		CO_CCK-81	characteristic	cell line	CCK-81
+E-PROT-6		CO_CCK-81	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_CCK-81	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_CCK-81	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_CCK-81	factor	cell line	CCK-81
+E-PROT-6		CO_CL-11	characteristic	cell line	CL-11	http://www.ebi.ac.uk/efo/EFO_0006368
+E-PROT-6		CO_CL-11	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_CL-11	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_CL-11	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_CL-11	factor	cell line	CL-11	http://www.ebi.ac.uk/efo/EFO_0006368
+E-PROT-6		CO_CL-40	characteristic	cell line	CL-40	http://www.ebi.ac.uk/efo/EFO_0006370
+E-PROT-6		CO_CL-40	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_CL-40	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_CL-40	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_CL-40	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_CL-40	factor	cell line	CL-40	http://www.ebi.ac.uk/efo/EFO_0006370
+E-PROT-6		CO_COLO-205	characteristic	cell line	COLO-205	http://www.ebi.ac.uk/efo/EFO_0003082
+E-PROT-6		CO_COLO-205	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_COLO-205	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_COLO-205	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_COLO-205	characteristic	organism part	colon, derived from metastatic site ascites
+E-PROT-6		CO_COLO-205	factor	cell line	COLO-205	http://www.ebi.ac.uk/efo/EFO_0003082
+E-PROT-6		CO_COLO-320-HSR	characteristic	cell line	COLO-320-HSR
+E-PROT-6		CO_COLO-320-HSR	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_COLO-320-HSR	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_COLO-320-HSR	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_COLO-320-HSR	factor	cell line	COLO-320-HSR
+E-PROT-6		CO_COLO-678	characteristic	cell line	COLO-678	http://www.ebi.ac.uk/efo/EFO_0006371
+E-PROT-6		CO_COLO-678	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_COLO-678	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_COLO-678	characteristic	organism part	colon, derived from metastatic site lymph node
+E-PROT-6		CO_COLO-678	factor	cell line	COLO-678	http://www.ebi.ac.uk/efo/EFO_0006371
+E-PROT-6		CO_CW-2	characteristic	cell line	CW-2	http://www.ebi.ac.uk/efo/EFO_0006560
+E-PROT-6		CO_CW-2	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_CW-2	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_CW-2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_CW-2	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_CW-2	factor	cell line	CW-2	http://www.ebi.ac.uk/efo/EFO_0006560
+E-PROT-6		CO_CaR-1	characteristic	cell line	CaR-1	http://www.ebi.ac.uk/efo/EFO_0006548
+E-PROT-6		CO_CaR-1	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_CaR-1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_CaR-1	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-6		CO_CaR-1	factor	cell line	CaR-1	http://www.ebi.ac.uk/efo/EFO_0006548
+E-PROT-6		CO_DIFI	characteristic	cell line	DIFI
+E-PROT-6		CO_DIFI	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_DIFI	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_DIFI	factor	cell line	DIFI
+E-PROT-6		CO_GEO	characteristic	cell line	GEO
+E-PROT-6		CO_GEO	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_GEO	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_GEO	factor	cell line	GEO
+E-PROT-6		CO_GP5d	characteristic	cell line	GP5d	http://www.ebi.ac.uk/efo/EFO_0006576
+E-PROT-6		CO_GP5d	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_GP5d	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_GP5d	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_GP5d	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_GP5d	factor	cell line	GP5d	http://www.ebi.ac.uk/efo/EFO_0006576
+E-PROT-6		CO_HCC-56	characteristic	cell line	HCC-56
+E-PROT-6		CO_HCC-56	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_HCC-56	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_HCC-56	factor	cell line	HCC-56
+E-PROT-6		CO_HCC2998	characteristic	cell line	HCC2998	http://www.ebi.ac.uk/efo/EFO_0005370
+E-PROT-6		CO_HCC2998	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_HCC2998	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_HCC2998	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_HCC2998	factor	cell line	HCC2998	http://www.ebi.ac.uk/efo/EFO_0005370
+E-PROT-6		CO_HCT-116	characteristic	cell line	HCT-116	http://www.ebi.ac.uk/efo/EFO_0002824
+E-PROT-6		CO_HCT-116	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_HCT-116	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_HCT-116	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_HCT-116	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_HCT-116	factor	cell line	HCT-116	http://www.ebi.ac.uk/efo/EFO_0002824
+E-PROT-6		CO_HCT-15	characteristic	cell line	HCT-15	http://www.ebi.ac.uk/efo/EFO_0002188
+E-PROT-6		CO_HCT-15	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_HCT-15	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_HCT-15	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_HCT-15	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_HCT-15	factor	cell line	HCT-15	http://www.ebi.ac.uk/efo/EFO_0002188
+E-PROT-6		CO_HT-115	characteristic	cell line	HT-115	http://www.ebi.ac.uk/efo/EFO_0006442
+E-PROT-6		CO_HT-115	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_HT-115	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_HT-115	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_HT-115	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_HT-115	factor	cell line	HT-115	http://www.ebi.ac.uk/efo/EFO_0006442
+E-PROT-6		CO_HT-29	characteristic	cell line	HT-29	http://www.ebi.ac.uk/efo/EFO_0001193
+E-PROT-6		CO_HT-29	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_HT-29	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_HT-29	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_HT-29	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_HT-29	factor	cell line	HT-29	http://www.ebi.ac.uk/efo/EFO_0001193
+E-PROT-6		CO_HT55	characteristic	cell line	HT55	http://www.ebi.ac.uk/efo/EFO_0006444
+E-PROT-6		CO_HT55	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_HT55	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_HT55	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_HT55	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_HT55	factor	cell line	HT55	http://www.ebi.ac.uk/efo/EFO_0006444
+E-PROT-6		CO_KM12	characteristic	cell line	KM12	http://www.ebi.ac.uk/efo/EFO_0006282
+E-PROT-6		CO_KM12	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_KM12	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_KM12	factor	cell line	KM12	http://www.ebi.ac.uk/efo/EFO_0006282
+E-PROT-6		CO_LIM1215	characteristic	cell line	LIM1215
+E-PROT-6		CO_LIM1215	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_LIM1215	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_LIM1215	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_LIM1215	factor	cell line	LIM1215
+E-PROT-6		CO_LS-1034	characteristic	cell line	LS-1034
+E-PROT-6		CO_LS-1034	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_LS-1034	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_LS-1034	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_LS-1034	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_LS-1034	factor	cell line	LS-1034
+E-PROT-6		CO_LS-123	characteristic	cell line	LS-123
+E-PROT-6		CO_LS-123	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_LS-123	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_LS-123	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_LS-123	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_LS-123	factor	cell line	LS-123
+E-PROT-6		CO_LS-180	characteristic	cell line	LS-180	http://www.ebi.ac.uk/efo/EFO_0006640
+E-PROT-6		CO_LS-180	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_LS-180	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_LS-180	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_LS-180	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_LS-180	factor	cell line	LS-180	http://www.ebi.ac.uk/efo/EFO_0006640
+E-PROT-6		CO_LS-411N	characteristic	cell line	LS-411N
+E-PROT-6		CO_LS-411N	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_LS-411N	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_LS-411N	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_LS-411N	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-PROT-6		CO_LS-411N	factor	cell line	LS-411N
+E-PROT-6		CO_LS-513	characteristic	cell line	LS-513
+E-PROT-6		CO_LS-513	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_LS-513	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_LS-513	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_LS-513	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-PROT-6		CO_LS-513	factor	cell line	LS-513
+E-PROT-6		CO_LoVo	characteristic	cell line	LoVo	http://www.ebi.ac.uk/efo/EFO_0006639
+E-PROT-6		CO_LoVo	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_LoVo	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_LoVo	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_LoVo	characteristic	organism part	colon, derived from metastatic site left supraclavicular region
+E-PROT-6		CO_LoVo	factor	cell line	LoVo	http://www.ebi.ac.uk/efo/EFO_0006639
+E-PROT-6		CO_MDST8	characteristic	cell line	MDST8	http://www.ebi.ac.uk/efo/EFO_0006644
+E-PROT-6		CO_MDST8	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_MDST8	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_MDST8	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_MDST8	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_MDST8	factor	cell line	MDST8	http://www.ebi.ac.uk/efo/EFO_0006644
+E-PROT-6		CO_NCI-H508	characteristic	cell line	NCI-H508	http://www.ebi.ac.uk/efo/EFO_0002294
+E-PROT-6		CO_NCI-H508	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_NCI-H508	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_NCI-H508	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_NCI-H508	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-PROT-6		CO_NCI-H508	factor	cell line	NCI-H508	http://www.ebi.ac.uk/efo/EFO_0002294
+E-PROT-6		CO_NCI-H630	characteristic	cell line	NCI-H630	http://www.ebi.ac.uk/efo/EFO_0002297
+E-PROT-6		CO_NCI-H630	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_NCI-H630	factor	cell line	NCI-H630	http://www.ebi.ac.uk/efo/EFO_0002297
+E-PROT-6		CO_NCI-H716	characteristic	cell line	NCI-H716	http://www.ebi.ac.uk/efo/EFO_0002301
+E-PROT-6		CO_NCI-H716	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_NCI-H716	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_NCI-H716	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_NCI-H716	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-PROT-6		CO_NCI-H716	factor	cell line	NCI-H716	http://www.ebi.ac.uk/efo/EFO_0002301
+E-PROT-6		CO_NCI-H747	characteristic	cell line	NCI-H747	http://www.ebi.ac.uk/efo/EFO_0002303
+E-PROT-6		CO_NCI-H747	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_NCI-H747	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_NCI-H747	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_NCI-H747	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-PROT-6		CO_NCI-H747	factor	cell line	NCI-H747	http://www.ebi.ac.uk/efo/EFO_0002303
+E-PROT-6		CO_RCM-1	characteristic	cell line	RCM-1	http://www.ebi.ac.uk/efo/EFO_0006476
+E-PROT-6		CO_RCM-1	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_RCM-1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_RCM-1	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-6		CO_RCM-1	factor	cell line	RCM-1	http://www.ebi.ac.uk/efo/EFO_0006476
+E-PROT-6		CO_RKO	characteristic	cell line	RKO	http://www.ebi.ac.uk/efo/EFO_0001232
+E-PROT-6		CO_RKO	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_RKO	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_RKO	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_RKO	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_RKO	factor	cell line	RKO	http://www.ebi.ac.uk/efo/EFO_0001232
+E-PROT-6		CO_SK-CO-1	characteristic	cell line	SK-CO-1	http://www.ebi.ac.uk/efo/EFO_0006752
+E-PROT-6		CO_SK-CO-1	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SK-CO-1	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SK-CO-1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SK-CO-1	characteristic	organism part	colon, derived from metastatic site ascites
+E-PROT-6		CO_SK-CO-1	factor	cell line	SK-CO-1	http://www.ebi.ac.uk/efo/EFO_0006752
+E-PROT-6		CO_SNU-1040	characteristic	cell line	SNU-1040
+E-PROT-6		CO_SNU-1040	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SNU-1040	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-1040	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-1040	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_SNU-1040	factor	cell line	SNU-1040
+E-PROT-6		CO_SNU-175	characteristic	cell line	SNU-175
+E-PROT-6		CO_SNU-175	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-175	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-175	characteristic	organism part	colon, derived from metastatic site peritoneum
+E-PROT-6		CO_SNU-175	factor	cell line	SNU-175
+E-PROT-6		CO_SNU-407	characteristic	cell line	SNU-407
+E-PROT-6		CO_SNU-407	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SNU-407	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-407	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-407	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_SNU-407	factor	cell line	SNU-407
+E-PROT-6		CO_SNU-61	characteristic	cell line	SNU-61
+E-PROT-6		CO_SNU-61	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SNU-61	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-61	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-61	characteristic	organism part	colon, derived from metastatic site liver
+E-PROT-6		CO_SNU-61	factor	cell line	SNU-61
+E-PROT-6		CO_SNU-81	characteristic	cell line	SNU-81
+E-PROT-6		CO_SNU-81	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SNU-81	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-81	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-81	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_SNU-81	factor	cell line	SNU-81
+E-PROT-6		CO_SNU-C1	characteristic	cell line	SNU-C1	http://www.ebi.ac.uk/efo/EFO_0006761
+E-PROT-6		CO_SNU-C1	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-C1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-C1	characteristic	organism part	colon, derived from metastatic site peritoneum
+E-PROT-6		CO_SNU-C1	factor	cell line	SNU-C1	http://www.ebi.ac.uk/efo/EFO_0006761
+E-PROT-6		CO_SNU-C2B	characteristic	cell line	SNU-C2B
+E-PROT-6		CO_SNU-C2B	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SNU-C2B	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-C2B	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-C2B	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-PROT-6		CO_SNU-C2B	factor	cell line	SNU-C2B
+E-PROT-6		CO_SNU-C5	characteristic	cell line	SNU-C5
+E-PROT-6		CO_SNU-C5	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SNU-C5	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SNU-C5	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SNU-C5	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_SNU-C5	factor	cell line	SNU-C5
+E-PROT-6		CO_SW1116	characteristic	cell line	SW1116	http://www.ebi.ac.uk/efo/EFO_0002359
+E-PROT-6		CO_SW1116	characteristic	cell type	enterocyte	http://purl.obolibrary.org/obo/CL_0000584
+E-PROT-6		CO_SW1116	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SW1116	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SW1116	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_SW1116	factor	cell line	SW1116	http://www.ebi.ac.uk/efo/EFO_0002359
+E-PROT-6		CO_SW1463	characteristic	cell line	SW1463	http://www.ebi.ac.uk/efo/EFO_0002362
+E-PROT-6		CO_SW1463	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SW1463	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SW1463	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SW1463	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-6		CO_SW1463	factor	cell line	SW1463	http://www.ebi.ac.uk/efo/EFO_0002362
+E-PROT-6		CO_SW48	characteristic	cell line	SW48	http://www.ebi.ac.uk/efo/EFO_0002367
+E-PROT-6		CO_SW48	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SW48	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SW48	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SW48	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_SW48	factor	cell line	SW48	http://www.ebi.ac.uk/efo/EFO_0002367
+E-PROT-6		CO_SW620	characteristic	cell line	SW620	http://www.ebi.ac.uk/efo/EFO_0002368
+E-PROT-6		CO_SW620	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SW620	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SW620	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SW620	characteristic	organism part	colon, derived from metastatic site lymph node
+E-PROT-6		CO_SW620	factor	cell line	SW620	http://www.ebi.ac.uk/efo/EFO_0002368
+E-PROT-6		CO_SW837	characteristic	cell line	SW837	http://www.ebi.ac.uk/efo/EFO_0002372
+E-PROT-6		CO_SW837	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SW837	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SW837	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SW837	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-6		CO_SW837	factor	cell line	SW837	http://www.ebi.ac.uk/efo/EFO_0002372
+E-PROT-6		CO_SW948	characteristic	cell line	SW948	http://www.ebi.ac.uk/efo/EFO_0002375
+E-PROT-6		CO_SW948	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_SW948	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_SW948	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_SW948	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-6		CO_SW948	factor	cell line	SW948	http://www.ebi.ac.uk/efo/EFO_0002375
+E-PROT-6		CO_T84	characteristic	cell line	T84	http://www.ebi.ac.uk/efo/EFO_0002084
+E-PROT-6		CO_T84	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-PROT-6		CO_T84	characteristic	disease	colorectal adenocarcinoma	http://www.ebi.ac.uk/efo/EFO_0000365
+E-PROT-6		CO_T84	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-6		CO_T84	characteristic	organism part	colon, derived from metastatic site lung
+E-PROT-6		CO_T84	factor	cell line	T84	http://www.ebi.ac.uk/efo/EFO_0002084

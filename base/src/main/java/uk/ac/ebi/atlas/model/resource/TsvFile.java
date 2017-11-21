@@ -16,14 +16,14 @@ import java.util.zip.GZIPInputStream;
 
 public abstract class TsvFile<T> extends AtlasResource<T>{
 
-    public TsvFile(String dataFilesLocation, String template, String ... args) {
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, (Object []) args)));
+    public TsvFile(String parentDirectory, String template, String ... args) {
+        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object []) args)));
     }
 
     public static class ReadAsStream extends TsvFile<ObjectInputStream<String[]>> {
 
-        public ReadAsStream(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadAsStream(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
@@ -61,8 +61,8 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
     public static class ReadOnly extends TsvFile<TsvReader> {
 
-        public ReadOnly(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadOnly(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
@@ -77,8 +77,8 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
     public static class Appendable extends TsvFile<TsvWriter> {
 
-        public Appendable(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public Appendable(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
@@ -89,8 +89,8 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
     public static class Overwrite extends TsvFile<TsvWriter> {
 
-        public Overwrite(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public Overwrite(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
@@ -101,8 +101,8 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
     //Use TsvReader too, maybe?
     public static class ReadCompressed extends TsvFile<CSVReader> {
-        public ReadCompressed(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadCompressed(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override

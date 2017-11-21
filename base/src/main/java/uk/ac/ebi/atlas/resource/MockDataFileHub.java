@@ -14,12 +14,11 @@ public class MockDataFileHub extends DataFileHub {
 
     private MockDataFileHub() throws IOException {
         super(Files.createTempDirectory("").toString());
-        new File(dataFilesLocation, "admin").mkdir();
-        new File(dataFilesLocation, "magetab").mkdir();
-        new File(dataFilesLocation, "expdesign").mkdir();
-        new File(dataFilesLocation, "species").mkdir();
-        new File(dataFilesLocation, "serialized_expression").mkdir();
-        new File(dataFilesLocation).deleteOnExit();
+        new File(experimentsFilesLocation, "admin").mkdir();
+        new File(experimentsFilesLocation, "magetab").mkdir();
+        new File(experimentsFilesLocation, "expdesign").mkdir();
+        new File(experimentsFilesLocation, "serialized_expression").mkdir();
+        new File(experimentsFilesLocation).deleteOnExit();
     }
 
     public static MockDataFileHub create() {
@@ -39,7 +38,7 @@ public class MockDataFileHub extends DataFileHub {
     }
 
     public void addTemporaryFile(String where, Collection<String> lines) {
-        File f = new File(dataFilesLocation + where);
+        File f = new File(experimentsFilesLocation + where);
         f.deleteOnExit();
         f.getParentFile().mkdirs();
         try {
@@ -97,10 +96,6 @@ public class MockDataFileHub extends DataFileHub {
 
     public void addConfigurationFile(String accession,Collection<String> lines){
         addTemporaryFile(MessageFormat.format(CONFIGURATION_FILE_PATH_TEMPLATE, accession), lines);
-    }
-
-    public void addSpeciesJsonFile(Collection<String> lines) {
-        addTemporaryFile(SPECIES_PROPERTIES_FILE_PATH, lines);
     }
 
     public void addReactomePathwaysFile(String accession, String comparison, Collection<String[]> lines) {

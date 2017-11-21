@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.resource;
 
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.model.resource.TsvFile;
@@ -12,15 +11,11 @@ import javax.inject.Named;
 @Named
 public class SingleCellDataFileHub extends DataFileHub {
 
-    private final static String SINGLE_CELL_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
+    private final static String SINGLE_CELL_FILE_PATH_TEMPLATE = "scxa/magetab/{0}/{0}.tsv";
 
     @Inject
-    public SingleCellDataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation) {
+    public SingleCellDataFileHub(@Value("#{configuration['experimentsFilesLocation']}") String dataFilesLocation) {
         super(dataFilesLocation);
-    }
-
-    public AtlasResource<TsvReader> getGuysIdentifiers() {
-        return new TsvFile.ReadOnly(dataFilesLocation, "/sc/guyIdToEnsemblId.tsv");
     }
 
     public SingleCellExperimentFiles getSingleCellExperimentFiles(String experimentAccession) {
@@ -32,7 +27,7 @@ public class SingleCellDataFileHub extends DataFileHub {
 
         SingleCellExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.data = new TsvFile.ReadAsStream(dataFilesLocation, SINGLE_CELL_FILE_PATH_TEMPLATE, experimentAccession);
+            this.data = new TsvFile.ReadAsStream(experimentsFilesLocation, SINGLE_CELL_FILE_PATH_TEMPLATE, experimentAccession);
 
         }
     }

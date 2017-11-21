@@ -1,0 +1,2 @@
+Pipeline        Please see <a href="https://www.ebi.ac.uk/arrayexpress/experiments/E-PROT-6/protocols/">Sample and Data Processing Protocols</a> for more information.
+Post-processing from source data file <a href="http://www.ebi.ac.uk/arrayexpress/files/E-PROT-6.processed.1.zip">E-PROT-6.processed.1.zip</a> involved mapping Uniprot IDs to Ensembl 83/GENCODE 24 (GRCh38) identifiers.
