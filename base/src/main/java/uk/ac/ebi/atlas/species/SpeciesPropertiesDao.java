@@ -4,6 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.model.resource.JsonFile;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -13,32 +16,17 @@ import java.io.IOException;
 @Named
 public class SpeciesPropertiesDao {
 
-    private DataFileHub dataFileHub;
+    private final AtlasResource<JsonReader> speciesPropertiesJsonFile;
 
     @Inject
-    public void setDataFileHub(DataFileHub dataFileHub) {
-        this.dataFileHub = dataFileHub;
+    public SpeciesPropertiesDao(@Value("#{configuration['speciesPropertiesLocation']}") String speciesPropertiesLocation) {
+        speciesPropertiesJsonFile = new JsonFile.ReadOnly(speciesPropertiesLocation, "species-properties.json");
     }
-
-//    public SpeciesProperties get(String species) throws IOException {
-//        try (JsonReader reader = dataFileHub.getSpeciesPropertiesFile().json.get()) {
-//            reader.beginArray();
-//            while (reader.hasNext()) {
-//                SpeciesProperties speciesJson = readSpeciesProperties(reader);
-//                if (speciesJson.referenceName().equals(species)) {
-//                    return speciesJson;
-//                }
-//            }
-//            reader.endArray();
-//        }
-//
-//        return null;
-//    }
 
     public ImmutableList<SpeciesProperties> fetchAll() throws IOException {
         ImmutableList.Builder<SpeciesProperties> allSpeciesPropertiesBuilder = ImmutableList.builder();
 
-        try (JsonReader reader = dataFileHub.getSpeciesPropertiesFile().json.get()) {
+        try (JsonReader reader = speciesPropertiesJsonFile.get()) {
             reader.beginArray();
             while (reader.hasNext()) {
                 allSpeciesPropertiesBuilder.add(readSpeciesProperties(reader));
