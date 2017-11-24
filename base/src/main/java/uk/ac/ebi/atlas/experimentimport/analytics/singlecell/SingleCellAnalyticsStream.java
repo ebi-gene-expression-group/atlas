@@ -5,10 +5,11 @@ import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-public class SingleCellAnalyticsStream {
+public class SingleCellAnalyticsStream implements Closeable {
 
     private final MatrixMarketReader matrixMarketReader;
     private final String[] geneIds;
@@ -35,5 +36,10 @@ public class SingleCellAnalyticsStream {
                                 geneIds[triple.getLeft() - 1],
                                 cellIds[triple.getMiddle() - 1],
                                 triple.getRight()));
+    }
+
+    @Override
+    public void close() throws IOException {
+        matrixMarketReader.close();
     }
 }

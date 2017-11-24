@@ -5,7 +5,6 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.stream.Stream;
 
 @Named
 public class SingleCellAnalyticsStreamFactory {
@@ -16,7 +15,8 @@ public class SingleCellAnalyticsStreamFactory {
         this.dataFileHub = dataFileHub;
     }
 
-    public Stream<SingleCellAnalytics> create(String experimentAccession) throws IOException {
-        return new SingleCellAnalyticsStream(dataFileHub.getSingleCellExperimentFiles(experimentAccession).dataFiles()).stream();
+    public SingleCellAnalyticsStream create(String experimentAccession) throws IOException {
+        return new SingleCellAnalyticsStream(
+                dataFileHub.getSingleCellExperimentFiles(experimentAccession).dataFiles());
     }
 }

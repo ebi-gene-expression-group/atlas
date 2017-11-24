@@ -25,7 +25,9 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
 
     @Override
     public void loadAnalytics(String accession) throws IOException {
-        analyticsDao.loadAnalytics(accession, analyticsStreamFactory.create(accession));
+        try (SingleCellAnalyticsStream analyticsStream = analyticsStreamFactory.create(accession)) {
+            analyticsDao.loadAnalytics(accession, analyticsStream.stream());
+        }
     }
 
     @Override
