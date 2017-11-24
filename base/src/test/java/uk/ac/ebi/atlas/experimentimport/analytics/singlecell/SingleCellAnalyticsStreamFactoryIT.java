@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +11,7 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.leftPad;
 import static org.hamcrest.Matchers.hasItem;
@@ -68,9 +65,9 @@ public class SingleCellAnalyticsStreamFactoryIT {
         dataFileHub.addMatrixMarketExpressionFiles(
                 EXPERIMENT_ACCESSION, matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
 
-        Stream<SingleCellAnalytics> singleCellAnalyticsStream = subject.create(EXPERIMENT_ACCESSION);
+        SingleCellAnalyticsStream singleCellAnalyticsStream = subject.create(EXPERIMENT_ACCESSION);
 
-        singleCellAnalyticsStream.forEach(
+        singleCellAnalyticsStream.stream().forEach(
                 sca -> assertThat(
                         matrixEntries,
                         hasItem(
