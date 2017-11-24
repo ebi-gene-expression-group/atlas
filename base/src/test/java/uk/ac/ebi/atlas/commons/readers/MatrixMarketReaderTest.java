@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.contains;
@@ -31,7 +33,9 @@ public class MatrixMarketReaderTest {
     @Before
     public void setUp() throws Exception {
         subject =
-                new MatrixMarketReader(MatrixMarketReaderTest.class.getResourceAsStream("matrix_market_example.mtx"));
+                new MatrixMarketReader(
+                        new InputStreamReader(
+                                MatrixMarketReaderTest.class.getResourceAsStream("matrix_market_example.mtx")));
     }
 
     @Test
@@ -53,7 +57,9 @@ public class MatrixMarketReaderTest {
 
     @Test
     public void underlyingInputStreamIsClosed() throws Exception {
-        InputStream in = spy(MatrixMarketReaderTest.class.getResourceAsStream("matrix_market_example.mtx"));
+        Reader in =
+                spy(new InputStreamReader(
+                        MatrixMarketReaderTest.class.getResourceAsStream("matrix_market_example.mtx")));
 
         try (MatrixMarketReader matrixMarketReader = new MatrixMarketReader(in)) {
             // Use matrixMarketReader here

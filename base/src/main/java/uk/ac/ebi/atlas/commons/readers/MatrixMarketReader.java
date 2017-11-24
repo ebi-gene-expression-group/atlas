@@ -5,8 +5,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -17,14 +16,14 @@ public class MatrixMarketReader implements Closeable {
     private final int numCols;
     private final int numElements;
     private final Stream<Triple<Integer, Integer, Double>> lines;
-    private final BufferedReader reader;
+    private final BufferedReader inReader;
 
-    public MatrixMarketReader(InputStream in) throws IOException {
-        reader = new BufferedReader(new InputStreamReader(in));
+    public MatrixMarketReader(Reader reader) throws IOException {
+        inReader = new BufferedReader(reader);
 
         String line;
         do {
-            line = reader.readLine();
+            line = inReader.readLine();
         } while (line.startsWith("%"));
 
         String[] splitLine = line.split(" ");
@@ -32,7 +31,7 @@ public class MatrixMarketReader implements Closeable {
         numCols = Integer.parseInt(splitLine[1]);
         numElements = Integer.parseInt(splitLine[2]);
 
-        lines = reader.lines().map(MatrixMarketReader::parseLine);
+        lines = inReader.lines().map(MatrixMarketReader::parseLine);
     }
 
     public int getRows() {
@@ -57,7 +56,7 @@ public class MatrixMarketReader implements Closeable {
 
     @Override
     public void close() throws IOException {
-        reader.close();
+        inReader.close();
     }
 
     static private Triple<Integer, Integer, Double> parseLine(String line) {
