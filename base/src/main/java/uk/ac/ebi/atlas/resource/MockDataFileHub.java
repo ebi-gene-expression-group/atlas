@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,7 +39,7 @@ public class MockDataFileHub extends DataFileHub {
     }
 
     public void addTemporaryFile(String where, Collection<String> lines) {
-        File f = new File(experimentsFilesLocation + where);
+        File f = Paths.get(experimentsFilesLocation, where).toFile();
         f.deleteOnExit();
         f.getParentFile().mkdirs();
         try {
