@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentimport.analytics.SingleCellBaselineDao;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 @Named
 public class MarkerGeneDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellBaselineDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerGeneDao.class);
 
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 2000;

@@ -1,23 +1,23 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.SingleCellAnalyticsLoader;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 
 @Named
 public class SingleCellAnalyticsLoaderFactory implements AnalyticsLoaderFactory {
 
-    SingleCellBaselineAnalyticsLoader singleCellBaselineAnalyticsLoader;
+    private final SingleCellAnalyticsLoader singleCellAnalyticsLoader;
 
     @Inject
-    public SingleCellAnalyticsLoaderFactory(SingleCellBaselineAnalyticsLoader singleCellBaselineAnalyticsLoader){
-        this.singleCellBaselineAnalyticsLoader = singleCellBaselineAnalyticsLoader;
+    public SingleCellAnalyticsLoaderFactory(SingleCellAnalyticsLoader singleCellAnalyticsLoader) {
+        this.singleCellAnalyticsLoader = singleCellAnalyticsLoader;
     }
 
     @Override
     public AnalyticsLoader getLoader(ExperimentType experimentType) {
-        return singleCellBaselineAnalyticsLoader;
+        return singleCellAnalyticsLoader;
     }
 }
