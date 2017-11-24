@@ -3,7 +3,9 @@ package uk.ac.ebi.atlas.resource;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -46,7 +48,11 @@ public class DataFileHub {
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "magetab/{0}/{0}_{1}-log-fold-changes.tsv";
     final static String COEXPRESSION_FILE_TEMPLATE = "magetab/{0}/{0}-coexpressions.tsv.gz";
 
-    final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "gxa/magetab/{0}/{0}.{1}.reactome.gsea.tsv";
+    final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.{1}.reactome.gsea.tsv";
+
+    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms.mtx";
+    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms_rows.tsv";
+    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms_cols.tsv";
 
     @Inject
     public DataFileHub(@Value("#{configuration['experimentsFilesLocation']}") String experimentsFilesLocation){
@@ -76,7 +82,6 @@ public class DataFileHub {
         return new DifferentialExperimentFiles(experimentAccession);
     }
 
-
     public RnaSeqDifferentialExperimentFiles getRnaSeqDifferentialExperimentFiles(String experimentAccession) {
         return new RnaSeqDifferentialExperimentFiles(experimentAccession);
     }
@@ -94,6 +99,10 @@ public class DataFileHub {
     public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
                                                       ProfileStreamOptions<?> profileStreamOptions){
         return new KryoFile(experimentsFilesLocation, experimentAccession, profileStreamOptions);
+    }
+
+    public SingleCellExperimentFiles getSingleCellExperimentFiles(String experimentAccession) {
+        return new SingleCellExperimentFiles(experimentAccession);
     }
 
     public class ExperimentFiles {
@@ -246,6 +255,44 @@ public class DataFileHub {
                     new TsvFile.ReadOnly(
                             experimentsFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE,
                             experimentAccession, arrayDesign);
+        }
+    }
+
+    public class SingleCellExperimentFiles extends ExperimentFiles {
+        private final AtlasResource<MatrixMarketReader> tpms;
+        private final AtlasResource<TsvReader> geneIds;
+        private final AtlasResource<TsvReader> cellIds;
+
+        SingleCellExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.tpms =
+                    new MatrixMarketFile.ReadOnly(
+                            experimentsFilesLocation,
+                            SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            this.geneIds =
+                    new TsvFile.ReadOnly(
+                            experimentsFilesLocation,
+                            SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            this.cellIds =
+                    new TsvFile.ReadOnly(
+                            experimentsFilesLocation,
+                            SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+        }
+
+//        public AtlasResource<MatrixMarketReader> dataFile(ExpressionUnit.Absolute.Rna unit) {
+//            switch(unit) {
+//                case TPM:
+//                    return tpms;
+//                default:
+//                    throw new RuntimeException("No file for " + unit);
+//            }
+//        }
+
+        public Triple<AtlasResource<MatrixMarketReader>, AtlasResource<TsvReader>, AtlasResource<TsvReader>> dataFiles() {
+            return Triple.of(tpms, geneIds, cellIds);
         }
     }
 

@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.resource;
 
+import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.tuple.Triple;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -9,6 +12,8 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 // I belong in the test dir, but here I can be shared among different modules without the need of creating a test jar
 public class MockDataFileHub extends DataFileHub {
@@ -30,6 +35,19 @@ public class MockDataFileHub extends DataFileHub {
         }
     }
 
+    private void addTemporaryMatrixMarket(String where, int rows, int columns, Collection<Triple> lines) {
+        ImmutableList<String> preamble =
+                ImmutableList.of(
+                        "%%MatrixMarket matrix coordinate real general",
+                        String.format("%d %d %d", rows, columns, lines.size()));
+
+        addTemporaryFile(
+                where,
+                Stream.concat(
+                        preamble.stream(),
+                        lines.stream().map(line -> line.toString("%1$s %2$s %3$s"))).collect(Collectors.toList()));
+    }
+
     private void addTemporaryTsv(String where, Collection<String[]> lines) {
         addTemporaryFile(
                 where,
@@ -48,6 +66,25 @@ public class MockDataFileHub extends DataFileHub {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addMatrixMarketExpressionFiles(String accession,
+                                               Collection<Triple> lines,
+                                               String[] geneIds,
+                                               String[] cellIds) {
+        addTemporaryMatrixMarket(
+                MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE, accession),
+                geneIds.length, cellIds.length, lines);
+        addTemporaryTsv(
+                MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE, accession),
+                IntStream.range(0, geneIds.length).boxed()
+                        .map(i -> new String[] {Integer.toString(i + 1), geneIds[i]})
+                        .collect(Collectors.toList()));
+        addTemporaryTsv(
+                MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE, accession),
+                IntStream.range(0, cellIds.length).boxed()
+                        .map(i -> new String[] {Integer.toString(i + 1), cellIds[i]})
+                        .collect(Collectors.toList()));
     }
 
     public void addTpmsExpressionFile(String accession, Collection<String[]> lines) {
