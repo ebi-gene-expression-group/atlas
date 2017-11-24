@@ -546,16 +546,6 @@
             </properties>
         </profile>
 
-        <!--<profile>-->
-            <!--&lt;!&ndash;build used for staging and production &ndash;&gt;-->
-            <!--<id>production-sc</id>-->
-            <!--&lt;!&ndash; jdbc.properties and log.properties are located on the filesystem, see Tomcat’s conf/Catalina/localhost/gxa.xml &ndash;&gt;-->
-            <!--&lt;!&ndash; solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> &ndash;&gt;-->
-            <!--<properties>-->
-                <!--<data.files.location>/srv/gxa/data-sc/</data.files.location>-->
-            <!--</properties>-->
-        <!--</profile>-->
-
         <profile>
             <!-- Used for build that is deployed to ves-hx-77 -->
             <id>test</id>
