@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LatestExperimentsService {
-
     private final LatestExperimentsDao latestExperimentsDao;
     private final ExperimentTrader experimentTrader;
     private final ImmutableSet<ExperimentType> experimentTypes;

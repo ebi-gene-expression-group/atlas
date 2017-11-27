@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experiments;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
@@ -9,13 +7,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Named
 public class LatestExperimentsDao {
-
     private static final String SELECT_PUBLIC_ACCESSIONS = "SELECT accession FROM experiment WHERE private='F' ";
     private static final String IN_DESCENDING_ORDER_BY_DATE = " ORDER BY last_update DESC LIMIT 5";
-
     private static final String EXPERIMENT_COUNT = "SELECT COUNT(*) FROM experiment WHERE private='F' ";
 
     private final JdbcTemplate jdbcTemplate;
@@ -32,12 +29,10 @@ public class LatestExperimentsDao {
 
         return String.format(
                 "AND (%s)",
-                FluentIterable.from(experimentTypes).transform(experimentType -> String.format("type='%s'", experimentType.name())).join(Joiner.on(" OR ")));
+                experimentTypes.stream()
+                        .map(experimentType -> String.format("type='%s'", experimentType.name()))
+                        .collect(Collectors.joining(" OR ")));
     }
-
-//    public List<String> fetchLatestExperimentAccessions() {
-//        return jdbcTemplate.queryForList(SELECT_PUBLIC_ACCESSIONS + IN_DESCENDING_ORDER_BY_DATE, String.class);
-//    }
 
     public List<String> fetchLatestExperimentAccessions(Set<ExperimentType> experimentTypes) {
         return jdbcTemplate.queryForList(
@@ -47,15 +42,10 @@ public class LatestExperimentsDao {
                 String.class);
     }
 
-//    public long fetchPublicExperimentsCount() {
-//        return jdbcTemplate.queryForObject(EXPERIMENT_COUNT, Long.class);
-//    }
-
     public long fetchPublicExperimentsCount(Set<ExperimentType> experimentTypes) {
         return jdbcTemplate.queryForObject(
                 EXPERIMENT_COUNT +
                 buildExperimentTypeConditions(experimentTypes),
                 Long.class);
     }
-
 }

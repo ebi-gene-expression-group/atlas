@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,8 +10,10 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Named
 public class ExperimentDAO {
@@ -76,7 +76,8 @@ public class ExperimentDAO {
 
         jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentDTO.getExperimentAccession(),
                 experimentDTO.getExperimentType().name(), isPrivateAsString(experimentDTO.isPrivate()),
-                accessKeyUUID.toString(), Joiner.on(", ").join(experimentDTO.getPubmedIds()), experimentDTO.getTitle());
+                accessKeyUUID.toString(), experimentDTO.getPubmedIds().stream().collect(Collectors.joining(", ")),
+                experimentDTO.getTitle());
         return accessKeyUUID;
     }
 
@@ -133,7 +134,7 @@ public class ExperimentDAO {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM EXPERIMENT", Integer.class);
     }
 
-    void checkExperimentFound(boolean conditionThatIndicatesExperimentWasFound, String accession) {
+    private void checkExperimentFound(boolean conditionThatIndicatesExperimentWasFound, String accession) {
         if (!conditionThatIndicatesExperimentWasFound) {
             throw new ResourceNotFoundException("Experiment with accession:" + accession + " not found");
         }

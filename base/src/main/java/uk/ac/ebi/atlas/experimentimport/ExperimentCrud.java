@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.FluentIterable;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +10,6 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -21,7 +18,9 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -70,7 +69,10 @@ public class ExperimentCrud {
                 condensedSdrfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
-                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(AssayGroup::assaysAnalyzedForThisDataColumn).toSet()), isPrivate);
+                        .getSpeciesForAssays(
+                                experimentConfiguration.getAssayGroups().stream()
+                                        .flatMap(assayGroup -> assayGroup.assaysAnalyzedForThisDataColumn().stream())
+                                        .collect(Collectors.toSet())), isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);
@@ -94,7 +96,7 @@ public class ExperimentCrud {
             ExperimentDTO experiment = findExperiment(experimentAccession);
             return Optional.of(experiment.getAccessKey());
         } catch (ResourceNotFoundException e) {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
