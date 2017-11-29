@@ -15,7 +15,7 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
     public static final double nonZeroButVerySmallCutoffValue = Double.MIN_VALUE;
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
-    private static final int HEATMAP_SIZE_MIN = 0;
+    private static final int HEATMAP_SIZE_MIN = 1;
     private static final int HEATMAP_SIZE_MAX = 1000;
 
     private double cutoff = getDefaultCutoff();

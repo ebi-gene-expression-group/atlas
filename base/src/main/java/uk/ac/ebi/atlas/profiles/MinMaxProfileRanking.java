@@ -17,6 +17,10 @@ public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<
         this.newList = newList;
     }
 
+    /**
+    @param maxSize value is restricted between 1 and 1000 when set as a bean binding to UI parameters
+    @see uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences
+  */
     @Override
     public L select(ObjectInputStream<T> profiles, int maxSize) {
 
