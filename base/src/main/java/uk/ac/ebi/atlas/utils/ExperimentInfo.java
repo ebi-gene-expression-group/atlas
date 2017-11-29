@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.ImmutableList;

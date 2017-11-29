@@ -218,29 +218,41 @@ public class ExperimentOps {
 
     private Pair<OpResult,JsonPrimitive> performStatefulOp(String accession, Op op) {
         Pair<OpResult,JsonPrimitive> result;
-        ImmutableList<OpLogEntry> opRecords = experimentOpLogWriter.getCurrentOpLog(accession);
 
+        ImmutableList<OpLogEntry> opRecords = experimentOpLogWriter.getCurrentOpLog(accession);
         OpLogEntry lastOp = opRecords.isEmpty() ? null : opRecords.get(opRecords.size() - 1);
+
         if (lastOp != null && lastOp.isInProgress()) {
-            result= Pair.of(OpResult.FAILURE, new JsonPrimitive(
-                    lastOp.statusMessage()+" Refusing to start "+op
-            ));
+            result =
+                    Pair.of(
+                            OpResult.FAILURE,
+                            new JsonPrimitive(lastOp.statusMessage() + " Refusing to start " + op));
         } else {
             OpLogEntry newOpRecord = OpLogEntry.newlyStartedOp(op);
-            experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord).build());
+            experimentOpLogWriter.persistOpLog(
+                    accession,
+                    ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord).build());
+
             try {
-                result = Pair.of(OpResult.SUCCESS,
-                        experimentOpsExecutionService
-                                .attemptExecuteStatefulOp(accession, op));
-                experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toSuccess()).build());
+                result =
+                        Pair.of(OpResult.SUCCESS,
+                                experimentOpsExecutionService.attemptExecuteStatefulOp(accession, op));
+
+                experimentOpLogWriter.persistOpLog(
+                        accession,
+                        ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toSuccess()).build());
 
             } catch (Exception e) {
                 String text = e.getMessage()!=null? e.getMessage() : e.toString();
                 LOGGER.error(text,e);
                 result = Pair.of(OpResult.FAILURE, new JsonPrimitive(text));
-                experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toFailure(text)).build());
+
+                experimentOpLogWriter.persistOpLog(
+                        accession,
+                        ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toFailure(text)).build());
             }
         }
+
         return result;
     }
 
