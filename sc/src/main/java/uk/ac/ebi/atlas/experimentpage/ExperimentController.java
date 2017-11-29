@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.Arrays;
 
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
-
-    private final ExperimentTrader experimentTrader;
+    private final ScxaExperimentTrader experimentTrader;
     private static final Gson gson = new Gson();
     
     @Inject
-    public ExperimentController(ExperimentTrader experimentTrader){
+    public ExperimentController(ScxaExperimentTrader experimentTrader){
         this.experimentTrader = experimentTrader;
     }
 

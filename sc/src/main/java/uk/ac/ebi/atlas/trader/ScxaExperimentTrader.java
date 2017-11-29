@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -15,19 +15,20 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-public class SingleCellAtlasExperimentTrader extends ExperimentTrader {
-
+public class ScxaExperimentTrader extends ExperimentTrader {
     private final LoadingCache<String, BaselineExperiment> baselineExperimentsCache;
 
     @Inject
-    public SingleCellAtlasExperimentTrader(ExperimentDAO experimentDAO,
-                                           SingleCellRnaSeqBaselineExperimentFactory
+    public ScxaExperimentTrader(ScxaExperimentDao experimentDao,
+                                SingleCellRnaSeqBaselineExperimentFactory
                                               experimentFactory,
-                                           ArrayExpressClient arrayExpressClient,
-                                           ExperimentDesignParser experimentDesignParser) {
-        super(experimentDAO);
-        baselineExperimentsCache = CacheBuilder.newBuilder().build(new ExperimentsCacheLoader<>(arrayExpressClient,
-                experimentDesignParser, experimentDAO, experimentFactory));
+                                ArrayExpressClient arrayExpressClient,
+                                ExperimentDesignParser experimentDesignParser) {
+        super(experimentDao);
+        baselineExperimentsCache =
+                CacheBuilder.newBuilder().build(
+                        new ExperimentsCacheLoader<>(
+                                arrayExpressClient, experimentDesignParser, experimentDao, experimentFactory));
     }
 
     public Experiment getPublicExperiment(String experimentAccession) {
@@ -53,5 +54,4 @@ public class SingleCellAtlasExperimentTrader extends ExperimentTrader {
             return null;
         }
     }
-
 }

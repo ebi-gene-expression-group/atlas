@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.trader;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.cache.*;
@@ -19,12 +19,12 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
     private final ImmutableMap<ExperimentType, ExperimentsCache<? extends Experiment>> experimentCachesPerType;
 
     @Inject
-    public ExpressionAtlasExperimentTrader(ExperimentDAO experimentDAO,
+    public ExpressionAtlasExperimentTrader(GxaExperimentDao experimentDao,
                                            RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache,
                                            RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                            MicroarrayExperimentsCache microarrayExperimentsCache,
                                            ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache) {
-        super(experimentDAO);
+        super(experimentDao);
 
         ImmutableMap.Builder<ExperimentType, ExperimentsCache<? extends Experiment>> builder = ImmutableMap.builder();
 
@@ -41,11 +41,11 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
 
     }
 
-    ConcurrentHashMap<Pair<String, String>, ExperimentType> experimentTypes = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Pair<String, String>, ExperimentType> experimentTypes = new ConcurrentHashMap<>();
 
     private ExperimentType getExperimentType(String experimentAccession, String accessKey) {
         Pair<String, String> k = Pair.of(experimentAccession, accessKey);
-        experimentTypes.computeIfAbsent(k, k_ -> experimentDAO.findExperiment(k_.getLeft(), k_.getRight()).getExperimentType());
+        experimentTypes.computeIfAbsent(k, k_ -> experimentDao.findExperiment(k_.getLeft(), k_.getRight()).getExperimentType());
         return experimentTypes.get(k);
     }
 

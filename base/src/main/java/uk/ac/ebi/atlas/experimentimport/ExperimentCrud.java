@@ -26,30 +26,32 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /*
  * Responsible for:
- * - the database (the experiments table, and the deprecated expression values tables)
- * - conditions index
+ * - Database:
+ *     - gxa: the experiments table, and the deprecated expression values tables)
+ *     - scxa: tables scxa_experiments, scxa_analytics; TODO scxa_marker_gene, scxa_tsne_plot_*
  * - design files on disk
  */
 
-public class ExperimentCrud {
+public abstract class ExperimentCrud {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCrud.class);
+
+    private final ExperimentDao experimentDao;
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
-    private final ExperimentDAO experimentDAO;
     private final ExperimentChecker experimentChecker;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final ConfigurationTrader configurationTrader;
 
-    public ExperimentCrud(CondensedSdrfParser condensedSdrfParser,
+    public ExperimentCrud(ExperimentDao experimentDao,
+                          CondensedSdrfParser condensedSdrfParser,
                           ExperimentDesignFileWriterService experimentDesignFileWriterService,
-                          ExperimentDAO experimentDAO,
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
                           ConfigurationTrader configurationTrader) {
 
+        this.experimentDao = experimentDao;
         this.condensedSdrfParser = condensedSdrfParser;
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
-        this.experimentDAO = experimentDAO;
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.configurationTrader = configurationTrader;
@@ -65,7 +67,7 @@ public class ExperimentCrud {
 
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
 
-        ExperimentDTO experimentDTO = ExperimentDTO.createNew(
+        ExperimentDTO experimentDTO = ExperimentDTO.create(
                 condensedSdrfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
@@ -78,17 +80,15 @@ public class ExperimentCrud {
             deleteExperiment(experimentAccession);
         }
 
-        // We only insert in the DB differential experiments expressions
-        if (experimentConfiguration.getExperimentType().isDifferential()) {
-            analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType()).loadAnalytics(experimentAccession);
-        }
+        // We only insert in the DB differential and single cell experiments expressions
+        analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType())
+                .loadAnalytics(experimentAccession);
 
-        UUID result = experimentDAO.addExperiment(experimentDTO, accessKey);
-
+        UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
+        experimentDao.addExperiment(experimentDTO, accessKeyUuid);
         updateWithNewExperimentDesign(condensedSdrfParserOutput.getExperimentDesign(), experimentDTO);
 
-        return result;
-
+        return accessKeyUuid;
     }
 
     private Optional<String> fetchExperimentAccessKey(String experimentAccession) {
@@ -100,8 +100,6 @@ public class ExperimentCrud {
         }
     }
 
-
-
     public void deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = findExperiment(experimentAccession);
         checkNotNull(experimentDTO, MessageFormat.format("Experiment not found: {0}", experimentAccession));
@@ -112,16 +110,15 @@ public class ExperimentCrud {
             analyticsLoader.deleteAnalytics(experimentAccession);
         }
 
-        experimentDAO.deleteExperiment(experimentDTO.getExperimentAccession());
-
+        experimentDao.deleteExperiment(experimentDTO.getExperimentAccession());
     }
 
     public ExperimentDTO findExperiment(String experimentAccession) {
-        return experimentDAO.getExperimentAsAdmin(experimentAccession);
+        return experimentDao.getExperimentAsAdmin(experimentAccession);
     }
 
     public List<ExperimentDTO> findAllExperiments() {
-        return experimentDAO.getAllExperimentsAsAdmin();
+        return experimentDao.getAllExperimentsAsAdmin();
     }
 
     public void makeExperimentPrivate(String experimentAccession) throws IOException {
@@ -132,10 +129,10 @@ public class ExperimentCrud {
         setExperimentPrivacyStatus(experimentAccession, false);
     }
 
-    private void setExperimentPrivacyStatus(String experimentAccession, boolean newPrivacyStatus){
+    private void setExperimentPrivacyStatus(String experimentAccession, boolean newPrivacyStatus) {
         ExperimentDesign newDesign = loadAndValidateFiles(experimentAccession).getRight().getExperimentDesign();
-        experimentDAO.setExperimentPrivacyStatus(experimentAccession, newPrivacyStatus);
-        ExperimentDTO experimentDTO = experimentDAO.getExperimentAsAdmin(experimentAccession);
+        experimentDao.setExperimentPrivacyStatus(experimentAccession, newPrivacyStatus);
+        ExperimentDTO experimentDTO = experimentDao.getExperimentAsAdmin(experimentAccession);
         Preconditions.checkState(newPrivacyStatus == experimentDTO.isPrivate(), "Failed to change experiment status in the db! (?)");
 
         updateWithNewExperimentDesign(newDesign, experimentDTO);
@@ -144,31 +141,41 @@ public class ExperimentCrud {
     public void updateExperimentDesign(String experimentAccession) {
         updateWithNewExperimentDesign(
                 loadAndValidateFiles(experimentAccession).getRight().getExperimentDesign(),
-                experimentDAO.getExperimentAsAdmin(experimentAccession)
+                experimentDao.getExperimentAsAdmin(experimentAccession)
         );
     }
 
-    private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO){
-        updateWithNewExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(),experimentDTO.isPrivate(), newDesign);
-
+    private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO) {
+        updateWithNewExperimentDesign(
+                experimentDTO.getExperimentAccession(),
+                experimentDTO.getExperimentType(),
+                newDesign);
     }
 
-    private void updateWithNewExperimentDesign(String accession, ExperimentType type, boolean isPrivate,
-                                        ExperimentDesign experimentDesign) {
+    private void updateWithNewExperimentDesign(String accession,
+                                               ExperimentType type,
+                                               ExperimentDesign experimentDesign) {
         try {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
             LOGGER.info("updated design for experiment {}", accession);
-
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private Pair<ExperimentConfiguration, CondensedSdrfParserOutput> loadAndValidateFiles(String experimentAccession){
-        ExperimentConfiguration experimentConfiguration = configurationTrader.getExperimentConfiguration(experimentAccession);
+    private Pair<ExperimentConfiguration, CondensedSdrfParserOutput> loadAndValidateFiles(String experimentAccession) {
+        ExperimentConfiguration experimentConfiguration =
+                configurationTrader.getExperimentConfiguration(experimentAccession);
         experimentChecker.checkAllFiles(experimentAccession, experimentConfiguration.getExperimentType());
-        CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
-        new ExperimentFilesCrossValidator(experimentConfiguration, condensedSdrfParserOutput.getExperimentDesign()).validate();
+
+        CondensedSdrfParserOutput condensedSdrfParserOutput =
+                condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
+
+        new ExperimentFilesCrossValidator(
+                experimentConfiguration,
+                condensedSdrfParserOutput.getExperimentDesign())
+                .validate();
+
         return Pair.of(experimentConfiguration, condensedSdrfParserOutput);
     }
 }

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +15,14 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class ExperimentDAOIT {
+public class GxaExperimentDaoIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_GEOD_5614 = "E-GEOD-5614";
@@ -30,11 +31,13 @@ public class ExperimentDAOIT {
     private static final String SECRET_111 = "Secret_111";
 
     @Inject
-    private ExperimentDAO subject;
+    private GxaExperimentDao subject;
 
     public UUID createSecret111(boolean isPrivate) {
-        ExperimentDTO mtab = ExperimentDTO.createNew(SECRET_111, TYPE_MICROARRAY, "cow", Sets.newHashSet("1"), "diff", isPrivate);
-        return subject.addExperiment(mtab, Optional.absent());
+        UUID randomUUID = UUID.randomUUID();
+        ExperimentDTO mtab = ExperimentDTO.create(SECRET_111, TYPE_MICROARRAY, "cow", Sets.newHashSet("1"), "diff", isPrivate);
+        subject.addExperiment(mtab, randomUUID);
+        return randomUUID;
     }
 
     @Before
@@ -50,7 +53,7 @@ public class ExperimentDAOIT {
     public void testFindExperiments() {
         List<ExperimentDTO> experimentDTOs = subject.getAllExperimentsAsAdmin();
         assertThat(experimentDTOs.size(), greaterThan(50));
-        assertThat(experimentDTOs, hasItem(ExperimentDTO.createNew(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), "", false)));
+        assertThat(experimentDTOs, hasItem(ExperimentDTO.create(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), "", false)));
     }
 
     @Test

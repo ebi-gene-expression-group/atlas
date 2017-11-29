@@ -3,10 +3,10 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.GxaExperimentCrud;
+import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExpressionAtlasExperimentChecker;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
@@ -22,33 +22,29 @@ import javax.inject.Inject;
 @Scope("request")
 @RequestMapping("/admin/experiments")
 public class ExpressionAtlasExperimentAdminController extends ExperimentAdminController {
-
     @Inject
     public ExpressionAtlasExperimentAdminController(DataFileHub dataFileHub,
                                                     CondensedSdrfParser condensedSdrfParser,
                                                     ExperimentDesignFileWriterService experimentDesignFileWriterService,
-                                                    ExperimentDAO experimentDAO,
+                                                    GxaExperimentDao expressionAtlasExperimentDao,
                                                     ExpressionAtlasExperimentChecker experimentChecker,
-                                                    AnalyticsLoaderFactory analyticsLoaderFactory,
+                                                    GxaAnalyticsLoaderFactory analyticsLoaderFactory,
                                                     ConfigurationTrader configurationTrader,
                                                     BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                                     AnalyticsIndexerManager analyticsIndexerManager,
                                                     ExpressionSerializerService expressionSerializerService,
-                                                    ExperimentTrader experimentTrader
-    ) {
+                                                    ExperimentTrader experimentTrader) {
         super(
             new ExperimentOps(
-                new ExperimentOpLogWriter(
-                    dataFileHub
-                ),
+                new ExperimentOpLogWriter(dataFileHub),
                 new ExpressionAtlasExperimentOpsExecutionService(
-                    new ExperimentCrud(
-                        condensedSdrfParser,
-                        experimentDesignFileWriterService,
-                        experimentDAO,
-                        experimentChecker,
-                        analyticsLoaderFactory,
-                        configurationTrader),
+                    new GxaExperimentCrud(
+                            expressionAtlasExperimentDao,
+                            condensedSdrfParser,
+                            experimentDesignFileWriterService,
+                            experimentChecker,
+                            analyticsLoaderFactory,
+                            configurationTrader),
                     baselineCoexpressionProfileLoader,
                     analyticsIndexerManager,
                     expressionSerializerService,

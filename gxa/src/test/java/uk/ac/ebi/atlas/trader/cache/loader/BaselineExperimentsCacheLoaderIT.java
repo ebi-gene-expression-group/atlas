@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -39,7 +39,7 @@ public class BaselineExperimentsCacheLoaderIT {
     private RnaSeqBaselineExperimentFactory rnaSeqBaselineExperimentFactory;
 
     @Mock
-    private ExperimentDAO experimentDao;
+    private GxaExperimentDao expressionAtlasExperimentDao;
 
     @Mock
     private ArrayExpressClient arrayExpressClient;
@@ -56,9 +56,9 @@ public class BaselineExperimentsCacheLoaderIT {
         ExperimentDTO experimentDTO = new ExperimentDTO(accession, ExperimentType.RNASEQ_MRNA_BASELINE,
                 "Homo sapiens", pubMedIds, "title", new Date(),
                 false, UUID.randomUUID().toString());
-        when(experimentDao.getExperimentAsAdmin(accession)).thenReturn(experimentDTO);
+        when(expressionAtlasExperimentDao.getExperimentAsAdmin(accession)).thenReturn(experimentDTO);
 
-        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser,experimentDao,
+        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,
                 rnaSeqBaselineExperimentFactory );
     }
 

@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -49,7 +49,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     private ProteomicsBaselineExperimentFactory proteomicsBaselineExperimentFactory;
 
     @Mock
-    private ExperimentDAO experimentDao;
+    private GxaExperimentDao expressionAtlasExperimentDao;
 
     @Mock
     private ArrayExpressClient arrayExpressClient;
@@ -67,11 +67,11 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         ExperimentDTO experimentDTO = new ExperimentDTO(E_PROT_1, ExperimentType.PROTEOMICS_BASELINE,
                                                         "Homo sapiens", pubMedIds, "title", new Date(),
                                                         false, UUID.randomUUID().toString());
-        when(experimentDao.getExperimentAsAdmin(E_PROT_1)).thenReturn(experimentDTO);
+        when(expressionAtlasExperimentDao.getExperimentAsAdmin(E_PROT_1)).thenReturn(experimentDTO);
 
         when(arrayExpressClient.fetchExperimentName(E_PROT_1)).thenReturn("title");
 
-        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser,experimentDao,
+        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,
                 proteomicsBaselineExperimentFactory );
 
     }

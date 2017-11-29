@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
-public class ExperimentCrudIT {
+public class GxaExperimentCrudIT {
 
     @Spy
     @Inject
@@ -46,7 +46,7 @@ public class ExperimentCrudIT {
     public ExpectedException thrown = ExpectedException.none();
 
     @Inject
-    private AnalyticsLoaderFactory analyticsLoaderFactory;
+    private GxaAnalyticsLoaderFactory analyticsLoaderFactory;
 
     @Mock
     private ExperimentDesignFileWriterService experimentDesignFileWriterService;
@@ -55,7 +55,7 @@ public class ExperimentCrudIT {
     private DataFileHub dataFileHub;
 
     @Inject
-    private ExperimentDAO experimentDAO;
+    private GxaExperimentDao experimentDao;
 
     @Inject
     private CondensedSdrfParser condensedSdrfParser;
@@ -63,17 +63,20 @@ public class ExperimentCrudIT {
     @Inject
     private ConfigurationTrader configurationTrader;
 
-    private ExperimentCrud subject;
+    private GxaExperimentCrud subject;
 
 
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        subject = new ExperimentCrud(condensedSdrfParser, experimentDesignFileWriterService,
-                experimentDAO, experimentCheckerSpy,
-                analyticsLoaderFactory, configurationTrader);
-
+        subject = new GxaExperimentCrud(
+                experimentDao,
+                condensedSdrfParser,
+                experimentDesignFileWriterService,
+                experimentCheckerSpy,
+                analyticsLoaderFactory,
+                configurationTrader);
     }
 
     public static final String accession_rnaseq_baseline = "TEST-RNASEQ-BASELINE";

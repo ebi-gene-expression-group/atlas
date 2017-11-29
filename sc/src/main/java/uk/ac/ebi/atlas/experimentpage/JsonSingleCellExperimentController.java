@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 import uk.ac.ebi.atlas.tsne.TSnePlotCollator;
 import uk.ac.ebi.atlas.tsne.TSnePoint;
 
@@ -32,7 +33,7 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
     private final TSnePlotCollator tSnePlotCollator;
 
     @Inject
-    public JsonSingleCellExperimentController(ExperimentTrader experimentTrader, TSnePlotCollator tSnePlotCollator) {
+    public JsonSingleCellExperimentController(ScxaExperimentTrader experimentTrader, TSnePlotCollator tSnePlotCollator) {
         super(experimentTrader);
         this.tSnePlotCollator = tSnePlotCollator;
 

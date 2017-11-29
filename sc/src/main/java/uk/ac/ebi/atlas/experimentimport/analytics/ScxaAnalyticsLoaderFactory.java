@@ -7,12 +7,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class SingleCellAnalyticsLoaderFactory implements AnalyticsLoaderFactory {
+public class ScxaAnalyticsLoaderFactory implements AnalyticsLoaderFactory {
 
     private final SingleCellAnalyticsLoader singleCellAnalyticsLoader;
 
     @Inject
-    public SingleCellAnalyticsLoaderFactory(SingleCellAnalyticsLoader singleCellAnalyticsLoader) {
+    public ScxaAnalyticsLoaderFactory(SingleCellAnalyticsLoader singleCellAnalyticsLoader) {
         this.singleCellAnalyticsLoader = singleCellAnalyticsLoader;
     }
 
