@@ -20,7 +20,10 @@ public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<
     @Override
     public L select(ObjectInputStream<T> profiles, int maxSize) {
 
-        MinMaxPriorityQueue<T> rankingQueue =  MinMaxPriorityQueue.orderedBy(comparator).maximumSize(maxSize).create();
+        MinMaxPriorityQueue<T> rankingQueue =
+                maxSize > 0
+                        ? MinMaxPriorityQueue.orderedBy(comparator).maximumSize(maxSize).create()
+                        : MinMaxPriorityQueue.orderedBy(comparator).create();
 
         int count = 0;
 
