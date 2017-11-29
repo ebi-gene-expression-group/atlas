@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experiments;
+package uk.ac.ebi.atlas.home;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;

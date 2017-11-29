@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.homepage;
+package uk.ac.ebi.atlas.home;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
@@ -7,8 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experiments.LatestExperimentsDao;
-import uk.ac.ebi.atlas.experiments.LatestExperimentsService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;

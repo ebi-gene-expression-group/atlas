@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.controllers.page;
+package uk.ac.ebi.atlas.home;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -9,10 +9,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
-import uk.ac.ebi.atlas.experiments.LatestExperimentsDao;
-import uk.ac.ebi.atlas.experiments.LatestExperimentsService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.services.PopularSpeciesInfo;
 import uk.ac.ebi.atlas.species.services.PopularSpeciesService;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experiments;
+package uk.ac.ebi.atlas.home;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
