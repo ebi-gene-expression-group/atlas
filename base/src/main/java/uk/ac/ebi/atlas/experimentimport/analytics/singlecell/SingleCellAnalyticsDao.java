@@ -16,7 +16,7 @@ public class SingleCellAnalyticsDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellAnalyticsDao.class);
 
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
-    private static final int BATCH_SIZE = 2000;
+    private static final int BATCH_SIZE = 50000;
     private static final String SC_EXPRESSION_INSERT = "INSERT INTO scxa_analytics " +
             "(EXPERIMENT_ACCESSION, GENE_ID, CELL_ID, EXPRESSION_LEVEL) VALUES (?, ?, ?, ?)";
 
@@ -28,13 +28,15 @@ public class SingleCellAnalyticsDao {
     }
 
     public void loadAnalytics(final String experimentAccession, Stream<SingleCellAnalytics> singleCellAnalyticsStream) {
-        LOGGER.info("loadSingleCellExpression for experiment {} begin", experimentAccession);
+        LOGGER.info("loadAnalytics for experiment {} begin", experimentAccession);
 
         final List<Object[]> batch = new ArrayList<>(BATCH_SIZE);
         singleCellAnalyticsStream.forEach(scxa -> {
             batch.add(new Object[] {experimentAccession, scxa.geneId(), scxa.cellId(), scxa.expressionLevel()});
             if (batch.size() == BATCH_SIZE) {
+                LOGGER.debug("loadAnalytics for experiment {}: inserting batch...", experimentAccession);
                 jdbcTemplate.batchUpdate(SC_EXPRESSION_INSERT, batch);
+                LOGGER.debug("loadAnalytics for experiment {}: batch inserted", experimentAccession);
                 batch.clear();
             }
         });
