@@ -24,8 +24,8 @@ public class SingleCellAnalyticsStream implements Closeable {
         geneIds = new String[matrixMarketReader.getRows()];
         cellIds = new String[matrixMarketReader.getColumns()];
 
-        readers.getMiddle().get().readAll().forEach(line -> geneIds[Integer.parseInt(line[0]) - 1] = line[1]);
-        readers.getRight().get().readAll().forEach(line -> cellIds[Integer.parseInt(line[0]) - 1] = line[1]);
+        readers.getMiddle().get().readAll().forEach(line -> geneIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
+        readers.getRight().get().readAll().forEach(line -> cellIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
 
     }
 

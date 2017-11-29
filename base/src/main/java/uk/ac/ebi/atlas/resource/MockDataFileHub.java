@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static org.apache.commons.lang3.StringUtils.leftPad;
+
 // I belong in the test dir, but here I can be shared among different modules without the need of creating a test jar
 public class MockDataFileHub extends DataFileHub {
 
@@ -78,12 +80,12 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(
                 MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE, accession),
                 IntStream.range(0, geneIds.length).boxed()
-                        .map(i -> new String[] {Integer.toString(i + 1), geneIds[i]})
+                        .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(geneIds.length).length()), geneIds[i]})
                         .collect(Collectors.toList()));
         addTemporaryTsv(
                 MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE, accession),
                 IntStream.range(0, cellIds.length).boxed()
-                        .map(i -> new String[] {Integer.toString(i + 1), cellIds[i]})
+                        .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(cellIds.length).length()), cellIds[i]})
                         .collect(Collectors.toList()));
     }
 
