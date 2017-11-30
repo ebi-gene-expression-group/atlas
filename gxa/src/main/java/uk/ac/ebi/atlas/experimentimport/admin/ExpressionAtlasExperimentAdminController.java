@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentimport.GxaExperimentCrud;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExpressionAtlasExperimentChecker;
 import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
@@ -38,7 +38,7 @@ public class ExpressionAtlasExperimentAdminController extends ExperimentAdminCon
             new ExperimentOps(
                 new ExperimentOpLogWriter(dataFileHub),
                 new ExpressionAtlasExperimentOpsExecutionService(
-                    new GxaExperimentCrud(
+                    new ExperimentCrud(
                             expressionAtlasExperimentDao,
                             condensedSdrfParser,
                             experimentDesignFileWriterService,

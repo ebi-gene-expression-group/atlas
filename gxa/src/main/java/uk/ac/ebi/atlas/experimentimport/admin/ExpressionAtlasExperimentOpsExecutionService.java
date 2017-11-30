@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.experimentimport.GxaExperimentCrud;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
@@ -23,19 +23,19 @@ import static java.util.stream.Collectors.toList;
 
 public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentOpsExecutionService {
 
-    private final GxaExperimentCrud expressionAtlasExperimentCrud;
+    private final ExperimentCrud experimentCrud;
     private final BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     private final AnalyticsIndexerManager analyticsIndexerManager;
     private final ExpressionSerializerService expressionSerializerService;
     private final ExperimentTrader experimentTrader;
     private final Gson gson = new Gson();
 
-    public ExpressionAtlasExperimentOpsExecutionService(GxaExperimentCrud experimentCrud,
+    public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
                                                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                                         AnalyticsIndexerManager analyticsIndexerManager,
                                                         ExpressionSerializerService expressionSerializerService,
                                                         ExperimentTrader experimentTrader) {
-        this.expressionAtlasExperimentCrud = experimentCrud;
+        this.experimentCrud = experimentCrud;
         this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.expressionSerializerService = expressionSerializerService;
@@ -51,7 +51,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op){
         switch (op) {
             case LIST:
-                return Optional.of(expressionAtlasExperimentCrud.findExperiment(accession).toJson());
+                return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
                 return Optional.of(gson.toJsonTree(getAnyExperimentWithAdminAccess(accession).getAttributes()));
             case CACHE_REMOVE:
@@ -83,11 +83,11 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     private Experiment<?> getAnyExperimentWithAdminAccess(String accession){
         return experimentTrader.getExperiment(
                 accession,
-                expressionAtlasExperimentCrud.findExperiment(accession).getAccessKey());
+                experimentCrud.findExperiment(accession).getAccessKey());
     }
 
     private Stream<ExperimentDTO> allDtos() {
-        return expressionAtlasExperimentCrud.findAllExperiments().stream();
+        return experimentCrud.findAllExperiments().stream();
     }
 
     private List<Pair<String, ? extends JsonElement>> list(){
@@ -106,20 +106,20 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         switch (op) {
             case UPDATE_PRIVATE:
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
-                expressionAtlasExperimentCrud.makeExperimentPrivate(accession);
+                experimentCrud.makeExperimentPrivate(accession);
                 break;
             case UPDATE_PUBLIC:
-                expressionAtlasExperimentCrud.makeExperimentPublic(accession);
+                experimentCrud.makeExperimentPublic(accession);
                 break;
             case UPDATE_DESIGN_ONLY:
                 experimentTrader.removeExperimentFromCache(accession);
-                expressionAtlasExperimentCrud.updateExperimentDesign(accession);
+                experimentCrud.updateExperimentDesign(accession);
                 break;
             case IMPORT_PUBLIC:
                 isPrivate = false;
             case IMPORT:
                 experimentTrader.removeExperimentFromCache(accession);
-                UUID accessKeyUUID = expressionAtlasExperimentCrud.importExperiment(accession, isPrivate);
+                UUID accessKeyUUID = experimentCrud.importExperiment(accession, isPrivate);
                 resultOfTheOp = new JsonPrimitive("Success, access key UUID: " + accessKeyUUID);
                 break;
             case SERIALIZE:
@@ -129,7 +129,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 expressionSerializerService.removeKryoFile(getAnyExperimentWithAdminAccess(accession));
                 experimentTrader.removeExperimentFromCache(accession);
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
-                expressionAtlasExperimentCrud.deleteExperiment(accession);
+                experimentCrud.deleteExperiment(accession);
                 break;
             case COEXPRESSION_UPDATE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);

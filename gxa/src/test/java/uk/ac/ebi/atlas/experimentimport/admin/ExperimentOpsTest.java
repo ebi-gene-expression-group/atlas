@@ -12,8 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletResponse;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
-import uk.ac.ebi.atlas.experimentimport.GxaExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
@@ -54,7 +54,7 @@ import static org.mockito.Mockito.when;
 public class ExperimentOpsTest {
 
     @Mock
-    private GxaExperimentCrud expressionAtlasExperimentCrud;
+    private ExperimentCrud experimentCrudMock;
     @Mock
     private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     @Mock
@@ -78,7 +78,7 @@ public class ExperimentOpsTest {
 
         subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
-                        expressionAtlasExperimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
+                        experimentCrudMock, baselineCoexpressionProfileLoader, analyticsIndexerManager,
                         expressionSerializerService,experimentTrader));
 
         when(expressionSerializerService.kryoSerializeExpressionData(any())).thenReturn("skipped");
@@ -93,7 +93,7 @@ public class ExperimentOpsTest {
                     [new Random().nextInt(ExperimentType.values().length)];
 
             return mockDTO(accession1, experimentType);
-        }).when(expressionAtlasExperimentCrud).findExperiment(anyString());
+        }).when(experimentCrudMock).findExperiment(anyString());
 
     }
 
@@ -129,7 +129,7 @@ public class ExperimentOpsTest {
     @Test
     public void aggregateOpsInANeatFashion() throws Exception {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        doThrow(new RuntimeException("Woosh!")).when(expressionAtlasExperimentCrud).deleteExperiment(accession);
+        doThrow(new RuntimeException("Woosh!")).when(experimentCrudMock).deleteExperiment(accession);
         List<Op> ops= new ArrayList<>();
         ops.add(Op.UPDATE_DESIGN_ONLY); // says "success!"
         ops.add(Op.CLEAR_LOG); // says "success!"
@@ -191,7 +191,7 @@ public class ExperimentOpsTest {
     @Test
     public void errorLeavesLogDirty() throws Exception {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        doThrow(new RuntimeException("Woosh!")).when(expressionAtlasExperimentCrud).deleteExperiment(accession);
+        doThrow(new RuntimeException("Woosh!")).when(experimentCrudMock).deleteExperiment(accession);
 
         JsonObject result = subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singleton(Op
                 .DELETE))
@@ -214,27 +214,27 @@ public class ExperimentOpsTest {
 
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
-        verify(expressionAtlasExperimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(expressionAtlasExperimentCrud).findExperiment(accession);
+        verify(experimentCrudMock).findExperiment(accession);
         verify(expressionSerializerService).kryoSerializeExpressionData(any(Experiment.class));
         verify(analyticsIndexerManager).addToAnalyticsIndex(accession);
 
-        verifyNoMoreInteractions(expressionAtlasExperimentCrud, expressionAtlasExperimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled1() throws Exception {
         doThrow(new RuntimeException("The files are bad!"))
-                .when(expressionAtlasExperimentCrud)
+                .when(experimentCrudMock)
                 .importExperiment(accession,false);
 
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
-        verify(expressionAtlasExperimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
 
-        verifyNoMoreInteractions(expressionAtlasExperimentCrud, expressionAtlasExperimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
@@ -245,11 +245,11 @@ public class ExperimentOpsTest {
 
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",new MockHttpServletResponse());
 
-        verify(expressionAtlasExperimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
 
-        verifyNoMoreInteractions(expressionAtlasExperimentCrud, expressionAtlasExperimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
@@ -265,13 +265,13 @@ public class ExperimentOpsTest {
 
         String response = responseObject.getContentAsString();
 
-        verify(expressionAtlasExperimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(expressionAtlasExperimentCrud).findExperiment(accession);
+        verify(experimentCrudMock).findExperiment(accession);
         verify(expressionSerializerService).kryoSerializeExpressionData(any(Experiment.class));
 
-        verifyNoMoreInteractions(expressionAtlasExperimentCrud, expressionAtlasExperimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
 
         assertThat(response, containsString("Serializing failed"));
         assertThat(response, containsString("error"));

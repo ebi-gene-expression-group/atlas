@@ -12,7 +12,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.GxaExperimentCrudIT;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrudIT;
 
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ public class ExpressionAtlasExperimentAdminControllerIT {
     @Inject
     ExpressionAtlasExperimentAdminController subject;
 
-    String accession = GxaExperimentCrudIT.accession_rnaseq_baseline;
+    String accession = ExperimentCrudIT.accession_rnaseq_baseline;
 
 
     @After

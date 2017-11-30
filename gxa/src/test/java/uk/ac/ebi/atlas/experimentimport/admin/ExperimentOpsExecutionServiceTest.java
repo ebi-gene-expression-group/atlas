@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.GxaExperimentCrud;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class ExperimentOpsExecutionServiceTest {
 
     @Mock
-    GxaExperimentCrud expressionAtlasExperimentCrud;
+    ExperimentCrud experimentCrudMock;
 
     @Mock
     BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
@@ -39,8 +39,8 @@ public class ExperimentOpsExecutionServiceTest {
 
     @Before
     public void setUp(){
-        when(expressionAtlasExperimentCrud.findExperiment(accession)).thenReturn(experimentDTO);
-        subject = new ExpressionAtlasExperimentOpsExecutionService(expressionAtlasExperimentCrud,baselineCoexpressionProfileLoader,analyticsIndexerManager,
+        when(experimentCrudMock.findExperiment(accession)).thenReturn(experimentDTO);
+        subject = new ExpressionAtlasExperimentOpsExecutionService(experimentCrudMock,baselineCoexpressionProfileLoader,analyticsIndexerManager,
                 expressionSerializerService, experimentTrader );
     }
 

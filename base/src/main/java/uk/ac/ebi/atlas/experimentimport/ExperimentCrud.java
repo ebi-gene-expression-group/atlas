@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * - design files on disk
  */
 
-public abstract class ExperimentCrud {
+public class ExperimentCrud {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCrud.class);
 
     private final ExperimentDao experimentDao;

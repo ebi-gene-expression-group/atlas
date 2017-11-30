@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
-public class GxaExperimentCrudIT {
+public class ExperimentCrudIT {
 
     @Spy
     @Inject
@@ -63,14 +63,14 @@ public class GxaExperimentCrudIT {
     @Inject
     private ConfigurationTrader configurationTrader;
 
-    private GxaExperimentCrud subject;
+    private ExperimentCrud subject;
 
 
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        subject = new GxaExperimentCrud(
+        subject = new ExperimentCrud(
                 experimentDao,
                 condensedSdrfParser,
                 experimentDesignFileWriterService,
