@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.commons.readers;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,35 +15,25 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class UrlTsvReaderBuilderEIT {
-
+public class ArrayExpressIdfReaderFactoryEIT {
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_FOOBAR = "E-FOOBAR";
 
-    private UrlTsvReaderBuilder subject;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
+    private ArrayExpressIdfReaderFactory subject;
 
     @Before
     public void setUp() {
-        subject =
-                new UrlTsvReaderBuilder()
-                        .forTsvFileUrlTemplate("https://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
+        subject = new ArrayExpressIdfReaderFactory();
     }
 
     @Test
     public void build() throws Exception {
-        TsvReader idfReader = subject.withExperimentAccession(E_MTAB_513).build();
+        TsvReader idfReader = subject.createArrayExpressIdfReader(E_MTAB_513);
         assertThat(idfReader, is(instanceOf(TsvReaderImpl.class)));
     }
 
-    @Test
+    @Test(expected = IOException.class)
     public void buildMissingExperiment() throws Exception {
-        thrown.expect(IOException.class);
-
-        subject.withExperimentAccession(E_FOOBAR).build();
+        subject.createArrayExpressIdfReader(E_FOOBAR);
     }
-
 }
