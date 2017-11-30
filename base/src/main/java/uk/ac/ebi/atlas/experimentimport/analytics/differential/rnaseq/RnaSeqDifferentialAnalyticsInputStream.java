@@ -111,8 +111,10 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
                 if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString))) {
                     double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
                     double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
-                    RnaSeqDifferentialAnalytics dto = new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
-                    builder.add(dto);
+                    if (foldChange != 0.0) {
+                        RnaSeqDifferentialAnalytics dto = new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
+                        builder.add(dto);
+                    }
                 }
 
             }
