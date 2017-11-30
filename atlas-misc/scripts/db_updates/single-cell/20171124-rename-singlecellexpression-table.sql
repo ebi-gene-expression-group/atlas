@@ -1,1 +1,0 @@
-ALTER TABLE sca_single_cell_expression RENAME TO scxa_analytics
