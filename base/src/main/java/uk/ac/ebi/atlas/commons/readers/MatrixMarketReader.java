@@ -3,15 +3,13 @@ package uk.ac.ebi.atlas.commons.readers;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MatrixMarketReader implements Closeable {
-
+public class MatrixMarketReader implements AutoCloseable {
     private final int numRows;
     private final int numCols;
     private final int numElements;
@@ -55,8 +53,12 @@ public class MatrixMarketReader implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
-        inReader.close();
+    public void close() {
+        try {
+            inReader.close();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     static private Triple<Integer, Integer, Double> parseLine(String line) {

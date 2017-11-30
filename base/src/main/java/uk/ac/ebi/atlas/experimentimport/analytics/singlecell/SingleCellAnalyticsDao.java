@@ -16,7 +16,7 @@ public class SingleCellAnalyticsDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellAnalyticsDao.class);
 
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
-    private static final int BATCH_SIZE = 50000;
+    private static final int BATCH_SIZE = 100000;
     private static final String SC_EXPRESSION_INSERT = "INSERT INTO scxa_analytics " +
             "(EXPERIMENT_ACCESSION, GENE_ID, CELL_ID, EXPRESSION_LEVEL) VALUES (?, ?, ?, ?)";
 
