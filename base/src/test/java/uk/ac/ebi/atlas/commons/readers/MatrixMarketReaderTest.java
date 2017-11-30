@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.spy;
@@ -67,4 +68,12 @@ public class MatrixMarketReaderTest {
         verify(in).close();
     }
 
+    @Test
+    public void emptyMatrixProducesEmptyStream() throws Exception {
+        subject = new MatrixMarketReader(
+                new InputStreamReader(
+                        MatrixMarketReaderTest.class.getResourceAsStream("empty_matrix.mtx")));
+
+        assertThat(subject.list(), hasSize(0));
+    }
 }
