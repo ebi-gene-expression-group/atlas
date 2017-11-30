@@ -103,11 +103,8 @@ public class ExperimentCrud {
         ExperimentDTO experimentDTO = findExperiment(experimentAccession);
         checkNotNull(experimentDTO, MessageFormat.format("Experiment not found: {0}", experimentAccession));
 
-        // We only insert in the DB differential experiments expressions
-        if (experimentDTO.getExperimentType().isDifferential()) {
-            AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
-            analyticsLoader.deleteAnalytics(experimentAccession);
-        }
+        AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
+        analyticsLoader.deleteAnalytics(experimentAccession);
 
         experimentDao.deleteExperiment(experimentDTO.getExperimentAccession());
     }
