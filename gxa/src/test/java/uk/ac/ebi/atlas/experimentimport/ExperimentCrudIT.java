@@ -7,18 +7,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -34,6 +32,9 @@ import static org.mockito.Mockito.verify;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentCrudIT {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Spy
     @Inject
     private ExpressionAtlasExperimentChecker experimentCheckerSpy;
@@ -42,14 +43,8 @@ public class ExperimentCrudIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Inject
     private GxaAnalyticsLoaderFactory analyticsLoaderFactory;
-
-    @Mock
-    private ExperimentDesignFileWriterService experimentDesignFileWriterService;
 
     @Inject
     private DataFileHub dataFileHub;
@@ -58,25 +53,14 @@ public class ExperimentCrudIT {
     private GxaExperimentDao experimentDao;
 
     @Inject
-    private CondensedSdrfParser condensedSdrfParser;
-
-    @Inject
-    private ConfigurationTrader configurationTrader;
+    private ExperimentCrudFactory experimentCrudFactory;
 
     private ExperimentCrud subject;
-
 
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
-
-        subject = new ExperimentCrud(
-                experimentDao,
-                condensedSdrfParser,
-                experimentDesignFileWriterService,
-                experimentCheckerSpy,
-                analyticsLoaderFactory,
-                configurationTrader);
+        subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
     }
 
     public static final String accession_rnaseq_baseline = "TEST-RNASEQ-BASELINE";
