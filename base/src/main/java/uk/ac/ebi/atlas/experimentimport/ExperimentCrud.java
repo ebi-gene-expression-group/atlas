@@ -36,26 +36,25 @@ public class ExperimentCrud {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCrud.class);
 
     private final ExperimentDao experimentDao;
-    private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
-    private final CondensedSdrfParser condensedSdrfParser;
     private final ExperimentChecker experimentChecker;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
+    private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
+    private final CondensedSdrfParser condensedSdrfParser;
     private final ConfigurationTrader configurationTrader;
 
     public ExperimentCrud(ExperimentDao experimentDao,
-                          CondensedSdrfParser condensedSdrfParser,
-                          ExperimentDesignFileWriterService experimentDesignFileWriterService,
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
+                          CondensedSdrfParser condensedSdrfParser,
+                          ExperimentDesignFileWriterService experimentDesignFileWriterService,
                           ConfigurationTrader configurationTrader) {
 
         this.experimentDao = experimentDao;
-        this.condensedSdrfParser = condensedSdrfParser;
-        this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
+        this.condensedSdrfParser = condensedSdrfParser;
+        this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.configurationTrader = configurationTrader;
-
     }
 
     public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrudFactory;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExpressionAtlasExperimentChecker;
 import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
@@ -24,33 +25,22 @@ import javax.inject.Inject;
 public class ExpressionAtlasExperimentAdminController extends ExperimentAdminController {
     @Inject
     public ExpressionAtlasExperimentAdminController(DataFileHub dataFileHub,
-                                                    CondensedSdrfParser condensedSdrfParser,
-                                                    ExperimentDesignFileWriterService experimentDesignFileWriterService,
-                                                    GxaExperimentDao expressionAtlasExperimentDao,
+                                                    ExperimentCrudFactory experimentCrudFactory,
+                                                    GxaExperimentDao experimentDao,
                                                     ExpressionAtlasExperimentChecker experimentChecker,
                                                     GxaAnalyticsLoaderFactory analyticsLoaderFactory,
-                                                    ConfigurationTrader configurationTrader,
                                                     BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                                     AnalyticsIndexerManager analyticsIndexerManager,
                                                     ExpressionSerializerService expressionSerializerService,
                                                     ExperimentTrader experimentTrader) {
         super(
-            new ExperimentOps(
-                new ExperimentOpLogWriter(dataFileHub),
-                new ExpressionAtlasExperimentOpsExecutionService(
-                    new ExperimentCrud(
-                            expressionAtlasExperimentDao,
-                            condensedSdrfParser,
-                            experimentDesignFileWriterService,
-                            experimentChecker,
-                            analyticsLoaderFactory,
-                            configurationTrader),
-                    baselineCoexpressionProfileLoader,
-                    analyticsIndexerManager,
-                    expressionSerializerService,
-                    experimentTrader
-                )
-            )
-        );
+                new ExperimentOps(
+                        new ExperimentOpLogWriter(dataFileHub),
+                        new ExpressionAtlasExperimentOpsExecutionService(
+                                experimentCrudFactory.create(experimentDao, experimentChecker, analyticsLoaderFactory),
+                                baselineCoexpressionProfileLoader,
+                                analyticsIndexerManager,
+                                expressionSerializerService,
+                                experimentTrader)));
     }
 }
