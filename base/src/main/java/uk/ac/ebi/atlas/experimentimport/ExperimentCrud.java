@@ -167,9 +167,7 @@ public class ExperimentCrud {
         CondensedSdrfParserOutput condensedSdrfParserOutput =
                 condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
 
-        new ExperimentFilesCrossValidator(
-                experimentConfiguration,
-                condensedSdrfParserOutput.getExperimentDesign())
+        new ExperimentFilesCrossValidator(experimentConfiguration, condensedSdrfParserOutput.getExperimentDesign())
                 .validate();
 
         return Pair.of(experimentConfiguration, condensedSdrfParserOutput);

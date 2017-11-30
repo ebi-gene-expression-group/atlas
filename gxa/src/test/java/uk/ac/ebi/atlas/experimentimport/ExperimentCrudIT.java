@@ -21,6 +21,8 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 import java.io.IOException;
 
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
@@ -63,11 +65,11 @@ public class ExperimentCrudIT {
         subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
     }
 
-    public static final String accession_rnaseq_baseline = "TEST-RNASEQ-BASELINE";
+    public static final String RNASEQ_BASELINE_ACCESSION = "TEST-RNASEQ-BASELINE";
 
     @After
     public void tryCleanUp() {
-        tryDelete(accession_rnaseq_baseline);
+        tryDelete(RNASEQ_BASELINE_ACCESSION);
         tryDelete("TEST-RNASEQ-DIFFERENTIAL");
         tryDelete("TEST-MICROARRAY-1COLOUR-MRNA-DIFFERENTIAL");
         tryDelete("TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL");
@@ -93,8 +95,8 @@ public class ExperimentCrudIT {
 
     @Test
     public void importReloadDeleteRnaSeqBaselineExperiment() throws IOException, SolrServerException {
-        testImportNewImportExistingAndDelete(accession_rnaseq_baseline, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentCheckerSpy, times(2)).checkRnaSeqBaselineFiles(accession_rnaseq_baseline);
+        testImportNewImportExistingAndDelete(RNASEQ_BASELINE_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
+        verify(experimentCheckerSpy, times(2)).checkRnaSeqBaselineFiles(RNASEQ_BASELINE_ACCESSION);
     }
 
     @Test
@@ -121,6 +123,14 @@ public class ExperimentCrudIT {
     public void importReloadDeleteProteomicsBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-PROTEOMICS-BASELINE", ExperimentType.PROTEOMICS_BASELINE);
         verify(experimentCheckerSpy, times(2)).checkProteomicsBaselineFiles("TEST-PROTEOMICS-BASELINE");
+    }
+
+    @Test
+    public void findAllExperimentsFindsPrivateExperiemtns() throws Exception {
+        subject.importExperiment(RNASEQ_BASELINE_ACCESSION, true);
+        assertThat(
+                subject.findAllExperiments(),
+                hasItem(hasProperty("experimentAccession", is(RNASEQ_BASELINE_ACCESSION))));
     }
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {

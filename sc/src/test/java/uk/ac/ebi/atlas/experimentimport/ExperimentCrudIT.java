@@ -3,9 +3,7 @@ package uk.ac.ebi.atlas.experimentimport;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
@@ -21,6 +19,8 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 import java.io.IOException;
 
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
@@ -31,9 +31,6 @@ import static org.mockito.Mockito.verify;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentCrudIT {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Spy
     @Inject
@@ -63,11 +60,11 @@ public class ExperimentCrudIT {
         subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
     }
 
-    public static final String SINGLE_CELL_EXPERIMENT_ACCESSION = "TEST-SC";
+    public static final String SINGLE_CELL_ACCESSION = "TEST-SC";
 
     @After
     public void tryCleanUp() {
-        tryDelete(SINGLE_CELL_EXPERIMENT_ACCESSION);
+        tryDelete(SINGLE_CELL_ACCESSION);
     }
 
     private boolean tryDelete(String accession) {
@@ -79,18 +76,25 @@ public class ExperimentCrudIT {
         }
     }
 
-    @Test
+    @Test(expected=ResourceNotFoundException.class)
     public void deleteNonExistentExperimentThrowsResourceNotFoundException() {
-        thrown.expect(ResourceNotFoundException.class);
         subject.deleteExperiment("FOOBAR");
     }
 
     @Test
     public void importReloadDeleteExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete(
-                SINGLE_CELL_EXPERIMENT_ACCESSION, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
+                SINGLE_CELL_ACCESSION, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
         verify(experimentCheckerSpy, times(2))
-                .checkAllFiles(SINGLE_CELL_EXPERIMENT_ACCESSION, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
+                .checkAllFiles(SINGLE_CELL_ACCESSION, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
+    }
+
+    @Test
+    public void findAllExperimentsFindsPrivateExperiemtns() throws Exception {
+        subject.importExperiment(SINGLE_CELL_ACCESSION, true);
+        assertThat(
+                subject.findAllExperiments(),
+                hasItem(hasProperty("experimentAccession", is(SINGLE_CELL_ACCESSION))));
     }
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {

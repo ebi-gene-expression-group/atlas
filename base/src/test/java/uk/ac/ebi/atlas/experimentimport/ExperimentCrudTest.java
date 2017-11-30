@@ -16,11 +16,14 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -51,16 +54,16 @@ public class ExperimentCrudTest {
     private ExperimentDTO experimentDTOMock;
 
     @Mock
-    ExperimentDesignFileWriterService experimentDesignFileWriterService;
+    private ExperimentDesignFileWriterService experimentDesignFileWriterService;
 
     @Mock
-    ExperimentChecker experimentChecker;
+    private ExperimentChecker experimentChecker;
 
     @Mock
-    AnalyticsLoaderFactory analyticsLoaderFactoryMock;
+    private AnalyticsLoaderFactory analyticsLoaderFactoryMock;
 
     @Mock
-    ConfigurationTrader configurationTrader;
+    private ConfigurationTrader configurationTrader;
 
     private ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
 
@@ -68,8 +71,8 @@ public class ExperimentCrudTest {
 
     @Before
     public void setUp() throws Exception {
-        when(configurationTrader.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn
-                (experimentConfigurationMock);
+        when(configurationTrader.getExperimentConfiguration(EXPERIMENT_ACCESSION))
+                .thenReturn(experimentConfigurationMock);
 
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
 
@@ -81,7 +84,8 @@ public class ExperimentCrudTest {
         given(experimentDTOMock.getExperimentType()).willReturn(experimentType);
         given(experimentDTOMock.getAccessKey()).willReturn(accessKey);
 
-        given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
+        given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class)))
+                .willReturn(condensedSdrfParserOutputMock);
         given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesignMock);
 
         given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
@@ -124,4 +128,24 @@ public class ExperimentCrudTest {
         verify(condensedSdrfParserMock).parse(EXPERIMENT_ACCESSION, experimentType);
     }
 
+    @Test(expected=IllegalStateException.class)
+    public void ioExceptionsAreWrapped() throws Exception {
+        doThrow(new IOException())
+                .when(experimentDesignFileWriterService)
+                .writeExperimentDesignFile(
+                        eq(EXPERIMENT_ACCESSION), eq(ExperimentType.RNASEQ_MRNA_BASELINE), any(ExperimentDesign.class));
+
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
+    }
+
+    @Test
+    public void updateExperimentDesign() throws Exception {
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
+        subject.updateExperimentDesign(EXPERIMENT_ACCESSION);
+
+        // First time for import, second for update
+        verify(experimentDesignFileWriterService, times(2))
+                .writeExperimentDesignFile(
+                        eq(EXPERIMENT_ACCESSION), eq(ExperimentType.RNASEQ_MRNA_BASELINE), any(ExperimentDesign.class));
+    }
 }
