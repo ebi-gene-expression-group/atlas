@@ -36,6 +36,10 @@ public class DiffAnalytics {
         return bioentityId;
     }
 
+    public String getContrastDisplayName() {
+        return contrast.getDisplayName();
+    }
+
     public AssayGroup getContrastTestAssayGroup() {
         return contrast.getTestAssayGroup();
     }
