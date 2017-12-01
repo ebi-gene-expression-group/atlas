@@ -259,23 +259,23 @@ public class DataFileHub {
     }
 
     public class SingleCellExperimentFiles extends ExperimentFiles {
-        private final AtlasResource<MatrixMarketReader> tpms;
-        private final AtlasResource<TsvReader> geneIds;
-        private final AtlasResource<TsvReader> cellIds;
+        public final AtlasResource<MatrixMarketReader> tpmsMatrix;
+        public final AtlasResource<TsvReader> geneIdsTsv;
+        public final AtlasResource<TsvReader> cellIdsTsv;
 
         SingleCellExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.tpms =
+            this.tpmsMatrix =
                     new MatrixMarketFile(
                             experimentsFilesLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE,
                             experimentAccession);
-            this.geneIds =
+            this.geneIdsTsv =
                     new TsvFile.ReadOnly(
                             experimentsFilesLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
-            this.cellIds =
+            this.cellIdsTsv =
                     new TsvFile.ReadOnly(
                             experimentsFilesLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE,
@@ -290,10 +290,6 @@ public class DataFileHub {
 //                    throw new RuntimeException("No file for " + unit);
 //            }
 //        }
-
-        public Triple<AtlasResource<MatrixMarketReader>, AtlasResource<TsvReader>, AtlasResource<TsvReader>> dataFiles() {
-            return Triple.of(tpms, geneIds, cellIds);
-        }
     }
 
     public String getExperimentDataLocation() {

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
 
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.DataFileHub.SingleCellExperimentFiles;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,7 +17,7 @@ public class SingleCellAnalyticsStreamFactory {
     }
 
     public SingleCellAnalyticsStream create(String experimentAccession) throws IOException {
-        return new SingleCellAnalyticsStream(
-                dataFileHub.getSingleCellExperimentFiles(experimentAccession).dataFiles());
+        SingleCellExperimentFiles scFiles = dataFileHub.getSingleCellExperimentFiles(experimentAccession);
+        return new SingleCellAnalyticsStream(scFiles.tpmsMatrix, scFiles.geneIdsTsv, scFiles.cellIdsTsv);
     }
 }

@@ -14,17 +14,18 @@ public class SingleCellAnalyticsStream implements AutoCloseable {
     private final String[] geneIds;
     private final String[] cellIds;
 
-    public SingleCellAnalyticsStream(
-            Triple<AtlasResource<MatrixMarketReader>, AtlasResource<TsvReader>, AtlasResource<TsvReader>> readers)
+    public SingleCellAnalyticsStream(AtlasResource<MatrixMarketReader> tpmsMatrix,
+                                     AtlasResource<TsvReader> geneIdsTsv,
+                                     AtlasResource<TsvReader> cellIdsTsv)
             throws IOException {
 
-        matrixMarketReader = readers.getLeft().get();
+        matrixMarketReader = tpmsMatrix.get();
 
         geneIds = new String[matrixMarketReader.getRows()];
         cellIds = new String[matrixMarketReader.getColumns()];
 
-        readers.getMiddle().get().readAll().forEach(line -> geneIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
-        readers.getRight().get().readAll().forEach(line -> cellIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
+        geneIdsTsv.get().readAll().forEach(line -> geneIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
+        cellIdsTsv.get().readAll().forEach(line -> cellIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
 
     }
 
