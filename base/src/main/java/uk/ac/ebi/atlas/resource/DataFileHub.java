@@ -266,7 +266,7 @@ public class DataFileHub {
         SingleCellExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.tpms =
-                    new MatrixMarketFile.ReadOnly(
+                    new MatrixMarketFile(
                             experimentsFilesLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE,
                             experimentAccession);

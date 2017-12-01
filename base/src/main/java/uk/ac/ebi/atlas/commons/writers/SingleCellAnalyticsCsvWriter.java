@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 public class SingleCellAnalyticsCsvWriter implements AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellAnalyticsCsvWriter.class);
-    private static final String CSV_LINE = "%s,%s,%f";
 
     private final BufferedWriter outWriter;
 
@@ -22,8 +21,7 @@ public class SingleCellAnalyticsCsvWriter implements AutoCloseable {
 
     public void write(SingleCellAnalyticsStream scaStream) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        scaStream.stream().forEach(
-                sca -> writeLine(String.format(CSV_LINE, sca.geneId(), sca.cellId(), sca.expressionLevel())));
+        scaStream.stream().forEach(sca -> writeLine(sca.toCsvLine()));
         close();
         stopwatch.stop();
         LOGGER.info("Finished writing SC analytics in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
