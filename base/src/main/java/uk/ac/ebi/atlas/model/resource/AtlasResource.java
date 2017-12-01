@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 public abstract class AtlasResource<T> {
 
@@ -31,6 +32,10 @@ public abstract class AtlasResource<T> {
     }
 
     public abstract T get();
+
+    public Optional<T> maybeGet(){
+        return exists() ? Optional.of(get()) : Optional.empty();
+    }
 
     public Reader getReader() throws IOException {
         return Files.newBufferedReader(path, StandardCharsets.UTF_8);

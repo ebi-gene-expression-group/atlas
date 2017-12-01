@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -48,6 +49,16 @@ public class BaselineTranscriptProfileStreamFactoryTest {
     public void setUp() throws Exception {
         dataFileHub = MockDataFileHub.create();
         subject = new BaselineTranscriptProfileStreamFactory(dataFileHub);
+    }
+
+    @Test
+    public void whenTheFileIsNotPresentReturnEmptyStream(){
+        assertThat(
+                ImmutableList.copyOf(
+                        new IterableObjectInputStream<>(subject.create(experiment, new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment), Collections.emptySet()))
+                ),
+                empty()
+        );
     }
 
 
