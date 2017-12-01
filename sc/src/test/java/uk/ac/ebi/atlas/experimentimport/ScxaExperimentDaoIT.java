@@ -3,7 +3,9 @@ package uk.ac.ebi.atlas.experimentimport;
 import com.google.common.collect.Sets;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,11 +18,11 @@ import javax.inject.Inject;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
 import static org.junit.Assume.assumeThat;
 
 @WebAppConfiguration
@@ -83,5 +85,21 @@ public class ScxaExperimentDaoIT {
         int count = subject.countExperiments();
         subject.deleteExperiment(SC_ACCESSION);
         assertThat(subject.countExperiments(), is(count - 1));
+    }
+
+    @Test
+    public void forPublicExperimentsAccessKeyIsIgnored() {
+        subject.setExperimentPrivacyStatus(SC_ACCESSION, false);
+        assertThat(subject.findExperiment(SC_ACCESSION, "foo"), is(subject.findExperiment(SC_ACCESSION, "bar")));
+    }
+
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+    @Test
+    public void forPrivateExperimentsAccessKeyIsRequired() {
+        assertThat(subject.findExperiment(SC_ACCESSION, RANDOM_UUID.toString()), hasProperty("experimentAccession", is(SC_ACCESSION)));
+
+        exception.expect(ResourceNotFoundException.class);
+        subject.findExperiment(SC_ACCESSION, "foobar");
     }
 }

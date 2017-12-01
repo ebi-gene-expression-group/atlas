@@ -2,10 +2,13 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
@@ -17,11 +20,13 @@ import java.util.UUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class GxaExperimentDaoIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
@@ -121,25 +126,16 @@ public class GxaExperimentDaoIT {
         assertThat(subject.findExperiment(SECRET_111, id.toString()), is(subject.findExperiment(SECRET_111, "different id")));
     }
 
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
     @Test
     public void forPrivateExperimentsAccessKeyIsRequired() {
         UUID id = createSecret111(true);
-        try {
-            subject.findExperiment(SECRET_111, id.toString());
-        } catch (Exception e) {
-            fail();
-        }
-    }
 
-    @Test
-    public void forPrivateExperimentsAccessKeyIsRequired2() {
-        createSecret111(true);
-        try {
-            subject.findExperiment(SECRET_111, "different id");
-            fail();
-        } catch (Exception e) {
-            //yum
-        }
+        assertThat(subject.findExperiment(SECRET_111, id.toString()), hasProperty("experimentAccession", is(SECRET_111)));
+
+        exception.expect(ResourceNotFoundException.class);
+        subject.findExperiment(SECRET_111, "foobar");
     }
 
     @Test
@@ -150,5 +146,13 @@ public class GxaExperimentDaoIT {
         } catch (Exception e) {
             fail();
         }
+    }
+
+    @Test
+    public void countExperiments() {
+        createSecret111(true);
+        int count = subject.countExperiments();
+        deleteSecret111();
+        assertThat(subject.countExperiments(), is(count - 1));
     }
 }
