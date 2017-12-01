@@ -2,9 +2,10 @@ package uk.ac.ebi.atlas.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
-import com.google.gson.stream.JsonReader;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -22,47 +23,43 @@ import java.util.Set;
 @Named
 public class DataFileHub {
 
-    protected final String dataFilesLocation;
+    protected final String experimentsFilesLocation;
 
-    final static String SPECIES_PROPERTIES_FILE_PATH = "/species/species-properties.json";
+    final static String CONFIGURATION_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-configuration.xml";
+    final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-analysis-methods.tsv";
+    final static String EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE = "expdesign/ExpDesign-{0}.tsv";
+    final static String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.condensed-sdrf.tsv";
+    final static String IDF_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.idf.txt";
+    final static String OP_LOG_FILE_PATH_TEMPLATE = "admin/{0}-op-log.tsv";
 
-    final static String CONFIGURATION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-configuration.xml";
-    final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analysis-methods.tsv";
-    final static String EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE = "/expdesign/ExpDesign-{0}.tsv";
-    final static String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.condensed-sdrf.tsv";
-    final static String IDF_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.idf.txt";
-    final static String OP_LOG_FILE_PATH_TEMPLATE = "/admin/{0}-op-log.tsv";
+    final static String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.tsv";
+    final static String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-fpkms.tsv";
+    final static String RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms.tsv";
+    final static String RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-transcripts-tpms.tsv";
 
-    final static String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
-    final static String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-fpkms.tsv";
-    final static String RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-tpms.tsv";
-    final static String RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-transcripts-tpms.tsv";
-
-
-
-    final static String FACTORS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-factors.xml";
-    final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analytics.tsv";
-    final static String DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-percentile-ranks.tsv";
-    final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
-    final static String QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
-    final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
+    final static String FACTORS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-factors.xml";
+    final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-analytics.tsv";
+    final static String DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-percentile-ranks.tsv";
+    final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-raw-counts.tsv";
+    final static String QC_DIRECTORY_PATH_TEMPLATE = "magetab/{0}/qc";
+    final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}_{1}-analytics.tsv";
     final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE =
-            "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
-    final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
-    final static String COEXPRESSION_FILE_TEMPLATE = "/magetab/{0}/{0}-coexpressions.tsv.gz";
+            "magetab/{0}/{0}_{1}-normalized-expressions.tsv";
+    final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "magetab/{0}/{0}_{1}-log-fold-changes.tsv";
+    final static String COEXPRESSION_FILE_TEMPLATE = "magetab/{0}/{0}-coexpressions.tsv.gz";
 
-    final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.{1}.reactome.gsea.tsv";
+    final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.{1}.reactome.gsea.tsv";
+
+    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms.mtx";
+    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms_rows.tsv";
+    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms_cols.tsv";
 
     @Inject
-    public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
+    public DataFileHub(@Value("#{configuration['experimentsFilesLocation']}") String experimentsFilesLocation){
         Validate.notNull(
-                dataFilesLocation,
-                "Data files location not found - if this is a developement environment try maven clean/install");
-        this.dataFilesLocation = dataFilesLocation;
-    }
-
-    public SpeciesPropertiesFile getSpeciesPropertiesFile() {
-        return new SpeciesPropertiesFile();
+                experimentsFilesLocation,
+                "Data files location not found - if this is a developement environment try `mvn clean install`");
+        this.experimentsFilesLocation = experimentsFilesLocation;
     }
 
     public ExperimentFiles getExperimentFiles(String experimentAccession) {
@@ -85,7 +82,6 @@ public class DataFileHub {
         return new DifferentialExperimentFiles(experimentAccession);
     }
 
-
     public RnaSeqDifferentialExperimentFiles getRnaSeqDifferentialExperimentFiles(String experimentAccession) {
         return new RnaSeqDifferentialExperimentFiles(experimentAccession);
     }
@@ -96,17 +92,17 @@ public class DataFileHub {
 
     public AtlasResource<TsvReader> getReactomePathwaysFiles(String experimentAccession, String comparison) {
         return new TsvFile.ReadOnly(
-                dataFilesLocation, REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
+                experimentsFilesLocation, REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
                 experimentAccession, comparison);
     }
 
     public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
                                                       ProfileStreamOptions<?> profileStreamOptions){
-        return new KryoFile(dataFilesLocation, experimentAccession, profileStreamOptions);
+        return new KryoFile(experimentsFilesLocation, experimentAccession, profileStreamOptions);
     }
 
-    public class SpeciesPropertiesFile {
-        public final AtlasResource<JsonReader> json = new JsonFile.ReadOnly(dataFilesLocation, SPECIES_PROPERTIES_FILE_PATH);
+    public SingleCellExperimentFiles getSingleCellExperimentFiles(String experimentAccession) {
+        return new SingleCellExperimentFiles(experimentAccession);
     }
 
     public class ExperimentFiles {
@@ -124,26 +120,26 @@ public class DataFileHub {
 
         ExperimentFiles(String experimentAccession) {
             this.analysisMethods =
-                    new TsvFile.ReadOnly(dataFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
+                    new TsvFile.ReadOnly(experimentsFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
             this.configuration =
-                    new XmlFile.ReadOnly(dataFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
+                    new XmlFile.ReadOnly(experimentsFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
 
             this.experimentDesign =
-                    new TsvFile.ReadOnly(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
+                    new TsvFile.ReadOnly(experimentsFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
             this.experimentDesignWrite =
-                    new TsvFile.Overwrite(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
+                    new TsvFile.Overwrite(experimentsFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
 
             this.condensedSdrf =
-                    new TsvFile.ReadOnly(dataFilesLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+                    new TsvFile.ReadOnly(experimentsFilesLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
 
-            this.idf = new TsvFile.ReadOnly(dataFilesLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
+            this.idf = new TsvFile.ReadOnly(experimentsFilesLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
 
-            this.adminOpLog = new TsvFile.ReadOnly(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            this.adminOpLog = new TsvFile.ReadOnly(experimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
             this.adminOpLogWrite =
-                    new TsvFile.Overwrite(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+                    new TsvFile.Overwrite(experimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
             this.adminOpLogAppend =
-                    new TsvFile.Appendable(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            this.qcFolder = new Directory(dataFilesLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
+                    new TsvFile.Appendable(experimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            this.qcFolder = new Directory(experimentsFilesLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
         }
 
     }
@@ -156,13 +152,13 @@ public class DataFileHub {
             super(experimentAccession);
             this.fpkms =
                     new TsvFile.ReadAsStream(
-                            dataFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
+                            experimentsFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
             this.tpms =
                     new TsvFile.ReadAsStream(
-                            dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
+                            experimentsFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
             this.transcriptsTpms =
                     new TsvFile.ReadAsStream(
-                            dataFilesLocation, RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
+                            experimentsFilesLocation, RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
         }
 
         public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit) {
@@ -194,7 +190,7 @@ public class DataFileHub {
             super(experimentAccession);
             this.main =
                     new TsvFile.ReadAsStream(
-                            dataFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
+                            experimentsFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
@@ -204,9 +200,9 @@ public class DataFileHub {
 
         BaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.factors = new XmlFile.ReadOnly(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.factors = new XmlFile.ReadOnly(experimentsFilesLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
             this.coexpressions =
-                    new TsvFile.ReadCompressed(dataFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
+                    new TsvFile.ReadCompressed(experimentsFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
         }
     }
 
@@ -217,7 +213,7 @@ public class DataFileHub {
             super(experimentAccession);
             this.percentileRanks =
                     new TsvFile.ReadAsStream(
-                            dataFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
+                            experimentsFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
 
 
         }
@@ -232,10 +228,10 @@ public class DataFileHub {
             super(experimentAccession);
             this.analytics =
                     new TsvFile.ReadAsStream(
-                            dataFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
+                            experimentsFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
             this.rawCounts =
                     new TsvFile.ReadOnly(
-                            dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
+                            experimentsFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
         }
 
     }
@@ -249,21 +245,55 @@ public class DataFileHub {
             super(experimentAccession);
             analytics =
                     new TsvFile.ReadAsStream(
-                            dataFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE,
+                            experimentsFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE,
                             experimentAccession, arrayDesign);
             normalizedExpressions =
                     new TsvFile.ReadOnly(
-                            dataFilesLocation, MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE,
+                            experimentsFilesLocation, MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE,
                             experimentAccession, arrayDesign);
             logFoldChanges =
                     new TsvFile.ReadOnly(
-                            dataFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE,
+                            experimentsFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE,
                             experimentAccession, arrayDesign);
         }
     }
 
+    public class SingleCellExperimentFiles extends ExperimentFiles {
+        public final AtlasResource<MatrixMarketReader> tpmsMatrix;
+        public final AtlasResource<TsvReader> geneIdsTsv;
+        public final AtlasResource<TsvReader> cellIdsTsv;
+
+        SingleCellExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.tpmsMatrix =
+                    new MatrixMarketFile(
+                            experimentsFilesLocation,
+                            SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            this.geneIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsFilesLocation,
+                            SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            this.cellIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsFilesLocation,
+                            SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+        }
+
+//        public AtlasResource<MatrixMarketReader> dataFile(ExpressionUnit.Absolute.Rna unit) {
+//            switch(unit) {
+//                case TPM:
+//                    return tpms;
+//                default:
+//                    throw new RuntimeException("No file for " + unit);
+//            }
+//        }
+    }
+
     public String getExperimentDataLocation() {
-        return Paths.get(dataFilesLocation, "magetab").toString() + "/";
+        return Paths.get(experimentsFilesLocation, "magetab").toString() + "/";
     }
 
 }

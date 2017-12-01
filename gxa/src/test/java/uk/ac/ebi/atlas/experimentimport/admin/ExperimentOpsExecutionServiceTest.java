@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class ExperimentOpsExecutionServiceTest {
 
     @Mock
-    ExperimentCrud experimentCrud;
+    ExperimentCrud experimentCrudMock;
 
     @Mock
     BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
@@ -39,8 +39,8 @@ public class ExperimentOpsExecutionServiceTest {
 
     @Before
     public void setUp(){
-        when(experimentCrud.findExperiment(accession)).thenReturn(experimentDTO);
-        subject = new ExpressionAtlasExperimentOpsExecutionService(experimentCrud,baselineCoexpressionProfileLoader,analyticsIndexerManager,
+        when(experimentCrudMock.findExperiment(accession)).thenReturn(experimentDTO);
+        subject = new ExpressionAtlasExperimentOpsExecutionService(experimentCrudMock,baselineCoexpressionProfileLoader,analyticsIndexerManager,
                 expressionSerializerService, experimentTrader );
     }
 

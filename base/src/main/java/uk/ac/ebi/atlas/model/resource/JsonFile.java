@@ -10,14 +10,14 @@ import java.text.MessageFormat;
 
 public abstract class JsonFile<T> extends AtlasResource<T> {
 
-    public JsonFile(String dataFilesLocation, String template, String ... args) {
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, (Object []) args)));
+    public JsonFile(String parentDirectory, String template, String ... args) {
+        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object []) args)));
     }
 
     public static class ReadOnly extends JsonFile<JsonReader> {
 
-        public ReadOnly(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadOnly(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override

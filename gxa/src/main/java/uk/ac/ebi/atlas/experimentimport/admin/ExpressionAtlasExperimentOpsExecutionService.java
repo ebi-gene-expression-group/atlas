@@ -12,13 +12,11 @@ import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSeria
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -44,21 +42,10 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         this.experimentTrader = experimentTrader;
     }
 
-    private Stream<ExperimentDTO> allDtos(){
-        return experimentCrud.findAllExperiments().stream().filter(experimentDTO -> !experimentDTO.getExperimentType().isSingleCell());
-    }
-
     @Override
     public List<String> findAllExperiments(){
-        return allDtos().map(new Function<ExperimentDTO, String>() {
-            @Nullable
-            @Override
-            public String apply(ExperimentDTO experimentDTO) {
-                return experimentDTO.getExperimentAccession();
-            }
-        }).collect(toList());
+        return allDtos().map(ExperimentDTO::getExperimentAccession).collect(toList());
     }
-
 
     @Override
     public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op){
@@ -73,11 +60,6 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             default:
                 return Optional.empty();
         }
-    }
-
-    private Experiment<?> getAnyExperimentWithAdminAccess(String accession){
-        return experimentTrader.getExperiment(accession,
-                experimentCrud.findExperiment(accession).getAccessKey());
     }
 
     @Override
@@ -98,10 +80,20 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         }
     }
 
-    private List<Pair<String,? extends JsonElement>> list(){
-        return allDtos().map(
-                (Function<ExperimentDTO, Pair<String, ? extends JsonElement>>) experimentDTO ->
-                        Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson())).collect(toList());
+    private Experiment<?> getAnyExperimentWithAdminAccess(String accession){
+        return experimentTrader.getExperiment(
+                accession,
+                experimentCrud.findExperiment(accession).getAccessKey());
+    }
+
+    private Stream<ExperimentDTO> allDtos() {
+        return experimentCrud.findAllExperiments().stream();
+    }
+
+    private List<Pair<String, ? extends JsonElement>> list(){
+        return allDtos()
+                .map(experimentDTO -> Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson()))
+                .collect(toList());
     }
 
     @Override
@@ -110,6 +102,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         boolean isPrivate = true;
         int deleteCount;
         int loadCount;
+
         switch (op) {
             case UPDATE_PRIVATE:
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
@@ -127,7 +120,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case IMPORT:
                 experimentTrader.removeExperimentFromCache(accession);
                 UUID accessKeyUUID = experimentCrud.importExperiment(accession, isPrivate);
-                resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
+                resultOfTheOp = new JsonPrimitive("Success, access key UUID: " + accessKeyUUID);
                 break;
             case SERIALIZE:
                 resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(getAnyExperimentWithAdminAccess(accession)));
@@ -141,13 +134,14 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case COEXPRESSION_UPDATE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
                 loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(accession);
-                resultOfTheOp = new JsonPrimitive(String.format(" deleted %,d and loaded %,d " +
-                        "coexpression profiles", deleteCount, loadCount));
+                resultOfTheOp =
+                        new JsonPrimitive(
+                                String.format(
+                                        " deleted %,d and loaded %,d coexpression profiles", deleteCount, loadCount));
                 break;
             case COEXPRESSION_IMPORT:
                 loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(accession);
-                resultOfTheOp = new JsonPrimitive(String.format(" loaded %,d " +
-                        "coexpression profiles", loadCount));
+                resultOfTheOp = new JsonPrimitive(String.format(" loaded %,d coexpression profiles", loadCount));
                 break;
             case COEXPRESSION_DELETE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
@@ -165,6 +159,5 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         }
         return resultOfTheOp;
     }
-
 
 }

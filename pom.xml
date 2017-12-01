@@ -496,7 +496,7 @@
         <profile>
             <id>dev</id>
             <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data/</data.files.location>
                 <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</jdbc.url>
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>YxyR9PKvOAtY</jdbc.password>
@@ -510,7 +510,7 @@
         <profile>
             <id>dev.local</id>
             <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data/</data.files.location>
                 <jdbc.url>jdbc:postgresql:gxpatlasloc</jdbc.url>
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>atlas3dev</jdbc.password>
@@ -525,7 +525,7 @@
             <id>integration</id>
             <properties>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
+                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data/</data.files.location>
                 <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
                 <jdbc.username>atlas3it</jdbc.username>
                 <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
@@ -542,17 +542,7 @@
             <!-- jdbc.properties and log.properties are located on the filesystem, see Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
-                <data.files.location>/srv/gxa/data</data.files.location>
-            </properties>
-        </profile>
-
-        <profile>
-            <!--build used for staging and production -->
-            <id>production-sc</id>
-            <!-- jdbc.properties and log.properties are located on the filesystem, see Tomcat’s conf/Catalina/localhost/gxa.xml -->
-            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
-            <properties>
-                <data.files.location>/srv/gxa/data-sc</data.files.location>
+                <data.files.location>/srv/gxa/data/</data.files.location>
             </properties>
         </profile>
 
@@ -560,7 +550,7 @@
             <!-- Used for build that is deployed to ves-hx-77 -->
             <id>test</id>
             <properties>
-                <data.files.location>/srv/gxa/data</data.files.location>
+                <data.files.location>/srv/gxa/data/</data.files.location>
                 <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>

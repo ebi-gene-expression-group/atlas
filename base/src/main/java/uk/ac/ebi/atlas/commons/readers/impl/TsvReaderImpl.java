@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.commons.readers.impl;
 
 import au.com.bytecode.opencsv.CSVReader;
-
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +9,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class TsvReaderImpl implements TsvReader {
 
@@ -47,7 +46,7 @@ public class TsvReaderImpl implements TsvReader {
         try (CSVReader csvReader = new CSVReader(tsvReader, '\t')) {
 
             ImmutableList.Builder<String[]> rowsBuilder = new ImmutableList.Builder<>();
-            csvReader.readAll().stream().filter(row -> acceptanceCriteria.apply(row[0])).forEach(rowsBuilder::add);
+            csvReader.readAll().stream().filter(row -> acceptanceCriteria.test(row[0])).forEach(rowsBuilder::add);
             return rowsBuilder.build();
 
         } catch (IOException e) {
@@ -58,7 +57,7 @@ public class TsvReaderImpl implements TsvReader {
 
     private static class IsNotCommentPredicate implements Predicate<String> {
         @Override
-        public boolean apply(String rowHeader) {
+        public boolean test(String rowHeader) {
             return ! rowHeader.trim().startsWith("#");
         }
     }

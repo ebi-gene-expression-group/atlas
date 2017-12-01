@@ -7,22 +7,22 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
 
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
@@ -34,6 +34,9 @@ import static org.mockito.Mockito.verify;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentCrudIT {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Spy
     @Inject
     private ExpressionAtlasExperimentChecker experimentCheckerSpy;
@@ -42,45 +45,31 @@ public class ExperimentCrudIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Inject
-    private AnalyticsLoaderFactory analyticsLoaderFactory;
-
-    @Mock
-    private ExperimentDesignFileWriterService experimentDesignFileWriterService;
+    private GxaAnalyticsLoaderFactory analyticsLoaderFactory;
 
     @Inject
     private DataFileHub dataFileHub;
 
     @Inject
-    private ExperimentDAO experimentDAO;
+    private GxaExperimentDao experimentDao;
 
     @Inject
-    private CondensedSdrfParser condensedSdrfParser;
-
-    @Inject
-    private ConfigurationTrader configurationTrader;
+    private ExperimentCrudFactory experimentCrudFactory;
 
     private ExperimentCrud subject;
-
 
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
-
-        subject = new ExperimentCrud(condensedSdrfParser, experimentDesignFileWriterService,
-                experimentDAO, experimentCheckerSpy,
-                analyticsLoaderFactory, configurationTrader);
-
+        subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
     }
 
-    public static final String accession_rnaseq_baseline = "TEST-RNASEQ-BASELINE";
+    public static final String RNASEQ_BASELINE_ACCESSION = "TEST-RNASEQ-BASELINE";
 
     @After
     public void tryCleanUp() {
-        tryDelete(accession_rnaseq_baseline);
+        tryDelete(RNASEQ_BASELINE_ACCESSION);
         tryDelete("TEST-RNASEQ-DIFFERENTIAL");
         tryDelete("TEST-MICROARRAY-1COLOUR-MRNA-DIFFERENTIAL");
         tryDelete("TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL");
@@ -106,8 +95,8 @@ public class ExperimentCrudIT {
 
     @Test
     public void importReloadDeleteRnaSeqBaselineExperiment() throws IOException, SolrServerException {
-        testImportNewImportExistingAndDelete(accession_rnaseq_baseline, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentCheckerSpy, times(2)).checkRnaSeqBaselineFiles(accession_rnaseq_baseline);
+        testImportNewImportExistingAndDelete(RNASEQ_BASELINE_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
+        verify(experimentCheckerSpy, times(2)).checkRnaSeqBaselineFiles(RNASEQ_BASELINE_ACCESSION);
     }
 
     @Test
@@ -134,6 +123,14 @@ public class ExperimentCrudIT {
     public void importReloadDeleteProteomicsBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-PROTEOMICS-BASELINE", ExperimentType.PROTEOMICS_BASELINE);
         verify(experimentCheckerSpy, times(2)).checkProteomicsBaselineFiles("TEST-PROTEOMICS-BASELINE");
+    }
+
+    @Test
+    public void findAllExperimentsFindsPrivateExperiemtns() throws Exception {
+        subject.importExperiment(RNASEQ_BASELINE_ACCESSION, true);
+        assertThat(
+                subject.findAllExperiments(),
+                hasItem(hasProperty("experimentAccession", is(RNASEQ_BASELINE_ACCESSION))));
     }
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {

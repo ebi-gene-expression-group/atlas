@@ -22,8 +22,8 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
     @Override
     public L select(ObjectInputStream<T> profiles, int maxSize) {
         List<LinkedList<T>> ans = new ArrayList<>(geneNamesInOrder.size());
-        for (String _ : geneNamesInOrder) {
-            ans.add(new LinkedList<T>());
+        for (String s : geneNamesInOrder) {
+            ans.add(new LinkedList<>());
         }
         for (T profile : new IterableObjectInputStream<>(profiles)) {
             int pos = geneNamesInOrder.indexOf(profile.getId());
@@ -35,7 +35,6 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
         }
 
         L result = geneProfilesListBuilder.get();
-
 
         int i = 0;
         loop:
@@ -49,7 +48,6 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
                 }
             }
         }
-
 
         return result;
     }
