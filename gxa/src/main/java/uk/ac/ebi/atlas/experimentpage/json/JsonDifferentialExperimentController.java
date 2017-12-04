@@ -124,7 +124,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public void differentialMicroarrayExperimentEvidence(
             @RequestParam(defaultValue = "0") Double logFoldChangeCutoff,
             @RequestParam(defaultValue = "1") Double pValueCutoff,
-            @RequestParam(defaultValue = "1000") Integer maxGenesPerContrast,
+            @RequestParam(defaultValue = "-1") Integer maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
@@ -146,7 +146,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public void differentialRnaSeqExperimentEvidence(
             @RequestParam(defaultValue = "0") Double logFoldChangeCutoff,
             @RequestParam(defaultValue = "1") Double pValueCutoff,
-            @RequestParam(defaultValue = "1000") Integer maxGenesPerContrast,
+            @RequestParam(defaultValue = "-1") Integer maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
