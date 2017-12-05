@@ -78,7 +78,7 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                                 "        \"value\": {\n" +
                                 "            \"expression_absolute_units\": 2.0,\n" +
                                 "            \"expression_as_fraction_of_total\": 0.571,\n" +
-                                "            \"expression_dominance\": \"present\"\n" +
+                                "            \"expression_dominance\": \"dominant\"\n" +
                                 "        }\n" +
                                 "    }, {\n" +
                                 "        \"id\": \"t1\",\n" +
