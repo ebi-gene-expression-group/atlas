@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -23,11 +24,14 @@ public class ExperimentPageServiceTest {
         when(experiment.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         ExperimentPageRequestPreferences preferences = new RnaSeqBaselineRequestPreferences();
         preferences.setCutoff(1.234);
+        preferences.setSelectedColumnIds(ImmutableSet.of("g1", "g2"));
 
         URI result = new ExperimentPageService().geneSpecificResultsLink(experiment, "ENSG0000012345", "", preferences);
 
         assertThat(result.getPath(), is("json/experiments/E-MOCK-1/genes/ENSG0000012345"));
         assertThat(result.getQuery(), containsString("cutoff=1.234"));
+        assertThat(result.getQuery(), containsString("selectedColumnIds=g1,g2"));
         assertThat(result.getQuery(), containsString("type="+ExperimentType.RNASEQ_MRNA_BASELINE.name()));
     }
+
 }

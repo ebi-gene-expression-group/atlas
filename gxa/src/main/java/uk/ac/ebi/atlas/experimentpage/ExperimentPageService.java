@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean2;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 import uk.ac.ebi.atlas.model.Profile;
@@ -20,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -86,8 +89,9 @@ public class ExperimentPageService {
                     "json/experiments/{0}/genes/{1}",
                     experiment.getAccession(), gene
         ));
+
         for(Map.Entry<String, String> e: BeanUtils.describe(requestPreferences).entrySet()) {
-            if(e.getKey().equals("class") || e.getKey().startsWith("default")){
+            if(e.getKey().equals("class") || e.getKey().startsWith("default") || e.getKey().equals("selectedColumnIds") ){
                 continue;
             }
             builder.addParameter(e.getKey(), e.getValue());
@@ -95,6 +99,10 @@ public class ExperimentPageService {
         if(StringUtils.isNotBlank(accessKey)){
             builder.addParameter("accessKey", accessKey);
         }
+        builder.addParameter(
+                "selectedColumnIds",
+                Joiner.on(",").join(requestPreferences.getSelectedColumnIds())
+        );
         builder.addParameter("type", experiment.getType().name());
         return builder.build();
     }
