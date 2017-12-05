@@ -162,5 +162,14 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                         )
                 ), true
         );
+        hasDominantTranscript(
+                new BaselineExpressionPerBiologicalReplicate(
+                        ImmutableMap.of(
+                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
+                                new BiologicalReplicate("assay_2"), new BaselineExpression(100.0),
+                                new BiologicalReplicate("assay_3"), new BaselineExpression(200.0)
+                        )
+                ), true
+        );
     }
 }

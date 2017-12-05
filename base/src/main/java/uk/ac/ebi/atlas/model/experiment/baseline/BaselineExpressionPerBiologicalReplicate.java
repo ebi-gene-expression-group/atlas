@@ -103,7 +103,7 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
         /*
         Definition quoted by Nuno: a transcript is dominant if it is twice as expressed as the next value
          */
-        if(value == topValue && value > valueFollowingTopValue * 2 ) return DOMINANCE_AMONG_RELATED_VALUES.dominant;
+        if(value == topValue && value >= valueFollowingTopValue * 2 ) return DOMINANCE_AMONG_RELATED_VALUES.dominant;
 
         return DOMINANCE_AMONG_RELATED_VALUES.present;
     }
