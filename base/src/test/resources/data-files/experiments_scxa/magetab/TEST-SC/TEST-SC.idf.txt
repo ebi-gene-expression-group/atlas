@@ -1,0 +1,37 @@
+Comment[ArrayExpressAccession]	E-MTAB-5061				
+MAGE-TAB Version	1.1				
+Investigation Title	Single-cell RNA-seq analysis of human pancreas from healthy individuals and type 2 diabetes patients				
+Comment[Submitted Name]	Single-cell RNA-seq analysis of human pancreas from healthy individuals and type 2 diabetes patients				
+Experiment Description	We used single-cell RNA-sequencing to generate transcriptional profiles of endocrine and exocrine cell types of the human pancreas. Pancreatic tissue and islets were obtained from six healthy and four T2D cadaveric donors. Islets were cultured and dissociated into single-cell suspension. Viable individual cells were distributed via fluorescence-activated cell sorted (FACS) into 384-well plates containing lysis buffer. Single-cell cDNA libraries were generated using the Smart-seq2 protocol. Gene expression was quantified as reads per kilobase transcript and per million mapped reads (RPKM) using rpkmforgenes. Bioinformatics analysis was used to classify cells into cell types without knowledge of cell types or prior purification of cell populations. We revealed subpopulations in endocrine and exocrine cell types, identified genes with interesting correlations to body mass index (BMI) in specific cell types and found transcriptional alterations in T2D.				
+Experimental Design	cell type comparison design	disease state design			
+Experimental Design Term Source REF	EFO	EFO			
+Experimental Design Term Accession Number	EFO_0001745	EFO_0001756			
+Experimental Factor Name	cell type	disease			
+Experimental Factor Type	cell type	disease			
+Experimental Factor Term Source REF	EFO				
+Experimental Factor Term Accession Number	EFO_0000324				
+Person Last Name	Palasantza	Sandberg	Segerstolpe		
+Person First Name	Athanasia	Rickard	Åsa		
+Person Mid Initials					
+Person Email	Athanasia.Palasantza@ki.se	Rickard.Sandberg@ki.se	Asa.Segerstolpe@ki.se		
+Person Phone		0046 8 5248 3986			
+Person Fax					
+Person Address	Nobels väg 3, 171 77, Stockholm,  Sweden.	Nobels väg 3, 171 77, Stockholm,  Sweden. 	Nobels väg 3, 171 77, Stockholm,  Sweden. 		
+Person Affiliation	Department of Cell and Molecular Biology (CMB), Karolinska Institutet, Stockholm, Sweden.	Department of Cell and Molecular Biology (CMB), Karolinska Institutet, Stockholm, Sweden. Ludwig Institute for Cancer Research, Stockholm, Sweden. Integrated Cardiometabolic Center (ICMC), Karolinska Institutet, Stockholm, Sweden.	Department of Cell and Molecular Biology (CMB), Karolinska Institutet, Stockholm, Sweden. Integrated Cardiometabolic Center (ICMC), Karolinska Institutet, Stockholm, Sweden.		
+Person Roles	data analyst; submitter	investigator	experiment performer		
+Public Release Date	2016-09-22				
+Protocol Name	P-MTAB-51963	P-MTAB-51964	P-MTAB-51965	P-MTAB-51966	P-MTAB-51967
+Protocol Type	sample collection protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol	normalization data transformation protocol	cell-type classification
+Protocol Term Source REF	EFO	EFO	EFO	EFO	
+Protocol Term Accession Number	EFO_0005518	EFO_0004184	EFO_0004170	EFO_0003816	
+Protocol Description	Human primary islets (85-95% pure) were purchased from Prodo Laboratories Inc (Irvine, CA, USA) and cultured for 4 days in Prodo Islet Media Standard PIM(S) to recover after arrival. Islets were dissociated into single-cell suspension and viable individual cells were distributed by FACS into 384-well plates containing lysis buffer. Spike-in RNA from the External RNA Controls Consortium (ERCC) (Ambion, Life Technologies) was added to each well in 1:40 000 dilution. 	Single-cell RNA-seq libraries were generated as described in Picelli et al., 2014, Full-length RNA-seq from single cells using Smart-seq2, Nature Protocols. 	Libraries were sequenced on an Illumina HiSeq 2000, generating 43 bp single-end reads.	Expression values for RefSeq genes and values for ERCC transcripts were quantified as RPKMs using rpkmforgenes (Ramsköld et al., 2009). Format of the datafile ‘pancreas_refseq_rpkms_counts_3514sc.txt’: The file contains both the normalized rpkm values and the raw read counts for each sample. Columns correspond to samples and rows to genes. The first line of the file (starting with: #samples) contains the sample IDs to be used as column labels for both the rpkm and counts. The columns of the rpkm and the counts have the same order with the sample IDs. Columns 1:3514 correspond to rpkm values, Columns 3515:7028 correspond to read counts. Rows 1:26179 correspond to data for RefSeq genes, Rows 26180:26271 correspond to data for the 92 external RNA spike-in controls (ERCCs), Row 26272 (last) contains data for ‘eGFP’.	Dimensionality reduction was used for the classification of cells into cell types, without knowledge of cell types or prior purification of cell populations.
+Protocol Hardware			Illumina HiSeq 2000		
+Protocol Software					
+Term Source Name	EFO				
+Term Source File	http://www.ebi.ac.uk/efo/				
+Term Source Version					
+Comment[AEExperimentType]	RNA-seq of coding RNA from single cells				
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR1630013-ERR1633526				
+Comment[SecondaryAccession]	ERP017126				
+SDRF File	E-MTAB-5061.sdrf.txt				
+Comment[AdditionalFile:txt]	E-MTAB-5061.README.txt				

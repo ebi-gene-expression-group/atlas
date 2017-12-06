@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public class GeneExpressionDao {
         this.tSnePlotDao = tSnePlotDao;
     }
 
-    public ImmutableMap<String, Double> fetchGeneExpression(String experimentAccession, String geneId) {
+    public ImmutableMap<String, Optional<Double>> fetchGeneExpression(String experimentAccession, String geneId) {
         return ImmutableMap.copyOf(
                 tSnePlotDao.fetchTSnePlotPoints(experimentAccession)
                         .values().stream()
@@ -27,6 +28,6 @@ public class GeneExpressionDao {
                                 Collectors.toMap(
                                         TSnePoint::name,
                                         p -> isBlank(geneId) ?
-                                                0.0 : ThreadLocalRandom.current().nextDouble(0.0, 10000.0))));
+                                                Optional.empty() : Optional.of(ThreadLocalRandom.current().nextDouble(0.0, 10000.0)))));
     }
 }

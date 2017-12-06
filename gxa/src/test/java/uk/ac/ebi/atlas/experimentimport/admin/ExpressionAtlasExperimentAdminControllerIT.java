@@ -28,7 +28,7 @@ public class ExpressionAtlasExperimentAdminControllerIT {
     @Inject
     ExpressionAtlasExperimentAdminController subject;
 
-    String accession = ExperimentCrudIT.accession_rnaseq_baseline;
+    String accession = ExperimentCrudIT.RNASEQ_BASELINE_ACCESSION;
 
 
     @After

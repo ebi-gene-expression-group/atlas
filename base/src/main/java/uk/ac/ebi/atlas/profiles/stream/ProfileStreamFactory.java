@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreams;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -37,6 +39,19 @@ implements CreatesProfileStream<DataColumnDescriptor, Expr, E, StreamOptions, Pr
                                                        SelectProfiles<Prof, L> selectProfiles) {
         return selectProfiles.select(getProfiles(experiment, streamOptions,keepGeneIds, keepProfiles),
                 streamOptions.getHeatmapMatrixSize());
+    }
+
+    public GeneProfilesList<Prof> getAllMatchingProfiles(E experiment,
+                           StreamOptions streamOptions,
+                           Collection<String> keepGeneIds){
+        return new GeneProfilesList<>(ImmutableList.copyOf(
+                new IterableObjectInputStream<>(getProfiles(
+                        experiment,
+                        streamOptions,
+                        keepGeneIds,
+                        profile -> true
+                ))
+        ));
     }
 
     public long write(E experiment, StreamOptions streamOptions, Collection<String> keepGeneIds, Predicate<Prof> keepProfiles,

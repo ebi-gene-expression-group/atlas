@@ -13,10 +13,10 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
 
@@ -39,22 +39,18 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         List<AssayGroup> dataColumnsToReturn = requestContext.getDataColumnsToReturn();
 
-        BaselineProfilesHeatmapsWrangler heatmapResults =
+        BaselineProfilesHeatmapsWrangler<Unit> heatmapResults =
                 baselineProfilesHeatmapWranglerFactory.create(preferences, experiment);
 
         result.add("columnHeaders", constructColumnHeaders(dataColumnsToReturn, requestContext, experiment));
 
         result.add("columnGroupings", new JsonArray());
 
-        try {
-            result.add("profiles", heatmapResults.getJsonProfiles());
+        result.add("profiles", heatmapResults.getJsonProfiles());
 
-            JsonArray jsonCoexpressions = heatmapResults.getJsonCoexpressions();
-            if (jsonCoexpressions.size() > 0) {
-                result.add("coexpressions", jsonCoexpressions);
-            }
-        } catch (GenesNotFoundException e) {
-            throw new RuntimeException(String.format("No genes found for query: '%s'", preferences.getGeneQuery()));
+        JsonArray jsonCoexpressions = heatmapResults.getJsonCoexpressions();
+        if (jsonCoexpressions.size() > 0) {
+            result.add("coexpressions", jsonCoexpressions);
         }
 
         result.add(
@@ -62,7 +58,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 anatomogramFactory.get(requestContext.getDataColumnsToReturn(), experiment)
                         .orElse(JsonNull.INSTANCE));
 
-        for (Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences).entrySet()) {
+        for (Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences, heatmapResults.getTheOnlyId()).entrySet()) {
             result.add(e.getKey(), e.getValue());
         }
 

@@ -1,25 +1,32 @@
 package uk.ac.ebi.atlas.resource;
 
+import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.tuple.Triple;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static org.apache.commons.lang3.StringUtils.leftPad;
 
 // I belong in the test dir, but here I can be shared among different modules without the need of creating a test jar
 public class MockDataFileHub extends DataFileHub {
 
     private MockDataFileHub() throws IOException {
         super(Files.createTempDirectory("").toString());
-        new File(dataFilesLocation, "admin").mkdir();
-        new File(dataFilesLocation, "magetab").mkdir();
-        new File(dataFilesLocation, "expdesign").mkdir();
-        new File(dataFilesLocation, "species").mkdir();
-        new File(dataFilesLocation, "serialized_expression").mkdir();
-        new File(dataFilesLocation).deleteOnExit();
+        new File(experimentsFilesLocation, "admin").mkdir();
+        new File(experimentsFilesLocation, "magetab").mkdir();
+        new File(experimentsFilesLocation, "expdesign").mkdir();
+        new File(experimentsFilesLocation, "serialized_expression").mkdir();
+        new File(experimentsFilesLocation).deleteOnExit();
     }
 
     public static MockDataFileHub create() {
@@ -28,6 +35,19 @@ public class MockDataFileHub extends DataFileHub {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void addTemporaryMatrixMarket(String where, int rows, int columns, Collection<Triple> lines) {
+        ImmutableList<String> preamble =
+                ImmutableList.of(
+                        "%%MatrixMarket matrix coordinate real general",
+                        String.format("%d %d %d", rows, columns, lines.size()));
+
+        addTemporaryFile(
+                where,
+                Stream.concat(
+                        preamble.stream(),
+                        lines.stream().map(line -> line.toString("%1$s %2$s %3$s"))).collect(Collectors.toList()));
     }
 
     private void addTemporaryTsv(String where, Collection<String[]> lines) {
@@ -39,7 +59,7 @@ public class MockDataFileHub extends DataFileHub {
     }
 
     public void addTemporaryFile(String where, Collection<String> lines) {
-        File f = new File(dataFilesLocation + where);
+        File f = Paths.get(experimentsFilesLocation, where).toFile();
         f.deleteOnExit();
         f.getParentFile().mkdirs();
         try {
@@ -48,6 +68,25 @@ public class MockDataFileHub extends DataFileHub {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addMatrixMarketExpressionFiles(String accession,
+                                               Collection<Triple> lines,
+                                               String[] geneIds,
+                                               String[] cellIds) {
+        addTemporaryMatrixMarket(
+                MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE, accession),
+                geneIds.length, cellIds.length, lines);
+        addTemporaryTsv(
+                MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE, accession),
+                IntStream.range(0, geneIds.length).boxed()
+                        .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(geneIds.length).length()), geneIds[i]})
+                        .collect(Collectors.toList()));
+        addTemporaryTsv(
+                MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE, accession),
+                IntStream.range(0, cellIds.length).boxed()
+                        .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(cellIds.length).length()), cellIds[i]})
+                        .collect(Collectors.toList()));
     }
 
     public void addTpmsExpressionFile(String accession, Collection<String[]> lines) {
@@ -97,10 +136,6 @@ public class MockDataFileHub extends DataFileHub {
 
     public void addConfigurationFile(String accession,Collection<String> lines){
         addTemporaryFile(MessageFormat.format(CONFIGURATION_FILE_PATH_TEMPLATE, accession), lines);
-    }
-
-    public void addSpeciesJsonFile(Collection<String> lines) {
-        addTemporaryFile(SPECIES_PROPERTIES_FILE_PATH, lines);
     }
 
     public void addReactomePathwaysFile(String accession, String comparison, Collection<String[]> lines) {

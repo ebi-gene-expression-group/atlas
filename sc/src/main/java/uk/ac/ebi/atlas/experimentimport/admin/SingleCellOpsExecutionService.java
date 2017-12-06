@@ -8,7 +8,6 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.markergenes.MarkerGeneDao;
-import uk.ac.ebi.atlas.markergenes.MarkerGeneProfile;
 import uk.ac.ebi.atlas.markergenes.RandomMarkerGeneInputStream;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -143,4 +142,5 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
         }
         return resultOfTheOp;
     }
+
 }

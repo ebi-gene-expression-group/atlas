@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -48,8 +49,7 @@ public class GeneExpressionDaoTest {
     @Test
     public void fetchGeneExpressionWithEmptyId() throws Exception {
         subject.fetchGeneExpression(EXPERIMENT_ACCESSION, "").values().forEach(
-                expression -> assertThat(expression, is(0.0))
+                expression -> assertThat(expression, is(Optional.empty()))
         );
     }
-
 }

@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDao;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
@@ -10,13 +10,15 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 public abstract class ExperimentTrader {
-    protected final ExperimentDAO experimentDAO;
+    protected final ExperimentDao experimentDao;
 
-    public ExperimentTrader(ExperimentDAO experimentDAO) {
-        this.experimentDAO = experimentDAO;
+    public ExperimentTrader(ExperimentDao experimentDao) {
+        this.experimentDao = experimentDao;
     }
 
-    public abstract Experiment getPublicExperiment(String experimentAccession);
+    public Experiment getPublicExperiment(String experimentAccession) {
+        return getExperiment(experimentAccession, "");
+    }
 
     public abstract Experiment getExperiment(String experimentAccession, String accessKey);
 
@@ -35,6 +37,6 @@ public abstract class ExperimentTrader {
     }
 
     public Set<String> getPublicExperimentAccessions(ExperimentType... experimentTypes) {
-        return experimentDAO.findPublicExperimentAccessions(experimentTypes);
+        return experimentDao.findPublicExperimentAccessions(experimentTypes);
     }
 }

@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -23,12 +22,12 @@ import java.util.List;
 @Controller
 public class SingleCellExperimentController extends HtmlExceptionHandlingController {
 
-    private final ExperimentTrader experimentTrader;
+    private final ScxaExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
     private static final Gson gson = new Gson();
     
     @Inject
-    public SingleCellExperimentController(ExperimentTrader experimentTrader, DataFileHub dataFileHub) {
+    public SingleCellExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
     }

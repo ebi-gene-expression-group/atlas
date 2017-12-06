@@ -1,43 +1,39 @@
 package uk.ac.ebi.atlas.species;
 
-import com.google.common.collect.Lists;
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.hamcrest.Matchers.*;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.apache.commons.io.IOUtils.toInputStream;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 public class SpeciesPropertiesTraderTest {
 
-    private static MockDataFileHub dataFileHub;
-
-    private SpeciesPropertiesDao speciesPropertiesDao = new SpeciesPropertiesDao();
+    private Path location;
 
     private int speciesPropertiesCountBeforeRefresh;
 
     private SpeciesPropertiesTrader subject = new SpeciesPropertiesTrader();
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        dataFileHub = MockDataFileHub.create();
-    }
-
     @Before
     public void setUp() throws IOException {
-        dataFileHub.addSpeciesJsonFile(
-                IOUtils.readLines(
-                        SpeciesPropertiesTraderTest.class.getResourceAsStream("species-properties.json"),
-                        StandardCharsets.UTF_8));
-
-        speciesPropertiesDao.setDataFileHub(dataFileHub);
+        location =
+                createSpeciesPropertiesFile(
+                        SpeciesPropertiesTraderTest.class.getResourceAsStream("species-properties.json"));
+        SpeciesPropertiesDao speciesPropertiesDao = new SpeciesPropertiesDao(location.toString());
         subject.setSpeciesPropertiesDao(speciesPropertiesDao);
 
         subject.refresh();
@@ -59,10 +55,10 @@ public class SpeciesPropertiesTraderTest {
 
     @Test
     public void refresh() throws Exception {
-        dataFileHub.addSpeciesJsonFile(
-                IOUtils.readLines(
-                        SpeciesPropertiesTraderTest.class.getResourceAsStream("species-tyrannosaurus-rex.json"),
-                        StandardCharsets.UTF_8));
+        Files.copy(
+                SpeciesPropertiesTraderTest.class.getResourceAsStream("species-tyrannosaurus-rex.json"),
+                location.resolve("species-properties.json"),
+                REPLACE_EXISTING);
         subject.refresh();
 
         assertThat(subject.getAll(), hasSize(1));
@@ -75,10 +71,10 @@ public class SpeciesPropertiesTraderTest {
         String refreshMessage = subject.refresh();
         assertThat(refreshMessage, is("No changes were made to the reference species"));
 
-        dataFileHub.addSpeciesJsonFile(
-                IOUtils.readLines(
-                        SpeciesPropertiesTraderTest.class.getResourceAsStream("species-tyrannosaurus-rex.json"),
-                        StandardCharsets.UTF_8));
+        Files.copy(
+                SpeciesPropertiesTraderTest.class.getResourceAsStream("species-tyrannosaurus-rex.json"),
+                location.resolve("species-properties.json"),
+                REPLACE_EXISTING);
         refreshMessage = subject.refresh();
 
         Pattern removedSpeciesPattern = Pattern.compile(".*\\[(.+)\\] removed.*");
@@ -93,7 +89,9 @@ public class SpeciesPropertiesTraderTest {
         int speciesPropertiesCountBeforeRefresh = subject.getAll().size();
 
         try {
-            dataFileHub.addSpeciesJsonFile(Lists.newArrayList("invalid", "json", "contents"));
+            Files.copy(
+                    toInputStream("invalid JSON contents", StandardCharsets.UTF_8),
+                    location.resolve("species-properties.json"));
             subject.refresh();
             // We should never get here
             throw new RuntimeException();
@@ -117,5 +115,11 @@ public class SpeciesPropertiesTraderTest {
         assertThat(subject.get("hordeum vulgare"), not(is(SpeciesProperties.UNKNOWN)));
         assertThat(subject.get("hordeum vulgare"), is(subject.get("Hordeum vulgare subsp. vulgare")));
         assertThat(subject.get("hordeum vulgare"), is(subject.get("Hordeum_vulgare")));
+    }
+
+    private Path createSpeciesPropertiesFile(InputStream in) throws IOException {
+        Path tempDirPath = Files.createTempDirectory(null);
+        Files.copy(in, tempDirPath.resolve("species-properties.json"));
+        return tempDirPath;
     }
 }

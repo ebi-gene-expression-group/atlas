@@ -1,13 +1,9 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.ImmutableMap;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 @Named

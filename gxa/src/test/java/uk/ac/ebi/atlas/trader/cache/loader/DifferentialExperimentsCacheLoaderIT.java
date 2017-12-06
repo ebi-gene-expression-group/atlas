@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -39,7 +39,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     private DifferentialExperimentFactory differentialExperimentFactory;
 
     @Mock
-    private ExperimentDAO experimentDao;
+    private GxaExperimentDao expressionAtlasExperimentDao;
 
     @Mock
     private ArrayExpressClient arrayExpressClient;
@@ -56,9 +56,9 @@ public class DifferentialExperimentsCacheLoaderIT {
         ExperimentDTO experimentDTO = new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
                 species, pubMedIds, "title", new Date(),
                 false, UUID.randomUUID().toString());
-        when(experimentDao.findExperiment(EXPERIMENT_ACCESSION, true)).thenReturn(experimentDTO);
+        when(expressionAtlasExperimentDao.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).thenReturn(experimentDTO);
 
-        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser,experimentDao,
+        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,
                 differentialExperimentFactory );
     }
 
