@@ -60,7 +60,7 @@ public class ExperimentPageService {
          */
         urls.addProperty("genome_browsers",
                 callbackLink(
-                        MessageFormat.format(GenomeBrowserController.REDIRECT_URL_TEMPLATE, experiment.getAccession()),
+                        GenomeBrowserController.REDIRECT_URL_TEMPLATE.replace("{experimentAccession}", experiment.getAccession()),
                         accessKey
                 ).toString()
         );
