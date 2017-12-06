@@ -141,15 +141,12 @@ public class ExperimentCrud {
         );
     }
 
-    private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO) {
-        updateWithNewExperimentDesign(
-                experimentDTO.getExperimentAccession(),
-                experimentDTO.getExperimentType(),
-                newDesign);
+    private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO){
+        updateWithNewExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(), newDesign);
+
     }
 
-    private void updateWithNewExperimentDesign(String accession,
-                                               ExperimentType type,
+    private void updateWithNewExperimentDesign(String accession, ExperimentType type,
                                                ExperimentDesign experimentDesign) {
         try {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
@@ -171,5 +168,9 @@ public class ExperimentCrud {
                 .validate();
 
         return Pair.of(experimentConfiguration, condensedSdrfParserOutput);
+    }
+
+    public void checkFiles(String experimentAccession) throws RuntimeException {
+        loadAndValidateFiles(experimentAccession);
     }
 }
