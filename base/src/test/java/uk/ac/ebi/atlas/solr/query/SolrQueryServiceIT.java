@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class SolrQueryServiceTest {
+public class SolrQueryServiceIT {
 
     @Inject
     SolrQueryService subject;
