@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -23,11 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentCrudTest {
@@ -37,9 +35,6 @@ public class ExperimentCrudTest {
 
     @Mock
     private ExperimentDao experimentDaoMock;
-
-    @Mock
-    private ExperimentDesign experimentDesignMock;
 
     @Mock
     private ExperimentConfiguration experimentConfigurationMock;
@@ -71,14 +66,21 @@ public class ExperimentCrudTest {
 
     @Before
     public void setUp() throws Exception {
+        AssayGroup assayGroup = new AssayGroup("g1", "run_1");
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+        experimentDesign.putSampleCharacteristic("run_1", "type", "value");
+        experimentDesign.putFactor("run_1", "type", "value");
+
         when(configurationTrader.getExperimentConfiguration(EXPERIMENT_ACCESSION))
                 .thenReturn(experimentConfigurationMock);
 
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
+        when(experimentConfigurationMock.getAssayGroups()).thenReturn(ImmutableList.of(assayGroup));
 
         when(experimentDaoMock.getExperimentAsAdmin(anyString())).thenReturn(experimentDTOMock);
 
-        when(analyticsLoaderFactoryMock.getLoader(experimentType)).thenReturn(new AnalyticsLoader() {});
+        when(analyticsLoaderFactoryMock.getLoader(experimentType)).thenReturn(new AnalyticsLoader() {
+        });
 
         given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(experimentDTOMock.getExperimentType()).willReturn(experimentType);
@@ -86,7 +88,7 @@ public class ExperimentCrudTest {
 
         given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class)))
                 .willReturn(condensedSdrfParserOutputMock);
-        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesignMock);
+        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesign);
 
         given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
@@ -98,6 +100,18 @@ public class ExperimentCrudTest {
                         condensedSdrfParserMock, experimentDesignFileWriterService, configurationTrader);
 
         subject = experimentCrudFactory.create(experimentDaoMock, experimentChecker, analyticsLoaderFactoryMock);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void failImportOnValidationWhenExperimentDesignDoesNotMatchAssayGroups() throws IOException {
+        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(new ExperimentDesign());
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void failImportOnValidationWhenExperimentDesignDoesNotMatchAssayGroups2() throws IOException {
+        when(experimentConfigurationMock.getAssayGroups()).thenReturn(ImmutableList.of(new AssayGroup("different assay", "different run")));
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
@@ -128,7 +142,7 @@ public class ExperimentCrudTest {
         verify(condensedSdrfParserMock).parse(EXPERIMENT_ACCESSION, experimentType);
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void ioExceptionsAreWrapped() throws Exception {
         doThrow(new IOException())
                 .when(experimentDesignFileWriterService)
