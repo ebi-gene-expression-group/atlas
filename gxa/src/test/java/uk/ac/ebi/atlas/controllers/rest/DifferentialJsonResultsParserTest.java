@@ -52,7 +52,7 @@ public class DifferentialJsonResultsParserTest {
     @Test
     public void emptyJsonResultArrayProducesEmptyList() throws Exception {
 
-        JsonObject result = buildJsonObject(0,false);
+        JsonObject result = buildJsonObject(0);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
         assertThat(expression,hasSize(0));
@@ -61,7 +61,7 @@ public class DifferentialJsonResultsParserTest {
     @Test
     public void numberOfJsonObjectsInResultArrayProducesEqualLengthList() throws Exception {
 
-        JsonObject result = buildJsonObject(3,false);
+        JsonObject result = buildJsonObject(3);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
         assertThat(expression,hasSize(3));
@@ -70,7 +70,7 @@ public class DifferentialJsonResultsParserTest {
     @Test
     public void secondJsonObjectsInResultArrayEqualsSecondElementOfList() throws Exception {
 
-        JsonObject result = buildJsonObject(4,false);
+        JsonObject result = buildJsonObject(4);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
 
@@ -79,16 +79,6 @@ public class DifferentialJsonResultsParserTest {
         assertThat(expression.get(1).getSpecies(),isA(String.class));
         assertThat(expression.get(1).getExpression().getPValue(),isA(Double.class));
         assertThat(expression.get(1).getExpression().getFoldChange(),isA(Double.class));
-    }
-
-    @Test
-    public void rejectInvalidJsonObjectsInResultArray() throws Exception {
-
-        JsonObject result = buildJsonObject(3,true);
-
-        List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
-
-        assertThat(expression,hasSize(3));
     }
 
     @Test
@@ -117,11 +107,10 @@ public class DifferentialJsonResultsParserTest {
         assertThat(expression,hasSize(1));
     }
 
-    private JsonObject buildJsonObject(int arraySize, boolean addInvalidElement) {
+    private JsonObject buildJsonObject(int arraySize) {
 
         JsonObject result = new JsonObject();
         JsonArray results = new JsonArray();
-        JsonObject testObject = new JsonObject();
         RandomStringUtils randomString = new RandomStringUtils();
         Random random = new Random();
 
@@ -139,18 +128,6 @@ public class DifferentialJsonResultsParserTest {
             results.add(element);
         }
 
-        if(addInvalidElement) {
-            testObject.addProperty("experiment accession", randomString.random(5));
-            testObject.addProperty("contrast_id", randomString.random(10));
-            testObject.addProperty("bioentity_identifier", randomString.random(15));
-            testObject.addProperty("species", randomString.random(6));
-            testObject.addProperty("p_value", random.nextDouble());
-            testObject.addProperty("fold_change", random.nextDouble());
-            testObject.addProperty("t_statistic", random.nextDouble());
-            testObject.addProperty("keyword_symbol", 4);
-
-            results.add(testObject);
-        }
         result.add("results", results);
         return result;
     }
