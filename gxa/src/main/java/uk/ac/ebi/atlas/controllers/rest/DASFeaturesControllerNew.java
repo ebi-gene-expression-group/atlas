@@ -49,8 +49,8 @@ public class DASFeaturesControllerNew {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView InternalServerHandleException(Exception e) {
         ModelAndView mav = new ModelAndView("error-page");
-        mav.addObject("exceptionMessage", "Unexpected error occurred, email us if this presists.");
-        LOGGER.error("Error getting Differential json results.",e.getMessage());
+        mav.addObject("exceptionMessage", "Couldn't fetch search results");
+        LOGGER.error("Error getting Differential json results.",e);
         return mav;
     }
 

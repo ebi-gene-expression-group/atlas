@@ -1,9 +1,8 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.google.gson.JsonParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
@@ -15,7 +14,6 @@ import uk.ac.ebi.atlas.trader.ContrastTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.IllegalFormatException;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -49,16 +47,16 @@ public class DifferentialJsonResultsParser extends JsonExceptionHandlingControll
 
             return diffAnalyticsListBuilder.build();
         }
-        catch (IllegalFormatException e) {
-            throw new RuntimeException("Input Json is missing a results field OR results field is not an Array",e.getCause());
+        catch (JsonParseException e) {
+            throw new RuntimeException("Input Json is missing a results field OR results field is not an Array",e);
         }
     }
 
-    private DiffAnalytics buildDiffAnalyticsObject(JsonElement e) {
+    private DiffAnalytics buildDiffAnalyticsObject(JsonElement element) {
 
         try {
 
-            JsonObject resultObj = e.getAsJsonObject();
+            JsonObject resultObj = element.getAsJsonObject();
 
             String experiment_accession = resultObj.get("experiment_accession").getAsString();
 
@@ -91,8 +89,8 @@ public class DifferentialJsonResultsParser extends JsonExceptionHandlingControll
 
             return new DiffAnalytics(bioentity_identifier, keyword_symbol, experiment_accession, expression, species, contrast);
         }
-        catch(NullPointerException exp) {
-            LOGGER.error("Error adding differential result: {}", exp.getMessage());
+        catch(NullPointerException e) {
+            LOGGER.error("Error adding differential result: {}", element);
             return null;
         }
     }
