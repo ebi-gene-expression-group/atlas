@@ -30,7 +30,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <org.springframework.version>4.3.9.RELEASE</org.springframework.version>
 
-        <solr.version>6.6.0</solr.version>
+        <solr.version>7.1.0</solr.version>
     </properties>
 
     <build>
