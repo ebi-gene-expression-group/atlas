@@ -11,7 +11,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\Create field type text_en_tight"
+printf "\n\nCreate field type text_en_tight"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field-type": {
     "name": "text_en_tight",
@@ -36,7 +36,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-echo "Delete field bioentity_identifier"
+echo "\n\nDelete field bioentity_identifier"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "delete-field":
   {
@@ -215,12 +215,12 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field expression_level (double)"
+printf "\n\nCreate field expression_level (pdouble)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name": "expression_level",
-    "type": "double"
+    "type": "pdouble"
   }
 }' http://$HOST/solr/$CORE/schema
 
@@ -233,13 +233,12 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field num_replicates (int)"
+printf "\n\nCreate field num_replicates (pint)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name": "num_replicates",
-    "type": "int",
-    "docValues": true
+    "type": "pint"
   }
 }' http://$HOST/solr/$CORE/schema
 
@@ -252,12 +251,12 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field fold_change (double)"
+printf "\n\nCreate field fold_change (pdouble)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name": "fold_change",
-    "type": "double"
+    "type": "pdouble"
   }
 }' http://$HOST/solr/$CORE/schema
 
@@ -270,12 +269,12 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field p_value (double)"
+printf "\n\nCreate field p_value (pdouble)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name": "p_value",
-    "type": "double"
+    "type": "pdouble"
   }
 }' http://$HOST/solr/$CORE/schema
 
@@ -288,12 +287,12 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field t_statistic (double)"
+printf "\n\nCreate field t_statistic (pdouble)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name": "t_statistic",
-    "type": "double"
+    "type": "pdouble"
   }
 }' http://$HOST/solr/$CORE/schema
 

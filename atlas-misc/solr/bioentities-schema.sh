@@ -133,12 +133,12 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
-printf "\n\nCreate field property_weight (int)"
+printf "\n\nCreate field property_weight (pint)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name":"property_weight",
-    "type":"int"
+    "type":"pint"
   }
 }' http://$HOST/solr/$CORE/schema
 
