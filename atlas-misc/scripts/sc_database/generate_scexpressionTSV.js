@@ -2,8 +2,8 @@
  * Created by barrera on 11/05/2017.
  */
 
-const genes = 50;
-const cells = 100;
+const genes = 1000;
+const cells = 10000;
 
 var header = new Array(cells);
 header[0] = "GeneId";
