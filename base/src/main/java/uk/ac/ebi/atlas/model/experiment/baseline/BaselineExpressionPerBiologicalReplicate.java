@@ -62,8 +62,6 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
             JsonObject value = new JsonObject();
             double expressionLevel = e.getValue().getLevel();
             value.addProperty("expression_absolute_units", expressionLevel);
-            value.addProperty("expression_as_fraction_of_total",(total == 0) ? 0 : MathUtils.round(expressionLevel / total,3));
-            value.addProperty("expression_dominance", dominanceAmongRelatedValues(expressionValuesSorted, expressionLevel).name());
 
             o.add("value", value);
             return o;
@@ -91,27 +89,4 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
         return MessageFormat.format("BaselineExpressionPerBiologicalReplicate{data={0}}", data);
     }
 
-    /*
-    assumes allValues contains value
-     */
-    DOMINANCE_AMONG_RELATED_VALUES dominanceAmongRelatedValues(double[] allValuesSortedInIncreasingOrder, double value){
-        if(allValuesSortedInIncreasingOrder.length == 0 || value == 0) return DOMINANCE_AMONG_RELATED_VALUES.absent;
-        if(allValuesSortedInIncreasingOrder.length == 1) return DOMINANCE_AMONG_RELATED_VALUES.dominant;
-
-        double topValue = allValuesSortedInIncreasingOrder[allValuesSortedInIncreasingOrder.length - 1];
-        double valueFollowingTopValue = allValuesSortedInIncreasingOrder[allValuesSortedInIncreasingOrder.length - 2];
-        /*
-        Definition quoted by Nuno: a transcript is dominant if it is twice as expressed as the next value
-         */
-        if(value == topValue && value >= valueFollowingTopValue * 2 ) return DOMINANCE_AMONG_RELATED_VALUES.dominant;
-
-        return DOMINANCE_AMONG_RELATED_VALUES.present;
-    }
-
-    /*
-    Please do not rename my values without checking if there is a dependency on name() values in the UI
-     */
-    enum DOMINANCE_AMONG_RELATED_VALUES {
-        dominant, present, absent
-    }
 }
