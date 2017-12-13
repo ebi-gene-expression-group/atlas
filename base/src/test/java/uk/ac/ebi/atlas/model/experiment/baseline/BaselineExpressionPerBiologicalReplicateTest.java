@@ -69,107 +69,23 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                                 "        \"assays\": [\"assay_1\"],\n" +
                                 "        \"value\": {\n" +
                                 "            \"expression_absolute_units\": 1.0,\n" +
-                                "            \"expression_as_fraction_of_total\": 0.286,\n" +
-                                "            \"expression_dominance\": \"present\"\n" +
                                 "        }\n" +
                                 "    }, {\n" +
                                 "        \"id\": \"assay_2\",\n" +
                                 "        \"assays\": [\"assay_2\"],\n" +
                                 "        \"value\": {\n" +
                                 "            \"expression_absolute_units\": 2.0,\n" +
-                                "            \"expression_as_fraction_of_total\": 0.571,\n" +
-                                "            \"expression_dominance\": \"dominant\"\n" +
                                 "        }\n" +
                                 "    }, {\n" +
                                 "        \"id\": \"t1\",\n" +
                                 "        \"assays\": [\"assay_3\", \"assay_4\"],\n" +
                                 "        \"value\": {\n" +
                                 "            \"expression_absolute_units\": 0.5,\n" +
-                                "            \"expression_as_fraction_of_total\": 0.143,\n" +
-                                "            \"expression_dominance\": \"present\"\n" +
                                 "        }\n" +
                                 "    }]\n" +
                                 "}", JsonObject.class
                 )));
     }
 
-    void hasDominantTranscript(BaselineExpressionPerBiologicalReplicate values, boolean t) {
 
-        assertThat(new Gson().toJson(values.toJson()).contains(BaselineExpressionPerBiologicalReplicate.DOMINANCE_AMONG_RELATED_VALUES.dominant.name()), is(t));
-    }
-
-    @Test
-    public void hasDominantTranscript() {
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                        )
-                ), false
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(0.0)
-                        )
-                ), false
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0)
-                        )
-                ), true
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(1.0)
-                        )
-                ), false
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(100.0)
-                        )
-                ), true
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(100.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(1.0)
-                        )
-                ), true
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(100.0),
-                                new BiologicalReplicate("assay_3"), new BaselineExpression(100.0)
-                        )
-                ), false
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(100.0),
-                                new BiologicalReplicate("assay_3"), new BaselineExpression(1000.0)
-                        )
-                ), true
-        );
-        hasDominantTranscript(
-                new BaselineExpressionPerBiologicalReplicate(
-                        ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(100.0),
-                                new BiologicalReplicate("assay_3"), new BaselineExpression(200.0)
-                        )
-                ), true
-        );
-    }
 }
