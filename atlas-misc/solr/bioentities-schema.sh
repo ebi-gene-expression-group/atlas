@@ -3,6 +3,8 @@
 HOST="localhost:8983"
 CORE="bioentities"
 
+# Will fail if executed at this point because there are fields of this type, we could reshuffle the script, or split it
+# into types and fields
 printf "\n\nDelete field type text_en_tight"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "delete-field-type":
