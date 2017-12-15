@@ -125,7 +125,7 @@
 
         <!-- For testing REST services -->
         <!-- Migrate to Spring’s MockMvc, as it doesn’t flood the server and seems to be more robust (see, e.g.
-             https://github.com/gxa/atlas/commit/ca69e94c5fe665d780ef3399f568e5a1245845ad which was casing the build to
+             https://github.com/gxa/atlas/commit/ca69e94c5fe665d780ef3399f568e5a1245845ad which was making the build
              “randomly” fail when lime couldn’t keep up with requests; also, it removes the requirement of running EITs
              against an embedded Tomcat server -->
         <dependency>
