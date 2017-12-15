@@ -61,13 +61,6 @@
     <bean id="solrAnalyticsServerURL" class="java.lang.String">
         <constructor-arg value="http://${solr.host}:8983/solr/analytics/"/>
     </bean>
-
-    <bean id="embeddedSolrServerFactory" class="uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory"/>
-
-    <bean id="embeddedBioentitiesSolrServer"
-          factory-bean="embeddedSolrServerFactory" factory-method="createEmbeddedSolrServerInstance">
-        <constructor-arg type="java.lang.String" value="bioentities"/>
-    </bean>
     <!-- End of Solr configuration -->
 
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
