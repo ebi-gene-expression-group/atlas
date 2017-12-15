@@ -42,7 +42,7 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
             Map<BioentityPropertyName, Set<String>> m =
                     propertiesPerBioentityIdentifier.get(experimentDataPoint.bioentityIdentifier);
 
-            return create(experimentDataPoint, m != null ? m : ImmutableMap.<BioentityPropertyName, Set<String>>of());
+            return create(experimentDataPoint, m != null ? m : ImmutableMap.of());
         }
         else {
             return null;
