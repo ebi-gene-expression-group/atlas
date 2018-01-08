@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration("classpath:applicationContext.xml")
 public class AnalyticsCollectionProxyIT {
 
-    // These two documents span a reasonable fields in the schema
+    // These two documents span a reasonable field set in the schema
     private static final SolrInputDocument RNASEQ_BASELINE_INPUT_DOCUMENT =
             createRnaSeqBaselineAnalyticsSolrInputDocument(
                     "ENSG00000150991",
@@ -75,7 +75,7 @@ public class AnalyticsCollectionProxyIT {
     @Inject
     private EmbeddedSolrCollectionProxyFactory embeddedSolrCollectionProxyFactory;
 
-    CollectionProxy subject;
+    private CollectionProxy subject;
 
     @Before
     public void setUp() {
@@ -99,12 +99,78 @@ public class AnalyticsCollectionProxyIT {
     }
 
     @Test
+    public void deleteAll() {
+        subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT, MICROARRAY_DIFFERENTIAL_INPUT_DOCUMENT));
+        assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(2);
+
+        Pair<UpdateResponse, UpdateResponse> response = subject.deleteAllAndCommit();
+        assertThat(response.getLeft().getStatus()).isEqualTo(0);
+        assertThat(response.getRight().getStatus()).isEqualTo(0);
+        assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(0);
+    }
+
+    @Test
     public void hasNoDefaultSearchHandler() {
         RNASEQ_BASELINE_INPUT_DOCUMENT.values().stream()
                 .flatMap(fieldValue -> fieldValue.getValues().stream())
                 .forEach(value ->
                         assertThat(subject.query(new SolrQuery(escapeQueryChars(value.toString()))).getResults())
                                 .hasSize(0));
+    }
+
+    @Test
+    public void dedupesSilently() {
+        subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT));
+
+        Pair<UpdateResponse, UpdateResponse> responseDuplicate =
+                subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT));
+
+        assertThat(responseDuplicate.getLeft().getStatus()).isEqualTo(0);
+        assertThat(responseDuplicate.getRight().getStatus()).isEqualTo(0);
+        assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(1);
+    }
+
+    @Test
+    public void baselineSignature() {
+        assertOnlySignatureFieldsIncreaseCollectionSize(
+                RNASEQ_BASELINE_INPUT_DOCUMENT,
+                ImmutableSet.of("bioentity_identifier", "experiment_accession", "assay_group_id"));
+    }
+
+    @Test
+    public void differentialSignature() {
+        assertOnlySignatureFieldsIncreaseCollectionSize(
+                MICROARRAY_DIFFERENTIAL_INPUT_DOCUMENT,
+                ImmutableSet.of("bioentity_identifier", "experiment_accession", "contrast_id"));
+    }
+
+    private void assertOnlySignatureFieldsIncreaseCollectionSize(SolrInputDocument inputDocument,
+                                                                 Collection<String> signatureFieldNames) {
+        for (String fieldName: inputDocument.getFieldNames()) {
+            subject.deleteAllAndCommit();
+            subject.addAndCommit(ImmutableSet.of(inputDocument));
+
+            SolrInputDocument modifiedDocument = inputDocument.deepCopy();
+
+            if (modifiedDocument.getFieldValue(fieldName) != null) {
+                if (modifiedDocument.getFieldValue(fieldName).getClass().equals(String.class)) {
+                    modifiedDocument.removeField(fieldName);
+                    modifiedDocument.addField(fieldName, "some random string");
+                } else {
+                    // We can do this because fields are either strings or numbers
+                    modifiedDocument.removeField(fieldName);
+                    modifiedDocument.addField(fieldName, 4);    // chosen by fair dice roll, guaranteed to be random
+                }
+
+                subject.addAndCommit(ImmutableSet.of(modifiedDocument));
+
+                if (signatureFieldNames.contains(fieldName)) {
+                    assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(2);
+                } else {
+                    assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(1);
+                }
+            }
+        }
     }
 
     private static SolrInputDocument createAnalyticsInputDocument(

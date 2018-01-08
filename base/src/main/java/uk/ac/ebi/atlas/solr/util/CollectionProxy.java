@@ -38,9 +38,16 @@ public abstract class CollectionProxy {
 
     public Pair<UpdateResponse, UpdateResponse> addAndCommit(Collection<SolrInputDocument> docs) {
         try {
-            UpdateResponse addUpdateResponse = add(docs);
-            UpdateResponse commitUpdateResponse = solrClient.commit();
-            return Pair.of(addUpdateResponse, commitUpdateResponse);
+            return Pair.of(add(docs), commit());
+        } catch (IOException | SolrServerException e) {
+            logException(e);
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Pair<UpdateResponse, UpdateResponse> deleteAllAndCommit() {
+        try {
+            return Pair.of(solrClient.deleteByQuery("*:*"), commit());
         } catch (IOException | SolrServerException e) {
             logException(e);
             throw new IllegalStateException(e);
@@ -54,6 +61,10 @@ public abstract class CollectionProxy {
             logException(e);
             throw new IllegalStateException(e);
         }
+    }
+
+    private UpdateResponse commit() throws IOException, SolrServerException {
+        return solrClient.commit();
     }
 
     private void logException(Exception e) {
