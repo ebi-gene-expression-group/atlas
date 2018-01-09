@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-// abstract so that it can be generalised to the bioentities collection if convenient
+// abstract so that clients are forced to use specific collections
 public abstract class CollectionProxy {
     private static final Logger LOGGER = LoggerFactory.getLogger(CollectionProxy.class);
 

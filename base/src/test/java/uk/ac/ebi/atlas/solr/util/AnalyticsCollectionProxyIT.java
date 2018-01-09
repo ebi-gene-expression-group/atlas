@@ -71,7 +71,6 @@ public class AnalyticsCollectionProxyIT {
                     "fucosyltransferase 11",
                     "vasectomy adult male Homo sapiens testis ejaculatory azoospermia premortem idiopathi   c infertility");
 
-
     @Inject
     private EmbeddedSolrCollectionProxyFactory embeddedSolrCollectionProxyFactory;
 
