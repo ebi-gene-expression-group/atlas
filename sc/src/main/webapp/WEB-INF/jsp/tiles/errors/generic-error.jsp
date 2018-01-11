@@ -15,10 +15,10 @@
                 <h5>${exceptionMessage}</h5>
             </c:when>
             <c:when test="${statusCode == 404}">
-                <h5>Page not found. If you think a resource is missing, please contact <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>.</h5>
+                <h5>Page not found. If you think a resource is missing, please contact <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a>.</h5>
             </c:when>
             <c:otherwise>
-                <h5>We are sorry - an unexpected error occurred. If it persists, please contact <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>.</h5>
+                <h5>We are sorry - an unexpected error occurred. If it persists, please contact <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a>.</h5>
             </c:otherwise>
         </c:choose>
         <h5 class="margin-top-xlarge">Go back to <a href="${pageContext.request.contextPath}/home">Expression Atlas home page</a>.</h5>
