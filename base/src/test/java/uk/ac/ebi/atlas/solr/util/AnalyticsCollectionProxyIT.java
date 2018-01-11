@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.solr.util;
 
 import com.google.common.collect.ImmutableSet;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
@@ -83,12 +82,11 @@ public class AnalyticsCollectionProxyIT {
 
     @Test
     public void addAndRetrieveDocuments() {
-        Pair<UpdateResponse, UpdateResponse> response =
+        UpdateResponse updateResponse =
                 subject.addAndCommit(
                         ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT, MICROARRAY_DIFFERENTIAL_INPUT_DOCUMENT));
 
-        assertThat(response.getLeft().getStatus()).isEqualTo(0);
-        assertThat(response.getRight().getStatus()).isEqualTo(0);
+        assertThat(updateResponse.getStatus()).isEqualTo(0);
 
         assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(2);
         assertThat(subject.query(new SolrQuery("bioentity_identifier:ENSG00000150991")).getResults()).hasSize(1);
@@ -102,9 +100,8 @@ public class AnalyticsCollectionProxyIT {
         subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT, MICROARRAY_DIFFERENTIAL_INPUT_DOCUMENT));
         assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(2);
 
-        Pair<UpdateResponse, UpdateResponse> response = subject.deleteAllAndCommit();
-        assertThat(response.getLeft().getStatus()).isEqualTo(0);
-        assertThat(response.getRight().getStatus()).isEqualTo(0);
+        UpdateResponse updateResponse = subject.deleteAllAndCommit();
+        assertThat(updateResponse.getStatus()).isEqualTo(0);
         assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(0);
     }
 
@@ -121,11 +118,9 @@ public class AnalyticsCollectionProxyIT {
     public void dedupesSilently() {
         subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT));
 
-        Pair<UpdateResponse, UpdateResponse> responseDuplicate =
-                subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT));
+        UpdateResponse updateResponse = subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT));
 
-        assertThat(responseDuplicate.getLeft().getStatus()).isEqualTo(0);
-        assertThat(responseDuplicate.getRight().getStatus()).isEqualTo(0);
+        assertThat(updateResponse.getStatus()).isEqualTo(0);
         assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(1);
     }
 
