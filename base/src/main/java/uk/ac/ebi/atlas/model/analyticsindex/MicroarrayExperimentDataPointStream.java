@@ -63,7 +63,7 @@ public class MicroarrayExperimentDataPointStream implements ObjectInputStream<Mi
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         for (ObjectInputStream inputStream : inputStreams) {
             inputStream.close();
         }

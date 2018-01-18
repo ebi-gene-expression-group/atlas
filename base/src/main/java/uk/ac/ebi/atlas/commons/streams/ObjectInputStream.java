@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.commons.streams;
 
-import java.io.Closeable;
-
 /*
  * Essentially a closeable iterator, however we don't use the Iterator interface because
  * the semantics of this class is different. See discussion here:
@@ -10,7 +8,7 @@ import java.io.Closeable;
  * and comments here about Iterator not supporting IOException semantics
  * http://stackoverflow.com/a/10811303/149412
  */
-public interface ObjectInputStream<T> extends Closeable {
+public interface ObjectInputStream<T> extends AutoCloseable {
     // returns null when stream is empty
     T readNext();
 }

@@ -74,7 +74,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
                     bioentityIdentifiers.add(analytics.getGeneId());
                     analytics = inputStream.readNext();
                 }
-            } catch (IOException exception) {
+            } catch (Exception exception) {
                 LOGGER.error(exception.getMessage());
             }
         }
@@ -140,7 +140,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
                     bioentityIdentifiers.add(analytics.getGeneId());
                     analytics = inputStream.readNext();
                 }
-            } catch (IOException exception) {
+            } catch (Exception exception) {
                 LOGGER.error(exception.getMessage());
             }
 

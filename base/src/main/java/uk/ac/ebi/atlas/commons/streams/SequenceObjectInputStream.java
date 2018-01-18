@@ -13,14 +13,14 @@ import java.util.Enumeration;
  */
 public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
 
-    private Enumeration<ObjectInputStream<T>> e;
+    private Enumeration<ObjectInputStream<T>> enumeration;
     private ObjectInputStream<T> in;
 
-    public SequenceObjectInputStream(Enumeration<ObjectInputStream<T>> e) {
-        this.e = e;
+    public SequenceObjectInputStream(Enumeration<ObjectInputStream<T>> enumeration) {
+        this.enumeration = enumeration;
         try {
             nextStream();
-        } catch (IOException ex) {
+        } catch (Exception e) {
             // This should never happen
             throw new Error("panic");
         }
@@ -29,13 +29,13 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
     /**
      * Continues reading in the next stream if an EOF is reached.
      */
-    private void nextStream() throws IOException {
+    private void nextStream() throws Exception {
         if (in != null) {
             in.close();
         }
 
-        if (e.hasMoreElements()) {
-            in = e.nextElement();
+        if (enumeration.hasMoreElements()) {
+            in = enumeration.nextElement();
             if (in == null)
                 throw new NullPointerException();
         } else in = null;
@@ -51,8 +51,8 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
         if (c == null) {
             try {
                 nextStream();
-            } catch (IOException ex) {
-                throw new IllegalStateException("Next stream failed.", ex);
+            } catch (Exception e) {
+                throw new IllegalStateException("Next stream failed", e);
             }
             return readNext();
         }
@@ -60,7 +60,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         do {
             nextStream();
         } while (in != null);

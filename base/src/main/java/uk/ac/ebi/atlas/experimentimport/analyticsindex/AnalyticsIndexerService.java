@@ -62,7 +62,7 @@ public class AnalyticsIndexerService {
                 }
             }
 
-        } catch (IOException | SolrServerException e) {
+        } catch (Exception e) {     // SolrServerException | Exception
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }

@@ -31,7 +31,7 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
 
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         experimentDataPointInputStream.close();
     }
 

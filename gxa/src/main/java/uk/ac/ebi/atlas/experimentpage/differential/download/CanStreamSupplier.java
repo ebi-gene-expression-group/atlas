@@ -82,7 +82,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
                     csvWriter.writeNext(inputLine);
                 }
                 csvWriter.flush();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
             }
             return null;

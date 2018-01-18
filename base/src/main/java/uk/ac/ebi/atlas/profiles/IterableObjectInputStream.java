@@ -68,7 +68,7 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
         private void close() {
             try {
                 inputStream.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }

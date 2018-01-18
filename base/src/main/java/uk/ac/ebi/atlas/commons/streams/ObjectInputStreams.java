@@ -22,7 +22,7 @@ public class ObjectInputStreams {
             }
 
             @Override
-            public void close() throws IOException {
+            public void close() throws Exception {
                 unfiltered.close();
             }
         };
