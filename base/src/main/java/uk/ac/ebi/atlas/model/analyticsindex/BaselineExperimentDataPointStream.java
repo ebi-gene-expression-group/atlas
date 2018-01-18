@@ -57,7 +57,7 @@ public class BaselineExperimentDataPointStream implements ObjectInputStream<Base
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         inputStream.close();
     }
 

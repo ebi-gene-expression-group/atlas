@@ -51,7 +51,7 @@ public class DifferentialExperimentDataPointStream implements ObjectInputStream<
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         inputStream.close();
     }
 
