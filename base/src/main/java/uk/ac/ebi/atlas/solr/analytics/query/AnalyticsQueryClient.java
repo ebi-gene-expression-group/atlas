@@ -71,13 +71,13 @@ public class AnalyticsQueryClient {
         return result;
     }
 
-    private boolean responseNonEmpty(String jsonFromSolr) {
+    protected boolean responseNonEmpty(String jsonFromSolr) {
         Integer numFound =  JsonPath.read(jsonFromSolr, "$.response.numFound");
         return numFound!= null && numFound>0;
     }
 
 
-    private String fetchResponseAsString(String url, SolrQuery query) {
+    protected String fetchResponseAsString(String url, SolrQuery query) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

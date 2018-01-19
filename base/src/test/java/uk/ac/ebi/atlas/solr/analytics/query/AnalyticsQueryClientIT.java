@@ -194,6 +194,7 @@ public class AnalyticsQueryClientIT {
         protected boolean responseNonEmpty(String jsonFromSolr){
             return true;
         }
+
     }
 
 }

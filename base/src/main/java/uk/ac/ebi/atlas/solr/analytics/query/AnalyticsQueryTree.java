@@ -194,7 +194,7 @@ public class AnalyticsQueryTree {
         TreeNode n = root.filter(leaf -> leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE));
 
         if (n.equals(Null.INSTANCE)) {
-            return ImmutableList.of(toString());
+            return ImmutableList.of(root.toQuery());
         } else {
             /*
             If there were somehow two identifier search queries, this would be wrong, because we would search for
