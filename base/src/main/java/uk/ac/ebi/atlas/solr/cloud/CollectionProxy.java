@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.util;
+package uk.ac.ebi.atlas.solr.cloud;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -19,18 +19,18 @@ import java.util.stream.Collectors;
 public abstract class CollectionProxy {
     private static final Logger LOGGER = LoggerFactory.getLogger(CollectionProxy.class);
 
-    final SolrClient solrClient;
-    final String collection;
+    public final SolrClient solrClient;
+    public final String nameOrAlias;
 
-    CollectionProxy(SolrClient solrClient, String collection) {
+    protected CollectionProxy(SolrClient solrClient, String nameOrAlias) {
         this.solrClient = solrClient;
-        this.collection = collection;
+        this.nameOrAlias = nameOrAlias;
     }
 
     public QueryResponse query(SolrQuery solrQuery) {
         try {
             // Change maybe to: return new QueryRequest()
-            return solrClient.query(collection, solrQuery);
+            return solrClient.query(nameOrAlias, solrQuery);
         } catch (IOException | SolrServerException e) {
             logException(e);
             throw new IllegalStateException(e);
@@ -39,7 +39,7 @@ public abstract class CollectionProxy {
 
     public UpdateResponse addAndCommit(Collection<SolrInputDocument> docs) {
         try {
-            return new UpdateRequest().add(docs).commit(solrClient, collection);
+            return new UpdateRequest().add(docs).commit(solrClient, nameOrAlias);
         } catch (IOException | SolrServerException e) {
             logException(e);
             throw new IllegalStateException(e);
@@ -48,7 +48,7 @@ public abstract class CollectionProxy {
 
     public UpdateResponse deleteAllAndCommit() {
         try {
-            return new UpdateRequest().deleteByQuery("*:*").commit(solrClient, collection);
+            return new UpdateRequest().deleteByQuery("*:*").commit(solrClient, nameOrAlias);
         } catch (IOException | SolrServerException e) {
             logException(e);
             throw new IllegalStateException(e);
@@ -59,7 +59,7 @@ public abstract class CollectionProxy {
         LOGGER.error(
                 "Problem connecting to SolrCloud {} with collection {}, full stack trace follows:\n\t{}",
                 solrClient.getClass().getSimpleName(),
-                collection,
+                nameOrAlias,
                 Arrays.stream(e.getStackTrace()).map(StackTraceElement::toString).collect(Collectors.joining("\n\t")));
     }
 }

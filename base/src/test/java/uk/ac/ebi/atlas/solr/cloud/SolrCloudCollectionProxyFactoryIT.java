@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.util;
+package uk.ac.ebi.atlas.solr.cloud;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Test;
