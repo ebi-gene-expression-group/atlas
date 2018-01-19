@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.util;
+package uk.ac.ebi.atlas.solr.analytics.fullanalytics;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
+import uk.ac.ebi.atlas.solr.EmbeddedSolrCollectionProxyFactory;
+import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 
 import javax.inject.Inject;
 

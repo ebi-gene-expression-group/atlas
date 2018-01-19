@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.util;
+package uk.ac.ebi.atlas.solr.cloud;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrClient;
@@ -45,25 +45,25 @@ public class CollectionProxyTest {
 
     @Test(expected = IllegalStateException.class)
     public void addAndCommitIOExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.collection))).thenThrow(new IOException());
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new IOException());
         subject.addAndCommit(ImmutableSet.of());
     }
 
     @Test(expected = IllegalStateException.class)
     public void addAndCommitSolrServerExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.collection))).thenThrow(new SolrServerException(""));
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new SolrServerException(""));
         subject.addAndCommit(ImmutableSet.of());
     }
 
     @Test(expected = IllegalStateException.class)
     public void deleteIOExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.collection))).thenThrow(new IOException());
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new IOException());
         subject.deleteAllAndCommit();
     }
 
     @Test(expected = IllegalStateException.class)
     public void deleteSolrServerExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.collection))).thenThrow(new SolrServerException(""));
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new SolrServerException(""));
         subject.deleteAllAndCommit();
     }
 

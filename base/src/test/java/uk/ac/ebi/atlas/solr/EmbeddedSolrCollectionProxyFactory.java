@@ -1,11 +1,12 @@
-package uk.ac.ebi.atlas.solr.util;
+package uk.ac.ebi.atlas.solr;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.solr.analytics.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
