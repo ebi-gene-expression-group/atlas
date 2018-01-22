@@ -1,14 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <footer id="local-footer" class="local-footer row expanded">
-    <div id="elixir-banner"
-         data-color="grey"
-         data-name="This service"
-         data-description="Gene Expression Atlas is an Elixir Core Data Resource"
-         data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
-         data-use-basic-styles="true"></div>
-    <script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/elixirBanner.js"></script>
-
     <div class="small-12 small-centered medium-8 large-6 columns">
         <div class="row small-up-1 medium-up-3">
             <div class="column column-block margin-top-large margin-bottom-large text-center">
@@ -35,3 +27,4 @@
         </div>
     </div>
 </footer>
+
