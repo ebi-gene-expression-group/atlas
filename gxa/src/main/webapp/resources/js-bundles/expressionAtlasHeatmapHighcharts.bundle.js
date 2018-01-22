@@ -17,7 +17,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 140);
+var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 141);
 
 exports.render = _expressionAtlasHeatmapHighcharts.render;
 

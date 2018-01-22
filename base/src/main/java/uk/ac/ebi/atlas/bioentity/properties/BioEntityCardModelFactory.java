@@ -64,10 +64,28 @@ public class BioEntityCardModelFactory {
         result.put("propertyNames", propertiesWeWillDisplay(orderedPropertyNames, propertyValuesByType));
 
         result.put("bioentityProperties",
-                GSON.toJson(bioentityProperties(identifier, species, orderedPropertyNames, propertyValuesByType)));
+                addBioentityProperties(identifier, species, orderedPropertyNames, propertyValuesByType));
 
         return result;
 
+    }
+
+    private Map<BioentityPropertyName, List<PropertyLink>> addBioentityProperties (String identifier, Species species,
+                                                                                   List<BioentityPropertyName> desiredOrderOfPropertyNames,
+                                                                                   Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
+            Map<BioentityPropertyName, List<PropertyLink>> result = new HashMap<>();
+
+        List<BioentityPropertyName> propertiesToDisplay = propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType);
+        for(BioentityPropertyName bioentityPropertyName : propertiesToDisplay) {
+
+            List<PropertyLink> propertyLinkList = fetchPropertyLinks(identifier, species, bioentityPropertyName,
+                    propertyValuesByType.get(bioentityPropertyName));
+
+            result.put(bioentityPropertyName, propertyLinkList);
+
+        }
+
+        return result;
     }
 
     private List<BioentityPropertyName> propertiesWeWillDisplay(
@@ -117,6 +135,7 @@ public class BioEntityCardModelFactory {
                                                   Set<String> propertyValues) {
         return createLinks(identifier, bioentityPropertyName, propertyValues, species);
     }
+
 
     private void addDesignElements(String identifier,Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
         Set<String> designElements = ImmutableSet.copyOf(arrayDesignDao.getDesignElements(identifier));

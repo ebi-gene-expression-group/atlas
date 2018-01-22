@@ -51,6 +51,13 @@ public class ExperimentDownloadController {
         this.microarrayExperimentDownloadSupplier = microarrayExperimentDownloadSupplier;
     }
 
+    /*
+    Wojtek : I think I wanted this to go somewhere - get rid of dispatching or so- rather than needed {experimentType} in the parameter
+    I ended up needing the dispatcher anyway - so that different ExperimentPageRequestPreferences get wired in
+    We're not trying to keep these URLs stable and people shouldn't bookmark them
+    So, you could just remove the parameter, and also the dispatcher because the links will have the parameter `type` - see ExperimentPageService
+    Be nice and set up redirects here if you do, with a note telling the future us to remove it after a while
+     */
     public static final String url = "experiments-content/{experimentAccession}/download/{experimentType}";
 
     @RequestMapping(value = url)
@@ -63,29 +70,6 @@ public class ExperimentDownloadController {
         }
 
         return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey));
-    }
-
-    public static String getUrl(String experimentAccession, String accessKey, ExperimentType experimentType, ExperimentPageRequestPreferences<?> experimentPageRequestPreferences) {
-        try {
-            List<BasicNameValuePair> parameters =
-                    org.apache.commons.beanutils.BeanUtils.describe(experimentPageRequestPreferences)
-                            .entrySet().stream()
-                            .filter(e -> !ImmutableList.of("class", "selectedColumnIds").contains(e.getKey()))
-                            .map(e -> new BasicNameValuePair(e.getKey(), e.getValue()))
-                            .collect(Collectors.toList());
-            parameters.add(new BasicNameValuePair("selectedColumnIds", Joiner.on(",").join(experimentPageRequestPreferences.getSelectedColumnIds())));
-            if (isNotEmpty(accessKey)) {
-                parameters.add(new BasicNameValuePair("accessKey", accessKey));
-            }
-
-            String query = URLEncodedUtils.format(parameters, Charset.defaultCharset());
-
-            return URI.create(
-                    url.replace("{experimentAccession}", experimentAccession).replace("{experimentType}", experimentType.getParent().name().toUpperCase())
-                            + "?" + query).toString();
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)

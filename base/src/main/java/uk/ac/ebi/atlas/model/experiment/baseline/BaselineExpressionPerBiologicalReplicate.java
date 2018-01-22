@@ -5,12 +5,14 @@ import com.google.gson.JsonObject;
 
 import org.apache.commons.math.stat.descriptive.rank.Median;
 import org.apache.commons.math.stat.descriptive.rank.Percentile;
+import org.apache.commons.math.util.MathUtils;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.DoubleStream;
 
 public class BaselineExpressionPerBiologicalReplicate implements Expression {
 
@@ -21,7 +23,11 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
     }
 
     private double[] expressionValuesSorted() {
-        return data.values().stream().mapToDouble(BaselineExpression::getLevel).sorted().toArray();
+        return expressionValues().sorted().toArray();
+    }
+
+    private DoubleStream expressionValues() {
+        return data.values().stream().mapToDouble(BaselineExpression::getLevel);
     }
 
     @Override
@@ -31,14 +37,14 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
 
     @Override
     public JsonObject toJson() {
-        /*
-        WIP
-        Indicate when
-         */
+        if (data.size() == 0) return new JsonObject();
         JsonObject result = new JsonObject();
 
         double[] expressionValuesSorted = expressionValuesSorted();
+        double total = expressionValues().sum();
+
         JsonObject stats = new JsonObject();
+        stats.addProperty("total", total); //not corresponding to any UI feature but will be helpful
         stats.addProperty("min", expressionValuesSorted[0]);
         stats.addProperty("lower_quartile", new Percentile(0.25).evaluate(expressionValuesSorted));
         stats.addProperty("median", new Median().evaluate(expressionValuesSorted));
@@ -53,7 +59,11 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
             JsonArray assays = new JsonArray();
             e.getKey().assaysAnalyzedForThisDataColumn().stream().sorted().forEach(assays::add);
             o.add("assays", assays);
-            o.addProperty("value", e.getValue().getLevel());
+            JsonObject value = new JsonObject();
+            double expressionLevel = e.getValue().getLevel();
+            value.addProperty("expression_absolute_units", expressionLevel);
+
+            o.add("value", value);
             return o;
         }).forEach(values::add);
         result.add("values", values);
@@ -78,4 +88,5 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
     public String toString() {
         return MessageFormat.format("BaselineExpressionPerBiologicalReplicate{data={0}}", data);
     }
+
 }

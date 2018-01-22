@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +8,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
+import uk.ac.ebi.atlas.bioentity.properties.PropertyLink;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertThat;
@@ -32,7 +32,6 @@ public class GenePageControllerIT {
     public void bioentityProperties() throws Exception {
         bioentityProperties("ENSG00000005801", 8, true); //zinc finger
         bioentityProperties("ENSMUSG00000006386", 5, true);
-        bioentityProperties("Sb01g008360");
     }
 
     private void bioentityProperties(String bioentityIdentifier){
@@ -43,21 +42,25 @@ public class GenePageControllerIT {
         Model model = new BindingAwareModelMap();
         subject.showGenePage(bioentityIdentifier, model);
 
-        JsonArray bioentityProperties = new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
+        Map<BioentityPropertyName, List<PropertyLink>> bioentityProperties =
+                (Map<BioentityPropertyName, List<PropertyLink>>) model.asMap().get("bioentityProperties");
 
         assertTrue(bioentityIdentifier+" should have properties" , bioentityProperties.size()>=expectedMinimalSize);
 
-        Map<String, Integer> gotermsAndTheirRelevance = new HashMap<>();
-        for(JsonElement e: bioentityProperties){
-            if(e.getAsJsonObject().get("type").getAsString().equals("go")){
-                for(JsonElement v: e.getAsJsonObject().get("values").getAsJsonArray()){
-                    gotermsAndTheirRelevance.put(
-                            v.getAsJsonObject().get("text").getAsString(),
-                            v.getAsJsonObject().get("relevance").getAsInt()
-                    );
+        Map<String, String> gotermsAndTheirRelevance = new HashMap<>();
+
+        for (Map.Entry<BioentityPropertyName, List<PropertyLink>> entry : bioentityProperties.entrySet()) {
+
+            BioentityPropertyName name = entry.getKey();
+            List<PropertyLink> values = entry.getValue();
+
+            if (name.name().equals(BioentityPropertyName.GO.name())) {
+                for (PropertyLink propertyLink : values) {
+                    gotermsAndTheirRelevance.put(propertyLink.getText(), propertyLink.getUrl());
                 }
             }
         }
+
         if(expectGoTerms){
             assertThat(gotermsAndTheirRelevance.size(), Matchers.greaterThan(0));
 

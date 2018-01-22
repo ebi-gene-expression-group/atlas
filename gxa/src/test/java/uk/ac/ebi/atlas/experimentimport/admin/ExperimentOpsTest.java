@@ -183,7 +183,7 @@ public class ExperimentOpsTest {
         String logResult = ImmutableList.copyOf(subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(Op.LOG))).toString();
 
         for(Op op: Op.values()){
-            boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ, Op.CACHE_REMOVE).contains(op);
+            boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ, Op.CACHE_REMOVE, Op.CHECK).contains(op);
             assertThat(op.toString(), logResult.contains( op.name()), is(isStateful));
         }
     }

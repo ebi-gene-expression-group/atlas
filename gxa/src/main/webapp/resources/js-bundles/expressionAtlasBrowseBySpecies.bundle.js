@@ -146,7 +146,7 @@ var _urijs = __webpack_require__(/*! urijs */ 19);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _reactEbiSpecies = __webpack_require__(/*! react-ebi-species */ 259);
+var _reactEbiSpecies = __webpack_require__(/*! react-ebi-species */ 260);
 
 var _reactEbiSpecies2 = _interopRequireDefault(_reactEbiSpecies);
 
@@ -220,7 +220,7 @@ exports.default = SpeciesItem;
 
 /***/ }),
 
-/***/ 259:
+/***/ 260:
 /*!*****************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/index.js ***!
   \*****************************************************/
@@ -244,7 +244,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EbiSpeciesIcon = __webpack_require__(/*! ./EbiSpeciesIcon.js */ 260);
+var _EbiSpeciesIcon = __webpack_require__(/*! ./EbiSpeciesIcon.js */ 261);
 
 var _EbiSpeciesIcon2 = _interopRequireDefault(_EbiSpeciesIcon);
 
@@ -259,7 +259,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 260:
+/***/ 261:
 /*!**************************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/EbiSpeciesIcon.js ***!
   \**************************************************************/
@@ -282,9 +282,9 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-__webpack_require__(/*! ./ebi-visual-species.css */ 261);
+__webpack_require__(/*! ./ebi-visual-species.css */ 262);
 
-var _mapping = __webpack_require__(/*! ./mapping.js */ 263);
+var _mapping = __webpack_require__(/*! ./mapping.js */ 264);
 
 var _mapping2 = _interopRequireDefault(_mapping);
 
@@ -322,7 +322,7 @@ exports.default = EbiSpeciesIcon;
 
 /***/ }),
 
-/***/ 261:
+/***/ 262:
 /*!*******************************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/ebi-visual-species.css ***!
   \*******************************************************************/
@@ -333,7 +333,7 @@ exports.default = EbiSpeciesIcon;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../css-loader!./ebi-visual-species.css */ 262);
+var content = __webpack_require__(/*! !../../css-loader!./ebi-visual-species.css */ 263);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -359,7 +359,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 262:
+/***/ 263:
 /*!*********************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/react-ebi-species/lib/ebi-visual-species.css ***!
   \*********************************************************************************************/
@@ -379,7 +379,7 @@ exports.push([module.i, "/* Taken from: https://github.com/ebiwd/EBI-Icon-fonts 
 
 /***/ }),
 
-/***/ 263:
+/***/ 264:
 /*!*******************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/mapping.js ***!
   \*******************************************************/

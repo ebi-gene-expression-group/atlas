@@ -42,31 +42,12 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
 
     private final ExperimentTrader experimentTrader;
 
-    private static final String REDIRECT_URL_TEMPLATE = "experiments/{experimentAccession}/redirect/genome-browsers";
-
-    public static String redirectUrl(String experimentAccession, String accessKey){
-        return REDIRECT_URL_TEMPLATE
-                .replace("{experimentAccession}", experimentAccession)
-                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
-    }
+    public static final String REDIRECT_URL_TEMPLATE = "experiments/{experimentAccession}/redirect/genome-browsers";
 
     @Inject
     public GenomeBrowserController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
-
-
-    //Deprecated - remove after deploying experiment page with expression-atlas-heatmap-highcharts 3.3
-    @RequestMapping(value = "/external-services/genome-browser/{genomeBrowserName}", method = {RequestMethod.GET, RequestMethod.HEAD})
-    public String redirectToGenomeBrowserPreviousUrl(@PathVariable String genomeBrowserName,
-                                                     @RequestParam String experimentAccession,
-                                                     @RequestParam String geneId,
-                                                     @RequestParam(required = false, defaultValue = "") String trackId,
-                                                     @RequestParam(required = false, defaultValue = "") String accessKey,
-                                                     HttpServletRequest request) throws IOException {
-        return redirectToGenomeBrowser(experimentAccession, genomeBrowserName, geneId, trackId, accessKey, request);
-    }
-
 
     @RequestMapping(value = REDIRECT_URL_TEMPLATE, method = {RequestMethod.GET, RequestMethod.HEAD})
     public String redirectToGenomeBrowser(@PathVariable String experimentAccession,
@@ -77,7 +58,7 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
                                           HttpServletRequest request)
             throws IOException {
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         String genomeBrowserUrl = null;
         ImmutableCollection<ImmutableMap<String, String>> genomeBrowsers = experiment.getGenomeBrowsers();

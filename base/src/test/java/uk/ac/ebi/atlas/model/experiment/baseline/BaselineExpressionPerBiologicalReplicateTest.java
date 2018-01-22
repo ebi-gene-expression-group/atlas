@@ -52,11 +52,12 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                         ImmutableMap.of(
                                 new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
                                 new BiologicalReplicate("assay_2"), new BaselineExpression(2.0),
-                                new BiologicalReplicate("t1", ImmutableSet.of( "assay_3", "assay_4")), new BaselineExpression(0.5)
+                                new BiologicalReplicate("t1", ImmutableSet.of("assay_3", "assay_4")), new BaselineExpression(0.5)
                         )
                 ).toJson(), is(new Gson().fromJson(
                         "{\n" +
                                 "    \"stats\": {\n" +
+                                "        \"total\": 3.5,\n" +
                                 "        \"min\": 0.5,\n" +
                                 "        \"lower_quartile\": 0.5,\n" +
                                 "        \"median\": 1.0,\n" +
@@ -66,17 +67,25 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                                 "    \"values\": [{\n" +
                                 "        \"id\": \"assay_1\",\n" +
                                 "        \"assays\": [\"assay_1\"],\n" +
-                                "        \"value\": 1.0\n" +
+                                "        \"value\": {\n" +
+                                "            \"expression_absolute_units\": 1.0,\n" +
+                                "        }\n" +
                                 "    }, {\n" +
                                 "        \"id\": \"assay_2\",\n" +
                                 "        \"assays\": [\"assay_2\"],\n" +
-                                "        \"value\": 2.0\n" +
+                                "        \"value\": {\n" +
+                                "            \"expression_absolute_units\": 2.0,\n" +
+                                "        }\n" +
                                 "    }, {\n" +
                                 "        \"id\": \"t1\",\n" +
                                 "        \"assays\": [\"assay_3\", \"assay_4\"],\n" +
-                                "        \"value\": 0.5\n" +
+                                "        \"value\": {\n" +
+                                "            \"expression_absolute_units\": 0.5,\n" +
+                                "        }\n" +
                                 "    }]\n" +
                                 "}", JsonObject.class
                 )));
     }
+
+
 }
