@@ -67,7 +67,7 @@
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/hipsci_logo.png" />
 
                         <h6>
-                            <a href="${pageContext.request.contextPath}/experiments/E-PROT-5">Proteomics – Cell Lines</a><br>
+                            <a href="${pageContext.request.contextPath}/experiments/E-PROT-5">Proteomics – Cell lines</a><br>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4748">RNA – Cell lines</a>
                         </h6>
                     </a>
@@ -102,6 +102,14 @@
             </div>
 
             <div class="row">
+                <div class="small-4 columns combo text-center padding-top-medium">
+                    <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4840">
+                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/hdbr_logo.png" />
+                        <h6>
+                            <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4840">Prenatal brain development</a>
+                        </h6>
+                    </a>
+                </div>
                 <div class="small-4 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/baseline/experiments">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/baseline.png" />
