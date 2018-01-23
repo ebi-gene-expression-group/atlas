@@ -68,19 +68,19 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                                 "        \"id\": \"assay_1\",\n" +
                                 "        \"assays\": [\"assay_1\"],\n" +
                                 "        \"value\": {\n" +
-                                "            \"expression_absolute_units\": 1.0,\n" +
+                                "            \"expression_absolute_units\": 1.0\n" +
                                 "        }\n" +
                                 "    }, {\n" +
                                 "        \"id\": \"assay_2\",\n" +
                                 "        \"assays\": [\"assay_2\"],\n" +
                                 "        \"value\": {\n" +
-                                "            \"expression_absolute_units\": 2.0,\n" +
+                                "            \"expression_absolute_units\": 2.0\n" +
                                 "        }\n" +
                                 "    }, {\n" +
                                 "        \"id\": \"t1\",\n" +
                                 "        \"assays\": [\"assay_3\", \"assay_4\"],\n" +
                                 "        \"value\": {\n" +
-                                "            \"expression_absolute_units\": 0.5,\n" +
+                                "            \"expression_absolute_units\": 0.5\n" +
                                 "        }\n" +
                                 "    }]\n" +
                                 "}", JsonObject.class
