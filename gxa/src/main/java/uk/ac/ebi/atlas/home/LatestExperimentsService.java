@@ -21,7 +21,7 @@ public class LatestExperimentsService {
 
     private final LazyReference<ImmutableMap<String, Object>> latestExperimentsAttributes = new LazyReference<ImmutableMap<String, Object>>() {
         @Override
-        protected ImmutableMap<String, Object> create() throws Exception {
+        protected ImmutableMap<String, Object> create() {
 
             long experimentCount = latestExperimentsDao.fetchPublicExperimentsCount(experimentTypes);
 
