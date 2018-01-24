@@ -278,12 +278,12 @@ expression-atlas-disclaimers@latest:
     react-dom "^15.6.1"
     urijs "^1.18.10"
 
-expression-atlas-experiment-page@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.3.1.tgz#7a9b204826d061136cbedab2b27551ef24aea900"
+expression-atlas-experiment-page@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.4.0.tgz#8929f12eb70cfe52af932685bd3e83faebbca395"
   dependencies:
     expression-atlas-disclaimers latest
-    expression-atlas-heatmap-highcharts latest
+    expression-atlas-heatmap-highcharts "3.9.0"
     lodash "^4.17.4"
     pluralize "^6.0.0"
     prop-types "^15.5.10"
@@ -300,9 +300,9 @@ expression-atlas-experiment-page@^1.3.1:
     sanitize-html "^1.14.1"
     urijs "^1.18.10"
 
-expression-atlas-heatmap-highcharts@latest:
-  version "3.7.5"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.7.5.tgz#75f8e280e628c352e2ccc676a904a4be9176d19c"
+expression-atlas-heatmap-highcharts@3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.9.0.tgz#c0bd321da3cf871e5378e135ff4883d924ce5622"
   dependencies:
     anatomogram latest
     color "^2.0.0"

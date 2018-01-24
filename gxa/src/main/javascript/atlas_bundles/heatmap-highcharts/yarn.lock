@@ -274,9 +274,9 @@ expression-atlas-disclaimers@latest:
     react-dom "^15.6.1"
     urijs "^1.18.10"
 
-expression-atlas-heatmap-highcharts@^3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.8.0.tgz#95ef9c308033f600b505b5df81145e2fb86f971f"
+expression-atlas-heatmap-highcharts@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.9.0.tgz#c0bd321da3cf871e5378e135ff4883d924ce5622"
   dependencies:
     anatomogram latest
     color "^2.0.0"
