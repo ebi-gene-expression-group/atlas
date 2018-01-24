@@ -2150,9 +2150,9 @@ expression-atlas-feedback@./atlas_modules/expression-atlas-feedback-v1.3.0.tgz:
     react-localstorage "^0.3.1"
     react-timer-mixin "^0.13.3"
 
-expression-atlas-heatmap-highcharts@3.7.8:
-  version "3.7.8"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.7.8.tgz#2fb7d29d32db761384ad0e45dc3e3cdcbe72cfae"
+expression-atlas-heatmap-highcharts@3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.8.0.tgz#95ef9c308033f600b505b5df81145e2fb86f971f"
   dependencies:
     anatomogram latest
     color "^2.0.0"
