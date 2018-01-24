@@ -25,13 +25,13 @@ public class LatestExperimentsDaoIT {
     LatestExperimentsDao subject;
 
     @Test
-    public void experimentsCount() throws Exception {
+    public void experimentsCount() {
         assertThat(
                 subject.fetchPublicExperimentsCount(ImmutableSet.copyOf(ExperimentType.values())),
                 is(greaterThan(50L)));
 
         assertThat(
-                subject.fetchPublicExperimentsCount(ImmutableSet.<ExperimentType>of()),
+                subject.fetchPublicExperimentsCount(ImmutableSet.of()),
                 is(subject.fetchPublicExperimentsCount(ImmutableSet.copyOf(ExperimentType.values()))));
 
         assertThat(
@@ -42,10 +42,10 @@ public class LatestExperimentsDaoIT {
     }
 
     @Test
-    public void experimentAccessions() throws Exception {
+    public void experimentAccessions() {
         assertThat(
                 subject.fetchLatestExperimentAccessions(ImmutableSet.copyOf(ExperimentType.values())),
-                hasSize(5));
+                hasSize(LatestExperimentsDao.LIMIT));
     }
 
 }

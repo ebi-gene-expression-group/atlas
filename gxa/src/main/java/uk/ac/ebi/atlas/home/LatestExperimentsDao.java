@@ -11,8 +11,9 @@ import java.util.stream.Collectors;
 
 @Named
 public class LatestExperimentsDao {
+    static final int LIMIT = 10;
     private static final String SELECT_PUBLIC_ACCESSIONS = "SELECT accession FROM experiment WHERE private='F' ";
-    private static final String IN_DESCENDING_ORDER_BY_DATE = " ORDER BY last_update DESC LIMIT 10";
+    private static final String IN_DESCENDING_ORDER_BY_DATE = " ORDER BY last_update DESC LIMIT " + Integer.toString(LIMIT);
     private static final String EXPERIMENT_COUNT = "SELECT COUNT(*) FROM experiment WHERE private='F' ";
 
     private final JdbcTemplate jdbcTemplate;
