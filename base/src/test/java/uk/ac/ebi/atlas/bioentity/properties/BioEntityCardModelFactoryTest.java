@@ -15,15 +15,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -68,18 +61,6 @@ public class BioEntityCardModelFactoryTest {
     }
 
     @Test
-    public void nullAttributes() throws Exception {
-        Map<String, Object> map = subject.modelAttributes(identifier, species, ImmutableList.of(), "", ImmutableMap.of());
-
-        assertThat(map.size(), is(5));
-        assertThat(map.get("bioentityProperties"), is(ImmutableMap.of()));
-        assertThat(map.get("propertyNames"), is(ImmutableList.of()));
-        assertThat(map.get("entityBriefName"), is(identifier));
-        assertNull(map.get("bioentityDescription"));
-        assertThat(map.get("entityFullName"), is(identifier));
-    }
-
-    @Test
     public void outputLooksRight() throws Exception {
         when(linkBuilder.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("value")))
                 .thenReturn(ImmutableMap.of("value", "value"));
@@ -102,35 +83,4 @@ public class BioEntityCardModelFactoryTest {
         assertThat(value.get("relevance").getAsInt(), is (0));
     }
 
-    @Test
-    public void outputLooksRight2() throws Exception {
-        when(linkBuilder.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("value")))
-                .thenReturn(ImmutableMap.of("value", "value"));
-
-        Map<String, Object> result = subject.modelAttributes(identifier,
-                species, ImmutableList.of(BioentityPropertyName.GO), "",
-                ImmutableMap.of(BioentityPropertyName.GO, ImmutableSet.of("value")));
-
-        PropertyLink propertyLink =
-                new PropertyLink("value",
-                        "http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value",
-                        0);
-
-        for (Map.Entry<String, Object> entry : result.entrySet()) {
-            String key = entry.getKey();
-
-            if (key.equals("bioentityProperties")) {
-                Map<BioentityPropertyName, List<PropertyLink>> v =
-                        (Map<BioentityPropertyName, List<PropertyLink>>) entry.getValue();
-                assertThat(v.size(), is(1));
-                assertTrue(v.containsKey(BioentityPropertyName.GO));
-                assertThat(v.values().size(), is(1));
-
-                assertThat(v.get(BioentityPropertyName.GO).get(0).getText(), is(propertyLink.getText()));
-                assertThat(v.get(BioentityPropertyName.GO).get(0).getUrl(), is(propertyLink.getUrl()));
-
-            }
-        }
-
-    }
 }

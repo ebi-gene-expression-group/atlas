@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import uk.ac.ebi.atlas.bioentity.properties.*;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
+import uk.ac.ebi.atlas.bioentity.properties.PropertyLink;
 import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -27,18 +30,17 @@ import java.util.stream.Collectors;
 public class JsonSingleCellGeneInfoController extends JsonExperimentController {
 
     private Gson gson = new GsonBuilder().create();
-    private BioEntityCardModelFactory bioEntityCardModelFactory;
+    private BioEntityPropertyService bioEntityPropertyService;
     private BioEntityPropertyDao bioentityPropertyDao;
     private SpeciesInferrer speciesInferrer;
 
     @Inject
     public JsonSingleCellGeneInfoController(ExperimentTrader experimentTrader,
-                                            BioEntityCardModelFactory bioEntityCardModelFactory,
                                             BioEntityPropertyService bioEntityPropertyService,
                                             BioEntityPropertyDao bioentityPropertyDao,
                                             SpeciesInferrer speciesInferrer) {
         super(experimentTrader);
-        this.bioEntityCardModelFactory = bioEntityCardModelFactory;
+        this.bioEntityPropertyService = bioEntityPropertyService;
         this.bioentityPropertyDao = bioentityPropertyDao;
         this.speciesInferrer = speciesInferrer;
     }
@@ -54,7 +56,7 @@ public class JsonSingleCellGeneInfoController extends JsonExperimentController {
         Set<String> symbols = bioentityPropertyDao.fetchPropertyValuesForGeneId(geneId, BioentityPropertyName.SYMBOL);
         String geneName = symbols == null || symbols.isEmpty() ? "" : Joiner.on("/").join(symbols);
 
-        Map<String, Object> bioentityGeneInformation = bioEntityCardModelFactory.modelAttributes(geneId,
+        Map<String, Object> bioentityGeneInformation = bioEntityPropertyService.addAtributesToModel(geneId,
                 speciesReferenceName,
                 BioEntityCardProperties.bioentityPropertyNames,
                 geneName,
