@@ -1,46 +1,7 @@
 var experimentPage =
 webpackJsonp_name_([1],{
 
-/***/ 1:
-/*!******************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/prop-types/index.js ***!
-  \******************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (true) {
-  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
-
-  var isValidElement = function isValidElement(object) {
-    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 424)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = require('./factoryWithThrowingShims')();
-}
-
-/***/ }),
-
-/***/ 16:
+/***/ 15:
 /*!***************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/URI.js ***!
   \***************************************************************/
@@ -2360,7 +2321,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   return URI;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
@@ -2812,7 +2773,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -2995,7 +2956,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -3763,7 +3724,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		root.punycode = punycode;
 	}
 })(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 9)))
 
 /***/ }),
 
@@ -3970,7 +3931,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     noConflict: noConflict
   };
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
@@ -4238,7 +4199,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   return SLD;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
@@ -5765,11 +5726,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -10122,7 +10083,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
   })(M);return M;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
@@ -10141,7 +10102,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -10232,6 +10193,45 @@ exports.default = SeriesPropTypes;
     };
   }
 })();
+
+/***/ }),
+
+/***/ 2:
+/*!******************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/prop-types/index.js ***!
+  \******************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (true) {
+  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
+
+  var isValidElement = function isValidElement(object) {
+    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 424)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = require('./factoryWithThrowingShims')();
+}
 
 /***/ }),
 
@@ -10479,7 +10479,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 13);
+var _reactDom = __webpack_require__(/*! react-dom */ 18);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10525,13 +10525,13 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ 427);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -11487,7 +11487,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -12018,7 +12018,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -12486,7 +12486,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -12778,7 +12778,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -13379,7 +13379,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -13524,7 +13524,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -14634,7 +14634,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -14876,7 +14876,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -15050,7 +15050,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -15197,20 +15197,18 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -15218,168 +15216,59 @@ var _expressionAtlasExperimentPageTsnePlot = __webpack_require__(/*! expression-
 
 var _expressionAtlasExperimentPageTsnePlot2 = _interopRequireDefault(_expressionAtlasExperimentPageTsnePlot);
 
-var _scAtlasBioentityInformation = __webpack_require__(/*! sc-atlas-bioentity-information */ 481);
-
-var _scAtlasBioentityInformation2 = _interopRequireDefault(_scAtlasBioentityInformation);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
+  var location = props.location,
+      history = props.history;
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+  var updateUrlSearch = function updateUrlSearch(parameter) {
+    history.push((0, _urijs2.default)(location.search).setSearch(parameter.name, parameter.value).toString());
+  };
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+  var atlasUrl = props.atlasUrl,
+      resourcesUrl = props.resourcesUrl;
+  var suggesterEndpoint = props.suggesterEndpoint,
+      experimentAccession = props.experimentAccession,
+      ks = props.ks,
+      perplexities = props.perplexities;
 
-var fetchResponseJson = function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(base, endpoint) {
-        var response, responseJson;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-                switch (_context.prev = _context.next) {
-                    case 0:
-                        _context.next = 2;
-                        return fetch((0, _urijs2.default)(endpoint, base).toString());
+  var search = (0, _urijs2.default)(location.search).search(true);
 
-                    case 2:
-                        response = _context.sent;
-                        _context.next = 5;
-                        return response.json();
-
-                    case 5:
-                        responseJson = _context.sent;
-                        return _context.abrupt('return', responseJson);
-
-                    case 7:
-                    case 'end':
-                        return _context.stop();
-                }
-            }
-        }, _callee, undefined);
-    }));
-
-    return function fetchResponseJson(_x, _x2) {
-        return _ref.apply(this, arguments);
-    };
-}();
-
-var TSnePlotViewRoute = function (_React$Component) {
-    _inherits(TSnePlotViewRoute, _React$Component);
-
-    function TSnePlotViewRoute(props) {
-        _classCallCheck(this, TSnePlotViewRoute);
-
-        var _this = _possibleConstructorReturn(this, (TSnePlotViewRoute.__proto__ || Object.getPrototypeOf(TSnePlotViewRoute)).call(this, props));
-
-        _this.state = {
-            geneId: null,
-            bioentityProperties: [],
-            errorMessage: null
-        };
-        return _this;
+  return _react2.default.createElement(_expressionAtlasExperimentPageTsnePlot2.default, { atlasUrl: atlasUrl,
+    suggesterEndpoint: suggesterEndpoint,
+    experimentAccession: experimentAccession,
+    ks: ks,
+    k: Number(search.k) || props.ks[0],
+    highlightClusters: search.clusterId ? JSON.parse(search.clusterId) : [],
+    perplexities: perplexities,
+    perplexity: Number(search.perplexity) || props.perplexities[0],
+    geneId: search.geneId || '',
+    height: 600,
+    resourcesUrl: resourcesUrl,
+    onSelectGeneId: function onSelectGeneId(geneId) {
+      updateUrlSearch({ name: 'geneId', value: geneId });
+    },
+    onChangeK: function onChangeK(k) {
+      updateUrlSearch({ name: 'k', value: k });
+    },
+    onChangePerplexity: function onChangePerplexity(perplexity) {
+      updateUrlSearch({ name: 'perplexity', value: perplexity });
     }
-
-    _createClass(TSnePlotViewRoute, [{
-        key: '_fetchAndSetState',
-        value: function _fetchAndSetState() {
-            var _this2 = this;
-
-            var atlasUrl = this.props.atlasUrl;
-            var geneId = this.state.geneId;
-
-            var search = (0, _urijs2.default)(location.search).search(true);
-
-            var gene = geneId ? geneId : search.geneId;
-
-            var bioentityEndPoint = 'json/bioEntityInformation/' + gene;
-
-            if (gene) {
-                return fetchResponseJson(atlasUrl, bioentityEndPoint).then(function (responseJson) {
-                    _this2.setState({
-                        geneId: gene,
-                        bioentityProperties: responseJson.bioentityProperties,
-                        errorMessage: null
-                    });
-                }).catch(function (reason) {
-                    _this2.setState({
-                        errorMessage: reason.name + ': ' + reason.message
-                    });
-                });
-            }
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            return this._fetchAndSetState();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
-
-            var _props = this.props,
-                location = _props.location,
-                history = _props.history;
-            var bioentityProperties = this.state.bioentityProperties;
-
-            var updateUrlSearch = function updateUrlSearch(parameter) {
-                history.push((0, _urijs2.default)(location.search).setSearch(parameter.name, parameter.value).toString());
-                _this3._fetchAndSetState();
-            };
-            var _props2 = this.props,
-                atlasUrl = _props2.atlasUrl,
-                resourcesUrl = _props2.resourcesUrl;
-            var _props3 = this.props,
-                suggesterEndpoint = _props3.suggesterEndpoint,
-                experimentAccession = _props3.experimentAccession,
-                ks = _props3.ks,
-                perplexities = _props3.perplexities;
-
-            var search = (0, _urijs2.default)(location.search).search(true);
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_expressionAtlasExperimentPageTsnePlot2.default, { atlasUrl: atlasUrl,
-                    suggesterEndpoint: suggesterEndpoint,
-                    experimentAccession: experimentAccession,
-                    ks: ks,
-                    k: Number(search.k) || ks[0],
-                    highlightClusters: search.clusterId ? JSON.parse(search.clusterId) : [],
-                    perplexities: perplexities,
-                    perplexity: Number(search.perplexity) || perplexities[0],
-                    geneId: search.geneId || '',
-                    height: 600,
-                    resourcesUrl: resourcesUrl,
-                    onSelectGeneId: function onSelectGeneId(geneId) {
-                        updateUrlSearch({ name: 'geneId', value: geneId });
-                    },
-                    onChangeK: function onChangeK(k) {
-                        updateUrlSearch({ name: 'k', value: k });
-                    },
-                    onChangePerplexity: function onChangePerplexity(perplexity) {
-                        updateUrlSearch({ name: 'perplexity', value: perplexity });
-                    }
-                }),
-                _react2.default.createElement(_scAtlasBioentityInformation2.default, { bioentityProperties: bioentityProperties })
-            );
-        }
-    }]);
-
-    return TSnePlotViewRoute;
-}(_react2.default.Component);
+  });
+};
 
 TSnePlotViewRoute.propTypes = {
-    match: _propTypes2.default.object.isRequired,
-    location: _propTypes2.default.object.isRequired,
-    history: _propTypes2.default.object.isRequired,
-    atlasUrl: _propTypes2.default.string.isRequired,
-    resourcesUrl: _propTypes2.default.string,
-    experimentAccession: _propTypes2.default.string.isRequired,
-    ks: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
-    perplexities: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
-    suggesterEndpoint: _propTypes2.default.string.isRequired
+  match: _propTypes2.default.object.isRequired,
+  location: _propTypes2.default.object.isRequired,
+  history: _propTypes2.default.object.isRequired,
+  atlasUrl: _propTypes2.default.string.isRequired,
+  resourcesUrl: _propTypes2.default.string,
+  experimentAccession: _propTypes2.default.string.isRequired,
+  ks: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
+  perplexities: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
+  suggesterEndpoint: _propTypes2.default.string.isRequired
 };
 
 exports.default = TSnePlotViewRoute;
@@ -15444,11 +15333,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -15734,7 +15623,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -16374,11 +16263,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -16441,7 +16330,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -18789,7 +18678,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     /******/)
   );
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
@@ -18986,7 +18875,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     });
   })(k);
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
@@ -19379,7 +19268,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     })) : "undefined" !== typeof h.initCanvasBoost ? h.initCanvasBoost() : h.error(26);
   })(r);
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
@@ -19517,7 +19406,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -19772,7 +19661,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -19780,7 +19669,7 @@ var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 473);
 
 var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -19984,9 +19873,9 @@ function _inherits(subClass, superClass) {
 }
 
 var React = __webpack_require__(/*! react */ 0);
-var PropTypes = __webpack_require__(/*! prop-types */ 1);
+var PropTypes = __webpack_require__(/*! prop-types */ 2);
 
-var _require = __webpack_require__(/*! react-dom */ 13),
+var _require = __webpack_require__(/*! react-dom */ 18),
     findDOMNode = _require.findDOMNode;
 
 var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 474);
@@ -21195,11 +21084,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -21369,7 +21258,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -21500,7 +21389,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -21544,284 +21433,6 @@ ScientificNotationNumber.defaultProps = {
 };
 
 exports.default = ScientificNotationNumber;
-
-/***/ }),
-
-/***/ 481:
-/*!******************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/sc-atlas-bioentity-information/lib/index.js ***!
-  \******************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.render = exports.default = undefined;
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(/*! react-dom */ 13);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _BioentityInformation = __webpack_require__(/*! ./BioentityInformation.js */ 482);
-
-var _BioentityInformation2 = _interopRequireDefault(_BioentityInformation);
-
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
-
-var render = function render(options, target) {
-    _reactDom2.default.render(_react2.default.createElement(_BioentityInformation2.default, options), document.getElementById(target));
-}; // import BioentityInformation from './BioentityInformation.js'
-//
-// export default BioentityInformation
-
-exports.default = _BioentityInformation2.default;
-exports.render = render;
-
-/***/ }),
-
-/***/ 482:
-/*!*********************************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/sc-atlas-bioentity-information/lib/BioentityInformation.js ***!
-  \*********************************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-            }
-        }
-    }return target;
-};
-
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _BioentityProperty = __webpack_require__(/*! ./BioentityProperty */ 483);
-
-var _BioentityProperty2 = _interopRequireDefault(_BioentityProperty);
-
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
-
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var BioentityInformation = function (_React$Component) {
-    _inherits(BioentityInformation, _React$Component);
-
-    function BioentityInformation(props) {
-        _classCallCheck(this, BioentityInformation);
-
-        return _possibleConstructorReturn(this, (BioentityInformation.__proto__ || Object.getPrototypeOf(BioentityInformation)).call(this, props));
-    }
-
-    _createClass(BioentityInformation, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement('div', { className: 'row row-padding small-12' }, _react2.default.createElement('ul', { className: 'accordion', 'data-accordion': true, 'data-allow-all-closed': 'true' }, _react2.default.createElement('li', { className: 'accordion-item', 'data-accordion-item': true }, _react2.default.createElement('a', { href: '#geneInfo', className: 'accordion-title', style: { fontSize: '1.1rem' } }, 'Gene Information'), _react2.default.createElement('div', { id: 'geneInfo', className: 'accordion-content', 'data-tab-content': true }, _react2.default.createElement('table', null, _react2.default.createElement('tbody', null, this.props.bioentityProperties.map(function (bioentityProperty) {
-                return _react2.default.createElement(_BioentityProperty2.default, _extends({
-                    key: bioentityProperty.type
-                }, bioentityProperty));
-            })))))));
-        }
-    }]);
-
-    return BioentityInformation;
-}(_react2.default.Component);
-
-BioentityInformation.propTypes = {
-    atlasUrl: _propTypes2.default.string,
-    bioentityProperties: _propTypes2.default.array
-};
-
-exports.default = BioentityInformation;
-
-/***/ }),
-
-/***/ 483:
-/*!******************************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/sc-atlas-bioentity-information/lib/BioentityProperty.js ***!
-  \******************************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
-
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var BioentityProperty = function (_React$Component) {
-    _inherits(BioentityProperty, _React$Component);
-
-    function BioentityProperty(props) {
-        _classCallCheck(this, BioentityProperty);
-
-        var _this = _possibleConstructorReturn(this, (BioentityProperty.__proto__ || Object.getPrototypeOf(BioentityProperty)).call(this, props));
-
-        _this.state = {
-            showAll: false
-        };
-        return _this;
-    }
-
-    // take three most relevant links and then all of the same relevance
-
-
-    _createClass(BioentityProperty, [{
-        key: '_pickMostRelevant',
-        value: function _pickMostRelevant(properties) {
-            var relevanceThreshold = properties.map(function (p) {
-                return p.relevance;
-            }).sort(function (l, r) {
-                return r - l;
-            }).concat([0, 0, 0])[properties.size < 3 ? properties.size - 1 : 2];
-            return properties.filter(function (p) {
-                return p.relevance >= relevanceThreshold;
-            });
-        }
-    }, {
-        key: '_renderProperty',
-        value: function _renderProperty(property, ix) {
-            return property.url ? _react2.default.createElement('a', { key: property.url + " " + ix, className: "bioEntityCardLink", href: property.url, target: '_blank' }, property.text) : _react2.default.createElement('span', { key: property.text + " " + ix }, property.text);
-        }
-    }, {
-        key: '_zipWithCommaSpans',
-        value: function _zipWithCommaSpans(elts) {
-            return [].concat.apply([], elts.map(function (e, ix) {
-                return [e, _react2.default.createElement('span', { key: "comma " + ix }, ', ')];
-            })).slice(0, -1);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var numUnshownLinks = this.props.values.length - this._pickMostRelevant(this.props.values).length;
-            var hasOptionalLinks = ["go", "po"].indexOf(this.props.type) > -1 && numUnshownLinks > 0;
-            var showMoreLessButton = _react2.default.createElement('a', { role: 'button', style: { cursor: "pointer" }, onClick: function () {
-                    this.setState(function (previousState) {
-                        return { showAll: !previousState.showAll };
-                    });
-                }.bind(this) }, this.state.showAll ? " (show less)" : " … and " + numUnshownLinks + " more");
-
-            return _react2.default.createElement('tr', null, _react2.default.createElement('td', { className: "gxaBioentityInformationCardPropertyType" }, this.props.name), _react2.default.createElement('td', null, _react2.default.createElement('div', null, hasOptionalLinks ? _react2.default.createElement('span', null, this._zipWithCommaSpans((this.state.showAll ? this.props.values : this._pickMostRelevant(this.props.values)).sort(function (l, r) {
-                return r.relevance === l.relevance ? r.text.toLowerCase() < l.text.toLowerCase() ? 1 : -1 : r.relevance - l.relevance;
-            }).map(this._renderProperty)), showMoreLessButton) : this._zipWithCommaSpans(this.props.values.map(this._renderProperty)))));
-        }
-    }]);
-
-    return BioentityProperty;
-}(_react2.default.Component);
-
-BioentityProperty.propTypes = {
-    type: _propTypes2.default.string.isRequired,
-    name: _propTypes2.default.string.isRequired,
-    values: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-        text: _propTypes2.default.string.isRequired,
-        url: _propTypes2.default.string.isRequired,
-        relevance: _propTypes2.default.number.isRequired
-    }))
-};
-
-exports.default = BioentityProperty;
 
 /***/ }),
 
@@ -22138,7 +21749,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 

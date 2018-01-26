@@ -21,12 +21,6 @@
     <!-- Use this CSS file for any custom styling -->
     <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
-
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
-
-
     <script src="/gxa_sc/vendorCommons.bundle.js"></script>
     <script src="/gxa_sc/experimentPage.bundle.js"></script>
 </head>
@@ -38,11 +32,6 @@
 </body>
 
 <script>
-
-    $(document).ready(function(){
-        $(document).foundation();
-    });
-
     var tabs = [
       {
         type: 't-sne-plot',
@@ -71,7 +60,7 @@
     ]
 
     experimentPage.render({
-        atlasUrl: 'http://localhost:9090/gxa_sc/',
+        atlasUrl: 'http://localhost:8080/gxa_sc/',
         content: {
           experimentAccession: 'E-MTAB-4388',
           tabs: tabs

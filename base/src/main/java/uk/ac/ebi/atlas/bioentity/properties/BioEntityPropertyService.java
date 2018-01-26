@@ -12,7 +12,9 @@ import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -47,8 +49,7 @@ public class BioEntityPropertyService {
                         .collect(Collectors.toMap(Function.identity(), this::fetchSymbolAndSpeciesForOrtholog));
             case PATHWAYID:
                 return reactomeClient.getPathwayNames(propertyValues);
-            case GO:
-            case PO:
+            case GO: case PO:
                 return propertyValues.stream()
                         .collect(
                                 Collectors.toMap(
