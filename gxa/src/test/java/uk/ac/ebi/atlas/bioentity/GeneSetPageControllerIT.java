@@ -9,13 +9,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
-import uk.ac.ebi.atlas.bioentity.properties.PropertyLink;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import javax.inject.Inject;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -38,9 +33,7 @@ public class GeneSetPageControllerIT {
     private void bioentityProperties(String bioentityIdentifier){
         Model model = new BindingAwareModelMap();
         subject.showGeneSetPage(bioentityIdentifier, "", model);
-
-        Map<BioentityPropertyName, List<PropertyLink>> bioentityProperties =
-                (Map<BioentityPropertyName, List<PropertyLink>>) model.asMap().get("bioentityProperties");
+        JsonArray bioentityProperties = new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
         assertThat(bioentityProperties.size(), is(1));
     }
 
