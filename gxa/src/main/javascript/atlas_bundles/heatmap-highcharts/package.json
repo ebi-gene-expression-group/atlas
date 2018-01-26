@@ -3,9 +3,15 @@
   "version": "0.0.1",
   "description": "Wrapper around https://github.com/gxa/atlas-heatmap",
   "main": "index.js",
+  "author": "Expression Atlas developers <arrayexpress-atlas@ebi.ac.uk>",
+  "collaborators": [
+    "Elisabet Barrera <barrera@ebi.ac.uk>",
+    "Wojciech Bażant <wbazant@ebi.ac.uk>",
+    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
+  ],
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "expression-atlas-heatmap-highcharts": "^3.9.0"
+    "expression-atlas-heatmap-highcharts": "^3.10.0"
   }
 }

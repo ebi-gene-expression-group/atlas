@@ -5,7 +5,7 @@ webpackJsonp_name_([2],{
 /*!****************************************************************!*\
   !*** ./node_modules/react-transition-group/utils/PropTypes.js ***!
   \****************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -62,11 +62,11 @@ var nameShape = exports.nameShape = _propTypes2.default.oneOfType([_propTypes2.d
 
 /***/ }),
 
-/***/ 1106:
+/***/ 1133:
 /*!****************************************************!*\
   !*** ./atlas_bundles/baseline-expression/index.js ***!
   \****************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -78,7 +78,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _baselineRenderer = __webpack_require__(/*! ./src/baselineRenderer.jsx */ 1107);
+var _baselineRenderer = __webpack_require__(/*! ./src/baselineRenderer.jsx */ 1134);
 
 var _baselineRenderer2 = _interopRequireDefault(_baselineRenderer);
 
@@ -88,11 +88,11 @@ exports.render = _baselineRenderer2.default;
 
 /***/ }),
 
-/***/ 1107:
+/***/ 1134:
 /*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/baselineRenderer.jsx ***!
   \********************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -130,7 +130,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _BaselineRouter = __webpack_require__(/*! ./BaselineRouter.jsx */ 1108);
+var _BaselineRouter = __webpack_require__(/*! ./BaselineRouter.jsx */ 1135);
 
 var _BaselineRouter2 = _interopRequireDefault(_BaselineRouter);
 
@@ -138,11 +138,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 1108:
+/***/ 1135:
 /*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineRouter.jsx ***!
   \******************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -163,11 +163,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _BaselineFacetsTree = __webpack_require__(/*! ./facets-tree/BaselineFacetsTree.jsx */ 1109);
+var _BaselineFacetsTree = __webpack_require__(/*! ./facets-tree/BaselineFacetsTree.jsx */ 1136);
 
 var _BaselineFacetsTree2 = _interopRequireDefault(_BaselineFacetsTree);
 
-var _BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 1112);
+var _BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 1139);
 
 var _BaselineHeatmaps2 = _interopRequireDefault(_BaselineHeatmaps);
 
@@ -179,7 +179,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var UrlManager = __webpack_require__(/*! ./urlManager.js */ 1114);
+var UrlManager = __webpack_require__(/*! ./urlManager.js */ 1141);
 
 var BaselineRouter = function (_React$Component) {
     _inherits(BaselineRouter, _React$Component);
@@ -405,11 +405,11 @@ exports.default = BaselineRouter;
 
 /***/ }),
 
-/***/ 1109:
+/***/ 1136:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.jsx ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -428,7 +428,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Facet = __webpack_require__(/*! ./Facet.jsx */ 1110);
+var _Facet = __webpack_require__(/*! ./Facet.jsx */ 1137);
 
 var _Facet2 = _interopRequireDefault(_Facet);
 
@@ -499,11 +499,11 @@ exports.default = BaselineFacetsTree;
 
 /***/ }),
 
-/***/ 1110:
+/***/ 1137:
 /*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/Facet.jsx ***!
   \*********************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -522,7 +522,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _FacetItem = __webpack_require__(/*! ./FacetItem.jsx */ 1111);
+var _FacetItem = __webpack_require__(/*! ./FacetItem.jsx */ 1138);
 
 var _FacetItem2 = _interopRequireDefault(_FacetItem);
 
@@ -571,11 +571,11 @@ exports.default = Facet;
 
 /***/ }),
 
-/***/ 1111:
+/***/ 1138:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/FacetItem.jsx ***!
   \*************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -622,11 +622,11 @@ exports.default = FacetItem;
 
 /***/ }),
 
-/***/ 1112:
+/***/ 1139:
 /*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmaps.jsx ***!
   \********************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -647,11 +647,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 1113);
+var _BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 1140);
 
 var _BaselineHeatmapWidget2 = _interopRequireDefault(_BaselineHeatmapWidget);
 
-var _expressionAtlasFeedback = __webpack_require__(/*! expression-atlas-feedback */ 236);
+var _expressionAtlasFeedback = __webpack_require__(/*! expression-atlas-feedback */ 247);
 
 var _expressionAtlasFeedback2 = _interopRequireDefault(_expressionAtlasFeedback);
 
@@ -733,11 +733,11 @@ exports.default = BaselineHeatmaps;
 
 /***/ }),
 
-/***/ 1113:
+/***/ 1140:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmapWidget.jsx ***!
   \*************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -756,7 +756,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 141);
+var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 148);
 
 var _expressionAtlasHeatmapHighcharts2 = _interopRequireDefault(_expressionAtlasHeatmapHighcharts);
 
@@ -805,19 +805,19 @@ exports.default = BaselineHeatmapWidget;
 
 /***/ }),
 
-/***/ 1114:
+/***/ 1141:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/urlManager.js ***!
   \*************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Url = __webpack_require__(/*! url */ 225);
-var QueryString = __webpack_require__(/*! querystring */ 226);
+var Url = __webpack_require__(/*! url */ 145);
+var QueryString = __webpack_require__(/*! querystring */ 236);
 
 /**
  * Stringify the `query` object, assign it to the `bs` search field in the URL and store it in the History
@@ -855,11 +855,11 @@ exports.parseBaselineUrlParameter = function getQuerySelectFromLocation() {
 
 /***/ }),
 
-/***/ 236:
+/***/ 247:
 /*!*************************************************************!*\
   !*** ./node_modules/expression-atlas-feedback/lib/index.js ***!
   \*************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -870,7 +870,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Feedback = __webpack_require__(/*! ./Feedback */ 237);
+var _Feedback = __webpack_require__(/*! ./Feedback */ 248);
 
 var _Feedback2 = _interopRequireDefault(_Feedback);
 
@@ -880,11 +880,11 @@ exports.default = _Feedback2.default;
 
 /***/ }),
 
-/***/ 237:
+/***/ 248:
 /*!****************************************************************!*\
   !*** ./node_modules/expression-atlas-feedback/lib/Feedback.js ***!
   \****************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -899,37 +899,37 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactLocalstorage = __webpack_require__(/*! react-localstorage */ 238);
+var _reactLocalstorage = __webpack_require__(/*! react-localstorage */ 249);
 
 var _reactLocalstorage2 = _interopRequireDefault(_reactLocalstorage);
 
-var _reactTimerMixin = __webpack_require__(/*! react-timer-mixin */ 240);
+var _reactTimerMixin = __webpack_require__(/*! react-timer-mixin */ 251);
 
 var _reactTimerMixin2 = _interopRequireDefault(_reactTimerMixin);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 241);
+var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 252);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 52);
+var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 50);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _FormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 207);
+var _FormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 214);
 
 var _FormGroup2 = _interopRequireDefault(_FormGroup);
 
-var _FormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 206);
+var _FormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 213);
 
 var _FormControl2 = _interopRequireDefault(_FormControl);
 
-var _emojioneSprites = __webpack_require__(/*! ./assets/emojione.sprites.png */ 248);
+var _emojioneSprites = __webpack_require__(/*! ./assets/emojione.sprites.png */ 259);
 
 var _emojioneSprites2 = _interopRequireDefault(_emojioneSprites);
 
-var _reactEmojione = __webpack_require__(/*! react-emojione */ 249);
+var _reactEmojione = __webpack_require__(/*! react-emojione */ 260);
 
-__webpack_require__(/*! ./gxaFeedback.css */ 258);
+__webpack_require__(/*! ./gxaFeedback.css */ 269);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1230,17 +1230,17 @@ exports.default = FeedbackPersistence(FeedbackSmileys);
 
 /***/ }),
 
-/***/ 238:
+/***/ 249:
 /*!***************************************************************!*\
   !*** ./node_modules/react-localstorage/react-localstorage.js ***!
   \***************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, process) {
-var warn = __webpack_require__(/*! ./lib/warning */ 239);
+var warn = __webpack_require__(/*! ./lib/warning */ 250);
 var hasLocalStorage = 'localStorage' in global;
 var ls, testKey;
 
@@ -1374,15 +1374,15 @@ function getSyncState(component, state) {
   return result;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 22), __webpack_require__(/*! ./../process/browser.js */ 33)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 18), __webpack_require__(/*! ./../process/browser.js */ 32)))
 
 /***/ }),
 
-/***/ 239:
+/***/ 250:
 /*!********************************************************!*\
   !*** ./node_modules/react-localstorage/lib/warning.js ***!
   \********************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1438,11 +1438,11 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 240:
+/***/ 251:
 /*!******************************************************!*\
   !*** ./node_modules/react-timer-mixin/TimerMixin.js ***!
   \******************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1539,40 +1539,38 @@ var TimerMixin = {
 
 module.exports = TimerMixin;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 22)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 18)))
 
 /***/ }),
 
-/***/ 241:
+/***/ 252:
 /*!*****************************************************************!*\
   !*** ./node_modules/react-addons-css-transition-group/index.js ***!
   \*****************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 
 
-module.exports = __webpack_require__(/*! react-transition-group/CSSTransitionGroup */ 242);
+module.exports = __webpack_require__(/*! react-transition-group/CSSTransitionGroup */ 253);
 
 
 /***/ }),
 
-/***/ 242:
+/***/ 253:
 /*!*******************************************************************!*\
   !*** ./node_modules/react-transition-group/CSSTransitionGroup.js ***!
   \*******************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1591,11 +1589,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _TransitionGroup = __webpack_require__(/*! ./TransitionGroup */ 243);
+var _TransitionGroup = __webpack_require__(/*! ./TransitionGroup */ 254);
 
 var _TransitionGroup2 = _interopRequireDefault(_TransitionGroup);
 
-var _CSSTransitionGroupChild = __webpack_require__(/*! ./CSSTransitionGroupChild */ 246);
+var _CSSTransitionGroupChild = __webpack_require__(/*! ./CSSTransitionGroupChild */ 257);
 
 var _CSSTransitionGroupChild2 = _interopRequireDefault(_CSSTransitionGroupChild);
 
@@ -1674,11 +1672,11 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 243:
+/***/ 254:
 /*!****************************************************************!*\
   !*** ./node_modules/react-transition-group/TransitionGroup.js ***!
   \****************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1689,7 +1687,7 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _chainFunction = __webpack_require__(/*! chain-function */ 244);
+var _chainFunction = __webpack_require__(/*! chain-function */ 255);
 
 var _chainFunction2 = _interopRequireDefault(_chainFunction);
 
@@ -1705,7 +1703,7 @@ var _warning = __webpack_require__(/*! warning */ 12);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _ChildMapping = __webpack_require__(/*! ./utils/ChildMapping */ 245);
+var _ChildMapping = __webpack_require__(/*! ./utils/ChildMapping */ 256);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1955,11 +1953,11 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 244:
+/***/ 255:
 /*!**********************************************!*\
   !*** ./node_modules/chain-function/index.js ***!
   \**********************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports) {
 
@@ -1987,11 +1985,11 @@ module.exports = function chain(){
 
 /***/ }),
 
-/***/ 245:
+/***/ 256:
 /*!*******************************************************************!*\
   !*** ./node_modules/react-transition-group/utils/ChildMapping.js ***!
   \*******************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2090,11 +2088,11 @@ function mergeChildMappings(prev, next) {
 
 /***/ }),
 
-/***/ 246:
+/***/ 257:
 /*!************************************************************************!*\
   !*** ./node_modules/react-transition-group/CSSTransitionGroupChild.js ***!
   \************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2105,15 +2103,15 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _addClass = __webpack_require__(/*! dom-helpers/class/addClass */ 211);
+var _addClass = __webpack_require__(/*! dom-helpers/class/addClass */ 215);
 
 var _addClass2 = _interopRequireDefault(_addClass);
 
-var _removeClass = __webpack_require__(/*! dom-helpers/class/removeClass */ 212);
+var _removeClass = __webpack_require__(/*! dom-helpers/class/removeClass */ 216);
 
 var _removeClass2 = _interopRequireDefault(_removeClass);
 
-var _requestAnimationFrame = __webpack_require__(/*! dom-helpers/util/requestAnimationFrame */ 247);
+var _requestAnimationFrame = __webpack_require__(/*! dom-helpers/util/requestAnimationFrame */ 258);
 
 var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
 
@@ -2331,11 +2329,11 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 247:
+/***/ 258:
 /*!****************************************************************!*\
   !*** ./node_modules/dom-helpers/util/requestAnimationFrame.js ***!
   \****************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2346,7 +2344,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(/*! ./inDOM */ 39);
+var _inDOM = __webpack_require__(/*! ./inDOM */ 38);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -2396,11 +2394,11 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 248:
+/***/ 259:
 /*!********************************************************************************!*\
   !*** ./node_modules/expression-atlas-feedback/lib/assets/emojione.sprites.png ***!
   \********************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2408,24 +2406,24 @@ module.exports = __webpack_require__.p + "72e306f1246f69de2c83c8d3c3141177.png";
 
 /***/ }),
 
-/***/ 249:
+/***/ 260:
 /*!**********************************************!*\
   !*** ./node_modules/react-emojione/index.js ***!
   \**********************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./lib/react-emojione */ 250);
+module.exports = __webpack_require__(/*! ./lib/react-emojione */ 261);
 
 
 /***/ }),
 
-/***/ 250:
+/***/ 261:
 /*!***********************************************************!*\
   !*** ./node_modules/react-emojione/lib/react-emojione.js ***!
   \***********************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2452,15 +2450,15 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _asciiToUnicode = __webpack_require__(/*! ./data/ascii-to-unicode */ 251);
+var _asciiToUnicode = __webpack_require__(/*! ./data/ascii-to-unicode */ 262);
 
 var _asciiToUnicode2 = _interopRequireDefault(_asciiToUnicode);
 
-var _rendererFactory = __webpack_require__(/*! ./renderers/renderer-factory */ 252);
+var _rendererFactory = __webpack_require__(/*! ./renderers/renderer-factory */ 263);
 
 var _rendererFactory2 = _interopRequireDefault(_rendererFactory);
 
-var _emojiFormatConversion = __webpack_require__(/*! ./utils/emoji-format-conversion */ 66);
+var _emojiFormatConversion = __webpack_require__(/*! ./utils/emoji-format-conversion */ 65);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2655,11 +2653,11 @@ exports.default = Emojify;
 
 /***/ }),
 
-/***/ 251:
+/***/ 262:
 /*!******************************************************************!*\
   !*** ./node_modules/react-emojione/lib/data/ascii-to-unicode.js ***!
   \******************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2743,11 +2741,11 @@ exports.default = [
 
 /***/ }),
 
-/***/ 252:
+/***/ 263:
 /*!***********************************************************************!*\
   !*** ./node_modules/react-emojione/lib/renderers/renderer-factory.js ***!
   \***********************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2758,11 +2756,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _emojiRenderer = __webpack_require__(/*! ./emoji-renderer */ 253);
+var _emojiRenderer = __webpack_require__(/*! ./emoji-renderer */ 264);
 
 var _emojiRenderer2 = _interopRequireDefault(_emojiRenderer);
 
-var _unicodeRenderer = __webpack_require__(/*! ./unicode-renderer */ 257);
+var _unicodeRenderer = __webpack_require__(/*! ./unicode-renderer */ 268);
 
 var _unicodeRenderer2 = _interopRequireDefault(_unicodeRenderer);
 
@@ -2782,11 +2780,11 @@ exports.default = getRenderer;
 
 /***/ }),
 
-/***/ 253:
+/***/ 264:
 /*!*********************************************************************!*\
   !*** ./node_modules/react-emojione/lib/renderers/emoji-renderer.js ***!
   \*********************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2801,9 +2799,9 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _emojioneSprite = __webpack_require__(/*! ../styles/emojione-sprite */ 254);
+var _emojioneSprite = __webpack_require__(/*! ../styles/emojione-sprite */ 265);
 
-var _emojiFormatConversion = __webpack_require__(/*! ../utils/emoji-format-conversion */ 66);
+var _emojiFormatConversion = __webpack_require__(/*! ../utils/emoji-format-conversion */ 65);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2840,11 +2838,11 @@ exports.default = getRenderer;
 
 /***/ }),
 
-/***/ 254:
+/***/ 265:
 /*!*******************************************************************!*\
   !*** ./node_modules/react-emojione/lib/styles/emojione-sprite.js ***!
   \*******************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2858,7 +2856,7 @@ exports.sprite = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _emojioneSpritePositions = __webpack_require__(/*! ./emojione-sprite-positions */ 255);
+var _emojioneSpritePositions = __webpack_require__(/*! ./emojione-sprite-positions */ 266);
 
 var _emojioneSpritePositions2 = _interopRequireDefault(_emojioneSpritePositions);
 
@@ -2909,11 +2907,11 @@ var sprite = exports.sprite = function sprite(codepoint) {
 
 /***/ }),
 
-/***/ 255:
+/***/ 266:
 /*!*****************************************************************************!*\
   !*** ./node_modules/react-emojione/lib/styles/emojione-sprite-positions.js ***!
   \*****************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4762,11 +4760,11 @@ exports.default = {
 
 /***/ }),
 
-/***/ 256:
+/***/ 267:
 /*!************************************************************!*\
   !*** ./node_modules/react-emojione/lib/data/emoji-data.js ***!
   \************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4783,11 +4781,11 @@ exports.default = [["1f468-1f469-1f466-1f466", "👨👩👦👦", ":family_mwbb
 
 /***/ }),
 
-/***/ 257:
+/***/ 268:
 /*!***********************************************************************!*\
   !*** ./node_modules/react-emojione/lib/renderers/unicode-renderer.js ***!
   \***********************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4798,7 +4796,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _emojiFormatConversion = __webpack_require__(/*! ../utils/emoji-format-conversion */ 66);
+var _emojiFormatConversion = __webpack_require__(/*! ../utils/emoji-format-conversion */ 65);
 
 var getRenderer = function getRenderer() {
   return function (codepoint) {
@@ -4810,23 +4808,23 @@ exports.default = getRenderer;
 
 /***/ }),
 
-/***/ 258:
+/***/ 269:
 /*!********************************************************************!*\
   !*** ./node_modules/expression-atlas-feedback/lib/gxaFeedback.css ***!
   \********************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../css-loader!./gxaFeedback.css */ 259);
+var content = __webpack_require__(/*! !../../css-loader!./gxaFeedback.css */ 270);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
 
-var options = {}
+var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
 var update = __webpack_require__(/*! ../../style-loader/lib/addStyles.js */ 17)(content, options);
@@ -4847,15 +4845,15 @@ if(false) {
 
 /***/ }),
 
-/***/ 259:
+/***/ 270:
 /*!**********************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/expression-atlas-feedback/lib/gxaFeedback.css ***!
   \**********************************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ 16)(undefined);
+exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ 16)(false);
 // imports
 
 
@@ -4867,11 +4865,11 @@ exports.push([module.i, "div.gxaFeedbackQuestionBox {\n  margin: 30px;\n  width:
 
 /***/ }),
 
-/***/ 66:
+/***/ 65:
 /*!**************************************************************************!*\
   !*** ./node_modules/react-emojione/lib/utils/emoji-format-conversion.js ***!
   \**************************************************************************/
-/*! no static exports found */
+/*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4885,7 +4883,7 @@ exports.unicodeToCodepoint = exports.codepointToUnicode = exports.shortToCodepoi
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _emojiData = __webpack_require__(/*! ../data/emoji-data */ 256);
+var _emojiData = __webpack_require__(/*! ../data/emoji-data */ 267);
 
 var _emojiData2 = _interopRequireDefault(_emojiData);
 
@@ -4912,5 +4910,5 @@ _emojiData2.default.forEach(function (_ref) {
 
 /***/ })
 
-},[1106]);
+},[1133]);
 //# sourceMappingURL=expressionAtlasBaselineExpression.bundle.js.map

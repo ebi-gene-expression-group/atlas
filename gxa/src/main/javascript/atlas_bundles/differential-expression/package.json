@@ -6,33 +6,38 @@
   "scripts": {
     "prepublishOnly": "rm -rf lib && babel src -d lib --copy-files"
   },
-  "author": "Wojciech Bażant<wbazant@ebi.ac.uk>, Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
-  "license": "Apache license, version 2.0",
+  "author": "Expression Atlas developers <arrayexpress-atlas@ebi.ac.uk>",
+  "collaborators": [
+    "Elisabet Barrera <barrera@ebi.ac.uk>",
+    "Wojciech Bażant <wbazant@ebi.ac.uk>",
+    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
+  ],
+  "license": "Apache-2.0",
   "private": true,
   "dependencies": {
     "expression-atlas-feedback": "../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz",
-    "expression-atlas-number-format": "latest",
-    "prop-types": "^15.5.10",
+    "expression-atlas-number-format": "^2.1.0",
+    "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-ebi-species": "latest",
+    "react-ebi-species": "^1.2.5",
     "react-tooltip": "^3.3.0",
-    "urijs": "^1.18.10"
+    "urijs": "^1.19.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "clean-webpack-plugin": "^0.1.16",
-    "css-loader": "^0.28.4",
-    "file-loader": "^0.11.2",
-    "image-webpack-loader": "^3.3.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.9",
+    "file-loader": "^1.1.6",
+    "image-webpack-loader": "^4.0.0",
     "imports-loader": "^0.7.1",
-    "style-loader": "^0.18.2",
-    "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.6.1"
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }
