@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.analytics.query;
+package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
-import java.util.Arrays;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -16,15 +16,9 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryTree.Operator.OR;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
 
-public class AnalyticsQueryTree {
-    // https://www.biostars.org/p/99142/#99150, see also https://www.ensembl.org/info/genome/stable_ids/index.html
-    private static final Pattern ENSEMBL_ID_REGEX_FROM_THE_INTERNET =
-            Pattern.compile(
-                    "ENS[A-Z]+[0-9]{11}|[A-Z]{3}[0-9]{3}[A-Za-z](-[A-Za-z])?|CG[0-9]+|[A-Z0-9]+\\.[0-9]+|YM[A-Z][0-9]{3}[a-z][0-9]",
-                    Pattern.CASE_INSENSITIVE);
-
+public class AnalyticsSolrQueryTree {
     private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
 
     public enum Operator {
@@ -39,14 +33,18 @@ public class AnalyticsQueryTree {
     }
 
     private static abstract class TreeNode {
-        // f can't return a Null or you'll mess up the tree
+        //f can't return a Null or you'll mess up the tree
         abstract TreeNode map(final Function<Leaf, TreeNode> f);
         abstract TreeNode filter(final Predicate<Leaf> f);
-        abstract String toQuery();
     }
 
-    private static final class Null extends TreeNode {
-        public static final TreeNode INSTANCE = new Null();
+    private static class Null extends TreeNode {
+
+        public static TreeNode INSTANCE = new Null();
+
+        private Null() {
+
+        }
 
         @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
@@ -54,13 +52,8 @@ public class AnalyticsQueryTree {
         }
 
         @Override
-        TreeNode filter(final Predicate<Leaf> f) {
+        TreeNode filter(Predicate<Leaf> f) {
             return this;
-        }
-
-        @Override
-        String toQuery() {
-            return "";
         }
     }
 
@@ -74,6 +67,11 @@ public class AnalyticsQueryTree {
         }
 
         @Override
+        public String toString() {
+            return  String.format("%s:\"%s\"", searchField, searchValue);
+        }
+
+        @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
             return f.apply(this);
         }
@@ -81,11 +79,6 @@ public class AnalyticsQueryTree {
         @Override
         TreeNode filter(final Predicate<Leaf> f) {
             return f.test(this) ? this : Null.INSTANCE;
-        }
-
-        @Override
-        public String toQuery() {
-            return  String.format("%s:\"%s\"", searchField, searchValue);
         }
     }
 
@@ -99,12 +92,22 @@ public class AnalyticsQueryTree {
         }
 
         @Override
-        public String toQuery() {
-            Function<TreeNode, String> wrapParentsInParenthesis =
-                    treeNode -> treeNode instanceof Parent ? "(" + treeNode.toQuery() + ")" : treeNode.toQuery();
+        public String toString() {
+            Function<TreeNode, String> wrapParentsInParenthesis = new Function<TreeNode, String>() {
+                @Nullable
+                @Override
+                public String apply(TreeNode treeNode) {
+                    if (treeNode instanceof Parent) {
+                        return "(" + treeNode.toString() + ")";
+                    } else {
+                        return treeNode.toString();
+                    }
+                }
+            };
 
             return children.stream().map(wrapParentsInParenthesis).collect(Collectors.joining(this.operator.opString));
         }
+
 
         @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
@@ -130,55 +133,39 @@ public class AnalyticsQueryTree {
 
     private final TreeNode root;
 
+    public String toString() {
+        return root.toString();
+    }
+
     //We want this search field to match at least one of these values
-    AnalyticsQueryTree(String searchField, String... searchValues) {
+    AnalyticsSolrQueryTree(String searchField, String... searchValues) {
         if (searchValues.length == 1) {
             root = new Leaf(searchField, searchValues[0]);
         } else {
-            ImmutableList<TreeNode> children =
-                    ImmutableList.copyOf(
-                            Arrays.stream(searchValues)
-                                    .map(searchValue -> new Leaf(searchField, searchValue))
-                                    .collect(Collectors.toList()));
-
-            root = new Parent(Operator.OR, children);
+            ImmutableList.Builder<TreeNode> childrenBuilder = new ImmutableList.Builder<>();
+            for (String searchValue : searchValues) {
+                childrenBuilder.add(new Leaf(searchField, searchValue));
+            }
+            root = new Parent(Operator.OR, childrenBuilder.build());
         }
     }
 
-    AnalyticsQueryTree(Operator operator, AnalyticsQueryTree... queryTrees) {
-        ImmutableList<TreeNode> children =
-                ImmutableList.copyOf(
-                        Arrays.stream(queryTrees)
-                                .map(queryTree -> queryTree.root)
-                                .collect(Collectors.toList()));
-
-        root = new Parent(operator, children);
-    }
-
-    public static AnalyticsQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
-        Multimap<String, String> m = HashMultimap.create();
-        geneQuery.terms().stream()
-                .filter(SemanticQueryTerm::hasValue)
-                .forEach(term -> m.put(decideOnKeywordField(term), term.value()));
-
-        List<AnalyticsQueryTree> possibleIdentifiers =
-                m.asMap().entrySet().stream()
-                        .map(e -> new AnalyticsQueryTree(e.getKey(), e.getValue().toArray(new String[0])))
-                        .collect(Collectors.toList());
-        if (possibleIdentifiers.size() == 1) {
-            return possibleIdentifiers.get(0);
-        } else {
-            return new AnalyticsQueryTree(OR, possibleIdentifiers.toArray(new AnalyticsQueryTree[0]));
+    AnalyticsSolrQueryTree(Operator operator, AnalyticsSolrQueryTree... queries) {
+        ImmutableList.Builder<TreeNode> childrenBuilder = new ImmutableList.Builder<>();
+        for (AnalyticsSolrQueryTree query : queries) {
+            childrenBuilder.add(query.root);
         }
+
+        root = new Parent(operator, childrenBuilder.build());
     }
 
-    private static String decideOnKeywordField(SemanticQueryTerm term) {
-        if (term.hasNoCategory()) {
-            if (ENSEMBL_ID_REGEX_FROM_THE_INTERNET.matcher(term.value()).matches()) {
+    private static String decideOnKeywordField(SemanticQueryTerm term){
+        if(term.hasNoCategory()){
+            if(ensemblIdRegexFromTheInternet.matcher(term.value()).matches()){
                 return BioentityPropertyName.BIOENTITY_IDENTIFIER.name;
             }
-            // A phrase cannot be a keyword
-            if (term.value().trim().contains(" ")) {
+            //a multiword string cannot be a keyword
+            if(term.value().trim().contains(" ")){
                 return AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name;
             } else {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
@@ -190,23 +177,48 @@ public class AnalyticsQueryTree {
         }
     }
 
-    public List<String> toQueryPlan() {
-        TreeNode n = root.filter(leaf -> leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE));
+    private static final Pattern ensemblIdRegexFromTheInternet =
+            Pattern.compile(
+                    "ENS[A-Z]+[0-9]{11}|[A-Z]{3}[0-9]{3}[A-Za-z](-[A-Za-z])?|CG[0-9]+|[A-Z0-9]+\\.[0-9]+|YM[A-Z][0-9]{3}[a-z][0-9]",
+                    Pattern.CASE_INSENSITIVE);
 
-        if (n.equals(Null.INSTANCE)) {
-            return ImmutableList.of(root.toQuery());
+    //package
+    public static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
+        Multimap<String, String> m = HashMultimap.create();
+
+        geneQuery.terms().stream()
+                .filter(SemanticQueryTerm::hasValue)
+                .forEach(term -> m.put(decideOnKeywordField(term), term.value()));
+
+        List<AnalyticsSolrQueryTree> possibleIdentifiers =
+                m.asMap().entrySet().stream()
+                        .map(e -> new AnalyticsSolrQueryTree(e.getKey(), e.getValue().toArray(new String[0])))
+                        .collect(Collectors.toList());
+
+        if (possibleIdentifiers.size() == 1) {
+            return possibleIdentifiers.get(0);
+        } else {
+            return new AnalyticsSolrQueryTree(OR, possibleIdentifiers.toArray(new AnalyticsSolrQueryTree[0]));
+        }
+    }
+
+    List<String> toQueryPlan() {
+        TreeNode n = root.filter(leaf -> leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE));
+        if(n.equals(Null.INSTANCE)){
+            return ImmutableList.of(toString());
         } else {
             /*
             If there were somehow two identifier search queries, this would be wrong, because we would search for
             both as keywords and then for both as text, missing the case when one matches as keyword and the other as
-            text.
-            */
+             text.
+             */
             Function<Leaf, TreeNode> makeTreeWithKeywordQueriesForIdentifiers = leaf -> {
-                if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
+                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
                     return new Parent(
                             OR,
                             possibleIdentifierKeywords().stream()
-                                    .map(possibleIdentifierSearch -> new Leaf(possibleIdentifierSearch, leaf.searchValue))
+                                    .map(possibleIdentifierSearch ->
+                                            new Leaf(possibleIdentifierSearch, leaf.searchValue))
                                     .collect(Collectors.toList()));
                 } else {
                     return leaf;
@@ -214,7 +226,7 @@ public class AnalyticsQueryTree {
             };
 
             Function<Leaf, TreeNode> makeTreeWithTextSearchForIdentifiers = leaf -> {
-                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
+                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
                     return new Leaf(AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name, leaf.searchValue);
                 } else {
                     return leaf;
@@ -222,16 +234,21 @@ public class AnalyticsQueryTree {
             };
 
             return ImmutableList.of(
-                    root.map(makeTreeWithKeywordQueriesForIdentifiers).toQuery(),
-                    root.map(makeTreeWithTextSearchForIdentifiers).toQuery());
+                    root.map(makeTreeWithKeywordQueriesForIdentifiers).toString(),
+                    root.map(makeTreeWithTextSearchForIdentifiers).toString());
         }
+
     }
 
-    private static ImmutableList<String> possibleIdentifierKeywords() {
-        return ImmutableList.copyOf(
-                ExperimentDataPoint.bioentityPropertyNames.stream()
+    private static ImmutableList<String> possibleIdentifierKeywords(){
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+
+        return builder
+                .add(BioentityPropertyName.BIOENTITY_IDENTIFIER.name)
+                .addAll(ExperimentDataPoint.bioentityPropertyNames.stream()
                         .filter(bioentityPropertyName -> bioentityPropertyName.isId)
                         .map(BioentityPropertyName::asAnalyticsIndexKeyword)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()))
+                .build();
     }
 }
