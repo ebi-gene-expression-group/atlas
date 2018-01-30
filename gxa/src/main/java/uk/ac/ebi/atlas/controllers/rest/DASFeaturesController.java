@@ -1,51 +1,74 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
+import com.google.gson.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 @Controller
 @Scope("request")
-public class DASFeaturesController extends HtmlExceptionHandlingController {
+public class DASFeaturesController {
 
-    private DiffAnalyticsSearchService diffAnalyticsSearchService;
-    private ExperimentTrader experimentTrader;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DASFeaturesController.class);
+
+    private final ExperimentTrader experimentTrader;
+    private final DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+    private final DifferentialJsonResultsParser differentialJsonResultsParser;
 
     @Inject
-    public DASFeaturesController(DiffAnalyticsSearchService diffAnalyticsSearchService, ExperimentTrader experimentTrader) {
-        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
+    public DASFeaturesController(ExperimentTrader experimentTrader,
+                                    DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
+                                    DifferentialJsonResultsParser differentialJsonResultsParser) {
+
         this.experimentTrader = experimentTrader;
+        this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
+        this.differentialJsonResultsParser = differentialJsonResultsParser;
     }
 
-    @RequestMapping(value = "/das/s4/features",produces = "application/xml;charset=UTF-8")
-    public String dasFeatures(@RequestParam(value = "segment") String geneId, Model model) {
-        checkArgument(geneId.length() <= 255, "Segment parameter is too long");
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ModelAndView InternalServerHandleException(Exception e) {
+        ModelAndView mav = new ModelAndView("error-page");
+        mav.addObject("exceptionMessage", "Couldn't fetch search results");
+        LOGGER.error("Error getting Differential json results.",e);
+        return mav;
+    }
 
-        List<DiffAnalytics> diffAnalyticsList = diffAnalyticsSearchService.fetchTopWithoutCountAnySpecies(geneId);
+    @RequestMapping(value = "/das/s4/features")
+    public String getDifferentialJsonResults(@RequestParam(value = "segment", required = false, defaultValue = "")
+                                                     String geneId,
+                                             @RequestParam(value = "conditionQuery", required = false, defaultValue = "")
+                                                     SemanticQuery conditionQuery,
+                                             Model model) {
+
+        List<DiffAnalytics> diffAnalyticsList;
+        SetMultimap<String, String> factorValuesByType = HashMultimap.create();
+
+        JsonObject result = differentialAnalyticsSearchService.fetchResults(SemanticQuery.create(geneId), conditionQuery);
+
+        diffAnalyticsList = differentialJsonResultsParser.parseDifferentialResults(result);
 
         String geneName = diffAnalyticsList.isEmpty() ? geneId : diffAnalyticsList.get(0).getBioentityName();
-
-        SetMultimap<String, String> factorValuesByType = HashMultimap.create();
 
         for (DiffAnalytics dbe : diffAnalyticsList) {
             AssayGroup testAssayGroup = dbe.getContrastTestAssayGroup();
@@ -59,14 +82,11 @@ public class DASFeaturesController extends HtmlExceptionHandlingController {
 
         model.addAttribute("geneId", geneId);
         model.addAttribute("geneName", geneName);
-        model.addAttribute("factorValues_ORGANISM_PART", formatFactorValuesLabel(factorValuesByType.get("ORGANISM_PART")));
-        model.addAttribute("factorValues_DISEASE", formatFactorValuesLabel(factorValuesByType.get("DISEASE")));
-        model.addAttribute("factorValues_CELL_TYPE", formatFactorValuesLabel(factorValuesByType.get("CELL_TYPE")));
-        model.addAttribute("factorValues_CELL_LINE", formatFactorValuesLabel(factorValuesByType.get("CELL_LINE")));
-        model.addAttribute("factorValues_COMPOUND", formatFactorValuesLabel(factorValuesByType.get("COMPOUND")));
-        model.addAttribute("factorValues_DEVELOPMENTAL_STAGE", formatFactorValuesLabel(factorValuesByType.get("DEVELOPMENTAL_STAGE")));
-        model.addAttribute("factorValues_INFECT", formatFactorValuesLabel(factorValuesByType.get("INFECT")));
-        model.addAttribute("factorValues_PHENOTYPE", formatFactorValuesLabel(factorValuesByType.get("PHENOTYPE")));
+
+        for (String factorValue: ImmutableList.of("ORGANISM_PART","DISEASE","CELL_TYPE","CELL_LINE","COMPOUND","DEVELOPMENTAL_STAGE","INFECT","PHENOTYPE")) {
+            model.addAttribute("factorValues_"+factorValue,formatFactorValuesLabel(factorValuesByType.get(factorValue)));
+        }
+
         return "das-features";
     }
 
