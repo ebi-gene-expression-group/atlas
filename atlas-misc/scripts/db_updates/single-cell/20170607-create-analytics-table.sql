@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS scxa_analytics
     expression_level     DOUBLE PRECISION
 );
 
--- TODO Evaluate performance hit if index is unique --
+-- TODO Evaluate performance hit if index is unique (i.e. primary key constraint) --
 -- CREATE UNIQUE INDEX IF NOT EXISTS scxa_analytics__uindex
 -- ON scxa_analytics (experiment_accession, gene_id, cell_id); --
 
