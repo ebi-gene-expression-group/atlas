@@ -10,8 +10,9 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -22,26 +23,38 @@ public class DataFileHubIT {
     private DataFileHub subject;
 
     @Test
-    public void testGetExperimentFiles() throws Exception {
+    public void testGetExperimentFiles() {
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").analysisMethods);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").condensedSdrf);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").experimentDesign);
     }
 
     @Test
-    public void testGetBaselineFiles() throws Exception {
-        assertAtlasResourceExists(subject.getRnaSeqBaselineExperimentFiles("E-MTAB-513").dataFile(ExpressionUnit.Absolute.Rna.TPM));
-        assertAtlasResourceExists(subject.getRnaSeqBaselineExperimentFiles("E-MTAB-513").dataFile(ExpressionUnit.Absolute.Rna.FPKM));
+    public void testGetBaselineFiles() {
+        assertAtlasResourceExists(
+                subject.getRnaSeqBaselineExperimentFiles("E-MTAB-513").dataFile(ExpressionUnit.Absolute.Rna.TPM));
+        assertAtlasResourceExists(
+                subject.getRnaSeqBaselineExperimentFiles("E-MTAB-513").dataFile(ExpressionUnit.Absolute.Rna.FPKM));
         assertAtlasResourceExists(subject.getProteomicsBaselineExperimentFiles("E-PROT-1").main);
     }
 
     @Test
-    public void testGetDifferentialExperimentFiles() throws Exception {
+    public void testGetDifferentialExperimentFiles() {
         assertAtlasResourceExists(subject.getRnaSeqDifferentialExperimentFiles("E-GEOD-54705").analytics);
         assertAtlasResourceExists(subject.getRnaSeqDifferentialExperimentFiles("E-GEOD-54705").rawCounts);
     }
 
+    @Test
+    public void findsTSnePlotFiles() {
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles("E-MTAB-5061").tSnePlotTsvs);
+    }
+
     private void assertAtlasResourceExists(AtlasResource<?> resource){
-        assertThat(resource.exists(), is(true));
+        assertThat(resource.exists()).isTrue();
+    }
+
+    private void assertAtlasResourceExists(Collection<? extends AtlasResource<?>> resource){
+        assertThat(resource).isNotEmpty();
+        assertThat(resource).allMatch(AtlasResource::exists);
     }
 }
