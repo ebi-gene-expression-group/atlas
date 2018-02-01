@@ -6,10 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class TsvReaderImpl implements TsvReader {
 
@@ -40,6 +43,19 @@ public class TsvReaderImpl implements TsvReader {
     @Override
     public List<String[]> readAll() {
         return readAndFilter(new IsNotCommentPredicate());
+    }
+
+    @Override
+    public Stream<String[]> stream() {
+        Predicate<String> isNotComment = new IsNotCommentPredicate();
+        try (BufferedReader reader = new BufferedReader(tsvReader)) {
+            return reader.lines()
+                    .map(line -> line.split("\t"))
+                    .filter(line -> isNotComment.test(line[0]));
+        } catch (IOException e) {
+            LOGGER.error("Error reading/closing file: " + e.getMessage(), e);
+            throw new UncheckedIOException(e);
+        }
     }
 
     private List<String[]> readAndFilter(Predicate<String> acceptanceCriteria) {
