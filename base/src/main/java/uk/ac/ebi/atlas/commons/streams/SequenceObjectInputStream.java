@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.commons.streams;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Enumeration;
 
 /**
@@ -52,7 +53,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
             try {
                 nextStream();
             } catch (IOException ex) {
-                throw new IllegalStateException("Next stream failed.", ex);
+                throw new UncheckedIOException("Next stream failed.", ex);
             }
             return readNext();
         }

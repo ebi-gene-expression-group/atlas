@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.acceptance.utils;
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.UncheckedIOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -51,7 +52,7 @@ public class URLBuilder {
             return localHost.getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
         }
     }
 

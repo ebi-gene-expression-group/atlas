@@ -1,11 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
 
-import org.apache.commons.lang3.tuple.Triple;
 import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 
 public class SingleCellAnalyticsStream implements AutoCloseable {
@@ -16,8 +14,7 @@ public class SingleCellAnalyticsStream implements AutoCloseable {
 
     public SingleCellAnalyticsStream(AtlasResource<MatrixMarketReader> tpmsMatrix,
                                      AtlasResource<TsvReader> geneIdsTsv,
-                                     AtlasResource<TsvReader> cellIdsTsv)
-            throws IOException {
+                                     AtlasResource<TsvReader> cellIdsTsv) {
 
         matrixMarketReader = tpmsMatrix.get();
 

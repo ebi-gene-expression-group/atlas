@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
@@ -183,7 +184,7 @@ public class BioEntityCardModelFactory {
                 return URLEncoder.encode(value, "UTF-8");
             }
         } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException("Cannot create URL from " + value, e);
+            throw new UncheckedIOException("Cannot create URL from " + value, e);
         }
     }
 

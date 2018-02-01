@@ -70,7 +70,7 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
             try {
                 return new TsvReaderImpl(Files.newBufferedReader(path, StandardCharsets.UTF_8));
             } catch (IOException e) {
-                throw new IllegalStateException(e);
+                throw new UncheckedIOException(e);
             }
         }
     }

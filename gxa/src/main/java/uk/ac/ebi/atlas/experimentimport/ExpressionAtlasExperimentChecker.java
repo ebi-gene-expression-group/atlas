@@ -65,7 +65,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
                                 .getArrayDesignAccessions());
                 break;
             default:
-                throw new IllegalStateException("The specified experiment type is not supported.");
+                throw new IllegalArgumentException("The specified experiment type is not supported.");
         }
     }
 

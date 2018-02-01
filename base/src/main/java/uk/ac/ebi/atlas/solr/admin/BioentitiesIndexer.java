@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -68,9 +69,12 @@ public class BioentitiesIndexer {
     private void addBeans(Collection<?> x) {
         try {
             solrClient.addBeans(x);
-        } catch (SolrServerException | IOException e) {
+        } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new UncheckedIOException(new IOException(e));
         }
     }
 
@@ -94,9 +98,12 @@ public class BioentitiesIndexer {
         try {
             solrClient.deleteByQuery("*:*");
             solrClient.commit();
-        } catch (SolrServerException | IOException e) {
+        } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new UncheckedIOException(new IOException(e));
         }
     }
 

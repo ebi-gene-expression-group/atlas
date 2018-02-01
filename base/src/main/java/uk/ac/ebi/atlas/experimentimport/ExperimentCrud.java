@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -152,7 +153,7 @@ public class ExperimentCrud {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
             LOGGER.info("updated design for experiment {}", accession);
         } catch (IOException e) {
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
         }
     }
 

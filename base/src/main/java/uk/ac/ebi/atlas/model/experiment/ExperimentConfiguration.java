@@ -111,7 +111,7 @@ public class ExperimentConfiguration {
             return new AssayGroup(id,biologicalReplicates.build());
 
         } catch (XPathExpressionException e) {
-            throw new IllegalStateException("Problem parsing configuration file.", e);
+            throw new IllegalArgumentException("Problem parsing configuration file.", e);
         }
     }
 
@@ -135,12 +135,12 @@ public class ExperimentConfiguration {
         String type = configuration.getAttribute(EXPERIMENT_TYPE);
 
         if (StringUtils.isEmpty(type)) {
-            throw new IllegalStateException(String.format("Missing %s attribute on root element", EXPERIMENT_TYPE));
+            throw new IllegalArgumentException(String.format("Missing %s attribute on root element", EXPERIMENT_TYPE));
         }
 
         ExperimentType experimentType = ExperimentType.get(type);
         if (experimentType == null) {
-            throw new IllegalStateException(String.format("Unknown %s attribute: \"%s\". Must be one of: [%s]", EXPERIMENT_TYPE, type, Joiner.on(", ").join(EnumSet.allOf(ExperimentType.class))));
+            throw new IllegalArgumentException(String.format("Unknown %s attribute: \"%s\". Must be one of: [%s]", EXPERIMENT_TYPE, type, Joiner.on(", ").join(EnumSet.allOf(ExperimentType.class))));
         }
 
         return experimentType;

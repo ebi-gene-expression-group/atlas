@@ -16,7 +16,7 @@ public class SingleCellAnalyticsStreamFactory {
         this.dataFileHub = dataFileHub;
     }
 
-    public SingleCellAnalyticsStream create(String experimentAccession) throws IOException {
+    public SingleCellAnalyticsStream create(String experimentAccession) {
         SingleCellExperimentFiles scFiles = dataFileHub.getSingleCellExperimentFiles(experimentAccession);
         return new SingleCellAnalyticsStream(scFiles.tpmsMatrix, scFiles.geneIdsTsv, scFiles.cellIdsTsv);
     }

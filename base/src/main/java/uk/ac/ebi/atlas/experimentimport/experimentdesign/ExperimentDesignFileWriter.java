@@ -71,7 +71,7 @@ public class ExperimentDesignFileWriter {
             case SINGLE_CELL_RNASEQ_MRNA_BASELINE:
                 return Lists.newArrayList("Cell");
             default:
-                throw new IllegalStateException("Invalid parent type: " + experimentType.getParent());
+                throw new IllegalArgumentException("Invalid parent type: " + experimentType.getParent());
         }
     }
 
