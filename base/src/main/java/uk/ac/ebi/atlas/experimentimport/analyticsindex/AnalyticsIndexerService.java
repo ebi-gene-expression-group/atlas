@@ -15,7 +15,11 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Named
 public class AnalyticsIndexerService {
@@ -66,7 +70,7 @@ public class AnalyticsIndexerService {
                 }
             }
 
-        } catch (IOException | SolrServerException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }

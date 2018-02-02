@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.commons.streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.function.Predicate;
 
 public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T> {
@@ -33,7 +32,7 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         inputStream.close();
         LOGGER.debug("<close> close invoked on ObjectInputStreamFilter");
     }

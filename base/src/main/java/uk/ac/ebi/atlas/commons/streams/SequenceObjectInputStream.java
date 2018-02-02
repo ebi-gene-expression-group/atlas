@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.commons.streams;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Enumeration;
 
 /**
@@ -21,7 +19,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
         this.e = e;
         try {
             nextStream();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             // This should never happen
             throw new Error("panic");
         }
@@ -30,7 +28,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
     /**
      * Continues reading in the next stream if an EOF is reached.
      */
-    private void nextStream() throws IOException {
+    private void nextStream() throws Exception {
         if (in != null) {
             in.close();
         }
@@ -52,8 +50,8 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
         if (c == null) {
             try {
                 nextStream();
-            } catch (IOException ex) {
-                throw new UncheckedIOException("Next stream failed.", ex);
+            } catch (Exception ex) {
+                throw new RuntimeException("Next stream failed.", ex);
             }
             return readNext();
         }
@@ -61,7 +59,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         do {
             nextStream();
         } while (in != null);

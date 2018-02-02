@@ -8,7 +8,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
 
-import java.io.IOException;
 import java.util.function.Predicate;
 
 import static org.hamcrest.Matchers.is;
@@ -35,7 +34,7 @@ public class ObjectInputStreamFilterTest {
     private ObjectInputStreamFilter<Object> subject;
 
     @Before
-    public void initSubject() throws Exception {
+    public void initSubject() {
         subject = new ObjectInputStreamFilter<Object>(inputStreamMock){
 
             @Override
@@ -46,7 +45,7 @@ public class ObjectInputStreamFilterTest {
     }
 
     @Test
-    public void testReadNext() throws Exception {
+    public void testReadNext() {
         //given
         given(predicateMock.test(any())).willReturn(false)
                                                 .willReturn(true)
@@ -66,10 +65,8 @@ public class ObjectInputStreamFilterTest {
     }
 
     @Test
-    public void closeShouldCloseTheWrappedInputStream() throws IOException {
-        //when
+    public void closeShouldCloseTheWrappedInputStream() throws Exception {
         subject.close();
-
         verify(inputStreamMock).close();
     }
 }

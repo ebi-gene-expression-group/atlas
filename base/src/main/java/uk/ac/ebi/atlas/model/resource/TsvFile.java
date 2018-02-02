@@ -35,17 +35,12 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
             }
         }
 
-        private static class TsvStreamReader implements Closeable, ObjectInputStream<String[]> {
+        private static class TsvStreamReader implements ObjectInputStream<String[]> {
 
             private CSVReader tsvReader;
 
             public TsvStreamReader(Reader reader) {
                 this.tsvReader = new CSVReader(reader, '\t');
-            }
-
-            @Override
-            public void close() throws IOException {
-                tsvReader.close();
             }
 
             @Override
@@ -55,6 +50,11 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+
+            @Override
+            public void close() throws IOException {
+                tsvReader.close();
             }
         }
     }
