@@ -22,4 +22,9 @@ public class TsvReaderDummy implements TsvReader {
     public Stream<String[]> stream() {
         return Stream.empty();
     }
+
+    @Override
+    public void close() {
+
+    }
 }

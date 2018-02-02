@@ -48,14 +48,10 @@ public class TsvReaderImpl implements TsvReader {
     @Override
     public Stream<String[]> stream() {
         Predicate<String> isNotComment = new IsNotCommentPredicate();
-        try (BufferedReader reader = new BufferedReader(tsvReader)) {
-            return reader.lines()
-                    .map(line -> line.split("\t"))
-                    .filter(line -> isNotComment.test(line[0]));
-        } catch (IOException e) {
-            LOGGER.error("Error reading/closing file: " + e.getMessage(), e);
-            throw new UncheckedIOException(e);
-        }
+        BufferedReader reader = new BufferedReader(tsvReader);
+        return reader.lines()
+                .map(line -> line.split("\t"))
+                .filter(line -> isNotComment.test(line[0]));
     }
 
     private List<String[]> readAndFilter(Predicate<String> acceptanceCriteria) {
@@ -68,6 +64,15 @@ public class TsvReaderImpl implements TsvReader {
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            tsvReader.close();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
