@@ -1,10 +1,52 @@
 package uk.ac.ebi.atlas.commons.readers;
 
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.util.stream.Stream;
 
-public interface TsvReader extends AutoCloseable {
-    String[] readLine(long lineIndex);
-    List<String[]> readAll();
-    Stream<String[]> stream();
+public class TsvReader implements AutoCloseable{
+    private final Reader reader;
+
+    public TsvReader(Reader reader) {
+        this.reader = reader;
+    }
+
+    public Stream<String[]> stream() {
+        return new BufferedReader(this.reader).lines()
+                .map(line -> line.split("\t"))
+                .filter(line -> !line[0].startsWith("#"));
+    }
+
+    @Override
+    public void close() {
+        try {
+            reader.close();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    public static TsvReader empty() {
+        return DUMMY;
+    }
+
+    private final static TsvReader DUMMY = new DummyTsvReader();
+
+    private final static class DummyTsvReader extends TsvReader {
+        private DummyTsvReader() {
+            super(null);
+        }
+
+        @Override
+        public Stream<String[]> stream() {
+            return Stream.empty();
+        }
+
+        @Override
+        public void close() {
+
+        }
+    }
 }

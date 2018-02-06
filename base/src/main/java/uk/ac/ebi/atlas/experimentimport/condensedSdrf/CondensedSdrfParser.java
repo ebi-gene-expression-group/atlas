@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -44,12 +45,12 @@ public class CondensedSdrfParser {
 
     private final DataFileHub dataFileHub;
     private final IdfParser idfParser;
+    // TODO https://www.pivotaltracker.com/story/show/100371514
     // private final ValueAndUnitJoiner valueAndUnitJoiner;
 
 
     @Inject
-    public CondensedSdrfParser(DataFileHub dataFileHub,
-                               IdfParser idfParser) { //ValueAndUnitJoiner valueAndUnitJoiner) {
+    public CondensedSdrfParser(DataFileHub dataFileHub, IdfParser idfParser) {
         this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
         // this.valueAndUnitJoiner = valueAndUnitJoiner;
@@ -59,23 +60,25 @@ public class CondensedSdrfParser {
 
     public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType) throws CondensedSdrfParserException {
         ExperimentDesign experimentDesign = new ExperimentDesign();
-
-        TsvReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get();
-
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
-        for (String[] tsvLine : tsvReader.readAll()) {
-            switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {
-                case FACTOR:
-                    factorsBuilder.add(tsvLine);
-                    break;
-                case CHARACTERISTIC:
-                    sampleCharacteristicsBuilder.add(tsvLine);
-                    break;
-                default:
-                    throw new CondensedSdrfParserException(String.format(
-                            "Parsing condensed SDRF for %s: Unknown factor/characteristic descriptor “%s”",
-                            experimentAccession, tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]));
+
+        try (TsvReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get()) {
+            for (Iterator<String[]> tsvIterator = tsvReader.stream().iterator() ; tsvIterator.hasNext() ; ) {
+                String[] tsvLine = tsvIterator.next();
+
+                switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {
+                    case FACTOR:
+                        factorsBuilder.add(tsvLine);
+                        break;
+                    case CHARACTERISTIC:
+                        sampleCharacteristicsBuilder.add(tsvLine);
+                        break;
+                    default:
+                        throw new CondensedSdrfParserException(String.format(
+                                "Parsing condensed SDRF for %s: Unknown factor/characteristic descriptor “%s”",
+                                experimentAccession, tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]));
+                }
             }
         }
 

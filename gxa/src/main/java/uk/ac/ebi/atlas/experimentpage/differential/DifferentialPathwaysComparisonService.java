@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
@@ -12,11 +13,11 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-import javax.inject.Named;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toMap;
 
 public class DifferentialPathwaysComparisonService <Expr extends DifferentialExpression, E extends DifferentialExperiment,
         K extends DifferentialRequestPreferences,
@@ -40,7 +41,7 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
         this.configurationTrader = configurationTrader;
     }
 
-    public  Map<Contrast, List<String>> getPathwaysListPerComparison(DifferentialExperiment experiment) {
+    public Map<Contrast, List<String>> getPathwaysListPerComparison(DifferentialExperiment experiment) {
         Map<Contrast, List<String>> comparisonsPathwaysMap = new HashMap<>();
 
         String experimentAccession = experiment.getAccession();
@@ -57,26 +58,18 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
     }
 
     private List<String> fetchPathwaysFromFile (String experimentAccession, Contrast comparison) {
-        Map<String, Double> result = new HashMap<>();
-
-        List<String[]> lines = dataFileHub.getReactomePathwaysFiles(experimentAccession, comparison.getId()).get().readAll();
-
-        for(int i = 1; i < lines.size(); i++) {
-            String[] strings = lines.get(i);
-            String pathway = strings[0];
-            Double pvalue = Double.valueOf(strings[4]);
-
-            if (pvalue < 0.05) {
-                result.put(pathway, pvalue);
-            }
+        try (TsvReader tsvReader = dataFileHub.getReactomePathwaysFiles(experimentAccession, comparison.getId()).get()) {
+            return tsvReader.stream()
+                    .skip(1)
+                    .filter(line -> line.length > 4)
+                    .filter(line -> Double.parseDouble(line[4]) < 0.05)
+                    .collect(Collectors.toMap(line -> line[0], line -> Double.valueOf(line[4])))
+                    .entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue())
+                    .limit(10)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
         }
-
-        return result.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .limit(10)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
     }
 
     public Map<Contrast, SetMultimap<String, Pair<String, DifferentialExpression>>> constructPathwaysByComparison (E experiment,

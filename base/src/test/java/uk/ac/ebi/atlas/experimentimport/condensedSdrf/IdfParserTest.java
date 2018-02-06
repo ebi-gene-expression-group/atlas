@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
@@ -8,7 +7,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -30,7 +31,7 @@ public class IdfParserTest {
     };
 
     @Mock
-    TsvReaderImpl tsvReaderImplMock;
+    TsvReader tsvReaderMock;
 
     @Mock
     private IdfReaderFactory idfReaderFactoryMock;
@@ -41,8 +42,8 @@ public class IdfParserTest {
     @Test
     public void parse() {
         //given
-        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderImplMock);
-        given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(E_MTAB_513_IDF_TXT));
+        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderMock);
+        given(tsvReaderMock.stream()).willReturn(Stream.of(E_MTAB_513_IDF_TXT));
 
         //when
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
@@ -55,8 +56,9 @@ public class IdfParserTest {
     @Test
     public void parseNoPubmedIds() {
         //given
-        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderImplMock);
-        given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.of(E_MTAB_513_IDF_TXT[0]));
+        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderMock);
+        // https://stackoverflow.com/questions/48625611/how-can-i-create-a-streamstring-with-only-one-element-with-stream-of
+        given(tsvReaderMock.stream()).willReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0]));
 
         //when
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
@@ -69,8 +71,8 @@ public class IdfParserTest {
     @Test
     public void parseNoTitle() {
         //given
-        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderImplMock);
-        given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.of(E_MTAB_513_IDF_TXT[1]));
+        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderMock);
+        given(tsvReaderMock.stream()).willReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[1]));
 
         //when
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
@@ -82,10 +84,9 @@ public class IdfParserTest {
 
     @Test
     public void parseNothing() {
-        ImmutableList<String[]> emptyList = ImmutableList.of();
         //given
-        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderImplMock);
-        given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(emptyList));
+        given(idfReaderFactoryMock.create(E_MTAB_513)).willReturn(tsvReaderMock);
+        given(tsvReaderMock.stream()).willReturn(Stream.empty());
 
         //when
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);

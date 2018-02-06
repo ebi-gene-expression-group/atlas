@@ -31,7 +31,7 @@ public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<St
     }
 
     @Override
-    public T load(@Nonnull String experimentAccession) throws Exception {
+    public T load(@Nonnull String experimentAccession) {
         LOGGER.info("loading experiment with accession: {}", experimentAccession);
 
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);

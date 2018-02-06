@@ -7,11 +7,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Reader;
 import java.io.StringReader;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Named
 public class GeneSetEnrichmentClient {
@@ -79,12 +81,17 @@ public class GeneSetEnrichmentClient {
     }
 
     private List<String[]> fetchResponse(Species species, Collection<String> bioentityIdentifiers) {
-        return new TsvReaderImpl(
-                new StringReader(
-                        restTemplate.getForObject(
-                                MessageFormat.format(urlPattern,
-                                        species.getEnsemblName().toLowerCase(),
-                                        Joiner.on(" ").join(bioentityIdentifiers)), String.class))).readAll();
+        Reader responseStringReader = new StringReader(
+                restTemplate.getForObject(
+                        MessageFormat.format(
+                                urlPattern,
+                                species.getEnsemblName().toLowerCase(),
+                                Joiner.on(" ").join(bioentityIdentifiers)),
+                        String.class));
+
+        try (TsvReader tsvReader = new TsvReader(responseStringReader)) {
+            return tsvReader.stream().collect(Collectors.toList());
+        }
     }
 
     private boolean linesHaveCorrectDimensions(List<String[]> lines) {

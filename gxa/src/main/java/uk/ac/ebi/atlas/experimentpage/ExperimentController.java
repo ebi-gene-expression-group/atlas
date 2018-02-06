@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.tuckey.web.filters.urlrewrite.Run;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.json.JsonBaselineExperimentController;
@@ -56,7 +58,8 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return "experiment-page";
     }
 
-    private JsonObject experimentPageContentForExperiment(final Experiment<? extends DescribesDataColumns> experiment, final String accessKey){
+    private JsonObject experimentPageContentForExperiment(final Experiment<? extends DescribesDataColumns> experiment,
+                                                          final String accessKey){
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
@@ -70,34 +73,44 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         // everything wants to have a heatmap
         availableTabs.add(heatmapTab(
                 experiment.groupingsForHeatmap(),
-                JsonBaselineExperimentController.geneDistributionUrl(experiment.getAccession(), accessKey, experiment.getType()),
+                JsonBaselineExperimentController.geneDistributionUrl(
+                        experiment.getAccession(), accessKey, experiment.getType()),
                 availableDataUnits(experiment.getAccession(), experiment.getType()))
         );
 
         if(experiment.getType().isDifferential()){
             availableTabs.add(
-                    customContentTab("resources", "Plots", "url",
-                            new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                    experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.PLOTS)))
-            );
+                    customContentTab(
+                            "resources",
+                            "Plots",
+                            "url",
+                            new JsonPrimitive(
+                                    ExternallyAvailableContentController.listResourcesUrl(
+                                            experiment.getAccession(),
+                                            accessKey,
+                                            ExternallyAvailableContent.ContentType.PLOTS))));
         }
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
                     experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
-                            ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey))
-            );
+                            ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey)));
         }
 
         availableTabs.add(
-                customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
-        );
+                customContentTab(
+                        "multipart",
+                        "Supplementary Information",
+                        "sections",
+                        supplementaryInformationTabs(experiment, accessKey)));
 
         availableTabs.add(
-                customContentTab("resources", "Downloads", "url",
+                customContentTab(
+                        "resources",
+                        "Downloads",
+                        "url",
                         new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
-        );
+                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA))));
 
         result.add("tabs", availableTabs);
 
@@ -109,37 +122,58 @@ public class ExperimentController extends HtmlExceptionHandlingController {
             return new JsonArray();
         }
         else {
-            return gson.toJsonTree(dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFiles()).getAsJsonArray();
+            return gson.toJsonTree(
+                    dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFiles()).getAsJsonArray();
         }
     }
 
     private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
         JsonArray supplementaryInformationTabs = new JsonArray();
-        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
-            supplementaryInformationTabs.add(customContentTab("static-table", "Analysis Methods", "data",
-                    formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()
-                            )
-            ));
+        if (dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()) {
+            try (TsvReader tsvReader =
+                         dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
+                supplementaryInformationTabs.add(
+                        customContentTab(
+                                "static-table",
+                                "Analysis Methods",
+                                "data",
+                                formatTable(tsvReader.stream().collect(Collectors.toList()))));
+            }
         }
+
         supplementaryInformationTabs.add(
-                customContentTab("resources", "Resources", "url",
-                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
+                customContentTab(
+                        "resources",
+                        "Resources",
+                        "url",
+                        new JsonPrimitive(
+                                ExternallyAvailableContentController.listResourcesUrl(
+                                        experiment.getAccession(),
+                                        accessKey,
+                                        ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
         );
 
         if(experiment.getType().isMicroarray() &&
-                dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()){
-            supplementaryInformationTabs.add(customContentTab("qc-report", "QC Report",
-                    "reports",
-                    pairsToArrayOfObjects("name", "url",
-                            new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
-                                    .getArrayDesignsThatHaveQcReports().stream().map(arrayDesign -> Pair.of(
-                                    "QC for array design " + arrayDesign,
-                                    QCReportController.getQcReportUrl(experiment.getAccession(), arrayDesign, accessKey
-                                    )
-                            )).collect(Collectors.toList())
-                    )
-            ));
+                dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()) {
+            supplementaryInformationTabs.add(
+                    customContentTab(
+                            "qc-report",
+                            "QC Report",
+                            "reports",
+                            pairsToArrayOfObjects(
+                                    "name",
+                                    "url",
+                                    new MicroarrayQCFiles(
+                                            dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
+                                            .getArrayDesignsThatHaveQcReports().stream()
+                                                .map(arrayDesign ->
+                                                        Pair.of(
+                                                                "QC for array design " + arrayDesign,
+                                                                QCReportController.getQcReportUrl(
+                                                                        experiment.getAccession(),
+                                                                        arrayDesign,
+                                                                        accessKey)))
+                                                .collect(Collectors.toList()))));
         }
 
         return supplementaryInformationTabs;
