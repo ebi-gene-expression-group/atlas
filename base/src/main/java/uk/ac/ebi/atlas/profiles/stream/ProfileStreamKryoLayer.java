@@ -56,7 +56,7 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
                 }
 
                 @Override
-                public void close() throws IOException {
+                public void close() {
                     input.close();
                 }
             };
@@ -72,7 +72,7 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
                 }
 
                 @Override
-                public void close() throws IOException {
+                public void close() {
                     input.close();
                 }
             };

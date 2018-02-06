@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commons.streams;
 
+import java.io.IOException;
 import java.util.Enumeration;
 
 /**
@@ -28,7 +29,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
     /**
      * Continues reading in the next stream if an EOF is reached.
      */
-    private void nextStream() throws Exception {
+    private void nextStream() throws IOException {
         if (in != null) {
             in.close();
         }
@@ -59,7 +60,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         do {
             nextStream();
         } while (in != null);

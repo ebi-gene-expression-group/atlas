@@ -7,7 +7,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -17,6 +16,7 @@ import uk.ac.ebi.atlas.utils.StringArrayUtil;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.text.MessageFormat;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -186,7 +186,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         try {
             stream.close();
         } catch (IOException e){
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
         return first;
     }

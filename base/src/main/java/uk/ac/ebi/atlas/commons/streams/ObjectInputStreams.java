@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commons.streams;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 
 public class ObjectInputStreams {
@@ -21,7 +22,7 @@ public class ObjectInputStreams {
             }
 
             @Override
-            public void close() throws Exception {
+            public void close() throws IOException {
                 unfiltered.close();
             }
         };

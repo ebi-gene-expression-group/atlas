@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.commons.streams;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 public class ObjectInputStreamTest {
@@ -14,7 +13,7 @@ public class ObjectInputStreamTest {
             }
 
             @Override
-            public void close() throws IOException {
+            public void close() {
 
             }
         };
