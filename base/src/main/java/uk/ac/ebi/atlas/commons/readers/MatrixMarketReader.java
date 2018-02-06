@@ -6,14 +6,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UncheckedIOException;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MatrixMarketReader implements AutoCloseable {
     private final int numRows;
     private final int numCols;
-    private final int numElements;
     private final Stream<Triple<Integer, Integer, Double>> lines;
     private final BufferedReader inReader;
 
@@ -28,7 +25,6 @@ public class MatrixMarketReader implements AutoCloseable {
         String[] splitLine = line.split(" ");
         numRows = Integer.parseInt(splitLine[0]);
         numCols = Integer.parseInt(splitLine[1]);
-        numElements = Integer.parseInt(splitLine[2]);
 
         lines = inReader.lines().map(MatrixMarketReader::parseLine);
     }
@@ -41,16 +37,8 @@ public class MatrixMarketReader implements AutoCloseable {
         return numCols;
     }
 
-    public int getElements() {
-        return numElements;
-    }
-
     public Stream<Triple<Integer, Integer, Double>> stream() {
         return lines;
-    }
-
-    public List<Triple<Integer, Integer, Double>> list() {
-        return lines.collect(Collectors.toList());
     }
 
     @Override
