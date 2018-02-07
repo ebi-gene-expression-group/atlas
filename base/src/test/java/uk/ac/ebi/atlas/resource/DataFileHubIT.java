@@ -46,14 +46,14 @@ public class DataFileHubIT {
 
     @Test
     public void findsTSnePlotFiles() {
-        assertAtlasResourceExists(subject.getSingleCellExperimentFiles("E-MTAB-5061").tSnePlotTsvs);
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles("E-MTAB-5061").tSnePlotTsvs.values());
     }
 
-    private void assertAtlasResourceExists(AtlasResource<?> resource){
-        assertThat(resource.exists()).isTrue();
+    private void assertAtlasResourceExists(AtlasResource<?> resource) {
+        assertThat(resource.exists());
     }
 
-    private void assertAtlasResourceExists(Collection<? extends AtlasResource<?>> resource){
+    private void assertAtlasResourceExists(Collection<? extends AtlasResource<?>> resource) {
         assertThat(resource).isNotEmpty();
         assertThat(resource).allMatch(AtlasResource::exists);
     }

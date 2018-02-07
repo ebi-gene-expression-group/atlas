@@ -72,7 +72,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
     void checkRnaSeqBaselineFiles(String experimentAccession) {
         DataFileHub.RnaSeqBaselineExperimentFiles experimentFiles =
                 dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
-        checkBaselineFiles(experimentFiles);
+        checkBaselineFiles(experimentFiles.baselineExperimentFiles);
         ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles = experimentFiles.dataFiles();
         Preconditions.checkState(
                 dataFiles.size()> 0,
@@ -101,7 +101,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
     void checkProteomicsBaselineFiles(String experimentAccession) {
         DataFileHub.ProteomicsBaselineExperimentFiles experimentFiles =
                 dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession);
-        checkBaselineFiles(experimentFiles);
+        checkBaselineFiles(experimentFiles.baselineExperimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.main);
         assayGroupIdsInHeaderMatchConfigurationXml(
                 proteomicsIdsFromHeader(extractFirstElement(experimentFiles.main)), experimentAccession);

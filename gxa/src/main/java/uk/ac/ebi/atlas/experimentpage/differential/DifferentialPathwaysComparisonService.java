@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -49,7 +50,7 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
 
         //fetch pathwaysId from file for each comparison
         for (Contrast comparison : comparisons) {
-            List<String> pathwaysValues = fetchPathwaysFromFile(experimentAccession, comparison);
+            List<String> pathwaysValues = fetchPathwaysFromFile(experimentAccession, experiment.getType(), comparison);
 
             comparisonsPathwaysMap.put(comparison, pathwaysValues);
         }
@@ -57,8 +58,11 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
         return comparisonsPathwaysMap;
     }
 
-    private List<String> fetchPathwaysFromFile (String experimentAccession, Contrast comparison) {
-        try (TsvReader tsvReader = dataFileHub.getReactomePathwaysFiles(experimentAccession, comparison.getId()).get()) {
+    private List<String> fetchPathwaysFromFile (String experimentAccession, ExperimentType experimentType, Contrast comparison) {
+        try (TsvReader tsvReader =
+                     dataFileHub.getDifferentialExperimentFiles(experimentAccession)
+                             .reactomePathwaysFiles(experimentAccession, comparison.getId())
+                             .get()) {
             return tsvReader.stream()
                     .skip(1)
                     .filter(line -> line.length > 4)

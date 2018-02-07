@@ -1,16 +1,18 @@
 package uk.ac.ebi.atlas.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.*;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
@@ -22,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,8 +33,7 @@ import java.util.stream.Collectors;
 @Named
 public class DataFileHub {
 
-    protected final String gxaExperimentsFilesLocation;
-    protected final String scxaExperimentsFilesLocation;
+    protected final String experimentsFilesLocation;
 
     final static String CONFIGURATION_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-configuration.xml";
     final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-analysis-methods.tsv";
@@ -66,22 +68,27 @@ public class DataFileHub {
     final static String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tsne_perp_{1}.tsv";
 
     @Inject
-    public DataFileHub(
-            @Value("#{configuration['experimentsFilesLocation']}") String gxaExperimentsFilesLocation,
-            @Value("#{configuration['scExperimentsFilesLocation']}") String scxaExperimentsFilesLocation){
-        Validate.notNull(
-                gxaExperimentsFilesLocation,
+    public DataFileHub(@Value("#{configuration['experimentsFilesLocation']}") String experimentsFilesLocation) {
+        Preconditions.checkNotNull(
+                experimentsFilesLocation,
                 "Data files location not found - if this is a development environment try `mvn clean install`");
-        this.gxaExperimentsFilesLocation = gxaExperimentsFilesLocation;
-        this.scxaExperimentsFilesLocation = scxaExperimentsFilesLocation;
+        this.experimentsFilesLocation = experimentsFilesLocation;
+    }
+
+    public String getGxaExperimentDataLocation() {
+        return Paths.get(experimentsFilesLocation, "gxa", "magetab").toString() + "/";
     }
 
     public ExperimentFiles getExperimentFiles(String experimentAccession) {
-        return new ExperimentFiles(experimentAccession);
+        return new ExperimentFiles(discoverExperimentLocation(experimentAccession), experimentAccession);
     }
 
     public BaselineExperimentFiles getBaselineExperimentFiles(String experimentAccession) {
-        return new BaselineExperimentFiles(experimentAccession);
+        return new BaselineExperimentFiles(discoverExperimentLocation(experimentAccession), experimentAccession);
+    }
+
+    public DifferentialExperimentFiles getDifferentialExperimentFiles(String experimentAccession) {
+        return new DifferentialExperimentFiles(discoverExperimentLocation(experimentAccession), experimentAccession);
     }
 
     public RnaSeqBaselineExperimentFiles getRnaSeqBaselineExperimentFiles(String experimentAccession) {
@@ -92,10 +99,6 @@ public class DataFileHub {
         return new ProteomicsBaselineExperimentFiles(experimentAccession);
     }
 
-    public DifferentialExperimentFiles getDifferentialExperimentFiles(String experimentAccession){
-        return new DifferentialExperimentFiles(experimentAccession);
-    }
-
     public RnaSeqDifferentialExperimentFiles getRnaSeqDifferentialExperimentFiles(String experimentAccession) {
         return new RnaSeqDifferentialExperimentFiles(experimentAccession);
     }
@@ -104,206 +107,256 @@ public class DataFileHub {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
     }
 
-    public AtlasResource<TsvReader> getReactomePathwaysFiles(String experimentAccession, String comparison) {
-        return new TsvFile.ReadOnly(
-                gxaExperimentsFilesLocation, REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
-                experimentAccession, comparison);
-    }
-
     public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
                                                       ProfileStreamOptions<?> profileStreamOptions){
-        return new KryoFile(gxaExperimentsFilesLocation, experimentAccession, profileStreamOptions);
+        return new KryoFile(experimentsFilesLocation, experimentAccession, profileStreamOptions);
     }
 
     public SingleCellExperimentFiles getSingleCellExperimentFiles(String experimentAccession) {
         return new SingleCellExperimentFiles(experimentAccession);
     }
 
-    public class ExperimentFiles {
-
+    public final class ExperimentFiles {
         public final AtlasResource<TsvReader> analysisMethods;
         public final AtlasResource<XmlReader> configuration;
-        public final AtlasResource<TsvReader> experimentDesign;
-        public final AtlasResource<TsvWriter> experimentDesignWrite;
         public final AtlasResource<TsvReader> condensedSdrf;
         public final AtlasResource<TsvReader> idf;
+        public final AtlasResource<Set<Path>> qcFolder;
+        public final AtlasResource<TsvReader> experimentDesign;
+        public final AtlasResource<TsvWriter> experimentDesignWrite;
         public final AtlasResource<TsvReader> adminOpLog;
         public final AtlasResource<TsvWriter> adminOpLogWrite;
         public final AtlasResource<TsvWriter> adminOpLogAppend;
-        public final AtlasResource<Set<Path>> qcFolder;
 
-        ExperimentFiles(String experimentAccession) {
-            this.analysisMethods =
-                    new TsvFile.ReadOnly(gxaExperimentsFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.configuration =
-                    new XmlFile.ReadOnly(gxaExperimentsFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
+        ExperimentFiles(String baseDir, String experimentAccession) {
+            analysisMethods = new TsvFile.ReadOnly(baseDir, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
+            configuration = new XmlFile.ReadOnly(baseDir, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
+            condensedSdrf = new TsvFile.ReadOnly(baseDir, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+            idf = new TsvFile.ReadOnly(baseDir, IDF_FILE_PATH_TEMPLATE, experimentAccession);
+            qcFolder = new Directory(baseDir, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
 
-            this.experimentDesign =
-                    new TsvFile.ReadOnly(gxaExperimentsFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
-            this.experimentDesignWrite =
-                    new TsvFile.Overwrite(gxaExperimentsFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
+            experimentDesign =
+                    new TsvFile.ReadOnly(
+                            baseDir,
+                            EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            experimentDesignWrite =
+                    new TsvFile.Overwrite(
+                            baseDir,
+                            EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE,
+                            experimentAccession);
 
-            this.condensedSdrf =
-                    new TsvFile.ReadOnly(gxaExperimentsFilesLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
-
-            this.idf = new TsvFile.ReadOnly(gxaExperimentsFilesLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
-
-            this.adminOpLog = new TsvFile.ReadOnly(gxaExperimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            this.adminOpLogWrite =
-                    new TsvFile.Overwrite(gxaExperimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            this.adminOpLogAppend =
-                    new TsvFile.Appendable(gxaExperimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            this.qcFolder = new Directory(gxaExperimentsFilesLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
+            adminOpLog = new TsvFile.ReadOnly(baseDir, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            adminOpLogWrite = new TsvFile.Overwrite(baseDir, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            adminOpLogAppend = new TsvFile.Appendable(baseDir, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
         }
-
     }
 
-    public class RnaSeqBaselineExperimentFiles extends BaselineExperimentFiles {
-        private final AtlasResource<ObjectInputStream<String[]>> fpkms;
-        private final AtlasResource<ObjectInputStream<String[]>> tpms;
-        public final AtlasResource<ObjectInputStream<String[]>> transcriptsTpms;
-        RnaSeqBaselineExperimentFiles(String experimentAccession) {
-            super(experimentAccession);
-            this.fpkms =
+    // baseDir parameterised as we might want to have BaselineExperimentFiles bundled with SC experiments
+    public final class BaselineExperimentFiles {
+        public final ExperimentFiles experimentFiles;
+        public final AtlasResource<XmlReader> factors;
+        public final AtlasResource<CSVReader> coexpressions;
+
+        BaselineExperimentFiles(String baseDir, String experimentAccession) {
+            experimentFiles = new ExperimentFiles(baseDir, experimentAccession);
+
+            factors = new XmlFile.ReadOnly(baseDir, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
+            coexpressions = new TsvFile.ReadCompressed(baseDir, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
+        }
+    }
+
+    // baseDir parameterised as we might want to have DifferentialExperimentFiles bundled with SC experiments
+    public final class DifferentialExperimentFiles {
+        public final ExperimentFiles experimentFiles;
+        public final AtlasResource<ObjectInputStream<String[]>> percentileRanks;
+
+        DifferentialExperimentFiles(String baseDir, String experimentAccession) {
+            experimentFiles = new ExperimentFiles(baseDir, experimentAccession);
+
+            percentileRanks =
                     new TsvFile.ReadAsStream(
-                            gxaExperimentsFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.tpms =
-                    new TsvFile.ReadAsStream(
-                            gxaExperimentsFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.transcriptsTpms =
-                    new TsvFile.ReadAsStream(
-                            gxaExperimentsFilesLocation, RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
+                            baseDir, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
         }
 
+        public AtlasResource<TsvReader> reactomePathwaysFiles(String experimentAccession, String comparison) {
+            return new TsvFile.ReadOnly(
+                    Paths.get(experimentsFilesLocation, "gxa").toString(),
+                    REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
+                    experimentAccession,
+                    comparison);
+        }
+    }
+
+    public final class RnaSeqBaselineExperimentFiles {
+        public final BaselineExperimentFiles baselineExperimentFiles;
+
+        public final AtlasResource<ObjectInputStream<String[]>> fpkms;
+        public final AtlasResource<ObjectInputStream<String[]>> tpms;
+        public final AtlasResource<ObjectInputStream<String[]>> transcriptsTpms;
+
+        RnaSeqBaselineExperimentFiles(String experimentAccession) {
+            baselineExperimentFiles =
+                    new BaselineExperimentFiles(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentAccession);
+
+            fpkms =
+                    new TsvFile.ReadAsStream(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            tpms =
+                    new TsvFile.ReadAsStream(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+
+            transcriptsTpms =
+                    new TsvFile.ReadAsStream(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            }
+
         public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit) {
-            switch(unit){
+            switch(unit) {
                 case FPKM:
                     return fpkms;
                 case TPM:
                     return tpms;
                 default:
-                    throw new RuntimeException("No file for: "+unit);
+                    throw new IllegalArgumentException(String.format("No file for: %s", unit));
             }
         }
 
         public ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles() {
             ImmutableList.Builder<ExpressionUnit.Absolute.Rna> b = ImmutableList.builder();
-            if(tpms.exists()){
+            if (tpms.exists()) {
                 b.add(ExpressionUnit.Absolute.Rna.TPM);
             }
-            if(fpkms.exists()){
+            if (fpkms.exists()) {
                 b.add(ExpressionUnit.Absolute.Rna.FPKM);
             }
             return b.build();
         }
     }
 
-    public class ProteomicsBaselineExperimentFiles extends BaselineExperimentFiles {
+    public final class ProteomicsBaselineExperimentFiles {
+        public final BaselineExperimentFiles baselineExperimentFiles;
         public final AtlasResource<ObjectInputStream<String[]>> main;
+
         ProteomicsBaselineExperimentFiles(String experimentAccession) {
-            super(experimentAccession);
-            this.main =
+            baselineExperimentFiles =
+                    new BaselineExperimentFiles(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentAccession);
+
+            main =
                     new TsvFile.ReadAsStream(
-                            gxaExperimentsFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
-        }
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            }
     }
 
-    public class BaselineExperimentFiles extends ExperimentFiles {
-        public final AtlasResource<XmlReader> factors;
-        public final AtlasResource<CSVReader> coexpressions;
-
-        BaselineExperimentFiles(String experimentAccession) {
-            super(experimentAccession);
-            this.factors = new XmlFile.ReadOnly(gxaExperimentsFilesLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.coexpressions =
-                    new TsvFile.ReadCompressed(gxaExperimentsFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
-        }
-    }
-
-    public class DifferentialExperimentFiles extends ExperimentFiles {
-        public AtlasResource<ObjectInputStream<String[]>> percentileRanks;
-
-        DifferentialExperimentFiles(String experimentAccession) {
-            super(experimentAccession);
-            this.percentileRanks =
-                    new TsvFile.ReadAsStream(
-                            gxaExperimentsFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
-        }
-
-    }
-
-    public class RnaSeqDifferentialExperimentFiles extends DifferentialExperimentFiles {
+    public final class RnaSeqDifferentialExperimentFiles {
+        public final DifferentialExperimentFiles differentialExperimentFiles;
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
         public final AtlasResource<TsvReader> rawCounts;
 
         RnaSeqDifferentialExperimentFiles(String experimentAccession) {
-            super(experimentAccession);
-            this.analytics =
-                    new TsvFile.ReadAsStream(
-                            gxaExperimentsFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.rawCounts =
-                    new TsvFile.ReadOnly(
-                            gxaExperimentsFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
-        }
+            differentialExperimentFiles =
+                    new DifferentialExperimentFiles(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentAccession);
 
-    }
-
-    public class MicroarrayExperimentFiles extends DifferentialExperimentFiles {
-        public final AtlasResource<ObjectInputStream<String[]>> analytics;
-        public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1-colour specific
-        public final AtlasResource<TsvReader> logFoldChanges;   // Microarray 2-colour specific
-
-        MicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
-            super(experimentAccession);
             analytics =
                     new TsvFile.ReadAsStream(
-                            gxaExperimentsFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE,
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            rawCounts =
+                    new TsvFile.ReadOnly(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+        }
+    }
+
+    public final class MicroarrayExperimentFiles {
+        public final DifferentialExperimentFiles differentialExperimentFiles;
+        public final AtlasResource<ObjectInputStream<String[]>> analytics;
+        public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1-colour specific
+        public final AtlasResource<TsvReader> logFoldChanges;           // Microarray 2-colour specific
+
+        MicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
+            differentialExperimentFiles =
+                    new DifferentialExperimentFiles(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentAccession);
+
+            analytics =
+                    new TsvFile.ReadAsStream(
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE,
                             experimentAccession, arrayDesign);
+
             normalizedExpressions =
                     new TsvFile.ReadOnly(
-                            gxaExperimentsFilesLocation, MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE,
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE,
                             experimentAccession, arrayDesign);
+
             logFoldChanges =
                     new TsvFile.ReadOnly(
-                            gxaExperimentsFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE,
+                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE,
                             experimentAccession, arrayDesign);
         }
     }
 
-    public class SingleCellExperimentFiles extends ExperimentFiles {
+    public final class SingleCellExperimentFiles {
+        public final ExperimentFiles experimentFiles;
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
         public final AtlasResource<TsvReader> geneIdsTsv;
         public final AtlasResource<TsvReader> cellIdsTsv;
-        public final Set<AtlasResource<TsvReader>> tSnePlotTsvs;
+        public final Map<Integer, ? extends AtlasResource<TsvReader>> tSnePlotTsvs;
 
         SingleCellExperimentFiles(String experimentAccession) {
-            super(experimentAccession);
-            this.tpmsMatrix =
+            experimentFiles =
+                    new ExperimentFiles(
+                            Paths.get(experimentsFilesLocation, "scxa").toString(),
+                            experimentAccession);
+
+            tpmsMatrix =
                     new MatrixMarketFile(
-                            scxaExperimentsFilesLocation,
+                            Paths.get(experimentsFilesLocation, "scxa").toString(),
                             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE,
                             experimentAccession);
-            this.geneIdsTsv =
+
+            geneIdsTsv =
                     new TsvFile.ReadOnly(
-                            scxaExperimentsFilesLocation,
+                            Paths.get(experimentsFilesLocation, "scxa").toString(),
                             SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
-            this.cellIdsTsv =
+
+            cellIdsTsv =
                     new TsvFile.ReadOnly(
-                            scxaExperimentsFilesLocation,
+                            Paths.get(experimentsFilesLocation, "scxa").toString(),
                             SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
-            tSnePlotTsvs =
-                    findAvailablePerplexityValuesFromTSnePlotFiles(experimentAccession).stream()
-                    .map(
-                            perplexity ->
-                                    new TsvFile.ReadOnly(
-                                            scxaExperimentsFilesLocation,
+            tSnePlotTsvs = discoverAvailablePerplexitiesFromTSnePlotFiles(experimentAccession).stream()
+                    .collect(
+                            Collectors.toMap(
+                                    perplexity -> perplexity,
+                                    perplexity -> new TsvFile.ReadOnly(
+                                            experimentsFilesLocation,
                                             SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE,
                                             experimentAccession,
-                                            Integer.toString(perplexity)))
-                    .collect(Collectors.toSet());
+                                            perplexity.toString())));
         }
 
 //        public AtlasResource<MatrixMarketReader> dataFile(ExpressionUnit.Absolute.Rna unit) {
@@ -315,9 +368,9 @@ public class DataFileHub {
 //            }
 //        }
 
-        private Set<Integer> findAvailablePerplexityValuesFromTSnePlotFiles(String experimentAccession) {
+        private Set<Integer> discoverAvailablePerplexitiesFromTSnePlotFiles(String experimentAccession) {
             Path tSnePlotFilePathTemplate =
-                    Paths.get(scxaExperimentsFilesLocation).resolve(
+                    Paths.get(experimentsFilesLocation).resolve(
                             MessageFormat.format(
                                     SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE, experimentAccession, "(\\d+)"));
 
@@ -338,24 +391,31 @@ public class DataFileHub {
             }
             return perplexityValues.build();
         }
-//
-//        private Set<Path> findMatchingFiles(Path directory, String glob) {
-//            //                        Paths.get(gxaExperimentsFilesLocation, new File(SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE).getPath()),
-//
-//            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory, glob)) {
-//                ImmutableSet.Builder<Path> fileNameSetBuilder = ImmutableSet.builder();
-//                for (Path path : dirStream) {
-//                    fileNameSetBuilder.add(path);
-//                }
-//                return fileNameSetBuilder.build();
-//            } catch (IOException e) {
-//                return Collections.emptySet();
-//            }
-//        }
     }
 
-    public String getExperimentDataLocation() {
-        return Paths.get(gxaExperimentsFilesLocation, "magetab").toString() + "/";
+    // After splitting the experiments directory to gxa and scxa we need to discover the experiment location because
+    // sometimes we won’t know where it is (
+    // Consider moving ExperimentSilo and the discocery method to a separate class if we go ahead with the plan of
+    // supporting multi-species single cell experiments, whose outcome will be having a directory layout of the form
+    // scxa/<species>/<accession>: scxa/mus_musculus/E-MTAB-9001, scxa/homo_sapiens/E-MTAB-9001
+    private enum ExperimentSilo {
+        GXA("gxa"),
+        SCXA("scxa");
+
+        private final String dir;
+
+        ExperimentSilo(String dir) {
+            this.dir = dir;
+        }
     }
 
+    private String discoverExperimentLocation(String experimentAccession) {
+        for (ExperimentSilo silo : ExperimentSilo.values()) {
+            if (Paths.get(experimentsFilesLocation, silo.dir, experimentAccession).toFile().isDirectory()) {
+                return Paths.get(experimentsFilesLocation, silo.dir).toString();
+            }
+        }
+
+        throw new ResourceNotFoundException(String.format("Experiment %s could not be found", experimentAccession));
+    }
 }

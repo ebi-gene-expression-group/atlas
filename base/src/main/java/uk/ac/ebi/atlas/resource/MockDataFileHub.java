@@ -21,12 +21,12 @@ import static org.apache.commons.lang3.StringUtils.leftPad;
 public class MockDataFileHub extends DataFileHub {
 
     private MockDataFileHub() throws IOException {
-        super(Files.createTempDirectory("gxa").toString(), Files.createTempDirectory("scxa").toString());
-        new File(gxaExperimentsFilesLocation, "admin").mkdir();
-        new File(gxaExperimentsFilesLocation, "magetab").mkdir();
-        new File(gxaExperimentsFilesLocation, "expdesign").mkdir();
-        new File(gxaExperimentsFilesLocation, "serialized_expression").mkdir();
-        new File(gxaExperimentsFilesLocation).deleteOnExit();
+        super(Files.createTempDirectory("").toString());
+        new File(experimentsFilesLocation, "admin").mkdir();
+        new File(experimentsFilesLocation, "magetab").mkdir();
+        new File(experimentsFilesLocation, "expdesign").mkdir();
+        new File(experimentsFilesLocation, "serialized_expression").mkdir();
+        new File(experimentsFilesLocation).deleteOnExit();
     }
 
     public static MockDataFileHub create() {
@@ -59,7 +59,7 @@ public class MockDataFileHub extends DataFileHub {
     }
 
     public void addTemporaryFile(String where, Collection<String> lines) {
-        File f = Paths.get(gxaExperimentsFilesLocation, where).toFile();
+        File f = Paths.get(experimentsFilesLocation, where).toFile();
         f.deleteOnExit();
         f.getParentFile().mkdirs();
         try {

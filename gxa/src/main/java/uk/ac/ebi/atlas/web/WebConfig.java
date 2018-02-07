@@ -38,7 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
 
         registry.addResourceHandler("/expdata/**")
-                .addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
+                .addResourceLocations("file:" + dataFileHub.getGxaExperimentDataLocation());
     }
 
     // equivalent to mvc:interceptors
