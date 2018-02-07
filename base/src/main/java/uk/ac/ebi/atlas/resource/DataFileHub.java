@@ -321,7 +321,7 @@ public class DataFileHub {
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
         public final AtlasResource<TsvReader> geneIdsTsv;
         public final AtlasResource<TsvReader> cellIdsTsv;
-        public final Map<Integer, ? extends AtlasResource<TsvReader>> tSnePlotTsvs;
+        public final Map<Integer, AtlasResource<TsvReader>> tSnePlotTsvs;
 
         SingleCellExperimentFiles(String experimentAccession) {
             experimentFiles = new ExperimentFiles(experimentAccession);
