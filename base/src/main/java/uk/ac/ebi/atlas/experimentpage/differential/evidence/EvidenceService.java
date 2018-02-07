@@ -481,7 +481,9 @@ public class EvidenceService<
     }
 
     Map<String, Map<Contrast, Integer>> getPercentileRanks(E experiment) {
-        return readPercentileRanks(experiment, dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).percentileRanks.get());
+        return readPercentileRanks(
+                experiment,
+                dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).percentileRanks.get());
     }
 
     private Map<String, Map<Contrast, Integer>> readPercentileRanks(E experiment, ObjectInputStream<String[]> lines) {

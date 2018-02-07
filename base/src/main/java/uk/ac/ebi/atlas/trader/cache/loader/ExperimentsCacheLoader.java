@@ -34,9 +34,9 @@ public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<St
     public T load(@Nonnull String experimentAccession) {
         LOGGER.info("loading experiment with accession: {}", experimentAccession);
 
-        ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
         ExperimentDTO experimentDTO = experimentDao.getExperimentAsAdmin(experimentAccession);
         String experimentDescription = fetchExperimentNameFromArrayExpress(experimentAccession, experimentDTO);
+        ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
 
         return experimentFactory.create(experimentDTO, experimentDescription, experimentDesign);
     }

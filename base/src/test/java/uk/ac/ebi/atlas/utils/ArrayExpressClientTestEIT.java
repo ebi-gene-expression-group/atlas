@@ -51,7 +51,7 @@ public class ArrayExpressClientTestEIT {
     }
 
     @Test(expected = RuntimeException.class)
-    public void throwIfIdfParserReturnsAnEmptyName() throws Exception {
+    public void throwIfIdfParserReturnsAnEmptyName() {
         IdfParser idfParser = mock(IdfParser.class);
         when(idfParser.parse("foobar")).thenReturn(ImmutablePair.of("", ImmutableSet.of()));
 

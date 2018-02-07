@@ -27,8 +27,7 @@ public class ExperimentOpLogWriter {
     }
 
     void persistOpLog(String accession, List<OpLogEntry> opLog) {
-
-        TsvWriter tsvWriter =  dataFileHub.getExperimentFiles(accession).adminOpLogWrite.get();
+        TsvWriter tsvWriter = dataFileHub.getExperimentFiles(accession).adminOpLogWrite.get();
         List<String[]> lines = new ArrayList<>();
         for (int i = opLog.size() - Math.min(opLog.size(), MAX_LENGTH); i < opLog.size(); i++) {
             OpLogEntry loggedOp = opLog.get(i);

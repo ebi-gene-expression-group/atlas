@@ -10,10 +10,13 @@ import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.resource.*;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.model.resource.Directory;
+import uk.ac.ebi.atlas.model.resource.KryoFile;
+import uk.ac.ebi.atlas.model.resource.MatrixMarketFile;
+import uk.ac.ebi.atlas.model.resource.TsvFile;
+import uk.ac.ebi.atlas.model.resource.XmlFile;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import javax.inject.Inject;
@@ -76,19 +79,19 @@ public class DataFileHub {
     }
 
     public String getGxaExperimentDataLocation() {
-        return Paths.get(experimentsFilesLocation, "gxa", "magetab").toString() + "/";
+        return Paths.get(experimentsFilesLocation, "magetab").toString() + "/";
     }
 
     public ExperimentFiles getExperimentFiles(String experimentAccession) {
-        return new ExperimentFiles(discoverExperimentLocation(experimentAccession), experimentAccession);
+        return new ExperimentFiles(experimentAccession);
     }
 
     public BaselineExperimentFiles getBaselineExperimentFiles(String experimentAccession) {
-        return new BaselineExperimentFiles(discoverExperimentLocation(experimentAccession), experimentAccession);
+        return new BaselineExperimentFiles(experimentAccession);
     }
 
     public DifferentialExperimentFiles getDifferentialExperimentFiles(String experimentAccession) {
-        return new DifferentialExperimentFiles(discoverExperimentLocation(experimentAccession), experimentAccession);
+        return new DifferentialExperimentFiles(experimentAccession);
     }
 
     public RnaSeqBaselineExperimentFiles getRnaSeqBaselineExperimentFiles(String experimentAccession) {
@@ -116,7 +119,7 @@ public class DataFileHub {
         return new SingleCellExperimentFiles(experimentAccession);
     }
 
-    public final class ExperimentFiles {
+    public class ExperimentFiles {
         public final AtlasResource<TsvReader> analysisMethods;
         public final AtlasResource<XmlReader> configuration;
         public final AtlasResource<TsvReader> condensedSdrf;
@@ -128,55 +131,48 @@ public class DataFileHub {
         public final AtlasResource<TsvWriter> adminOpLogWrite;
         public final AtlasResource<TsvWriter> adminOpLogAppend;
 
-        ExperimentFiles(String baseDir, String experimentAccession) {
-            analysisMethods = new TsvFile.ReadOnly(baseDir, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
-            configuration = new XmlFile.ReadOnly(baseDir, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
-            condensedSdrf = new TsvFile.ReadOnly(baseDir, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
-            idf = new TsvFile.ReadOnly(baseDir, IDF_FILE_PATH_TEMPLATE, experimentAccession);
-            qcFolder = new Directory(baseDir, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
+        ExperimentFiles(String experimentAccession) {
+            analysisMethods = new TsvFile.ReadOnly(experimentsFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
+            configuration = new XmlFile.ReadOnly(experimentsFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
+            condensedSdrf = new TsvFile.ReadOnly(experimentsFilesLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+            idf = new TsvFile.ReadOnly(experimentsFilesLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
+            qcFolder = new Directory(experimentsFilesLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
 
             experimentDesign =
                     new TsvFile.ReadOnly(
-                            baseDir,
+                            experimentsFilesLocation,
                             EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE,
                             experimentAccession);
             experimentDesignWrite =
                     new TsvFile.Overwrite(
-                            baseDir,
+                            experimentsFilesLocation,
                             EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
-            adminOpLog = new TsvFile.ReadOnly(baseDir, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            adminOpLogWrite = new TsvFile.Overwrite(baseDir, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            adminOpLogAppend = new TsvFile.Appendable(baseDir, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            adminOpLog = new TsvFile.ReadOnly(experimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            adminOpLogWrite = new TsvFile.Overwrite(experimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            adminOpLogAppend = new TsvFile.Appendable(experimentsFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
-    // baseDir parameterised as we might want to have BaselineExperimentFiles bundled with SC experiments
-    public final class BaselineExperimentFiles {
-        public final ExperimentFiles experimentFiles;
+    public class BaselineExperimentFiles {
         public final AtlasResource<XmlReader> factors;
         public final AtlasResource<CSVReader> coexpressions;
 
-        BaselineExperimentFiles(String baseDir, String experimentAccession) {
-            experimentFiles = new ExperimentFiles(baseDir, experimentAccession);
-
-            factors = new XmlFile.ReadOnly(baseDir, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
-            coexpressions = new TsvFile.ReadCompressed(baseDir, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
+        BaselineExperimentFiles(String experimentAccession) {
+            factors = new XmlFile.ReadOnly(experimentsFilesLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
+            coexpressions = new TsvFile.ReadCompressed(experimentsFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
         }
     }
 
-    // baseDir parameterised as we might want to have DifferentialExperimentFiles bundled with SC experiments
-    public final class DifferentialExperimentFiles {
-        public final ExperimentFiles experimentFiles;
+    public class DifferentialExperimentFiles {
         public final AtlasResource<ObjectInputStream<String[]>> percentileRanks;
 
-        DifferentialExperimentFiles(String baseDir, String experimentAccession) {
-            experimentFiles = new ExperimentFiles(baseDir, experimentAccession);
-
+        DifferentialExperimentFiles(String experimentAccession) {
             percentileRanks =
                     new TsvFile.ReadAsStream(
-                            baseDir, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE,
+                            experimentsFilesLocation,
+                            DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE,
                             experimentAccession);
         }
 
@@ -189,7 +185,8 @@ public class DataFileHub {
         }
     }
 
-    public final class RnaSeqBaselineExperimentFiles {
+    public class RnaSeqBaselineExperimentFiles {
+        public final ExperimentFiles experimentFiles;
         public final BaselineExperimentFiles baselineExperimentFiles;
 
         public final AtlasResource<ObjectInputStream<String[]>> fpkms;
@@ -197,25 +194,23 @@ public class DataFileHub {
         public final AtlasResource<ObjectInputStream<String[]>> transcriptsTpms;
 
         RnaSeqBaselineExperimentFiles(String experimentAccession) {
-            baselineExperimentFiles =
-                    new BaselineExperimentFiles(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
-                            experimentAccession);
+            experimentFiles = new ExperimentFiles(experimentAccession);
+            baselineExperimentFiles = new BaselineExperimentFiles(experimentAccession);
 
             fpkms =
                     new TsvFile.ReadAsStream(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE,
                             experimentAccession);
             tpms =
                     new TsvFile.ReadAsStream(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
             transcriptsTpms =
                     new TsvFile.ReadAsStream(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE,
                             experimentAccession);
             }
@@ -243,108 +238,109 @@ public class DataFileHub {
         }
     }
 
-    public final class ProteomicsBaselineExperimentFiles {
+    public class ProteomicsBaselineExperimentFiles {
+        public final ExperimentFiles experimentFiles;
         public final BaselineExperimentFiles baselineExperimentFiles;
+
         public final AtlasResource<ObjectInputStream<String[]>> main;
 
         ProteomicsBaselineExperimentFiles(String experimentAccession) {
-            baselineExperimentFiles =
-                    new BaselineExperimentFiles(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
-                            experimentAccession);
+            experimentFiles = new ExperimentFiles(experimentAccession);
+            baselineExperimentFiles = new BaselineExperimentFiles(experimentAccession);
 
             main =
                     new TsvFile.ReadAsStream(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE,
                             experimentAccession);
             }
     }
 
-    public final class RnaSeqDifferentialExperimentFiles {
+    public class RnaSeqDifferentialExperimentFiles {
+        public final ExperimentFiles experimentFiles;
         public final DifferentialExperimentFiles differentialExperimentFiles;
+
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
         public final AtlasResource<TsvReader> rawCounts;
 
         RnaSeqDifferentialExperimentFiles(String experimentAccession) {
-            differentialExperimentFiles =
-                    new DifferentialExperimentFiles(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
-                            experimentAccession);
+            experimentFiles = new ExperimentFiles(experimentAccession);
+            differentialExperimentFiles = new DifferentialExperimentFiles(experimentAccession);
 
             analytics =
                     new TsvFile.ReadAsStream(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE,
                             experimentAccession);
             rawCounts =
                     new TsvFile.ReadOnly(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE,
                             experimentAccession);
         }
     }
 
-    public final class MicroarrayExperimentFiles {
+    public class MicroarrayExperimentFiles {
+        public final ExperimentFiles experimentFiles;
         public final DifferentialExperimentFiles differentialExperimentFiles;
+
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
         public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1-colour specific
         public final AtlasResource<TsvReader> logFoldChanges;           // Microarray 2-colour specific
 
         MicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
-            differentialExperimentFiles =
-                    new DifferentialExperimentFiles(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
-                            experimentAccession);
+            experimentFiles = new ExperimentFiles(experimentAccession);
+            differentialExperimentFiles = new DifferentialExperimentFiles(experimentAccession);
 
             analytics =
                     new TsvFile.ReadAsStream(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE,
-                            experimentAccession, arrayDesign);
+                            experimentAccession,
+                            arrayDesign);
 
             normalizedExpressions =
                     new TsvFile.ReadOnly(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE,
-                            experimentAccession, arrayDesign);
+                            experimentAccession,
+                            arrayDesign);
 
             logFoldChanges =
                     new TsvFile.ReadOnly(
-                            Paths.get(experimentsFilesLocation, "gxa").toString(),
+                            experimentsFilesLocation,
                             MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE,
-                            experimentAccession, arrayDesign);
+                            experimentAccession,
+                            arrayDesign);
         }
     }
 
-    public final class SingleCellExperimentFiles {
+    public class SingleCellExperimentFiles {
         public final ExperimentFiles experimentFiles;
+
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
         public final AtlasResource<TsvReader> geneIdsTsv;
         public final AtlasResource<TsvReader> cellIdsTsv;
         public final Map<Integer, ? extends AtlasResource<TsvReader>> tSnePlotTsvs;
 
         SingleCellExperimentFiles(String experimentAccession) {
-            experimentFiles =
-                    new ExperimentFiles(
-                            Paths.get(experimentsFilesLocation, "scxa").toString(),
-                            experimentAccession);
+            experimentFiles = new ExperimentFiles(experimentAccession);
 
             tpmsMatrix =
                     new MatrixMarketFile(
-                            Paths.get(experimentsFilesLocation, "scxa").toString(),
+                            experimentsFilesLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
             geneIdsTsv =
                     new TsvFile.ReadOnly(
-                            Paths.get(experimentsFilesLocation, "scxa").toString(),
+                            experimentsFilesLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
             cellIdsTsv =
                     new TsvFile.ReadOnly(
-                            Paths.get(experimentsFilesLocation, "scxa").toString(),
+                            experimentsFilesLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
@@ -391,31 +387,5 @@ public class DataFileHub {
             }
             return perplexityValues.build();
         }
-    }
-
-    // After splitting the experiments directory to gxa and scxa we need to discover the experiment location because
-    // sometimes we won’t know where it is (
-    // Consider moving ExperimentSilo and the discocery method to a separate class if we go ahead with the plan of
-    // supporting multi-species single cell experiments, whose outcome will be having a directory layout of the form
-    // scxa/<species>/<accession>: scxa/mus_musculus/E-MTAB-9001, scxa/homo_sapiens/E-MTAB-9001
-    private enum ExperimentSilo {
-        GXA("gxa"),
-        SCXA("scxa");
-
-        private final String dir;
-
-        ExperimentSilo(String dir) {
-            this.dir = dir;
-        }
-    }
-
-    private String discoverExperimentLocation(String experimentAccession) {
-        for (ExperimentSilo silo : ExperimentSilo.values()) {
-            if (Paths.get(experimentsFilesLocation, silo.dir, experimentAccession).toFile().isDirectory()) {
-                return Paths.get(experimentsFilesLocation, silo.dir).toString();
-            }
-        }
-
-        throw new ResourceNotFoundException(String.format("Experiment %s could not be found", experimentAccession));
     }
 }

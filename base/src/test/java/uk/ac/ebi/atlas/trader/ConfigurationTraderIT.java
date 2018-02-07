@@ -18,7 +18,7 @@ public class ConfigurationTraderIT {
     ConfigurationTrader subject;
 
     @Test
-    public void EProtOneHasTwoMenuFilterFactors() throws Exception {
+    public void EProtOneHasTwoMenuFilterFactors() {
         BaselineExperimentConfiguration bc = subject.getBaselineFactorsConfiguration("E-PROT-1");
         assertThat(bc.getMenuFilterFactorTypes().size(), greaterThan(1));
     }
