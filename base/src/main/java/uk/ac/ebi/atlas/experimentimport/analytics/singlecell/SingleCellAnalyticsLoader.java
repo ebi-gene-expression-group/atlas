@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
 
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.SingleCellTSnePlotDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamer;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.SingleCellTSnePlotStreamFactory;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,14 +14,14 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
     private final SingleCellAnalyticsDao analyticsDao;
     private final SingleCellAnalyticsStreamFactory analyticsStreamFactory;
 
-    private final SingleCellTSnePlotDao tSnePlotDao;
-    private final SingleCellTSnePlotStreamFactory tSnePlotStreamFactory;
+    private final TSnePlotDao tSnePlotDao;
+    private final TSnePlotStreamerFactory tSnePlotStreamFactory;
 
     @Inject
     SingleCellAnalyticsLoader(SingleCellAnalyticsDao analyticsDao,
                               SingleCellAnalyticsStreamFactory analyticsStreamFactory,
-                              SingleCellTSnePlotDao tSnePlotDao,
-                              SingleCellTSnePlotStreamFactory tSnePlotStreamFactory) {
+                              TSnePlotDao tSnePlotDao,
+                              TSnePlotStreamerFactory tSnePlotStreamFactory) {
         this.analyticsDao = analyticsDao;
         this.analyticsStreamFactory = analyticsStreamFactory;
 
@@ -32,10 +32,10 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
     @Override
     public void loadAnalytics(String accession) {
         try (SingleCellAnalyticsStream analyticsStream = analyticsStreamFactory.create(accession);
-             TSnePlotStreamer tSnePlotStream = tSnePlotStreamFactory.create(accession)) {
+             TSnePlotStreamer tSnePlotStreamer = tSnePlotStreamFactory.create(accession)) {
             analyticsDao.loadAnalytics(accession, analyticsStream.stream());
-            tSnePlotStream.availablePerplexities()
-                    .forEach(p -> tSnePlotDao.loadTSnePlot(accession, p, tSnePlotStream.stream(p)));
+            tSnePlotStreamer.availablePerplexities()
+                    .forEach(p -> tSnePlotDao.loadTSnePlot(accession, p, tSnePlotStreamer.stream(p)));
         }
     }
 
