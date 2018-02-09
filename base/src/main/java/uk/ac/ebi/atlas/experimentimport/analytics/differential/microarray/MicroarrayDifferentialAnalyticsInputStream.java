@@ -117,7 +117,7 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
                     double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
                     double tStatistic = DifferentialTsvFileParsingUtil.parseDouble(tStatisticString);
                     double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
-                    if (foldChange != 0) {
+                    if (foldChange != 0.0) {
                         MicroarrayDifferentialAnalytics dto = new MicroarrayDifferentialAnalytics(geneId, designElement, contrastId, pValue, foldChange, tStatistic);
                         builder.add(dto);
                     }

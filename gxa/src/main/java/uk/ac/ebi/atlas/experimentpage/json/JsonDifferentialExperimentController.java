@@ -23,7 +23,7 @@ import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
