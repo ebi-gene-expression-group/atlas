@@ -19,7 +19,7 @@ public class BaselineCoexpressionProfileLoader {
     private DataFileHub dataFileHub;
 
     @Inject
-    public void setBaselineCoexpressionProfileDao(BaselineCoexpressionProfileDao baselineCoexpressionProfileDao) {
+    public BaselineCoexpressionProfileLoader(BaselineCoexpressionProfileDao baselineCoexpressionProfileDao) {
         this.baselineCoexpressionProfileDao = baselineCoexpressionProfileDao;
     }
 
@@ -28,12 +28,6 @@ public class BaselineCoexpressionProfileLoader {
         this.dataFileHub = dataFileHub;
     }
 
-    // @Transactional kicks in Spring’s AOP capabilities, which in turn proxies the target class. It must have a null
-    // constructor for CGLIB-based proxies, or implement an interface for JDK-based proxies (e.g. AnalyticsLoader).
-    // Therefore we can’t use final or inject beans via the constructor.
-    // http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/aop-api.html#aop-pfb-proxy-types
-    // http://blog.codeleak.pl/2014/07/spring-4-cglib-based-proxy-classes-with-no-default-ctor.html
-    // http://forum.spring.io/forum/spring-projects/aop/4971-transaction-proxy-on-class-with-no-default-constructor
     @Transactional
     public int loadBaselineCoexpressionsProfile(String experimentAccession) {
         AtlasResource<CSVReader> coexpressions =
