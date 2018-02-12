@@ -15,7 +15,7 @@ public class TsvReader implements AutoCloseable{
 
     public Stream<String[]> stream() {
         return new BufferedReader(this.reader).lines()
-                .map(line -> line.split("\t"))
+                .map(line -> line.split("\t", -1))
                 .filter(line -> !line[0].startsWith("#"));
     }
 
