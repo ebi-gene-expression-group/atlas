@@ -81,7 +81,8 @@ public class ExperimentCrud {
         }
 
         // We only insert in the DB differential and single cell experiments expressions
-        analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType())
+        analyticsLoaderFactory
+                .getLoader(experimentConfiguration.getExperimentType())
                 .loadAnalytics(experimentAccession);
 
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
