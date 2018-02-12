@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePoint;
 import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
-import uk.ac.ebi.atlas.tsne.TSnePlotCollator;
-import uk.ac.ebi.atlas.tsne.TSnePoint;
 
 import javax.inject.Inject;
-import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +29,13 @@ import java.util.stream.Collectors;
 public class JsonSingleCellExperimentController extends JsonExperimentController {
 
     private final Gson gson;
-    private final TSnePlotCollator tSnePlotCollator;
+    private final TSnePlotDao tSnePlotDao;
 
     @Inject
-    public JsonSingleCellExperimentController(ScxaExperimentTrader experimentTrader, TSnePlotCollator tSnePlotCollator) {
+    public JsonSingleCellExperimentController(ScxaExperimentTrader experimentTrader,
+                                              TSnePlotDao tSnePlotDao) {
         super(experimentTrader);
-        this.tSnePlotCollator = tSnePlotCollator;
+        this.tSnePlotDao = tSnePlotDao;
 
         gson = new GsonBuilder().registerTypeAdapter(TSnePoint.create(0.0, 0.0, "").getClass(), TSnePoint.getGsonTypeAdapter()).create();
     }
@@ -48,7 +48,7 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
             @PathVariable String experimentAccession,
             @PathVariable int perplexity,
             @PathVariable int k,
-            @RequestParam(defaultValue = "") String accessKey) throws IOException, InterruptedException {
+            @RequestParam(defaultValue = "") String accessKey) {
         return tSnePlotClustersWithExpression(experimentAccession, perplexity, k, "", accessKey);
     }
 
@@ -61,16 +61,21 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
             @PathVariable int perplexity,
             @PathVariable int k,
             @PathVariable String geneId,
-            @RequestParam(defaultValue = "") String accessKey) throws IOException, InterruptedException {
+            @RequestParam(defaultValue = "") String accessKey) {
 
         // Fail if experiment can’t be found
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         // Artificial delay to show the funky loading animation in the front end
         // Thread.sleep(3000);
+        // TODO Move to a service on top of the DAO that would use @Transactional(readOnly = true), and
+        // TODO perform all calls (with or without gene ID, etc.), data de/serialization and more
+        List<TSnePoint> tSnePoints = tSnePlotDao.fetchTSnePlot(experimentAccession, perplexity, geneId);
 
         TreeMultimap<Integer, TSnePoint> clusterPointsWithExpression =
-                tSnePlotCollator.getTsnePlotWithClustersAndExpression(experimentAccession, k, geneId);
+                TreeMultimap.create(Comparator.<Integer> naturalOrder(), TSnePoint.getNameComparator());
+
+        clusterPointsWithExpression.putAll(1, tSnePoints);
 
         OptionalDouble max = clusterPointsWithExpression.values().stream()
                 .map(TSnePoint::expressionLevel)
