@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -148,18 +149,18 @@ public class TSnePlotStreamerTest {
     static List<TSnePoint> randomTSnePoints(int maxSize) {
         int size = ThreadLocalRandom.current().nextInt(0, maxSize);
 
-        ImmutableList.Builder<TSnePoint> listBuilder = ImmutableList.builder();
-        for (int i = 0 ; i < size ; i++) {
-            listBuilder.add(
-                    TSnePoint.create(
-                            ThreadLocalRandom.current().nextDouble(-100.0, 100.0),
-                            ThreadLocalRandom.current().nextDouble(-100.0, 100.0),
-                            randomAlphanumeric(20)
-                    )
-            );
+        HashSet<String> cellIds = new HashSet<>(size);
+        while (cellIds.size() < size) {
+            cellIds.add(randomAlphanumeric(20));
         }
 
-        return listBuilder.build();
+        return cellIds.stream()
+                .map(cellId ->
+                                TSnePoint.create(
+                                        ThreadLocalRandom.current().nextDouble(-100.0, 100.0),
+                                        ThreadLocalRandom.current().nextDouble(-100.0, 100.0),
+                                        cellId))
+                .collect(Collectors.toList());
     }
 
     static private String[][] toTsv(List<TSnePoint> tSnePoints) {
