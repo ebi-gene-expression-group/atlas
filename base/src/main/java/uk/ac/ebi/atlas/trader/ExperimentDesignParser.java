@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -44,57 +45,59 @@ public class ExperimentDesignParser {
             throw new UncheckedIOException(new FileNotFoundException(String.format("%s does not exist", r)));
         }
 
-        try (TsvReader tsvHeadReader = r.get(); TsvReader tsvTailReader = r.get()) {
-            String[] headerLine = tsvHeadReader.stream().findFirst().orElse(new String[0]);
-
-            Map<String, Integer> sampleHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
-            Map<String, Integer> sampleValueOntologyTermHeaderIndexes =
-                    extractHeaderIndexes(headerLine, SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
-
-            Map<String, Integer> factorHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
-            Map<String, Integer> factorValueOntologyTermHeaderIndexes =
-                    extractHeaderIndexes(headerLine, FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
-
+        try (TsvReader tsvReaderz = r.get()) {
+            Iterator<String[]> lineIterator = tsvReaderz.stream().iterator();
             ExperimentDesign experimentDesign = new ExperimentDesign();
-            for (String headerLineField : headerLine) {
-                experimentDesign.addAssayHeader(headerLineField);
-            }
 
-            int headersStartIndex =
-                    headerLine.length - (sampleHeaderIndexes.size() + sampleValueOntologyTermHeaderIndexes.size() +
-                    factorHeaderIndexes.size() + factorValueOntologyTermHeaderIndexes.size());
+            if (lineIterator.hasNext()) {
+                String[] headerLine = lineIterator.next();
 
-            for (Iterator<String[]> tsvTailReaderIterator = tsvTailReader.stream().skip(1).iterator();
-                 tsvTailReaderIterator.hasNext();) {
-                String[] line = tsvTailReaderIterator.next();
+                Map<String, Integer> sampleHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
+                Map<String, Integer> sampleValueOntologyTermHeaderIndexes =
+                        extractHeaderIndexes(headerLine, SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
 
-                String runOrAssay = line[0];
-                if (headersStartIndex > 1) {
-                    experimentDesign.putArrayDesign(runOrAssay, line[1]);
+                Map<String, Integer> factorHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
+                Map<String, Integer> factorValueOntologyTermHeaderIndexes =
+                        extractHeaderIndexes(headerLine, FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
+
+                int headersStartIndex =
+                        headerLine.length - (sampleHeaderIndexes.size() + sampleValueOntologyTermHeaderIndexes.size() +
+                                factorHeaderIndexes.size() + factorValueOntologyTermHeaderIndexes.size());
+
+                for (String assayHeaderField : Arrays.copyOf(headerLine, headersStartIndex)) {
+                    experimentDesign.addAssayHeader(assayHeaderField);
                 }
 
-                for (String sampleHeader : sampleHeaderIndexes.keySet()) {
-                    String sampleValue = line[sampleHeaderIndexes.get(sampleHeader)];
+                while (lineIterator.hasNext()) {
+                    String[] line = lineIterator.next();
 
-                    Integer sampleValueOntologyTermIndex = sampleValueOntologyTermHeaderIndexes.get(sampleHeader);
-                    OntologyTerm[] sampleValueOntologyTerms = createOntologyTerms(line, sampleValueOntologyTermIndex);
-                    SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleHeader, sampleValue, sampleValueOntologyTerms);
+                    String runOrAssay = line[0];
+                    if (headersStartIndex > 1) {
+                        experimentDesign.putArrayDesign(runOrAssay, line[1]);
+                    }
 
-                    experimentDesign.putSampleCharacteristic(runOrAssay, sampleHeader, sampleCharacteristic);
-                }
+                    for (String sampleHeader : sampleHeaderIndexes.keySet()) {
+                        String sampleValue = line[sampleHeaderIndexes.get(sampleHeader)];
 
-                for (String factorHeader : factorHeaderIndexes.keySet()) {
-                    String factorValue = line[factorHeaderIndexes.get(factorHeader)];
+                        Integer sampleValueOntologyTermIndex = sampleValueOntologyTermHeaderIndexes.get(sampleHeader);
+                        OntologyTerm[] sampleValueOntologyTerms = createOntologyTerms(line, sampleValueOntologyTermIndex);
+                        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleHeader, sampleValue, sampleValueOntologyTerms);
 
-                    Integer factorValueOntologyTermIndex = factorValueOntologyTermHeaderIndexes.get(factorHeader);
-                    OntologyTerm[] factorValueOntologyTerms = createOntologyTerms(line, factorValueOntologyTermIndex);
+                        experimentDesign.putSampleCharacteristic(runOrAssay, sampleHeader, sampleCharacteristic);
+                    }
 
-                    experimentDesign.putFactor(runOrAssay, factorHeader, factorValue, factorValueOntologyTerms);
+                    for (String factorHeader : factorHeaderIndexes.keySet()) {
+                        String factorValue = line[factorHeaderIndexes.get(factorHeader)];
+
+                        Integer factorValueOntologyTermIndex = factorValueOntologyTermHeaderIndexes.get(factorHeader);
+                        OntologyTerm[] factorValueOntologyTerms = createOntologyTerms(line, factorValueOntologyTermIndex);
+
+                        experimentDesign.putFactor(runOrAssay, factorHeader, factorValue, factorValueOntologyTerms);
+                    }
                 }
             }
 
             return experimentDesign;
-
         }
     }
 
