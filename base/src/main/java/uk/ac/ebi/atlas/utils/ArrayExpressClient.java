@@ -22,7 +22,8 @@ public class ArrayExpressClient {
 
     private static final String EXPERIMENT_NAME_XPATH = "//experiment/name";
 
-    private static final String AE_URL_TEMPLATE = "https://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?accession={0}";
+    static final String AE_URL_TEMPLATE = "https://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?accession={0}";
+
     private RestTemplate restTemplate;
     private IdfParser idfParser;
 
@@ -35,14 +36,15 @@ public class ArrayExpressClient {
     public String fetchExperimentName(String experimentAccession) {
         try {
             String experimentXML =
-                    restTemplate.getForObject(MessageFormat.format(AE_URL_TEMPLATE, experimentAccession), String.class);
+                    restTemplate
+                            .getForObject(MessageFormat.format(AE_URL_TEMPLATE, experimentAccession), String.class);
             return parseExperimentName(experimentXML);
         } catch (Exception e) {
             LOGGER.warn("Could not retrieve experiment name from ArrayExpress, falling back to IDF file: " + e);
             String experimentName = idfParser.parse(experimentAccession).getLeft();
 
             if (experimentName.isEmpty()) {
-                throw new RuntimeException(e);    // Give cache loaders a chance to set the name from the DTO
+                throw new IllegalArgumentException(e);    // Give cache loaders a chance to set the name from the DTO
             }
 
             return experimentName;
