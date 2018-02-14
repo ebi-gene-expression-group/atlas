@@ -24,7 +24,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -195,9 +195,10 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         doThrow(new RuntimeException("Woosh!")).when(experimentCrudMock).deleteExperiment(accession);
 
-        JsonObject result = subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singleton(Op
-                .DELETE))
-                .iterator().next().getAsJsonObject();
+        JsonObject result =
+                subject.dispatchAndPerform(
+                        Collections.singletonList(accession),
+                        Collections.singleton(Op.DELETE)).iterator().next().getAsJsonObject();
 
         assertThat(accession, is(result.get("accession").getAsString()));
         assertThat(result.get("result"), is(nullValue()));
@@ -228,7 +229,7 @@ public class ExperimentOpsTest {
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled1() throws Exception {
-        doThrow(new RuntimeException("The files are bad!"))
+        doThrow(new IOException("The files are bad!"))
                 .when(experimentCrudMock)
                 .importExperiment(accession,false);
 
@@ -241,7 +242,7 @@ public class ExperimentOpsTest {
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled2() throws IOException {
-        doThrow(new RuntimeException("Database down, or something"))
+        doThrow(new UncheckedIOException(new IOException("Database down, or something")))
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
@@ -256,7 +257,7 @@ public class ExperimentOpsTest {
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws IOException {
-        doThrow(new RuntimeException("Serializing failed"))
+        doThrow(new UncheckedIOException(new IOException("Serializing failed")))
                 .when(expressionSerializerService)
                 .kryoSerializeExpressionData(any(Experiment.class));
 

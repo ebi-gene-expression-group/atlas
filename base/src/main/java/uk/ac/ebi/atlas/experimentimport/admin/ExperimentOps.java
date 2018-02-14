@@ -241,7 +241,7 @@ public class ExperimentOps {
                         accession,
                         ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toSuccess()).build());
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 String text = e.getMessage() != null ? e.getMessage() : e.toString();
                 LOGGER.error(text,e);
                 result = Pair.of(OpResult.FAILURE, new JsonPrimitive(text));
