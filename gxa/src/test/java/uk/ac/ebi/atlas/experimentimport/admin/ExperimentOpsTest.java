@@ -292,7 +292,7 @@ public class ExperimentOpsTest {
         assertThat(response, containsString("error"));
     }
 
-    private String readFromStatus(List<OpLogEntry> persisted) throws UnsupportedEncodingException {
+    private String readFromStatus(List<OpLogEntry> persisted) throws IOException {
         String accession = "ACCESSION-statusReadsOpLog";
         experimentOpLogWriter.persistOpLog(accession, persisted);
 
@@ -306,7 +306,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void statusReadsLastOpLogEntry() throws UnsupportedEncodingException {
+    public void statusReadsLastOpLogEntry() throws IOException {
         assertThat(readFromStatus(ImmutableList.of()), is(""));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));

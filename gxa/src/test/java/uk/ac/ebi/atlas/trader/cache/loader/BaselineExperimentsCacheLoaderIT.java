@@ -17,15 +17,14 @@ import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.io.FileNotFoundException;
+import java.io.UncheckedIOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
@@ -64,38 +63,39 @@ public class BaselineExperimentsCacheLoaderIT {
 
 
     @Test
-    public void correctSpeciesReadFromDatabase() throws Exception {
+    public void correctSpeciesReadFromDatabase() {
         //given
         BaselineExperiment experiment = subject.load(accession);
         //then
         String species = experiment.getSpecies().getName();
-        assertThat(species, is("Homo sapiens"));
+        assertThat(species).isEqualTo("Homo sapiens");
     }
 
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() throws Exception {
+    public void experimentShouldOnlyContainRunsFromDataFile() {
         BaselineExperiment experiment = subject.load(accession);
 
-        assertThat(experiment.getAnalysedAssays(), hasItems(
-            "ERR030872", "ERR030873", "ERR030874", "ERR030875",
-            "ERR030876", "ERR030877", "ERR030878", "ERR030879",
-            "ERR030880", "ERR030881", "ERR030882", "ERR030883",
-            "ERR030884", "ERR030885", "ERR030886", "ERR030887"
-        ));
+        assertThat(experiment.getAnalysedAssays())
+                .containsExactlyInAnyOrder(
+                        "ERR030872", "ERR030873", "ERR030874", "ERR030875", "ERR030876", "ERR030877", "ERR030878",
+                        "ERR030879", "ERR030880", "ERR030881", "ERR030882", "ERR030883", "ERR030884", "ERR030885",
+                        "ERR030886", "ERR030887");
 
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() throws Exception {
+    public void experimentShouldContainAssayGroups() {
         BaselineExperiment experiment = subject.load(accession);
 
-        assertThat(experiment.getDataColumnDescriptors(), hasSize(16));
+        assertThat(experiment.getDataColumnDescriptors()).hasSize(16);
     }
 
-    @Test(expected = FileNotFoundException.class)
-    public void loadNonExistentExperimentThrowsFileNotFoundException() throws Exception {
-        subject.load("FOOBAR");
+    @Test
+    public void loadNonExistentExperimentThrowsWrappedFileNotFoundException() {
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> subject.load("FOOBAR"))
+                .withCauseInstanceOf(FileNotFoundException.class);
     }
 
 }

@@ -56,11 +56,12 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
         return helpPage.getMessage();
     }
 
-    @RequestMapping(
-            value = "/{accessions}/{op}",
-            produces = "application/json;charset=UTF-8")
-    public void doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter, HttpServletResponse response) {
-        try (JsonWriter writer = new JsonWriter(response.getWriter())) {
+    @RequestMapping(value = "/{accessions}/{op}", produces = "application/json;charset=UTF-8")
+    public void doOp(@PathVariable("accessions") String accessionParameter,
+                     @PathVariable("op") String opParameter,
+                     HttpServletResponse response) throws IOException {
+        JsonWriter writer = new JsonWriter(response.getWriter());
+        try {
             writer.setIndent("  ");
             writer.beginArray();
 
@@ -75,14 +76,13 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
 
             for (JsonElement element : result) {
                 gson.toJson(element, writer);
-                writer.flush();
             }
-
+        } catch (Exception e) {
+            gson.toJson(errorMessage(accessionParameter, e), writer);
+        } finally {
             writer.endArray();
-
-        } catch (IOException e) {
-            gson.toJson(errorMessage(accessionParameter, e));
-            throw new UncheckedIOException(e);
+            writer.flush();
+            writer.close();
         }
     }
 

@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSeria
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -100,7 +101,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws Exception {
+    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws IOException {
         JsonPrimitive resultOfTheOp = ExperimentOps.DEFAULT_SUCCESS_RESULT;
         boolean isPrivate = true;
         int deleteCount;
