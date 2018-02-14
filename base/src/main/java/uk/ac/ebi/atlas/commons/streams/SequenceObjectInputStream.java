@@ -20,7 +20,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
         this.e = e;
         try {
             nextStream();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             // This should never happen
             throw new Error("panic");
         }
@@ -51,8 +51,8 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
         if (c == null) {
             try {
                 nextStream();
-            } catch (IOException ex) {
-                throw new IllegalStateException("Next stream failed.", ex);
+            } catch (Exception ex) {
+                throw new RuntimeException("Next stream failed.", ex);
             }
             return readNext();
         }

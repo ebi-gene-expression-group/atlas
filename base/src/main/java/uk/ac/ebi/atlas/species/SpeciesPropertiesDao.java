@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonToken;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.model.resource.JsonFile;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;

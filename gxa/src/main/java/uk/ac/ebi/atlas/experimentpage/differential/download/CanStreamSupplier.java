@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.function.Function;
@@ -36,7 +37,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
                 }
                 zipOutputStream.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new UncheckedIOException(e);
             }
             return null;
         };
@@ -56,8 +57,8 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
 
             try(Writer writer = response.getWriter()){
                 document.apply(writer);
-            } catch (IOException e){
-                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
             }
             return null;
         };
@@ -83,7 +84,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
                 }
                 csvWriter.flush();
             } catch (IOException e) {
-                throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
+                throw new UncheckedIOException("Exception thrown while reading next csv line: " + e.getMessage(), e);
             }
             return null;
         };
@@ -109,7 +110,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
                 }
                 csvWriter.flush();
             } catch (IOException e) {
-                throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
+                throw new UncheckedIOException("Exception thrown while reading next csv line: " + e.getMessage(), e);
             }
             return null;
         };

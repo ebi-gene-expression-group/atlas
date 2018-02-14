@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -65,7 +66,7 @@ public class ExperimentCrudTest {
     private String accessKey = UUID.randomUUID().toString();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         AssayGroup assayGroup = new AssayGroup("g1", "run_1");
         ExperimentDesign experimentDesign = new ExperimentDesign();
         experimentDesign.putSampleCharacteristic("run_1", "type", "value");
@@ -110,12 +111,13 @@ public class ExperimentCrudTest {
 
     @Test(expected = IllegalStateException.class)
     public void failImportOnValidationWhenExperimentDesignDoesNotMatchAssayGroups2() throws IOException {
-        when(experimentConfigurationMock.getAssayGroups()).thenReturn(ImmutableList.of(new AssayGroup("different assay", "different run")));
+        when(experimentConfigurationMock.getAssayGroups())
+                .thenReturn(ImmutableList.of(new AssayGroup("different assay", "different run")));
         subject.importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
-    public void updateExperimentToPrivateShouldDelegateToDAO() throws Exception {
+    public void updateExperimentToPrivateShouldDelegateToDAO() throws IOException {
         ExperimentDTO privateMock = mock(ExperimentDTO.class);
         when(privateMock.isPrivate()).thenReturn(true);
         given(experimentDaoMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(privateMock);
@@ -125,7 +127,7 @@ public class ExperimentCrudTest {
     }
 
     @Test
-    public void updateExperimentToPublicShouldDelegateToDAO() throws Exception {
+    public void updateExperimentToPublicShouldDelegateToDAO() throws IOException {
         ExperimentDTO publicMock = mock(ExperimentDTO.class);
         when(publicMock.isPrivate()).thenReturn(false);
         given(experimentDaoMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(publicMock);
@@ -137,29 +139,33 @@ public class ExperimentCrudTest {
     }
 
     @Test
-    public void importExperimentParsesDesignFileOnce() throws Exception {
+    public void importExperimentParsesDesignFileOnce() throws IOException {
         subject.importExperiment(EXPERIMENT_ACCESSION, false);
         verify(condensedSdrfParserMock).parse(EXPERIMENT_ACCESSION, experimentType);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void ioExceptionsAreWrapped() throws Exception {
+    @Test(expected = UncheckedIOException.class)
+    public void ioExceptionsAreWrapped() throws IOException {
         doThrow(new IOException())
                 .when(experimentDesignFileWriterService)
                 .writeExperimentDesignFile(
-                        eq(EXPERIMENT_ACCESSION), eq(ExperimentType.RNASEQ_MRNA_BASELINE), any(ExperimentDesign.class));
+                        eq(EXPERIMENT_ACCESSION),
+                        eq(ExperimentType.RNASEQ_MRNA_BASELINE),
+                        any(ExperimentDesign.class));
 
         subject.importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
-    public void updateExperimentDesign() throws Exception {
+    public void updateExperimentDesign() throws IOException {
         subject.importExperiment(EXPERIMENT_ACCESSION, false);
         subject.updateExperimentDesign(EXPERIMENT_ACCESSION);
 
         // First time for import, second for update
         verify(experimentDesignFileWriterService, times(2))
                 .writeExperimentDesignFile(
-                        eq(EXPERIMENT_ACCESSION), eq(ExperimentType.RNASEQ_MRNA_BASELINE), any(ExperimentDesign.class));
+                        eq(EXPERIMENT_ACCESSION),
+                        eq(ExperimentType.RNASEQ_MRNA_BASELINE),
+                        any(ExperimentDesign.class));
     }
 }

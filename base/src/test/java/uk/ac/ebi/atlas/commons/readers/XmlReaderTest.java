@@ -46,7 +46,7 @@ public class XmlReaderTest {
 
     @Test
     public void readDefaultFilterFactors(){
-        subject = dataFileHub.getRnaSeqBaselineExperimentFiles(E_MTAB_2812).factors.get();
+        subject = dataFileHub.getRnaSeqBaselineExperimentFiles(E_MTAB_2812).baselineExperimentFiles.factors.get();
         assertThat(subject.getMap("defaultFilterFactors", "type", "value").size(), is(2));
     }
 

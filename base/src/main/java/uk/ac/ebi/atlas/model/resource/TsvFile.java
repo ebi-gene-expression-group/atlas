@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
@@ -35,17 +34,12 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
             }
         }
 
-        private static class TsvStreamReader implements Closeable, ObjectInputStream<String[]> {
+        private static class TsvStreamReader implements ObjectInputStream<String[]> {
 
             private CSVReader tsvReader;
 
             public TsvStreamReader(Reader reader) {
                 this.tsvReader = new CSVReader(reader, '\t');
-            }
-
-            @Override
-            public void close() throws IOException {
-                tsvReader.close();
             }
 
             @Override
@@ -55,6 +49,11 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+
+            @Override
+            public void close() throws IOException {
+                tsvReader.close();
             }
         }
     }
@@ -68,9 +67,9 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
         @Override
         public TsvReader get() {
             try {
-                return new TsvReaderImpl(Files.newBufferedReader(path, StandardCharsets.UTF_8));
+                return new TsvReader(Files.newBufferedReader(path, StandardCharsets.UTF_8));
             } catch (IOException e) {
-                throw new IllegalStateException(e);
+                throw new UncheckedIOException(e);
             }
         }
     }

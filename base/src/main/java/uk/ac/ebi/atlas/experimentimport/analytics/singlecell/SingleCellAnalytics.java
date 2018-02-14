@@ -6,7 +6,7 @@ import com.google.auto.value.AutoValue;
 public abstract class SingleCellAnalytics {
     private static final String CSV_LINE_FORMAT = "%s,%s,%f";
 
-    static SingleCellAnalytics create(String geneId, String cellId, double expressionLevel) {
+    public static SingleCellAnalytics create(String geneId, String cellId, double expressionLevel) {
         return new AutoValue_SingleCellAnalytics(geneId, cellId, expressionLevel);
     }
 

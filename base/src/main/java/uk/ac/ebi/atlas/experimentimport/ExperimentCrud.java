@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -80,7 +81,8 @@ public class ExperimentCrud {
         }
 
         // We only insert in the DB differential and single cell experiments expressions
-        analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType())
+        analyticsLoaderFactory
+                .getLoader(experimentConfiguration.getExperimentType())
                 .loadAnalytics(experimentAccession);
 
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
@@ -152,7 +154,7 @@ public class ExperimentCrud {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
             LOGGER.info("updated design for experiment {}", accession);
         } catch (IOException e) {
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
         }
     }
 

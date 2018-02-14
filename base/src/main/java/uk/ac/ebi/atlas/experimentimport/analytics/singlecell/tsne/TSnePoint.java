@@ -1,7 +1,6 @@
-package uk.ac.ebi.atlas.tsne;
+package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
 
 import com.google.auto.value.AutoValue;
-import com.google.gson.InstanceCreator;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -16,17 +15,17 @@ import java.util.Optional;
 
 @AutoValue
 public abstract class TSnePoint {
-    abstract double x();
-    abstract double y();
+    public abstract double x();
+    public abstract double y();
     public abstract Optional<Double> expressionLevel();
-    abstract String name();
+    public abstract String name();
 
-    public static TSnePoint create(double x, double y, Optional<Double> expressionLevel, String name) {
-        return new AutoValue_TSnePoint(x, y, expressionLevel, name);
+    public static TSnePoint create(double x, double y, double expressionLevel, String name) {
+        return new AutoValue_TSnePoint(x, y, Optional.of(expressionLevel), name);
     }
 
     public static TSnePoint create(double x, double y, String name) {
-        return create(x, y, Optional.empty(), name);
+        return new AutoValue_TSnePoint(x, y, Optional.empty(), name);
     }
 
     private static final Comparator<TSnePoint> NAME_COMPARATOR = new NameComparator();
@@ -45,8 +44,7 @@ public abstract class TSnePoint {
         return GSON_TYPE_ADAPTER;
     }
 
-    private static class GsonTypeAdapter
-            implements JsonSerializer<TSnePoint>, JsonDeserializer<TSnePoint>, InstanceCreator<TSnePoint> {
+    private static class GsonTypeAdapter implements JsonSerializer<TSnePoint>, JsonDeserializer<TSnePoint> {
         @Override
         public JsonElement serialize(TSnePoint src, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
@@ -69,7 +67,7 @@ public abstract class TSnePoint {
                 return create(
                         jsonObject.get("x").getAsDouble(),
                         jsonObject.get("y").getAsDouble(),
-                        Optional.of(jsonObject.get("expressionLevel").getAsDouble()),
+                        jsonObject.get("expressionLevel").getAsDouble(),
                         jsonObject.get("name").getAsString());
             } else {
                 return create(
@@ -79,15 +77,17 @@ public abstract class TSnePoint {
             }
         }
 
-        @Override
-        public TSnePoint createInstance(Type type) {
-            return create(0.0, 0.0, "");
-        }
+        // Uncomment if GsonTypeAdapter also implements InstanceCreator<TSnePoint>
+        // @Override
+        // public TSnePoint createInstance(Type type) {
+        //     return create(0.0, 0.0, "");
+        // }
     }
     private static final GsonTypeAdapter GSON_TYPE_ADAPTER = new GsonTypeAdapter();
 
 
-    // Public static method returning a TypeAdapter<Foo> is what tells auto-value-gson to create a TypeAdapter for Foo
+// Public static method returning a TypeAdapter<Foo> is what tells auto-value-gson to create a TypeAdapter for Foo
+//
 //    public static TypeAdapter<TSnePoint> typeAdapter(Gson gson) {
 //        return new AutoValue_TSnePoint.GsonTypeAdapter(gson);
 //    }

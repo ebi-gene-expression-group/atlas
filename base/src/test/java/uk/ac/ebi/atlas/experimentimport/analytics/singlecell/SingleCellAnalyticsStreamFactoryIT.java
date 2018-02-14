@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -58,7 +57,7 @@ public class SingleCellAnalyticsStreamFactoryIT {
     SingleCellAnalyticsStreamFactory subject = new SingleCellAnalyticsStreamFactory(dataFileHub);
 
     @Test
-    public void readsAllEntries() throws Exception {
+    public void readsAllEntries() {
         Triple<Collection<Triple>, String[], String[]> matrixMarketFiles =
                 randomMatrixMarketGenerator(MAX_ROWS, MAX_COLS, MAX_EXPRESSION, SPARSE_FACTOR);
 
@@ -82,7 +81,7 @@ public class SingleCellAnalyticsStreamFactoryIT {
     }
 
     @Test
-    public void emptyMatrix() throws Exception {
+    public void emptyMatrix() {
         Triple<Collection<Triple>, String[], String[]> matrixMarketFiles =
                 randomMatrixMarketGenerator(MAX_ROWS, MAX_COLS, MAX_EXPRESSION, 1.0);
 

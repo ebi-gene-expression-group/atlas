@@ -64,7 +64,8 @@ public class ExperimentSorter {
 
     private long estimateSizeOfMicroarrayExperiment(String experimentAccession) {
         Set<String> arrayDesigns =
-                configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession).getArrayDesignAccessions();
+                configurationTrader
+                        .getMicroarrayExperimentConfiguration(experimentAccession).getArrayDesignAccessions();
 
         long n = 0;
         for (String arrayDesign : arrayDesigns) {

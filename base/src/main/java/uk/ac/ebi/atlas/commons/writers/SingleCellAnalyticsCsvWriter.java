@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.SingleCellAnalytics
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +33,7 @@ public class SingleCellAnalyticsCsvWriter implements AutoCloseable {
             outWriter.write(line);
             outWriter.newLine();
         } catch (IOException e) {
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -41,7 +42,7 @@ public class SingleCellAnalyticsCsvWriter implements AutoCloseable {
         try {
             outWriter.close();
         } catch (IOException e) {
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
         }
     }
 }

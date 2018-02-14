@@ -16,9 +16,11 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentCrudIT;
 
 import javax.inject.Inject;
 
+import java.io.IOException;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,58 +28,57 @@ import static org.junit.Assert.*;
 public class ExpressionAtlasExperimentAdminControllerIT {
 
     @Inject
-    ExpressionAtlasExperimentAdminController subject;
+    private ExpressionAtlasExperimentAdminController subject;
 
-    String accession = ExperimentCrudIT.RNASEQ_BASELINE_ACCESSION;
-
+    private static final String ACCESSION = ExperimentCrudIT.RNASEQ_BASELINE_ACCESSION;
 
     @After
-    public void tryCleanUp() throws Exception{
-        subject.doOp(accession,Op.CLEAR_LOG.name(), new MockHttpServletResponse());
-        subject.doOp(accession,Op.DELETE.name(), new MockHttpServletResponse());
-        subject.doOp(accession,Op.CLEAR_LOG.name(), new MockHttpServletResponse());
+    public void tryCleanUp() throws IOException {
+        subject.doOp(ACCESSION, Op.CLEAR_LOG.name(), new MockHttpServletResponse());
+        subject.doOp(ACCESSION, Op.DELETE.name(), new MockHttpServletResponse());
+        subject.doOp(ACCESSION, Op.CLEAR_LOG.name(), new MockHttpServletResponse());
     }
     @Test
-    public void ourScenario() throws Exception{
+    public void ourScenario() throws IOException {
         MockHttpServletResponse response;
 
         response = new MockHttpServletResponse();
-        subject.doOp(accession,Op.CACHE_READ.name(), response);
+        subject.doOp(ACCESSION, Op.CACHE_READ.name(), response);
         isError(
                 "Before import cache read should report not found",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(accession, Joiner.on(",").join(ImmutableList.copyOf(Op.opsForParameter("LOAD"))), response);
+        subject.doOp(ACCESSION, Joiner.on(",").join(ImmutableList.copyOf(Op.opsForParameter("LOAD"))), response);
         isOk(
                 "Load is fine",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(accession,Op.CACHE_READ.name(), response);
+        subject.doOp(ACCESSION,Op.CACHE_READ.name(), response);
         isOk(
                 "Cache read after load is fine",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(accession,Op.DELETE.name(), response);
+        subject.doOp(ACCESSION,Op.DELETE.name(), response);
         isOk(
                 "Delete is fine",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(accession,Op.CACHE_READ.name(), response);
+        subject.doOp(ACCESSION,Op.CACHE_READ.name(), response);
         isError(
                 "After delete cache read should report not found",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(accession,Op.CLEAR_LOG.name(), response);
+        subject.doOp(ACCESSION,Op.CLEAR_LOG.name(), response);
         isOk(
                 "Clear log is fine",
                 response.getContentAsString()
@@ -85,23 +86,23 @@ public class ExpressionAtlasExperimentAdminControllerIT {
 
     }
 
-    void isOk(String messageAboutWhatIsExpected, String result){
+    private void isOk(String messageAboutWhatIsExpected, String result) {
         isOk(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
     }
 
-    void isError(String messageAboutWhatIsExpected, String result){
+    private void isError(String messageAboutWhatIsExpected, String result){
         isError(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
     }
 
-    void isOk(String message, JsonObject object){
+    private void isOk(String message, JsonObject object){
         assertAboutResponseObject(message, object, true);
     }
 
-    void isError(String message, JsonObject object){
+    private void isError(String message, JsonObject object){
         assertAboutResponseObject(message, object, false);
     }
 
-    void assertAboutResponseObject(String message, JsonObject object, boolean expectedSuccessful){
+    private void assertAboutResponseObject(String message, JsonObject object, boolean expectedSuccessful){
         assertThat(
                 message,
                 object.has("result"),
@@ -113,9 +114,5 @@ public class ExpressionAtlasExperimentAdminControllerIT {
                 not(is(expectedSuccessful))
         );
     }
-
-
-
-
 
 }

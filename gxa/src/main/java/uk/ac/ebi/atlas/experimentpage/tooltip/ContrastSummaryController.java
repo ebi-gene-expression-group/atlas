@@ -37,7 +37,7 @@ public class ContrastSummaryController {
 
         Contrast contrast = differentialExperiment.getDataColumnDescriptor(contrastId);
         if (contrast == null) {
-            throw new IllegalStateException("No contrast with ID " + contrastId + " found.");
+            throw new IllegalArgumentException("No contrast with ID " + contrastId + " found.");
         }
 
         ExperimentDesign experimentDesign = differentialExperiment.getExperimentDesign();

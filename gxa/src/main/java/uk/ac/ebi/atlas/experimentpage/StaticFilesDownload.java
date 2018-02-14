@@ -40,7 +40,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
     public Collection<ExternallyAvailableContent> get(E experiment) {
         ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
 
-        Path rData = Paths.get(dataFileHub.getExperimentDataLocation(), experiment.getAccession(),
+        Path rData = Paths.get(dataFileHub.getGxaExperimentDataLocation(), experiment.getAccession(),
                 experiment.getAccession()+ "-atlasExperimentSummary.Rdata");
 
         if(rData.toFile().exists()){
@@ -51,7 +51,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
             )));
         }
 
-        Path heatmap = Paths.get(dataFileHub.getExperimentDataLocation(), experiment.getAccession(),
+        Path heatmap = Paths.get(dataFileHub.getGxaExperimentDataLocation(), experiment.getAccession(),
                 experiment.getAccession()+ "-heatmap.pdf");
         if(heatmap.toFile().exists()){
             b.add(new ExternallyAvailableContent(

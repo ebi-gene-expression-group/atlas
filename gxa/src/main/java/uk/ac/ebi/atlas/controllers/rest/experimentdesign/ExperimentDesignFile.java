@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.experimentpage.ExternallyAvailableContentController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -15,6 +16,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,27 +93,25 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
     }
 
     private void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer) {
-        List<String[]> newCsvLines =
-                getLines(
-                        analysedRowsAccessions,
-                        dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get().readAll());
+        try (TsvReader experimentDesignTsvReader =
+                     dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get();
+             CSVWriter csvWriter =
+                     new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
 
-        try {
-            CSVWriter csvWriter =
-                    new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER);
+            List<String[]> newCsvLines =
+                    getLines(analysedRowsAccessions, experimentDesignTsvReader.stream().collect(Collectors.toList()));
+
             csvWriter.writeAll(newCsvLines);
-
             csvWriter.flush();
-            csvWriter.close();
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
     private List<String[]> getLines(Set<String> analysedRowsAccessions, List<String[]> csvLines) {
 
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
-
 
         // modify header by adding new column
         String[] header = csvLines.get(0);
@@ -131,7 +131,6 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
 
         return newCsvLines;
     }
-
 
     private Set<String> getAnalysedRowsAccessions(E experiment) {
         return experiment.getDataColumnDescriptors().stream()

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.TreeSet;
@@ -52,7 +53,7 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error("Error while reading line {}", lineNumber);
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
         }
     }
 

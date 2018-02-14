@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -18,6 +19,7 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class SingleCellExperimentController extends HtmlExceptionHandlingController {
@@ -67,14 +69,22 @@ public class SingleCellExperimentController extends HtmlExceptionHandlingControl
 //        }
 
         availableTabs.add(
-                customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
-        );
+                customContentTab(
+                        "multipart",
+                        "Supplementary Information",
+                        "sections",
+                        supplementaryInformationTabs(experiment, accessKey)));
 
         availableTabs.add(
-                customContentTab("resources", "Downloads", "url",
-                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
-        );
+                customContentTab(
+                        "resources",
+                        "Downloads",
+                        "url",
+                        new JsonPrimitive(
+                                ExternallyAvailableContentController.listResourcesUrl(
+                                        experiment.getAccession(),
+                                        accessKey,
+                                        ExternallyAvailableContent.ContentType.DATA))));
 
         result.add("tabs", availableTabs);
 
@@ -83,17 +93,29 @@ public class SingleCellExperimentController extends HtmlExceptionHandlingControl
 
     private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
         JsonArray supplementaryInformationTabs = new JsonArray();
-        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
-            supplementaryInformationTabs.add(customContentTab("static-table", "Analysis Methods", "data",
-                    formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()
-                            )
-            ));
+
+        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()) {
+            try (TsvReader analysisMethodsTsvReader =
+                         dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
+                supplementaryInformationTabs.add(
+                        customContentTab(
+                                "static-table",
+                                "Analysis Methods",
+                                "data",
+                                formatTable(analysisMethodsTsvReader.stream().collect(Collectors.toList()))));
+            }
         }
+
         supplementaryInformationTabs.add(
-                customContentTab("resources", "Resources", "url",
-                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
-        );
+                customContentTab(
+                        "resources",
+                        "Resources",
+                        "url",
+                        new JsonPrimitive(
+                                ExternallyAvailableContentController.listResourcesUrl(
+                                        experiment.getAccession(),
+                                        accessKey,
+                                        ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION))));
 
         return supplementaryInformationTabs;
     }

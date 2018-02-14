@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.commons.readers;
 
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
-
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +15,6 @@ public class ArrayExpressIdfReaderFactory {
 
         URL tsvFileUrl = new URL(tsvFileUrlAsString);
         InputStreamReader tsvFileInputStreamReader = new InputStreamReader(tsvFileUrl.openStream());
-        return new TsvReaderImpl(tsvFileInputStreamReader);
+        return new TsvReader(tsvFileInputStreamReader);
     }
 }

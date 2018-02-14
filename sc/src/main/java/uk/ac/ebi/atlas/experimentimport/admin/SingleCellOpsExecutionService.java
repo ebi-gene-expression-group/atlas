@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.markergenes.RandomMarkerGeneInputStream;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -88,7 +89,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     }
 
     @Override
-    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws Exception {
+    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws IOException {
         JsonPrimitive resultOfTheOp = ExperimentOps.DEFAULT_SUCCESS_RESULT;
         boolean isPrivate = true;
         switch (op) {

@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import com.google.common.collect.ImmutableSet;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Arrays;
 
 @Named
 public class IdfParser {
-
     private static final String INVESTIGATION_TITLE_ID = "Investigation Title";
     private static final String PUBMED_ID = "PubMed ID";
 
@@ -23,23 +22,24 @@ public class IdfParser {
 
     public ImmutablePair<String, ImmutableSet<String>> parse(String experimentAccession) {
 
-        TsvReader idfReader = idfReaderFactory.create(experimentAccession);
+        try (TsvReader idfTitleReader = idfReaderFactory.create(experimentAccession);
+             TsvReader idfPubmedIdsReader = idfReaderFactory.create(experimentAccession)) {
+            String title =
+                    idfTitleReader.stream()
+                            .filter(line -> line.length > 1)
+                            .filter(line -> INVESTIGATION_TITLE_ID.equalsIgnoreCase(line[0].trim()))
+                            .map(line -> line[1])
+                            .findFirst()
+                            .orElse("");
 
-        String title = "";
+            ImmutableSet<String> pubmedIds = ImmutableSet.copyOf(
+                    idfPubmedIdsReader.stream()
+                            .filter(line -> line.length > 1)
+                            .filter(line -> PUBMED_ID.equalsIgnoreCase(line[0].trim()))
+                            .flatMap(line -> Arrays.stream(line).skip(1))
+                            .iterator());
 
-        ImmutableSet.Builder<String> pubmedIdsBuilder = new ImmutableSet.Builder<>();
-        for (String tsvLine[]: idfReader.readAll()) {
-            if (INVESTIGATION_TITLE_ID.equalsIgnoreCase(StringUtils.trim(tsvLine[0]))) {
-                title = tsvLine[1];
-            } else if (PUBMED_ID.equalsIgnoreCase(tsvLine[0])) {
-                for (int i = 1 ; i < tsvLine.length ; i++) {
-                    if (!tsvLine[i].isEmpty()) {
-                        pubmedIdsBuilder.add(tsvLine[i]);
-                    }
-                }
-            }
+            return ImmutablePair.of(title, pubmedIds);
         }
-
-        return new ImmutablePair<>(title, pubmedIdsBuilder.build());
     }
 }

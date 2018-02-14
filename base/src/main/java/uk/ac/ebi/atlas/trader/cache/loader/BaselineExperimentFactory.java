@@ -35,7 +35,8 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
         String experimentAccession = experimentDTO.getExperimentAccession();
 
         ExperimentConfiguration configuration = configurationTrader.getExperimentConfiguration(experimentAccession);
-        BaselineExperimentConfiguration factorsConfig = configurationTrader.getBaselineFactorsConfiguration(experimentAccession);
+        BaselineExperimentConfiguration factorsConfig =
+                configurationTrader.getBaselineFactorsConfiguration(experimentAccession);
 
         return new BaselineExperimentBuilder()
                 .ofType(experimentType)
@@ -64,9 +65,14 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
         List<String> descriptions = new ArrayList<>();
         for (String alternativeViewAccession : factorsConfig.getAlternativeViews()) {
             accessions.add(alternativeViewAccession);
-            descriptions.add("View by " + configurationTrader.getBaselineFactorsConfiguration
-                    (alternativeViewAccession).getDefaultQueryFactorType().toLowerCase().replace("_", " "));
+            descriptions.add(
+                    "View by " +
+                    configurationTrader.getBaselineFactorsConfiguration(alternativeViewAccession)
+                            .getDefaultQueryFactorType()
+                            .toLowerCase()
+                            .replace("_", " "));
         }
+
         return Pair.of(accessions, descriptions);
     }
 }

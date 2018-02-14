@@ -7,7 +7,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -17,6 +16,7 @@ import uk.ac.ebi.atlas.utils.StringArrayUtil;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.text.MessageFormat;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,14 +65,14 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
                                 .getArrayDesignAccessions());
                 break;
             default:
-                throw new IllegalStateException("The specified experiment type is not supported.");
+                throw new IllegalArgumentException("The specified experiment type is not supported.");
         }
     }
 
     void checkRnaSeqBaselineFiles(String experimentAccession) {
         DataFileHub.RnaSeqBaselineExperimentFiles experimentFiles =
                 dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
-        checkBaselineFiles(experimentFiles);
+        checkBaselineFiles(experimentFiles.baselineExperimentFiles);
         ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles = experimentFiles.dataFiles();
         Preconditions.checkState(
                 dataFiles.size()> 0,
@@ -101,7 +101,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
     void checkProteomicsBaselineFiles(String experimentAccession) {
         DataFileHub.ProteomicsBaselineExperimentFiles experimentFiles =
                 dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession);
-        checkBaselineFiles(experimentFiles);
+        checkBaselineFiles(experimentFiles.baselineExperimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.main);
         assayGroupIdsInHeaderMatchConfigurationXml(
                 proteomicsIdsFromHeader(extractFirstElement(experimentFiles.main)), experimentAccession);
@@ -186,7 +186,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         try {
             stream.close();
         } catch (IOException e){
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
         return first;
     }

@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSeria
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +49,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op){
+    public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op) {
         switch (op) {
             case LIST:
                 return Optional.of(experimentCrud.findExperiment(accession).toJson());
@@ -66,7 +67,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops){
+    public Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops) {
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
         } else {
@@ -75,7 +76,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Op op){
+    public Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Op op) {
         if (op.equals(Op.LIST)) {
             return Optional.of(list());
         } else {
@@ -83,7 +84,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         }
     }
 
-    private Experiment<?> getAnyExperimentWithAdminAccess(String accession){
+    private Experiment<?> getAnyExperimentWithAdminAccess(String accession) {
         return experimentTrader.getExperiment(
                 accession,
                 experimentCrud.findExperiment(accession).getAccessKey());
@@ -100,7 +101,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws Exception {
+    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws IOException {
         JsonPrimitive resultOfTheOp = ExperimentOps.DEFAULT_SUCCESS_RESULT;
         boolean isPrivate = true;
         int deleteCount;
@@ -158,7 +159,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 break;
             default:
-                throw new RuntimeException("Op not supported in Expression Atlas: " + op.name());
+                throw new IllegalArgumentException("Op not supported in Expression Atlas: " + op.name());
         }
         return resultOfTheOp;
     }

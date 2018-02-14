@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -63,7 +64,7 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
+            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 

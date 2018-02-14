@@ -51,7 +51,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
         JsonArray availableTabs = new JsonArray();
 
-        availableTabs.add(tSnePlotTab(availableDataUnits(experiment.getAccession(), experiment.getType())));
+        availableTabs.add(tSnePlotTab(experiment));
 
         availableTabs.add(customContentTab("none", "Experiment Design", new JsonObject()));
 //        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
@@ -155,7 +155,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 //        return customContentTab(tabType, name, props);
 //    }
 
-    private JsonObject customContentTab(String tabType, String name, JsonObject props){
+    private JsonObject customContentTab(String tabType, String name, JsonObject props) {
         JsonObject result = new JsonObject();
         result.addProperty("type", tabType);
         result.addProperty("name", name);
@@ -163,19 +163,21 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonObject tSnePlotTab(JsonArray availableDataUnits){
+    private JsonObject tSnePlotTab(Experiment experiment) {
         JsonObject props = new JsonObject();
 
         JsonArray availableClusters = new JsonArray();
         Arrays.stream(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}).forEach(availableClusters::add);
 
-        JsonArray perplexityArray = new JsonArray();
-        Arrays.stream(new int[] {1, 2, 3, 4, 5, 6}).forEach(perplexityArray::add);
-
         props.addProperty("suggesterEndpoint", "json/suggestions");
         props.add("ks", availableClusters);
+
+        // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174
+        JsonArray perplexityArray = new JsonArray();
+        Arrays.stream(new int[] {1, 5, 10, 15, 20}).forEach(perplexityArray::add);
         props.add("perplexities", perplexityArray);
-        props.add("units", availableDataUnits);
+
+        props.add("units", availableDataUnits(experiment.getAccession(), experiment.getType()));
         return customContentTab("t-sne-plot", "Results", props);
     }
 

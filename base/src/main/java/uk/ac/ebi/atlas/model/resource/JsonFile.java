@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.resource;
 import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,7 +26,7 @@ public abstract class JsonFile<T> extends AtlasResource<T> {
             try {
                 return new JsonReader(Files.newBufferedReader(path, StandardCharsets.UTF_8));
             } catch (IOException e) {
-                throw new IllegalStateException(e);
+                throw new UncheckedIOException(e);
             }
         }
     }

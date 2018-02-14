@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
+            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
