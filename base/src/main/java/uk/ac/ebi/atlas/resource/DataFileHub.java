@@ -178,7 +178,7 @@ public class DataFileHub {
 
         public AtlasResource<TsvReader> reactomePathwaysFiles(String experimentAccession, String comparison) {
             return new TsvFile.ReadOnly(
-                    Paths.get(experimentsFilesLocation, "gxa").toString(),
+                    experimentsFilesLocation,
                     REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
                     experimentAccession,
                     comparison);
