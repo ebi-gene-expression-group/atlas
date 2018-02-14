@@ -23,6 +23,8 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,7 +75,7 @@ public class ExperimentOpsTest {
     private ExperimentOpLogWriter experimentOpLogWriter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         experimentOpLogWriter = new ExperimentOpLogWriter(MockDataFileHub.create());
 
         subject = new ExperimentOps(experimentOpLogWriter,
@@ -98,7 +100,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void allOpsReturnTheSameKindOfJson() throws Exception {
+    public void allOpsReturnTheSameKindOfJson() {
         Random rand = new Random();
 
         for (Op op : Op.values()) {
@@ -127,7 +129,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void aggregateOpsInANeatFashion() throws Exception {
+    public void aggregateOpsInANeatFashion() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         doThrow(new RuntimeException("Woosh!")).when(experimentCrudMock).deleteExperiment(accession);
         List<Op> ops= new ArrayList<>();
@@ -172,7 +174,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void statefulOpsModifyTheOpLog() throws Exception {
+    public void statefulOpsModifyTheOpLog() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
             if (!op.equals(Op.CLEAR_LOG)) {
@@ -189,7 +191,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void errorLeavesLogDirty() throws Exception {
+    public void errorLeavesLogDirty() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         doThrow(new RuntimeException("Woosh!")).when(experimentCrudMock).deleteExperiment(accession);
 
@@ -238,7 +240,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled2() throws Exception {
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled2() throws IOException {
         doThrow(new RuntimeException("Database down, or something"))
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
@@ -253,7 +255,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws Exception {
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws IOException {
         doThrow(new RuntimeException("Serializing failed"))
                 .when(expressionSerializerService)
                 .kryoSerializeExpressionData(any(Experiment.class));
@@ -278,7 +280,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws Exception {
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws IOException {
         doThrow(new NullPointerException())
                 .when(expressionSerializerService)
                 .kryoSerializeExpressionData(any(Experiment.class));
@@ -290,7 +292,7 @@ public class ExperimentOpsTest {
         assertThat(response, containsString("error"));
     }
 
-    private String readFromStatus(List<OpLogEntry> persisted) throws Exception{
+    private String readFromStatus(List<OpLogEntry> persisted) throws UnsupportedEncodingException {
         String accession = "ACCESSION-statusReadsOpLog";
         experimentOpLogWriter.persistOpLog(accession, persisted);
 
@@ -304,7 +306,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void statusReadsLastOpLogEntry() throws Exception {
+    public void statusReadsLastOpLogEntry() throws UnsupportedEncodingException {
         assertThat(readFromStatus(ImmutableList.of()), is(""));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
