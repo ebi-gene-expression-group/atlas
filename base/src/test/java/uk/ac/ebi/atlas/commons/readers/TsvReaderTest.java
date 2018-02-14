@@ -1,14 +1,8 @@
 package uk.ac.ebi.atlas.commons.readers;
 
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
-import uk.ac.ebi.atlas.commons.readers.MatrixMarketReaderTest;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -17,7 +11,6 @@ import java.io.Reader;
 import java.io.UncheckedIOException;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -32,33 +25,51 @@ public class TsvReaderTest {
     private static final String HEADER_LINE = "Column1\tColumn2\tColumn3";
     private static final String VALUES_LINE = "Data1\tData2\tData3";
 
-    private static final String[] HEADER_LINE_AS_ARRAY = HEADER_LINE.split("\t");
-    private static final String[] VALUES_LINE_AS_ARRAY = VALUES_LINE.split("\t");
-
     private static final String DATA =
             COMMENT_LINE + "\n" +
             HEADER_LINE + "\n" +
             VALUES_LINE + "\n";
 
+    private static final String COMMENT_LINE_WITH_BEGIN_QUOTES = "\"#Comment\t\"Comment";
+    private static final String HEADER_LINE_WITH_END_QUOTES = "Column1\"\tColumn2\"\tColumn3\"";
+    private static final String VALUES_LINE_WITH_MIXED_QUOTES = "\"Data1\"\tData2\"\t\"Data3";
+    private static final String VALUES_LINE_WITH_IN_QUOTES = "\"Da\"ta1\"\tDa\"ta2\"\t\"Da\"ta3";
+
+    private static final String DATA_WITH_QUOTES =
+            COMMENT_LINE_WITH_BEGIN_QUOTES + "\n" +
+            HEADER_LINE_WITH_END_QUOTES + "\n" +
+            VALUES_LINE_WITH_MIXED_QUOTES + "\n" +
+            VALUES_LINE_WITH_IN_QUOTES;
+
+    private static final String[] HEADER_LINE_AS_ARRAY = HEADER_LINE.split("\t");
+    private static final String[] VALUES_LINE_AS_ARRAY = VALUES_LINE.split("\t");
+
+    private static final String[] VALUES_LINE_WITH_IN_QUOTES_ONLY = new String[] {"Da\"ta1", "Da\"ta2", "Da\"ta3"};
+
     private TsvReader subject;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Before
-    public void setUp() {
-        subject = new TsvReader(new InputStreamReader(new ByteArrayInputStream(DATA.getBytes())));
-    }
 
     @Test
     public void commentLinesAreFiltered() {
+        subject = new TsvReader(new InputStreamReader(new ByteArrayInputStream(DATA.getBytes())));
+
         assertThat(subject.stream().collect(Collectors.toList()))
-                .hasSize(2)
+                .hasSize(DATA.split("\n").length - 1)
                 .containsExactly(HEADER_LINE_AS_ARRAY, VALUES_LINE_AS_ARRAY);
     }
 
     @Test
+    public void wrappingQuotesAreTrimmed() {
+        subject = new TsvReader(new InputStreamReader(new ByteArrayInputStream(DATA_WITH_QUOTES.getBytes())));
+
+        assertThat(subject.stream().collect(Collectors.toList()))
+                .hasSize(DATA_WITH_QUOTES.split("\n").length - 1)
+                .containsExactly(HEADER_LINE_AS_ARRAY, VALUES_LINE_AS_ARRAY, VALUES_LINE_WITH_IN_QUOTES_ONLY);
+    }
+
+    @Test
     public void streamIsExhaustedAfterReading() {
+        subject = new TsvReader(new InputStreamReader(new ByteArrayInputStream(DATA.getBytes())));
+
         assertThat(subject.stream().collect(Collectors.toList()))
                 .hasSize(2)
                 .containsExactly(HEADER_LINE_AS_ARRAY, VALUES_LINE_AS_ARRAY);

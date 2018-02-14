@@ -6,6 +6,9 @@ import java.io.Reader;
 import java.io.UncheckedIOException;
 import java.util.stream.Stream;
 
+import static org.apache.commons.lang3.StringUtils.removeEnd;
+import static org.apache.commons.lang3.StringUtils.removeStart;
+
 public class TsvReader implements AutoCloseable{
     private final Reader reader;
 
@@ -15,8 +18,8 @@ public class TsvReader implements AutoCloseable{
 
     public Stream<String[]> stream() {
         return new BufferedReader(this.reader).lines()
-                .map(line -> line.split("\t", -1))
-                .filter(line -> !line[0].startsWith("#"));
+                .map(TsvReader::splitByTabsAndTrimWrappingQuotes)
+                .filter(lineFields -> !lineFields[0].startsWith("#"));
     }
 
     @Override
@@ -26,6 +29,17 @@ public class TsvReader implements AutoCloseable{
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    private static String[] splitByTabsAndTrimWrappingQuotes (String line) {
+        return Stream
+                .of(line.split("\t", -1))
+                .map(TsvReader::trimDoubleQuotes)
+                .toArray(String[]::new);
+    }
+
+    private static String trimDoubleQuotes(String str) {
+        return removeStart(removeEnd(str, "\""), "\"");
     }
 
     public static TsvReader empty() {
