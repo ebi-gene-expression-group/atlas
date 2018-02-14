@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
