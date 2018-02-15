@@ -112,7 +112,7 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
             }
 
             @Override
-            public void close() throws Exception {
+            public void close() throws IOException {
                 lines.close();
             }
         };

@@ -33,7 +33,7 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         inputStream.close();
         LOGGER.debug("<close> close invoked on ObjectInputStreamFilter");
     }
