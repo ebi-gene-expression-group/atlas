@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.io.stream.metrics.Metric;
 import org.apache.solr.common.params.SolrParams;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Collection;
 
 public class FacetStreamDaoBuilder {
@@ -140,7 +141,7 @@ public class FacetStreamDaoBuilder {
 
                 return new FacetStream(zkHost, collectionNameOrAlias, solrParams, buckets, metrics, sorts, limit);
             } catch (IOException e) {
-                throw new IllegalStateException(e);
+                throw new UncheckedIOException(e);
             }
         };
 
