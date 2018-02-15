@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -31,27 +32,36 @@ public abstract class CollectionProxy {
         try {
             // Change maybe to: return new QueryRequest()
             return solrClient.query(nameOrAlias, solrQuery);
-        } catch (IOException | SolrServerException e) {
+        } catch (IOException e) {
             logException(e);
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            logException(e);
+            throw new UncheckedIOException(new IOException(e));
         }
     }
 
     public UpdateResponse addAndCommit(Collection<SolrInputDocument> docs) {
         try {
             return new UpdateRequest().add(docs).commit(solrClient, nameOrAlias);
-        } catch (IOException | SolrServerException e) {
+        } catch (IOException e) {
             logException(e);
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            logException(e);
+            throw new UncheckedIOException(new IOException(e));
         }
     }
 
     public UpdateResponse deleteAllAndCommit() {
         try {
             return new UpdateRequest().deleteByQuery("*:*").commit(solrClient, nameOrAlias);
-        } catch (IOException | SolrServerException e) {
+        } catch (IOException e) {
             logException(e);
-            throw new IllegalStateException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            logException(e);
+            throw new UncheckedIOException(new IOException(e));
         }
     }
 

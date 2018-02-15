@@ -12,7 +12,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -31,40 +33,58 @@ public class CollectionProxyTest {
         subject = new CollectionProxy(solrClientMock, "mocked_collection") {};
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void queryIOExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.query(anyString(), any(SolrQuery.class))).thenThrow(new IOException());
-        subject.query(new SolrQuery("*:*"));
+        when(solrClientMock.query(anyString(), any(SolrQuery.class)))
+                .thenThrow(new IOException());
+
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void querySolrServerExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.query(anyString(), any(SolrQuery.class))).thenThrow(new SolrServerException(""));
-        subject.query(new SolrQuery("*:*"));
+        when(solrClientMock.query(anyString(), any(SolrQuery.class)))
+                .thenThrow(new SolrServerException(""));
+
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void addAndCommitIOExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new IOException());
-        subject.addAndCommit(ImmutableSet.of());
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias)))
+                .thenThrow(new IOException());
+
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> subject.addAndCommit(ImmutableSet.of()));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void addAndCommitSolrServerExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new SolrServerException(""));
-        subject.addAndCommit(ImmutableSet.of());
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias)))
+                .thenThrow(new SolrServerException(""));
+
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> subject.addAndCommit(ImmutableSet.of()));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void deleteIOExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new IOException());
-        subject.deleteAllAndCommit();
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias)))
+                .thenThrow(new IOException());
+
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> subject.deleteAllAndCommit());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void deleteSolrServerExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias))).thenThrow(new SolrServerException(""));
-        subject.deleteAllAndCommit();
+        when(solrClientMock.request(any(UpdateRequest.class), eq(subject.nameOrAlias)))
+                .thenThrow(new SolrServerException(""));
+
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> subject.deleteAllAndCommit());
     }
 
 }
