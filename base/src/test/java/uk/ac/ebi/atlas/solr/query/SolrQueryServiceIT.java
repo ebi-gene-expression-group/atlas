@@ -6,6 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,7 @@ public class SolrQueryServiceIT {
     SolrQueryService subject;
 
     @Test
-    public void getKnownSpeciesWithCategory() throws Exception {
+    public void getKnownSpeciesWithCategory() {
         assertThat(
                 subject.fetchSpecies(SemanticQueryTerm.create("ENSMUSG00000019082", BioentityPropertyName.ENSGENE.name())),
                 hasItem(equalToIgnoringCase("mus_musculus")));
@@ -34,21 +35,21 @@ public class SolrQueryServiceIT {
     }
 
     @Test
-    public void getKnownSpeciesWithoutCategory() throws Exception {
+    public void getKnownSpeciesWithoutCategory() {
         assertThat(
                 subject.fetchSpecies(SemanticQueryTerm.create("ENSMUSG00000019082")),
                 hasItem(equalToIgnoringCase("mus_musculus")));
     }
 
     @Test
-    public void queryWithoutCategoryFallsBackToProperties() throws Exception {
+    public void queryWithoutCategoryFallsBackToProperties() {
         assertThat(
                 subject.fetchSpecies(SemanticQueryTerm.create("OBP3-responsive gene 4")),
                 hasItem(equalToIgnoringCase("arabidopsis_lyrata")));
     }
 
     @Test
-    public void unknownSpeciesReturnsEmpty() throws Exception {
+    public void unknownSpeciesReturnsEmpty() {
         // Escherichia coli
         assertThat(
                 subject.fetchSpecies(SemanticQueryTerm.create(BioentityPropertyName.ENSGENE.name(), "ECBD_0176")),
