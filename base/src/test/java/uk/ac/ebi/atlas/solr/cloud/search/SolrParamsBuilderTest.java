@@ -20,8 +20,8 @@ public class SolrParamsBuilderTest {
     public void multipleQueryClausesAreJoinedWithAnd() {
         SolrParams solrParams =
                 new SolrParamsBuilder()
-                        .addQueryTermsClause("field1", ImmutableSet.of("value1"))
-                        .addQueryTermsClause("field2", ImmutableSet.of("value21", "value22"))
+                        .addQueryTermsClause("field1", "value1")
+                        .addQueryTermsClause("field2", "value21", "value22")
                         .addQueryRangeClause("field3", 1D)
                         .build();
 
@@ -32,8 +32,8 @@ public class SolrParamsBuilderTest {
     public void multipleFilterClausesAreJoinedWithAnd() {
         SolrParams solrParams =
                 new SolrParamsBuilder()
-                        .addFilterTermsClause("field1", ImmutableSet.of("value1"))
-                        .addFilterTermsClause("field2", ImmutableSet.of("value21", "value22"))
+                        .addFilterTermsClause("field1", "value1")
+                        .addFilterTermsClause("field2", "value21", "value22")
                         .addFilterRangeClause("field3", 1D)
                         .build();
 
@@ -45,7 +45,7 @@ public class SolrParamsBuilderTest {
         SolrParams solrParams =
                 new SolrParamsBuilder()
                         .addQueryTermsClause(
-                                "field1", ImmutableSet.of("value1", "value2", "value2", "value3", "value3", "value3"))
+                                "field1", "value1", "value2", "value2", "value3", "value3", "value3")
                         .build();
 
         assertThat(solrParams.get("q")).containsOnlyOnce("value1");

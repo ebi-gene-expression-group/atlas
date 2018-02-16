@@ -18,12 +18,12 @@ public class SolrParamsBuilder {
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
 
-    public SolrParamsBuilder addQueryTermsClause(String field, Collection<String> values) {
+    public SolrParamsBuilder addQueryTermsClause(String field, String... values) {
         qClausesBuilder.add(createTermsQuery(field, ImmutableSet.copyOf(values)));
         return this;
     }
 
-    public SolrParamsBuilder addFilterTermsClause(String field, Collection<String> values) {
+    public SolrParamsBuilder addFilterTermsClause(String field, String... values) {
         fqClausesBuilder.add(createTermsQuery(field, ImmutableSet.copyOf(values)));
         return this;
     }
@@ -48,7 +48,11 @@ public class SolrParamsBuilder {
     private static String createTermsQuery(String field, Set<String> searchValues) {
         return String.format(
                 TERMS_CLAUSE_TEMPLATE,
-                field, searchValues.stream().map(ClientUtils::escapeQueryChars).collect(Collectors.joining(",")));
+                field,
+                searchValues.stream()
+                        // The terms query parser searches for values verbatim, no escaping is necessary
+                        // .map(ClientUtils::escapeQueryChars)
+                        .collect(Collectors.joining(",")));
     }
 
     private static String createRangeQuery(String field, Double rangeStart) {
