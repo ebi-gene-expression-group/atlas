@@ -13,9 +13,13 @@ public class TupleStreamAutoCloseableIterator implements Iterator<Tuple>, AutoCl
     private boolean isOpen = false;
     private Tuple bufferedTuple;
 
-    public TupleStreamAutoCloseableIterator(TupleStream tupleStream) {
+    private TupleStreamAutoCloseableIterator(TupleStream tupleStream) {
         this.tupleStream = tupleStream;
         bufferNextTuple();
+    }
+
+    public static TupleStreamAutoCloseableIterator of(TupleStream tupleStream) {
+        return new TupleStreamAutoCloseableIterator(tupleStream);
     }
 
     @Override
