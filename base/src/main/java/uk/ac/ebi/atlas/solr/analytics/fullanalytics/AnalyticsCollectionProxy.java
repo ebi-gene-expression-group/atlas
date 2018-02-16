@@ -4,22 +4,16 @@ import org.apache.solr.client.solrj.SolrClient;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 
 public class AnalyticsCollectionProxy extends CollectionProxy {
-    enum Field {
-        EXPERIMENT_ACCESSION("experiment_accession"),
-        BIOENTITY_IDENTIFIER("bioentity_identifier"),
-        ASSAY_GROUP_ID("assay_group_id"),
-        EXPRESSION_LEVEL("expression_level");
-        final String name;
-
-        Field(String name){
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
+    private class AnalyticsSchemaField extends SchemaField<AnalyticsCollectionProxy>{
+        private AnalyticsSchemaField(String fieldName) {
+            super(fieldName);
         }
     }
+
+    public final AnalyticsSchemaField BIOENTITY_IDENTIFIER = new AnalyticsSchemaField("bioentity_identifier");
+    public final AnalyticsSchemaField EXPERIMENT_ACCESSION = new AnalyticsSchemaField("experiment_accession");
+    public final AnalyticsSchemaField ASSAY_GROUP_ID = new AnalyticsSchemaField("assay_group_id");
+    public final AnalyticsSchemaField EXPRESSION_LEVEL = new AnalyticsSchemaField("expression_level");
 
     public AnalyticsCollectionProxy(SolrClient solrClient) {
         super(solrClient, "analytics");
