@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -52,7 +53,7 @@ public class TupleStreamAutoCloseableIteratorTest {
 
     @Test
     public void underlyingTupleStreamIsAutoClosed() throws IOException {
-        try (TupleStreamAutoCloseableIterator subject = new TupleStreamAutoCloseableIterator(tupleStreamMock)) {
+        try (TupleStreamAutoCloseableIterator subject = TupleStreamAutoCloseableIterator.of(tupleStreamMock)) {
             Iterable<Tuple> iterable = () -> subject;
             Stream<Tuple> stream = StreamSupport.stream(iterable.spliterator(), false);
             assertThat(stream.collect(Collectors.toList())).isNotEmpty();
@@ -63,7 +64,7 @@ public class TupleStreamAutoCloseableIteratorTest {
 
     @Test
     public void eofTupleIsExcluded() throws IOException {
-        try (TupleStreamAutoCloseableIterator subject = new TupleStreamAutoCloseableIterator(tupleStreamMock)) {
+        try (TupleStreamAutoCloseableIterator subject = TupleStreamAutoCloseableIterator.of(tupleStreamMock)) {
             Iterable<Tuple> iterable = () -> subject;
             Stream<Tuple> stream = StreamSupport.stream(iterable.spliterator(), false);
             assertThat(stream.collect(Collectors.toList()))
@@ -72,19 +73,25 @@ public class TupleStreamAutoCloseableIteratorTest {
         }
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test
     public void openIOExceptionIsWrapped() throws IOException {
-        doThrow(new IOException()).when(tupleStreamMock).open();
-        new TupleStreamAutoCloseableIterator(tupleStreamMock);
+        doThrow(new IOException())
+                .when(tupleStreamMock).open();
+
+        assertThatExceptionOfType(IllegalStateException.class)
+                .isThrownBy(() -> TupleStreamAutoCloseableIterator.of(tupleStreamMock));
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test
     public void readIOExceptionIsWrapped() throws IOException {
         when(tupleStreamMock.read()).thenReturn(tuples.get(0)).thenThrow(new IOException());
-        try (TupleStreamAutoCloseableIterator subject = new TupleStreamAutoCloseableIterator(tupleStreamMock)) {
-            Iterable<Tuple> iterable = () -> subject;
-            Stream<Tuple> stream = StreamSupport.stream(iterable.spliterator(), false);
-            stream.collect(Collectors.toList());
-        }
+
+        assertThatExceptionOfType(IllegalStateException.class)
+                .isThrownBy(() -> {
+                    try (TupleStreamAutoCloseableIterator subject = TupleStreamAutoCloseableIterator.of(tupleStreamMock)) {
+                        Iterable<Tuple> iterable = () -> subject;
+                        Stream<Tuple> stream = StreamSupport.stream(iterable.spliterator(), false);
+                        stream.collect(Collectors.toList());
+                }});
     }
 }
