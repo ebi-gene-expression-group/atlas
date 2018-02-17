@@ -1,29 +1,24 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.io.Tuple;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.solr.analytics.fullanalytics.AnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamAutoCloseableIterator;
 
 import javax.inject.Inject;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.filter;
 
-// The correct way of doing these tests is by creating an EmbeddedSolrServer with a set of documents to have a sort of
-// analytics collection fixture but, alas!, streaming expressions only work in SolrCloud
+// The correct way of doing these tests is by creating an EmbeddedSolrServer with a set of documents to have an
+// analytics collection fixture but, alas!, streaming expressions only work in SolrCloud so we use the instance in lime
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
