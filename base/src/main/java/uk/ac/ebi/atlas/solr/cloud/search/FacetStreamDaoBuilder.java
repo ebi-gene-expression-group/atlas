@@ -15,9 +15,6 @@ import uk.ac.ebi.atlas.solr.cloud.TupleStreamAutoCloseableIterator;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.Collection;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public class FacetStreamDaoBuilder<T extends CollectionProxy> {
 
@@ -29,32 +26,32 @@ public class FacetStreamDaoBuilder<T extends CollectionProxy> {
     private ImmutableSet.Builder<FieldComparator> sortsBuilder = ImmutableSet.builder();
 
     @SafeVarargs
-    public FacetStreamDaoBuilder(T collectionProxy, CollectionProxy.SchemaField<? extends T>... bucketFields) {
+    public FacetStreamDaoBuilder(T collectionProxy, CollectionProxy.SchemaField<T>... bucketFields) {
         this.collectionProxy = collectionProxy;
 
         buckets =
-                ImmutableSet.<CollectionProxy.SchemaField<? extends T>>builder().add(bucketFields).build().stream()
+                ImmutableSet.<CollectionProxy.SchemaField<T>>builder().add(bucketFields).build().stream()
                         .map(CollectionProxy.SchemaField::name)
                         .map(Bucket::new)
                         .toArray(Bucket[]::new);
     }
 
-    public FacetStreamDaoBuilder<T> addQueryTermsClause(CollectionProxy.SchemaField<? extends T> field, String... values) {
+    public FacetStreamDaoBuilder<T> addQueryTermsClause(CollectionProxy.SchemaField<T> field, String... values) {
         solrParamsBuilder.addQueryTermsClause(field.name(), values);
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> addFilterTermsClause(CollectionProxy.SchemaField<? extends T> field, String... values) {
+    public FacetStreamDaoBuilder<T> addFilterTermsClause(CollectionProxy.SchemaField<T> field, String... values) {
         solrParamsBuilder.addFilterTermsClause(field.name(), values);
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> addQueryRangeClause(CollectionProxy.SchemaField<? extends T> field, Double rangeLowerBound) {
+    public FacetStreamDaoBuilder<T> addQueryRangeClause(CollectionProxy.SchemaField<T> field, Double rangeLowerBound) {
         solrParamsBuilder.addQueryRangeClause(field.name(), rangeLowerBound);
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> addFilterRangeClause(CollectionProxy.SchemaField<? extends T> field, Double rangeLowerBound) {
+    public FacetStreamDaoBuilder<T> addFilterRangeClause(CollectionProxy.SchemaField<T> field, Double rangeLowerBound) {
         solrParamsBuilder.addFilterRangeClause(field.name(), rangeLowerBound);
         return this;
     }
@@ -65,7 +62,7 @@ public class FacetStreamDaoBuilder<T extends CollectionProxy> {
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> withAverageOver(CollectionProxy.SchemaField<? extends T> field) {
+    public FacetStreamDaoBuilder<T> withAverageOver(CollectionProxy.SchemaField<T> field) {
         metricsBuilder.add(new MeanMetric(field.name()));
 //        sortsBuilder.add(new FieldComparator("avg(" + field.name() + ")", ComparatorOrder.ASCENDING));
         return this;
