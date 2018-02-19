@@ -25,7 +25,7 @@ public class FacetStreamBuilder<T extends CollectionProxy> {
     private ImmutableSet.Builder<FieldComparator> sortsBuilder = ImmutableSet.builder();
 
     @SafeVarargs
-    public FacetStreamBuilder(T collectionProxy, CollectionProxy.SchemaField<T>... bucketFields) {
+    private FacetStreamBuilder(T collectionProxy, CollectionProxy.SchemaField<T>... bucketFields) {
         this.collectionProxy = collectionProxy;
 
         buckets =
@@ -33,6 +33,11 @@ public class FacetStreamBuilder<T extends CollectionProxy> {
                         .map(CollectionProxy.SchemaField::name)
                         .map(Bucket::new)
                         .toArray(Bucket[]::new);
+    }
+
+    public static <T extends CollectionProxy> FacetStreamBuilder<T> create(T collectionProxy,
+                                                                           CollectionProxy.SchemaField<T> field) {
+        return new FacetStreamBuilder<>(collectionProxy, field);
     }
 
     public FacetStreamBuilder<T> addQueryTermsClause(CollectionProxy.SchemaField<T> field, String... values) {
