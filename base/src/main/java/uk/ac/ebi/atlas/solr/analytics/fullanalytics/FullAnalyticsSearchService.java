@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 //import java.util.List;
 //import java.util.Map;
 //import java.util.Set;
-//import java.util.stream.Collectors;
+//import java.util.get.Collectors;
 //
 //import static com.google.common.base.Preconditions.checkArgument;
 //import static uk.ac.ebi.atlas.solr.analytics.fullanalytics.FullAnalyticsSearchService.SpecificGeneProfile.COMPARATOR_BY_SPECIFICITY_AND_NAIVE_DIFF_EXPRESSION;
@@ -28,12 +28,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Named
 public class FullAnalyticsSearchService {
 
-    private final AnalyticsCollectionCloudDao analyticsCollectionCloudDao;
-
-    @Inject
-    public FullAnalyticsSearchService(AnalyticsCollectionCloudDao analyticsCollectionCloudDao) {
-        this.analyticsCollectionCloudDao = analyticsCollectionCloudDao;
-    }
+//    private final AnalyticsCollectionCloudDao analyticsCollectionCloudDao;
+//
+//    @Inject
+//    public FullAnalyticsSearchService(AnalyticsCollectionCloudDao analyticsCollectionCloudDao) {
+//        this.analyticsCollectionCloudDao = analyticsCollectionCloudDao;
+//    }
 
 //    static SpecificGeneProfile merge(SpecificGeneProfile geneProfile1, SpecificGeneProfile geneProfile2) {
 //        if (geneProfile2 == null) {
@@ -82,7 +82,7 @@ public class FullAnalyticsSearchService {
 //                                experimentAccession,expressionThreshold));
 //
 //        return
-//                geneProfilesInSelectedAssayGroups.stream()
+//                geneProfilesInSelectedAssayGroups.get()
 //                        .sorted(COMPARATOR_BY_SPECIFICITY_AND_NAIVE_DIFF_EXPRESSION)
 //                        .limit(resultSize)
 //                        .map(SpecificGeneProfile::geneId)
@@ -110,12 +110,12 @@ public class FullAnalyticsSearchService {
 //                                        experimentAccession,
 //                                        sliceAssayGroupIds,
 //                                        selectedAssayGroupIds,
-//                                        geneProfilesInSelectedAssayGroups.stream().map(SpecificGeneProfile::geneId).collect(Collectors.toSet()),
+//                                        geneProfilesInSelectedAssayGroups.get().map(SpecificGeneProfile::geneId).collect(Collectors.toSet()),
 //                                        expressionThreshold)) :
 //                        ImmutableSet.of();
 //
 //        return
-//                mergeGeneProfiles(geneProfilesInSelectedAssayGroups, geneProfilesOutsideSelectedAssayGroups).stream()
+//                mergeGeneProfiles(geneProfilesInSelectedAssayGroups, geneProfilesOutsideSelectedAssayGroups).get()
 //                .sorted(COMPARATOR_BY_SPECIFICITY_AND_NAIVE_DIFF_EXPRESSION)
 //                .limit(resultSize)
 //                .map(SpecificGeneProfile::geneId)
@@ -125,7 +125,7 @@ public class FullAnalyticsSearchService {
 //    private Set<SpecificGeneProfile> mapJsonBucketsWithAverageExpressionAndCountsToGeneProfiles(String json) {
 //        Collection<Map<String, Object>> buckets = JsonPath.read(json, "$.facets.genes.buckets.*");
 //
-//        return buckets.stream()
+//        return buckets.get()
 //                .filter(bucket -> bucket.containsKey("avg_expression"))
 //                .map(bucket ->
 //                        SpecificGeneProfile.create(
@@ -139,7 +139,7 @@ public class FullAnalyticsSearchService {
 //    private Set<SpecificGeneProfile> mapJsonBucketsWithMaxExpressionAndCountsToGeneProfiles(String json) {
 //        Collection<Map<String, Object>> buckets = JsonPath.read(json, "$.facets.genes.buckets.*");
 //
-//        return buckets.stream()
+//        return buckets.get()
 //                .filter(bucket -> bucket.containsKey("max_expression"))
 //                .map(bucket ->
 //                        SpecificGeneProfile.create(
@@ -155,10 +155,10 @@ public class FullAnalyticsSearchService {
 //            Collection<SpecificGeneProfile> geneProfilesInSelectedAssayGroupsWithSliceData) {
 //
 //        Map<String, SpecificGeneProfile> geneProfilesInSelectedAssayGroupsWithSliceDataByGeneId =
-//                geneProfilesInSelectedAssayGroupsWithSliceData.stream()
+//                geneProfilesInSelectedAssayGroupsWithSliceData.get()
 //                        .collect(Collectors.toMap(SpecificGeneProfile::geneId, profile -> profile));
 //
-//        return geneProfilesInSelectedAssayGroupsWithSelectionData.stream()
+//        return geneProfilesInSelectedAssayGroupsWithSelectionData.get()
 //                .map(profile ->
 //                        SpecificGeneProfile.merge(
 //                                profile,
