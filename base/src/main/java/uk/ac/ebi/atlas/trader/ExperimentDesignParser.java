@@ -4,7 +4,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -25,10 +25,12 @@ public class ExperimentDesignParser {
     private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic\\[(.*?)\\]\\s*");
-    private static final Pattern SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic Ontology Term\\[(.*?)\\]\\s*");
+    private static final Pattern SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN =
+            Pattern.compile("\\s*Sample Characteristic Ontology Term\\[(.*?)\\]\\s*");
 
     private static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value\\[(.*?)\\]\\s*");
-    private static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Term\\[(.*?)\\]\\s*");
+    private static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN =
+            Pattern.compile("\\s*Factor Value Ontology Term\\[(.*?)\\]\\s*");
 
     private final DataFileHub dataFileHub;
 
@@ -39,24 +41,26 @@ public class ExperimentDesignParser {
 
     public ExperimentDesign parse(String experimentAccession) {
 
-        AtlasResource<TsvReader> r = dataFileHub.getExperimentFiles(experimentAccession).experimentDesign;
+        AtlasResource<TsvStreamer> r = dataFileHub.getExperimentFiles(experimentAccession).experimentDesign;
 
         if (!r.exists()) {
             throw new UncheckedIOException(new FileNotFoundException(String.format("%s does not exist", r)));
         }
 
-        try (TsvReader tsvReaderz = r.get()) {
-            Iterator<String[]> lineIterator = tsvReaderz.stream().iterator();
+        try (TsvStreamer tsvStreamer = r.get()) {
+            Iterator<String[]> lineIterator = tsvStreamer.get().iterator();
             ExperimentDesign experimentDesign = new ExperimentDesign();
 
             if (lineIterator.hasNext()) {
                 String[] headerLine = lineIterator.next();
 
-                Map<String, Integer> sampleHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
+                Map<String, Integer> sampleHeaderIndexes =
+                        extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
                 Map<String, Integer> sampleValueOntologyTermHeaderIndexes =
                         extractHeaderIndexes(headerLine, SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
 
-                Map<String, Integer> factorHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
+                Map<String, Integer> factorHeaderIndexes =
+                        extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
                 Map<String, Integer> factorValueOntologyTermHeaderIndexes =
                         extractHeaderIndexes(headerLine, FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
 
@@ -79,9 +83,12 @@ public class ExperimentDesignParser {
                     for (String sampleHeader : sampleHeaderIndexes.keySet()) {
                         String sampleValue = line[sampleHeaderIndexes.get(sampleHeader)];
 
-                        Integer sampleValueOntologyTermIndex = sampleValueOntologyTermHeaderIndexes.get(sampleHeader);
-                        OntologyTerm[] sampleValueOntologyTerms = createOntologyTerms(line, sampleValueOntologyTermIndex);
-                        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleHeader, sampleValue, sampleValueOntologyTerms);
+                        Integer sampleValueOntologyTermIndex =
+                                sampleValueOntologyTermHeaderIndexes.get(sampleHeader);
+                        OntologyTerm[] sampleValueOntologyTerms =
+                                createOntologyTerms(line, sampleValueOntologyTermIndex);
+                        SampleCharacteristic sampleCharacteristic =
+                                SampleCharacteristic.create(sampleHeader, sampleValue, sampleValueOntologyTerms);
 
                         experimentDesign.putSampleCharacteristic(runOrAssay, sampleHeader, sampleCharacteristic);
                     }
@@ -89,8 +96,10 @@ public class ExperimentDesignParser {
                     for (String factorHeader : factorHeaderIndexes.keySet()) {
                         String factorValue = line[factorHeaderIndexes.get(factorHeader)];
 
-                        Integer factorValueOntologyTermIndex = factorValueOntologyTermHeaderIndexes.get(factorHeader);
-                        OntologyTerm[] factorValueOntologyTerms = createOntologyTerms(line, factorValueOntologyTermIndex);
+                        Integer factorValueOntologyTermIndex =
+                                factorValueOntologyTermHeaderIndexes.get(factorHeader);
+                        OntologyTerm[] factorValueOntologyTerms =
+                                createOntologyTerms(line, factorValueOntologyTermIndex);
 
                         experimentDesign.putFactor(runOrAssay, factorHeader, factorValue, factorValueOntologyTerms);
                     }

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TsvReaderTest {
+public class TsvStreamerTest {
 
     private static final String COMMENT_LINE = "#Comment\tComment";
     private static final String HEADER_LINE = "Column1\tColumn2\tColumn3";
@@ -46,35 +46,35 @@ public class TsvReaderTest {
 
     private static final String[] VALUES_LINE_WITH_IN_QUOTES_ONLY = new String[] {"Da\"ta1", "Da\"ta2", "Da\"ta3"};
 
-    private TsvReader subject;
+    private TsvStreamer subject;
 
     @Test
     public void commentLinesAreFiltered() {
-        subject = new TsvReader(new InputStreamReader(new ByteArrayInputStream(DATA.getBytes())));
+        subject = new TsvStreamer(new InputStreamReader(new ByteArrayInputStream(DATA.getBytes())));
 
-        assertThat(subject.stream().collect(Collectors.toList()))
+        assertThat(subject.get().collect(Collectors.toList()))
                 .hasSize(DATA.split("\n").length - 1)
                 .containsExactly(HEADER_LINE_AS_ARRAY, VALUES_LINE_AS_ARRAY);
     }
 
     @Test
     public void wrappingQuotesAreTrimmed() {
-        subject = new TsvReader(new InputStreamReader(new ByteArrayInputStream(DATA_WITH_QUOTES.getBytes())));
+        subject = new TsvStreamer(new InputStreamReader(new ByteArrayInputStream(DATA_WITH_QUOTES.getBytes())));
 
-        assertThat(subject.stream().collect(Collectors.toList()))
+        assertThat(subject.get().collect(Collectors.toList()))
                 .hasSize(DATA_WITH_QUOTES.split("\n").length - 1)
                 .containsExactly(HEADER_LINE_AS_ARRAY, VALUES_LINE_AS_ARRAY, VALUES_LINE_WITH_IN_QUOTES_ONLY);
     }
 
     @Test
     public void streamIsExhaustedAfterReading() {
-        subject = new TsvReader(new InputStreamReader(new ByteArrayInputStream(DATA.getBytes())));
+        subject = new TsvStreamer(new InputStreamReader(new ByteArrayInputStream(DATA.getBytes())));
 
-        assertThat(subject.stream().collect(Collectors.toList()))
+        assertThat(subject.get().collect(Collectors.toList()))
                 .hasSize(2)
                 .containsExactly(HEADER_LINE_AS_ARRAY, VALUES_LINE_AS_ARRAY);
 
-        assertThat(subject.stream().collect(Collectors.toList())).isEmpty();
+        assertThat(subject.get().collect(Collectors.toList())).isEmpty();
     }
 
     @Test
@@ -82,7 +82,7 @@ public class TsvReaderTest {
         ByteArrayInputStream inputStreamSpy = spy(new ByteArrayInputStream(DATA.getBytes()));
         InputStreamReader tsvInputStreamReader = new InputStreamReader(inputStreamSpy);
 
-        try (TsvReader tsvReader = new TsvReader(tsvInputStreamReader)) {
+        try (TsvStreamer tsvReader = new TsvStreamer(tsvInputStreamReader)) {
             // Use tsvReader
         }
 
@@ -96,7 +96,7 @@ public class TsvReaderTest {
         doThrow(new IOException()).when(readerSpy).close();
 
         assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(() -> {
-            try (TsvReader tsvReader = new TsvReader(readerSpy)) {
+            try (TsvStreamer tsvReader = new TsvStreamer(readerSpy)) {
                 // Use tsvReader
             }
         });
@@ -104,15 +104,15 @@ public class TsvReaderTest {
 
     @Test
     public void emptyIsEmpty() {
-        assertThat(TsvReader.empty().stream().collect(Collectors.toList())).hasSize(0);
+        assertThat(TsvStreamer.empty().get().collect(Collectors.toList())).hasSize(0);
     }
 
     @Test
     public void closeOnEmptyIsANoOp() {
         // We check .empty() is a singleton so that each call to close operates on the same object
-        assertThat(TsvReader.empty()).isSameAs(TsvReader.empty());
+        assertThat(TsvStreamer.empty()).isSameAs(TsvStreamer.empty());
         for (int i = 0 ; i < ThreadLocalRandom.current().nextInt(2, 100) ; i++) {
-            TsvReader.empty().close();
+            TsvStreamer.empty().close();
         }
     }
 }

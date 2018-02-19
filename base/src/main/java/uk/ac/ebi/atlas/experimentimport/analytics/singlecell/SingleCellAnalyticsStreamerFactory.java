@@ -5,19 +5,18 @@ import uk.ac.ebi.atlas.resource.DataFileHub.SingleCellExperimentFiles;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 
 @Named
-public class SingleCellAnalyticsStreamFactory {
+public class SingleCellAnalyticsStreamerFactory {
     private final DataFileHub dataFileHub;
 
     @Inject
-    public SingleCellAnalyticsStreamFactory(DataFileHub dataFileHub) {
+    public SingleCellAnalyticsStreamerFactory(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
     }
 
-    public SingleCellAnalyticsStream create(String experimentAccession) {
+    public SingleCellAnalyticsStreamer create(String experimentAccession) {
         SingleCellExperimentFiles scFiles = dataFileHub.getSingleCellExperimentFiles(experimentAccession);
-        return new SingleCellAnalyticsStream(scFiles.tpmsMatrix, scFiles.geneIdsTsv, scFiles.cellIdsTsv);
+        return new SingleCellAnalyticsStreamer(scFiles.tpmsMatrix, scFiles.geneIdsTsv, scFiles.cellIdsTsv);
     }
 }

@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import static org.mockito.Mockito.doNothing;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SingleCellAnalyticsStreamTest {
+public class SingleCellAnalyticsStreamerTest {
 
     @Mock
     private AtlasResource<MatrixMarketReader> tpmsMatrixResourceMock;
@@ -23,38 +23,38 @@ public class SingleCellAnalyticsStreamTest {
     private MatrixMarketReader matrixMarketReaderMock;
 
     @Mock
-    private AtlasResource<TsvReader> geneIdsResourceMock;
+    private AtlasResource<TsvStreamer> geneIdsResourceMock;
 
     @Mock
-    private TsvReader geneIdsTsvReaderMock;
+    private TsvStreamer geneIdsTsvStreamerMock;
 
     @Mock
-    private AtlasResource<TsvReader> cellIdsResourceMock;
+    private AtlasResource<TsvStreamer> cellIdsResourceMock;
 
     @Mock
-    private TsvReader cellIdsTsvReaderMock;
+    private TsvStreamer cellIdsTsvStreamerMock;
 
     @Before
     public void setUp() throws Exception {
         when(tpmsMatrixResourceMock.get()).thenReturn(matrixMarketReaderMock);
-        when(geneIdsResourceMock.get()).thenReturn(geneIdsTsvReaderMock);
-        when(cellIdsResourceMock.get()).thenReturn(cellIdsTsvReaderMock);
+        when(geneIdsResourceMock.get()).thenReturn(geneIdsTsvStreamerMock);
+        when(cellIdsResourceMock.get()).thenReturn(cellIdsTsvStreamerMock);
 
         doNothing().when(matrixMarketReaderMock).close();
-        doNothing().when(geneIdsTsvReaderMock).close();
-        doNothing().when(cellIdsTsvReaderMock).close();
+        doNothing().when(geneIdsTsvStreamerMock).close();
+        doNothing().when(cellIdsTsvStreamerMock).close();
     }
 
     @Test
     public void resourcesAreClosed() {
-        try (SingleCellAnalyticsStream subject =
-                     new SingleCellAnalyticsStream(tpmsMatrixResourceMock, geneIdsResourceMock, cellIdsResourceMock)) {
+        try (SingleCellAnalyticsStreamer subject =
+                     new SingleCellAnalyticsStreamer(tpmsMatrixResourceMock, geneIdsResourceMock, cellIdsResourceMock)) {
             // Use subject
         }
 
         verify(matrixMarketReaderMock).close();
-        verify(geneIdsTsvReaderMock).close();
-        verify(cellIdsTsvReaderMock).close();
+        verify(geneIdsTsvStreamerMock).close();
+        verify(cellIdsTsvStreamerMock).close();
     }
 
 

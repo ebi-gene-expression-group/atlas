@@ -1,32 +1,34 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
 
 import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class SingleCellAnalyticsStream implements AutoCloseable {
+public class SingleCellAnalyticsStreamer implements AutoCloseable, Supplier<Stream<SingleCellAnalytics>> {
     private final MatrixMarketReader matrixMarketReader;
     private final String[] geneIds;
     private final String[] cellIds;
 
-    public SingleCellAnalyticsStream(AtlasResource<MatrixMarketReader> tpmsMatrix,
-                                     AtlasResource<TsvReader> geneIdsTsv,
-                                     AtlasResource<TsvReader> cellIdsTsv) {
+    public SingleCellAnalyticsStreamer(AtlasResource<MatrixMarketReader> tpmsMatrix,
+                                       AtlasResource<TsvStreamer> geneIdsTsv,
+                                       AtlasResource<TsvStreamer> cellIdsTsv) {
 
         matrixMarketReader = tpmsMatrix.get();
 
         geneIds = new String[matrixMarketReader.getRows()];
         cellIds = new String[matrixMarketReader.getColumns()];
 
-        try (TsvReader geneIdsTsvReader = geneIdsTsv.get(); TsvReader cellIdsTsvReader = cellIdsTsv.get()) {
-            geneIdsTsvReader.stream().forEach(line -> geneIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
-            cellIdsTsvReader.stream().forEach(line -> cellIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
+        try (TsvStreamer geneIdsTsvReader = geneIdsTsv.get(); TsvStreamer cellIdsTsvReader = cellIdsTsv.get()) {
+            geneIdsTsvReader.get().forEach(line -> geneIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
+            cellIdsTsvReader.get().forEach(line -> cellIds[Integer.parseInt(line[0].trim()) - 1] = line[1]);
         }
     }
 
-    public Stream<SingleCellAnalytics> stream() {
+    @Override
+    public Stream<SingleCellAnalytics> get() {
         return matrixMarketReader.stream()
                 .map(triple ->
                         SingleCellAnalytics.create(

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class SingleCellAnalyticsStreamFactoryIT {
+public class SingleCellAnalyticsStreamerFactoryIT {
 
     static final String EXPERIMENT_ACCESSION = "TEST-SINGLE-CELL";
 
@@ -54,7 +54,7 @@ public class SingleCellAnalyticsStreamFactoryIT {
     }
 
     MockDataFileHub dataFileHub = MockDataFileHub.create();
-    SingleCellAnalyticsStreamFactory subject = new SingleCellAnalyticsStreamFactory(dataFileHub);
+    SingleCellAnalyticsStreamerFactory subject = new SingleCellAnalyticsStreamerFactory(dataFileHub);
 
     @Test
     public void readsAllEntries() {
@@ -68,8 +68,8 @@ public class SingleCellAnalyticsStreamFactoryIT {
         dataFileHub.addMatrixMarketExpressionFiles(
                 EXPERIMENT_ACCESSION, matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
 
-        try (SingleCellAnalyticsStream singleCellAnalyticsStream = subject.create(EXPERIMENT_ACCESSION)) {
-            singleCellAnalyticsStream.stream().forEach(
+        try (SingleCellAnalyticsStreamer singleCellAnalyticsStreamer = subject.create(EXPERIMENT_ACCESSION)) {
+            singleCellAnalyticsStreamer.get().forEach(
                     sca -> assertThat(
                             matrixEntries,
                             hasItem(
@@ -90,8 +90,8 @@ public class SingleCellAnalyticsStreamFactoryIT {
         dataFileHub.addMatrixMarketExpressionFiles(
                 EXPERIMENT_ACCESSION, matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
 
-        try (SingleCellAnalyticsStream singleCellAnalyticsStream = subject.create(EXPERIMENT_ACCESSION)) {
-            assertThat(singleCellAnalyticsStream.stream().collect(Collectors.toList()), hasSize(0));
+        try (SingleCellAnalyticsStreamer singleCellAnalyticsStreamer = subject.create(EXPERIMENT_ACCESSION)) {
+            assertThat(singleCellAnalyticsStreamer.get().collect(Collectors.toList()), hasSize(0));
         }
     }
 }

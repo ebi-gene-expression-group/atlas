@@ -13,21 +13,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class ArrayExpressIdfReaderFactoryEIT {
+public class ArrayExpressIdfStreamerFactoryEIT {
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_FOOBAR = "E-FOOBAR";
 
-    private ArrayExpressIdfReaderFactory subject;
+    private ArrayExpressIdfStreamerFactory subject;
 
     @Before
     public void setUp() {
-        subject = new ArrayExpressIdfReaderFactory();
+        subject = new ArrayExpressIdfStreamerFactory();
     }
 
     @Test
     public void build() throws Exception {
-        TsvReader idfReader = subject.createArrayExpressIdfReader(E_MTAB_513);
-        assertThat(idfReader).isInstanceOf(TsvReader.class);
+        TsvStreamer idfStreamer = subject.createArrayExpressIdfReader(E_MTAB_513);
+        assertThat(idfStreamer).isInstanceOf(TsvStreamer.class);
     }
 
     @Test(expected = IOException.class)

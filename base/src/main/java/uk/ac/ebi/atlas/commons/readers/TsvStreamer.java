@@ -4,21 +4,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UncheckedIOException;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 import static org.apache.commons.lang3.StringUtils.removeStart;
 
-public class TsvReader implements AutoCloseable{
+// A closeable Stream<String[]>, remember to close once you’re done with it! (i.e. use try-with-resources)
+
+public class TsvStreamer implements AutoCloseable, Supplier<Stream<String[]>> {
     private final Reader reader;
 
-    public TsvReader(Reader reader) {
+    public TsvStreamer(Reader reader) {
         this.reader = reader;
     }
 
-    public Stream<String[]> stream() {
+    @Override
+    public Stream<String[]> get() {
         return new BufferedReader(this.reader).lines()
-                .map(TsvReader::splitByTabsAndTrimWrappingQuotes)
+                .map(TsvStreamer::splitByTabsAndTrimWrappingQuotes)
                 .filter(lineFields -> !lineFields[0].startsWith("#"));
     }
 
@@ -34,7 +38,7 @@ public class TsvReader implements AutoCloseable{
     private static String[] splitByTabsAndTrimWrappingQuotes (String line) {
         return Stream
                 .of(line.split("\t", -1))
-                .map(TsvReader::trimDoubleQuotes)
+                .map(TsvStreamer::trimDoubleQuotes)
                 .toArray(String[]::new);
     }
 
@@ -42,19 +46,19 @@ public class TsvReader implements AutoCloseable{
         return removeStart(removeEnd(str, "\""), "\"");
     }
 
-    public static TsvReader empty() {
+    public static TsvStreamer empty() {
         return DUMMY;
     }
 
-    private final static TsvReader DUMMY = new DummyTsvReader();
+    private final static TsvStreamer DUMMY = new DummyTsvStreamer();
 
-    private final static class DummyTsvReader extends TsvReader {
-        private DummyTsvReader() {
+    private final static class DummyTsvStreamer extends TsvStreamer {
+        private DummyTsvStreamer() {
             super(null);
         }
 
         @Override
-        public Stream<String[]> stream() {
+        public Stream<String[]> get() {
             return Stream.empty();
         }
 

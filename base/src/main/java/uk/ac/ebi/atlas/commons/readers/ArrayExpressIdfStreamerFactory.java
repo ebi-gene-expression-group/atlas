@@ -7,14 +7,14 @@ import java.net.URL;
 import java.text.MessageFormat;
 
 @Named
-public class ArrayExpressIdfReaderFactory {
+public class ArrayExpressIdfStreamerFactory {
     private static final String ARRAYEXPRESS_IDF_TEMPLATE = "https://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt";
 
-    public TsvReader createArrayExpressIdfReader(String experimentAccession) throws IOException{
+    public TsvStreamer createArrayExpressIdfReader(String experimentAccession) throws IOException{
         String tsvFileUrlAsString = MessageFormat.format(ARRAYEXPRESS_IDF_TEMPLATE, experimentAccession);
 
         URL tsvFileUrl = new URL(tsvFileUrlAsString);
         InputStreamReader tsvFileInputStreamReader = new InputStreamReader(tsvFileUrl.openStream());
-        return new TsvReader(tsvFileInputStreamReader);
+        return new TsvStreamer(tsvFileInputStreamReader);
     }
 }
