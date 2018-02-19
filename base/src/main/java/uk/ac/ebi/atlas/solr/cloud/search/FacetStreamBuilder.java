@@ -11,13 +11,12 @@ import org.apache.solr.client.solrj.io.stream.metrics.MeanMetric;
 import org.apache.solr.client.solrj.io.stream.metrics.Metric;
 import org.apache.solr.common.params.SolrParams;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
-import uk.ac.ebi.atlas.solr.cloud.TupleStreamAutoCloseableIterator;
+import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
-public class FacetStreamDaoBuilder<T extends CollectionProxy> {
-
+public class FacetStreamBuilder<T extends CollectionProxy> {
     private final T collectionProxy;
     private final Bucket[] buckets;
 
@@ -26,7 +25,7 @@ public class FacetStreamDaoBuilder<T extends CollectionProxy> {
     private ImmutableSet.Builder<FieldComparator> sortsBuilder = ImmutableSet.builder();
 
     @SafeVarargs
-    public FacetStreamDaoBuilder(T collectionProxy, CollectionProxy.SchemaField<T>... bucketFields) {
+    public FacetStreamBuilder(T collectionProxy, CollectionProxy.SchemaField<T>... bucketFields) {
         this.collectionProxy = collectionProxy;
 
         buckets =
@@ -36,56 +35,52 @@ public class FacetStreamDaoBuilder<T extends CollectionProxy> {
                         .toArray(Bucket[]::new);
     }
 
-    public FacetStreamDaoBuilder<T> addQueryTermsClause(CollectionProxy.SchemaField<T> field, String... values) {
+    public FacetStreamBuilder<T> addQueryTermsClause(CollectionProxy.SchemaField<T> field, String... values) {
         solrParamsBuilder.addQueryTermsClause(field.name(), values);
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> addFilterTermsClause(CollectionProxy.SchemaField<T> field, String... values) {
+    public FacetStreamBuilder<T> addFilterTermsClause(CollectionProxy.SchemaField<T> field, String... values) {
         solrParamsBuilder.addFilterTermsClause(field.name(), values);
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> addQueryRangeClause(CollectionProxy.SchemaField<T> field, Double rangeLowerBound) {
+    public FacetStreamBuilder<T> addQueryRangeClause(CollectionProxy.SchemaField<T> field, Double rangeLowerBound) {
         solrParamsBuilder.addQueryRangeClause(field.name(), rangeLowerBound);
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> addFilterRangeClause(CollectionProxy.SchemaField<T> field, Double rangeLowerBound) {
+    public FacetStreamBuilder<T> addFilterRangeClause(CollectionProxy.SchemaField<T> field, Double rangeLowerBound) {
         solrParamsBuilder.addFilterRangeClause(field.name(), rangeLowerBound);
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> sortByCountsAscending() {
+    public FacetStreamBuilder<T> sortByCountsAscending() {
         metricsBuilder.add(new CountMetric("*"));
         sortsBuilder.add(new FieldComparator("count(*)", ComparatorOrder.ASCENDING));
         return this;
     }
 
-    public FacetStreamDaoBuilder<T> withAverageOver(CollectionProxy.SchemaField<T> field) {
+    public FacetStreamBuilder<T> withAverageOver(CollectionProxy.SchemaField<T> field) {
         metricsBuilder.add(new MeanMetric(field.name()));
-//        sortsBuilder.add(new FieldComparator("avg(" + field.name() + ")", ComparatorOrder.ASCENDING));
         return this;
     }
 
-    public TupleStreamDao build() {
+    public TupleStreamer build() {
+        SolrParams solrParams = solrParamsBuilder.build();
+        Metric[] metrics = metricsBuilder.build().toArray(new Metric[0]);
+        FieldComparator[] sorts = sortsBuilder.build().toArray(new FieldComparator[0]);
+        int limit = Integer.MAX_VALUE;  // retrieve all, see https://issues.apache.org/jira/browse/SOLR-11836
 
-        return () -> {
-            SolrParams solrParams = solrParamsBuilder.build();
-            Metric[] metrics = metricsBuilder.build().toArray(new Metric[0]);
-            FieldComparator[] sorts = sortsBuilder.build().toArray(new FieldComparator[0]);
-            int limit = Integer.MAX_VALUE;  // retrieve all, see https://issues.apache.org/jira/browse/SOLR-11836
-
-            try {
-                // Will throw ClassCastException if SolrClient isn’t CloudSolrClient, beware in testing
-                String zkHost = ((CloudSolrClient) collectionProxy.solrClient).getZkHost();
-                String collectionNameOrAlias = collectionProxy.nameOrAlias;
-                return TupleStreamAutoCloseableIterator.of(
-                        new FacetStream(zkHost, collectionNameOrAlias, solrParams, buckets, metrics, sorts, limit));
-            } catch (IOException e) {
-                throw new UncheckedIOException(e);
-            }
-        };
-
+        try {
+            // Will throw ClassCastException if SolrClient isn’t CloudSolrClient, beware in testing
+            String zkHost = ((CloudSolrClient) collectionProxy.solrClient).getZkHost();
+            String collectionNameOrAlias = collectionProxy.nameOrAlias;
+            return TupleStreamer.of(
+                    new FacetStream(zkHost, collectionNameOrAlias, solrParams, buckets, metrics, sorts, limit));
+        } catch (IOException e) {
+            // Can only happen if multiple sorters with different names are set, the class API prevents it :)
+            throw new UncheckedIOException(e);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
 import com.google.common.collect.ImmutableSet;
-import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.params.ModifiableSolrParams;
 import org.apache.solr.common.params.SolrParams;
 

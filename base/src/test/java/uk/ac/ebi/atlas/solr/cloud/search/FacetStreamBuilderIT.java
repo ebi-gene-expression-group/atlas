@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
-import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.io.Tuple;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,11 +8,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.solr.analytics.fullanalytics.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.TupleStreamAutoCloseableIterator;
+import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 
 import javax.inject.Inject;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class FacetStreamDaoBuilderIT {
+public class FacetStreamBuilderIT {
 
     @Inject
     private SolrCloudCollectionProxyFactory collectionProxyFactory;
@@ -35,76 +35,77 @@ public class FacetStreamDaoBuilderIT {
     }
 
     @Test
-    public void termsFilter() throws IOException {
-        ImmutableList<Tuple> unfilteredResults;
-        ImmutableList<Tuple> filteredResults;
+    public void termsFilter() {
+        List<Tuple> unfilteredResults;
+        List<Tuple> filteredResults;
 
-        try(TupleStreamAutoCloseableIterator unfilteredIterator =
-                    new FacetStreamDaoBuilder<>(
+        try(TupleStreamer unfilteredStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .sortByCountsAscending()
-                            .build().fetchTupleStream();
-            TupleStreamAutoCloseableIterator iterator =
-                    new FacetStreamDaoBuilder<>(
+                            .build();
+            TupleStreamer streamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
                             .sortByCountsAscending()
-                            .build().fetchTupleStream()) {
-            unfilteredResults = ImmutableList.copyOf(unfilteredIterator);
-            filteredResults = ImmutableList.copyOf(iterator);
+                            .build()) {
+            unfilteredResults = unfilteredStreamer.get().collect(Collectors.toList());
+            filteredResults = streamer.get().collect(Collectors.toList());
 
             assertThat(filteredResults.size()).isGreaterThan(0).isLessThan(unfilteredResults.size());
         }
     }
 
     @Test
-    public void rangeFilter() throws IOException {
-        ImmutableList<Tuple> unfilteredResults;
-        ImmutableList<Tuple> filteredResults;
+    public void rangeFilter() {
+        List<Tuple> unfilteredResults;
+        List<Tuple> filteredResults;
 
-        try(TupleStreamAutoCloseableIterator unfilteredIterator =
-                    new FacetStreamDaoBuilder<>(
+        try(TupleStreamer unfilteredStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .sortByCountsAscending()
-                            .build().fetchTupleStream();
-            TupleStreamAutoCloseableIterator filteredIterator =
-                    new FacetStreamDaoBuilder<>(
+                            .build();
+            TupleStreamer filteredStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterRangeClause(analyticsCollectionProxy.EXPRESSION_LEVEL, 10.0)
                             .sortByCountsAscending()
-                            .build().fetchTupleStream()) {
-            unfilteredResults = ImmutableList.copyOf(unfilteredIterator);
-            filteredResults = ImmutableList.copyOf(filteredIterator);
+                            .build()) {
+            unfilteredResults = unfilteredStreamer.get().collect(Collectors.toList());
+            filteredResults = filteredStreamer.get().collect(Collectors.toList());
             assertThat(filteredResults.size()).isGreaterThan(0).isLessThan(unfilteredResults.size());
         }
     }
 
     @Test
-    public void filterCombination() throws IOException {
-        ImmutableList<Tuple> filteredResultsByExperiment;
-        ImmutableList<Tuple> filteredResultsByExperimentAndExpressionLevel;
+    public void filterCombination() {
+        List<Tuple> filteredResultsByExperiment;
+        List<Tuple> filteredResultsByExperimentAndExpressionLevel;
 
-        try(TupleStreamAutoCloseableIterator filteredByExperimentIterator =
-                    new FacetStreamDaoBuilder<>(
+        try(TupleStreamer filteredByExperimentStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
                             .sortByCountsAscending()
-                            .build().fetchTupleStream() ;
-            TupleStreamAutoCloseableIterator filteredByExperimentAndExpressionLevelIterator =
-                    new FacetStreamDaoBuilder<>(
+                            .build();
+            TupleStreamer filteredByExperimentAndExpressionLevelStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
                             .addFilterRangeClause(analyticsCollectionProxy.EXPRESSION_LEVEL, 10.0)
                             .sortByCountsAscending()
-                            .build().fetchTupleStream()) {
-            filteredResultsByExperiment = ImmutableList.copyOf(filteredByExperimentIterator);
-            filteredResultsByExperimentAndExpressionLevel = ImmutableList.copyOf(filteredByExperimentAndExpressionLevelIterator);
+                            .build()) {
+            filteredResultsByExperiment = filteredByExperimentStreamer.get().collect(Collectors.toList());
+            filteredResultsByExperimentAndExpressionLevel =
+                    filteredByExperimentAndExpressionLevelStreamer.get().collect(Collectors.toList());
 
             assertThat(filteredResultsByExperimentAndExpressionLevel.size())
                     .isGreaterThan(0)
@@ -113,66 +114,66 @@ public class FacetStreamDaoBuilderIT {
     }
 
     @Test
-    public void includeAverage() throws IOException {
-        try(TupleStreamAutoCloseableIterator filteredByExperimentIterator =
-                    new FacetStreamDaoBuilder<>(
+    public void includeAverage() {
+        try(TupleStreamer filteredByExperimentStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
                             .withAverageOver(analyticsCollectionProxy.EXPRESSION_LEVEL)
                             .sortByCountsAscending()
-                            .build().fetchTupleStream()) {
-            filteredByExperimentIterator.forEachRemaining(
+                            .build()) {
+            filteredByExperimentStreamer.get().forEach(
                     tuple -> assertThat(tuple.getDouble("avg(expression_level)")).isNotNull().isGreaterThan(0));
         }
     }
 
     @Test
-    public void termsQuery() throws IOException {
-        ImmutableList<Tuple> twoAssayGroupsResult;
-        ImmutableList<Tuple> oneAssayGroupResult;
+    public void termsQuery() {
+        List<Tuple> twoAssayGroupsResult;
+        List<Tuple> oneAssayGroupResult;
 
-        try(TupleStreamAutoCloseableIterator twoAssayGroupsIterator =
-                    new FacetStreamDaoBuilder<>(
+        try(TupleStreamer twoAssayGroupsStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
                             .addFilterRangeClause(analyticsCollectionProxy.EXPRESSION_LEVEL, 10.0)
                             .addQueryTermsClause(analyticsCollectionProxy.ASSAY_GROUP_ID, "g39", "g341")
                             .sortByCountsAscending()
-                            .build().fetchTupleStream() ;
-            TupleStreamAutoCloseableIterator oneAssayGroupsIterator =
-                    new FacetStreamDaoBuilder<>(
+                            .build() ;
+            TupleStreamer oneAssayGroupsStreamer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
                             .addFilterRangeClause(analyticsCollectionProxy.EXPRESSION_LEVEL, 10.0)
                             .addQueryTermsClause(analyticsCollectionProxy.ASSAY_GROUP_ID, "g39")
                             .sortByCountsAscending()
-                            .build().fetchTupleStream()) {
-            twoAssayGroupsResult = ImmutableList.copyOf(twoAssayGroupsIterator);
-            oneAssayGroupResult = ImmutableList.copyOf(oneAssayGroupsIterator);
+                            .build()) {
+            twoAssayGroupsResult = twoAssayGroupsStreamer.get().collect(Collectors.toList());
+            oneAssayGroupResult = oneAssayGroupsStreamer.get().collect(Collectors.toList());
 
             assertThat(oneAssayGroupResult.size()).isGreaterThan(0).isLessThan(twoAssayGroupsResult.size());
         }
     }
 
     @Test
-    public void rangeQuery() throws IOException {
-        ImmutableList<Tuple> filteredExpressionLevel10;
-        ImmutableList<Tuple> queryexpressionLevel20;
+    public void rangeQuery() {
+        List<Tuple> filteredExpressionLevel10;
+        List<Tuple> queryexpressionLevel20;
 
-        try(TupleStreamAutoCloseableIterator filterExpressionLevel10Iterator =
-                    new FacetStreamDaoBuilder<>(
+        try(TupleStreamer filterExpressionLevel10Stremer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
                             .addFilterRangeClause(analyticsCollectionProxy.EXPRESSION_LEVEL, 10.0)
                             .addQueryTermsClause(analyticsCollectionProxy.ASSAY_GROUP_ID, "g39")
                             .sortByCountsAscending()
-                            .build().fetchTupleStream() ;
-            TupleStreamAutoCloseableIterator queryExpressionLevel20Iterator =
-                    new FacetStreamDaoBuilder<>(
+                            .build() ;
+            TupleStreamer queryExpressionLevel20Stremer =
+                    new FacetStreamBuilder<>(
                             analyticsCollectionProxy,
                             analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
                             .addFilterTermsClause(analyticsCollectionProxy.EXPERIMENT_ACCESSION, "E-MTAB-2706")
@@ -180,9 +181,9 @@ public class FacetStreamDaoBuilderIT {
                             .addQueryTermsClause(analyticsCollectionProxy.ASSAY_GROUP_ID, "g39")
                             .addQueryRangeClause(analyticsCollectionProxy.EXPRESSION_LEVEL, 20.0)
                             .sortByCountsAscending()
-                            .build().fetchTupleStream()) {
-            filteredExpressionLevel10 = ImmutableList.copyOf(filterExpressionLevel10Iterator);
-            queryexpressionLevel20 = ImmutableList.copyOf(queryExpressionLevel20Iterator);
+                            .build()) {
+            filteredExpressionLevel10 = filterExpressionLevel10Stremer.get().collect(Collectors.toList());
+            queryexpressionLevel20 = queryExpressionLevel20Stremer.get().collect(Collectors.toList());
 
             assertThat(queryexpressionLevel20.size()).isGreaterThan(0).isLessThan(filteredExpressionLevel10.size());
         }
