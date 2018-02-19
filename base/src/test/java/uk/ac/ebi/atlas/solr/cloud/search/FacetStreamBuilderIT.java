@@ -188,4 +188,45 @@ public class FacetStreamBuilderIT {
             assertThat(queryexpressionLevel20.size()).isGreaterThan(0).isLessThan(filteredExpressionLevel10.size());
         }
     }
+
+    @Test
+    public void sortByCountsAkaSpecificity() {
+        try(TupleStreamer streamer =
+                    new FacetStreamBuilder<>(
+                            analyticsCollectionProxy,
+                            analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
+                            .sortByCountsAscending()
+                            .build()) {
+
+            List<Tuple> results = streamer.get().collect(Collectors.toList());
+
+            for (int i = 0 ; i < results.size() - 1; i++) {
+                assertThat(results.get(i).getLong("count(*)"))
+                        .isLessThanOrEqualTo(results.get(i + 1).getLong("count(*)"));
+            }
+
+        }
+    }
+
+    @Test
+    public void sortByAverage() {
+        try(TupleStreamer streamer =
+                    new FacetStreamBuilder<>(
+                            analyticsCollectionProxy,
+                            analyticsCollectionProxy.BIOENTITY_IDENTIFIER)
+                            .sortByAverageDescending(analyticsCollectionProxy.EXPRESSION_LEVEL)
+                            .build()) {
+
+            List<Tuple> results = streamer.get().collect(Collectors.toList());
+
+            for (int i = 0 ; i < results.size() - 1; i++) {
+                assertThat(results.get(i).getDouble("avg(" + analyticsCollectionProxy.EXPRESSION_LEVEL.name() + ")"))
+                        .isGreaterThanOrEqualTo(
+                                results.get(i + 1)
+                                        .getDouble("avg(" + analyticsCollectionProxy.EXPRESSION_LEVEL.name() + ")"));
+            }
+
+        }
+    }
+
 }

@@ -4,7 +4,7 @@ import org.apache.solr.client.solrj.SolrClient;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 
 public class AnalyticsCollectionProxy extends CollectionProxy {
-    private class AnalyticsSchemaField extends SchemaField<AnalyticsCollectionProxy>{
+    public class AnalyticsSchemaField extends SchemaField<AnalyticsCollectionProxy>{
         private AnalyticsSchemaField(String fieldName) {
             super(fieldName);
         }

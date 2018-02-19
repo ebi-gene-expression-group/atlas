@@ -61,6 +61,12 @@ public class FacetStreamBuilder<T extends CollectionProxy> {
         return this;
     }
 
+    public FacetStreamBuilder<T> sortByAverageDescending(CollectionProxy.SchemaField<T> field) {
+        metricsBuilder.add(new MeanMetric(field.name()));
+        sortsBuilder.add(new FieldComparator("avg(" + field.name() + ")", ComparatorOrder.DESCENDING));
+        return this;
+    }
+
     public FacetStreamBuilder<T> withAverageOver(CollectionProxy.SchemaField<T> field) {
         metricsBuilder.add(new MeanMetric(field.name()));
         return this;
