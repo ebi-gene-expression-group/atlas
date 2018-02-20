@@ -72,16 +72,4 @@ public abstract class CollectionProxy {
                 nameOrAlias,
                 Arrays.stream(e.getStackTrace()).map(StackTraceElement::toString).collect(Collectors.joining("\n\t")));
     }
-
-    public abstract class SchemaField<T extends CollectionProxy> {
-        private final String fieldName;
-
-        protected SchemaField(String fieldName) {
-            this.fieldName = fieldName;
-        }
-
-        public String name() {
-             return fieldName;
-        }
-    }
 }

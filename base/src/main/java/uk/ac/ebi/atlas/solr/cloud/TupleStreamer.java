@@ -12,8 +12,8 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-// Due to the fact that tuple.EOF signals the end of the TupleStream we can’t use ObjectInputStream and related classes
-// Remember to use with try-with-resources so that the underlying TupleStream is properly closed
+// Due to the fact that tuple.EOF signals the end of the TupleStream we can’t use ObjectInputStream.
+// Remember: use with try-with-resources so that the underlying TupleStream is properly closed!
 
 public class TupleStreamer implements AutoCloseable, Supplier<Stream<Tuple>> {
     private final TupleStream tupleStream;
@@ -70,6 +70,7 @@ public class TupleStreamer implements AutoCloseable, Supplier<Stream<Tuple>> {
             return currentTuple;
         }
 
+        // TODO Consider using CompletableFuture, Supplier, Consumer so we don’t block until next tuple is ready
         private void bufferNextTuple() {
             try {
                 if (!isOpen) {

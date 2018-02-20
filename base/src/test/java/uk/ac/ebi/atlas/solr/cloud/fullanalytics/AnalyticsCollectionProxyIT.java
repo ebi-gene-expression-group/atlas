@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.analytics.fullanalytics;
+package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery;
