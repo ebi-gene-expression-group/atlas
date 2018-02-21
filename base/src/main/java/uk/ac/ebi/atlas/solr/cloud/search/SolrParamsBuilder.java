@@ -12,7 +12,9 @@ public class SolrParamsBuilder {
     // A general way to do single and multiple value field searches
     private static final String TERMS_CLAUSE_TEMPLATE = "({!terms f=%s}%s)";
     // If we want to add an exclusive value syntax: %s:{%f TO *]
-    private static final String RANGE_CLAUSE_TEMPLATE = "%s:[%f TO *]";
+    private static final String RANGE_UPPER_BOUND_CLAUSE_TEMPLATE = "%s:[* TO %f]";
+    private static final String RANGE_LOWER_BOUND_CLAUSE_TEMPLATE = "%s:[%f TO *]";
+    private static final String RANGE_DOUBLE_BOUND_CLAUSE_TEMPLATE = "%s:([* TO %f] OR [%f TO *])";
 
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
@@ -27,15 +29,36 @@ public class SolrParamsBuilder {
         return this;
     }
 
-    public SolrParamsBuilder addQueryRangeClause(String field, Double rangeLowerBound) {
-        qClausesBuilder.add(createRangeQuery(field, rangeLowerBound));
+    public SolrParamsBuilder addQueryUpperRangeClause(String field, Double rangeUpperBound) {
+        qClausesBuilder.add(createUpperRangeQuery(field, rangeUpperBound));
         return this;
     }
 
-    public SolrParamsBuilder addFilterRangeClause(String field, Double rangeLowerBound) {
-        fqClausesBuilder.add(createRangeQuery(field, rangeLowerBound));
+    public SolrParamsBuilder addFilterUpperRangeClause(String field, Double rangeUpperBound) {
+        fqClausesBuilder.add(createUpperRangeQuery(field, rangeUpperBound));
         return this;
     }
+
+    public SolrParamsBuilder addQueryLowerRangeClause(String field, Double rangeLowerBound) {
+        qClausesBuilder.add(createLowerRangeQuery(field, rangeLowerBound));
+        return this;
+    }
+
+    public SolrParamsBuilder addFilterLowerRangeClause(String field, Double rangeLowerBound) {
+        fqClausesBuilder.add(createLowerRangeQuery(field, rangeLowerBound));
+        return this;
+    }
+
+    public SolrParamsBuilder addQueryDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
+        qClausesBuilder.add(createDoubleRangeQuery(field, rangeUpperBound, rangeLowerBound));
+        return this;
+    }
+
+    public SolrParamsBuilder addFilterDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
+            fqClausesBuilder.add(createDoubleRangeQuery(field, rangeUpperBound, rangeLowerBound));
+        return this;
+    }
+
 
     public SolrParams build() {
         ImmutableSet<String> fqClauses = fqClausesBuilder.build();
@@ -54,8 +77,16 @@ public class SolrParamsBuilder {
                         .collect(Collectors.joining(",")));
     }
 
-    private static String createRangeQuery(String field, Double rangeStart) {
-        return String.format(RANGE_CLAUSE_TEMPLATE, field, rangeStart);
+    private static String createUpperRangeQuery(String field, Double rangeEnd) {
+        return String.format(RANGE_UPPER_BOUND_CLAUSE_TEMPLATE, field, rangeEnd);
+    }
+
+    private static String createLowerRangeQuery(String field, Double rangeStart) {
+        return String.format(RANGE_LOWER_BOUND_CLAUSE_TEMPLATE, field, rangeStart);
+    }
+
+    private static String createDoubleRangeQuery(String field, Double rangeEnd, Double rangeStart) {
+        return String.format(RANGE_DOUBLE_BOUND_CLAUSE_TEMPLATE, field, rangeEnd, rangeStart);
     }
 
 //    public FacetStreamingExpressionBuilder queryIdentifierSearch(SemanticQuery semanticQuery) {

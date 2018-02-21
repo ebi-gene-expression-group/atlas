@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
-import com.google.common.collect.ImmutableSet;
 import org.apache.solr.common.params.SolrParams;
 import org.junit.Test;
 
@@ -22,10 +21,11 @@ public class SolrParamsBuilderTest {
                 new SolrParamsBuilder()
                         .addQueryTermsClause("field1", "value1")
                         .addQueryTermsClause("field2", "value21", "value22")
-                        .addQueryRangeClause("field3", 1D)
+                        .addQueryLowerRangeClause("field3", 1D)
+                        .addQueryUpperRangeClause("field4", 1D)
                         .build();
 
-        assertThat(solrParams.get("q").split(" AND ")).hasSize(3);
+        assertThat(solrParams.get("q").split(" AND ")).hasSize(4);
     }
 
     @Test
@@ -34,10 +34,31 @@ public class SolrParamsBuilderTest {
                 new SolrParamsBuilder()
                         .addFilterTermsClause("field1", "value1")
                         .addFilterTermsClause("field2", "value21", "value22")
-                        .addFilterRangeClause("field3", 1D)
+                        .addFilterLowerRangeClause("field3", 1D)
+                        .addFilterUpperRangeClause("field4", 1D)
                         .build();
 
-        assertThat(solrParams.get("fq").split(" AND ")).hasSize(3);
+        assertThat(solrParams.get("fq").split(" AND ")).hasSize(4);
+    }
+
+    @Test
+    public void doubleRangeFiltersAreJoinedWithOr() {
+        SolrParams solrParams =
+                new SolrParamsBuilder()
+                        .addFilterDoubleRangeClause("field", -1D, 1D)
+                        .build();
+
+        assertThat(solrParams.get("fq").split(" OR ")).hasSize(2);
+    }
+
+    @Test
+    public void doubleRangeQueriesAreJoinedWithOr() {
+        SolrParams solrParams =
+                new SolrParamsBuilder()
+                        .addQueryDoubleRangeClause("field", -1D, 1D)
+                        .build();
+
+        assertThat(solrParams.get("q").split(" OR ")).hasSize(2);
     }
 
     @Test
