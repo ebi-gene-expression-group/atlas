@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.solr.cloud;
 
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.solr.analytics.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 
 import javax.inject.Named;
 
