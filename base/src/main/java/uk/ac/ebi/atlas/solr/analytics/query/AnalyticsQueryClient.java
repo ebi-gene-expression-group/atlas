@@ -102,11 +102,6 @@ public class AnalyticsQueryClient {
         final SolrQuery solrQuery = new SolrQuery();
 
         private Builder(){
-            /*
-             we put some more data than matches the 0.05 pValue limit to give ourselves some wiggle
-             room but we don't actually want them
-             */
-            solrQuery.addFilterQuery("-p_value:[0.05 TO *]");
             solrQuery.set("omitHeader", true);
         }
 
@@ -121,7 +116,9 @@ public class AnalyticsQueryClient {
 
         public Builder baselineFacets() {
             setFacets(baselineFacetsQueryJson);
-            solrQuery.addFilterQuery("experiment_type:(RNASEQ_MRNA_BASELINE OR PROTEOMICS_BASELINE)");
+            solrQuery.addFilterQuery(
+                    "(experiment_type:RNASEQ_MRNA_BASELINE AND expression_level:[0.5 TO *]) " +
+                    "OR experiment_type:PROTEOMICS_BASELINE");
             return this;
         }
 
@@ -130,7 +127,8 @@ public class AnalyticsQueryClient {
                     "RNASEQ_MRNA_DIFFERENTIAL " +
                     "OR MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL " +
                     "OR MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL " +
-                    "OR MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)");
+                    "OR MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL) " +
+                    "AND p_value:[* TO 0.05] AND fold_change:([* TO -1.0] OR [1.0 TO *])");
             return this;
         }
 
