@@ -367,11 +367,25 @@
             <version>3.0.3</version>
         </dependency>
 
+        <!-- Nasty bug in HttpClient 4.5.3 (bundled with Solr) -->
+        <!-- https://issues.apache.org/jira/browse/HTTPCLIENT-1831 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.5</version>
+        </dependency>
+
         <!-- Solr -->
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
             <version>${solr.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.solr</groupId>
