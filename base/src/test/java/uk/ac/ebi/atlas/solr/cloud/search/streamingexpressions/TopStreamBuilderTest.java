@@ -4,22 +4,25 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.DummyTupleStream.TUPLE_STREAM_SOURCE_SIZE;
 
 public class TopStreamBuilderTest {
     public static final int N = 20;
 
     @Test
     public void keepsOnlyNElements() {
-        TupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock = DummyTupleStream::new;
+        int size = ThreadLocalRandom.current().nextInt(1, 1000);
+        DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock = new DummyTupleStreamBuilder<>(size);
 
+        int topN = ThreadLocalRandom.current().nextInt(1, 1000);
         TopStreamBuilder<AnalyticsCollectionProxy> subject =
-                new TopStreamBuilder<>(tupleStreamBuilderMock, N, "field1");
+                new TopStreamBuilder<>(tupleStreamBuilderMock, topN, "field1");
 
         assertThat(TupleStreamer.of(subject.build()).get().collect(toList()))
-                .hasSize(20)
-                .first().matches(tuple -> tuple.getLong("field1") == TUPLE_STREAM_SOURCE_SIZE - 1);
+                .hasSize(Math.min(size, topN))
+                .first().matches(tuple -> tuple.getLong("field1") == size - 1);
     }
 }
