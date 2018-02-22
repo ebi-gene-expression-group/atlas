@@ -41,7 +41,7 @@ public class BaselineAnalyticsSearchDaoTest {
     }
 
     private static List<Map<String, Object>> loadJsonWithExperiments() throws IOException {
-        InputStream in = BaselineAnalyticsSearchDaoTest.class.getResourceAsStream("/uk/ac/ebi/atlas/search/analyticsindex/baseline/baseline.heatmap.pivot.response.json");
+        InputStream in = BaselineAnalyticsSearchDaoTest.class.getResourceAsStream("/uk/ac/ebi/atlas/solr/analytics/baseline/baseline.heatmap.pivot.response.json");
 
         return JsonPath.read(in, BaselineAnalyticsSearchDao.EXPERIMENTS_PATH);
     }

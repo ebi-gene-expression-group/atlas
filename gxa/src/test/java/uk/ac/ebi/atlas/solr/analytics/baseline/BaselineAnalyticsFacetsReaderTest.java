@@ -41,7 +41,7 @@ public class BaselineAnalyticsFacetsReaderTest {
 
 
     private static List<Map<String, Object>> loadJsonWithFacets() throws IOException {
-        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/uk/ac/ebi/atlas/search/analyticsindex/baseline/baseline.heatmap.pivot.response2.json");
+        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/uk/ac/ebi/atlas/solr/analytics/baseline/baseline.heatmap.pivot.response2.json");
         return JsonPath.read(in, BaselineAnalyticsSearchDao.FACET_TREE_PATH);
     }
 
