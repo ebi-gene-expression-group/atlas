@@ -45,6 +45,7 @@ public class MiscellaneousAnalyticsSearchDao {
     String searchBioentityIdentifiersForTissuesInBaselineExperiments(SemanticQuery geneQuery) {
         return analyticsQueryClient.queryBuilder()
                         .bioentityIdentifierFacets(1)
+                        .filterBaselineExperiments()
                         .queryIdentifierSearch(geneQuery)
                         .fetch();
     }

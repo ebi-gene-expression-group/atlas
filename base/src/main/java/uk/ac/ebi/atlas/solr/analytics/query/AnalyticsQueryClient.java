@@ -114,11 +114,16 @@ public class AnalyticsQueryClient {
             solrQuery.set("json.facet", ResourceUtils.readPlainTextResource(r).replaceAll("\\s+",""));
         }
 
-        public Builder baselineFacets() {
-            setFacets(baselineFacetsQueryJson);
+        public Builder filterBaselineExperiments() {
             solrQuery.addFilterQuery(
                     "(experiment_type:RNASEQ_MRNA_BASELINE AND expression_level:[0.5 TO *]) " +
-                    "OR experiment_type:PROTEOMICS_BASELINE");
+                            "OR experiment_type:PROTEOMICS_BASELINE");
+            return this;
+        }
+
+        public Builder baselineFacets() {
+            setFacets(baselineFacetsQueryJson);
+            filterBaselineExperiments();
             return this;
         }
 
