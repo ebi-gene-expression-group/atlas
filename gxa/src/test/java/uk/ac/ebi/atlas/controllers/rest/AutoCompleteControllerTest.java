@@ -36,7 +36,7 @@ public class AutoCompleteControllerTest {
     private AutoCompleteController subject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         SemanticQueryTerm queryTerm1 = SemanticQueryTerm.create("Value1");
         SemanticQueryTerm queryTerm2 = SemanticQueryTerm.create("Value2");
 
@@ -49,7 +49,7 @@ public class AutoCompleteControllerTest {
     }
 
     @Test
-    public void fetchTopSuggestions() throws Exception {
+    public void fetchTopSuggestions() {
         //given
         String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS, 15);
 
@@ -58,7 +58,7 @@ public class AutoCompleteControllerTest {
     }
 
     @Test
-    public void fetchTermSource() throws Exception {
+    public void fetchTermSource() {
 
         SemanticQueryTerm queryTerm1 = SemanticQueryTerm.create("TERM1", "CATEGORY1");
         SemanticQueryTerm queryTerm2 = SemanticQueryTerm.create("TERM2", "CATEGORY2");

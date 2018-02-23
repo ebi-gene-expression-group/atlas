@@ -29,10 +29,10 @@ public class GenePageControllerIT {
     GenePageController subject;
 
     @Test
-    public void bioentityProperties() throws Exception {
+    public void bioentityProperties() {
         bioentityProperties("ENSG00000005801", 8, true); //zinc finger
         bioentityProperties("ENSMUSG00000006386", 5, true);
-        bioentityProperties("Sb01g001140", 0, false);
+        bioentityProperties("Zm00001d001841", 0, false);
     }
 
     private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms){
