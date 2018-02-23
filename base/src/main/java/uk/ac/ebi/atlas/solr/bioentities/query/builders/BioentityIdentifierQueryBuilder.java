@@ -46,9 +46,9 @@ public class BioentityIdentifierQueryBuilder {
     private SolrQuery buildQueryObject(String queryString) {
         SolrQuery solrQuery = new SolrQuery(queryString);
         solrQuery.setFields(BIOENTITY_IDENTIFIER_FIELD);
-        solrQuery.setParam("group", true);
-        solrQuery.setParam("group.field", BIOENTITY_IDENTIFIER_FIELD);
-        solrQuery.setParam("group.main", true);
+        solrQuery.setParam("facet", true);
+        solrQuery.setParam("facet.field", BIOENTITY_IDENTIFIER_FIELD);
+        solrQuery.setParam("facet.main", true);
         solrQuery.setRows(MAX_GENE_IDS_TO_FETCH);
 
         LOGGER.trace("<buildQueryObject> solr query: {}", solrQuery.toString());
