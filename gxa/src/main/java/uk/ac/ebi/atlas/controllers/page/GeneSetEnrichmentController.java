@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
+import uk.ac.ebi.atlas.controllers.SpeciesUnknownException;
 import uk.ac.ebi.atlas.experiments.ExperimentMetadataEnrichmentService;
-import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.species.SpeciesFactory;
+import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.GeneSetEnrichmentClient;
 
@@ -23,6 +25,8 @@ import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -34,35 +38,34 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
     private final Gson gson = new Gson();
     private final ExperimentMetadataEnrichmentService experimentMetadataEnrichmentService;
     private final GeneSetEnrichmentClient geneSetEnrichmentClient;
-    private final SpeciesFactory speciesFactory;
-    private final SpeciesLookupService speciesLookupService;
+    private final SpeciesInferrer speciesInferrer;
 
     @Inject
     public GeneSetEnrichmentController(ExperimentTrader experimentTrader,
                                        GeneSetEnrichmentClient geneSetEnrichmentClient,
-                                       SpeciesFactory speciesFactory,
-                                       SpeciesLookupService speciesLookupService) {
+                                       SpeciesInferrer speciesInferrer) {
         this.experimentMetadataEnrichmentService = new ExperimentMetadataEnrichmentService(experimentTrader);
         this.geneSetEnrichmentClient = geneSetEnrichmentClient;
-        this.speciesFactory = speciesFactory;
-        this.speciesLookupService = speciesLookupService;
+        this.speciesInferrer = speciesInferrer;
     }
 
 
     @RequestMapping(value = "/genesetenrichment", method = RequestMethod.GET)
     public String getExperimentsListParameters(@RequestParam(defaultValue = "") String query, Model model) {
-        List<String> bioentityIdentifiers = Arrays.asList(query.split("\\W+"));
+        List<String> bioentityIdentifiers = Arrays.asList(query.trim().split("\\W+"));
         checkArgument(
                 !bioentityIdentifiers.isEmpty() && !isBlank(query),
                 "Please pass a list of genes separated by whitespace: ?query=gene_1 gene_2 ...");
 
-        Species species = speciesFactory.create(
-                speciesLookupService.
-                        fetchFirstSpeciesForBioentityIdentifiers(bioentityIdentifiers)
-                        .or("could not be determined for query")
-        );
+        Set<SemanticQueryTerm> queryTerms = bioentityIdentifiers.stream().map(SemanticQueryTerm::create).collect(Collectors.toSet());
 
-        Pair<Optional<String>, Optional<JsonArray>> result =
+        Species species = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(queryTerms));
+
+        if (species.isUnknown()) {
+            throw new SpeciesUnknownException();
+        }
+
+        Pair<Optional<Exception>, Optional<JsonArray>> result =
                 geneSetEnrichmentClient.fetchEnrichedGenes(species, bioentityIdentifiers);
 
         if (GeneSetEnrichmentClient.isSuccess(result)) {
@@ -73,7 +76,7 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
                     "data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
             return "gene-set-enrichment-results";
         } else {
-            throw new RuntimeException(result.getLeft().get());
+            throw new RuntimeException(result.getLeft().get().getMessage());
         }
     }
 }
