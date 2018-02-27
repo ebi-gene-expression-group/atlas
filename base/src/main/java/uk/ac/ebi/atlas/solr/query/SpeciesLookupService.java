@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.base.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
@@ -9,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Optional;
 
 @Deprecated // See SpeciesInferrer for a better (?) option
 @Named
@@ -38,7 +38,7 @@ public class SpeciesLookupService {
                 return species;
             }
         }
-        return Optional.absent();
+        return Optional.empty();
     }
 
     // this is faster than fetchSpeciesForGeneSet because it doesn't facet
@@ -53,6 +53,6 @@ public class SpeciesLookupService {
 
         Collection<String> species = solrServer.query(query, false, SPECIES_FIELD);
 
-        return species.isEmpty() ? Optional.<String>absent() : Optional.of(species.iterator().next());
+        return species.isEmpty() ? Optional.empty() : Optional.of(species.iterator().next());
     }
 }
