@@ -6,8 +6,10 @@ import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.controllers.NoStatisticalSignificanceException;
 import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
@@ -17,10 +19,8 @@ import java.io.StringReader;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Named
@@ -38,26 +38,25 @@ public class GeneSetEnrichmentClient {
         this.restTemplate = restTemplate;
     }
 
-    public Pair<Optional<String>, Optional<JsonArray>> fetchEnrichedGenes(Species species,
+    public Pair<Optional<Exception>, Optional<JsonArray>> fetchEnrichedGenes(Species species,
                                                                           Collection<String> bioentityIdentifiers) {
         try {
-            Optional<String> maybeError = validateInput(species, bioentityIdentifiers);
-            return maybeError.isPresent() ?
-                    Pair.of(maybeError, Optional.empty()) :
-                    formatResponse(fetchResponse(species, bioentityIdentifiers));
-
+            Pair<Optional<String>, Optional<JsonArray>> errorOrResponse = formatResponse(fetchResponse(species, bioentityIdentifiers));
+            return errorOrResponse.getLeft().isPresent() ?
+                    Pair.of(errorOrResponse.getLeft().map(RuntimeException::new), Optional.empty()) :
+                    Pair.of(Optional.empty(), errorOrResponse.getRight());
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            return Pair.of(Optional.of("Exception occurred:\n" + e.getMessage()), Optional.empty());
+            return Pair.of(Optional.of(e), Optional.empty());
         }
     }
 
-    public static boolean isSuccess(Pair<Optional<String>, Optional<JsonArray>> result) {
+    public static boolean isSuccess(Pair<Optional<Exception>, Optional<JsonArray>> result) {
         return !result.getLeft().isPresent();
     }
 
     //either error message or result
-    public Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
+    private Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
         if(lines.isEmpty()) {
             return Pair.of(Optional.of("Result empty!"),
                     Optional.empty());
@@ -81,16 +80,22 @@ public class GeneSetEnrichmentClient {
     }
 
     private List<String[]> fetchResponse(Species species, Collection<String> bioentityIdentifiers) {
-        Reader responseStringReader = new StringReader(
-                restTemplate.getForObject(
-                        MessageFormat.format(
-                                urlPattern,
-                                species.getEnsemblName().toLowerCase(),
-                                Joiner.on(" ").join(bioentityIdentifiers)),
-                        String.class));
+        try {
+            String response = restTemplate.getForObject(
+                    MessageFormat.format(
+                            urlPattern,
+                            species.getEnsemblName().toLowerCase(),
+                            Joiner.on(" ").join(bioentityIdentifiers)),
+                    String.class);
 
-        try (TsvReader tsvReader = new TsvReader(responseStringReader)) {
-            return tsvReader.stream().collect(Collectors.toList());
+            Reader responseStringReader = new StringReader(response);
+
+            try (TsvReader tsvReader = new TsvReader(responseStringReader)) {
+                return tsvReader.stream().collect(Collectors.toList());
+            }
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage());
+            throw new NoStatisticalSignificanceException("No significant contrasts found. Try adding more than " + bioentityIdentifiers.size() + " gene identifiers.");
         }
     }
 
@@ -137,18 +142,6 @@ public class GeneSetEnrichmentClient {
         } catch (NumberFormatException e){
             return Double.NaN;
         }
-    }
-
-    private Optional<String> validateInput(Species species, Collection<String> bioentityIdentifiers) {
-        Set<String> errors = new HashSet<>();
-        if (species.isUnknown()) {
-            errors.add("Unknown species: " + species.getName());
-        }
-        if (bioentityIdentifiers.size() < 10) {
-            errors.add("Please use at least 10 gene identifiers, was: " + bioentityIdentifiers.size());
-        }
-
-        return errors.isEmpty() ? Optional.empty() : Optional.of(Joiner.on("\n").join(errors));
     }
 
 }
