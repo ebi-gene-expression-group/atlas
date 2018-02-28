@@ -10,10 +10,10 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Optional;
 
 @Named
 public class BaselineAnalyticsInputStreamFactory {
-
     private final DataFileHub dataFileHub;
 
     @Inject
@@ -28,10 +28,17 @@ public class BaselineAnalyticsInputStreamFactory {
             AtlasResource<?> resource = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession).main;
             return new ProteomicsBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
         } else {
-            AtlasResource<?> resource =
+            AtlasResource<?> tpms =
                     dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession)
                             .dataFile(ExpressionUnit.Absolute.Rna.TPM);
-            return new RnaSeqBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
+
+            AtlasResource<?> fpkms =
+                    dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession)
+                            .dataFile(ExpressionUnit.Absolute.Rna.FPKM);
+
+            return new RnaSeqBaselineAnalyticsInputStream(
+                    tpms.exists() ? Optional.of(tpms.getReader()) : Optional.empty(),
+                    fpkms.exists() ? Optional.of(fpkms.getReader()) : Optional.empty());
         }
     }
 }
