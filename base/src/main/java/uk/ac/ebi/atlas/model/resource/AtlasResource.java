@@ -33,7 +33,7 @@ public abstract class AtlasResource<T> {
 
     public abstract T get();
 
-    public Optional<T> maybeGet(){
+    public Optional<T> maybeGet() {
         return exists() ? Optional.of(get()) : Optional.empty();
     }
 
