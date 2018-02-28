@@ -51,7 +51,7 @@ public class SolrInputDocumentInputStreamTest {
 
     private BaselineExperimentDataPoint baselineExperimentDataPoint = new BaselineExperimentDataPoint(
             BaselineExperimentTest.mockExperiment(),
-            new BaselineAnalytics(bioentityIdentifier, "column_name", 13.37),
+            BaselineAnalytics.create(bioentityIdentifier, "column_name", 13.37, 0.0),
             "condition search");
 
     private SolrInputDocumentInputStream subject;
