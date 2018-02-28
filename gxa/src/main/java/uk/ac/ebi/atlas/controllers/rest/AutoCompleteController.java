@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.controllers.rest;
 
 import com.google.gson.Gson;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
-import uk.ac.ebi.atlas.solr.query.SolrBioentitiesSuggesterService;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrBioentitiesSuggesterService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

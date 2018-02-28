@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.bioentity.properties;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
-import uk.ac.ebi.atlas.solr.query.BioentitiesSolrClient;
+import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;

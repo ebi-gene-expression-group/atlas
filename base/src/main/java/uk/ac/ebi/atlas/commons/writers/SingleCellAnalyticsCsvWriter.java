@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.commons.writers;
 import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.SingleCellAnalyticsStream;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.SingleCellAnalyticsStreamer;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -20,9 +20,9 @@ public class SingleCellAnalyticsCsvWriter implements AutoCloseable {
         outWriter = new BufferedWriter(writer);
     }
 
-    public void write(SingleCellAnalyticsStream scaStream) {
+    public void write(SingleCellAnalyticsStreamer scaStreamer) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        scaStream.stream().forEach(sca -> writeLine(sca.toCsvLine()));
+        scaStreamer.get().forEach(sca -> writeLine(sca.toCsvLine()));
         close();
         stopwatch.stop();
         LOGGER.info("Finished writing SC analytics in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));

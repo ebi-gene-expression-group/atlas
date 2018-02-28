@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.model.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
@@ -58,16 +58,16 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
         }
     }
 
-    public static class ReadOnly extends TsvFile<TsvReader> {
+    public static class ReadOnly extends TsvFile<TsvStreamer> {
 
         public ReadOnly(String parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
         }
 
         @Override
-        public TsvReader get() {
+        public TsvStreamer get() {
             try {
-                return new TsvReader(Files.newBufferedReader(path, StandardCharsets.UTF_8));
+                return new TsvStreamer(Files.newBufferedReader(path, StandardCharsets.UTF_8));
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }

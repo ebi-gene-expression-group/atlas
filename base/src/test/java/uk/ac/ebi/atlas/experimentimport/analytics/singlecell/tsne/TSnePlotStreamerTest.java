@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.util.Collections;
@@ -28,39 +28,39 @@ public class TSnePlotStreamerTest {
     private static final int STREAM_MAX_SIZE = 1000;
 
     @Mock
-    private TsvReader tsvReaderMock1;
+    private TsvStreamer tsvStreamerMock1;
 
     @Mock
-    private TsvReader tsvReaderMock5;
+    private TsvStreamer tsvStreamerMock5;
 
     @Mock
-    private TsvReader tsvReaderMock10;
+    private TsvStreamer tsvStreamerMock10;
 
     @Mock
-    private AtlasResource<TsvReader> atlasResourceTsvReaderMock1;
+    private AtlasResource<TsvStreamer> atlasResourceTsvStreamerMock1;
 
     @Mock
-    private AtlasResource<TsvReader> atlasResourceTsvReaderMock5;
+    private AtlasResource<TsvStreamer> atlasResourceTsvStreamerMock5;
 
     @Mock
-    private AtlasResource<TsvReader> atlasResourceTsvReaderMock10;
+    private AtlasResource<TsvStreamer> atlasResourceTsvStreamerMock10;
 
-    private Map<Integer, AtlasResource<TsvReader>> tSnePlotsResource;
+    private Map<Integer, AtlasResource<TsvStreamer>> tSnePlotsResource;
 
 
     private TSnePlotStreamer subject;
 
     @Before
     public void setUp() {
-        when(atlasResourceTsvReaderMock1.get()).thenReturn(tsvReaderMock1);
-        when(atlasResourceTsvReaderMock5.get()).thenReturn(tsvReaderMock5);
-        when(atlasResourceTsvReaderMock10.get()).thenReturn(tsvReaderMock10);
+        when(atlasResourceTsvStreamerMock1.get()).thenReturn(tsvStreamerMock1);
+        when(atlasResourceTsvStreamerMock5.get()).thenReturn(tsvStreamerMock5);
+        when(atlasResourceTsvStreamerMock10.get()).thenReturn(tsvStreamerMock10);
 
         tSnePlotsResource =
                 ImmutableMap.of(
-                        1, atlasResourceTsvReaderMock1,
-                        5, atlasResourceTsvReaderMock5,
-                        10, atlasResourceTsvReaderMock10);
+                        1, atlasResourceTsvStreamerMock1,
+                        5, atlasResourceTsvStreamerMock5,
+                        10, atlasResourceTsvStreamerMock10);
 
         subject = new TSnePlotStreamer(tSnePlotsResource);
     }
@@ -76,9 +76,9 @@ public class TSnePlotStreamerTest {
         List<TSnePoint> tSnePlot5 = randomTSnePoints(STREAM_MAX_SIZE);
         List<TSnePoint> tSnePlot10 = randomTSnePoints(STREAM_MAX_SIZE);
 
-        when(tsvReaderMock1.stream()).thenReturn(Stream.of(toTsv(tSnePlot1)));
-        when(tsvReaderMock5.stream()).thenReturn(Stream.of(toTsv(tSnePlot5)));
-        when(tsvReaderMock10.stream()).thenReturn(Stream.of(toTsv(tSnePlot10)));
+        when(tsvStreamerMock1.get()).thenReturn(Stream.of(toTsv(tSnePlot1)));
+        when(tsvStreamerMock5.get()).thenReturn(Stream.of(toTsv(tSnePlot5)));
+        when(tsvStreamerMock10.get()).thenReturn(Stream.of(toTsv(tSnePlot10)));
 
         assertThat(subject.stream(1).collect(Collectors.toList())).containsExactlyElementsOf(tSnePlot1);
         assertThat(subject.stream(5).collect(Collectors.toList())).containsExactlyElementsOf(tSnePlot5);
@@ -99,9 +99,9 @@ public class TSnePlotStreamerTest {
         assertThat(tSnePlot5Tsv.length).isEqualTo(tSnePlot5.size() + 1);
         assertThat(tSnePlot10Tsv.length).isEqualTo(tSnePlot10.size() + 1);
 
-        when(tsvReaderMock1.stream()).thenReturn(Stream.of(tSnePlot1Tsv));
-        when(tsvReaderMock5.stream()).thenReturn(Stream.of(tSnePlot5Tsv));
-        when(tsvReaderMock10.stream()).thenReturn(Stream.of(tSnePlot10Tsv));
+        when(tsvStreamerMock1.get()).thenReturn(Stream.of(tSnePlot1Tsv));
+        when(tsvStreamerMock5.get()).thenReturn(Stream.of(tSnePlot5Tsv));
+        when(tsvStreamerMock10.get()).thenReturn(Stream.of(tSnePlot10Tsv));
 
         assertThat(subject.stream(1).collect(Collectors.toList())).hasSize(tSnePlot1.size());
         assertThat(subject.stream(5).collect(Collectors.toList())).hasSize(tSnePlot5.size());
@@ -115,9 +115,9 @@ public class TSnePlotStreamerTest {
         List<TSnePoint> tSnePlot5 = Collections.emptyList();
         List<TSnePoint> tSnePlot10 = Collections.emptyList();
 
-        when(tsvReaderMock1.stream()).thenReturn(Stream.of(toTsv(tSnePlot1)));
-        when(tsvReaderMock5.stream()).thenReturn(Stream.of(toTsv(tSnePlot5)));
-        when(tsvReaderMock10.stream()).thenReturn(Stream.of(toTsv(tSnePlot10)));
+        when(tsvStreamerMock1.get()).thenReturn(Stream.of(toTsv(tSnePlot1)));
+        when(tsvStreamerMock5.get()).thenReturn(Stream.of(toTsv(tSnePlot5)));
+        when(tsvStreamerMock10.get()).thenReturn(Stream.of(toTsv(tSnePlot10)));
 
         assertThat(subject.stream(1).collect(Collectors.toList())).isEmpty();
         assertThat(subject.stream(5).collect(Collectors.toList())).isEmpty();
@@ -126,9 +126,9 @@ public class TSnePlotStreamerTest {
 
     @Test
     public void worksWithEmptyFiles() {
-        when(tsvReaderMock1.stream()).thenReturn(Stream.empty());
-        when(tsvReaderMock5.stream()).thenReturn(Stream.empty());
-        when(tsvReaderMock10.stream()).thenReturn(Stream.empty());
+        when(tsvStreamerMock1.get()).thenReturn(Stream.empty());
+        when(tsvStreamerMock5.get()).thenReturn(Stream.empty());
+        when(tsvStreamerMock10.get()).thenReturn(Stream.empty());
 
         assertThat(subject.stream(1).collect(Collectors.toList())).isEmpty();
         assertThat(subject.stream(5).collect(Collectors.toList())).isEmpty();
@@ -140,9 +140,9 @@ public class TSnePlotStreamerTest {
         try(TSnePlotStreamer subject = new TSnePlotStreamer(tSnePlotsResource)) {
             // Use subject...
         }
-        verify(tsvReaderMock1).close();
-        verify(tsvReaderMock5).close();
-        verify(tsvReaderMock10).close();
+        verify(tsvStreamerMock1).close();
+        verify(tsvStreamerMock5).close();
+        verify(tsvStreamerMock10).close();
     }
 
     static List<TSnePoint> randomTSnePoints(int maxSize) {

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
@@ -89,8 +89,8 @@ public class GeneSetEnrichmentClient {
                                 Joiner.on(" ").join(bioentityIdentifiers)),
                         String.class));
 
-        try (TsvReader tsvReader = new TsvReader(responseStringReader)) {
-            return tsvReader.stream().collect(Collectors.toList());
+        try (TsvStreamer tsvStreamer = new TsvStreamer(responseStringReader)) {
+            return tsvStreamer.get().collect(Collectors.toList());
         }
     }
 

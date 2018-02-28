@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrInputDocument;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +28,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnalyticsIndexerServiceTest {
@@ -38,8 +36,6 @@ public class AnalyticsIndexerServiceTest {
     private SolrClient solrClient;
     @Mock
     private ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
-    @Mock
-    private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator;
 
     private AnalyticsIndexerService subject;
 
@@ -51,9 +47,8 @@ public class AnalyticsIndexerServiceTest {
         UpdateResponse r = Mockito.mock(UpdateResponse.class);
         when(r.getQTime()).thenReturn(10);
         when(solrClient.add(anyCollection())).thenReturn(r);
-        when(analyticsIndexDocumentValidator.validate(any(SolrInputDocument.class))).thenReturn(true);
 
-        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
+        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory);
     }
 
     @Test
@@ -135,7 +130,6 @@ public class AnalyticsIndexerServiceTest {
         // mockExperimentDataPointStreamFactory(
         //        experimentDataPointStreamFactory, experiment, experimentDataPoint1, experimentDataPoint2, null);
 
-
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
         int batchSize = 1;
 
@@ -155,6 +149,5 @@ public class AnalyticsIndexerServiceTest {
 
         Mockito.doAnswer(invocationOnMock -> baselineExperimentDataPointStreamMock)
                 .when(experimentDataPointStreamFactory).stream(experiment);
-
     }
 }

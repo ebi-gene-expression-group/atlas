@@ -1,0 +1,41 @@
+package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
+
+import com.google.common.collect.ImmutableMap;
+import org.apache.solr.client.solrj.io.stream.SelectStream;
+import org.apache.solr.client.solrj.io.stream.TupleStream;
+import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.Map;
+
+public class SelectStreamBuilder<T extends CollectionProxy> extends TupleStreamBuilder<T> {
+    private final TupleStreamBuilder<T> tupleStreamBuilder;
+    private final ImmutableMap.Builder<String, String> fieldMapsBuilder = ImmutableMap.builder();
+
+    public SelectStreamBuilder(TupleStreamBuilder<T> tupleStreamBuilder) {
+        this.tupleStreamBuilder = tupleStreamBuilder;
+    }
+
+    // public SelectStreamBuilder<T> addFieldMap(String originalfieldName, String newFieldName) {
+    //     fieldMapsBuilder.put(originalfieldName, newFieldName);
+    //     return this;
+    // }
+
+    // We don’t use SchemaField<T> as keys because field names may have been renamed by a previous select clause or it
+    // may be a field with a stream evaluator
+    public SelectStreamBuilder<T> addFieldMapping(Map<String, String> fieldNamesMap) {
+        fieldMapsBuilder.putAll(fieldNamesMap);
+        return this;
+    }
+
+    @Override
+    protected TupleStream getRawTupleStream() {
+        try {
+            return new SelectStream(tupleStreamBuilder.build(), fieldMapsBuilder.build());
+        } catch (IOException e) {
+            // The truth is, this constructor can’t throw an IOException, but the class declaration does... lame
+            throw new UncheckedIOException(e);
+        }
+    }
+}

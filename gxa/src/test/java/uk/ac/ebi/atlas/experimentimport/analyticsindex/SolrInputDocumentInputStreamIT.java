@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.common.SolrInputDocument;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,8 +14,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient;
+import uk.ac.ebi.atlas.solr.analytics.AnalyticsSearchService;
+import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -48,8 +47,6 @@ public class SolrInputDocumentInputStreamIT {
 
     @Inject
     private AnalyticsQueryClient analyticsQueryClient;
-
-    private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator = new AnalyticsIndexDocumentValidator();
 
     // TODO The lack of a subject is “code smell” that this class is testing stuff from here and there
     // TODO Split this into isolated tests for ExperimentDataPoint, SolrInputDocumentInputStream, etc.
@@ -108,10 +105,8 @@ public class SolrInputDocumentInputStreamIT {
         assertThat(identifiersForThatExperiment, not(empty()));
 
         for(SolrInputDocument solrInputDocument: results) {
-            if (analyticsIndexDocumentValidator.validate(solrInputDocument)) {
-                String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
-                assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
-            }
+            String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
+            assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
          }
 
     }
@@ -163,7 +158,7 @@ public class SolrInputDocumentInputStreamIT {
 
         assertThat(
                 MessageFormat.format("Nothing in the index for {0} , {1}", accession, identifierSearch.description()),
-                identifiersForThatExperiment, not(Matchers.<String>empty()));
+                identifiersForThatExperiment, not(empty()));
     }
 
 }

@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -21,10 +21,10 @@ public class ExperimentOpLogWriter {
     }
 
     ImmutableList<OpLogEntry> getCurrentOpLog(String accession) {
-        AtlasResource<TsvReader> r = dataFileHub.getExperimentFiles(accession).adminOpLog;
+        AtlasResource<TsvStreamer> r = dataFileHub.getExperimentFiles(accession).adminOpLog;
 
-        try (TsvReader tsvReader = r.exists() ? r.get() : TsvReader.empty()) {
-            return ImmutableList.copyOf(tsvReader.stream().map(OpLogEntry::fromArray).iterator());
+        try (TsvStreamer tsvStreamer = r.exists() ? r.get() : TsvStreamer.empty()) {
+            return ImmutableList.copyOf(tsvStreamer.get().map(OpLogEntry::fromArray).iterator());
         }
     }
 

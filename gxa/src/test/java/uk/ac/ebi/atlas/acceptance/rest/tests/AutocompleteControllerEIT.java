@@ -37,7 +37,7 @@ public class AutocompleteControllerEIT {
     }
 
     @Test
-    public void shouldReturnNonEmptyJSonObject(){
+    public void shouldReturnNonEmptyJSonObject() {
         //given
         ResponseBody responseBody = subject.getResponse().body();
         String jsonString = responseBody.asString();
