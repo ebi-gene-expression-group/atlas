@@ -225,6 +225,24 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 }' http://$HOST/solr/$CORE/schema
 
 
+printf "\n\nDelete field expression_level_fpkm"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "delete-field":
+  {
+    "name": "expression_level_fpkm"
+  }
+}' http://$HOST/solr/$CORE/schema
+
+printf "\n\nCreate field expression_level_fpkm (pdouble)"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field":
+  {
+    "name": "expression_level_fpkm",
+    "type": "pdouble"
+  }
+}' http://$HOST/solr/$CORE/schema
+
+
 printf "\n\nDelete field num_replicates"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "delete-field":
