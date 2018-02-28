@@ -24,16 +24,17 @@ public class GeneSetPageControllerIT {
     GeneSetPageController subject;
 
     @Test
-    public void bioentityPropertiesOfVariousTypes() throws Exception {
+    public void bioentityPropertiesOfVariousTypes() {
         bioentityProperties("GO:0016746");
         bioentityProperties("R-HSA-73887");
-        bioentityProperties("PO:0009025");
+        bioentityProperties("PO:0009030");
     }
 
     private void bioentityProperties(String bioentityIdentifier){
         Model model = new BindingAwareModelMap();
         subject.showGeneSetPage(bioentityIdentifier, "", model);
-        JsonArray bioentityProperties = new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
+        JsonArray bioentityProperties =
+                new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
         assertThat(bioentityProperties.size(), is(1));
     }
 
