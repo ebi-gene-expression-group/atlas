@@ -66,7 +66,7 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
         }
 
         Pair<Optional<Exception>, Optional<JsonArray>> result =
-                geneSetEnrichmentClient.fetchEnrichedGenes(species, bioentityIdentifiers);
+                geneSetEnrichmentClient.fetchEnrichedGenes(species.getEnsemblName().toLowerCase(), bioentityIdentifiers);
 
         if (GeneSetEnrichmentClient.isSuccess(result)) {
             model.addAttribute("species", StringUtils.capitalizeFirstLetter(species.getReferenceName()));

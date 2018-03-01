@@ -10,7 +10,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.controllers.NoStatisticalSignificanceException;
-import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,7 +28,7 @@ public class GeneSetEnrichmentClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneSetEnrichmentClient.class);
 
     private final RestTemplate restTemplate;
-    private static final String urlPattern = "https://www.ebi.ac.uk/fg/gsa/api/tsv/getOverlappingComparisons/{0}/{1}";
+    static final String urlPattern = "https://www.ebi.ac.uk/fg/gsa/api/tsv/getOverlappingComparisons/{0}/{1}";
     private static final String [] expectedHeader =("EXPERIMENT\tCOMPARISON_ID\tP-VALUE\tOBSERVED\tEXPECTED\t" +
             "ADJUSTED P-VALUE\tEFFECT SIZE\tCOMPARISON_TITLE\tEXPERIMENT_URL").split("\t");
 
@@ -38,10 +37,10 @@ public class GeneSetEnrichmentClient {
         this.restTemplate = restTemplate;
     }
 
-    public Pair<Optional<Exception>, Optional<JsonArray>> fetchEnrichedGenes(Species species,
+    public Pair<Optional<Exception>, Optional<JsonArray>> fetchEnrichedGenes(String speciesName,
                                                                           Collection<String> bioentityIdentifiers) {
         try {
-            Pair<Optional<String>, Optional<JsonArray>> errorOrResponse = formatResponse(fetchResponse(species, bioentityIdentifiers));
+            Pair<Optional<String>, Optional<JsonArray>> errorOrResponse = formatResponse(fetchResponse(speciesName, bioentityIdentifiers));
             return errorOrResponse.getLeft().isPresent() ?
                     Pair.of(errorOrResponse.getLeft().map(RuntimeException::new), Optional.empty()) :
                     Pair.of(Optional.empty(), errorOrResponse.getRight());
@@ -79,12 +78,12 @@ public class GeneSetEnrichmentClient {
         }
     }
 
-    private List<String[]> fetchResponse(Species species, Collection<String> bioentityIdentifiers) {
+    private List<String[]> fetchResponse(String speciesName, Collection<String> bioentityIdentifiers) {
         try {
             String response = restTemplate.getForObject(
                     MessageFormat.format(
                             urlPattern,
-                            species.getEnsemblName().toLowerCase(),
+                            speciesName,
                             Joiner.on(" ").join(bioentityIdentifiers)),
                     String.class);
 
