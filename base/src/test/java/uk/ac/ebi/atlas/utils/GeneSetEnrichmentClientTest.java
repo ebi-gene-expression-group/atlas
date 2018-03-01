@@ -158,9 +158,9 @@ public class GeneSetEnrichmentClientTest {
 
         List<String> bioentityIdentifiers = Arrays.asList(GENE_IDS.split("\\W+"));
         Pair<Optional<Exception>, Optional<JsonArray>> result = subject.fetchEnrichedGenes(ARABIDOPSIS_SPECIES, bioentityIdentifiers);
-
+        
         assertThat(jsonPath("$", hasSize(2)));
-        assertThat(jsonPath("$[0].effect_size", is(Double.NaN)));
+        assertThat(jsonPath("$[0].effect_size", is("NaN")));
         assertThat(jsonPath("$[1].effect_size", is(3.2)));
     }
 }

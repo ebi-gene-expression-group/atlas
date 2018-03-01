@@ -89,7 +89,6 @@ public class GeneSetEnrichmentClient {
                 return tsvReader.stream().collect(Collectors.toList());
             }
         } catch (RestClientException e) {
-            LOGGER.error(e.getMessage());
             throw new NoStatisticalSignificanceException("No significant contrasts found. Try adding more than " + bioentityIdentifiers.size() + " gene identifiers.");
         }
     }
@@ -122,7 +121,13 @@ public class GeneSetEnrichmentClient {
         result.addProperty("observed", Integer.parseInt(line[3]));
         result.addProperty("expected", Double.parseDouble(line[4]));
         result.addProperty("adjusted_p-value", Double.parseDouble(line[5]));
-        result.addProperty("effect_size", parseOrNaN(line[6]));
+        // Handle NaN to produce valid JSON
+        if(Double.isNaN(parseOrNaN(line[6]))) {
+            result.addProperty("effect_size", "NaN");
+        }
+        else {
+            result.addProperty("effect_size", parseOrNaN(line[6]));
+        }
         result.add("comparison_title", new JsonObject()); // enriched later
         result.addProperty("experiment", ""); // enriched later
 
