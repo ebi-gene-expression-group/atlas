@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -93,7 +93,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
 
 
     protected Function<Writer, Void> readFromResourceAndWriteTsv(
-            final AtlasResource<TsvReader> resource,
+            final AtlasResource<TsvStreamer> resource,
             final Function<String[], String[]> whatToDoWithTheHeaders) {
 
         return writer -> {

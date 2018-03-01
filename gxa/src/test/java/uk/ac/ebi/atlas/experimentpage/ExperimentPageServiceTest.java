@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableSet;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -13,8 +12,10 @@ import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 import java.net.URI;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,8 +32,7 @@ public class ExperimentPageServiceTest {
         preferences = new RnaSeqBaselineRequestPreferences();
     }
     @Test
-    public void testGeneSpecificResultsLink() throws Exception {
-
+    public void testGeneSpecificResultsLink() {
         preferences.setCutoff(1.234);
         preferences.setSelectedColumnIds(ImmutableSet.of("g1", "g2"));
 
@@ -46,28 +46,25 @@ public class ExperimentPageServiceTest {
 
 
     @Test
-    public void unitsMatterForExperimentDownloadLink() throws Exception {
-
+    public void unitsMatterForExperimentDownloadLink() {
         RnaSeqBaselineRequestPreferences preferences = new RnaSeqBaselineRequestPreferences();
 
         preferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
         assertThat(
                 new ExperimentPageService().experimentDownloadLink(experiment, "", preferences).toString(),
-                Matchers.containsString("unit=TPM")
+                containsString("unit=TPM")
         );
 
         preferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
 
         assertThat(
                 new ExperimentPageService().experimentDownloadLink(experiment, "", preferences).toString(),
-                Matchers.containsString("unit=FPKM")
+                containsString("unit=FPKM")
         );
     }
 
     @Test
-    public void selectedIdsMatterForExperimentDownloadLink() throws Exception {
-
-
+    public void selectedIdsMatterForExperimentDownloadLink() {
         preferences.setSelectedColumnIds(ImmutableSet.of());
         String url1 = new ExperimentPageService().experimentDownloadLink(experiment, "", preferences).toString();
 
@@ -79,10 +76,8 @@ public class ExperimentPageServiceTest {
         preferences.setSelectedColumnIds(ImmutableSet.of("g1", "g2"));
         String url3 = new ExperimentPageService().experimentDownloadLink(experiment, "", preferences).toString();
 
-        assertNotEquals(url1, url2);
-        assertNotEquals(url1, url3);
-        assertNotEquals(url2, url3);
+        assertThat(url1, is(not(equalTo(url2))));
+        assertThat(url1, is(not(equalTo(url3))));
+        assertThat(url2, is(not(equalTo(url3))));
     }
-
-
 }

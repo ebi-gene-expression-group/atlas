@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.controllers.NoStatisticalSignificanceException;
 
 import javax.inject.Inject;
@@ -64,7 +64,7 @@ public class GeneSetEnrichmentClient {
             return Pair.of(Optional.of("Header not as expected: " + Joiner.on("\t").join(lines.get(0))),
                     Optional.empty());
         }
-        else if(! linesHaveCorrectDimensions(lines)){
+        else if(!linesHaveCorrectDimensions(lines)){
             return Pair.of(Optional.of("Data malformed, expected a matrix" ),
                     Optional.empty());
         }
@@ -85,8 +85,8 @@ public class GeneSetEnrichmentClient {
 
             Reader responseStringReader = new StringReader(response);
 
-            try (TsvReader tsvReader = new TsvReader(responseStringReader)) {
-                return tsvReader.stream().collect(Collectors.toList());
+            try (TsvStreamer tsvStreamer = new TsvStreamer(responseStringReader)) {
+                return tsvStreamer.get().collect(Collectors.toList());
             }
         } catch (RestClientException e) {
             throw new NoStatisticalSignificanceException("No significant contrasts found. Try adding more than " + bioentityIdentifiers.size() + " gene identifiers.");

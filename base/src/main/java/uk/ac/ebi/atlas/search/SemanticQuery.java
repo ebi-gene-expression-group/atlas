@@ -1,21 +1,18 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -31,7 +28,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
     }
 
     public static SemanticQuery create() {
-        return new AutoValue_SemanticQuery(ImmutableSet.<SemanticQueryTerm>of());
+        return new AutoValue_SemanticQuery(ImmutableSet.of());
     }
 
     public static SemanticQuery create(SemanticQueryTerm... queryTerms) {
@@ -93,7 +90,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         }
 
         Gson gson = new Gson();
-        return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
+        return create(ImmutableSet.copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
     }
 
     public static SemanticQuery fromUrlEncodedJson(String json) throws MalformedJsonException {
@@ -109,7 +106,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
                 throw new RuntimeException(e);
         }
          try {
-             return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(decoded, AutoValue_SemanticQueryTerm[].class)));
+             return create(ImmutableSet.copyOf(gson.fromJson(decoded, AutoValue_SemanticQueryTerm[].class)));
         } catch (NullPointerException | JsonSyntaxException e) {
             String geneQueryString = gson.fromJson(StringUtils.wrap(decoded, "\""), String.class);
 
@@ -127,12 +124,8 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
     }
 
     public String description() {
-        return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm, String>() {
-            @Nullable
-            @Override
-            public String apply(SemanticQueryTerm semanticQueryTerm) {
-                return semanticQueryTerm.description();
-            }
-        }));
+        return terms().stream()
+                .map(SemanticQueryTerm::description)
+                .collect(Collectors.joining(OR_OPERATOR));
     }
 }

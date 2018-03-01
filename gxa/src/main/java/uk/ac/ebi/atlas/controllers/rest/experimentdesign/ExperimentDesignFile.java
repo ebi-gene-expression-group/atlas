@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.experimentpage.ExternallyAvailableContentController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -93,13 +93,13 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
     }
 
     private void writeLines(String experimentAccession, Set<String> analysedRowsAccessions, Writer writer) {
-        try (TsvReader experimentDesignTsvReader =
+        try (TsvStreamer experimentDesignTsvStreamer =
                      dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get();
              CSVWriter csvWriter =
                      new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
 
             List<String[]> newCsvLines =
-                    getLines(analysedRowsAccessions, experimentDesignTsvReader.stream().collect(Collectors.toList()));
+                    getLines(analysedRowsAccessions, experimentDesignTsvStreamer.get().collect(Collectors.toList()));
 
             csvWriter.writeAll(newCsvLines);
             csvWriter.flush();

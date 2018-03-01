@@ -15,7 +15,7 @@ import uk.ac.ebi.atlas.profiles.ProfileStreamFilter;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.stream.ProfileStreamFactory;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

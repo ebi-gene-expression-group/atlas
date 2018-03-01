@@ -6,13 +6,14 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Comparator;
+import java.util.function.Supplier;
 
-public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T,L> {
+public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T, L> {
 
     private final Comparator<T> comparator;
-    private final java.util.function.Supplier<L> newList;
+    private final Supplier<L> newList;
 
-    public MinMaxProfileRanking(Comparator<T> comparator, java.util.function.Supplier<L> newList) {
+    public MinMaxProfileRanking(Comparator<T> comparator, Supplier<L> newList) {
         this.comparator = comparator;
         this.newList = newList;
     }

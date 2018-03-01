@@ -51,7 +51,7 @@ public class AnalyticsIndexerController {
             } else {
                 analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize, timeout);
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             return Arrays.deepToString(e.getStackTrace());
         }
 
