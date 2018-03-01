@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.interceptors;
+package uk.ac.ebi.atlas.web.interceptors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @Named
 public class AdminInterceptor extends HandlerInterceptorAdapter {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminInterceptor.class);
 
     @Override
@@ -21,7 +20,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 
         LOGGER.info(
                 "<preHandle> username: {}, request: {}, query: {}",
-                request.getUserPrincipal().getName(), request.getRequestURI(), request.getQueryString());
+                request.getUserPrincipal().getName(),
+                request.getRequestURI(),
+                request.getQueryString());
+
         return true;
     }
 }

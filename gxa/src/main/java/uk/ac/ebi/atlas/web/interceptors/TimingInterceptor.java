@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.interceptors;
+package uk.ac.ebi.atlas.web.interceptors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,15 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @Named
 public class TimingInterceptor extends HandlerInterceptorAdapter {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(TimingInterceptor.class);
 
-    protected static final String STOP_WATCH = "requestURLStopWatch";
+    static final String STOP_WATCH = "requestURLStopWatch";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String requestURL =
-                request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        String requestURL = getRequestUrl(request);
 
         LOGGER.info("{} - start", requestURL);
 
@@ -33,15 +31,19 @@ public class TimingInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Override
-    public void postHandle(
-            HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Object handler,
+                           ModelAndView modelAndView) {
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
         stopWatch.stop();
 
-        String requestURL =
-                request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        String requestURL = getRequestUrl(request);
 
         LOGGER.info("{} - time taken {}", requestURL, stopWatch.getTotalTimeSeconds());
     }
 
+    private static String getRequestUrl(HttpServletRequest request) {
+        return request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+    }
 }
