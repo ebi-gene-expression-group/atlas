@@ -50,10 +50,6 @@ public class GeneSetEnrichmentClient {
         }
     }
 
-    public static boolean isSuccess(Pair<Optional<Exception>, Optional<JsonArray>> result) {
-        return !result.getLeft().isPresent();
-    }
-
     //either error message or result
     private Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
         if(lines.isEmpty()) {

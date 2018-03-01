@@ -68,7 +68,8 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
         Pair<Optional<Exception>, Optional<JsonArray>> result =
                 geneSetEnrichmentClient.fetchEnrichedGenes(species.getEnsemblName().toLowerCase(), bioentityIdentifiers);
 
-        if (GeneSetEnrichmentClient.isSuccess(result)) {
+        // Enriched gene retrieval was successful
+        if (!result.getLeft().isPresent()) {
             model.addAttribute("species", StringUtils.capitalizeFirstLetter(species.getReferenceName()));
             model.addAttribute("queryShort", Joiner.on(" ").join(Arrays.asList(query.split("\\W+")).subList(0,3)));
             model.addAttribute("query", query);
@@ -76,6 +77,7 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
                     "data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
             return "gene-set-enrichment-results";
         } else {
+            // An error occurred during enriched gene retrieval
             throw new RuntimeException(result.getLeft().get().getMessage());
         }
     }
