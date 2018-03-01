@@ -21,18 +21,19 @@ import java.util.stream.Stream;
 
 @Named
 @Scope("request")
-public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute>
-        extends RequestContext<AssayGroup,BaselineExperiment, BaselineRequestPreferences<Unit>>
-        implements BaselineProfileStreamOptions<Unit> {
+public class BaselineRequestContext<U extends ExpressionUnit.Absolute>
+        extends RequestContext<AssayGroup, BaselineExperiment, BaselineRequestPreferences<U>>
+        implements BaselineProfileStreamOptions<U> {
 
-    private LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
-        @Override
-        protected ImmutableMap<AssayGroup, String> create() throws Exception {
-            return displayNamePerSelectedAssayGroup();
-        }
-    };
+    private LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup =
+            new LazyReference<ImmutableMap<AssayGroup, String>>() {
+                @Override
+                protected ImmutableMap<AssayGroup, String> create() {
+                    return displayNamePerSelectedAssayGroup();
+                }
+            };
 
-    public BaselineRequestContext(BaselineRequestPreferences<Unit> requestPreferences, BaselineExperiment experiment) {
+    public BaselineRequestContext(BaselineRequestPreferences<U> requestPreferences, BaselineExperiment experiment) {
         super(requestPreferences, experiment);
     }
 
@@ -79,7 +80,7 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute>
     }
 
     @Override
-    public Unit getExpressionUnit() {
+    public U getExpressionUnit() {
         return requestPreferences.getUnit();
     }
 

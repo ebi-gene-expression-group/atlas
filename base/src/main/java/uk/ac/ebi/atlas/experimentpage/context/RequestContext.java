@@ -14,9 +14,10 @@ import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns,E extends
-        Experiment<DataColumnDescriptor>, K extends ExperimentPageRequestPreferences>
-    implements ProfileStreamOptions<DataColumnDescriptor>{
+public abstract class RequestContext
+        <D extends DescribesDataColumns, E extends Experiment<D>, K extends ExperimentPageRequestPreferences>
+        implements ProfileStreamOptions<D> {
+
     protected final K requestPreferences;
     protected final E experiment;
 
@@ -41,19 +42,19 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         return requestPreferences.getHeatmapMatrixSize();
     }
 
-    public List<DataColumnDescriptor> getAllDataColumns(){
+    public List<D> getAllDataColumns(){
         return experiment.getDataColumnDescriptors();
     }
 
-    protected FluentIterable<DataColumnDescriptor> dataColumnsToBeReturned(){
+    protected FluentIterable<D> dataColumnsToBeReturned(){
         final Collection<String> selectedIds = requestPreferences.getSelectedColumnIds();
-        Predicate<DataColumnDescriptor> keepColumns =
-                selectedIds.isEmpty() ? Predicates.<DataColumnDescriptor>alwaysTrue()
+        Predicate<D> keepColumns =
+                selectedIds.isEmpty() ? Predicates.<D>alwaysTrue()
                         : dataColumnDescriptor -> selectedIds.contains(dataColumnDescriptor.getId());
         return FluentIterable.from(experiment.getDataColumnDescriptors()).filter(keepColumns);
     }
 
-    public List<DataColumnDescriptor> getDataColumnsToReturn() {
+    public List<D> getDataColumnsToReturn() {
         return experiment.getDisplayDefaults().preserveColumnOrder()
                 ? dataColumnsToBeReturned().toList()
                 : dataColumnsToBeReturned().toSortedList((o1, o2) -> displayNameForColumn(o1).compareTo(displayNameForColumn(o2)));
@@ -61,7 +62,7 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
 
 
 
-    public abstract String displayNameForColumn(DataColumnDescriptor dataColumnDescriptor);
+    public abstract String displayNameForColumn(D dataColumnDescriptor);
 
     public Species getSpecies() {
         return experiment.getSpecies();

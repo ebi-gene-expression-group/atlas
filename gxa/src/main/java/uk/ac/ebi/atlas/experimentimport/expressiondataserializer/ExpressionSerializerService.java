@@ -15,12 +15,15 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.*;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.web.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.List;
+
+import static uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences.VERY_SMALL_NON_ZERO_VALUE;
 
 @Named
 public class ExpressionSerializerService {
@@ -74,7 +77,8 @@ public class ExpressionSerializerService {
         for(ExpressionUnit.Absolute.Rna unit: dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFiles()){
             RnaSeqBaselineRequestPreferences p = new RnaSeqBaselineRequestPreferences();
             p.setUnit(unit);
-            BaselineRequestPreferences.setRequestAllData(p);
+            p.setCutoff(VERY_SMALL_NON_ZERO_VALUE);
+            p.setGeneQuery(SemanticQuery.create());
             b.add(new BaselineRequestContext<>(p, experiment));
         }
 
@@ -90,7 +94,7 @@ public class ExpressionSerializerService {
     private ImmutableList<RnaSeqRequestContext> rnaSeqStreamOptions(DifferentialExperiment experiment) {
         DifferentialRequestPreferences p = new DifferentialRequestPreferences();
         p.setCutoff(1d);
-        p.setFoldChangeCutoff(ExperimentPageRequestPreferences.nonZeroButVerySmallCutoffValue);
+        p.setFoldChangeCutoff(VERY_SMALL_NON_ZERO_VALUE);
         return ImmutableList.of(
                 new RnaSeqRequestContext(p, experiment)
         );
@@ -99,7 +103,7 @@ public class ExpressionSerializerService {
     private ImmutableList<MicroarrayRequestContext> microarrayProfileStreamOptions(MicroarrayExperiment microarrayExperiment) {
         MicroarrayRequestPreferences p = new MicroarrayRequestPreferences();
         p.setCutoff(1d);
-        p.setFoldChangeCutoff(ExperimentPageRequestPreferences.nonZeroButVerySmallCutoffValue);
+        p.setFoldChangeCutoff(VERY_SMALL_NON_ZERO_VALUE);
         return ImmutableList.of(
                 new MicroarrayRequestContext(p, microarrayExperiment)
         );

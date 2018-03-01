@@ -122,9 +122,9 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             produces = "application/json-seq;charset=UTF-8",
             params = "type=MICROARRAY_ANY")
     public void differentialMicroarrayExperimentEvidence(
-            @RequestParam(defaultValue = "0") Double logFoldChangeCutoff,
-            @RequestParam(defaultValue = "1") Double pValueCutoff,
-            @RequestParam(defaultValue = "-1") Integer maxGenesPerContrast,
+            @RequestParam(defaultValue = "0") double logFoldChangeCutoff,
+            @RequestParam(defaultValue = "1") double pValueCutoff,
+            @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
@@ -144,9 +144,9 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             produces = "application/json-seq;charset=UTF-8",
             params = "type=RNASEQ_MRNA_DIFFERENTIAL")
     public void differentialRnaSeqExperimentEvidence(
-            @RequestParam(defaultValue = "0") Double logFoldChangeCutoff,
-            @RequestParam(defaultValue = "1") Double pValueCutoff,
-            @RequestParam(defaultValue = "-1") Integer maxGenesPerContrast,
+            @RequestParam(defaultValue = "0") double logFoldChangeCutoff,
+            @RequestParam(defaultValue = "1") double pValueCutoff,
+            @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);

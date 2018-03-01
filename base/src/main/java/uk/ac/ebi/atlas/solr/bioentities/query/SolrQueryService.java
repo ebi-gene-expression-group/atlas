@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.solr.bioentities.query.builders.BioentityIdentifierQueryBuilder;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;

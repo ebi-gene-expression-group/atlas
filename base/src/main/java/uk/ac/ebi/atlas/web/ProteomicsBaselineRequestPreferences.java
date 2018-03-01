@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.web;
 
-
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
-public class ProteomicsBaselineRequestPreferences extends BaselineRequestPreferences<ExpressionUnit.Absolute.Protein>{
+public class ProteomicsBaselineRequestPreferences extends BaselineRequestPreferences<ExpressionUnit.Absolute.Protein> {
     public static final double DEFAULT_CUTOFF = 0.0d;
 
     @Override
@@ -11,9 +11,10 @@ public class ProteomicsBaselineRequestPreferences extends BaselineRequestPrefere
         return DEFAULT_CUTOFF;
     }
 
-    public static ProteomicsBaselineRequestPreferences requestAllData(){
+    public static ProteomicsBaselineRequestPreferences requestAllData() {
         ProteomicsBaselineRequestPreferences preferences = new ProteomicsBaselineRequestPreferences();
-        BaselineRequestPreferences.setRequestAllData(preferences);
+        preferences.setCutoff(VERY_SMALL_NON_ZERO_VALUE);
+        preferences.setGeneQuery(SemanticQuery.create());
         return preferences;
     }
 

@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
 
@@ -30,11 +29,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     }
 
     public <Unit extends ExpressionUnit.Absolute> JsonObject getResultsForExperiment(
-            BaselineExperiment experiment,
-            String accessKey,
-            BaselineRequestPreferences<Unit> preferences) {
-
-        JsonObject result = new JsonObject();
+            BaselineExperiment experiment, String accessKey, BaselineRequestPreferences<Unit> preferences) {
 
         BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         List<AssayGroup> dataColumnsToReturn = requestContext.getDataColumnsToReturn();
@@ -42,10 +37,9 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         BaselineProfilesHeatmapsWrangler<Unit> heatmapResults =
                 baselineProfilesHeatmapWranglerFactory.create(preferences, experiment);
 
+        JsonObject result = new JsonObject();
         result.add("columnHeaders", constructColumnHeaders(dataColumnsToReturn, requestContext, experiment));
-
         result.add("columnGroupings", new JsonArray());
-
         result.add("profiles", heatmapResults.getJsonProfiles());
 
         JsonArray jsonCoexpressions = heatmapResults.getJsonCoexpressions();
@@ -55,23 +49,22 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         result.add(
                 "anatomogram",
-                anatomogramFactory.get(requestContext.getDataColumnsToReturn(), experiment)
-                        .orElse(JsonNull.INSTANCE));
+                anatomogramFactory.get(requestContext.getDataColumnsToReturn(), experiment).orElse(JsonNull.INSTANCE));
 
-        for (Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences, heatmapResults.getTheOnlyId()).entrySet()) {
+        for (Map.Entry<String, JsonElement> e :
+                payloadAttributes(experiment, accessKey, preferences, heatmapResults.getTheOnlyId()).entrySet()) {
             result.add(e.getKey(), e.getValue());
         }
 
         return result;
     }
 
-    private JsonArray constructColumnHeaders(List<AssayGroup> dataColumnsToReturn, BaselineRequestContext
-            baselineRequestContext,
-            BaselineExperiment
-            experiment){
+    private JsonArray constructColumnHeaders(List<AssayGroup> dataColumnsToReturn,
+                                             BaselineRequestContext baselineRequestContext,
+                                             BaselineExperiment experiment){
         JsonArray result = new JsonArray();
 
-        for(AssayGroup dataColumnDescriptor: dataColumnsToReturn){
+        for(AssayGroup dataColumnDescriptor : dataColumnsToReturn) {
             JsonObject o = new JsonObject();
             o.addProperty("assayGroupId", dataColumnDescriptor.getId());
             o.addProperty("factorValue", baselineRequestContext.displayNameForColumn(dataColumnDescriptor));

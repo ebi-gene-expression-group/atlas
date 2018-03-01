@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.profiles.stream.BaselineTranscriptProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
@@ -24,6 +25,8 @@ import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
+import static uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences.VERY_SMALL_NON_ZERO_VALUE;
 
 
 @RestController
@@ -67,7 +70,8 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
 
         Kick this all out and replace with Just Right Solr queries when the time comes.
          */
-        BaselineRequestPreferences.setRequestAllData(preferences);
+        preferences.setCutoff(VERY_SMALL_NON_ZERO_VALUE);
+        preferences.setGeneQuery(SemanticQuery.create());
 
 
         BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext = new BaselineRequestContext<>(preferences, experiment);
