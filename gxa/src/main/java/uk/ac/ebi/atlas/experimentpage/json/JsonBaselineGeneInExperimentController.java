@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.LinkToGene;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -19,7 +18,6 @@ import uk.ac.ebi.atlas.profiles.stream.BaselineTranscriptProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
@@ -31,11 +29,6 @@ import static uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences.VERY_SMALL_NO
 
 @RestController
 public class JsonBaselineGeneInExperimentController extends JsonExperimentController {
-    @InitBinder("preferences")
-    void initBinder(WebDataBinder binder) {
-        binder.addValidators(new BaselineRequestPreferencesValidator());
-    }
-
     private final RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory;
     private final BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory;
 

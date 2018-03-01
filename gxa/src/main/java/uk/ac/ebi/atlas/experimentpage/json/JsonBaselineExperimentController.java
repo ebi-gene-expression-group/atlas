@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatmapsWranglerFactory;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.HistogramService;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -19,7 +18,6 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
@@ -32,12 +30,6 @@ import static uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences.VERY_SMALL_NO
 
 @RestController
 public class JsonBaselineExperimentController extends JsonExperimentController {
-
-    @InitBinder("preferences")
-    void initBinder(WebDataBinder binder) {
-        binder.addValidators(new BaselineRequestPreferencesValidator());
-    }
-
     private final BaselineExperimentPageService rnaSeqBaselineExperimentPageService;
     private final BaselineExperimentPageService proteomicsBaselineExperimentPageService;
     private final SpeciesInferrer speciesInferrer;
