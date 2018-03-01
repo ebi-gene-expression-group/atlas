@@ -125,8 +125,8 @@ public class GeneSetEnrichmentClient {
         result.addProperty("p-value", Double.parseDouble(line[2]));
         result.addProperty("observed", Integer.parseInt(line[3]));
         result.addProperty("expected", Double.parseDouble(line[4]));
-        result.addProperty("adjusted p-value", Double.parseDouble(line[5]));
-        result.addProperty("effect size", parseOrNaN(line[6]));
+        result.addProperty("adjusted_p-value", Double.parseDouble(line[5]));
+        result.addProperty("effect_size", parseOrNaN(line[6]));
         result.add("comparison_title", new JsonObject()); // enriched later
         result.addProperty("experiment", ""); // enriched later
 

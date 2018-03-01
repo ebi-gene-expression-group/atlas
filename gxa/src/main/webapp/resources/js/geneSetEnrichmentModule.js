@@ -71,7 +71,7 @@ var geneSetEnrichmentModule = (function ($) {
                 },
                 {
                     "title": "Adjusted P-Value",
-                    "data": "adjusted p-value",
+                    "data": "adjusted_p-value",
                     "className": "center",
                     "type": "title-numeric",
                     "width": "10%",
@@ -81,7 +81,7 @@ var geneSetEnrichmentModule = (function ($) {
                 },
                 {
                     "title": "Observed/Expected",
-                    "data": "effect size",
+                    "data": "effect_size",
                     "className": "center",
                     "type": "title-numeric",
                     "width": "10%",
