@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
     private final String name;
     private int lineNumber = 0;
 
-    public ProteomicsBaselineAnalyticsInputStream(Reader reader, String name) throws IOException {
+    public ProteomicsBaselineAnalyticsInputStream(Reader reader, String name) {
         this.name = name;
         this.csvReader = new CSVReader(reader, '\t');
         String[] headers = readCsvLine();
@@ -72,7 +73,7 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
+            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
@@ -125,8 +126,8 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
 
             if (!"NA".equalsIgnoreCase(expressionLevelString)) {
                 Double expressionLevel = Double.parseDouble(expressionLevels[i]);
-                if (expressionLevel != 0.0) {
-                    builder.add(new BaselineAnalytics(geneId, StringUtils.removeEnd(assayGroupId, SAMPLE_ABUNDANCE_QUALIFIER), expressionLevel));
+                if (expressionLevel > 0.0) {
+                    builder.add(BaselineAnalytics.create(geneId, StringUtils.removeEnd(assayGroupId, SAMPLE_ABUNDANCE_QUALIFIER), expressionLevel, 0));
                 }
             }
         }

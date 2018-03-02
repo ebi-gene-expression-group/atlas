@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-44</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="Alzheimer's disease">
+                <assay>H_IB34</assay>
+                <assay>H_IB60</assay>
+                <assay>H_IB33</assay>
+                <assay>H_IB32</assay>
+                <assay>H_IB36</assay>
+                <assay>H_IB59</assay>
+                <assay>H_IB35</assay>
+            </assay_group>
+            <assay_group id="g2" label="Pick disease">
+                <assay>H_IB23</assay>
+                <assay>H_IB17</assay>
+                <assay>H_IB20</assay>
+                <assay>H_IB26</assay>
+                <assay>H_IB21</assay>
+                <assay>H_IB24</assay>
+                <assay>H_IB62</assay>
+                <assay>H_IB22</assay>
+                <assay>H_IB63</assay>
+                <assay>H_IB19</assay>
+                <assay>H_IB18</assay>
+                <assay>H_IB25</assay>
+            </assay_group>
+            <assay_group id="g3" label="normal">
+                <assay>H_IB38</assay>
+                <assay>H_IB40</assay>
+                <assay>H_IB37</assay>
+                <assay>H_IB39</assay>
+                <assay>H_IB41</assay>
+            </assay_group>
+            <assay_group id="g4" label="progressive supranuclear palsy">
+                <assay>H_IB30</assay>
+                <assay>H_IB31</assay>
+                <assay>H_IB55</assay>
+                <assay>H_IB27</assay>
+                <assay>H_IB29</assay>
+                <assay>H_IB64</assay>
+                <assay>H_IB28</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g3_g1" cttv_primary="1">
+                <name>'Alzheimer's disease' vs 'normal'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+                <batch_effects>
+                    <batch_effect name="sex">
+                        <batch value="female">
+                            <assay>H_IB37</assay>
+                            <assay>H_IB35</assay>
+                            <assay>H_IB34</assay>
+                            <assay>H_IB32</assay>
+                            <assay>H_IB39</assay>
+                        </batch>
+                        <batch value="male">
+                            <assay>H_IB36</assay>
+                            <assay>H_IB59</assay>
+                            <assay>H_IB38</assay>
+                            <assay>H_IB40</assay>
+                            <assay>H_IB33</assay>
+                            <assay>H_IB41</assay>
+                            <assay>H_IB60</assay>
+                        </batch>
+                    </batch_effect>
+                </batch_effects>
+            </contrast>
+            <contrast id="g3_g2" cttv_primary="1">
+                <name>'Pick disease' vs 'normal'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+                <batch_effects>
+                    <batch_effect name="sex">
+                        <batch value="female">
+                            <assay>H_IB37</assay>
+                            <assay>H_IB18</assay>
+                            <assay>H_IB22</assay>
+                            <assay>H_IB23</assay>
+                            <assay>H_IB26</assay>
+                            <assay>H_IB39</assay>
+                            <assay>H_IB19</assay>
+                            <assay>H_IB62</assay>
+                        </batch>
+                        <batch value="male">
+                            <assay>H_IB63</assay>
+                            <assay>H_IB41</assay>
+                            <assay>H_IB20</assay>
+                            <assay>H_IB17</assay>
+                            <assay>H_IB40</assay>
+                            <assay>H_IB25</assay>
+                            <assay>H_IB24</assay>
+                            <assay>H_IB21</assay>
+                            <assay>H_IB38</assay>
+                        </batch>
+                    </batch_effect>
+                </batch_effects>
+            </contrast>
+            <contrast id="g3_g4" cttv_primary="1">
+                <name>'progressive supranuclear palsy' vs 'normal'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+                <batch_effects>
+                    <batch_effect name="sex">
+                        <batch value="female">
+                            <assay>H_IB37</assay>
+                            <assay>H_IB55</assay>
+                            <assay>H_IB31</assay>
+                            <assay>H_IB39</assay>
+                            <assay>H_IB30</assay>
+                        </batch>
+                        <batch value="male">
+                            <assay>H_IB29</assay>
+                            <assay>H_IB41</assay>
+                            <assay>H_IB27</assay>
+                            <assay>H_IB40</assay>
+                            <assay>H_IB64</assay>
+                            <assay>H_IB38</assay>
+                            <assay>H_IB28</assay>
+                        </batch>
+                    </batch_effect>
+                </batch_effects>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

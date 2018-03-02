@@ -92,7 +92,8 @@ public class SpeciesPropertiesTrader {
     }
 
     private static String normalise(String str) {
-        return applyExceptions(StringUtils.capitalize(StringUtils.lowerCase(fromWords(truncate(toWords(nullSafe(str)))))));
+        return applyExceptions(StringUtils.capitalize(
+                StringUtils.lowerCase(fromWords(truncate(toWords(nullSafe(str)))))));
     }
 
     private static String nullSafe(String str){
@@ -110,7 +111,7 @@ public class SpeciesPropertiesTrader {
     }
 
     private static final ImmutableMap<String, String> exceptions = ImmutableMap.of("Canis_lupus", "Canis_familiaris");
-    private static String applyExceptions(String str){
-        return exceptions.containsKey(str) ? exceptions.get(str) : str;
+    private static String applyExceptions(String str) {
+        return exceptions.getOrDefault(str, str);
     }
 }

@@ -5,17 +5,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
 import javax.inject.Inject;
 
-@Controller
+@RestController
 @Scope("request")
 @RequestMapping("/admin/species")
 public class SpeciesAdminController extends JsonExceptionHandlingController {
@@ -47,7 +45,6 @@ public class SpeciesAdminController extends JsonExceptionHandlingController {
     }
 
     @RequestMapping(value = "/{op}",produces = "application/json;charset=UTF-8")
-    @ResponseBody
     public String doOp(@PathVariable("op") String opParameter) {
 
         switch (opParameter.toUpperCase()) {

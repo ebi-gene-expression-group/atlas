@@ -13,8 +13,8 @@ import java.util.Set;
 
 public class Directory extends AtlasResource<Set<Path>> {
 
-    public Directory(String dataFilesLocation, String template, String... args) {
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, (Object []) args)));
+    public Directory(String parentDirectory, String template, String... args) {
+        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object []) args)));
     }
 
     @Override

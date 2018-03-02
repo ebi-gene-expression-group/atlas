@@ -51,24 +51,26 @@
 
     <!-- Solr configuration -->
     <bean id="solrClientBioentities" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://${solr.host}:8983/solr/bioentities"/>
+        <constructor-arg value="http://${solr.host}:8984/solr/bioentities"/>
     </bean>
 
     <bean id="solrClientAnalytics" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://${solr.host}:8983/solr/analytics"/>
+        <constructor-arg value="http://${solr.host}:8984/solr/analytics"/>
     </bean>
 
     <bean id="solrAnalyticsServerURL" class="java.lang.String">
-        <constructor-arg value="http://${solr.host}:8983/solr/analytics/"/>
+        <constructor-arg value="http://${solr.host}:8984/solr/analytics/"/>
     </bean>
+    <!-- End of Solr configuration -->
 
+    <!-- Legacy Solr stuff -->
     <bean id="embeddedSolrServerFactory" class="uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory"/>
 
     <bean id="embeddedBioentitiesSolrServer"
           factory-bean="embeddedSolrServerFactory" factory-method="createEmbeddedSolrServerInstance">
         <constructor-arg type="java.lang.String" value="bioentities"/>
     </bean>
-    <!-- End of Solr configuration -->
+    <!-- End of legacy Solr -->
 
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 

@@ -7,8 +7,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
-import java.nio.file.NoSuchFileException;
-
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -16,8 +14,9 @@ import static org.junit.Assert.assertThat;
 public class BaselineAnalyticsInputStreamFactoryTest {
 
     private static final String EXPERIMENT_ACCESSION_RNASEQ_TPMS = "E-FOOBAR-TPMS";
-    private static final String EXPERIMENT_ACCESSION_PROTEOMICS = "E-FOOBAR-PROT";
     private static final String EXPERIMENT_ACCESSION_RNASQ_FPKMS = "E-FOOBAR-FPKMS";
+    private static final String EXPERIMENT_ACCESSION_PROTEOMICS = "E-FOOBAR-PROT";
+    private static final String EXPERIMENT_ACCESSION_NO_TPMS_FPKMS= "E-FOOBAR";
 
     BaselineAnalyticsInputStreamFactory subject;
 
@@ -38,10 +37,15 @@ public class BaselineAnalyticsInputStreamFactoryTest {
     }
 
     @Test
-    public void createForRnaSeqBaseline() throws Exception {
+    public void createForRnaSeqBaselineWithTpmsOnly() throws Exception {
         Object objectInputStream =
                 subject.create(EXPERIMENT_ACCESSION_RNASEQ_TPMS, ExperimentType.RNASEQ_MRNA_BASELINE);
         assertThat(objectInputStream, is(instanceOf(RnaSeqBaselineAnalyticsInputStream.class)));
+    }
+
+    @Test
+    public void createRnaSeqBaselineWithFpkmsOnly() throws Exception {
+        subject.create(EXPERIMENT_ACCESSION_RNASQ_FPKMS, ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 
     @Test
@@ -51,10 +55,8 @@ public class BaselineAnalyticsInputStreamFactoryTest {
         assertThat(objectInputStream, is(instanceOf(ProteomicsBaselineAnalyticsInputStream.class)));
     }
 
-
-    @Test(expected = NoSuchFileException.class)
-    public void createRnaSeqBaselineWithNoTpmsThrows() throws Exception {
-        subject.create(EXPERIMENT_ACCESSION_RNASQ_FPKMS, ExperimentType.RNASEQ_MRNA_BASELINE);
+    @Test(expected = IllegalArgumentException.class)
+    public void createRnaSeqBaselineWithNoFpkmsOrTpmsThrows() throws Exception {
+        subject.create(EXPERIMENT_ACCESSION_NO_TPMS_FPKMS, ExperimentType.RNASEQ_MRNA_BASELINE);
     }
-
 }

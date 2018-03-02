@@ -51,15 +51,15 @@
 
     <!-- Solr configuration -->
     <bean id="solrClientBioentities" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://${solr.host}:8983/solr/bioentities"/>
+        <constructor-arg value="http://${solr.host}:8984/solr/bioentities"/>
     </bean>
 
     <bean id="solrClientAnalytics" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://${solr.host}:8983/solr/analytics"/>
+        <constructor-arg value="http://${solr.host}:8984/solr/analytics"/>
     </bean>
 
     <bean id="solrAnalyticsServerURL" class="java.lang.String">
-        <constructor-arg value="http://${solr.host}:8983/solr/analytics/"/>
+        <constructor-arg value="http://${solr.host}:8984/solr/analytics/"/>
     </bean>
     <!-- End of Solr configuration -->
 

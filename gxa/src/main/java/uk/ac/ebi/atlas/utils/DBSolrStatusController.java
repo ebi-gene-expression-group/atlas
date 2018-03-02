@@ -9,11 +9,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 
 import javax.inject.Inject;
 
@@ -40,13 +39,13 @@ Andrea
 @Scope("request")
 public final class DBSolrStatusController extends JsonExceptionHandlingController {
 
-    private ExperimentDAO experimentDAO;
+    private GxaExperimentDao expressionAtlasExperimentDao;
     private SolrClient solrClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(DBSolrStatusController.class);
 
     @Inject
-    public DBSolrStatusController(ExperimentDAO experimentDAO, SolrClient solrClientAnalytics) {
-        this.experimentDAO = experimentDAO;
+    public DBSolrStatusController(GxaExperimentDao expressionAtlasExperimentDao, SolrClient solrClientAnalytics) {
+        this.expressionAtlasExperimentDao = expressionAtlasExperimentDao;
         this.solrClient = solrClientAnalytics;
     }
 
@@ -55,7 +54,7 @@ public final class DBSolrStatusController extends JsonExceptionHandlingControlle
     @ResponseBody
     public String dbAndSolrStatus(){
         //check database is up or down
-        Integer experimentsSize = experimentDAO.countExperiments();
+        Integer experimentsSize = expressionAtlasExperimentDao.countExperiments();
         String dbStatus = (experimentsSize > 0) ? "UP" : "DOWN";
 
         //check solr is up or down

@@ -14,21 +14,21 @@ import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class DifferentialExperimentPageService
         <Expr extends DifferentialExpression, E extends DifferentialExperiment,
-         K extends DifferentialRequestPreferences,
-         P extends DifferentialProfile<Expr, P>,  R extends DifferentialRequestContext<E, K> >
+                K extends DifferentialRequestPreferences,
+                P extends DifferentialProfile<Expr, P>, R extends DifferentialRequestContext<E, K>>
         extends ExperimentPageService {
 
     private final AtlasResourceHub atlasResourceHub;
     private final DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory;
     private final DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap;
 
-    public  DifferentialExperimentPageService(
+    public DifferentialExperimentPageService(
             DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory,
             DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
             AtlasResourceHub atlasResourceHub) {
@@ -38,45 +38,32 @@ public class DifferentialExperimentPageService
 
     }
 
-    public JsonObject getResultsForExperiment(E experiment,String accessKey, K preferences) {
+    public JsonObject getResultsForExperiment(E experiment, String accessKey, K preferences) {
 
         JsonObject result = new JsonObject();
         R requestContext = differentialRequestContextFactory.create(experiment, preferences);
         List<Contrast> contrasts = requestContext.getDataColumnsToReturn();
+        DifferentialProfilesList<P> profiles = profilesHeatMap.fetch(requestContext);
 
         result.add("anatomogram", JsonNull.INSTANCE);
-        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences).entrySet()){
+        for (Map.Entry<String, JsonElement> e : payloadAttributes(experiment, accessKey, preferences, getTheOnlyId(profiles)).entrySet()) {
             result.add(e.getKey(), e.getValue());
         }
 
-        try {
+        result.add("columnGroupings", new JsonArray());
+        result.add("columnHeaders", constructColumnHeaders(contrasts, experiment));
+        result.add("profiles", new ExternallyViewableProfilesList<>(
+                profiles, new LinkToGene<>(), requestContext.getDataColumnsToReturn(),
+                p -> ExpressionUnit.Relative.FOLD_CHANGE).asJson());
 
-            DifferentialProfilesList<P> differentialProfiles = profilesHeatMap.fetch(requestContext);
-            if (!differentialProfiles.isEmpty()) {
-                result.add("columnGroupings", new JsonArray());
-                result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
-                result.add("profiles", new ExternallyViewableProfilesList<>(
-                        differentialProfiles, new LinkToGene<>(), requestContext.getDataColumnsToReturn(),
-                        p -> ExpressionUnit.Relative.FOLD_CHANGE).asJson());
-
-                return result;
-            } else {
-                return noMatchError(preferences);
-            }
-        } catch (GenesNotFoundException e) {
-            return noMatchError(preferences);
-        }
-    }
-
-    JsonObject noMatchError(K preferences){
-        throw new RuntimeException("No genes found matching query: '" + preferences.getGeneQuery().description() + "'");
+        return result;
     }
 
     private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment
-            differentialExperiment){
+            differentialExperiment) {
         JsonArray result = new JsonArray();
         Map<String, JsonArray> contrastImages = atlasResourceHub.contrastImages(differentialExperiment);
-        for(Contrast contrast: contrasts){
+        for (Contrast contrast : contrasts) {
             JsonObject o = contrast.toJson();
             o.add("contrastSummary", new ContrastSummaryBuilder()
                     .forContrast(contrast)

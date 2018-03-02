@@ -11,6 +11,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,15 +43,15 @@ public class ExperimentOps {
     public static final JsonPrimitive DEFAULT_SUCCESS_RESULT = new JsonPrimitive("success");
 
 
-    public Iterable<JsonElement> dispatchAndPerform(Collection<String> accessions, Collection<Op> ops){
-        if(ops.size() == 1) {
-            if(!accessions.isEmpty()){
+    public Iterable<JsonElement> dispatchAndPerform(Collection<String> accessions, Collection<Op> ops) {
+        if (ops.size() == 1) {
+            if (!accessions.isEmpty()) {
                 return perform(accessions, ops.iterator().next());
             } else {
                 return perform(ops.iterator().next());
             }
         } else {
-            if(!accessions.isEmpty()) {
+            if (!accessions.isEmpty()) {
                 return perform(accessions, ops);
             } else {
                 return perform(ops);
@@ -58,16 +59,16 @@ public class ExperimentOps {
         }
     }
 
-    List<String> findAllExperiments(){
+    List<String> findAllExperiments() {
         return experimentOpsExecutionService.findAllExperiments();
     }
 
-    private Iterable<JsonElement> perform(Collection<Op> ops){
+    private Iterable<JsonElement> perform(Collection<Op> ops) {
         Optional<? extends List<Pair<String,? extends JsonElement>>> r =
                 experimentOpsExecutionService.attemptExecuteForAllAccessions(ops);
-        if(r.isPresent()){
+        if (r.isPresent()) {
             JsonArray array = new JsonArray();
-            for(Pair<String,? extends JsonElement> p : r.get()){
+            for (Pair<String,? extends JsonElement> p : r.get()) {
                 array.add(showSuccess(p));
             }
             return array;
@@ -79,9 +80,9 @@ public class ExperimentOps {
     private Iterable<JsonElement> perform(Op op){
         Optional<? extends List<Pair<String,? extends JsonElement>>> r =
                 experimentOpsExecutionService.attemptExecuteForAllAccessions(op);
-        if(r.isPresent()){
+        if (r.isPresent()) {
             JsonArray array = new JsonArray();
-            for(Pair<String,? extends JsonElement> p : r.get()){
+            for (Pair<String,? extends JsonElement> p : r.get()) {
                 array.add(showSuccess(p));
             }
             return array;
@@ -91,7 +92,6 @@ public class ExperimentOps {
     }
 
     private Iterable<JsonElement> perform(final Collection<String> accessions, final Op op) {
-
         return accessions
                 .stream()
                 .map(accession -> {
@@ -110,22 +110,22 @@ public class ExperimentOps {
         return result;
     }
 
-    private JsonObject packageResultIntoJsonObject(String accession, Pair<JsonArray, JsonArray> r){
+    private JsonObject packageResultIntoJsonObject(String accession, Pair<JsonArray, JsonArray> r) {
         JsonObject resultForOneAccession = new JsonObject();
         resultForOneAccession.add("accession", new JsonPrimitive(accession));
-        if(r.getRight().size()>0){
+        if (r.getRight().size()>0) {
             resultForOneAccession.add("result", r.getRight());
         }
-        if(r.getLeft().size()>0){
+        if (r.getLeft().size()>0) {
             resultForOneAccession.add("error", r.getLeft());
         }
 
         return resultForOneAccession;
     }
 
-    //wrong ones on the left, right ones on the right. :)
+    // Wrong ones on the left, right ones on the right. :)
     private Pair<JsonArray, JsonArray> performManyOpsAndReturnResultingErrorsAndResults(String accession,
-                                                                                        Iterable<Op> ops){
+                                                                                        Iterable<Op> ops) {
         JsonArray opsWithErrors = new JsonArray();
         JsonArray opsWithResults = new JsonArray();
         boolean failed = false;
@@ -133,24 +133,23 @@ public class ExperimentOps {
         JsonElement resultOfPreviousOperations = JsonNull.INSTANCE;
         JsonElement resultOfCurrentOperation;
         List<Op> opsThatProducedTheSameResult = new ArrayList<>();
-        for(Op op: ops){
-            if(failed){
+        for (Op op: ops) {
+            if (failed) {
                 resultOfCurrentOperation = new JsonPrimitive("Not started");
             } else {
                 Pair<OpResult, ? extends JsonElement> r = performOneOp(accession, op);
-                if(r.getLeft().equals(OpResult.FAILURE)){
+                if (r.getLeft().equals(OpResult.FAILURE)) {
                     setFailed = true;
                 }
                 resultOfCurrentOperation = r.getRight();
             }
 
-            if(resultOfPreviousOperations.equals(resultOfCurrentOperation)){
+            if (resultOfPreviousOperations.equals(resultOfCurrentOperation)) {
                 opsThatProducedTheSameResult.add(op);
             } else {
-                if(! resultOfPreviousOperations.equals(JsonNull.INSTANCE)) {
-                    (failed? opsWithErrors : opsWithResults).add(aggregatedResultsObject
-                            (opsThatProducedTheSameResult,
-                                    resultOfPreviousOperations));
+                if (!resultOfPreviousOperations.equals(JsonNull.INSTANCE)) {
+                    (failed ? opsWithErrors : opsWithResults)
+                            .add(aggregatedResultsObject(opsThatProducedTheSameResult, resultOfPreviousOperations));
                 }
                 opsThatProducedTheSameResult = new ArrayList<>();
                 opsThatProducedTheSameResult.add(op);
@@ -158,12 +157,12 @@ public class ExperimentOps {
             }
             failed |= setFailed;
         }
-        (failed? opsWithErrors : opsWithResults).add(aggregatedResultsObject(opsThatProducedTheSameResult,
-                resultOfPreviousOperations));
+        (failed ? opsWithErrors : opsWithResults)
+                .add(aggregatedResultsObject(opsThatProducedTheSameResult, resultOfPreviousOperations));
         return Pair.of(opsWithErrors, opsWithResults);
     }
 
-    private JsonObject aggregatedResultsObject(Collection<Op> ops, JsonElement result){
+    private JsonObject aggregatedResultsObject(Collection<Op> ops, JsonElement result) {
         JsonObject objectBeingReturned = new JsonObject();
         String niceEnoughName = ops.size()==1
                 ? ops.iterator().next().name()
@@ -172,7 +171,7 @@ public class ExperimentOps {
         return objectBeingReturned;
     }
 
-    private String niceEnoughKeyName(Collection<Op> ops){
+    private String niceEnoughKeyName(Collection<Op> ops) {
         Collection<String> names = ops.stream().map(Op::name).collect(Collectors.toCollection(ArrayList::new));
         return Joiner.on(',').join(names);
     }
@@ -188,7 +187,7 @@ public class ExperimentOps {
                 .orElseGet(() -> performStatefulOp(accession, op));
     }
 
-    private Optional<JsonElement> attemptPerformOneOpRelatedToTheOpLog(String accession, Op op){
+    private Optional<JsonElement> attemptPerformOneOpRelatedToTheOpLog(String accession, Op op) {
         switch (op) {
             case LOG:
                 return Optional.of(getCurrentOpLogAsJson(accession));
@@ -201,14 +200,14 @@ public class ExperimentOps {
         }
     }
 
-    private JsonElement showSuccess(Pair<String,? extends JsonElement> accessionAndOpValue){
+    private JsonElement showSuccess(Pair<String,? extends JsonElement> accessionAndOpValue) {
         return showResult(accessionAndOpValue.getLeft(), OpResult.SUCCESS, accessionAndOpValue.getRight());
     }
 
-    private JsonElement showResult(String accession, OpResult opResult, JsonElement opValue){
+    private JsonElement showResult(String accession, OpResult opResult, JsonElement opValue) {
         JsonObject resultObject = new JsonObject();
         resultObject.add("accession", new JsonPrimitive(accession));
-        if(opResult.equals(OpResult.SUCCESS)){
+        if (opResult.equals(OpResult.SUCCESS)) {
             resultObject.add("result", opValue);
         } else {
             resultObject.add("error", opValue);
@@ -218,29 +217,41 @@ public class ExperimentOps {
 
     private Pair<OpResult,JsonPrimitive> performStatefulOp(String accession, Op op) {
         Pair<OpResult,JsonPrimitive> result;
-        ImmutableList<OpLogEntry> opRecords = experimentOpLogWriter.getCurrentOpLog(accession);
 
+        ImmutableList<OpLogEntry> opRecords = experimentOpLogWriter.getCurrentOpLog(accession);
         OpLogEntry lastOp = opRecords.isEmpty() ? null : opRecords.get(opRecords.size() - 1);
+
         if (lastOp != null && lastOp.isInProgress()) {
-            result= Pair.of(OpResult.FAILURE, new JsonPrimitive(
-                    lastOp.statusMessage()+" Refusing to start "+op
-            ));
+            result =
+                    Pair.of(
+                            OpResult.FAILURE,
+                            new JsonPrimitive(lastOp.statusMessage() + " Refusing to start " + op));
         } else {
             OpLogEntry newOpRecord = OpLogEntry.newlyStartedOp(op);
-            experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord).build());
+            experimentOpLogWriter.persistOpLog(
+                    accession,
+                    ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord).build());
+
             try {
-                result = Pair.of(OpResult.SUCCESS,
-                        experimentOpsExecutionService
-                                .attemptExecuteStatefulOp(accession, op));
-                experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toSuccess()).build());
+                result =
+                        Pair.of(OpResult.SUCCESS,
+                                experimentOpsExecutionService.attemptExecuteStatefulOp(accession, op));
+
+                experimentOpLogWriter.persistOpLog(
+                        accession,
+                        ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toSuccess()).build());
 
             } catch (Exception e) {
-                String text = e.getMessage()!=null? e.getMessage() : e.toString();
+                String text = e.getMessage() != null ? e.getMessage() : e.toString();
                 LOGGER.error(text,e);
                 result = Pair.of(OpResult.FAILURE, new JsonPrimitive(text));
-                experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toFailure(text)).build());
+
+                experimentOpLogWriter.persistOpLog(
+                        accession,
+                        ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toFailure(text)).build());
             }
         }
+
         return result;
     }
 

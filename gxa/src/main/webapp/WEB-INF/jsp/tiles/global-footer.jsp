@@ -1,7 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<div id="global-footer" class="global-footer">
+<!-- https://www.ebi.ac.uk/style-lab/websites/patterns/banner-elixir.html -->
+<div id="elixir-banner"
+     data-color="none"
+     data-use-cdr-logo="true"
+     data-name="This service"
+     data-description="Expression Atlas is an ELIXIR Core Data Resource"
+     data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
+     data-use-basic-styles="false">
+</div>
+<script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/elixirBanner.js"></script>
 
+<div id="global-footer" class="global-footer">
     <nav id="global-nav-expanded" class="row global-nav-expanded">
         <div class="columns small-6 medium-2 ">
             <a href="https://www.ebi.ac.uk/" title="EMBL-EBI"><span class="ebi-logo"></span></a>

@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialTsvFi
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -64,7 +65,7 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
+            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
@@ -117,7 +118,7 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
                     double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
                     double tStatistic = DifferentialTsvFileParsingUtil.parseDouble(tStatisticString);
                     double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
-                    if (foldChange != 0) {
+                    if (foldChange != 0.0) {
                         MicroarrayDifferentialAnalytics dto = new MicroarrayDifferentialAnalytics(geneId, designElement, contrastId, pValue, foldChange, tStatistic);
                         builder.add(dto);
                     }

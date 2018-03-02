@@ -53,8 +53,6 @@ public class ExperimentsInfoListServiceTest {
                 new ExperimentInfoListService(experimentTrader, ImmutableSet.of(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 
-
-
     @Test
     public void sizeIsRight() throws Exception {
         JsonArray result = subject.getExperimentsJson().get("aaData").getAsJsonArray();

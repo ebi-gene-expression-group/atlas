@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static uk.ac.ebi.atlas.utils.StringUtil.escapeDoubleQuotes;
 
 @AutoValue
 public abstract class SemanticQueryTerm {
@@ -21,9 +22,11 @@ public abstract class SemanticQueryTerm {
     }
 
     public String asBioentitiesIndexQueryLiteral() {
-        return hasNoCategory()
-                ? String.format("property_value:\"%s\"", value().replace("\"", "\\\""))
-                : String.format("property_name:\"%s\" AND property_value:\"%s\"", category(), value().replace("\"", "\\\""));
+        return hasNoCategory() ?
+                String.format("property_value:\"%s\"", escapeDoubleQuotes(value())) :
+                String.format(
+                        "property_name:\"%s\" AND property_value:\"%s\"",
+                        escapeDoubleQuotes(category()), escapeDoubleQuotes(value()));
     }
 
     public boolean hasNoCategory() {

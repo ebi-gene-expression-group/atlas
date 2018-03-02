@@ -70,7 +70,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private ExperimentDesignParser subject;
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
         dataFileHub = MockDataFileHub.create();
     }
 
@@ -83,14 +83,14 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     }
 
     @Test
-    public void testParseHeaders() throws Exception {
+    public void testParseHeaders() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getFactorHeaders(), contains(GENOTYPE));
         assertThat(experimentDesign.getSampleHeaders(), contains(CHARACTERISTIC_1, "Genotype", "Organism", CHARACTERISTIC_2));
     }
 
     @Test
-    public void testParseFactors() throws Exception {
+    public void testParseFactors() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, GENOTYPE), is(CYC_C_MUTANT));
         assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
@@ -105,7 +105,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     }
 
     @Test
-    public void testParseSamples() throws Exception {
+    public void testParseSamples() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, CHARACTERISTIC_1), is(RD_INSTAR_LARVA));
         assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, CHARACTERISTIC_1), is(RD_INSTAR_LARVA));
@@ -125,7 +125,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     }
 
     @Test
-    public void parseEmptyOntologyTermInSample() throws Exception {
+    public void parseEmptyOntologyTermInSample() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentDesign.getSampleCharacteristics(ASSAY_ACCESSION_3)));
@@ -134,7 +134,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
 
     @Test
-    public void parseEmptyOntologyTermInFactor() throws Exception {
+    public void parseEmptyOntologyTermInFactor() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentDesign.getFactors(ASSAY_ACCESSION_3)));
@@ -145,26 +145,26 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     }
 
     @Test
-    public void testAssays() throws Exception {
+    public void testAssays() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_1), is(A_AFFY_35));
         assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_2), is(A_AFFY_35));
     }
 
     @Test
-    public void testAssayHeaders() throws Exception {
+    public void testAssayHeaders() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getAssayHeaders(), contains(ASSAY, ARRAY));
     }
 
     @Test
-    public void testGetAllRunOrAssay() throws Exception {
+    public void testGetAllRunOrAssay() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getAllRunOrAssay(), contains(ASSAY_ACCESSION_3, ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
     }
 
     @Test
-    public void testGetSpeciesForAssays() throws Exception {
+    public void testGetSpeciesForAssays() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         String species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1));
         assertThat(species, is(SPECIES_1));

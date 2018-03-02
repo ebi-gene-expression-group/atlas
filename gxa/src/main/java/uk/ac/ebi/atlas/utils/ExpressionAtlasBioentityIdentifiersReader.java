@@ -68,13 +68,14 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
 
-            try (ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession, experimentType)) {
+            try (ObjectInputStream<BaselineAnalytics> inputStream =
+                         baselineAnalyticsInputStreamFactory.create(experimentAccession, experimentType)) {
                 BaselineAnalytics analytics = inputStream.readNext();
                 while (analytics != null) {
-                    bioentityIdentifiers.add(analytics.getGeneId());
+                    bioentityIdentifiers.add(analytics.geneId());
                     analytics = inputStream.readNext();
                 }
-            } catch (IOException exception) {
+            } catch (Exception exception) {
                 LOGGER.error(exception.getMessage());
             }
         }
@@ -137,10 +138,10 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
                     (experimentAccession, experiment.getType())) {
                 BaselineAnalytics analytics = inputStream.readNext();
                 while (analytics != null) {
-                    bioentityIdentifiers.add(analytics.getGeneId());
+                    bioentityIdentifiers.add(analytics.geneId());
                     analytics = inputStream.readNext();
                 }
-            } catch (IOException exception) {
+            } catch (Exception exception) {
                 LOGGER.error(exception.getMessage());
             }
 

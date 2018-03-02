@@ -109,8 +109,8 @@ public class BaselineTranscriptProfileStreamFactory extends
         @Override
         protected Collection<ObjectInputStream<String[]>> getDataFiles(
                 BaselineExperiment experiment, BaselineRequestContext<ExpressionUnit.Absolute.Rna> options) {
-            return Collections.singleton(
-                    dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).transcriptsTpms.get());
+            return dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).transcriptsTpms.maybeGet()
+                    .map(Collections::singletonList).orElse(Collections.emptyList());
         }
 
     }

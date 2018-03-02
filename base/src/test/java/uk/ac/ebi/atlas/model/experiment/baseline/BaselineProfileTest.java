@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -23,9 +22,9 @@ public class BaselineProfileTest {
     private static final String GENE_ID = "geneId_1";
     private static final String GENE_NAME = "geneName_1";
 
-    private AssayGroup g1 = new AssayGroup("g1", "run11","run12","run13");
+    private AssayGroup g1 = new AssayGroup("g1", "run11", "run12", "run13");
     private AssayGroup g2 = new AssayGroup("g2", "run21");
-    private AssayGroup g3 = new AssayGroup("g3", "run31","run32");
+    private AssayGroup g3 = new AssayGroup("g3", "run31", "run32");
     private AssayGroup g4 = new AssayGroup("g4", "g41");
 
     private BaselineExpression expression_1 = new BaselineExpression(2.2D);
@@ -43,7 +42,7 @@ public class BaselineProfileTest {
     }
 
     @Test
-    public void getSpecificityOnAssayGroups(){
+    public void getSpecificityOnAssayGroups() {
         assertThat(subject.getSpecificity(ImmutableList.of(g1)), is(1L));
         assertThat(subject.getSpecificity(ImmutableList.of()), is(0L));
         assertThat(subject.getSpecificity(ImmutableList.of(g4)), is(0L));
@@ -79,19 +78,22 @@ public class BaselineProfileTest {
     }
 
     @Test
-    public void isExpressedAnywhereIsLikeSpecificityGreaterThanZeroButPossiblyFaster(){
+    public void isExpressedAnywhereIsLikeSpecificityGreaterThanZeroButPossiblyFaster() {
+
         List<AssayGroup> assayGroups = new ArrayList<>();
         while (assayGroups.isEmpty()) {
-            if(RandomUtils.nextBoolean()) assayGroups.add(g1);
-            if(RandomUtils.nextBoolean()) assayGroups.add(g2);
-            if(RandomUtils.nextBoolean()) assayGroups.add(g3);
-            if(RandomUtils.nextBoolean()) assayGroups.add(g4);
+            if (RandomUtils.nextBoolean()) assayGroups.add(g1);
+            if (RandomUtils.nextBoolean()) assayGroups.add(g2);
+            if (RandomUtils.nextBoolean()) assayGroups.add(g3);
+            if (RandomUtils.nextBoolean()) assayGroups.add(g4);
         }
         Collections.shuffle(assayGroups);
 
         assertThat(
+                assayGroups.toString(),
                 subject.isExpressedAnywhereOn(assayGroups),
-                is(subject.getSpecificity() > 0)
+                is(subject.getSpecificity(assayGroups) > 0)
         );
     }
+
 }

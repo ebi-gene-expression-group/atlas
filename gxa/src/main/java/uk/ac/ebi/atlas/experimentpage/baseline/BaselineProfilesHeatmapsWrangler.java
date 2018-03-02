@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.LinkToGene;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -13,8 +14,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.util.List;
@@ -73,6 +74,10 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
         fetchProfilesIfMissing();
         return new ExternallyViewableProfilesList<>(jsonProfiles, new LinkToGene<>(),
                 requestContext.getDataColumnsToReturn(), provideUnits).asJson();
+    }
+
+    public java.util.Optional<String> getTheOnlyId(){
+        return ExperimentPageService.getTheOnlyId(jsonProfiles);
     }
 
     public JsonArray getJsonCoexpressions()   {

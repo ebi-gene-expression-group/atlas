@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.Arrays;
 
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
-
-    private final ExperimentTrader experimentTrader;
+    private final ScxaExperimentTrader experimentTrader;
     private static final Gson gson = new Gson();
     
     @Inject
-    public ExperimentController(ExperimentTrader experimentTrader){
+    public ExperimentController(ScxaExperimentTrader experimentTrader){
         this.experimentTrader = experimentTrader;
     }
 
@@ -52,7 +51,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
         JsonArray availableTabs = new JsonArray();
 
-        availableTabs.add(tSnePlotTab(availableDataUnits(experiment.getAccession(), experiment.getType())));
+        availableTabs.add(tSnePlotTab(experiment));
 
         availableTabs.add(customContentTab("none", "Experiment Design", new JsonObject()));
 //        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
@@ -156,7 +155,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 //        return customContentTab(tabType, name, props);
 //    }
 
-    private JsonObject customContentTab(String tabType, String name, JsonObject props){
+    private JsonObject customContentTab(String tabType, String name, JsonObject props) {
         JsonObject result = new JsonObject();
         result.addProperty("type", tabType);
         result.addProperty("name", name);
@@ -164,19 +163,21 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonObject tSnePlotTab(JsonArray availableDataUnits){
+    private JsonObject tSnePlotTab(Experiment experiment) {
         JsonObject props = new JsonObject();
 
         JsonArray availableClusters = new JsonArray();
         Arrays.stream(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}).forEach(availableClusters::add);
 
-        JsonArray perplexityArray = new JsonArray();
-        Arrays.stream(new int[] {1, 2, 3, 4, 5, 6}).forEach(perplexityArray::add);
-
         props.addProperty("suggesterEndpoint", "json/suggestions");
         props.add("ks", availableClusters);
+
+        // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174
+        JsonArray perplexityArray = new JsonArray();
+        Arrays.stream(new int[] {1, 5, 10, 15, 20}).forEach(perplexityArray::add);
         props.add("perplexities", perplexityArray);
-        props.add("units", availableDataUnits);
+
+        props.add("units", availableDataUnits(experiment.getAccession(), experiment.getType()));
         return customContentTab("t-sne-plot", "Results", props);
     }
 

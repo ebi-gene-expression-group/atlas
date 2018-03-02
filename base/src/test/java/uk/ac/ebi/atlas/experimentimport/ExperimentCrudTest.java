@@ -1,28 +1,32 @@
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.UUID;
+
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentCrudTest {
@@ -31,10 +35,7 @@ public class ExperimentCrudTest {
     private ExperimentCrud subject;
 
     @Mock
-    private ExperimentDAO experimentDAOMock;
-
-    @Mock
-    private ExperimentDesign experimentDesignMock;
+    private ExperimentDao experimentDaoMock;
 
     @Mock
     private ExperimentConfiguration experimentConfigurationMock;
@@ -49,75 +50,122 @@ public class ExperimentCrudTest {
     private ExperimentDTO experimentDTOMock;
 
     @Mock
-    ExperimentDesignFileWriterService experimentDesignFileWriterService;
+    private ExperimentDesignFileWriterService experimentDesignFileWriterService;
 
     @Mock
-    ExperimentChecker experimentChecker;
+    private ExperimentChecker experimentChecker;
 
     @Mock
-    AnalyticsLoaderFactory analyticsLoaderFactory;
+    private AnalyticsLoaderFactory analyticsLoaderFactoryMock;
 
     @Mock
-    ConfigurationTrader configurationTrader;
+    private ConfigurationTrader configurationTrader;
 
     private ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
 
-    private String accessKey = "accessKey";
+    private String accessKey = UUID.randomUUID().toString();
 
     @Before
-    public void setUp() throws Exception {
-        when(configurationTrader.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn
-                (experimentConfigurationMock);
+    public void setUp() {
+        AssayGroup assayGroup = new AssayGroup("g1", "run_1");
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+        experimentDesign.putSampleCharacteristic("run_1", "type", "value");
+        experimentDesign.putFactor("run_1", "type", "value");
+
+        when(configurationTrader.getExperimentConfiguration(EXPERIMENT_ACCESSION))
+                .thenReturn(experimentConfigurationMock);
 
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
+        when(experimentConfigurationMock.getAssayGroups()).thenReturn(ImmutableList.of(assayGroup));
 
-        when(experimentDAOMock.findExperiment(anyString(), anyBoolean())).thenReturn(experimentDTOMock);
+        when(experimentDaoMock.getExperimentAsAdmin(anyString())).thenReturn(experimentDTOMock);
+
+        when(analyticsLoaderFactoryMock.getLoader(experimentType)).thenReturn(new AnalyticsLoader() {
+        });
 
         given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(experimentDTOMock.getExperimentType()).willReturn(experimentType);
         given(experimentDTOMock.getAccessKey()).willReturn(accessKey);
 
-        given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
-        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesignMock);
+        given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class)))
+                .willReturn(condensedSdrfParserOutputMock);
+        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesign);
 
         given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         given(condensedSdrfParserOutputMock.getPubmedIds()).willReturn(new ImmutableSet.Builder<String>().build());
         given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
 
-        subject = new ExperimentCrud(condensedSdrfParserMock,
-                experimentDesignFileWriterService,
-                experimentDAOMock,
-                experimentChecker,
-                analyticsLoaderFactory,configurationTrader );
+        ExperimentCrudFactory experimentCrudFactory =
+                new ExperimentCrudFactory(
+                        condensedSdrfParserMock, experimentDesignFileWriterService, configurationTrader);
+
+        subject = experimentCrudFactory.create(experimentDaoMock, experimentChecker, analyticsLoaderFactoryMock);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void failImportOnValidationWhenExperimentDesignDoesNotMatchAssayGroups() throws IOException {
+        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(new ExperimentDesign());
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void failImportOnValidationWhenExperimentDesignDoesNotMatchAssayGroups2() throws IOException {
+        when(experimentConfigurationMock.getAssayGroups())
+                .thenReturn(ImmutableList.of(new AssayGroup("different assay", "different run")));
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
-    public void updateExperimentToPrivateShouldDelegateToDAO() throws Exception {
+    public void updateExperimentToPrivateShouldDelegateToDAO() throws IOException {
         ExperimentDTO privateMock = mock(ExperimentDTO.class);
         when(privateMock.isPrivate()).thenReturn(true);
-        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, true)).willReturn(privateMock);
+        given(experimentDaoMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(privateMock);
         subject.makeExperimentPrivate(EXPERIMENT_ACCESSION);
-        verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, true);
-        verify(experimentDAOMock, times(0)).updateExperiment(EXPERIMENT_ACCESSION, false);
+        verify(experimentDaoMock).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, true);
+        verify(experimentDaoMock, times(0)).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
-    public void updateExperimentToPublicShouldDelegateToDAO() throws Exception {
+    public void updateExperimentToPublicShouldDelegateToDAO() throws IOException {
         ExperimentDTO publicMock = mock(ExperimentDTO.class);
         when(publicMock.isPrivate()).thenReturn(false);
-        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, false)).willReturn(publicMock);
+        given(experimentDaoMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(publicMock);
 
         subject.makeExperimentPublic(EXPERIMENT_ACCESSION);
-        verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, false);
-        verify(experimentDAOMock, times(0)).updateExperiment(EXPERIMENT_ACCESSION, true);
+        verify(experimentDaoMock).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, false);
+        verify(experimentDaoMock, times(0)).setExperimentPrivacyStatus(EXPERIMENT_ACCESSION, true);
 
     }
 
     @Test
-    public void importExperimentParsesDesignFileOnce() throws Exception {
+    public void importExperimentParsesDesignFileOnce() throws IOException {
         subject.importExperiment(EXPERIMENT_ACCESSION, false);
         verify(condensedSdrfParserMock).parse(EXPERIMENT_ACCESSION, experimentType);
     }
 
+    @Test(expected = UncheckedIOException.class)
+    public void ioExceptionsAreWrapped() throws IOException {
+        doThrow(new IOException())
+                .when(experimentDesignFileWriterService)
+                .writeExperimentDesignFile(
+                        eq(EXPERIMENT_ACCESSION),
+                        eq(ExperimentType.RNASEQ_MRNA_BASELINE),
+                        any(ExperimentDesign.class));
+
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
+    }
+
+    @Test
+    public void updateExperimentDesign() throws IOException {
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
+        subject.updateExperimentDesign(EXPERIMENT_ACCESSION);
+
+        // First time for import, second for update
+        verify(experimentDesignFileWriterService, times(2))
+                .writeExperimentDesignFile(
+                        eq(EXPERIMENT_ACCESSION),
+                        eq(ExperimentType.RNASEQ_MRNA_BASELINE),
+                        any(ExperimentDesign.class));
+    }
 }

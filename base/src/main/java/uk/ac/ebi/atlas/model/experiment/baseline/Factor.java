@@ -31,7 +31,7 @@ public class Factor implements Comparable<Factor> {
         this.header = header;
         this.type = normalize(checkNotNull(header));
         this.value = checkNotNull(value);
-        this.valueOntologyTerms = new ImmutableSet.Builder<OntologyTerm>().add(valueOntologyTerms).build();
+        this.valueOntologyTerms = ImmutableSet.copyOf(valueOntologyTerms);
     }
 
     public static String normalize(String header) {

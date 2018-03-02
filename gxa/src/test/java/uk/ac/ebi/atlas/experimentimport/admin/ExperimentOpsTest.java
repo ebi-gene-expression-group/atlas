@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletResponse;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDTOTest;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
@@ -23,15 +23,20 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
@@ -51,7 +56,7 @@ import static org.mockito.Mockito.when;
 public class ExperimentOpsTest {
 
     @Mock
-    private ExperimentCrud experimentCrud;
+    private ExperimentCrud experimentCrudMock;
     @Mock
     private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     @Mock
@@ -70,12 +75,12 @@ public class ExperimentOpsTest {
     private ExperimentOpLogWriter experimentOpLogWriter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         experimentOpLogWriter = new ExperimentOpLogWriter(MockDataFileHub.create());
 
         subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
-                        experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
+                        experimentCrudMock, baselineCoexpressionProfileLoader, analyticsIndexerManager,
                         expressionSerializerService,experimentTrader));
 
         when(expressionSerializerService.kryoSerializeExpressionData(any())).thenReturn("skipped");
@@ -89,13 +94,13 @@ public class ExperimentOpsTest {
             ExperimentType experimentType = ExperimentType.values()
                     [new Random().nextInt(ExperimentType.values().length)];
 
-            return ExperimentDTOTest.mockDTO(accession1, experimentType);
-        }).when(experimentCrud).findExperiment(anyString());
+            return mockDTO(accession1, experimentType);
+        }).when(experimentCrudMock).findExperiment(anyString());
 
     }
 
     @Test
-    public void allOpsReturnTheSameKindOfJson() throws Exception {
+    public void allOpsReturnTheSameKindOfJson() {
         Random rand = new Random();
 
         for (Op op : Op.values()) {
@@ -124,9 +129,9 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void aggregateOpsInANeatFashion() throws Exception {
+    public void aggregateOpsInANeatFashion() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        doThrow(new RuntimeException("Woosh!")).when(experimentCrud).deleteExperiment(accession);
+        doThrow(new RuntimeException("Woosh!")).when(experimentCrudMock).deleteExperiment(accession);
         List<Op> ops= new ArrayList<>();
         ops.add(Op.UPDATE_DESIGN_ONLY); // says "success!"
         ops.add(Op.CLEAR_LOG); // says "success!"
@@ -169,7 +174,7 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void statefulOpsModifyTheOpLog() throws Exception {
+    public void statefulOpsModifyTheOpLog() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
             if (!op.equals(Op.CLEAR_LOG)) {
@@ -177,24 +182,23 @@ public class ExperimentOpsTest {
             }
         }
 
-
         String logResult = ImmutableList.copyOf(subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(Op.LOG))).toString();
 
         for(Op op: Op.values()){
-            boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ, Op.CACHE_REMOVE).contains(op);
+            boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ, Op.CACHE_REMOVE, Op.CHECK).contains(op);
             assertThat(op.toString(), logResult.contains( op.name()), is(isStateful));
         }
-
     }
 
     @Test
-    public void errorLeavesLogDirty() throws Exception {
+    public void errorLeavesLogDirty() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        doThrow(new RuntimeException("Woosh!")).when(experimentCrud).deleteExperiment(accession);
+        doThrow(new RuntimeException("Woosh!")).when(experimentCrudMock).deleteExperiment(accession);
 
-        JsonObject result = subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singleton(Op
-                .DELETE))
-                .iterator().next().getAsJsonObject();
+        JsonObject result =
+                subject.dispatchAndPerform(
+                        Collections.singletonList(accession),
+                        Collections.singleton(Op.DELETE)).iterator().next().getAsJsonObject();
 
         assertThat(accession, is(result.get("accession").getAsString()));
         assertThat(result.get("result"), is(nullValue()));
@@ -202,7 +206,6 @@ public class ExperimentOpsTest {
 
         assertThat(ImmutableList.copyOf(subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(Op.LOG))).toString(),
                 containsString("error"));
-
     }
 
     @Test
@@ -214,47 +217,47 @@ public class ExperimentOpsTest {
 
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
-        verify(experimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(experimentCrud).findExperiment(accession);
+        verify(experimentCrudMock).findExperiment(accession);
         verify(expressionSerializerService).kryoSerializeExpressionData(any(Experiment.class));
         verify(analyticsIndexerManager).addToAnalyticsIndex(accession);
 
-        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled1() throws Exception {
-        doThrow(new RuntimeException("The files are bad!"))
-                .when(experimentCrud)
+        doThrow(new IOException("The files are bad!"))
+                .when(experimentCrudMock)
                 .importExperiment(accession,false);
 
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
-        verify(experimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
 
-        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
-    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled2() throws Exception {
-        doThrow(new RuntimeException("Database down, or something"))
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled2() throws IOException {
+        doThrow(new UncheckedIOException(new IOException("Database down, or something")))
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",new MockHttpServletResponse());
 
-        verify(experimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
 
-        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
-    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws Exception {
-        doThrow(new RuntimeException("Serializing failed"))
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws IOException {
+        doThrow(new UncheckedIOException(new IOException("Serializing failed")))
                 .when(expressionSerializerService)
                 .kryoSerializeExpressionData(any(Experiment.class));
 
@@ -265,20 +268,20 @@ public class ExperimentOpsTest {
 
         String response = responseObject.getContentAsString();
 
-        verify(experimentCrud).importExperiment(accession, false);
+        verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(experimentCrud).findExperiment(accession);
+        verify(experimentCrudMock).findExperiment(accession);
         verify(expressionSerializerService).kryoSerializeExpressionData(any(Experiment.class));
 
-        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
 
         assertThat(response, containsString("Serializing failed"));
         assertThat(response, containsString("error"));
     }
 
     @Test
-    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws Exception {
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws IOException {
         doThrow(new NullPointerException())
                 .when(expressionSerializerService)
                 .kryoSerializeExpressionData(any(Experiment.class));
@@ -290,7 +293,7 @@ public class ExperimentOpsTest {
         assertThat(response, containsString("error"));
     }
 
-    private String readFromStatus(List<OpLogEntry> persisted) throws Exception{
+    private String readFromStatus(List<OpLogEntry> persisted) throws IOException {
         String accession = "ACCESSION-statusReadsOpLog";
         experimentOpLogWriter.persistOpLog(accession, persisted);
 
@@ -304,11 +307,15 @@ public class ExperimentOpsTest {
     }
 
     @Test
-    public void statusReadsLastOpLogEntry() throws Exception {
+    public void statusReadsLastOpLogEntry() throws IOException {
         assertThat(readFromStatus(ImmutableList.of()), is(""));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), not(containsString("msg")));
     }
 
+    private static ExperimentDTO mockDTO(String accession, ExperimentType experimentType){
+        return new ExperimentDTO(accession, experimentType,
+                "Homo sapiens", new HashSet<>(), "title", new Date(), false, UUID.randomUUID().toString());
+    }
 }

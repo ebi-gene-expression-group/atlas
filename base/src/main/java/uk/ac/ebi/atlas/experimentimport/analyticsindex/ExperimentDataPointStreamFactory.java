@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSetMultimap;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalytics;
@@ -19,15 +18,12 @@ import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.Condition;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.ConditionsLookupService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.DifferentialCondition;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -62,7 +58,7 @@ public class ExperimentDataPointStreamFactory {
         } else if (experiment instanceof BaselineExperiment) {
             return stream((BaselineExperiment) experiment);
         } else {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException(String.format("Unsupported experiment type: %s", experiment.getType()));
         }
     }
 

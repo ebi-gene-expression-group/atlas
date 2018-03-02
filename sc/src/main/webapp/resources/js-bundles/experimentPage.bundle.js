@@ -32,10 +32,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   if (( false ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 192), __webpack_require__(/*! ./IPv6 */ 193), __webpack_require__(/*! ./SecondLevelDomains */ 194));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 190), __webpack_require__(/*! ./IPv6 */ 191), __webpack_require__(/*! ./SecondLevelDomains */ 192));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 192), __webpack_require__(/*! ./IPv6 */ 193), __webpack_require__(/*! ./SecondLevelDomains */ 194)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 190), __webpack_require__(/*! ./IPv6 */ 191), __webpack_require__(/*! ./SecondLevelDomains */ 192)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2325,7 +2325,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 181:
+/***/ 179:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/fbjs/lib/emptyFunction.js ***!
   \************************************************************************/
@@ -2373,7 +2373,7 @@ module.exports = emptyFunction;
 
 /***/ }),
 
-/***/ 182:
+/***/ 180:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/fbjs/lib/invariant.js ***!
   \********************************************************************/
@@ -2438,7 +2438,7 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ 183:
+/***/ 181:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/fbjs/lib/warning.js ***!
   \******************************************************************/
@@ -2457,7 +2457,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 181);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 179);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -2512,7 +2512,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 184:
+/***/ 182:
 /*!*************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \*************************************************************************************/
@@ -2536,7 +2536,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 185:
+/***/ 183:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/resolve-pathname/index.js ***!
   \************************************************************************/
@@ -2623,7 +2623,7 @@ exports.default = resolvePathname;
 
 /***/ }),
 
-/***/ 186:
+/***/ 184:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/value-equal/index.js ***!
   \*******************************************************************/
@@ -2685,7 +2685,7 @@ exports.default = valueEqual;
 
 /***/ }),
 
-/***/ 187:
+/***/ 185:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/DOMUtils.js ***!
   \******************************************************************/
@@ -2752,7 +2752,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 
 /***/ }),
 
-/***/ 188:
+/***/ 186:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Link.js ***!
   \**************************************************************************/
@@ -2902,7 +2902,7 @@ exports.default = Link;
 
 /***/ }),
 
-/***/ 189:
+/***/ 187:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Route.js ***!
   \***************************************************************************/
@@ -2917,7 +2917,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Route = __webpack_require__(/*! react-router/es/Route */ 190);
+var _Route = __webpack_require__(/*! react-router/es/Route */ 188);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -2927,7 +2927,7 @@ exports.default = _Route2.default; // Written in this round about way for babel-
 
 /***/ }),
 
-/***/ 190:
+/***/ 188:
 /*!***********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Route.js ***!
   \***********************************************************************/
@@ -3116,7 +3116,7 @@ exports.default = Route;
 
 /***/ }),
 
-/***/ 191:
+/***/ 189:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/DOMUtils.js ***!
   \*********************************************************************/
@@ -3185,7 +3185,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 
 /***/ }),
 
-/***/ 192:
+/***/ 190:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/punycode.js ***!
   \********************************************************************/
@@ -3728,7 +3728,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 193:
+/***/ 191:
 /*!****************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/IPv6.js ***!
   \****************************************************************/
@@ -3935,7 +3935,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 194:
+/***/ 192:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/SecondLevelDomains.js ***!
   \******************************************************************************/
@@ -4203,7 +4203,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 195:
+/***/ 193:
 /*!*************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color/index.js ***!
   \*************************************************************/
@@ -4214,8 +4214,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 "use strict";
 
 
-var colorString = __webpack_require__(/*! color-string */ 461);
-var convert = __webpack_require__(/*! color-convert */ 464);
+var colorString = __webpack_require__(/*! color-string */ 458);
+var convert = __webpack_require__(/*! color-convert */ 461);
 
 var _slice = [].slice;
 
@@ -4687,7 +4687,7 @@ module.exports = Color;
 
 /***/ }),
 
-/***/ 196:
+/***/ 194:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-name/index.js ***!
   \******************************************************************/
@@ -4851,7 +4851,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 197:
+/***/ 195:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/conversions.js ***!
   \***************************************************************************/
@@ -4863,7 +4863,7 @@ module.exports = {
 
 
 /* MIT license */
-var cssKeywords = __webpack_require__(/*! color-name */ 196);
+var cssKeywords = __webpack_require__(/*! color-name */ 194);
 
 // NOTE: conversions should only return primitive values (i.e. arrays, or
 //       values that give correct `typeof` results).
@@ -5707,7 +5707,7 @@ convert.rgb.gray = function (rgb) {
 
 /***/ }),
 
-/***/ 198:
+/***/ 196:
 /*!**********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/PlotLoader.js ***!
   \**********************************************************************************************************************/
@@ -5734,15 +5734,15 @@ var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _LoadingOverlay = __webpack_require__(/*! ./LoadingOverlay */ 466);
+var _LoadingOverlay = __webpack_require__(/*! ./LoadingOverlay */ 463);
 
 var _LoadingOverlay2 = _interopRequireDefault(_LoadingOverlay);
 
-var _ScatterPlot = __webpack_require__(/*! ./ScatterPlot */ 468);
+var _ScatterPlot = __webpack_require__(/*! ./ScatterPlot */ 465);
 
 var _ScatterPlot2 = _interopRequireDefault(_ScatterPlot);
 
-var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 200);
+var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 198);
 
 var _SeriesPropTypes2 = _interopRequireDefault(_SeriesPropTypes);
 
@@ -5790,7 +5790,7 @@ exports.default = PlotLoader;
 
 /***/ }),
 
-/***/ 199:
+/***/ 197:
 /*!***********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/highcharts.js ***!
   \***********************************************************************/
@@ -10087,6 +10087,115 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
+/***/ 198:
+/*!***************************************************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/SeriesPropTypes.js ***!
+  \***************************************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+var SeriesPropTypes = _propTypes2.default.arrayOf(_propTypes2.default.shape({
+  name: _propTypes2.default.string.isRequired,
+  data: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+    name: _propTypes2.default.string.isRequired,
+    x: _propTypes2.default.number.isRequired,
+    y: _propTypes2.default.number.isRequired,
+    expressionLevel: _propTypes2.default.number,
+    color: _propTypes2.default.string
+  })).isRequired,
+  color: _propTypes2.default.string
+}));
+
+exports.default = SeriesPropTypes;
+
+/***/ }),
+
+/***/ 199:
+/*!***************************************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/util/MathRound.js ***!
+  \***************************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+// Beware: it pollutes Math!
+
+// Closure
+
+(function () {
+  /**
+   * Decimal adjustment of a number.
+   *
+   * @param {String}  type  The type of adjustment.
+   * @param {Number}  value The number.
+   * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
+   * @returns {Number} The adjusted value.
+   */
+  function decimalAdjust(type, value, exp) {
+    // If the exp is undefined or zero...
+    if (typeof exp === 'undefined' || +exp === 0) {
+      return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    // If the value is not a number or the exp is not an integer...
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+      return NaN;
+    }
+    // If the value is negative...
+    if (value < 0) {
+      return -decimalAdjust(type, -value, exp);
+    }
+    // Shift
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? +value[1] - exp : -exp)));
+    // Shift back
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? +value[1] + exp : exp));
+  }
+
+  // Decimal round
+  if (!Math.round10) {
+    Math.round10 = function (value, exp) {
+      return decimalAdjust('round', value, exp);
+    };
+  }
+  // Decimal floor
+  if (!Math.floor10) {
+    Math.floor10 = function (value, exp) {
+      return decimalAdjust('floor', value, exp);
+    };
+  }
+  // Decimal ceil
+  if (!Math.ceil10) {
+    Math.ceil10 = function (value, exp) {
+      return decimalAdjust('ceil', value, exp);
+    };
+  }
+})();
+
+/***/ }),
+
 /***/ 2:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/index.js ***!
@@ -10117,51 +10226,12 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 427)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 424)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
-
-/***/ }),
-
-/***/ 200:
-/*!***************************************************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/SeriesPropTypes.js ***!
-  \***************************************************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _propTypes = __webpack_require__(/*! prop-types */ 2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-var SeriesPropTypes = _propTypes2.default.arrayOf(_propTypes2.default.shape({
-  name: _propTypes2.default.string.isRequired,
-  data: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-    name: _propTypes2.default.string.isRequired,
-    x: _propTypes2.default.number.isRequired,
-    y: _propTypes2.default.number.isRequired,
-    expressionLevel: _propTypes2.default.number.isRequired,
-    color: _propTypes2.default.string
-  })).isRequired,
-  color: _propTypes2.default.string
-}));
-
-exports.default = SeriesPropTypes;
 
 /***/ }),
 
@@ -10376,7 +10446,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 424:
+/***/ 421:
 /*!****************************************************!*\
   !*** multi ./bundles/experiment-page/src/index.js ***!
   \****************************************************/
@@ -10384,12 +10454,12 @@ module.exports = warning;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/experiment-page/src/index.js */425);
+module.exports = __webpack_require__(/*! ./bundles/experiment-page/src/index.js */422);
 
 
 /***/ }),
 
-/***/ 425:
+/***/ 422:
 /*!**********************************************!*\
   !*** ./bundles/experiment-page/src/index.js ***!
   \**********************************************/
@@ -10413,7 +10483,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 18);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _ExperimentPageRouter = __webpack_require__(/*! ./ExperimentPageRouter */ 426);
+var _ExperimentPageRouter = __webpack_require__(/*! ./ExperimentPageRouter */ 423);
 
 var _ExperimentPageRouter2 = _interopRequireDefault(_ExperimentPageRouter);
 
@@ -10434,7 +10504,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 426:
+/***/ 423:
 /*!*************************************************************!*\
   !*** ./bundles/experiment-page/src/ExperimentPageRouter.js ***!
   \*************************************************************/
@@ -10459,13 +10529,13 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ 430);
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ 427);
 
 var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _TSnePlotViewRoute = __webpack_require__(/*! ./TSnePlotViewRoute */ 457);
+var _TSnePlotViewRoute = __webpack_require__(/*! ./TSnePlotViewRoute */ 454);
 
 var _TSnePlotViewRoute2 = _interopRequireDefault(_TSnePlotViewRoute);
 
@@ -10601,7 +10671,7 @@ exports.default = ExperimentPageRouter;
 
 /***/ }),
 
-/***/ 427:
+/***/ 424:
 /*!************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \************************************************************************************/
@@ -10621,13 +10691,13 @@ exports.default = ExperimentPageRouter;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 181);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 182);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 183);
-var assign = __webpack_require__(/*! object-assign */ 428);
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 179);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 180);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 181);
+var assign = __webpack_require__(/*! object-assign */ 425);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 184);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 429);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 182);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 426);
 
 module.exports = function (isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -11131,7 +11201,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 428:
+/***/ 425:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/object-assign/index.js ***!
   \*********************************************************************/
@@ -11233,7 +11303,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 429:
+/***/ 426:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/checkPropTypes.js ***!
   \***************************************************************************/
@@ -11254,9 +11324,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 182);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 183);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 184);
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 180);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 181);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 182);
   var loggedTypeFailures = {};
 }
 
@@ -11306,107 +11376,7 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 43:
-/*!**************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/history/es/LocationUtils.js ***!
-  \**************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.locationsAreEqual = exports.createLocation = undefined;
-
-var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 185);
-
-var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
-
-var _valueEqual = __webpack_require__(/*! value-equal */ 186);
-
-var _valueEqual2 = _interopRequireDefault(_valueEqual);
-
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
-var createLocation = exports.createLocation = function createLocation(path, state, key, currentLocation) {
-  var location = void 0;
-  if (typeof path === 'string') {
-    // Two-arg form: push(path, state)
-    location = (0, _PathUtils.parsePath)(path);
-    location.state = state;
-  } else {
-    // One-arg form: push(location)
-    location = _extends({}, path);
-
-    if (location.pathname === undefined) location.pathname = '';
-
-    if (location.search) {
-      if (location.search.charAt(0) !== '?') location.search = '?' + location.search;
-    } else {
-      location.search = '';
-    }
-
-    if (location.hash) {
-      if (location.hash.charAt(0) !== '#') location.hash = '#' + location.hash;
-    } else {
-      location.hash = '';
-    }
-
-    if (state !== undefined && location.state === undefined) location.state = state;
-  }
-
-  try {
-    location.pathname = decodeURI(location.pathname);
-  } catch (e) {
-    if (e instanceof URIError) {
-      throw new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is likely caused by an invalid percent-encoding.');
-    } else {
-      throw e;
-    }
-  }
-
-  if (key) location.key = key;
-
-  if (currentLocation) {
-    // Resolve incomplete/relative pathname relative to current location.
-    if (!location.pathname) {
-      location.pathname = currentLocation.pathname;
-    } else if (location.pathname.charAt(0) !== '/') {
-      location.pathname = (0, _resolvePathname2.default)(location.pathname, currentLocation.pathname);
-    }
-  } else {
-    // When there is no prior location and pathname is empty, set it to /
-    if (!location.pathname) {
-      location.pathname = '/';
-    }
-  }
-
-  return location;
-};
-
-var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
-  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
-};
-
-/***/ }),
-
-/***/ 430:
+/***/ 427:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/index.js ***!
   \***************************************************************************/
@@ -11422,35 +11392,35 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.withRouter = exports.matchPath = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.Redirect = exports.Prompt = exports.NavLink = exports.MemoryRouter = exports.Link = exports.HashRouter = exports.BrowserRouter = undefined;
 
-var _BrowserRouter2 = __webpack_require__(/*! ./BrowserRouter */ 431);
+var _BrowserRouter2 = __webpack_require__(/*! ./BrowserRouter */ 428);
 
 var _BrowserRouter3 = _interopRequireDefault(_BrowserRouter2);
 
-var _HashRouter2 = __webpack_require__(/*! ./HashRouter */ 433);
+var _HashRouter2 = __webpack_require__(/*! ./HashRouter */ 430);
 
 var _HashRouter3 = _interopRequireDefault(_HashRouter2);
 
-var _Link2 = __webpack_require__(/*! ./Link */ 188);
+var _Link2 = __webpack_require__(/*! ./Link */ 186);
 
 var _Link3 = _interopRequireDefault(_Link2);
 
-var _MemoryRouter2 = __webpack_require__(/*! ./MemoryRouter */ 435);
+var _MemoryRouter2 = __webpack_require__(/*! ./MemoryRouter */ 432);
 
 var _MemoryRouter3 = _interopRequireDefault(_MemoryRouter2);
 
-var _NavLink2 = __webpack_require__(/*! ./NavLink */ 438);
+var _NavLink2 = __webpack_require__(/*! ./NavLink */ 435);
 
 var _NavLink3 = _interopRequireDefault(_NavLink2);
 
-var _Prompt2 = __webpack_require__(/*! ./Prompt */ 441);
+var _Prompt2 = __webpack_require__(/*! ./Prompt */ 438);
 
 var _Prompt3 = _interopRequireDefault(_Prompt2);
 
-var _Redirect2 = __webpack_require__(/*! ./Redirect */ 443);
+var _Redirect2 = __webpack_require__(/*! ./Redirect */ 440);
 
 var _Redirect3 = _interopRequireDefault(_Redirect2);
 
-var _Route2 = __webpack_require__(/*! ./Route */ 189);
+var _Route2 = __webpack_require__(/*! ./Route */ 187);
 
 var _Route3 = _interopRequireDefault(_Route2);
 
@@ -11458,19 +11428,19 @@ var _Router2 = __webpack_require__(/*! ./Router */ 83);
 
 var _Router3 = _interopRequireDefault(_Router2);
 
-var _StaticRouter2 = __webpack_require__(/*! ./StaticRouter */ 449);
+var _StaticRouter2 = __webpack_require__(/*! ./StaticRouter */ 446);
 
 var _StaticRouter3 = _interopRequireDefault(_StaticRouter2);
 
-var _Switch2 = __webpack_require__(/*! ./Switch */ 451);
+var _Switch2 = __webpack_require__(/*! ./Switch */ 448);
 
 var _Switch3 = _interopRequireDefault(_Switch2);
 
-var _matchPath2 = __webpack_require__(/*! ./matchPath */ 453);
+var _matchPath2 = __webpack_require__(/*! ./matchPath */ 450);
 
 var _matchPath3 = _interopRequireDefault(_matchPath2);
 
-var _withRouter2 = __webpack_require__(/*! ./withRouter */ 454);
+var _withRouter2 = __webpack_require__(/*! ./withRouter */ 451);
 
 var _withRouter3 = _interopRequireDefault(_withRouter2);
 
@@ -11492,7 +11462,7 @@ exports.withRouter = _withRouter3.default;
 
 /***/ }),
 
-/***/ 431:
+/***/ 428:
 /*!***********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/BrowserRouter.js ***!
   \***********************************************************************************/
@@ -11521,7 +11491,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _createBrowserHistory = __webpack_require__(/*! history/createBrowserHistory */ 432);
+var _createBrowserHistory = __webpack_require__(/*! history/createBrowserHistory */ 429);
 
 var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 
@@ -11591,7 +11561,7 @@ exports.default = BrowserRouter;
 
 /***/ }),
 
-/***/ 432:
+/***/ 429:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/createBrowserHistory.js ***!
   \******************************************************************************/
@@ -11638,7 +11608,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 187);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 185);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -11923,7 +11893,107 @@ exports.default = createBrowserHistory;
 
 /***/ }),
 
-/***/ 433:
+/***/ 43:
+/*!**************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/history/es/LocationUtils.js ***!
+  \**************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.locationsAreEqual = exports.createLocation = undefined;
+
+var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 183);
+
+var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
+
+var _valueEqual = __webpack_require__(/*! value-equal */ 184);
+
+var _valueEqual2 = _interopRequireDefault(_valueEqual);
+
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+var createLocation = exports.createLocation = function createLocation(path, state, key, currentLocation) {
+  var location = void 0;
+  if (typeof path === 'string') {
+    // Two-arg form: push(path, state)
+    location = (0, _PathUtils.parsePath)(path);
+    location.state = state;
+  } else {
+    // One-arg form: push(location)
+    location = _extends({}, path);
+
+    if (location.pathname === undefined) location.pathname = '';
+
+    if (location.search) {
+      if (location.search.charAt(0) !== '?') location.search = '?' + location.search;
+    } else {
+      location.search = '';
+    }
+
+    if (location.hash) {
+      if (location.hash.charAt(0) !== '#') location.hash = '#' + location.hash;
+    } else {
+      location.hash = '';
+    }
+
+    if (state !== undefined && location.state === undefined) location.state = state;
+  }
+
+  try {
+    location.pathname = decodeURI(location.pathname);
+  } catch (e) {
+    if (e instanceof URIError) {
+      throw new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is likely caused by an invalid percent-encoding.');
+    } else {
+      throw e;
+    }
+  }
+
+  if (key) location.key = key;
+
+  if (currentLocation) {
+    // Resolve incomplete/relative pathname relative to current location.
+    if (!location.pathname) {
+      location.pathname = currentLocation.pathname;
+    } else if (location.pathname.charAt(0) !== '/') {
+      location.pathname = (0, _resolvePathname2.default)(location.pathname, currentLocation.pathname);
+    }
+  } else {
+    // When there is no prior location and pathname is empty, set it to /
+    if (!location.pathname) {
+      location.pathname = '/';
+    }
+  }
+
+  return location;
+};
+
+var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
+  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
+};
+
+/***/ }),
+
+/***/ 430:
 /*!********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/HashRouter.js ***!
   \********************************************************************************/
@@ -11952,7 +12022,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _createHashHistory = __webpack_require__(/*! history/createHashHistory */ 434);
+var _createHashHistory = __webpack_require__(/*! history/createHashHistory */ 431);
 
 var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
 
@@ -12021,7 +12091,7 @@ exports.default = HashRouter;
 
 /***/ }),
 
-/***/ 434:
+/***/ 431:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/createHashHistory.js ***!
   \***************************************************************************/
@@ -12060,7 +12130,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 187);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 185);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -12366,7 +12436,7 @@ exports.default = createHashHistory;
 
 /***/ }),
 
-/***/ 435:
+/***/ 432:
 /*!**********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/MemoryRouter.js ***!
   \**********************************************************************************/
@@ -12381,7 +12451,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _MemoryRouter = __webpack_require__(/*! react-router/es/MemoryRouter */ 436);
+var _MemoryRouter = __webpack_require__(/*! react-router/es/MemoryRouter */ 433);
 
 var _MemoryRouter2 = _interopRequireDefault(_MemoryRouter);
 
@@ -12391,7 +12461,7 @@ exports.default = _MemoryRouter2.default; // Written in this round about way for
 
 /***/ }),
 
-/***/ 436:
+/***/ 433:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/MemoryRouter.js ***!
   \******************************************************************************/
@@ -12420,7 +12490,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _createMemoryHistory = __webpack_require__(/*! history/createMemoryHistory */ 437);
+var _createMemoryHistory = __webpack_require__(/*! history/createMemoryHistory */ 434);
 
 var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
 
@@ -12490,7 +12560,7 @@ exports.default = MemoryRouter;
 
 /***/ }),
 
-/***/ 437:
+/***/ 434:
 /*!*****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/createMemoryHistory.js ***!
   \*****************************************************************************/
@@ -12687,7 +12757,7 @@ exports.default = createMemoryHistory;
 
 /***/ }),
 
-/***/ 438:
+/***/ 435:
 /*!*****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/NavLink.js ***!
   \*****************************************************************************/
@@ -12712,11 +12782,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Route = __webpack_require__(/*! ./Route */ 189);
+var _Route = __webpack_require__(/*! ./Route */ 187);
 
 var _Route2 = _interopRequireDefault(_Route);
 
-var _Link = __webpack_require__(/*! ./Link */ 188);
+var _Link = __webpack_require__(/*! ./Link */ 186);
 
 var _Link2 = _interopRequireDefault(_Link);
 
@@ -12805,7 +12875,7 @@ exports.default = NavLink;
 
 /***/ }),
 
-/***/ 439:
+/***/ 436:
 /*!**********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/path-to-regexp/index.js ***!
   \**********************************************************************/
@@ -12818,7 +12888,7 @@ exports.default = NavLink;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var isarray = __webpack_require__(/*! isarray */ 440);
+var isarray = __webpack_require__(/*! isarray */ 437);
 
 /**
  * Expose `pathToRegexp`.
@@ -13246,7 +13316,7 @@ function pathToRegexp(path, keys, options) {
 
 /***/ }),
 
-/***/ 440:
+/***/ 437:
 /*!***************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/isarray/index.js ***!
   \***************************************************************/
@@ -13263,7 +13333,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 441:
+/***/ 438:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Prompt.js ***!
   \****************************************************************************/
@@ -13278,7 +13348,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Prompt = __webpack_require__(/*! react-router/es/Prompt */ 442);
+var _Prompt = __webpack_require__(/*! react-router/es/Prompt */ 439);
 
 var _Prompt2 = _interopRequireDefault(_Prompt);
 
@@ -13288,7 +13358,7 @@ exports.default = _Prompt2.default; // Written in this round about way for babel
 
 /***/ }),
 
-/***/ 442:
+/***/ 439:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Prompt.js ***!
   \************************************************************************/
@@ -13408,7 +13478,7 @@ exports.default = Prompt;
 
 /***/ }),
 
-/***/ 443:
+/***/ 440:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Redirect.js ***!
   \******************************************************************************/
@@ -13423,7 +13493,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Redirect = __webpack_require__(/*! react-router/es/Redirect */ 444);
+var _Redirect = __webpack_require__(/*! react-router/es/Redirect */ 441);
 
 var _Redirect2 = _interopRequireDefault(_Redirect);
 
@@ -13433,7 +13503,7 @@ exports.default = _Redirect2.default; // Written in this round about way for bab
 
 /***/ }),
 
-/***/ 444:
+/***/ 441:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Redirect.js ***!
   \**************************************************************************/
@@ -13466,7 +13536,7 @@ var _invariant = __webpack_require__(/*! invariant */ 8);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _history = __webpack_require__(/*! history */ 445);
+var _history = __webpack_require__(/*! history */ 442);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13570,7 +13640,7 @@ exports.default = Redirect;
 
 /***/ }),
 
-/***/ 445:
+/***/ 442:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/index.js ***!
   \******************************************************************/
@@ -13616,15 +13686,15 @@ Object.defineProperty(exports, 'createPath', {
   }
 });
 
-var _createBrowserHistory2 = __webpack_require__(/*! ./createBrowserHistory */ 446);
+var _createBrowserHistory2 = __webpack_require__(/*! ./createBrowserHistory */ 443);
 
 var _createBrowserHistory3 = _interopRequireDefault(_createBrowserHistory2);
 
-var _createHashHistory2 = __webpack_require__(/*! ./createHashHistory */ 447);
+var _createHashHistory2 = __webpack_require__(/*! ./createHashHistory */ 444);
 
 var _createHashHistory3 = _interopRequireDefault(_createHashHistory2);
 
-var _createMemoryHistory2 = __webpack_require__(/*! ./createMemoryHistory */ 448);
+var _createMemoryHistory2 = __webpack_require__(/*! ./createMemoryHistory */ 445);
 
 var _createMemoryHistory3 = _interopRequireDefault(_createMemoryHistory2);
 
@@ -13636,7 +13706,7 @@ exports.createMemoryHistory = _createMemoryHistory3.default;
 
 /***/ }),
 
-/***/ 446:
+/***/ 443:
 /*!*********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/createBrowserHistory.js ***!
   \*********************************************************************************/
@@ -13669,7 +13739,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 191);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 189);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13968,7 +14038,7 @@ exports.default = createBrowserHistory;
 
 /***/ }),
 
-/***/ 447:
+/***/ 444:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/createHashHistory.js ***!
   \******************************************************************************/
@@ -13999,7 +14069,7 @@ var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 191);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 189);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14313,7 +14383,7 @@ exports.default = createHashHistory;
 
 /***/ }),
 
-/***/ 448:
+/***/ 445:
 /*!********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/createMemoryHistory.js ***!
   \********************************************************************************/
@@ -14510,7 +14580,7 @@ exports.default = createMemoryHistory;
 
 /***/ }),
 
-/***/ 449:
+/***/ 446:
 /*!**********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/StaticRouter.js ***!
   \**********************************************************************************/
@@ -14525,7 +14595,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _StaticRouter = __webpack_require__(/*! react-router/es/StaticRouter */ 450);
+var _StaticRouter = __webpack_require__(/*! react-router/es/StaticRouter */ 447);
 
 var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 
@@ -14535,7 +14605,7 @@ exports.default = _StaticRouter2.default; // Written in this round about way for
 
 /***/ }),
 
-/***/ 450:
+/***/ 447:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/StaticRouter.js ***!
   \******************************************************************************/
@@ -14760,7 +14830,7 @@ exports.default = StaticRouter;
 
 /***/ }),
 
-/***/ 451:
+/***/ 448:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Switch.js ***!
   \****************************************************************************/
@@ -14775,7 +14845,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Switch = __webpack_require__(/*! react-router/es/Switch */ 452);
+var _Switch = __webpack_require__(/*! react-router/es/Switch */ 449);
 
 var _Switch2 = _interopRequireDefault(_Switch);
 
@@ -14785,7 +14855,7 @@ exports.default = _Switch2.default; // Written in this round about way for babel
 
 /***/ }),
 
-/***/ 452:
+/***/ 449:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Switch.js ***!
   \************************************************************************/
@@ -14911,7 +14981,7 @@ exports.default = Switch;
 
 /***/ }),
 
-/***/ 453:
+/***/ 450:
 /*!*******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/matchPath.js ***!
   \*******************************************************************************/
@@ -14936,7 +15006,7 @@ exports.default = _matchPath2.default; // Written in this round about way for ba
 
 /***/ }),
 
-/***/ 454:
+/***/ 451:
 /*!********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/withRouter.js ***!
   \********************************************************************************/
@@ -14951,7 +15021,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _withRouter = __webpack_require__(/*! react-router/es/withRouter */ 455);
+var _withRouter = __webpack_require__(/*! react-router/es/withRouter */ 452);
 
 var _withRouter2 = _interopRequireDefault(_withRouter);
 
@@ -14961,7 +15031,7 @@ exports.default = _withRouter2.default; // Written in this round about way for b
 
 /***/ }),
 
-/***/ 455:
+/***/ 452:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/withRouter.js ***!
   \****************************************************************************/
@@ -14984,11 +15054,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 456);
+var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 453);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _Route = __webpack_require__(/*! ./Route */ 190);
+var _Route = __webpack_require__(/*! ./Route */ 188);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -15036,7 +15106,7 @@ exports.default = withRouter;
 
 /***/ }),
 
-/***/ 456:
+/***/ 453:
 /*!*******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/hoist-non-react-statics/index.js ***!
   \*******************************************************************************/
@@ -15115,7 +15185,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 /***/ }),
 
-/***/ 457:
+/***/ 454:
 /*!**********************************************************!*\
   !*** ./bundles/experiment-page/src/TSnePlotViewRoute.js ***!
   \**********************************************************/
@@ -15142,7 +15212,7 @@ var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _expressionAtlasExperimentPageTsnePlot = __webpack_require__(/*! expression-atlas-experiment-page-tsne-plot */ 458);
+var _expressionAtlasExperimentPageTsnePlot = __webpack_require__(/*! expression-atlas-experiment-page-tsne-plot */ 455);
 
 var _expressionAtlasExperimentPageTsnePlot2 = _interopRequireDefault(_expressionAtlasExperimentPageTsnePlot);
 
@@ -15205,7 +15275,7 @@ exports.default = TSnePlotViewRoute;
 
 /***/ }),
 
-/***/ 458:
+/***/ 455:
 /*!******************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/index.js ***!
   \******************************************************************************************************/
@@ -15220,7 +15290,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _TSnePlotView = __webpack_require__(/*! ./TSnePlotView */ 459);
+var _TSnePlotView = __webpack_require__(/*! ./TSnePlotView */ 456);
 
 var _TSnePlotView2 = _interopRequireDefault(_TSnePlotView);
 
@@ -15232,7 +15302,7 @@ exports.default = _TSnePlotView2.default;
 
 /***/ }),
 
-/***/ 459:
+/***/ 456:
 /*!*************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/TSnePlotView.js ***!
   \*************************************************************************************************************/
@@ -15271,11 +15341,11 @@ var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _ClusterTSnePlot = __webpack_require__(/*! ./ClusterTSnePlot */ 460);
+var _ClusterTSnePlot = __webpack_require__(/*! ./ClusterTSnePlot */ 457);
 
 var _ClusterTSnePlot2 = _interopRequireDefault(_ClusterTSnePlot);
 
-var _GeneExpressionTSnePlot = __webpack_require__(/*! ./GeneExpressionTSnePlot */ 473);
+var _GeneExpressionTSnePlot = __webpack_require__(/*! ./GeneExpressionTSnePlot */ 470);
 
 var _GeneExpressionTSnePlot2 = _interopRequireDefault(_GeneExpressionTSnePlot);
 
@@ -15523,7 +15593,7 @@ exports.default = ExperimentPageView;
 
 /***/ }),
 
-/***/ 460:
+/***/ 457:
 /*!****************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/ClusterTSnePlot.js ***!
   \****************************************************************************************************************/
@@ -15557,11 +15627,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _color = __webpack_require__(/*! color */ 195);
+var _color = __webpack_require__(/*! color */ 193);
 
 var _color2 = _interopRequireDefault(_color);
 
-var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 198);
+var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 196);
 
 var _PlotLoader2 = _interopRequireDefault(_PlotLoader);
 
@@ -15674,7 +15744,7 @@ exports._colourizeClusters = _colourizeClusters;
 
 /***/ }),
 
-/***/ 461:
+/***/ 458:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-string/index.js ***!
   \********************************************************************/
@@ -15686,8 +15756,8 @@ exports._colourizeClusters = _colourizeClusters;
 
 
 /* MIT license */
-var colorNames = __webpack_require__(/*! color-name */ 196);
-var swizzle = __webpack_require__(/*! simple-swizzle */ 462);
+var colorNames = __webpack_require__(/*! color-name */ 194);
+var swizzle = __webpack_require__(/*! simple-swizzle */ 459);
 
 var reverseNames = {};
 
@@ -15907,7 +15977,7 @@ function hexDouble(num) {
 
 /***/ }),
 
-/***/ 462:
+/***/ 459:
 /*!**********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/simple-swizzle/index.js ***!
   \**********************************************************************/
@@ -15918,7 +15988,7 @@ function hexDouble(num) {
 "use strict";
 
 
-var isArrayish = __webpack_require__(/*! is-arrayish */ 463);
+var isArrayish = __webpack_require__(/*! is-arrayish */ 460);
 
 var concat = Array.prototype.concat;
 var slice = Array.prototype.slice;
@@ -15948,7 +16018,7 @@ swizzle.wrap = function (fn) {
 
 /***/ }),
 
-/***/ 463:
+/***/ 460:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/is-arrayish/index.js ***!
   \*******************************************************************/
@@ -15969,7 +16039,7 @@ module.exports = function isArrayish(obj) {
 
 /***/ }),
 
-/***/ 464:
+/***/ 461:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/index.js ***!
   \*********************************************************************/
@@ -15982,8 +16052,8 @@ module.exports = function isArrayish(obj) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var conversions = __webpack_require__(/*! ./conversions */ 197);
-var route = __webpack_require__(/*! ./route */ 465);
+var conversions = __webpack_require__(/*! ./conversions */ 195);
+var route = __webpack_require__(/*! ./route */ 462);
 
 var convert = {};
 
@@ -16063,7 +16133,7 @@ module.exports = convert;
 
 /***/ }),
 
-/***/ 465:
+/***/ 462:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/route.js ***!
   \*********************************************************************/
@@ -16074,7 +16144,7 @@ module.exports = convert;
 "use strict";
 
 
-var conversions = __webpack_require__(/*! ./conversions */ 197);
+var conversions = __webpack_require__(/*! ./conversions */ 195);
 
 /*
 	this function routes a model to all other models.
@@ -16174,7 +16244,7 @@ module.exports = function (fromModel) {
 
 /***/ }),
 
-/***/ 466:
+/***/ 463:
 /*!**************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/LoadingOverlay.js ***!
   \**************************************************************************************************************************/
@@ -16213,7 +16283,7 @@ var LoadingOverlay = function LoadingOverlay(props) {
       background: 'rgba(255,255,255,0.8)',
       alignItems: 'center',
       justifyContent: 'center'
-    } }, _react2.default.createElement('div', { style: { textAlign: 'center' } }, _react2.default.createElement('p', null, 'Loading, please wait...'), _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 467), props.resourcesUrl).toString() }), _react2.default.createElement('p', null, _react2.default.createElement('small', null, 'Powered by ', _react2.default.createElement('a', { href: 'https://loading.io' }, 'loading.io')))));
+    } }, _react2.default.createElement('div', { style: { textAlign: 'center' } }, _react2.default.createElement('p', null, 'Loading, please wait...'), _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 464), props.resourcesUrl).toString() }), _react2.default.createElement('p', null, _react2.default.createElement('small', null, 'Powered by ', _react2.default.createElement('a', { href: 'https://loading.io' }, 'loading.io')))));
 };
 
 LoadingOverlay.propTypes = {
@@ -16229,7 +16299,7 @@ exports.default = LoadingOverlay;
 
 /***/ }),
 
-/***/ 467:
+/***/ 464:
 /*!*****************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/svg/flask-loader.svg ***!
   \*****************************************************************************************************************************/
@@ -16241,7 +16311,7 @@ module.exports = __webpack_require__.p + "bbe30b27d9320f575e5452cf2b930c40.svg";
 
 /***/ }),
 
-/***/ 468:
+/***/ 465:
 /*!***********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/ScatterPlot.js ***!
   \***********************************************************************************************************************/
@@ -16264,23 +16334,23 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 469);
+var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 466);
 
 var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
 
-var _exporting = __webpack_require__(/*! highcharts/modules/exporting */ 470);
+var _exporting = __webpack_require__(/*! highcharts/modules/exporting */ 467);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _boost = __webpack_require__(/*! highcharts/modules/boost */ 471);
+var _boost = __webpack_require__(/*! highcharts/modules/boost */ 468);
 
 var _boost2 = _interopRequireDefault(_boost);
 
-var _deepmerge = __webpack_require__(/*! deepmerge */ 472);
+var _deepmerge = __webpack_require__(/*! deepmerge */ 469);
 
 var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
-var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 200);
+var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 198);
 
 var _SeriesPropTypes2 = _interopRequireDefault(_SeriesPropTypes);
 
@@ -16387,10 +16457,10 @@ exports.default = ScatterPlot;
 
 /***/ }),
 
-/***/ 469:
-/*!***************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/react-highcharts/dist/ReactHighcharts.js ***!
-  \***************************************************************************************/
+/***/ 466:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/node_modules/react-highcharts/dist/ReactHighcharts.js ***!
+  \***********************************************************************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -16401,11 +16471,11 @@ exports.default = ScatterPlot;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function webpackUniversalModuleDefinition(root, factory) {
-  if (( false ? 'undefined' : _typeof(exports)) === 'object' && ( false ? 'undefined' : _typeof(module)) === 'object') module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 199));else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 199)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+  if (( false ? 'undefined' : _typeof(exports)) === 'object' && ( false ? 'undefined' : _typeof(module)) === 'object') module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 197));else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 197)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') exports["ReactHighcharts"] = factory(require("react"), require("highcharts"));else root["ReactHighcharts"] = factory(root["React"], root["Highcharts"]);
-})(undefined, function (__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_17__) {
+})(undefined, function (__WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_17__) {
   return (/******/function (modules) {
       // webpackBootstrap
       /******/ // The module cache
@@ -16689,11 +16759,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       (function (process) {
         /**
         * Copyright (c) 2013-present, Facebook, Inc.
-        * All rights reserved.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
@@ -16752,11 +16820,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /**
        * Copyright (c) 2013-present, Facebook, Inc.
-       * All rights reserved.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        *
        * 
        */
@@ -16796,12 +16862,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2014-2015, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2014-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
@@ -16817,45 +16881,43 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var warning = emptyFunction;
 
         if (process.env.NODE_ENV !== 'production') {
-          (function () {
-            var printWarning = function printWarning(format) {
-              for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                args[_key - 1] = arguments[_key];
+          var printWarning = function printWarning(format) {
+            for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              args[_key - 1] = arguments[_key];
+            }
+
+            var argIndex = 0;
+            var message = 'Warning: ' + format.replace(/%s/g, function () {
+              return args[argIndex++];
+            });
+            if (typeof console !== 'undefined') {
+              console.error(message);
+            }
+            try {
+              // --- Welcome to debugging React ---
+              // This error was thrown as a convenience so that you can use this stack
+              // to find the callsite that caused this warning to fire.
+              throw new Error(message);
+            } catch (x) {}
+          };
+
+          warning = function warning(condition, format) {
+            if (format === undefined) {
+              throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+            }
+
+            if (format.indexOf('Failed Composite propType: ') === 0) {
+              return; // Ignore CompositeComponent proptype check.
+            }
+
+            if (!condition) {
+              for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+                args[_key2 - 2] = arguments[_key2];
               }
 
-              var argIndex = 0;
-              var message = 'Warning: ' + format.replace(/%s/g, function () {
-                return args[argIndex++];
-              });
-              if (typeof console !== 'undefined') {
-                console.error(message);
-              }
-              try {
-                // --- Welcome to debugging React ---
-                // This error was thrown as a convenience so that you can use this stack
-                // to find the callsite that caused this warning to fire.
-                throw new Error(message);
-              } catch (x) {}
-            };
-
-            warning = function warning(condition, format) {
-              if (format === undefined) {
-                throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-              }
-
-              if (format.indexOf('Failed Composite propType: ') === 0) {
-                return; // Ignore CompositeComponent proptype check.
-              }
-
-              if (!condition) {
-                for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-                  args[_key2 - 2] = arguments[_key2];
-                }
-
-                printWarning.apply(undefined, [format].concat(args));
-              }
-            };
-          })();
+              printWarning.apply(undefined, [format].concat(args));
+            }
+          };
         }
 
         module.exports = warning;
@@ -16865,23 +16927,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /***/
     },
     /* 4 */
-    /***/function (module, exports) {
-
-      module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
-
-      /***/
-    },
-    /* 5 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
       /**
-       * Copyright 2013-present, Facebook, Inc.
-       * All rights reserved.
+       * Copyright (c) 2013-present, Facebook, Inc.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        */
 
       var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
@@ -16890,25 +16943,126 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /***/
     },
+    /* 5 */
+    /***/function (module, exports) {
+
+      module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+
+      /***/
+    },
     /* 6 */
+    /***/function (module, exports, __webpack_require__) {
+
+      "use strict";
+      /*
+      object-assign
+      (c) Sindre Sorhus
+      @license MIT
+      */
+
+      /* eslint-disable no-unused-vars */
+
+      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+      var hasOwnProperty = Object.prototype.hasOwnProperty;
+      var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+      function toObject(val) {
+        if (val === null || val === undefined) {
+          throw new TypeError('Object.assign cannot be called with null or undefined');
+        }
+
+        return Object(val);
+      }
+
+      function shouldUseNative() {
+        try {
+          if (!Object.assign) {
+            return false;
+          }
+
+          // Detect buggy property enumeration order in older V8 versions.
+
+          // https://bugs.chromium.org/p/v8/issues/detail?id=4118
+          var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
+          test1[5] = 'de';
+          if (Object.getOwnPropertyNames(test1)[0] === '5') {
+            return false;
+          }
+
+          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+          var test2 = {};
+          for (var i = 0; i < 10; i++) {
+            test2['_' + String.fromCharCode(i)] = i;
+          }
+          var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+            return test2[n];
+          });
+          if (order2.join('') !== '0123456789') {
+            return false;
+          }
+
+          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+          var test3 = {};
+          'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+            test3[letter] = letter;
+          });
+          if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+            return false;
+          }
+
+          return true;
+        } catch (err) {
+          // We don't expect any of the above to throw, but better to be safe.
+          return false;
+        }
+      }
+
+      module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+        var from;
+        var to = toObject(target);
+        var symbols;
+
+        for (var s = 1; s < arguments.length; s++) {
+          from = Object(arguments[s]);
+
+          for (var key in from) {
+            if (hasOwnProperty.call(from, key)) {
+              to[key] = from[key];
+            }
+          }
+
+          if (getOwnPropertySymbols) {
+            symbols = getOwnPropertySymbols(from);
+            for (var i = 0; i < symbols.length; i++) {
+              if (propIsEnumerable.call(from, symbols[i])) {
+                to[symbols[i]] = from[symbols[i]];
+              }
+            }
+          }
+        }
+
+        return to;
+      };
+
+      /***/
+    },
+    /* 7 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
-        var _assign = __webpack_require__(9);
+        var _assign = __webpack_require__(6);
 
-        var emptyObject = __webpack_require__(8);
+        var emptyObject = __webpack_require__(9);
         var _invariant = __webpack_require__(1);
 
         if (process.env.NODE_ENV !== 'production') {
@@ -16964,7 +17118,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
            * @internal
            */
           var ReactClassInterface = {
-
             /**
              * An array of Mixin objects to include when defining your component.
              *
@@ -17055,7 +17208,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
              *   }
              *
              * @return {ReactComponent}
-             * @nosideeffects
              * @required
              */
             render: 'DEFINE_ONCE',
@@ -17183,7 +17335,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
              * @overridable
              */
             updateComponent: 'OVERRIDE_BASE'
-
           };
 
           /**
@@ -17238,14 +17389,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             statics: function statics(Constructor, _statics) {
               mixStaticSpecIntoComponent(Constructor, _statics);
             },
-            autobind: function autobind() {} };
+            autobind: function autobind() {}
+          };
 
           function validateTypeDef(Constructor, typeDef, location) {
             for (var propName in typeDef) {
               if (typeDef.hasOwnProperty(propName)) {
                 // use a warning instead of an _invariant so components
                 // don't show up in prod but only in __DEV__
-                process.env.NODE_ENV !== 'production' ? warning(typeof typeDef[propName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', Constructor.displayName || 'ReactClass', ReactPropTypeLocationNames[location], propName) : void 0;
+                if (process.env.NODE_ENV !== 'production') {
+                  warning(typeof typeDef[propName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', Constructor.displayName || 'ReactClass', ReactPropTypeLocationNames[location], propName);
+                }
               }
             }
           }
@@ -17274,14 +17428,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 var typeofSpec = typeof spec === 'undefined' ? 'undefined' : _typeof(spec);
                 var isMixinValid = typeofSpec === 'object' && spec !== null;
 
-                process.env.NODE_ENV !== 'production' ? warning(isMixinValid, '%s: You\'re attempting to include a mixin that is either null ' + 'or not an object. Check the mixins included by the component, ' + 'as well as any mixins they include themselves. ' + 'Expected object but got %s.', Constructor.displayName || 'ReactClass', spec === null ? null : typeofSpec) : void 0;
+                if (process.env.NODE_ENV !== 'production') {
+                  warning(isMixinValid, "%s: You're attempting to include a mixin that is either null " + 'or not an object. Check the mixins included by the component, ' + 'as well as any mixins they include themselves. ' + 'Expected object but got %s.', Constructor.displayName || 'ReactClass', spec === null ? null : typeofSpec);
+                }
               }
 
               return;
             }
 
-            _invariant(typeof spec !== 'function', 'ReactClass: You\'re attempting to ' + 'use a component class or function as a mixin. Instead, just use a ' + 'regular object.');
-            _invariant(!isValidElement(spec), 'ReactClass: You\'re attempting to ' + 'use a component as a mixin. Instead, just use a regular object.');
+            _invariant(typeof spec !== 'function', "ReactClass: You're attempting to " + 'use a component class or function as a mixin. Instead, just use a ' + 'regular object.');
+            _invariant(!isValidElement(spec), "ReactClass: You're attempting to " + 'use a component as a mixin. Instead, just use a regular object.');
 
             var proto = Constructor.prototype;
             var autoBindPairs = proto.__reactAutoBindPairs;
@@ -17451,9 +17607,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 // ignore the value of "this" that the user is trying to use, so
                 // let's warn.
                 if (newThis !== component && newThis !== null) {
-                  process.env.NODE_ENV !== 'production' ? warning(false, 'bind(): React component methods may only be bound to the ' + 'component instance. See %s', componentName) : void 0;
+                  if (process.env.NODE_ENV !== 'production') {
+                    warning(false, 'bind(): React component methods may only be bound to the ' + 'component instance. See %s', componentName);
+                  }
                 } else if (!args.length) {
-                  process.env.NODE_ENV !== 'production' ? warning(false, 'bind(): You are binding a component method to the component. ' + 'React does this for you automatically in a high-performance ' + 'way, so you can safely remove this call. See %s', componentName) : void 0;
+                  if (process.env.NODE_ENV !== 'production') {
+                    warning(false, 'bind(): You are binding a component method to the component. ' + 'React does this for you automatically in a high-performance ' + 'way, so you can safely remove this call. See %s', componentName);
+                  }
                   return boundMethod;
                 }
                 var reboundMethod = _bind.apply(boundMethod, arguments);
@@ -17480,10 +17640,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
           }
 
-          var IsMountedMixin = {
+          var IsMountedPreMixin = {
             componentDidMount: function componentDidMount() {
               this.__isMounted = true;
-            },
+            }
+          };
+
+          var IsMountedPostMixin = {
             componentWillUnmount: function componentWillUnmount() {
               this.__isMounted = false;
             }
@@ -17494,7 +17657,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
            * therefore not already part of the modern ReactComponent.
            */
           var ReactClassMixin = {
-
             /**
              * TODO: This will be deprecated because state should always keep a consistent
              * type signature and the only use case for this, is to avoid that.
@@ -17511,7 +17673,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
              */
             isMounted: function isMounted() {
               if (process.env.NODE_ENV !== 'production') {
-                process.env.NODE_ENV !== 'production' ? warning(this.__didWarnIsMounted, '%s: isMounted is deprecated. Instead, make sure to clean up ' + 'subscriptions and pending requests in componentWillUnmount to ' + 'prevent memory leaks.', this.constructor && this.constructor.displayName || this.name || 'Component') : void 0;
+                warning(this.__didWarnIsMounted, '%s: isMounted is deprecated. Instead, make sure to clean up ' + 'subscriptions and pending requests in componentWillUnmount to ' + 'prevent memory leaks.', this.constructor && this.constructor.displayName || this.name || 'Component');
                 this.__didWarnIsMounted = true;
               }
               return !!this.__isMounted;
@@ -17538,7 +17700,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               // by mocks to assert on what gets mounted.
 
               if (process.env.NODE_ENV !== 'production') {
-                process.env.NODE_ENV !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory') : void 0;
+                warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory');
               }
 
               // Wire up auto-binding
@@ -17575,8 +17737,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
 
-            mixSpecIntoComponent(Constructor, IsMountedMixin);
+            mixSpecIntoComponent(Constructor, IsMountedPreMixin);
             mixSpecIntoComponent(Constructor, spec);
+            mixSpecIntoComponent(Constructor, IsMountedPostMixin);
 
             // Initialize the defaultProps property after all mixins have been merged.
             if (Constructor.getDefaultProps) {
@@ -17599,8 +17762,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             _invariant(Constructor.prototype.render, 'createClass(...): Class specification must implement a `render` method.');
 
             if (process.env.NODE_ENV !== 'production') {
-              process.env.NODE_ENV !== 'production' ? warning(!Constructor.prototype.componentShouldUpdate, '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', spec.displayName || 'A component') : void 0;
-              process.env.NODE_ENV !== 'production' ? warning(!Constructor.prototype.componentWillRecieveProps, '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', spec.displayName || 'A component') : void 0;
+              warning(!Constructor.prototype.componentShouldUpdate, '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', spec.displayName || 'A component');
+              warning(!Constructor.prototype.componentWillRecieveProps, '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', spec.displayName || 'A component');
             }
 
             // Reduce time spent doing lookups by setting these on the prototype.
@@ -17623,22 +17786,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /***/
     },
-    /* 7 */
+    /* 8 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
       /**
-       * Copyright 2013-present, Facebook, Inc.
-       * All rights reserved.
+       * Copyright (c) 2013-present, Facebook, Inc.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        *
        */
 
-      var React = __webpack_require__(4);
-      var factory = __webpack_require__(6);
+      var React = __webpack_require__(5);
+      var factory = __webpack_require__(7);
+
+      if (typeof React === 'undefined') {
+        throw Error('create-react-class could not find the React object. If you are using script tags, ' + 'make sure that React is being loaded before create-react-class.');
+      }
 
       // Hack to grab NoopUpdateQueue from isomorphic React
       var ReactNoopUpdateQueue = new React.Component().updater;
@@ -17647,7 +17812,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /***/
     },
-    /* 8 */
+    /* 9 */
     /***/function (module, exports, __webpack_require__) {
 
       "use strict";
@@ -17655,11 +17820,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       (function (process) {
         /**
         * Copyright (c) 2013-present, Facebook, Inc.
-        * All rights reserved.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         *
         */
 
@@ -17672,102 +17835,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         module.exports = emptyObject;
         /* WEBPACK VAR INJECTION */
       }).call(exports, __webpack_require__(0));
-
-      /***/
-    },
-    /* 9 */
-    /***/function (module, exports, __webpack_require__) {
-
-      "use strict";
-      /*
-      object-assign
-      (c) Sindre Sorhus
-      @license MIT
-      */
-
-      /* eslint-disable no-unused-vars */
-
-      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-      var hasOwnProperty = Object.prototype.hasOwnProperty;
-      var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-      function toObject(val) {
-        if (val === null || val === undefined) {
-          throw new TypeError('Object.assign cannot be called with null or undefined');
-        }
-
-        return Object(val);
-      }
-
-      function shouldUseNative() {
-        try {
-          if (!Object.assign) {
-            return false;
-          }
-
-          // Detect buggy property enumeration order in older V8 versions.
-
-          // https://bugs.chromium.org/p/v8/issues/detail?id=4118
-          var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
-          test1[5] = 'de';
-          if (Object.getOwnPropertyNames(test1)[0] === '5') {
-            return false;
-          }
-
-          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
-          var test2 = {};
-          for (var i = 0; i < 10; i++) {
-            test2['_' + String.fromCharCode(i)] = i;
-          }
-          var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-            return test2[n];
-          });
-          if (order2.join('') !== '0123456789') {
-            return false;
-          }
-
-          // https://bugs.chromium.org/p/v8/issues/detail?id=3056
-          var test3 = {};
-          'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-            test3[letter] = letter;
-          });
-          if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
-            return false;
-          }
-
-          return true;
-        } catch (err) {
-          // We don't expect any of the above to throw, but better to be safe.
-          return false;
-        }
-      }
-
-      module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-        var from;
-        var to = toObject(target);
-        var symbols;
-
-        for (var s = 1; s < arguments.length; s++) {
-          from = Object(arguments[s]);
-
-          for (var key in from) {
-            if (hasOwnProperty.call(from, key)) {
-              to[key] = from[key];
-            }
-          }
-
-          if (getOwnPropertySymbols) {
-            symbols = getOwnPropertySymbols(from);
-            for (var i = 0; i < symbols.length; i++) {
-              if (propIsEnumerable.call(from, symbols[i])) {
-                to[symbols[i]] = from[symbols[i]];
-              }
-            }
-          }
-        }
-
-        return to;
-      };
 
       /***/
     },
@@ -17788,8 +17855,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           }return target;
         };
 
-        var React = __webpack_require__(4);
-        var createReactClass = __webpack_require__(7);
+        var React = __webpack_require__(5);
+        var createReactClass = __webpack_require__(8);
         var PropTypes = __webpack_require__(14);
         var win = typeof global === 'undefined' ? window : global;
 
@@ -17805,12 +17872,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               callback: PropTypes.func,
               domProps: PropTypes.object
             },
-
-            defaultProps: {
-              callback: function callback() {},
-              domProps: {}
+            getDefaultProps: function getDefaultProps() {
+              return {
+                callback: function callback() {},
+                domProps: {}
+              };
             },
-
+            setChartRef: function setChartRef(chartRef) {
+              this.chartRef = chartRef;
+            },
             renderChart: function renderChart(config) {
               var _this = this;
 
@@ -17820,7 +17890,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               var chartConfig = config.chart;
               this.chart = new Highcharts[chartType](_extends({}, config, {
                 chart: _extends({}, chartConfig, {
-                  renderTo: this.refs.chart
+                  renderTo: this.chartRef
                 })
               }), this.props.callback);
 
@@ -17855,7 +17925,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             },
 
             render: function render() {
-              return React.createElement('div', _extends({ ref: 'chart' }, this.props.domProps));
+              return React.createElement('div', _extends({ ref: this.setChartRef }, this.props.domProps));
             }
           });
 
@@ -17877,18 +17947,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         */
 
         if (process.env.NODE_ENV !== 'production') {
           var invariant = __webpack_require__(1);
           var warning = __webpack_require__(3);
-          var ReactPropTypesSecret = __webpack_require__(5);
+          var ReactPropTypesSecret = __webpack_require__(4);
           var loggedTypeFailures = {};
         }
 
@@ -17914,7 +17982,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 try {
                   // This is intentionally an invariant that gets caught. It's the same
                   // behavior as without this statement except with a better message.
-                  invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+                  invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, _typeof(typeSpecs[typeSpecName]));
                   error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
                 } catch (ex) {
                   error = ex;
@@ -17946,27 +18014,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       "use strict";
       /**
-       * Copyright 2013-present, Facebook, Inc.
-       * All rights reserved.
+       * Copyright (c) 2013-present, Facebook, Inc.
        *
-       * This source code is licensed under the BSD-style license found in the
-       * LICENSE file in the root directory of this source tree. An additional grant
-       * of patent rights can be found in the PATENTS file in the same directory.
+       * This source code is licensed under the MIT license found in the
+       * LICENSE file in the root directory of this source tree.
        */
 
       var emptyFunction = __webpack_require__(2);
       var invariant = __webpack_require__(1);
+      var ReactPropTypesSecret = __webpack_require__(4);
 
       module.exports = function () {
-        // Important!
-        // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-        function shim() {
+        function shim(props, propName, componentName, location, propFullName, secret) {
+          if (secret === ReactPropTypesSecret) {
+            // It is still safe when called from React.
+            return;
+          }
           invariant(false, 'Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
         };
         shim.isRequired = shim;
         function getShim() {
           return shim;
         };
+        // Important!
+        // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
         var ReactPropTypes = {
           array: shim,
           bool: shim,
@@ -17984,7 +18055,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           objectOf: getShim,
           oneOf: getShim,
           oneOfType: getShim,
-          shape: getShim
+          shape: getShim,
+          exact: getShim
         };
 
         ReactPropTypes.checkPropTypes = emptyFunction;
@@ -18002,19 +18074,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /* WEBPACK VAR INJECTION */
       (function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         */
 
         var emptyFunction = __webpack_require__(2);
         var invariant = __webpack_require__(1);
         var warning = __webpack_require__(3);
+        var assign = __webpack_require__(6);
 
-        var ReactPropTypesSecret = __webpack_require__(5);
+        var ReactPropTypesSecret = __webpack_require__(4);
         var checkPropTypes = __webpack_require__(11);
 
         module.exports = function (isValidElement, throwOnDirectAccess) {
@@ -18111,7 +18182,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             objectOf: createObjectOfTypeChecker,
             oneOf: createEnumTypeChecker,
             oneOfType: createUnionTypeChecker,
-            shape: createShapeTypeChecker
+            shape: createShapeTypeChecker,
+            exact: createStrictShapeTypeChecker
           };
 
           /**
@@ -18305,6 +18377,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               return emptyFunction.thatReturnsNull;
             }
 
+            for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+              var checker = arrayOfTypeCheckers[i];
+              if (typeof checker !== 'function') {
+                warning(false, 'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' + 'received %s at index %s.', getPostfixForTypeWarning(checker), i);
+                return emptyFunction.thatReturnsNull;
+              }
+            }
+
             function validate(props, propName, componentName, location, propFullName) {
               for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
                 var checker = arrayOfTypeCheckers[i];
@@ -18347,6 +18427,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
               return null;
             }
+            return createChainableTypeChecker(validate);
+          }
+
+          function createStrictShapeTypeChecker(shapeTypes) {
+            function validate(props, propName, componentName, location, propFullName) {
+              var propValue = props[propName];
+              var propType = getPropType(propValue);
+              if (propType !== 'object') {
+                return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+              }
+              // We need to check all keys in case some are required but missing from
+              // props.
+              var allKeys = assign({}, props[propName], shapeTypes);
+              for (var key in allKeys) {
+                var checker = shapeTypes[key];
+                if (!checker) {
+                  return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' + '\nBad object: ' + JSON.stringify(props[propName], null, '  ') + '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  '));
+                }
+                var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+                if (error) {
+                  return error;
+                }
+              }
+              return null;
+            }
+
             return createChainableTypeChecker(validate);
           }
 
@@ -18437,6 +18543,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // This handles more types than `getPropType`. Only used for error messages.
           // See `createPrimitiveTypeChecker`.
           function getPreciseType(propValue) {
+            if (typeof propValue === 'undefined' || propValue === null) {
+              return '' + propValue;
+            }
             var propType = getPropType(propValue);
             if (propType === 'object') {
               if (propValue instanceof Date) {
@@ -18446,6 +18555,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
             }
             return propType;
+          }
+
+          // Returns a string that is postfixed to a warning about an invalid type.
+          // For example, "undefined" or "of type array"
+          function getPostfixForTypeWarning(value) {
+            var type = getPreciseType(value);
+            switch (type) {
+              case 'array':
+              case 'object':
+                return 'an ' + type;
+              case 'boolean':
+              case 'date':
+              case 'regexp':
+                return 'a ' + type;
+              default:
+                return type;
+            }
           }
 
           // Returns class name of the object, if any.
@@ -18472,12 +18598,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       /* WEBPACK VAR INJECTION */(function (process) {
         /**
-        * Copyright 2013-present, Facebook, Inc.
-        * All rights reserved.
+        * Copyright (c) 2013-present, Facebook, Inc.
         *
-        * This source code is licensed under the BSD-style license found in the
-        * LICENSE file in the root directory of this source tree. An additional grant
-        * of patent rights can be found in the PATENTS file in the same directory.
+        * This source code is licensed under the MIT license found in the
+        * LICENSE file in the root directory of this source tree.
         */
 
         if (process.env.NODE_ENV !== 'production') {
@@ -18554,11 +18678,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     /******/)
   );
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
-/***/ 470:
+/***/ 467:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/modules/exporting.js ***!
   \******************************************************************************/
@@ -18755,7 +18879,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 471:
+/***/ 468:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/modules/boost.js ***!
   \**************************************************************************/
@@ -19148,7 +19272,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 472:
+/***/ 469:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/deepmerge/dist/es.js ***!
   \*******************************************************************/
@@ -19252,7 +19376,7 @@ exports.default = deepmerge_1;
 
 /***/ }),
 
-/***/ 473:
+/***/ 470:
 /*!***********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/GeneExpressionTSnePlot.js ***!
   \***********************************************************************************************************************/
@@ -19286,19 +19410,23 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _color = __webpack_require__(/*! color */ 195);
+var _color = __webpack_require__(/*! color */ 193);
 
 var _color2 = _interopRequireDefault(_color);
 
-var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 198);
+var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 196);
 
 var _PlotLoader2 = _interopRequireDefault(_PlotLoader);
 
-var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 474);
+var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 471);
 
 var _expressionAtlasAutocomplete2 = _interopRequireDefault(_expressionAtlasAutocomplete);
 
-__webpack_require__(/*! ./util/MathRound */ 481);
+var _MultiStopGradient = __webpack_require__(/*! ./MultiStopGradient */ 478);
+
+var _MultiStopGradient2 = _interopRequireDefault(_MultiStopGradient);
+
+__webpack_require__(/*! ./util/MathRound */ 199);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -19306,7 +19434,34 @@ function _interopRequireDefault(obj) {
 
 var MAX_WHITE = 90;
 
-var _colourizeExpressionLevel = function _colourizeExpressionLevel(hue, highlightSeries) {
+var _colourize = function _colourize(colourRanges) {
+  var defaultColour = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'blue';
+  var alpha = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.65;
+
+  return function (val) {
+    if (isNaN(val)) {
+      return (0, _color2.default)(defaultColour).alpha(alpha).rgb().toString();
+    }
+
+    var rangeIndex = val <= 0 ? 0 : colourRanges.findIndex(function (colourRange) {
+      return colourRange.threshold >= val;
+    }) - 1;
+
+    var loColour = (0, _color2.default)(colourRanges[rangeIndex].colour);
+    var hiColour = (0, _color2.default)(colourRanges[rangeIndex + 1].colour);
+
+    var redDelta = hiColour.red() - loColour.red();
+    var greenDelta = hiColour.green() - loColour.green();
+    var blueDelta = hiColour.blue() - loColour.blue();
+    var increment = (val - colourRanges[rangeIndex].threshold) / (colourRanges[rangeIndex + 1].threshold - colourRanges[rangeIndex].threshold);
+
+    return (0, _color2.default)('rgb(' + (Math.floor(loColour.red() + redDelta * increment) + ', ') + (Math.floor(loColour.green() + greenDelta * increment) + ', ') + (Math.floor(loColour.blue() + blueDelta * increment) + ')')).alpha(alpha).rgb().toString();
+  };
+};
+
+var _colourizeExpressionLevel = function _colourizeExpressionLevel(gradientColours, highlightSeries) {
+  var colourize = _colourize(gradientColours);
+
   return function (plotData) {
     return plotData.series.map(function (aSeries) {
       // I can’t think of a better way to reconcile series.name being a string and highlightSeries being an array of
@@ -19317,10 +19472,9 @@ var _colourizeExpressionLevel = function _colourizeExpressionLevel(hue, highligh
         return {
           name: aSeries.name,
           data: aSeries.data.map(function (point) {
-            var white = plotData.max > plotData.min ? (1 - (point.expressionLevel - plotData.min) / (plotData.max - plotData.min)) * MAX_WHITE : 0;
             return _extends({}, point, {
               expressionLevel: Math.round10(point.expressionLevel, -2),
-              color: (0, _color2.default)('hwb(' + hue + ', ' + white + '%, 0%)').alpha(0.65).rgb().toString()
+              color: colourize(point.expressionLevel)
             });
           })
         };
@@ -19347,7 +19501,7 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
 
   var height = props.height,
       plotData = props.plotData,
-      expressionColourHue = props.expressionColourHue,
+      expressionGradientColours = props.expressionGradientColours,
       highlightClusters = props.highlightClusters; // Chart
 
   var loading = props.loading,
@@ -19373,7 +19527,10 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
 
   var renderGradient = plotData.max && plotData.min && plotData.max > plotData.min;
   var chartClassName = renderGradient ? 'small-10 columns' : 'small-12 columns';
-  var gradient = renderGradient ? _react2.default.createElement(Gradient, { height: height, colourHue: expressionColourHue, plotData: plotData }) : null;
+  var gradient = renderGradient ? _react2.default.createElement(_MultiStopGradient2.default, { height: height,
+    showTicks: true,
+    colourRanges: expressionGradientColours,
+    plotData: plotData }) : null;
 
   return [_react2.default.createElement(_expressionAtlasAutocomplete2.default, { key: 'expression-autocomplete',
     wrapperClassName: 'row column',
@@ -19387,24 +19544,13 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
   }), _react2.default.createElement(_PlotLoader2.default, { key: 'expression-plot',
     wrapperClassName: 'row',
     chartClassName: chartClassName,
-    series: _colourizeExpressionLevel(expressionColourHue, highlightClusters)(plotData),
+    series: _colourizeExpressionLevel(expressionGradientColours, highlightClusters)(plotData),
     highchartsConfig: highchartsConfig,
     children: gradient,
     loading: loading,
     resourcesUrl: resourcesUrl,
     errorMessage: errorMessage
   })];
-};
-
-var Gradient = function Gradient(_ref) {
-  var height = _ref.height,
-      colourHue = _ref.colourHue,
-      plotData = _ref.plotData;
-
-  var topColour = (0, _color2.default)('hwb(' + colourHue + ', 0%, 0%)').rgb().toString();
-  var bottomColour = (0, _color2.default)('hwb(' + colourHue + ', ' + MAX_WHITE + '%, 0%)').rgb().toString();
-
-  return _react2.default.createElement('div', { className: 'small-2 columns text-center' }, _react2.default.createElement('div', null, _react2.default.createElement('small', null, Math.round10(plotData.max, -2), ' ', plotData.unit)), _react2.default.createElement('div', { style: { width: '20px', height: height - 100 + 'px', background: 'linear-gradient(' + topColour + ', ' + bottomColour + ')', verticalAlign: 'middle', margin: 'auto' } }), _react2.default.createElement('div', null, _react2.default.createElement('small', null, Math.round10(plotData.min, -2), ' ', plotData.unit)));
 };
 
 GeneExpressionScatterPlot.propTypes = {
@@ -19416,7 +19562,11 @@ GeneExpressionScatterPlot.propTypes = {
     max: _propTypes2.default.number,
     min: _propTypes2.default.number
   }),
-  expressionColourHue: _propTypes2.default.number,
+  expressionGradientColours: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+    colour: _propTypes2.default.string.isRequired,
+    threshold: _propTypes2.default.number.isRequired,
+    stopPosition: _propTypes2.default.number.isRequired
+  })).isRequired,
   highlightClusters: _propTypes2.default.array,
 
   atlasUrl: _propTypes2.default.string.isRequired,
@@ -19429,7 +19579,23 @@ GeneExpressionScatterPlot.propTypes = {
 };
 
 GeneExpressionScatterPlot.defaultProps = {
-  expressionColourHue: 240
+  expressionGradientColours: [{
+    colour: 'rgb(215, 255, 255)',
+    threshold: 0,
+    stopPosition: 0
+  }, {
+    colour: 'rgb(128, 255, 255)',
+    threshold: 10,
+    stopPosition: 20
+  }, {
+    colour: 'rgb(0, 85, 225)',
+    threshold: 100,
+    stopPosition: 40
+  }, {
+    colour: 'rgb(0, 0, 115)',
+    threshold: 10000,
+    stopPosition: 100
+  }]
 };
 
 exports.default = GeneExpressionScatterPlot;
@@ -19437,7 +19603,7 @@ exports._colourizeExpressionLevel = _colourizeExpressionLevel;
 
 /***/ }),
 
-/***/ 474:
+/***/ 471:
 /*!*****************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/index.js ***!
   \*****************************************************************************************/
@@ -19452,7 +19618,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 475);
+var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 472);
 
 var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
 
@@ -19464,7 +19630,7 @@ exports.default = _AtlasAutocomplete2.default;
 
 /***/ }),
 
-/***/ 475:
+/***/ 472:
 /*!*****************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
   \*****************************************************************************************************/
@@ -19499,7 +19665,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 476);
+var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 473);
 
 var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
@@ -19507,7 +19673,7 @@ var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 480);
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 477);
 
 var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
 
@@ -19655,10 +19821,10 @@ exports.default = AtlasAutocomplete;
 
 /***/ }),
 
-/***/ 476:
-/*!*******************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
-  \*******************************************************************************************/
+/***/ 473:
+/*!**************************************************************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
+  \**************************************************************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -19712,7 +19878,7 @@ var PropTypes = __webpack_require__(/*! prop-types */ 2);
 var _require = __webpack_require__(/*! react-dom */ 18),
     findDOMNode = _require.findDOMNode;
 
-var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 477);
+var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 474);
 
 var IMPERATIVE_API = ['blur', 'checkValidity', 'click', 'focus', 'select', 'setCustomValidity', 'setSelectionRange', 'setRangeText'];
 
@@ -20295,11 +20461,11 @@ Autocomplete.keyDownHandlers = {
 };
 
 module.exports = Autocomplete;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../../../node_modules/webpack/buildin/global.js */ 9)))
 
 /***/ }),
 
-/***/ 477:
+/***/ 474:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/index.js ***!
   \****************************************************************************/
@@ -20310,11 +20476,11 @@ module.exports = Autocomplete;
 "use strict";
 
 
-module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 478);
+module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 475);
 
 /***/ }),
 
-/***/ 478:
+/***/ 475:
 /*!***********************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
   \***********************************************************************************************/
@@ -20325,7 +20491,7 @@ module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 478);
 "use strict";
 
 
-var util = __webpack_require__(/*! ./util */ 479);
+var util = __webpack_require__(/*! ./util */ 476);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -20442,7 +20608,7 @@ module.exports = scrollIntoView;
 
 /***/ }),
 
-/***/ 479:
+/***/ 476:
 /*!*******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/lib/util.js ***!
   \*******************************************************************************/
@@ -20887,7 +21053,7 @@ mix(utils, domUtils);
 
 /***/ }),
 
-/***/ 480:
+/***/ 477:
 /*!*************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/SpeciesSelect.js ***!
   \*************************************************************************************************/
@@ -21073,10 +21239,10 @@ exports.default = SpeciesSelect;
 
 /***/ }),
 
-/***/ 481:
-/*!***************************************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/util/MathRound.js ***!
-  \***************************************************************************************************************/
+/***/ 478:
+/*!******************************************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/MultiStopGradient.js ***!
+  \******************************************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -21084,62 +21250,189 @@ exports.default = SpeciesSelect;
 "use strict";
 
 
-// Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
-// Beware: it pollutes Math!
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-// Closure
+var _react = __webpack_require__(/*! react */ 0);
 
-(function () {
-  /**
-   * Decimal adjustment of a number.
-   *
-   * @param {String}  type  The type of adjustment.
-   * @param {Number}  value The number.
-   * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
-   * @returns {Number} The adjusted value.
-   */
-  function decimalAdjust(type, value, exp) {
-    // If the exp is undefined or zero...
-    if (typeof exp === 'undefined' || +exp === 0) {
-      return Math[type](value);
-    }
-    value = +value;
-    exp = +exp;
-    // If the value is not a number or the exp is not an integer...
-    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
-      return NaN;
-    }
-    // If the value is negative...
-    if (value < 0) {
-      return -decimalAdjust(type, -value, exp);
-    }
-    // Shift
-    value = value.toString().split('e');
-    value = Math[type](+(value[0] + 'e' + (value[1] ? +value[1] - exp : -exp)));
-    // Shift back
-    value = value.toString().split('e');
-    return +(value[0] + 'e' + (value[1] ? +value[1] + exp : exp));
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _expressionAtlasNumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 479);
+
+var _expressionAtlasNumberFormat2 = _interopRequireDefault(_expressionAtlasNumberFormat);
+
+__webpack_require__(/*! ./util/MathRound */ 199);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+// ranges have at least threshold (in ascending order) and stopPosition [0..100]
+var putInRange = function putInRange(ranges, val) {
+  var stopMatch = ranges.filter(function (range) {
+    return range.threshold === val;
+  });
+  if (stopMatch.length) {
+    return stopMatch[0].stopPosition / 100;
   }
 
-  // Decimal round
-  if (!Math.round10) {
-    Math.round10 = function (value, exp) {
-      return decimalAdjust('round', value, exp);
-    };
+  var rangeIndex = ranges.findIndex(function (range) {
+    return range.threshold >= val;
+  }) - 1;
+
+  var withinRangeOffset = (val - ranges[rangeIndex].threshold) / (ranges[rangeIndex + 1].threshold - ranges[rangeIndex].threshold);
+
+  return (ranges[rangeIndex].stopPosition + (ranges[rangeIndex + 1].stopPosition - ranges[rangeIndex].stopPosition) * withinRangeOffset) / 100;
+};
+
+var lineHeight = 24;
+var Tick = function Tick(_ref) {
+  var value = _ref.value,
+      colour = _ref.colour,
+      top = _ref.top;
+  return _react2.default.createElement('div', { style: { position: 'absolute', height: '2px', width: '20px', background: colour, top: top + lineHeight + 'px' } }, _react2.default.createElement('div', { style: { position: 'absolute', marginLeft: '24px', marginTop: '-' + lineHeight / 2 + 'px' } }, _react2.default.createElement('small', { style: { color: colour } }, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: Math.round10(value, -2) }))));
+};
+
+var MultiStopGradient = function MultiStopGradient(_ref2) {
+  var height = _ref2.height,
+      showTicks = _ref2.showTicks,
+      colourRanges = _ref2.colourRanges,
+      plotData = _ref2.plotData;
+
+  var bg = colourRanges.map(function (colourRange) {
+    return colourRange.colour + ' ' + colourRange.stopPosition + '%';
+  }).join(', ');
+  var minMaxExpressionTickHeight = 2;
+  var gradientHeight = height - 100;
+
+  var minExpressionTopPosition = Math.min(gradientHeight - minMaxExpressionTickHeight, gradientHeight - gradientHeight * putInRange(colourRanges, plotData.min));
+  var maxExpressionTopPosition = Math.max(minMaxExpressionTickHeight, gradientHeight - gradientHeight * putInRange(colourRanges, plotData.max));
+
+  return _react2.default.createElement('div', { className: 'small-2 columns text-center' }, _react2.default.createElement('div', null, _react2.default.createElement('small', null, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: colourRanges[colourRanges.length - 1].threshold }), ' ', plotData.unit)), _react2.default.createElement('div', {
+    style: {
+      width: '20px',
+      height: gradientHeight + 'px',
+      background: 'linear-gradient(0deg, ' + bg + ')',
+      verticalAlign: 'middle',
+      margin: 'auto' } }, _react2.default.createElement(Tick, { value: plotData.max, colour: 'dimgray', top: maxExpressionTopPosition }), _react2.default.createElement(Tick, { value: plotData.min, colour: 'dimgray', top: minExpressionTopPosition }), showTicks && colourRanges.slice(1, -1).map(function (colourRange) {
+    return _react2.default.createElement(Tick, { key: colourRange.threshold, value: colourRange.threshold, colour: 'lightgray', top: gradientHeight - gradientHeight * putInRange(colourRanges, colourRange.threshold) });
+  })), _react2.default.createElement('div', null, _react2.default.createElement('small', null, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: colourRanges[0].threshold }), ' ', plotData.unit)));
+};
+
+MultiStopGradient.propTypes = {
+  height: _propTypes2.default.number.isRequired,
+  showTicks: _propTypes2.default.bool,
+  colourRanges: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+    colour: _propTypes2.default.string.isRequired,
+    threshold: _propTypes2.default.number.isRequired,
+    stopPosition: _propTypes2.default.number.isRequired
+  })).isRequired,
+  plotData: _propTypes2.default.shape({
+    min: _propTypes2.default.number.isRequired,
+    max: _propTypes2.default.number.isRequired,
+    unit: _propTypes2.default.string.isRequired
+  })
+};
+
+exports.default = MultiStopGradient;
+
+/***/ }),
+
+/***/ 479:
+/*!******************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-number-format/lib/index.js ***!
+  \******************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ScientificNotationNumber = __webpack_require__(/*! ./ScientificNotationNumber.js */ 480);
+
+var _ScientificNotationNumber2 = _interopRequireDefault(_ScientificNotationNumber);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+exports.default = _ScientificNotationNumber2.default;
+
+/***/ }),
+
+/***/ 480:
+/*!*************************************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-number-format/lib/ScientificNotationNumber.js ***!
+  \*************************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ 0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ 2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+var removeTrailingZeroes = function removeTrailingZeroes(str) {
+  return str.replace(/(\d)0+$/, '$1');
+};
+var removeLeadingPlus = function removeLeadingPlus(str) {
+  return str.replace(/^\+/, '');
+};
+
+var ScientificNotationNumber = function ScientificNotationNumber(_ref) {
+  var value = _ref.value,
+      accuracy = _ref.accuracy,
+      style = _ref.style;
+
+  if (value >= 0.1 && value < 100000 || value === 0) {
+    return _react2.default.createElement('span', null, value);
   }
-  // Decimal floor
-  if (!Math.floor10) {
-    Math.floor10 = function (value, exp) {
-      return decimalAdjust('floor', value, exp);
-    };
-  }
-  // Decimal ceil
-  if (!Math.ceil10) {
-    Math.ceil10 = function (value, exp) {
-      return decimalAdjust('ceil', value, exp);
-    };
-  }
-})();
+
+  var scientificNotationString = value.toExponential(accuracy);
+  var mantissaExponent = scientificNotationString.split('e');
+  var mantissa = removeTrailingZeroes(mantissaExponent[0]);
+  var exponent = removeLeadingPlus(mantissaExponent[1]);
+
+  return _react2.default.createElement('span', { style: style }, +mantissa !== 1 ? mantissa + ' \xD7 ' : '', '10', _react2.default.createElement('span', { style: { verticalAlign: 'super' } }, exponent));
+};
+
+ScientificNotationNumber.propTypes = {
+  value: _propTypes2.default.number.isRequired,
+  accuracy: _propTypes2.default.number,
+  style: _propTypes2.default.object
+};
+
+ScientificNotationNumber.defaultProps = {
+  accuracy: 4,
+  style: {}
+};
+
+exports.default = ScientificNotationNumber;
 
 /***/ }),
 
@@ -21227,11 +21520,11 @@ var _extends = Object.assign || function (target) {
   }return target;
 };
 
-var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 185);
+var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 183);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(/*! value-equal */ 186);
+var _valueEqual = __webpack_require__(/*! value-equal */ 184);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -21598,7 +21891,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _pathToRegexp = __webpack_require__(/*! path-to-regexp */ 439);
+var _pathToRegexp = __webpack_require__(/*! path-to-regexp */ 436);
 
 var _pathToRegexp2 = _interopRequireDefault(_pathToRegexp);
 
@@ -21773,5 +22066,5 @@ exports.default = createTransitionManager;
 
 /***/ })
 
-},[424]);
+},[421]);
 //# sourceMappingURL=experimentPage.bundle.js.map

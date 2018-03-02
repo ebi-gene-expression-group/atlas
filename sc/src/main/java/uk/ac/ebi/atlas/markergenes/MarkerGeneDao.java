@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentimport.analytics.SingleCellBaselineDao;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,15 +18,15 @@ import static java.util.stream.Collectors.toList;
 @Named
 public class MarkerGeneDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellBaselineDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerGeneDao.class);
 
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 2000;
     private static final String MARKER_GENE_INSERT_STATEMENT =
-            "INSERT INTO sca_marker_genes " +
+            "INSERT INTO scxa_marker_genes " +
             "(gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES (?, ?, ?, ?, ?)";
     private static final String MARKER_GENE_SELECT_STATEMENT =
-            "SELECT * FROM sca_marker_genes WHERE gene_id=? AND marker_probability>?";
+            "SELECT * FROM scxa_marker_genes WHERE gene_id=? AND marker_probability>?";
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -85,12 +84,12 @@ public class MarkerGeneDao {
     }
 
     public void deleteAll() {
-        int rowCount = jdbcTemplate.update("DELETE FROM sca_marker_genes");
+        int rowCount = jdbcTemplate.update("DELETE FROM scxa_marker_genes");
         LOGGER.info("{} rows deleted", rowCount);
     }
 
     public void delete(String experimentAccession) {
-        int rowCount = jdbcTemplate.update("DELETE FROM sca_marker_genes WHERE experiment_accession=?", experimentAccession);
+        int rowCount = jdbcTemplate.update("DELETE FROM scxa_marker_genes WHERE experiment_accession=?", experimentAccession);
         LOGGER.info("{} rows deleted", rowCount);
     }
 

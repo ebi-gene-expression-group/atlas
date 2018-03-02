@@ -51,11 +51,13 @@ public class ExternalImageController {
                                             @PathVariable String arrayDesignAccession, @PathVariable String
                                                         contrastName, @PathVariable String fileName) {
 
-        streamExternalImage(response, contrastImageFactory.getContrastImage(
-                ResourceType.forFileName(fileName),
-                experimentAccession,
-                Optional.of(arrayDesignAccession),
-                contrastName).get());
+        streamExternalImage(
+                response,
+                contrastImageFactory.getContrastImage(
+                        ResourceType.forFileName(fileName),
+                        experimentAccession,
+                        Optional.of(arrayDesignAccession),
+                        contrastName).get());
     }
 
     void streamExternalImage(HttpServletResponse response, Function<HttpServletResponse, Void> callback) {

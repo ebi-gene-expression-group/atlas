@@ -13,16 +13,12 @@ public abstract class ExperimentsCache<T extends Experiment> {
         this.experiments = experiments;
     }
 
-    public T getExperiment(String experimentAccession) throws ExecutionException {
-        return experiments.get(experimentAccession);
+    public T getExperiment(String experimentAccession) {
+        return experiments.getUnchecked(experimentAccession);
     }
 
     public void evictExperiment(String experimentAccession) {
         experiments.invalidate(experimentAccession);
-    }
-
-    public void evictAll() {
-        experiments.invalidateAll();
     }
 
 }

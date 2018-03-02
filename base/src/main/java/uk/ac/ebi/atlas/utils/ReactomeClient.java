@@ -27,7 +27,7 @@ public class ReactomeClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactomeClient.class);
 
-    static final String URL = "https://reactome.org/ContentService/data/query/ids";
+    static final String URL = "http://reactome.org/ContentService/data/query/ids";
     static final int QUERY_MAX_SIZE = 20;  // https://reactome.org/ContentService/#!/query/findByIdsUsingPOST
     private static final Gson GSON = new Gson();
     private static final String STATIC_ID_FIELD = "stId";

@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Named
 public class ArrayDesignDAO {
@@ -38,7 +37,9 @@ public class ArrayDesignDAO {
     }
 
     public ArrayDesign getArrayDesign(String accession){
-        return arrayDesigns.get().stream().filter(a -> a.accession().equals(accession)).findFirst().orElse(ArrayDesign.createForUnknownName(accession));
+        return arrayDesigns.get().stream()
+                .filter(a -> a.accession().equals(accession))
+                .findFirst().orElse(ArrayDesign.createForUnknownName(accession));
     }
 
     public Map<String, String> getArrayDesignMapNames() {

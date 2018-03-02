@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.collect.*;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
@@ -11,7 +13,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
@@ -19,10 +24,17 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -79,7 +91,7 @@ public class DifferentialPathwaysComparisonServiceTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockDataFileHub mockDataFileHub = MockDataFileHub.create();
 
         String accession = "E-GEOD-54351";
@@ -100,22 +112,22 @@ public class DifferentialPathwaysComparisonServiceTest {
     }
 
     @Test
-    public void testGetPathwaysListPerComparison() throws Exception {
-
+    public void testGetPathwaysListPerComparison() {
         Map comparisonPathwaysMap = subject.getPathwaysListPerComparison(mockDifferentialExperiment);
 
         assertNotNull(comparisonPathwaysMap);
         assertThat(comparisonPathwaysMap.size(), is(2));
         assertThat(comparisonPathwaysMap.get(c1), is(new ArrayList<>()));
 
-        List<String> expectedList = Arrays.asList("R-MMU-416482", "R-MMU-397014", "R-MMU-2132295", "R-MMU-193648", "R-MMU-373760",
-                "R-MMU-5620924", "R-MMU-5654741", "R-MMU-199418", "R-MMU-2029480", "R-MMU-1483206");
+        List<String> expectedList =
+                Arrays.asList(
+                        "R-MMU-416482", "R-MMU-397014", "R-MMU-2132295", "R-MMU-193648", "R-MMU-373760",
+                        "R-MMU-5620924", "R-MMU-5654741", "R-MMU-199418", "R-MMU-2029480", "R-MMU-1483206");
         assertThat(comparisonPathwaysMap.get(c2), is(expectedList));
-
     }
 
     @Test
-    public void testConstructPathwaysByComparison() throws Exception {
+    public void testConstructPathwaysByComparison() {
 
         Map multimap = subject.constructPathwaysByComparison(mockDifferentialExperiment, mockDifferentialRequestPreferences);
         assertNotNull(multimap);
@@ -242,6 +254,5 @@ public class DifferentialPathwaysComparisonServiceTest {
         when(mockDifferentialRequestContextFactory.create(mockDifferentialExperiment, mockDifferentialRequestPreferences)).thenReturn(mockRequestContext);
         when(mockDifferentialProfilesHeatMap.fetch(mockRequestContext)).thenReturn(profile1,profile4,profile2,profile5,profile6,profile3,
                 profile9,profile7,profile8,profile10);
-
     }
 }

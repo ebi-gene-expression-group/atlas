@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 
@@ -41,7 +42,7 @@ public class FileTsvWriterBuilder {
         try {
             return new TsvWriter(new OutputStreamWriter(new FileOutputStream(new File(path), append)));
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot write TSV file to path " + path, e);
+            throw new UncheckedIOException("Cannot write TSV file to path " + path, e);
         }
     }
 
@@ -49,7 +50,7 @@ public class FileTsvWriterBuilder {
         try {
             return new TsvWriter(new OutputStreamWriter(new FileOutputStream(path.toFile(), appendTo)));
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot write TSV file to path " + path, e);
+            throw new UncheckedIOException("Cannot write TSV file to path " + path, e);
         }
     }
 

@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.model.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
@@ -16,14 +15,14 @@ import java.util.zip.GZIPInputStream;
 
 public abstract class TsvFile<T> extends AtlasResource<T>{
 
-    public TsvFile(String dataFilesLocation, String template, String ... args) {
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, (Object []) args)));
+    public TsvFile(String parentDirectory, String template, String ... args) {
+        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object []) args)));
     }
 
     public static class ReadAsStream extends TsvFile<ObjectInputStream<String[]>> {
 
-        public ReadAsStream(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadAsStream(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
@@ -35,17 +34,12 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
             }
         }
 
-        private static class TsvStreamReader implements Closeable, ObjectInputStream<String[]> {
+        private static class TsvStreamReader implements ObjectInputStream<String[]> {
 
             private CSVReader tsvReader;
 
             public TsvStreamReader(Reader reader) {
                 this.tsvReader = new CSVReader(reader, '\t');
-            }
-
-            @Override
-            public void close() throws IOException {
-                tsvReader.close();
             }
 
             @Override
@@ -56,29 +50,34 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
                     throw new RuntimeException(e);
                 }
             }
+
+            @Override
+            public void close() throws IOException {
+                tsvReader.close();
+            }
         }
     }
 
-    public static class ReadOnly extends TsvFile<TsvReader> {
+    public static class ReadOnly extends TsvFile<TsvStreamer> {
 
-        public ReadOnly(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadOnly(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
-        public TsvReader get() {
+        public TsvStreamer get() {
             try {
-                return new TsvReaderImpl(Files.newBufferedReader(path, StandardCharsets.UTF_8));
+                return new TsvStreamer(Files.newBufferedReader(path, StandardCharsets.UTF_8));
             } catch (IOException e) {
-                throw new IllegalStateException(e);
+                throw new UncheckedIOException(e);
             }
         }
     }
 
     public static class Appendable extends TsvFile<TsvWriter> {
 
-        public Appendable(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public Appendable(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
@@ -89,8 +88,8 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
     public static class Overwrite extends TsvFile<TsvWriter> {
 
-        public Overwrite(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public Overwrite(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override
@@ -101,8 +100,8 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
     //Use TsvReader too, maybe?
     public static class ReadCompressed extends TsvFile<CSVReader> {
-        public ReadCompressed(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadCompressed(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override

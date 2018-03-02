@@ -8,11 +8,11 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.markergenes.MarkerGeneDao;
-import uk.ac.ebi.atlas.markergenes.MarkerGeneProfile;
 import uk.ac.ebi.atlas.markergenes.RandomMarkerGeneInputStream;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -89,7 +89,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     }
 
     @Override
-    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws Exception {
+    public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws IOException {
         JsonPrimitive resultOfTheOp = ExperimentOps.DEFAULT_SUCCESS_RESULT;
         boolean isPrivate = true;
         switch (op) {
@@ -143,4 +143,5 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
         }
         return resultOfTheOp;
     }
+
 }

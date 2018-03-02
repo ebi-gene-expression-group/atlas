@@ -13,15 +13,14 @@ import java.text.MessageFormat;
 
 public abstract class XmlFile<T> extends AtlasResource<T>{
 
-    public XmlFile(String dataFilesLocation, String template, String ... args) {
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, (Object [])args)));
+    public XmlFile(String parentDirectory, String template, String ... args) {
+        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object [])args)));
     }
-
 
     public static class ReadOnly extends XmlFile<XmlReader> {
 
-        public ReadOnly(String dataFilesLocation, String template, String... args) {
-            super(dataFilesLocation, template, args);
+        public ReadOnly(String parentDirectory, String template, String... args) {
+            super(parentDirectory, template, args);
         }
 
         @Override

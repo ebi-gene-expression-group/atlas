@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -55,14 +56,14 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
         return helpPage.getMessage();
     }
 
-    @RequestMapping(
-            value = "/{accessions}/{op}",
-            produces = "application/json;charset=UTF-8")
-    public void doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/{accessions}/{op}", produces = "application/json;charset=UTF-8")
+    public void doOp(@PathVariable("accessions") String accessionParameter,
+                     @PathVariable("op") String opParameter,
+                     HttpServletResponse response) throws IOException {
         JsonWriter writer = new JsonWriter(response.getWriter());
-        writer.setIndent("  ");
-        writer.beginArray();
         try {
+            writer.setIndent("  ");
+            writer.beginArray();
 
             final Collection<String> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
                     ? ImmutableList.of()
@@ -75,13 +76,12 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
 
             for (JsonElement element : result) {
                 gson.toJson(element, writer);
-                writer.flush();
             }
-
         } catch (Exception e) {
-            gson.toJson(errorMessage(accessionParameter, e),writer);
+            gson.toJson(errorMessage(accessionParameter, e), writer);
         } finally {
             writer.endArray();
+            writer.flush();
             writer.close();
         }
     }

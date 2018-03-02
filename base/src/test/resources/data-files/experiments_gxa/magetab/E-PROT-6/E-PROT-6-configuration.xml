@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="proteomics_baseline" r_data="0">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="C2BBe1">
+                <assay>CO_C2BBe1</assay>
+            </assay_group>
+            <assay_group id="g2" label="CCK-81">
+                <assay>CO_CCK-81</assay>
+            </assay_group>
+            <assay_group id="g3" label="CL-11">
+                <assay>CO_CL-11</assay>
+            </assay_group>
+            <assay_group id="g4" label="CL-40">
+                <assay>CO_CL-40</assay>
+            </assay_group>
+            <assay_group id="g5" label="COLO-205">
+                <assay>CO_COLO-205</assay>
+            </assay_group>
+            <assay_group id="g6" label="COLO-320-HSR">
+                <assay>CO_COLO-320-HSR</assay>
+            </assay_group>
+            <assay_group id="g7" label="COLO-678">
+                <assay>CO_COLO-678</assay>
+            </assay_group>
+            <assay_group id="g8" label="CW-2">
+                <assay>CO_CW-2</assay>
+            </assay_group>
+            <assay_group id="g9" label="CaR-1">
+                <assay>CO_CaR-1</assay>
+            </assay_group>
+            <assay_group id="g10" label="DIFI">
+                <assay>CO_DIFI</assay>
+            </assay_group>
+            <assay_group id="g11" label="GEO">
+                <assay>CO_GEO</assay>
+            </assay_group>
+            <assay_group id="g12" label="GP5d">
+                <assay>CO_GP5d</assay>
+            </assay_group>
+            <assay_group id="g13" label="HCC-56">
+                <assay>CO_HCC-56</assay>
+            </assay_group>
+            <assay_group id="g14" label="HCC2998">
+                <assay>CO_HCC2998</assay>
+            </assay_group>
+            <assay_group id="g15" label="HCT-116">
+                <assay>CO_HCT-116</assay>
+            </assay_group>
+            <assay_group id="g16" label="HCT-15">
+                <assay>CO_HCT-15</assay>
+            </assay_group>
+            <assay_group id="g17" label="HT-115">
+                <assay>CO_HT-115</assay>
+            </assay_group>
+            <assay_group id="g18" label="HT-29">
+                <assay>CO_HT-29</assay>
+            </assay_group>
+            <assay_group id="g19" label="HT55">
+                <assay>CO_HT55</assay>
+            </assay_group>
+            <assay_group id="g20" label="KM12">
+                <assay>CO_KM12</assay>
+            </assay_group>
+            <assay_group id="g21" label="LIM1215">
+                <assay>CO_LIM1215</assay>
+            </assay_group>
+            <assay_group id="g22" label="LS-1034">
+                <assay>CO_LS-1034</assay>
+            </assay_group>
+            <assay_group id="g23" label="LS-123">
+                <assay>CO_LS-123</assay>
+            </assay_group>
+            <assay_group id="g24" label="LS-180">
+                <assay>CO_LS-180</assay>
+            </assay_group>
+            <assay_group id="g25" label="LS-411N">
+                <assay>CO_LS-411N</assay>
+            </assay_group>
+            <assay_group id="g26" label="LS-513">
+                <assay>CO_LS-513</assay>
+            </assay_group>
+            <assay_group id="g27" label="LoVo">
+                <assay>CO_LoVo</assay>
+            </assay_group>
+            <assay_group id="g28" label="MDST8">
+                <assay>CO_MDST8</assay>
+            </assay_group>
+            <assay_group id="g29" label="NCI-H508">
+                <assay>CO_NCI-H508</assay>
+            </assay_group>
+            <assay_group id="g30" label="NCI-H630">
+                <assay>CO_NCI-H630</assay>
+            </assay_group>
+            <assay_group id="g31" label="NCI-H716">
+                <assay>CO_NCI-H716</assay>
+            </assay_group>
+            <assay_group id="g32" label="NCI-H747">
+                <assay>CO_NCI-H747</assay>
+            </assay_group>
+            <assay_group id="g33" label="RCM-1">
+                <assay>CO_RCM-1</assay>
+            </assay_group>
+            <assay_group id="g34" label="RKO">
+                <assay>CO_RKO</assay>
+            </assay_group>
+            <assay_group id="g35" label="SK-CO-1">
+                <assay>CO_SK-CO-1</assay>
+            </assay_group>
+            <assay_group id="g36" label="SNU-1040">
+                <assay>CO_SNU-1040</assay>
+            </assay_group>
+            <assay_group id="g37" label="SNU-175">
+                <assay>CO_SNU-175</assay>
+            </assay_group>
+            <assay_group id="g38" label="SNU-407">
+                <assay>CO_SNU-407</assay>
+            </assay_group>
+            <assay_group id="g39" label="SNU-61">
+                <assay>CO_SNU-61</assay>
+            </assay_group>
+            <assay_group id="g40" label="SNU-81">
+                <assay>CO_SNU-81</assay>
+            </assay_group>
+            <assay_group id="g41" label="SNU-C1">
+                <assay>CO_SNU-C1</assay>
+            </assay_group>
+            <assay_group id="g42" label="SNU-C2B">
+                <assay>CO_SNU-C2B</assay>
+            </assay_group>
+            <assay_group id="g43" label="SNU-C5">
+                <assay>CO_SNU-C5</assay>
+            </assay_group>
+            <assay_group id="g44" label="SW1116">
+                <assay>CO_SW1116</assay>
+            </assay_group>
+            <assay_group id="g45" label="SW1463">
+                <assay>CO_SW1463</assay>
+            </assay_group>
+            <assay_group id="g46" label="SW48">
+                <assay>CO_SW48</assay>
+            </assay_group>
+            <assay_group id="g47" label="SW620">
+                <assay>CO_SW620</assay>
+            </assay_group>
+            <assay_group id="g48" label="SW837">
+                <assay>CO_SW837</assay>
+            </assay_group>
+            <assay_group id="g49" label="SW948">
+                <assay>CO_SW948</assay>
+            </assay_group>
+            <assay_group id="g50" label="T84">
+                <assay>CO_T84</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

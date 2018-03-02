@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 
 if [ $# -ne 1 ] || [[ $1 -ne "ci" && $1 -ne "prod" ]] ; then
@@ -14,43 +15,24 @@ if [ $# -ne 1 ] || [[ $1 -ne "ci" && $1 -ne "prod" ]] ; then
         exit;
 fi
 
-
-export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-atlas_modules=`ls atlas_modules`
-atlas_bundles=`ls atlas_bundles`
-npm_packages=(expression-atlas-heatmap-highcharts anatomogram expression-atlas-experiment-page react-ebi-species)
-
-all_packages=("${atlas_modules[@]}" "${atlas_bundles[@]}")
-
+#find atlas_bundles -maxdepth 2 -name '*lock*' | xargs rm
 for dir in atlas_bundles/*
 do
     pushd . > /dev/null
+    echo "Upgrading $dir:"
     cd $dir
-        for module in ${all_packages[*]}
-        do
-            rm -rf node_modules/expression-atlas-$module*
-        done
-        for module in ${npm_packages[*]}
-        do
-            rm -rf node_modules/$module
-        done
-    npm install
+    # Upgrade everything but React to their latest versions
+    ncu -x /react.*/ -a
+    yarn install
+    # Upgrade React to the latest non-breaking change
+    yarn upgrade
     popd > /dev/null
 done
 
-for module in ${all_packages[*]}
-do
-    rm -rf node_modules/expression-atlas-$module
-done
-for module in ${npm_packages[*]}
-do
-    rm -rf node_modules/$module
-done
-rm -rf node_modules/highcharts
+# Upgrade everything but React to their latest versions
+ncu -x /react.*/ -a
+yarn install
+# Upgrade React to the latest non-breaking change
+yarn upgrade
 
-npm install
-
-npm run $1
-
+yarn run $1

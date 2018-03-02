@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import uk.ac.ebi.atlas.interceptors.AdminInterceptor;
 import uk.ac.ebi.atlas.interceptors.TimingInterceptor;
-import uk.ac.ebi.atlas.resource.SingleCellDataFileHub;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
@@ -21,14 +21,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     private final AdminInterceptor adminInterceptor;
     private final TimingInterceptor timingInterceptor;
-    private final SingleCellDataFileHub fileHub;
+    private final DataFileHub dataFileHub;
 
     @Inject
-    public WebConfig(
-            AdminInterceptor adminInterceptor, TimingInterceptor timingInterceptor, SingleCellDataFileHub fileHub) {
+    public WebConfig(AdminInterceptor adminInterceptor, TimingInterceptor timingInterceptor, DataFileHub dataFileHub) {
         this.adminInterceptor = adminInterceptor;
         this.timingInterceptor = timingInterceptor;
-        this.fileHub = fileHub;
+        this.dataFileHub = dataFileHub;
     }
 
     // equivalent to mvc:resources

@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -48,6 +49,16 @@ public class BaselineTranscriptProfileStreamFactoryTest {
     public void setUp() throws Exception {
         dataFileHub = MockDataFileHub.create();
         subject = new BaselineTranscriptProfileStreamFactory(dataFileHub);
+    }
+
+    @Test
+    public void whenTheFileIsNotPresentReturnEmptyStream(){
+        assertThat(
+                ImmutableList.copyOf(
+                        new IterableObjectInputStream<>(subject.create(experiment, new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment), Collections.emptySet()))
+                ),
+                empty()
+        );
     }
 
 
@@ -206,81 +217,4 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                 )
         );
     }
-
-    @Test
-    public void rightJson(){
-        /*
-         baselineRnaSeqTranscriptsDataWithVeryTemporaryImplementation
-         Clearly WIP:
-         -searchResultTotal 0
-         - uri is wrong (if we care)
-
-         */
-
-        dataFileHub.addTranscriptsTpmsExpressionFile(experiment.getAccession(), ImmutableList.of(
-                header,
-                new String[]{"id_1", "name_1", "transcript_1_1", "1.0", "2.0", "3.0"}
-        ));
-
-        String geneId = "id_1";
-
-        RnaSeqBaselineRequestPreferences preferences = new RnaSeqBaselineRequestPreferences();
-        BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext = new BaselineRequestContext<>(preferences, experiment);
-
-        assertThat(new ExternallyViewableProfilesList<>(
-                        new GeneProfilesList<>(ImmutableList.copyOf(
-                                new IterableObjectInputStream<>(subject.create(
-                                        experiment,
-                                        requestContext,
-                                        ImmutableSet.of(geneId)
-                                ))
-                        )),
-                        new LinkToGene<>(),
-                        requestContext.getDataColumnsToReturn(),
-                        p -> requestContext.getExpressionUnit()
-                ).asJson()
-        , is(new Gson().fromJson(
-                        "{\n" +
-                                "    \"searchResultTotal\": \"0\",\n" +
-                                "    \"rows\": [{\n" +
-                                "        \"id\": \"transcript_1_1\",\n" +
-                                "        \"name\": \"transcript_1_1\",\n" +
-                                "        \"expressions\": [{\n" +
-                                "            \"stats\": {\n" +
-                                "                \"min\": 1.0,\n" +
-                                "                \"lower_quartile\": 1.0,\n" +
-                                "                \"median\": 1.0,\n" +
-                                "                \"upper_quartile\": 1.0,\n" +
-                                "                \"max\": 1.0\n" +
-                                "            },\n" +
-                                "            \"values\": [{\n" +
-                                "                \"id\": \"assay_1\",\n" +
-                                "                \"assays\": [\"assay_1\"],\n" +
-                                "                \"value\": 1.0\n" +
-                                "            }]\n" +
-                                "        }, {\n" +
-                                "            \"stats\": {\n" +
-                                "                \"min\": 2.0,\n" +
-                                "                \"lower_quartile\": 2.0,\n" +
-                                "                \"median\": 2.5,\n" +
-                                "                \"upper_quartile\": 2.0,\n" +
-                                "                \"max\": 3.0\n" +
-                                "            },\n" +
-                                "            \"values\": [{\n" +
-                                "                \"id\": \"assay_2\",\n" +
-                                "                \"assays\": [\"assay_2\"],\n" +
-                                "                \"value\": 2.0\n" +
-                                "            }, {\n" +
-                                "                \"id\": \"assay_3\",\n" +
-                                "                \"assays\": [\"assay_3\"],\n" +
-                                "                \"value\": 3.0\n" +
-                                "            }]\n" +
-                                "        }],\n" +
-                                "        \"uri\": \"genes/transcript_1_1\",\n" +
-                                "        \"expressionUnit\": \"TPM\"\n" +
-                                "    }]\n" +
-                                "}"
-                        , JsonObject.class)));
-    }
-
 }

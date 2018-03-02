@@ -18,8 +18,8 @@ I think it doesn't matter - e.g. InputStream's .close() does nothing.
 public class KryoFile extends AtlasResource<KryoFile.Handle> {
     static final String template = "/serialized_expression/{0}.{1}.kryo";
 
-    public KryoFile(String dataFilesLocation, String experimentAccession, ProfileStreamOptions<?> profileStreamOptions){
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, experimentAccession, profileStreamOptions.serializationShortString())));
+    public KryoFile(String parentDirectory, String experimentAccession, ProfileStreamOptions<?> profileStreamOptions){
+        super(Paths.get(parentDirectory, MessageFormat.format(template, experimentAccession, profileStreamOptions.serializationShortString())));
     }
 
     @Override

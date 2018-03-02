@@ -17,19 +17,25 @@ import static org.hamcrest.Matchers.not;
 public class RichFactorGroupTest {
 
     @Test
+    public void oneFactorGroupDoesntVaryInAnything(){
+        FactorGroup fg1 = new FactorSet().add(new Factor("T1", "v1"));
+        assertThat(RichFactorGroup.typesWithCommonValues(ImmutableList.of(fg1)),
+                is((Set<String>) ImmutableSet.<String>of()));
+        assertThat(RichFactorGroup.filterOutTypesWithCommonValues(ImmutableList.of("T1"),ImmutableList.of(fg1) ),
+                is((List<String>)ImmutableList.of("T1")));
+
+    }
+
+    @Test
     public void smallCase()  {
         FactorGroup fg1 = new FactorSet().add(new Factor("T1", "v1"));
         FactorGroup fg2 = new FactorSet().add(new Factor("T1", "v2"));
 
-        assertThat(RichFactorGroup.typesWithCommonValues(ImmutableList.of(fg1)),
-                is((Set<String>) ImmutableSet.of("T1")));
         assertThat(RichFactorGroup.typesWithCommonValues(ImmutableList.of(fg1, fg1)),
                 is((Set<String>) ImmutableSet.of("T1")));
         assertThat(RichFactorGroup.typesWithCommonValues(ImmutableList.of(fg1, fg2)),
                 is((Set<String>) ImmutableSet.<String>of()));
 
-        assertThat(RichFactorGroup.filterOutTypesWithCommonValues(ImmutableList.of("T1"),ImmutableList.of(fg1) ),
-                is((List<String>)ImmutableList.<String>of()));
         assertThat(RichFactorGroup.filterOutTypesWithCommonValues(ImmutableList.of("T1"),ImmutableList.of(fg1, fg1) ),
                 is((List<String>)ImmutableList.<String>of()));
         assertThat(RichFactorGroup.filterOutTypesWithCommonValues(ImmutableList.of("T1"),ImmutableList.of(fg1, fg2) ),

@@ -13,7 +13,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static uk.ac.ebi.atlas.commons.streams.ObjectInputStreamTest.convert;
 
@@ -41,7 +43,7 @@ public class MinMaxProfileRankingTest {
 
         BaselineProfile result = new BaselineProfile(id, id);
         for (AssayGroup factorName: allFactors) {
-            if (rng.nextBoolean() || includeAll) {
+            if (includeAll || rng.nextBoolean() ) {
                 result.add(factorName, new BaselineExpression(randDouble(min, max)));
             }
         }
@@ -57,10 +59,6 @@ public class MinMaxProfileRankingTest {
 
         double min = 1000 * rng.nextDouble();
         double max = min + 1000 * rng.nextDouble();
-
-        List<AssayGroup> allFactors =
-                ImmutableList.of(
-                        new AssayGroup("a", "run_1"), new AssayGroup("b", "run_2"), new AssayGroup("c", "run_3"));
 
         int j = rng.nextInt(10);
         for(int i = 0 ; i < j ; i++) {
@@ -81,16 +79,16 @@ public class MinMaxProfileRankingTest {
         assertEquals("profileWeWant", result.iterator().next().getName());
     }
 
+    List<AssayGroup> allFactors =
+            ImmutableList.of(
+                    new AssayGroup("a", "run_1"), new AssayGroup("b", "run_2"), new AssayGroup("c", "run_3"));
+
     @Test
     public void specificSearchLetsTheHighestExpressedFactorWin(){
         BaselineProfilesList l = new BaselineProfilesList();
 
         double min = 1000 * rng.nextDouble();
         double max = min + 1000 * rng.nextDouble();
-
-        List<AssayGroup> allFactors =
-                ImmutableList.of(
-                        new AssayGroup("a", "run_1"), new AssayGroup("b", "run_2"), new AssayGroup("c", "run_3"));
 
         int j = rng.nextInt(1000);
         for(int i = 0 ; i < j ; i++) {
@@ -113,6 +111,12 @@ public class MinMaxProfileRankingTest {
         if (!"profileWeWant".equals(result.iterator().next().getName())) {
             fail();
         }
+    }
+
+    @Test
+    public void sizeZeroMeansDoNotLimit(){
+        assertThat(new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(true, allFactors, allFactors), new BaselineProfilesListBuilder()).select(convert(ImmutableList.of(new BaselineProfile("", "")))
+        , 0).isEmpty(), is(false));
     }
 
 }

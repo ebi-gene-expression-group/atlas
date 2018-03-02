@@ -45,7 +45,7 @@ public class JsonSingleCellExperimentControllerWIT {
 
         this.mockMvc
                 .perform(get(
-                        "/json/experiments/E-MTAB-4388/tsneplot/" + perplexity +
+                        "/json/experiments/E-MTAB-5061/tsneplot/" + perplexity +
                         "/clusters/" + k + "/expression/ENSFOOBAR"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))

@@ -11,15 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 
 public class ExperimentOpLogWriterTest {
-
     private static final String DUMMY_ACCESSION = "DUMMY_ACCESSION";
 
     private ExperimentOpLogWriter subject;
-
 
     @Before
     public void setUp() {
@@ -29,7 +28,6 @@ public class ExperimentOpLogWriterTest {
         dir.deleteOnExit();
 
         subject = new ExperimentOpLogWriter(new DataFileHub(dir.getPath()));
-
     }
 
     @Test
@@ -39,14 +37,13 @@ public class ExperimentOpLogWriterTest {
 
     @Test
     public void writeAndThenReadTheLog() {
-        List<OpLogEntry> opLog = ImmutableList.of(
-                OpLogEntry.successfulOp(Op.UPDATE_PUBLIC, 100L, 150L));
+        List<OpLogEntry> opLog = ImmutableList.of(OpLogEntry.successfulOp(Op.UPDATE_PUBLIC, 100L, 150L));
 
         assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), hasSize(0));
 
         subject.persistOpLog(DUMMY_ACCESSION, opLog);
 
-        assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), is(opLog));
+        assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), contains(opLog.toArray(new OpLogEntry[0])));
     }
 
     @Test
@@ -56,7 +53,7 @@ public class ExperimentOpLogWriterTest {
 
         int ourMax = ExperimentOpLogWriter.MAX_LENGTH + 10;
         for (int i = 0; i < ourMax; i++) {
-            opLog.add(OpLogEntry.successfulOp(Op.UPDATE_PUBLIC, 100L*i, 100L * i + 50));
+            opLog.add(OpLogEntry.successfulOp(Op.UPDATE_PUBLIC, 100L * i, 100L * i + 50));
             if (i % 10 == 0) {
                 subject.persistOpLog(DUMMY_ACCESSION, opLog);
             }
@@ -66,7 +63,6 @@ public class ExperimentOpLogWriterTest {
         List<OpLogEntry> opLogNow = subject.getCurrentOpLog(DUMMY_ACCESSION);
 
         assertThat(opLogNow, hasSize(ExperimentOpLogWriter.MAX_LENGTH));
-
         assertThat(opLogNow.get(ExperimentOpLogWriter.MAX_LENGTH - 1), is(opLog.get(ourMax - 1)));
     }
 }

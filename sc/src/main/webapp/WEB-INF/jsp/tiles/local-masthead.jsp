@@ -7,7 +7,7 @@
             <div class="small-8 medium-10 columns anim" id="local-title">
                 <h1>
                     <a href="${pageContext.request.contextPath}/home" title="Back to Single Cell Expression Atlas homepage">
-                        <img src="${pageContext.request.contextPath}/resources/images/logos/logo_atlas_transparent.png" alt="Single Cell Expression Atlas logo" >
+                        <img src="${pageContext.request.contextPath}/resources/images/logos/sc_atlas_logo.png" alt="Single Cell Expression Atlas logo" >
                         Single Cell Expression Atlas
                     </a>
                 </h1>

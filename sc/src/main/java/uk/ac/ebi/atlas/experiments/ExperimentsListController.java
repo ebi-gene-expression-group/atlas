@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import uk.ac.ebi.atlas.trader.SingleCellAtlasExperimentTrader;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 
@@ -23,9 +23,9 @@ public class ExperimentsListController {
     private ExperimentInfoListService experimentInfoListService;
 
     @Inject
-    public ExperimentsListController(SingleCellAtlasExperimentTrader singleCellAtlasExperimentTrader) {
+    public ExperimentsListController(ScxaExperimentTrader scxaExperimentTrader) {
         this.experimentInfoListService =
-                new ExperimentInfoListService(singleCellAtlasExperimentTrader, ImmutableList.of(
+                new ExperimentInfoListService(scxaExperimentTrader, ImmutableList.of(
                         SINGLE_CELL_RNASEQ_MRNA_BASELINE));
     }
 

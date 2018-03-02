@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -480,7 +481,9 @@ public class EvidenceService<
     }
 
     Map<String, Map<Contrast, Integer>> getPercentileRanks(E experiment) {
-        return readPercentileRanks(experiment, dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).percentileRanks.get());
+        return readPercentileRanks(
+                experiment,
+                dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).percentileRanks.get());
     }
 
     private Map<String, Map<Contrast, Integer>> readPercentileRanks(E experiment, ObjectInputStream<String[]> lines) {
@@ -509,12 +512,13 @@ public class EvidenceService<
     }
 
     private String getMethodDescriptionFromAnalysisMethodsFile(E experiment) {
-        for (String[] line : dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()) {
-            if (line[0].toLowerCase().contains("differential expression")) {
-                return line[1].trim().replace("<.+?>", "");
-            }
+        try (TsvStreamer tsvStreamer = dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
+            return tsvStreamer.get()
+                    .filter(line -> line.length > 1)
+                    .filter(line -> line[0].toLowerCase().contains("differential expression"))
+                    .map(line -> line[1].trim().replace("<.+?>", ""))
+                    .findFirst().orElse("");
         }
-        return "";
     }
 
     /*
@@ -522,7 +526,9 @@ public class EvidenceService<
     Example mistake was E-GEOD-23764.
      */
     boolean cellLineAsSampleCharacteristicButNoDiseaseAsFactor(ExperimentDesign experimentDesign){
-        return (experimentDesign.getSampleHeaders().contains("cell line") || experimentDesign.getFactorHeaders().contains("cell line"))  && ! experimentDesign.getFactorHeaders().contains("disease");
+        return (experimentDesign.getSampleHeaders().contains("cell line") ||
+                experimentDesign.getFactorHeaders().contains("cell line"))  &&
+                !experimentDesign.getFactorHeaders().contains("disease");
     }
 
 }

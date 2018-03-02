@@ -4,7 +4,7 @@ import com.google.common.base.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
 
 import javax.inject.Inject;
 import javax.inject.Named;

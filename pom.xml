@@ -30,7 +30,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <org.springframework.version>4.3.9.RELEASE</org.springframework.version>
 
-        <solr.version>6.6.0</solr.version>
+        <solr.version>7.1.0</solr.version>
     </properties>
 
     <build>
@@ -337,18 +337,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ryanharter.auto.value</groupId>
-            <artifactId>auto-value-gson</artifactId>
-            <version>0.5.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.squareup</groupId>
-            <artifactId>javapoet</artifactId>
-            <version>1.9.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math</artifactId>
             <version>2.2</version>
@@ -357,7 +345,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
+            <version>3.7</version>
         </dependency>
 
         <dependency>
@@ -379,11 +367,25 @@
             <version>3.0.3</version>
         </dependency>
 
+        <!-- Nasty bug in HttpClient 4.5.3 (bundled with Solr) -->
+        <!-- https://issues.apache.org/jira/browse/HTTPCLIENT-1831 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.5</version>
+        </dependency>
+
         <!-- Solr -->
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
             <version>${solr.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.solr</groupId>
@@ -414,9 +416,23 @@
         </dependency>
 
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.8.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
             <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -555,16 +571,6 @@
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
-            </properties>
-        </profile>
-
-        <profile>
-            <!--build used for staging and production -->
-            <id>production-sc</id>
-            <!-- jdbc.properties and log.properties are located on the filesystem, see Tomcat’s conf/Catalina/localhost/gxa.xml -->
-            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
-            <properties>
-                <data.files.location>/srv/gxa/data-sc</data.files.location>
             </properties>
         </profile>
 

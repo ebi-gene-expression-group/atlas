@@ -2,9 +2,13 @@ package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -13,6 +17,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -44,12 +49,12 @@ public class CondensedSdrfParser {
 
     private final DataFileHub dataFileHub;
     private final IdfParser idfParser;
+    // TODO https://www.pivotaltracker.com/story/show/100371514
     // private final ValueAndUnitJoiner valueAndUnitJoiner;
 
 
     @Inject
-    public CondensedSdrfParser(DataFileHub dataFileHub,
-                               IdfParser idfParser) { //ValueAndUnitJoiner valueAndUnitJoiner) {
+    public CondensedSdrfParser(DataFileHub dataFileHub, IdfParser idfParser) {
         this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
         // this.valueAndUnitJoiner = valueAndUnitJoiner;
@@ -57,25 +62,29 @@ public class CondensedSdrfParser {
     }
 
 
-    public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType) throws CondensedSdrfParserException {
+    public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType)
+            throws CondensedSdrfParserException {
+
         ExperimentDesign experimentDesign = new ExperimentDesign();
-
-        TsvReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get();
-
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
-        for (String[] tsvLine : tsvReader.readAll()) {
-            switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {
-                case FACTOR:
-                    factorsBuilder.add(tsvLine);
-                    break;
-                case CHARACTERISTIC:
-                    sampleCharacteristicsBuilder.add(tsvLine);
-                    break;
-                default:
-                    throw new CondensedSdrfParserException(String.format(
-                            "Parsing condensed SDRF for %s: Unknown factor/characteristic descriptor “%s”",
-                            experimentAccession, tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]));
+
+        try (TsvStreamer tsvStreamer = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get()) {
+            for (Iterator<String[]> tsvIterator = tsvStreamer.get().iterator(); tsvIterator.hasNext() ; ) {
+                String[] tsvLine = tsvIterator.next();
+
+                switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {
+                    case FACTOR:
+                        factorsBuilder.add(tsvLine);
+                        break;
+                    case CHARACTERISTIC:
+                        sampleCharacteristicsBuilder.add(tsvLine);
+                        break;
+                    default:
+                        throw new CondensedSdrfParserException(String.format(
+                                "Parsing condensed SDRF for %s: Unknown factor/characteristic descriptor “%s”",
+                                experimentAccession, tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]));
+                }
             }
         }
 
@@ -87,30 +96,48 @@ public class CondensedSdrfParser {
 
         Pair<String, ImmutableSet<String>> titleAndPubMedIds = idfParser.parse(experimentAccession);
 
-        return new CondensedSdrfParserOutput(experimentAccession, experimentType, titleAndPubMedIds.getLeft(), titleAndPubMedIds.getRight(), experimentDesign);
+        return new CondensedSdrfParserOutput(
+                experimentAccession,
+                experimentType,
+                titleAndPubMedIds.getLeft(),
+                titleAndPubMedIds.getRight(),
+                experimentDesign);
+
     }
 
 
-    private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, List<String[]> sampleCharacteristicsTsvLines) {
+    private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign,
+                                                     List<String[]> sampleCharacteristicsTsvLines) {
 
         for (String[] sampleCharacteristicTsvLine : sampleCharacteristicsTsvLines) {
             String header = sampleCharacteristicTsvLine[CHARACTERISTIC_TYPE_INDEX];
-            String value = sampleCharacteristicTsvLine[CHARACTERISTIC_VALUE_INDEX]; // cleanValueAndUnitIfNeeded(sampleCharacteristicTsvLine[CHARACTERISTIC_VALUE_INDEX]);
-            String characteristicValueOntologyTermAsString = sampleCharacteristicTsvLine.length > ONTOLOGY_TERMS_INDEX ? sampleCharacteristicTsvLine[ONTOLOGY_TERMS_INDEX] : null;
+            // cleanValueAndUnitIfNeeded(sampleCharacteristicTsvLine[CHARACTERISTIC_VALUE_INDEX]);
+            String value = sampleCharacteristicTsvLine[CHARACTERISTIC_VALUE_INDEX];
+
+            String characteristicValueOntologyTermAsString =
+                    sampleCharacteristicTsvLine.length > ONTOLOGY_TERMS_INDEX ?
+                            sampleCharacteristicTsvLine[ONTOLOGY_TERMS_INDEX] :
+                            null;
+
             OntologyTerm[] characteristicOntologyTerms = parseOntologyTerms(characteristicValueOntologyTermAsString);
 
-            SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(header, value, characteristicOntologyTerms);
+            SampleCharacteristic sampleCharacteristic =
+                    SampleCharacteristic.create(header, value, characteristicOntologyTerms);
 
             if (experimentDesign.getFactors(sampleCharacteristicTsvLine[RUN_OR_ASSAY_INDEX]) != null) {
-                experimentDesign.putSampleCharacteristic(sampleCharacteristicTsvLine[RUN_OR_ASSAY_INDEX], header, sampleCharacteristic);
+                experimentDesign.putSampleCharacteristic(
+                        sampleCharacteristicTsvLine[RUN_OR_ASSAY_INDEX],
+                        header,
+                        sampleCharacteristic);
             }
         }
+
     }
 
-    private void addFactorValuesToExperimentDesign(ExperimentDesign experimentDesign, Multimap<String, String[]> factorsByAssayRun) {
+    private void addFactorValuesToExperimentDesign(ExperimentDesign experimentDesign,
+                                                   Multimap<String, String[]> factorsByAssayRun) {
 
         for (String runOrAssay : factorsByAssayRun.keys()) {
-
             String compoundFactorType = null;
             String compoundFactorValue = null;
             String compoundFactorValueOntologyTermAsString = null;
@@ -120,7 +147,11 @@ public class CondensedSdrfParser {
                 String factorType = factorTsvLine[FACTOR_TYPE_INDEX];
                 String factorValue = factorTsvLine[FACTOR_VALUE_INDEX];
                 //cleanValueAndUnitIfNeeded(factorTsvLine[FACTOR_VALUE_INDEX]);
-                String factorValueOntologyTermAsString = factorTsvLine.length > ONTOLOGY_TERMS_INDEX ? factorTsvLine[ONTOLOGY_TERMS_INDEX] : null;
+
+                String factorValueOntologyTermAsString =
+                        factorTsvLine.length > ONTOLOGY_TERMS_INDEX ?
+                                factorTsvLine[ONTOLOGY_TERMS_INDEX] :
+                                null;
 
                 if (isFactorThatHasADose(factorType)) {
 
@@ -139,19 +170,27 @@ public class CondensedSdrfParser {
                         compoundFactorValue = null;
                         compoundFactorValueOntologyTermAsString = null;
                     } else {
-                        throw new CondensedSdrfParserException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
+                        throw new CondensedSdrfParserException(
+                                DOSE + " : " + factorValue + " has no corresponding value " +
+                                "for any of the following factors: " + FACTORS_NEEDING_DOSE);
                     }
-
                 }
 
-                experimentDesign.putFactor(runOrAssay, factorType, factorValue, parseOntologyTerms(factorValueOntologyTermAsString));
+                experimentDesign.putFactor(
+                        runOrAssay,
+                        factorType,
+                        factorValue,
+                        parseOntologyTerms(factorValueOntologyTermAsString));
             }
 
             //Add compound factor in a case there was no dose corresponding to it
             if (!Strings.isNullOrEmpty(compoundFactorType) && !Strings.isNullOrEmpty(compoundFactorValue)) {
-                experimentDesign.putFactor(runOrAssay, compoundFactorType, compoundFactorValue, parseOntologyTerms(compoundFactorValueOntologyTermAsString));
+                experimentDesign.putFactor(
+                        runOrAssay,
+                        compoundFactorType,
+                        compoundFactorValue,
+                        parseOntologyTerms(compoundFactorValueOntologyTermAsString));
             }
-
         }
 
     }
@@ -181,7 +220,9 @@ public class CondensedSdrfParser {
     }
 
 
-    private void addArraysToExperimentDesign(ExperimentDesign experimentDesign, Multimap<String, String[]> assayRunToTsvLines) {
+    private void addArraysToExperimentDesign(ExperimentDesign experimentDesign,
+                                             Multimap<String, String[]> assayRunToTsvLines) {
+
         for (String assayRun : assayRunToTsvLines.keys()) {
 
             String assayDesign = assayRunToTsvLines.get(assayRun).iterator().next()[ASSAY_DESIGN_INDEX];
@@ -193,6 +234,7 @@ public class CondensedSdrfParser {
 
             experimentDesign.putArrayDesign(assayRun, assayDesign);
         }
+
     }
 
 

@@ -35,6 +35,7 @@
   atlasAutocomplete.render({
     atlasUrl: '${pageContext.request.contextPath}/',
     suggesterEndpoint: 'json/suggestions',
-    initialValue: '${geneId}'
+    initialValue: '${geneId}',
+    enableSpeciesFilter: true
   }, 'target')
 </script>

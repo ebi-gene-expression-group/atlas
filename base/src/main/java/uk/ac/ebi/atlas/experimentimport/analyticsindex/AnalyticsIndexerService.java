@@ -15,7 +15,11 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Named
 public class AnalyticsIndexerService {
@@ -23,15 +27,12 @@ public class AnalyticsIndexerService {
 
     private final SolrClient solrClient;
     private final ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
-    private final AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator;
 
     @Inject
     public AnalyticsIndexerService(@Qualifier("solrClientAnalytics") SolrClient solrClient,
-                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory,
-                                   AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator) {
+                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory) {
         this.solrClient = solrClient;
         this.experimentDataPointStreamFactory = experimentDataPointStreamFactory;
-        this.analyticsIndexDocumentValidator = analyticsIndexDocumentValidator;
     }
 
     public int index(
@@ -51,22 +52,21 @@ public class AnalyticsIndexerService {
             while (it.hasNext()) {
                 while (addedIntoThisBatch < batchSize && it.hasNext()) {
                     SolrInputDocument analyticsInputDocument = it.next();
-                    if (analyticsIndexDocumentValidator.validate(analyticsInputDocument)) {
-                        toLoad.add(analyticsInputDocument);
-                        addedIntoThisBatch++;
-                    }
+                    toLoad.add(analyticsInputDocument);
+                    addedIntoThisBatch++;
                 }
                 if (addedIntoThisBatch > 0) {
                     UpdateResponse r = solrClient.add(toLoad);
-                    LOGGER.info("Sent {} documents for {}, qTime:{}",
+                    LOGGER.info(
+                            "Sent {} documents for {}, qTime:{}",
                             addedIntoThisBatch, experiment.getAccession(), r.getQTime());
                     addedInTotal += addedIntoThisBatch;
                     addedIntoThisBatch = 0;
-                    toLoad = new ArrayList<>(batchSize);
+                    toLoad.clear();
                 }
             }
 
-        } catch (IOException | SolrServerException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }

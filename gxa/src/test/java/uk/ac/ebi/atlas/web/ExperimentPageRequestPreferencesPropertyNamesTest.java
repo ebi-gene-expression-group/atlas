@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.beanutils.BeanUtils;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,6 +50,11 @@ public class ExperimentPageRequestPreferencesPropertyNamesTest {
         for(String requiredProperty: baselinePageProperties){
             assertThat(baselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
+        for(String requiredProperty: BeanUtils.describe(new RnaSeqBaselineRequestPreferences()).keySet()){
+            if(! requiredProperty.contains("default")){
+                assertThat(baselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
+            }
+        }
 
 
         Set<String> proteomicsBaselineRequestPreferencesProperties =
@@ -63,7 +69,9 @@ public class ExperimentPageRequestPreferencesPropertyNamesTest {
         for(String requiredProperty: baselinePageProperties){
             assertThat(proteomicsBaselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
-
+        for(String requiredProperty: BeanUtils.describe(new ProteomicsBaselineRequestPreferences()).keySet()){
+            assertThat(proteomicsBaselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
+        }
 
         List<String> differentialPageProperties =
                 ImmutableList.<String>builder()
@@ -82,6 +90,10 @@ public class ExperimentPageRequestPreferencesPropertyNamesTest {
                 }).toSet();
 
         for(String requiredProperty: differentialPageProperties){
+            assertThat(differentialRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
+        }
+
+        for(String requiredProperty:  BeanUtils.describe(new DifferentialRequestPreferences()).keySet()){
             assertThat(differentialRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
 

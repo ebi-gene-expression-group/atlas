@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -68,7 +66,7 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
         private void close() {
             try {
                 inputStream.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
