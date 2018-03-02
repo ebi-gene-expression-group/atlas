@@ -10,7 +10,7 @@ public class LinkToGene<P extends Profile> implements Function<P, URI> {
     @Override
     public URI apply(P profile) {
         try {
-            return new URI("genes/" + profile.getId() + "#information");
+            return new URI("genes/" + profile.getId());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
