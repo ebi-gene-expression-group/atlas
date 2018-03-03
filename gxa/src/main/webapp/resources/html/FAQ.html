@@ -32,7 +32,7 @@
 
 
         <h4><a name="rnaseqAnalysis">How is RNA-seq data analysed?</a></h4>
-        <p>RNA-seq data is analysed using the <a href="https://nunofonseca.github.io/irap/">iRAP</a> pipeline. Quality-filtered reads are aligned to the latest version of the reference genome from <a href="https://www.ensembl.org/index.html">Ensembl</a> using <a href="https://genomebiology.biomedcentral.com/articles/10.1186/gb-2013-14-4-r36">TopHat2</a>. Raw counts (number of mapped reads summarized and aggregated over each gene) are generated using  <a href="https://www-huber.embl.de/HTSeq/doc/count.html">htseq-count</a>. Then, FPKM (fragments per kilobase of exon model per million mapped reads) and TPM (transcripts per million) are calculated. Pairwise comparisons are performed using a conditioned test based on the negative binomial distribution, using  <a href="https://www.bioconductor.org/packages/release/bioc/html/DESeq.html">DESeq</a>.</p>
+        <p>RNA-seq data is analysed using the <a href="https://nunofonseca.github.io/irap/">iRAP</a> pipeline. Quality-filtered reads are aligned to the latest version of the reference genome from <a href="https://www.ensembl.org/index.html">Ensembl</a> using <a href="https://genomebiology.biomedcentral.com/articles/10.1186/gb-2013-14-4-r36">TopHat2</a>. Raw counts (number of mapped reads summarized and aggregated over each gene) are generated using  <a href="http://htseq.readthedocs.io/">htseq-count</a>. Then, FPKM (fragments per kilobase of exon model per million mapped reads) and TPM (transcripts per million) are calculated. Pairwise comparisons are performed using a conditioned test based on the negative binomial distribution, using  <a href="https://www.bioconductor.org/packages/release/bioc/html/DESeq.html">DESeq</a>.</p>
 
 
         <h4><a name="rnaseqUnits">What are FPKM and TPM?</a></h4>
@@ -48,7 +48,7 @@
 
 
         <h4><a name="analysisMethods">How do I see how an individual experiment was analysed?</a></h4>
-        <p>On any <strong>Experiment page</strong>, e.g. <a href="/gxa/experiments/E-MTAB-2809">RNA-seq of coding RNA of eight barley tissues from different developmental stages</a> you can see a breakdown of the analysis steps from raw data to the results you see in Expression Atlas by clicking the <img alt="analysis methods button" src="resources/images/help/am_btn.png" align="bottom"> button in the top right corner of the page.</p>
+        <p>On any <strong>Experiment page</strong>, e.g. <a href="/gxa/experiments/E-MTAB-2809">RNA-seq of coding RNA of eight barley tissues from different developmental stages</a> you can see a breakdown of the analysis steps from raw data to the results you see in Expression Atlas by selecting the <i>Experiment design</i> or <i>Supplemmentary information</i> tab on the top of the experiment section.</p>
 
 
         <h4><a name="contact">How can I contact you?</a></h4>
@@ -65,19 +65,56 @@
 
         <h3><a name="searching">Searching</a></h3><br>
 
-
-        <h4><a name="conditionSearch">How do I find out what genes are expressed in a particular condition (e.g. in my favourite tissue, cell line, developmental stage)?</a></h4>
-        <p>Use the <strong>Condition query</strong> search box on the <a href="/gxa">home page</a> to search for the condition you are interested in e.g. <a href="/gxa/search?conditionQuery=%5B%7B%22value%22%3A%22kidney%22%7D%5D">kidney</a>. Click on <strong>Show anatomogram</strong> in the top left corner if you want to see the corresponding anatomogram for each of the species displayed. Your query is expanded using the Experimental Factor Ontology <a href="https://www.ebi.ac.uk/efo/">(EFO)</a>, so that this search will also returns matching synonyms and child terms of <a href="https://www.ebi.ac.uk/ols/search?q=kidney&submit1=1&ontology=efo">kidney</a> in EFO. You will see both baseline expression and differential expression results in the condition (organism part in our example) you searched for.</p>
-        <p>Select one experiment from the Baseline multi-experiment page (e.g. <a href="/gxa/experiments/E-MTAB-5214?geneQuery=%5B%5D">GTEx</a>) to see the results in that particular experiment. Use the <strong>Organism part</strong> box to find <a href="/gxa/experiments/E-MTAB-5214?accessKey=&serializedFilterFactors=&queryFactorType=ORGANISM_PART&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=%5B%5D&queryFactorValues=cortex+of+kidney&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5">what genes are expressed in kidney in GTEx</a>.</p>
+        <h4><a name="conditionSearch">How do I find out what genes are expressed in a particular condition (e.g. in my
+            favourite tissue, cell line, developmental stage)?</a></h4>
+        <p>
+            Use the <strong>Condition query</strong> search box on the <a href="/gxa">home page</a> to search for the
+            condition you are interested in e.g.
+            <a href="/gxa/search?conditionQuery=%5B%7B%22value%22%3A%22kidney%22%7D%5D">kidney</a>. Click on
+            <strong>Show anatomogram</strong> in the top left corner if you want to see the corresponding anatomogram
+            for each of the species displayed. Your query is expanded using the Experimental Factor Ontology
+            <a href="https://www.ebi.ac.uk/efo/">(EFO)</a>, so that this search will also returns matching synonyms and
+            child terms of <a href="https://www.ebi.ac.uk/ols/search?q=kidney&submit1=1&ontology=efo">kidney</a> in
+            EFO. You will see both baseline expression and differential expression results in the condition (organism
+            part in our example) you searched for.</p>
+        <p>
+            Select one experiment from the Baseline multi-experiment page (e.g.
+            <a href="/gxa/experiments/E-MTAB-5214">GTEx</a>) to see the results in that particular
+            experiment. Use the <i>Select</i> button under <strong>Organism parts</strong> on the left sidebar to find
+            <a href="/gxa/experiments/E-MTAB-5214/Results?specific=true&geneQuery=%255B%255D&filterFactors=%257B%2522ORGANISM_PART%2522%253A%255B%2522cortex%2520of%2520kidney%2522%255D%257D&cutoff=%257B%2522value%2522%253A0.5%257D&unit=%2522TPM%2522">
+            what genes are expressed in kidney in GTEx</a>.</p>
 
 
         <h4><a name="multiConditionQuery">How do I search for multiple conditions at once?</a></h4>
-        <p>Use the <strong>Condition query</strong> search box on the <a href="/gxa">home page</a> to search for as many conditions as you want. You will need to type each condition, click enter and when you are done, just search. For example, searching with <img alt="liver_heart" src="resources/images/help/liver_heart.png" align="bottom"> will find <a href="/gxa/search?conditionQuery=%5B%7B%22value%22%3A%22liver%22%7D%2C%7B%22value%22%3A%22heart%22%7D%5D">all experiments in which both liver and heart are studied as well as the ones analysing either liver or heart</a>.</p>
+        <p>
+            Use the <strong>Condition query</strong> search box on the <a href="/gxa">home page</a> to search for as
+            many conditions as you want. You will need to type each condition, click enter and when you are done, just
+            search. For example, searching with
+            <img alt="liver_heart" src="resources/images/help/liver_heart.png" align="bottom"> will find
+            <a href="/gxa/search?conditionQuery=%5B%7B%22value%22%3A%22liver%22%7D%2C%7B%22value%22%3A%22heart%22%7D%5D">
+            all experiments in which both liver and heart are studied as well as the ones analysing either liver or
+            heart</a>.
+        </p>
 
 
         <h4><a name="geneSearch">How do I find out in which conditions my favourite gene is expressed?</a></h4>
-        <p>Use the <strong>Gene query</strong> search box on the <a href="/gxa">home page</a> to search for your favourite gene (e.g. <a href="/gxa/search?geneQuery=%5B%7B%22value%22%3A%22SFTPC%22%2C%22category%22%3A%22symbol%22%7D%5D">SFTPC</a>). Click on <strong>Show anatomogram</strong> in the top left corner if you want to see the corresponding anatomogram for each of the species displayed. You will see <strong>Baseline expression</strong> results in different conditions (e.g. organism part, cell line, cell type, developmental stage) and <strong>Differential expression</strong> results for biologically meaningful pairwise comparisons.</p>
-        <p>Select one experiment from the <strong>Baseline expression</strong> results (e.g. <a href="/gxa/experiments/E-MTAB-5214?geneQuery=%5B%5D">GTEx</a>) to see the results in that particular experiment. Use the <strong>Gene query</strong> box (e.g. SFTPC in our example) to find <a href="/gxa/experiments/E-MTAB-5214?accessKey=&serializedFilterFactors=&queryFactorType=ORGANISM_PART&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=%5B%7B%22value%22%3A%22SFTPC%22%2C%22category%22%3A%22symbol%22%7D%5D&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5">in which tissues from GTEx gene SFTPC is expressed</a>.</p>
+        <p>
+            Use the <strong>Gene query</strong> search box on the <a href="/gxa">home page</a> to search for your
+            favourite gene (e.g.
+            <a href="/gxa/search?geneQuery=%5B%7B%22value%22%3A%22SFTPC%22%2C%22category%22%3A%22symbol%22%7D%5D">
+            SFTPC</a>). Click on <strong>Show anatomogram</strong> in the top left corner if you want to see the
+            corresponding anatomogram for each of the species displayed. You will see <strong>Baseline
+            expression</strong> results in different conditions (e.g. organism part, cell line, cell type,
+            developmental stage) and <strong>Differential expression</strong> results for biologically meaningful
+            pairwise comparisons.
+        </p>
+        <p>
+            Select one experiment from the <strong>Baseline expression</strong> results (e.g.
+            <a href="/gxa/experiments/E-MTAB-5214">GTEx</a>) to see the results in that particular
+            experiment. Use the <strong>Gene query</strong> box (e.g. SFTPC in our example) to find
+            <a href="/gxa/experiments/E-MTAB-5214/Results?specific=true&geneQuery=%255B%257B%2522value%2522%253A%2522SFTPC%2522%252C%2522category%2522%253A%2522symbol%2522%257D%255D&filterFactors=%257B%257D&cutoff=%257B%2522value%2522%253A0.5%257D&unit=%2522TPM%2522">
+            in which tissues from GTEx gene SFTPC is expressed</a>.
+        </p>
 
 
         <h4><a name="multiGeneQuery">How do I search for multiple genes at once?</a></h4>
@@ -169,7 +206,7 @@
 
         <h4><a name="blDownloadAnalytics">Can I download the baseline expression results?</a></h4>
         <p>Yes, click on the <img alt="Download All Results button" src="resources/images/help/downloadAllResults_btn.png" align="bottom"> button above the heatmap to download the data corresponding to your query. For example, if you select 'flower' in the <strong>Organism part</strong> box, use the <strong>Download all results</strong> button to download expression data for the <a href="/gxa/experiments/E-MTAB-552?accessKey=&serializedFilterFactors=&queryFactorType=ORGANISM_PART&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=%5B%7B%22value%22%3A%22protein_coding%22%2C%22category%22%3A%22gene_biotype%22%7D%5D&queryFactorValues=flower&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5">subset of genes specifically expressed in flower</a> in tab-delimited format with no ordering.</p>
-        <p>On the other hand, by clicking on the <img alt="Download button" src="resources/images/help/download_button.png" align="bottom"> button in the top left corner of the Experiment page you will download expression data for all genes and all conditions studied in the experiment.</p>
+        <p>On the other hand, by clicking on the <i>Downloads tab</i> of the experiment page you will download expression data for all genes and all conditions studied in the experiment.</p>
 
 
         <h4><a name="ensembl">Can I view the results in the Ensembl browser?</a></h4>
@@ -219,7 +256,7 @@
 
         <h4><a name="deDownloadAnalytics">Can I download the differential expression results?</a></h4>
         <p>Yes, click on the <img alt="Download All Results button" src="resources/images/help/downloadAllResults_btn.png" align="bottom"> button above the heatmap to download the data corresponding to your query. For example, in <a href="/gxa/experiments/E-GEOD-73131">Transcription profiling by array of pancreatic islets from Sgpp2 knockout mice after high fat diet</a> if you select just one comparison, e.g. 'high fat diet' vs 'normal' in 'Sgpp2 knockout' from the <strong>Comparison</strong> box and click Apply, by clicking on the <strong>Download all results</strong> button you will download <a href="/gxa/experiments/E-GEOD-73131?accessKey=&serializedFilterFactors=&queryFactorType=&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&arrayDesignAccession=&geneQuery=%5B%5D&regulation=UP_DOWN&queryFactorValues=g3_g1&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.05&foldChangeCutOff=1.0">expression data for the subset of genes differentially expressed in that particular comparison</a> in tab-delimited format with no ordering.</p>
-        <p>On the other hand, by clicking on the <img alt="Download button" src="resources/images/help/download_button.png" align="bottom"> button in the top left corner of the Experiment page you will download expression data for all genes in all comparisons studied in the experiment.</p>
+        <p>On the other hand, by clicking on the <i>Downloads</i> tab of the experiment page you will download expression data for all genes in all comparisons studied in the experiment.</p>
 
     </div>
 
