@@ -40,8 +40,13 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
 
         Pair<Optional<String[]>, Optional<String[]>> headerLines = readNextLines();
         if (headerLines.getLeft().isPresent() && headerLines.getRight().isPresent()) {
+            String[] leftHeader = headerLines.getLeft().get();
+            String[] rightHeader = headerLines.getRight().get();
+
             checkArgument(
-                    Arrays.deepEquals(headerLines.getLeft().get(), headerLines.getRight().get()),
+                    Arrays.deepEquals(
+                            Arrays.copyOfRange(leftHeader, FIRST_EXPRESSION_LEVEL_INDEX, leftHeader.length),
+                            Arrays.copyOfRange(rightHeader, FIRST_EXPRESSION_LEVEL_INDEX, leftHeader.length)),
                     "TPMs and FPKMs header lines don’t match!");
         }
         String[] headers = headerLines.getLeft().orElseGet(() -> headerLines.getRight().get());
