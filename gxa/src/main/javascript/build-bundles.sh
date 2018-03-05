@@ -22,7 +22,7 @@ do
     echo "Upgrading $dir:"
     cd $dir
     # Upgrade everything but React to their latest versions
-    ncu -x /react.*/ -a
+    ncu -x '/(react.*)|(webpack.*)/' -a
     yarn install
     # Upgrade React to the latest non-breaking change
     yarn upgrade
@@ -30,7 +30,7 @@ do
 done
 
 # Upgrade everything but React to their latest versions
-ncu -x /react.*/ -a
+ncu -x '/(react.*)|(webpack.*)/' -a
 yarn install
 # Upgrade React to the latest non-breaking change
 yarn upgrade
