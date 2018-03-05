@@ -40,6 +40,11 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
     private static String TSV_CONTENTS_FPKM =
             Stream.of(TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
 
+    private static final String NOT_REALLY_BAD_TSV_HEADER =
+            Stream.of("GeneID", "GeneName", "g1", "g2", "g3", "g4", "g5").collect(joining("\t"));
+    private static String TSV_CONTENTS_FPKM_NOT_REALLY_BAD_HEADER =
+            Stream.of(NOT_REALLY_BAD_TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
+
     private static final String BAD_TSV_HEADER =
             Stream.of("Gene ID", "Gene Name", "g1", "g2", "g3", "g5", "g4").collect(joining("\t"));
     private static String TSV_CONTENTS_FPKM_BAD_HEADER =
@@ -143,6 +148,24 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
 
         verify(readerTpmsSpy).close();
         verify(readerFpkmsSpy).close();
+    }
+
+    @Test
+    public void ignoresHeaderFieldsWhichAreNotAssayGroupIds() {
+        try (RnaSeqBaselineAnalyticsInputStream subject =
+                     new RnaSeqBaselineAnalyticsInputStream(
+                             Optional.of(new StringReader(TSV_CONTENTS_TPM)),
+                             Optional.of(new StringReader(TSV_CONTENTS_FPKM_NOT_REALLY_BAD_HEADER)))) {
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g1", 1.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g2", 2.0, 0.8));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g3", 3.0, 2.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g4", 4.0, 2.9));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g5", 0.5, 0.1));
+
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g2", 0.1, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g3", 1.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g5", 1.0, 0.5));
+        }
     }
 
     @Ignore
