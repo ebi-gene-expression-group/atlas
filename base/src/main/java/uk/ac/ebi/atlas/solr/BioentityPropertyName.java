@@ -46,8 +46,8 @@ public enum BioentityPropertyName {
             ImmutableMap.copyOf(Arrays.stream(values()).collect(Collectors.toMap(v -> v.name, v -> v)));
 
     public final String name;
-    public final String label;
     public final boolean isId;
+    public final String label;
 
     BioentityPropertyName(String name, boolean isId, String label) {
         this.name = name;
