@@ -1,12 +1,13 @@
-package uk.ac.ebi.atlas.search.analyticsindex.solr;
+package uk.ac.ebi.atlas.solr.analytics.query;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
+import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsSolrQueryTree.Operator.OR;
 
 public class AnalyticsSolrQueryTree {
     private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
@@ -146,7 +147,7 @@ public class AnalyticsSolrQueryTree {
             for (String searchValue : searchValues) {
                 childrenBuilder.add(new Leaf(searchField, searchValue));
             }
-            root = new Parent(Operator.OR, childrenBuilder.build());
+            root = new Parent(OR, childrenBuilder.build());
         }
     }
 
@@ -216,7 +217,7 @@ public class AnalyticsSolrQueryTree {
                 if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
                     return new Parent(
                             OR,
-                            possibleIdentifierKeywords().stream()
+                            identifierKeywords().stream()
                                     .map(possibleIdentifierSearch ->
                                             new Leaf(possibleIdentifierSearch, leaf.searchValue))
                                     .collect(Collectors.toList()));
@@ -240,14 +241,18 @@ public class AnalyticsSolrQueryTree {
 
     }
 
-    private static ImmutableList<String> possibleIdentifierKeywords(){
+    private static ImmutableList<String> identifierKeyword() {
+        return ImmutableList.of(AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER.name());
+    }
+
+    private static ImmutableList<String> identifierKeywords() {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
 
         return builder
                 .add(BioentityPropertyName.BIOENTITY_IDENTIFIER.name)
                 .addAll(ExperimentDataPoint.bioentityPropertyNames.stream()
                         .filter(bioentityPropertyName -> bioentityPropertyName.isId)
-                        .map(BioentityPropertyName::asAnalyticsIndexKeyword)
+                        .map(AnalyticsCollectionProxy::asAnalyticsIndexKeyword)
                         .collect(Collectors.toList()))
                 .build();
     }

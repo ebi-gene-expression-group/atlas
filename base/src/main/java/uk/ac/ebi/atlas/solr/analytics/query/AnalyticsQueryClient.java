@@ -97,7 +97,7 @@ public class AnalyticsQueryClient {
 
         private static final String DEFAULT_QUERY = "*:*";
 
-        private ImmutableList.Builder<AnalyticsQueryTree> queryClausesBuilder = ImmutableList.builder();
+        private ImmutableList.Builder<AnalyticsSolrQueryTree> queryClausesBuilder = ImmutableList.builder();
 
         final SolrQuery solrQuery = new SolrQuery();
 
@@ -174,14 +174,14 @@ public class AnalyticsQueryClient {
 
         private void addQueryClause(Field searchField, String searchValue) {
             if (!isBlank(searchValue)) {
-                queryClausesBuilder.add(new AnalyticsQueryTree(searchField.toString(), searchValue));
+                queryClausesBuilder.add(new AnalyticsSolrQueryTree(searchField.toString(), searchValue));
             }
         }
 
         public Builder queryIdentifierOrConditionsSearch(SemanticQuery query) {
-            queryClausesBuilder.add(new AnalyticsQueryTree(
-                    AnalyticsQueryTree.Operator.OR,
-                    AnalyticsQueryTree.createForIdentifierSearch(query),
+            queryClausesBuilder.add(new AnalyticsSolrQueryTree(
+                    AnalyticsSolrQueryTree.Operator.OR,
+                    AnalyticsSolrQueryTree.createForIdentifierSearch(query),
                     conditionsSearchQuery(query)
             ));
             return this;
@@ -189,18 +189,18 @@ public class AnalyticsQueryClient {
 
         public Builder queryIdentifierSearch(SemanticQuery geneQuery) {
             if(isNotEmpty(geneQuery)){
-                queryClausesBuilder.add(AnalyticsQueryTree.createForIdentifierSearch(geneQuery));
+                queryClausesBuilder.add(AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery));
             }
             return this;
         }
 
-        private AnalyticsQueryTree conditionsSearchQuery(SemanticQuery conditionQuery) {
+        private AnalyticsSolrQueryTree conditionsSearchQuery(SemanticQuery conditionQuery) {
             Stream<String> var =
                     conditionQuery.terms().stream()
                             .filter(SemanticQueryTerm::hasValue)
                             .map(SemanticQueryTerm::value);
 
-            return new AnalyticsQueryTree(CONDITIONS_SEARCH.toString(), var.toArray(String[]::new));
+            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), var.toArray(String[]::new));
         }
 
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {
@@ -246,14 +246,14 @@ public class AnalyticsQueryClient {
         }
     }
 
-    private static List<String> qsForQueryClauses(List<AnalyticsQueryTree> queryClauses) {
+    private static List<String> qsForQueryClauses(List<AnalyticsSolrQueryTree> queryClauses) {
         if (queryClauses.isEmpty()) {
             return ImmutableList.of(Builder.DEFAULT_QUERY);
         } else {
             return
-                    new AnalyticsQueryTree(
-                            AnalyticsQueryTree.Operator.AND,
-                            queryClauses.toArray(new AnalyticsQueryTree[0])
+                    new AnalyticsSolrQueryTree(
+                            AnalyticsSolrQueryTree.Operator.AND,
+                            queryClauses.toArray(new AnalyticsSolrQueryTree[0])
                     ).toQueryPlan();
         }
     }
