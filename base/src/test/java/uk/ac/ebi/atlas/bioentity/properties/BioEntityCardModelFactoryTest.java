@@ -15,24 +15,22 @@ import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BioEntityCardModelFactoryTest {
+    private static final BioentityPropertyName BIOENTITY_PROPERTY_NAME_GO = BioentityPropertyName.GO;
+    private static final String GENE_ID = "identifier";
+    private static final Species SPECIES = new SpeciesFactory(null).createUnknownSpecies();
 
     @Mock
-    ArrayDesignDAO arrayDesignDAO;
+    private ArrayDesignDAO arrayDesignDAO;
 
     @Mock
-    BioEntityPropertyService linkBuilder;
+    private BioEntityPropertyService linkBuilder;
 
-    BioEntityCardModelFactory subject;
-
-    String identifier = "identifier";
-
-    Species species = new SpeciesFactory(null).createUnknownSpecies();
+    private BioEntityCardModelFactory subject;
 
     @Before
     public void setUp() throws Exception {
@@ -41,46 +39,56 @@ public class BioEntityCardModelFactoryTest {
 
 
     @Test
-    public void nullCases() throws Exception {
+    public void nullCases() {
+        assertThat(subject.bioentityProperties(GENE_ID, SPECIES, ImmutableList.of(), ImmutableMap.of()))
+                .isEqualTo(new JsonArray());
+
         assertThat(
-                subject.bioentityProperties(identifier, species, ImmutableList.of(), ImmutableMap.of()),
-                is(new JsonArray())
-        );
+                subject.bioentityProperties(
+                        GENE_ID, SPECIES,
+                        ImmutableList.of(BioentityPropertyName.GO),
+                        ImmutableMap.of()))
+                .isEqualTo(new JsonArray());
+
         assertThat(
-                subject.bioentityProperties(identifier, species, ImmutableList.of(BioentityPropertyName.GO), ImmutableMap.of()),
-                is(new JsonArray())
-        );
+                subject.bioentityProperties(
+                        GENE_ID,
+                        SPECIES,
+                        ImmutableList.of(BioentityPropertyName.GO),
+                        ImmutableMap.of(BioentityPropertyName.PATHWAYID, ImmutableSet.of())))
+                .isEqualTo(new JsonArray());
+
         assertThat(
-                subject.bioentityProperties(identifier, species, ImmutableList.of(BioentityPropertyName.GO), ImmutableMap.of(BioentityPropertyName.PATHWAYID, ImmutableSet.of())),
-                is(new JsonArray())
-        );
-        assertThat(
-                subject.bioentityProperties(identifier, species, ImmutableList.of(BioentityPropertyName.GO), ImmutableMap.of(BioentityPropertyName.GO, ImmutableSet.of())),
-                is(new JsonArray())
-        );
+                subject.bioentityProperties(
+                        GENE_ID,
+                        SPECIES,
+                        ImmutableList.of(BioentityPropertyName.GO),
+                        ImmutableMap.of(BioentityPropertyName.GO, ImmutableSet.of()))).
+                isEqualTo(new JsonArray());
     }
 
     @Test
-    public void outputLooksRight() throws Exception {
-        when(linkBuilder.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("value")))
+    public void outputLooksRight() {
+        when(linkBuilder.mapToLinkText(BIOENTITY_PROPERTY_NAME_GO, ImmutableSet.of("value")))
                 .thenReturn(ImmutableMap.of("value", "value"));
 
         JsonArray result =
                 subject.bioentityProperties(
-                        identifier,
-                        species,
-                        ImmutableList.of(BioentityPropertyName.GO),
-                        ImmutableMap.of(BioentityPropertyName.GO, ImmutableSet.of("value")));
+                        GENE_ID,
+                        SPECIES,
+                        ImmutableList.of(BIOENTITY_PROPERTY_NAME_GO),
+                        ImmutableMap.of(BIOENTITY_PROPERTY_NAME_GO, ImmutableSet.of("value")));
 
         JsonObject property = result.get(0).getAsJsonObject();
 
-        assertThat(property.get("type").getAsString(), is("go"));
-        assertThat(property.get("name").getAsString(), is("Gene Ontology"));
+        assertThat(property.get("type").getAsString()).isEqualTo(BIOENTITY_PROPERTY_NAME_GO.name);
+        assertThat(property.get("name").getAsString()).isEqualTo(BIOENTITY_PROPERTY_NAME_GO.label);
 
         JsonObject value = property.get("values").getAsJsonArray().get(0).getAsJsonObject();
-        assertThat(value.get("text").getAsString(), is("value"));
-        assertThat(value.get("url").getAsString(), is("http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value"));
-        assertThat(value.get("relevance").getAsInt(), is (0));
+        assertThat(value.get("text").getAsString()).isEqualTo("value");
+        assertThat(value.get("url").getAsString())
+                .isEqualTo("http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value");
+        assertThat(value.get("relevance").getAsInt()).isEqualTo(0);
     }
 
 }
