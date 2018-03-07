@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import java.util.Map.Entry;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.GENE_BIOTYPE;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GENE_BIOTYPE;
 
 public class BioEntityCardPropertiesTest {
 

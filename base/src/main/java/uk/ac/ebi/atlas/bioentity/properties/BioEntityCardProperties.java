@@ -2,9 +2,9 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.*;
 
 public class BioEntityCardProperties {
 

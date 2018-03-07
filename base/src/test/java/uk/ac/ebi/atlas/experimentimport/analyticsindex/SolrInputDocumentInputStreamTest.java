@@ -13,7 +13,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import java.util.Map;
 import java.util.Set;
@@ -26,9 +26,10 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.GO;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.GOTERM;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.ORTHOLOG;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GOTERM;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ORTHOLOG;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrInputDocumentInputStreamTest {
@@ -75,11 +76,11 @@ public class SolrInputDocumentInputStreamTest {
         assertThat(result.get("expression_level").getValue(), is(13.37));
 
         //identifier search
-        assertThat(result.keySet(), hasItems(GO.asAnalyticsIndexKeyword(), "identifier_search"));
+        assertThat(result.keySet(), hasItems(asAnalyticsSchemaKeyword(GO), "identifier_search"));
         assertThat(result.get("identifier_search").toString(), containsString("pancake"));
 
         //we do not index everything
-        assertThat(result.keySet(), not(hasItem(ORTHOLOG.asAnalyticsIndexKeyword())));
+        assertThat(result.keySet(), not(hasItem(asAnalyticsSchemaKeyword(ORTHOLOG))));
 
         assertThat(subject.readNext(), is(nullValue()));
     }
