@@ -14,7 +14,7 @@ import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPointStream;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;

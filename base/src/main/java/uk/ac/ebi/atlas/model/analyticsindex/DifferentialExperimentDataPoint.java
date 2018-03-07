@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 

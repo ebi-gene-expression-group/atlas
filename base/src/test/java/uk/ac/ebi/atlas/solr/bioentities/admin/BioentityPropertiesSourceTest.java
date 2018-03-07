@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
 import uk.ac.ebi.atlas.species.SpeciesFactory;

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import org.apache.solr.client.solrj.SolrClient;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
@@ -18,6 +19,10 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     public static final AnalyticsSchemaField EXPRESSION_LEVEL = new AnalyticsSchemaField("expression_level");
     public static final AnalyticsSchemaField LOG_2_FOLD_CHANGE = new AnalyticsSchemaField("fold_change");
     public static final AnalyticsSchemaField ADJUSTED_P_VALUE = new AnalyticsSchemaField("p_value");
+
+    public static String asAnalyticsIndexKeyword(BioentityPropertyName bioentityPropertyName) {
+        return String.format("keyword_%s", bioentityPropertyName.name);
+    }
 
     public AnalyticsCollectionProxy(SolrClient solrClient) {
         super(solrClient, "analytics");

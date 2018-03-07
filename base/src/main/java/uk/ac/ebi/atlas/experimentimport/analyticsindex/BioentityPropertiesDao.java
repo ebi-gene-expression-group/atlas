@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;

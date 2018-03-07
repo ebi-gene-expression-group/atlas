@@ -10,7 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.species.SpeciesProperties;

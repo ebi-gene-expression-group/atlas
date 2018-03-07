@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.common.SolrInputDocument;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
 import java.io.IOException;
@@ -14,6 +14,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsIndexKeyword;
 
 public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInputDocument> {
 
@@ -60,12 +62,12 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
 
         List<String> nonKeywordProperties = new LinkedList<>();
 
-        for(BioentityPropertyName bioentityPropertyName : experimentDataPoint.getRelevantBioentityPropertyNames()){
+        for (BioentityPropertyName bioentityPropertyName : experimentDataPoint.getRelevantBioentityPropertyNames()) {
             Collection<String> values = bioentityProperties.get(bioentityPropertyName);
-            if(values != null){
-                for(String value: values){
-                    if(bioentityPropertyName.isId){
-                        solrInputDocument.addField(bioentityPropertyName.asAnalyticsIndexKeyword(), value);
+            if (values != null) {
+                for (String value : values) {
+                    if (bioentityPropertyName.isId) {
+                        solrInputDocument.addField(asAnalyticsIndexKeyword(bioentityPropertyName), value);
                     } else {
                         nonKeywordProperties.add(value);
                     }
