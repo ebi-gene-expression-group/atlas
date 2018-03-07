@@ -232,11 +232,10 @@ public class AnalyticsQueryClient {
         }
 
         public String fetch() {
-
             List<String> qsForQueryClauses = qsForQueryClauses(queryClausesBuilder.build());
             SolrQuery[] solrQueries = new SolrQuery[qsForQueryClauses.size()];
 
-            for(int i = 0; i< qsForQueryClauses.size(); i++){
+            for (int i = 0 ; i < qsForQueryClauses.size() ; i++) {
                 SolrQuery c = solrQuery.getCopy();
                 c.setQuery(qsForQueryClauses.get(i));
                 solrQueries[i] = c;
