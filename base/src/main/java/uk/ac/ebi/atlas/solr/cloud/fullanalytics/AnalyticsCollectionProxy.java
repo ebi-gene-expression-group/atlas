@@ -20,7 +20,7 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     public static final AnalyticsSchemaField LOG_2_FOLD_CHANGE = new AnalyticsSchemaField("fold_change");
     public static final AnalyticsSchemaField ADJUSTED_P_VALUE = new AnalyticsSchemaField("p_value");
 
-    public static String asAnalyticsIndexKeyword(BioentityPropertyName bioentityPropertyName) {
+    public static String asAnalyticsSchemaKeyword(BioentityPropertyName bioentityPropertyName) {
         return String.format("keyword_%s", bioentityPropertyName.name);
     }
 

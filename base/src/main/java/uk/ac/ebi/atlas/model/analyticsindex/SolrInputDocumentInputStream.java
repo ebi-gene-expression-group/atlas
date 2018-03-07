@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsIndexKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
 
 public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInputDocument> {
 
@@ -67,7 +67,7 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
             if (values != null) {
                 for (String value : values) {
                     if (bioentityPropertyName.isId) {
-                        solrInputDocument.addField(asAnalyticsIndexKeyword(bioentityPropertyName), value);
+                        solrInputDocument.addField(asAnalyticsSchemaKeyword(bioentityPropertyName), value);
                     } else {
                         nonKeywordProperties.add(value);
                     }

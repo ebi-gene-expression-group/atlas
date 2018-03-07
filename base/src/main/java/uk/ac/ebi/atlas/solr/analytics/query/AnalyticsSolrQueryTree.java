@@ -21,7 +21,7 @@ import static uk.ac.ebi.atlas.solr.BioentityPropertyName.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient.Field.IDENTIFIER_SEARCH;
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsSolrQueryTree.Operator.OR;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsIndexKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
 
 public class AnalyticsSolrQueryTree {
     private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
@@ -227,7 +227,7 @@ public class AnalyticsSolrQueryTree {
 
             Function<Leaf, TreeNode> makeTreeForSymbol = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
-                    return new Leaf(asAnalyticsIndexKeyword(SYMBOL), leaf.searchValue);
+                    return new Leaf(asAnalyticsSchemaKeyword(SYMBOL), leaf.searchValue);
                 } else {
                     return leaf;
                 }
@@ -269,7 +269,7 @@ public class AnalyticsSolrQueryTree {
         return ImmutableList.copyOf(
                 ExperimentDataPoint.bioentityPropertyNames.stream()
                         .filter(bioentityPropertyName -> bioentityPropertyName.isId)
-                        .map(AnalyticsCollectionProxy::asAnalyticsIndexKeyword)
+                        .map(AnalyticsCollectionProxy::asAnalyticsSchemaKeyword)
                         .collect(toList()));
     }
 }

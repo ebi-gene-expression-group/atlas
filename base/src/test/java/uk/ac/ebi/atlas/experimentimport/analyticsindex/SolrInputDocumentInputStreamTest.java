@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GOTERM;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ORTHOLOG;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsIndexKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrInputDocumentInputStreamTest {
@@ -76,11 +76,11 @@ public class SolrInputDocumentInputStreamTest {
         assertThat(result.get("expression_level").getValue(), is(13.37));
 
         //identifier search
-        assertThat(result.keySet(), hasItems(asAnalyticsIndexKeyword(GO), "identifier_search"));
+        assertThat(result.keySet(), hasItems(asAnalyticsSchemaKeyword(GO), "identifier_search"));
         assertThat(result.get("identifier_search").toString(), containsString("pancake"));
 
         //we do not index everything
-        assertThat(result.keySet(), not(hasItem(asAnalyticsIndexKeyword(ORTHOLOG))));
+        assertThat(result.keySet(), not(hasItem(asAnalyticsSchemaKeyword(ORTHOLOG))));
 
         assertThat(subject.readNext(), is(nullValue()));
     }
