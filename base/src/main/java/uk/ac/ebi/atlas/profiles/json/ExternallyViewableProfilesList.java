@@ -19,19 +19,19 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ExternallyViewableProfilesList<DataColumnDescriptor extends DescribesDataColumns,
-                                            Prof extends Profile<DataColumnDescriptor, ? extends Expression, Prof>,
-                                            Unit extends ExpressionUnit> {
+public class ExternallyViewableProfilesList<D extends DescribesDataColumns,
+                                            P extends Profile<D, ? extends Expression, ? extends Profile>,
+                                            U extends ExpressionUnit> {
 
-    private final GeneProfilesList<Prof> profiles;
-    private final Function<Prof, URI> provideLinkToProfile;
-    private final List<DataColumnDescriptor> prescribedOrderOfColumns;
-    private final Function<Prof, Unit> expressionUnitForProfile;
+    private final GeneProfilesList<P> profiles;
+    private final Function<P, URI> provideLinkToProfile;
+    private final List<D> prescribedOrderOfColumns;
+    private final Function<P, U> expressionUnitForProfile;
 
-    public ExternallyViewableProfilesList(GeneProfilesList<Prof> profiles,
-                                          Function<Prof, URI> provideLinkToProfile,
-                                          List<DataColumnDescriptor> prescribedOrderOfColumns,
-                                          Function<Prof, Unit> expressionUnitForProfile){
+    public ExternallyViewableProfilesList(GeneProfilesList<P> profiles,
+                                          Function<P, URI> provideLinkToProfile,
+                                          List<D> prescribedOrderOfColumns,
+                                          Function<P, U> expressionUnitForProfile){
         this.profiles = profiles;
         this.provideLinkToProfile = provideLinkToProfile;
         this.prescribedOrderOfColumns = prescribedOrderOfColumns;
@@ -59,7 +59,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         }
 
         JsonArray rows = new JsonArray();
-        for(Prof profile : profiles) {
+        for(P profile : profiles) {
             rows.add(convert(profile));
         }
         result.add("rows", rows);
@@ -67,23 +67,24 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         return result;
     }
 
-    private JsonObject convert(Prof profile) {
+    private JsonObject convert(P profile) {
 
         JsonObject result = new JsonObject();
-        for (Map.Entry<String, String> e: profile.properties().entrySet()) {
+        for (Map.Entry<String, String> e : profile.properties().entrySet()) {
             result.addProperty(e.getKey(), e.getValue());
         }
+
         JsonArray expressions = new JsonArray();
-        for (DataColumnDescriptor c: prescribedOrderOfColumns) {
+        for (D c : prescribedOrderOfColumns) {
             expressions.add(Optional.ofNullable(profile.getExpression(c))
-                    .map(e -> e.toJson()).orElse(new JsonObject()));
+                    .map(Expression::toJson).orElse(new JsonObject()));
         }
+
         result.add("expressions", expressions);
         result.addProperty("uri", provideLinkToProfile.apply(profile).toString());
         result.addProperty("expressionUnit", expressionUnitForProfile.apply(profile).toString());
 
         return result;
-
     }
 
 
