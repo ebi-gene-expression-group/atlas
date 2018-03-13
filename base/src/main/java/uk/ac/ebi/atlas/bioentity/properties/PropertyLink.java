@@ -22,6 +22,8 @@ public class PropertyLink {
         return url;
     }
 
+    public int getRelevance() { return relevance; }
+
     public JsonObject toJson() {
         JsonObject result = new JsonObject();
         result.addProperty("text", text);
