@@ -22,10 +22,9 @@ var jsonToTsv = function jsonToTsv(results) {
   }) ? ['tStatistics'] : []).join('\t')].concat(arrayResults.map(function (diffResults) {
     return [diffResults.bioentityIdentifier, diffResults.species, diffResults.experimentAccession, diffResults.comparison, diffResults.foldChange, diffResults.pValue, diffResults.tStatistics].filter(function (el) {
       return el !== null;
-    });
-  } // tStatistics might be missing
-  // .join(`\t`)
-  )).join('\n');
+    }) // tStatistics might be missing
+    .join('\t');
+  })).join('\n');
 };
 
 var DownloadDifferentialButton = function DownloadDifferentialButton(_ref) {

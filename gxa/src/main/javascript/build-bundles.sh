@@ -21,18 +21,14 @@ do
     pushd . > /dev/null
     echo "Upgrading $dir:"
     cd $dir
-    # Upgrade everything but React to their latest versions
+    # Upgrade everything but React and Webpack to their latest versions
     ncu -x '/(react.*)|(webpack.*)/' -a
-    yarn install
-    # Upgrade React to the latest non-breaking change
-    yarn upgrade
+    npm install
     popd > /dev/null
 done
 
-# Upgrade everything but React to their latest versions
+# Upgrade everything but React and Webpack to their latest versions
 ncu -x '/(react.*)|(webpack.*)/' -a
-yarn install
-# Upgrade React to the latest non-breaking change
-yarn upgrade
+npm install
 
-yarn run $1
+npm run $1
