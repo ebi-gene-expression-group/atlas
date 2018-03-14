@@ -87,6 +87,7 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
                 .map(TSnePoint::expressionLevel)
                 .filter(Optional::isPresent)
                 .mapToDouble(Optional::get)
+                .filter(d -> d > 0)
                 .min();
 
         String unit = "TPM"; // Get units from experiment, or from request parameter if more than one is available
