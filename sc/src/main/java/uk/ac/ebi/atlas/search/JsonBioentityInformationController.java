@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.search;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardModelFactory;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
-import uk.ac.ebi.atlas.bioentity.properties.PropertyLink;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
@@ -25,7 +21,6 @@ import java.util.stream.Collectors;
 @RestController
 public class JsonBioentityInformationController extends JsonExceptionHandlingController {
 
-    private final Gson gson;
     private BioEntityPropertyDao bioEntityPropertyDao;
     private BioEntityCardModelFactory bioEntityCardModelFactory;
     private SpeciesInferrer speciesInferrer;
@@ -35,9 +30,6 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
         this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.bioEntityCardModelFactory = bioEntityCardModelFactory;
         this.speciesInferrer = speciesInferrer;
-
-        gson = new Gson();
-        // Inject BioEntityCardModelFactory?
     }
 
     @RequestMapping(
@@ -51,15 +43,8 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
                 bioEntityPropertyDao.fetchPropertyValuesForGeneId(geneId, BioentityPropertyName.SYMBOL).stream()
                         .collect(Collectors.joining("/"));
 
-
         Map<String, Object> model = bioEntityCardModelFactory.modelAttributes(geneId, species, BioEntityCardProperties.bioentityPropertyNames, geneName, propertyValues);
 
         return model.get("bioentityProperties").toString();
-
-
-//        return gson.toJson(this.bioEntityPropertyDao.fetchGenePageProperties(geneId));
-//        return gson.toJson(this.bioEntityPropertyDao.fetchTooltipProperties(geneId));
-//        return gson.toJson(bioEntityPropertyDao.fetchPropertyValuesForGeneId(geneId, BioentityPropertyName.SYMBOL));
-
     }
 }
