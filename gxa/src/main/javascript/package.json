@@ -43,7 +43,7 @@
     "downloadjs": "^1.4.7",
     "expression-atlas-experiment-page": "^1.7.0",
     "expression-atlas-feedback": "./atlas_modules/expression-atlas-feedback-v1.3.0.tgz",
-    "expression-atlas-heatmap-highcharts": "^3.12.0",
+    "expression-atlas-heatmap-highcharts": "^3.14.0",
     "expression-atlas-number-format": "^2.1.0",
     "he": "^1.1.1",
     "highcharts": "^6.0.7",
