@@ -17,9 +17,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var jsonToTsv = function jsonToTsv(results) {
   var arrayResults = typeof results !== 'object' ? JSON.parse(results) : results;
 
-  return [['Gene', 'Organism', 'Experiment Accession', 'Comparison', 'log2foldchange', 'pValue'].concat(arrayResults.some(function (diffResults) {
+  return [['Gene', 'Species', 'Experiment accession', 'Comparison', 'log_2 fold change', 'Adjusted p-value'].concat(arrayResults.some(function (diffResults) {
     return diffResults.tStatistics !== null;
-  }) ? ['tStatistics'] : []).join('\t')].concat(arrayResults.map(function (diffResults) {
+  }) ? ['t-statistic'] : []).join('\t')].concat(arrayResults.map(function (diffResults) {
     return [diffResults.bioentityIdentifier, diffResults.species, diffResults.experimentAccession, diffResults.comparison, diffResults.foldChange, diffResults.pValue, diffResults.tStatistics].filter(function (el) {
       return el !== null;
     }) // tStatistics might be missing
