@@ -22,7 +22,7 @@ const jsonToTsv = (results)  => {
             diffResults.tStatistics
           ]
             .filter(el => el !== null)    // tStatistics might be missing
-          // .join(`\t`)
+            .join(`\t`)
         )
     ).join(`\n`)
   )
