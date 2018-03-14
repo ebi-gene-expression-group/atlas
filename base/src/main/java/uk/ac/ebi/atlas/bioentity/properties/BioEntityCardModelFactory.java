@@ -146,10 +146,9 @@ public class BioEntityCardModelFactory {
                                         species,
                                         bioEntityPropertyService.assessRelevance(propertyName, linkWithText.getKey())
                                 )
-                ).collect(Collectors.toList());
-
-        // Sort by relevance in descending order
-        links.sort((PropertyLink p1, PropertyLink p2) -> p2.getRelevance() - p1.getRelevance());
+                )
+                .sorted(Comparator.comparing(PropertyLink::getRelevance).reversed())
+                .collect(Collectors.toList());
 
         return links;
     }
