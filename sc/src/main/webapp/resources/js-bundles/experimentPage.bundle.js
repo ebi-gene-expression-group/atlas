@@ -1,7 +1,7 @@
 var experimentPage =
 webpackJsonp_name_([1],{
 
-/***/ 15:
+/***/ 17:
 /*!***************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/URI.js ***!
   \***************************************************************/
@@ -17,7 +17,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*!
  * URI.js - Mutating URLs
  *
- * Version: 1.19.0
+ * Version: 1.19.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -32,10 +32,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   if (( false ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 190), __webpack_require__(/*! ./IPv6 */ 191), __webpack_require__(/*! ./SecondLevelDomains */ 192));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 193), __webpack_require__(/*! ./IPv6 */ 194), __webpack_require__(/*! ./SecondLevelDomains */ 195));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 190), __webpack_require__(/*! ./IPv6 */ 191), __webpack_require__(/*! ./SecondLevelDomains */ 192)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 193), __webpack_require__(/*! ./IPv6 */ 194), __webpack_require__(/*! ./SecondLevelDomains */ 195)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -103,7 +103,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     );
   }
 
-  URI.version = '1.19.0';
+  URI.version = '1.19.1';
 
   var p = URI.prototype;
   var hasOwn = Object.prototype.hasOwnProperty;
@@ -1255,9 +1255,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     } else if (_URI || _object) {
       var src = _URI ? href._parts : href;
       for (key in src) {
+        if (key === 'query') {
+          continue;
+        }
         if (hasOwn.call(this._parts, key)) {
           this._parts[key] = src[key];
         }
+      }
+      if (src.query) {
+        this.query(src.query, false);
       }
     } else {
       throw new TypeError('invalid input');
@@ -2325,7 +2331,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 179:
+/***/ 182:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/fbjs/lib/emptyFunction.js ***!
   \************************************************************************/
@@ -2373,7 +2379,7 @@ module.exports = emptyFunction;
 
 /***/ }),
 
-/***/ 180:
+/***/ 183:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/fbjs/lib/invariant.js ***!
   \********************************************************************/
@@ -2438,7 +2444,7 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ 181:
+/***/ 184:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/fbjs/lib/warning.js ***!
   \******************************************************************/
@@ -2457,7 +2463,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 179);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 182);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -2512,7 +2518,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 182:
+/***/ 185:
 /*!*************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \*************************************************************************************/
@@ -2536,7 +2542,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 183:
+/***/ 186:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/resolve-pathname/index.js ***!
   \************************************************************************/
@@ -2623,7 +2629,7 @@ exports.default = resolvePathname;
 
 /***/ }),
 
-/***/ 184:
+/***/ 187:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/value-equal/index.js ***!
   \*******************************************************************/
@@ -2685,7 +2691,7 @@ exports.default = valueEqual;
 
 /***/ }),
 
-/***/ 185:
+/***/ 188:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/DOMUtils.js ***!
   \******************************************************************/
@@ -2752,7 +2758,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 
 /***/ }),
 
-/***/ 186:
+/***/ 189:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Link.js ***!
   \**************************************************************************/
@@ -2777,7 +2783,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -2902,7 +2908,7 @@ exports.default = Link;
 
 /***/ }),
 
-/***/ 187:
+/***/ 190:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Route.js ***!
   \***************************************************************************/
@@ -2917,7 +2923,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Route = __webpack_require__(/*! react-router/es/Route */ 188);
+var _Route = __webpack_require__(/*! react-router/es/Route */ 191);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -2927,7 +2933,7 @@ exports.default = _Route2.default; // Written in this round about way for babel-
 
 /***/ }),
 
-/***/ 188:
+/***/ 191:
 /*!***********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Route.js ***!
   \***********************************************************************/
@@ -2948,7 +2954,7 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -2960,7 +2966,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _matchPath = __webpack_require__(/*! ./matchPath */ 85);
+var _matchPath = __webpack_require__(/*! ./matchPath */ 89);
 
 var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -3116,7 +3122,7 @@ exports.default = Route;
 
 /***/ }),
 
-/***/ 189:
+/***/ 192:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/DOMUtils.js ***!
   \*********************************************************************/
@@ -3185,7 +3191,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 
 /***/ }),
 
-/***/ 190:
+/***/ 193:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/punycode.js ***!
   \********************************************************************/
@@ -3704,10 +3710,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	/** Expose `punycode` */
 	// Some AMD build optimizers, like r.js, check for specific condition patterns
 	// like the following:
-	if ("function" == 'function' && _typeof(__webpack_require__(/*! !webpack amd options */ 10)) == 'object' && __webpack_require__(/*! !webpack amd options */ 10)) {
-		!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	if ("function" == 'function' && _typeof(__webpack_require__(/*! !webpack amd options */ 12)) == 'object' && __webpack_require__(/*! !webpack amd options */ 12)) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return punycode;
-		}.call(exports, __webpack_require__, exports, module),
+		}).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else if (freeExports && freeModule) {
 		if (module.exports == freeExports) {
@@ -3724,11 +3730,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		root.punycode = punycode;
 	}
 })(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 11)))
 
 /***/ }),
 
-/***/ 191:
+/***/ 194:
 /*!****************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/IPv6.js ***!
   \****************************************************************/
@@ -3745,7 +3751,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * URI.js - Mutating URLs
  * IPv6 Support
  *
- * Version: 1.19.0
+ * Version: 1.19.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -3935,7 +3941,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 192:
+/***/ 195:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/urijs/src/SecondLevelDomains.js ***!
   \******************************************************************************/
@@ -3952,7 +3958,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * URI.js - Mutating URLs
  * Second Level Domain (SLD) Support
  *
- * Version: 1.19.0
+ * Version: 1.19.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -4203,7 +4209,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 193:
+/***/ 196:
 /*!*************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color/index.js ***!
   \*************************************************************/
@@ -4214,8 +4220,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 "use strict";
 
 
-var colorString = __webpack_require__(/*! color-string */ 458);
-var convert = __webpack_require__(/*! color-convert */ 461);
+var colorString = __webpack_require__(/*! color-string */ 459);
+var convert = __webpack_require__(/*! color-convert */ 462);
 
 var _slice = [].slice;
 
@@ -4687,7 +4693,7 @@ module.exports = Color;
 
 /***/ }),
 
-/***/ 194:
+/***/ 197:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-name/index.js ***!
   \******************************************************************/
@@ -4851,7 +4857,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 195:
+/***/ 198:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/conversions.js ***!
   \***************************************************************************/
@@ -4863,7 +4869,7 @@ module.exports = {
 
 
 /* MIT license */
-var cssKeywords = __webpack_require__(/*! color-name */ 194);
+var cssKeywords = __webpack_require__(/*! color-name */ 197);
 
 // NOTE: conversions should only return primitive values (i.e. arrays, or
 //       values that give correct `typeof` results).
@@ -5707,7 +5713,7 @@ convert.rgb.gray = function (rgb) {
 
 /***/ }),
 
-/***/ 196:
+/***/ 199:
 /*!**********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/PlotLoader.js ***!
   \**********************************************************************************************************************/
@@ -5730,19 +5736,19 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 15);
+var _urijs = __webpack_require__(/*! urijs */ 17);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _LoadingOverlay = __webpack_require__(/*! ./LoadingOverlay */ 463);
+var _LoadingOverlay = __webpack_require__(/*! ./LoadingOverlay */ 464);
 
 var _LoadingOverlay2 = _interopRequireDefault(_LoadingOverlay);
 
-var _ScatterPlot = __webpack_require__(/*! ./ScatterPlot */ 465);
+var _ScatterPlot = __webpack_require__(/*! ./ScatterPlot */ 466);
 
 var _ScatterPlot2 = _interopRequireDefault(_ScatterPlot);
 
-var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 198);
+var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 201);
 
 var _SeriesPropTypes2 = _interopRequireDefault(_SeriesPropTypes);
 
@@ -5790,7 +5796,46 @@ exports.default = PlotLoader;
 
 /***/ }),
 
-/***/ 197:
+/***/ 2:
+/*!******************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/prop-types/index.js ***!
+  \******************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (true) {
+  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
+
+  var isValidElement = function isValidElement(object) {
+    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 425)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = require('./factoryWithThrowingShims')();
+}
+
+/***/ }),
+
+/***/ 200:
 /*!***********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/highcharts.js ***!
   \***********************************************************************/
@@ -10087,7 +10132,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 198:
+/***/ 201:
 /*!***************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/SeriesPropTypes.js ***!
   \***************************************************************************************************************************/
@@ -10126,7 +10171,7 @@ exports.default = SeriesPropTypes;
 
 /***/ }),
 
-/***/ 199:
+/***/ 202:
 /*!***************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/util/MathRound.js ***!
   \***************************************************************************************************************/
@@ -10196,46 +10241,7 @@ exports.default = SeriesPropTypes;
 
 /***/ }),
 
-/***/ 2:
-/*!******************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/prop-types/index.js ***!
-  \******************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (true) {
-  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
-
-  var isValidElement = function isValidElement(object) {
-    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 424)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = require('./factoryWithThrowingShims')();
-}
-
-/***/ }),
-
-/***/ 28:
+/***/ 29:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/PathUtils.js ***!
   \*******************************************************************/
@@ -10247,80 +10253,6 @@ if (true) {
 
 
 exports.__esModule = true;
-var addLeadingSlash = exports.addLeadingSlash = function addLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path : '/' + path;
-};
-
-var stripLeadingSlash = exports.stripLeadingSlash = function stripLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path.substr(1) : path;
-};
-
-var hasBasename = exports.hasBasename = function hasBasename(path, prefix) {
-  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
-};
-
-var stripBasename = exports.stripBasename = function stripBasename(path, prefix) {
-  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
-};
-
-var stripTrailingSlash = exports.stripTrailingSlash = function stripTrailingSlash(path) {
-  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
-};
-
-var parsePath = exports.parsePath = function parsePath(path) {
-  var pathname = path || '/';
-  var search = '';
-  var hash = '';
-
-  var hashIndex = pathname.indexOf('#');
-  if (hashIndex !== -1) {
-    hash = pathname.substr(hashIndex);
-    pathname = pathname.substr(0, hashIndex);
-  }
-
-  var searchIndex = pathname.indexOf('?');
-  if (searchIndex !== -1) {
-    search = pathname.substr(searchIndex);
-    pathname = pathname.substr(0, searchIndex);
-  }
-
-  return {
-    pathname: pathname,
-    search: search === '?' ? '' : search,
-    hash: hash === '#' ? '' : hash
-  };
-};
-
-var createPath = exports.createPath = function createPath(location) {
-  var pathname = location.pathname,
-      search = location.search,
-      hash = location.hash;
-
-  var path = pathname || '/';
-
-  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
-
-  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
-
-  return path;
-};
-
-/***/ }),
-
-/***/ 29:
-/*!**********************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/history/es/PathUtils.js ***!
-  \**********************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 var addLeadingSlash = exports.addLeadingSlash = function addLeadingSlash(path) {
   return path.charAt(0) === '/' ? path : '/' + path;
 };
@@ -10446,7 +10378,81 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 421:
+/***/ 30:
+/*!**********************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/history/es/PathUtils.js ***!
+  \**********************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var addLeadingSlash = exports.addLeadingSlash = function addLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path : '/' + path;
+};
+
+var stripLeadingSlash = exports.stripLeadingSlash = function stripLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path.substr(1) : path;
+};
+
+var hasBasename = exports.hasBasename = function hasBasename(path, prefix) {
+  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
+};
+
+var stripBasename = exports.stripBasename = function stripBasename(path, prefix) {
+  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
+};
+
+var stripTrailingSlash = exports.stripTrailingSlash = function stripTrailingSlash(path) {
+  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
+};
+
+var parsePath = exports.parsePath = function parsePath(path) {
+  var pathname = path || '/';
+  var search = '';
+  var hash = '';
+
+  var hashIndex = pathname.indexOf('#');
+  if (hashIndex !== -1) {
+    hash = pathname.substr(hashIndex);
+    pathname = pathname.substr(0, hashIndex);
+  }
+
+  var searchIndex = pathname.indexOf('?');
+  if (searchIndex !== -1) {
+    search = pathname.substr(searchIndex);
+    pathname = pathname.substr(0, searchIndex);
+  }
+
+  return {
+    pathname: pathname,
+    search: search === '?' ? '' : search,
+    hash: hash === '#' ? '' : hash
+  };
+};
+
+var createPath = exports.createPath = function createPath(location) {
+  var pathname = location.pathname,
+      search = location.search,
+      hash = location.hash;
+
+  var path = pathname || '/';
+
+  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
+
+  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
+
+  return path;
+};
+
+/***/ }),
+
+/***/ 422:
 /*!****************************************************!*\
   !*** multi ./bundles/experiment-page/src/index.js ***!
   \****************************************************/
@@ -10454,12 +10460,12 @@ module.exports = warning;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/experiment-page/src/index.js */422);
+module.exports = __webpack_require__(/*! ./bundles/experiment-page/src/index.js */423);
 
 
 /***/ }),
 
-/***/ 422:
+/***/ 423:
 /*!**********************************************!*\
   !*** ./bundles/experiment-page/src/index.js ***!
   \**********************************************/
@@ -10479,11 +10485,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 18);
+var _reactDom = __webpack_require__(/*! react-dom */ 20);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _ExperimentPageRouter = __webpack_require__(/*! ./ExperimentPageRouter */ 423);
+var _ExperimentPageRouter = __webpack_require__(/*! ./ExperimentPageRouter */ 424);
 
 var _ExperimentPageRouter2 = _interopRequireDefault(_ExperimentPageRouter);
 
@@ -10504,7 +10510,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 423:
+/***/ 424:
 /*!*************************************************************!*\
   !*** ./bundles/experiment-page/src/ExperimentPageRouter.js ***!
   \*************************************************************/
@@ -10529,13 +10535,13 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ 427);
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ 428);
 
-var _urijs = __webpack_require__(/*! urijs */ 15);
+var _urijs = __webpack_require__(/*! urijs */ 17);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _TSnePlotViewRoute = __webpack_require__(/*! ./TSnePlotViewRoute */ 454);
+var _TSnePlotViewRoute = __webpack_require__(/*! ./TSnePlotViewRoute */ 455);
 
 var _TSnePlotViewRoute2 = _interopRequireDefault(_TSnePlotViewRoute);
 
@@ -10671,7 +10677,7 @@ exports.default = ExperimentPageRouter;
 
 /***/ }),
 
-/***/ 424:
+/***/ 425:
 /*!************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \************************************************************************************/
@@ -10691,13 +10697,13 @@ exports.default = ExperimentPageRouter;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 179);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 180);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 181);
-var assign = __webpack_require__(/*! object-assign */ 425);
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 182);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 183);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 184);
+var assign = __webpack_require__(/*! object-assign */ 426);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 182);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 426);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 185);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 427);
 
 module.exports = function (isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -11201,7 +11207,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 425:
+/***/ 426:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/object-assign/index.js ***!
   \*********************************************************************/
@@ -11303,7 +11309,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 426:
+/***/ 427:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/prop-types/checkPropTypes.js ***!
   \***************************************************************************/
@@ -11324,9 +11330,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 180);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 181);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 182);
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 183);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 184);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 185);
   var loggedTypeFailures = {};
 }
 
@@ -11376,7 +11382,7 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 427:
+/***/ 428:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/index.js ***!
   \***************************************************************************/
@@ -11392,55 +11398,55 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.withRouter = exports.matchPath = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.Redirect = exports.Prompt = exports.NavLink = exports.MemoryRouter = exports.Link = exports.HashRouter = exports.BrowserRouter = undefined;
 
-var _BrowserRouter2 = __webpack_require__(/*! ./BrowserRouter */ 428);
+var _BrowserRouter2 = __webpack_require__(/*! ./BrowserRouter */ 429);
 
 var _BrowserRouter3 = _interopRequireDefault(_BrowserRouter2);
 
-var _HashRouter2 = __webpack_require__(/*! ./HashRouter */ 430);
+var _HashRouter2 = __webpack_require__(/*! ./HashRouter */ 431);
 
 var _HashRouter3 = _interopRequireDefault(_HashRouter2);
 
-var _Link2 = __webpack_require__(/*! ./Link */ 186);
+var _Link2 = __webpack_require__(/*! ./Link */ 189);
 
 var _Link3 = _interopRequireDefault(_Link2);
 
-var _MemoryRouter2 = __webpack_require__(/*! ./MemoryRouter */ 432);
+var _MemoryRouter2 = __webpack_require__(/*! ./MemoryRouter */ 433);
 
 var _MemoryRouter3 = _interopRequireDefault(_MemoryRouter2);
 
-var _NavLink2 = __webpack_require__(/*! ./NavLink */ 435);
+var _NavLink2 = __webpack_require__(/*! ./NavLink */ 436);
 
 var _NavLink3 = _interopRequireDefault(_NavLink2);
 
-var _Prompt2 = __webpack_require__(/*! ./Prompt */ 438);
+var _Prompt2 = __webpack_require__(/*! ./Prompt */ 439);
 
 var _Prompt3 = _interopRequireDefault(_Prompt2);
 
-var _Redirect2 = __webpack_require__(/*! ./Redirect */ 440);
+var _Redirect2 = __webpack_require__(/*! ./Redirect */ 441);
 
 var _Redirect3 = _interopRequireDefault(_Redirect2);
 
-var _Route2 = __webpack_require__(/*! ./Route */ 187);
+var _Route2 = __webpack_require__(/*! ./Route */ 190);
 
 var _Route3 = _interopRequireDefault(_Route2);
 
-var _Router2 = __webpack_require__(/*! ./Router */ 83);
+var _Router2 = __webpack_require__(/*! ./Router */ 87);
 
 var _Router3 = _interopRequireDefault(_Router2);
 
-var _StaticRouter2 = __webpack_require__(/*! ./StaticRouter */ 446);
+var _StaticRouter2 = __webpack_require__(/*! ./StaticRouter */ 447);
 
 var _StaticRouter3 = _interopRequireDefault(_StaticRouter2);
 
-var _Switch2 = __webpack_require__(/*! ./Switch */ 448);
+var _Switch2 = __webpack_require__(/*! ./Switch */ 449);
 
 var _Switch3 = _interopRequireDefault(_Switch2);
 
-var _matchPath2 = __webpack_require__(/*! ./matchPath */ 450);
+var _matchPath2 = __webpack_require__(/*! ./matchPath */ 451);
 
 var _matchPath3 = _interopRequireDefault(_matchPath2);
 
-var _withRouter2 = __webpack_require__(/*! ./withRouter */ 451);
+var _withRouter2 = __webpack_require__(/*! ./withRouter */ 452);
 
 var _withRouter3 = _interopRequireDefault(_withRouter2);
 
@@ -11462,7 +11468,7 @@ exports.withRouter = _withRouter3.default;
 
 /***/ }),
 
-/***/ 428:
+/***/ 429:
 /*!***********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/BrowserRouter.js ***!
   \***********************************************************************************/
@@ -11491,11 +11497,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _createBrowserHistory = __webpack_require__(/*! history/createBrowserHistory */ 429);
+var _createBrowserHistory = __webpack_require__(/*! history/createBrowserHistory */ 430);
 
 var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 
-var _Router = __webpack_require__(/*! ./Router */ 83);
+var _Router = __webpack_require__(/*! ./Router */ 87);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -11561,7 +11567,7 @@ exports.default = BrowserRouter;
 
 /***/ }),
 
-/***/ 429:
+/***/ 430:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/createBrowserHistory.js ***!
   \******************************************************************************/
@@ -11596,19 +11602,19 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 81);
+var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 85);
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 28);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
 
-var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 82);
+var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 86);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 185);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 188);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -11893,107 +11899,7 @@ exports.default = createBrowserHistory;
 
 /***/ }),
 
-/***/ 43:
-/*!**************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/history/es/LocationUtils.js ***!
-  \**************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.locationsAreEqual = exports.createLocation = undefined;
-
-var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 183);
-
-var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
-
-var _valueEqual = __webpack_require__(/*! value-equal */ 184);
-
-var _valueEqual2 = _interopRequireDefault(_valueEqual);
-
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
-var createLocation = exports.createLocation = function createLocation(path, state, key, currentLocation) {
-  var location = void 0;
-  if (typeof path === 'string') {
-    // Two-arg form: push(path, state)
-    location = (0, _PathUtils.parsePath)(path);
-    location.state = state;
-  } else {
-    // One-arg form: push(location)
-    location = _extends({}, path);
-
-    if (location.pathname === undefined) location.pathname = '';
-
-    if (location.search) {
-      if (location.search.charAt(0) !== '?') location.search = '?' + location.search;
-    } else {
-      location.search = '';
-    }
-
-    if (location.hash) {
-      if (location.hash.charAt(0) !== '#') location.hash = '#' + location.hash;
-    } else {
-      location.hash = '';
-    }
-
-    if (state !== undefined && location.state === undefined) location.state = state;
-  }
-
-  try {
-    location.pathname = decodeURI(location.pathname);
-  } catch (e) {
-    if (e instanceof URIError) {
-      throw new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is likely caused by an invalid percent-encoding.');
-    } else {
-      throw e;
-    }
-  }
-
-  if (key) location.key = key;
-
-  if (currentLocation) {
-    // Resolve incomplete/relative pathname relative to current location.
-    if (!location.pathname) {
-      location.pathname = currentLocation.pathname;
-    } else if (location.pathname.charAt(0) !== '/') {
-      location.pathname = (0, _resolvePathname2.default)(location.pathname, currentLocation.pathname);
-    }
-  } else {
-    // When there is no prior location and pathname is empty, set it to /
-    if (!location.pathname) {
-      location.pathname = '/';
-    }
-  }
-
-  return location;
-};
-
-var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
-  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
-};
-
-/***/ }),
-
-/***/ 430:
+/***/ 431:
 /*!********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/HashRouter.js ***!
   \********************************************************************************/
@@ -12022,11 +11928,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _createHashHistory = __webpack_require__(/*! history/createHashHistory */ 431);
+var _createHashHistory = __webpack_require__(/*! history/createHashHistory */ 432);
 
 var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
 
-var _Router = __webpack_require__(/*! ./Router */ 83);
+var _Router = __webpack_require__(/*! ./Router */ 87);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -12091,7 +11997,7 @@ exports.default = HashRouter;
 
 /***/ }),
 
-/***/ 431:
+/***/ 432:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/createHashHistory.js ***!
   \***************************************************************************/
@@ -12118,19 +12024,19 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 81);
+var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 85);
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 28);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
 
-var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 82);
+var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 86);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 185);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 188);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -12436,7 +12342,7 @@ exports.default = createHashHistory;
 
 /***/ }),
 
-/***/ 432:
+/***/ 433:
 /*!**********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/MemoryRouter.js ***!
   \**********************************************************************************/
@@ -12451,7 +12357,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _MemoryRouter = __webpack_require__(/*! react-router/es/MemoryRouter */ 433);
+var _MemoryRouter = __webpack_require__(/*! react-router/es/MemoryRouter */ 434);
 
 var _MemoryRouter2 = _interopRequireDefault(_MemoryRouter);
 
@@ -12461,7 +12367,7 @@ exports.default = _MemoryRouter2.default; // Written in this round about way for
 
 /***/ }),
 
-/***/ 433:
+/***/ 434:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/MemoryRouter.js ***!
   \******************************************************************************/
@@ -12490,11 +12396,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _createMemoryHistory = __webpack_require__(/*! history/createMemoryHistory */ 434);
+var _createMemoryHistory = __webpack_require__(/*! history/createMemoryHistory */ 435);
 
 var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
 
-var _Router = __webpack_require__(/*! ./Router */ 84);
+var _Router = __webpack_require__(/*! ./Router */ 88);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -12560,7 +12466,7 @@ exports.default = MemoryRouter;
 
 /***/ }),
 
-/***/ 434:
+/***/ 435:
 /*!*****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/createMemoryHistory.js ***!
   \*****************************************************************************/
@@ -12595,11 +12501,11 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 28);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
 
-var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 81);
+var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 85);
 
-var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 82);
+var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 86);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -12757,7 +12663,7 @@ exports.default = createMemoryHistory;
 
 /***/ }),
 
-/***/ 435:
+/***/ 436:
 /*!*****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/NavLink.js ***!
   \*****************************************************************************/
@@ -12782,11 +12688,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Route = __webpack_require__(/*! ./Route */ 187);
+var _Route = __webpack_require__(/*! ./Route */ 190);
 
 var _Route2 = _interopRequireDefault(_Route);
 
-var _Link = __webpack_require__(/*! ./Link */ 186);
+var _Link = __webpack_require__(/*! ./Link */ 189);
 
 var _Link2 = _interopRequireDefault(_Link);
 
@@ -12875,7 +12781,7 @@ exports.default = NavLink;
 
 /***/ }),
 
-/***/ 436:
+/***/ 437:
 /*!**********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/path-to-regexp/index.js ***!
   \**********************************************************************/
@@ -12888,7 +12794,7 @@ exports.default = NavLink;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var isarray = __webpack_require__(/*! isarray */ 437);
+var isarray = __webpack_require__(/*! isarray */ 438);
 
 /**
  * Expose `pathToRegexp`.
@@ -13316,7 +13222,7 @@ function pathToRegexp(path, keys, options) {
 
 /***/ }),
 
-/***/ 437:
+/***/ 438:
 /*!***************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/isarray/index.js ***!
   \***************************************************************/
@@ -13333,7 +13239,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 438:
+/***/ 439:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Prompt.js ***!
   \****************************************************************************/
@@ -13348,7 +13254,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Prompt = __webpack_require__(/*! react-router/es/Prompt */ 439);
+var _Prompt = __webpack_require__(/*! react-router/es/Prompt */ 440);
 
 var _Prompt2 = _interopRequireDefault(_Prompt);
 
@@ -13358,7 +13264,7 @@ exports.default = _Prompt2.default; // Written in this round about way for babel
 
 /***/ }),
 
-/***/ 439:
+/***/ 440:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Prompt.js ***!
   \************************************************************************/
@@ -13383,7 +13289,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -13478,7 +13384,7 @@ exports.default = Prompt;
 
 /***/ }),
 
-/***/ 440:
+/***/ 441:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Redirect.js ***!
   \******************************************************************************/
@@ -13493,7 +13399,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Redirect = __webpack_require__(/*! react-router/es/Redirect */ 441);
+var _Redirect = __webpack_require__(/*! react-router/es/Redirect */ 442);
 
 var _Redirect2 = _interopRequireDefault(_Redirect);
 
@@ -13503,7 +13409,7 @@ exports.default = _Redirect2.default; // Written in this round about way for bab
 
 /***/ }),
 
-/***/ 441:
+/***/ 442:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Redirect.js ***!
   \**************************************************************************/
@@ -13532,11 +13438,11 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _history = __webpack_require__(/*! history */ 442);
+var _history = __webpack_require__(/*! history */ 443);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13640,7 +13546,7 @@ exports.default = Redirect;
 
 /***/ }),
 
-/***/ 442:
+/***/ 443:
 /*!******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/index.js ***!
   \******************************************************************/
@@ -13656,7 +13562,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createPath = exports.parsePath = exports.locationsAreEqual = exports.createLocation = exports.createMemoryHistory = exports.createHashHistory = exports.createBrowserHistory = undefined;
 
-var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 43);
+var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 45);
 
 Object.defineProperty(exports, 'createLocation', {
   enumerable: true,
@@ -13671,7 +13577,7 @@ Object.defineProperty(exports, 'locationsAreEqual', {
   }
 });
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 30);
 
 Object.defineProperty(exports, 'parsePath', {
   enumerable: true,
@@ -13686,15 +13592,15 @@ Object.defineProperty(exports, 'createPath', {
   }
 });
 
-var _createBrowserHistory2 = __webpack_require__(/*! ./createBrowserHistory */ 443);
+var _createBrowserHistory2 = __webpack_require__(/*! ./createBrowserHistory */ 444);
 
 var _createBrowserHistory3 = _interopRequireDefault(_createBrowserHistory2);
 
-var _createHashHistory2 = __webpack_require__(/*! ./createHashHistory */ 444);
+var _createHashHistory2 = __webpack_require__(/*! ./createHashHistory */ 445);
 
 var _createHashHistory3 = _interopRequireDefault(_createHashHistory2);
 
-var _createMemoryHistory2 = __webpack_require__(/*! ./createMemoryHistory */ 445);
+var _createMemoryHistory2 = __webpack_require__(/*! ./createMemoryHistory */ 446);
 
 var _createMemoryHistory3 = _interopRequireDefault(_createMemoryHistory2);
 
@@ -13706,7 +13612,7 @@ exports.createMemoryHistory = _createMemoryHistory3.default;
 
 /***/ }),
 
-/***/ 443:
+/***/ 444:
 /*!*********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/createBrowserHistory.js ***!
   \*********************************************************************************/
@@ -13727,19 +13633,19 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 43);
+var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 45);
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 30);
 
-var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 86);
+var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 90);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 189);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 192);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14038,7 +13944,7 @@ exports.default = createBrowserHistory;
 
 /***/ }),
 
-/***/ 444:
+/***/ 445:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/createHashHistory.js ***!
   \******************************************************************************/
@@ -14057,19 +13963,19 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 43);
+var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 45);
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 30);
 
-var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 86);
+var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 90);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 189);
+var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 192);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14383,7 +14289,7 @@ exports.default = createHashHistory;
 
 /***/ }),
 
-/***/ 445:
+/***/ 446:
 /*!********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/createMemoryHistory.js ***!
   \********************************************************************************/
@@ -14404,11 +14310,11 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 30);
 
-var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 43);
+var _LocationUtils = __webpack_require__(/*! ./LocationUtils */ 45);
 
-var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 86);
+var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 90);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -14580,7 +14486,7 @@ exports.default = createMemoryHistory;
 
 /***/ }),
 
-/***/ 446:
+/***/ 447:
 /*!**********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/StaticRouter.js ***!
   \**********************************************************************************/
@@ -14595,7 +14501,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _StaticRouter = __webpack_require__(/*! react-router/es/StaticRouter */ 447);
+var _StaticRouter = __webpack_require__(/*! react-router/es/StaticRouter */ 448);
 
 var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 
@@ -14605,7 +14511,7 @@ exports.default = _StaticRouter2.default; // Written in this round about way for
 
 /***/ }),
 
-/***/ 447:
+/***/ 448:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/StaticRouter.js ***!
   \******************************************************************************/
@@ -14626,7 +14532,7 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -14638,9 +14544,9 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _PathUtils = __webpack_require__(/*! history/PathUtils */ 28);
+var _PathUtils = __webpack_require__(/*! history/PathUtils */ 29);
 
-var _Router = __webpack_require__(/*! ./Router */ 84);
+var _Router = __webpack_require__(/*! ./Router */ 88);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -14830,7 +14736,7 @@ exports.default = StaticRouter;
 
 /***/ }),
 
-/***/ 448:
+/***/ 449:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Switch.js ***!
   \****************************************************************************/
@@ -14845,7 +14751,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Switch = __webpack_require__(/*! react-router/es/Switch */ 449);
+var _Switch = __webpack_require__(/*! react-router/es/Switch */ 450);
 
 var _Switch2 = _interopRequireDefault(_Switch);
 
@@ -14855,7 +14761,107 @@ exports.default = _Switch2.default; // Written in this round about way for babel
 
 /***/ }),
 
-/***/ 449:
+/***/ 45:
+/*!**************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/history/es/LocationUtils.js ***!
+  \**************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.locationsAreEqual = exports.createLocation = undefined;
+
+var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 186);
+
+var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
+
+var _valueEqual = __webpack_require__(/*! value-equal */ 187);
+
+var _valueEqual2 = _interopRequireDefault(_valueEqual);
+
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 30);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+var createLocation = exports.createLocation = function createLocation(path, state, key, currentLocation) {
+  var location = void 0;
+  if (typeof path === 'string') {
+    // Two-arg form: push(path, state)
+    location = (0, _PathUtils.parsePath)(path);
+    location.state = state;
+  } else {
+    // One-arg form: push(location)
+    location = _extends({}, path);
+
+    if (location.pathname === undefined) location.pathname = '';
+
+    if (location.search) {
+      if (location.search.charAt(0) !== '?') location.search = '?' + location.search;
+    } else {
+      location.search = '';
+    }
+
+    if (location.hash) {
+      if (location.hash.charAt(0) !== '#') location.hash = '#' + location.hash;
+    } else {
+      location.hash = '';
+    }
+
+    if (state !== undefined && location.state === undefined) location.state = state;
+  }
+
+  try {
+    location.pathname = decodeURI(location.pathname);
+  } catch (e) {
+    if (e instanceof URIError) {
+      throw new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is likely caused by an invalid percent-encoding.');
+    } else {
+      throw e;
+    }
+  }
+
+  if (key) location.key = key;
+
+  if (currentLocation) {
+    // Resolve incomplete/relative pathname relative to current location.
+    if (!location.pathname) {
+      location.pathname = currentLocation.pathname;
+    } else if (location.pathname.charAt(0) !== '/') {
+      location.pathname = (0, _resolvePathname2.default)(location.pathname, currentLocation.pathname);
+    }
+  } else {
+    // When there is no prior location and pathname is empty, set it to /
+    if (!location.pathname) {
+      location.pathname = '/';
+    }
+  }
+
+  return location;
+};
+
+var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
+  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
+};
+
+/***/ }),
+
+/***/ 450:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Switch.js ***!
   \************************************************************************/
@@ -14884,11 +14890,11 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _matchPath = __webpack_require__(/*! ./matchPath */ 85);
+var _matchPath = __webpack_require__(/*! ./matchPath */ 89);
 
 var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -14981,7 +14987,7 @@ exports.default = Switch;
 
 /***/ }),
 
-/***/ 450:
+/***/ 451:
 /*!*******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/matchPath.js ***!
   \*******************************************************************************/
@@ -14996,7 +15002,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _matchPath = __webpack_require__(/*! react-router/es/matchPath */ 85);
+var _matchPath = __webpack_require__(/*! react-router/es/matchPath */ 89);
 
 var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -15006,7 +15012,7 @@ exports.default = _matchPath2.default; // Written in this round about way for ba
 
 /***/ }),
 
-/***/ 451:
+/***/ 452:
 /*!********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/withRouter.js ***!
   \********************************************************************************/
@@ -15021,7 +15027,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _withRouter = __webpack_require__(/*! react-router/es/withRouter */ 452);
+var _withRouter = __webpack_require__(/*! react-router/es/withRouter */ 453);
 
 var _withRouter2 = _interopRequireDefault(_withRouter);
 
@@ -15031,7 +15037,7 @@ exports.default = _withRouter2.default; // Written in this round about way for b
 
 /***/ }),
 
-/***/ 452:
+/***/ 453:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/withRouter.js ***!
   \****************************************************************************/
@@ -15054,11 +15060,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 453);
+var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 454);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _Route = __webpack_require__(/*! ./Route */ 188);
+var _Route = __webpack_require__(/*! ./Route */ 191);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -15106,7 +15112,7 @@ exports.default = withRouter;
 
 /***/ }),
 
-/***/ 453:
+/***/ 454:
 /*!*******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/hoist-non-react-statics/index.js ***!
   \*******************************************************************************/
@@ -15115,77 +15121,90 @@ exports.default = withRouter;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
+(function (global, factory) {
+    ( false ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? module.exports = factory() :  true ? !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : global.hoistNonReactStatics = factory();
+})(undefined, function () {
+    'use strict';
 
+    var REACT_STATICS = {
+        childContextTypes: true,
+        contextTypes: true,
+        defaultProps: true,
+        displayName: true,
+        getDefaultProps: true,
+        getDerivedStateFromProps: true,
+        mixins: true,
+        propTypes: true,
+        type: true
+    };
 
-var REACT_STATICS = {
-    childContextTypes: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-};
+    var KNOWN_STATICS = {
+        name: true,
+        length: true,
+        prototype: true,
+        caller: true,
+        callee: true,
+        arguments: true,
+        arity: true
+    };
 
-var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    callee: true,
-    arguments: true,
-    arity: true
-};
+    var defineProperty = Object.defineProperty;
+    var getOwnPropertyNames = Object.getOwnPropertyNames;
+    var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+    var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+    var getPrototypeOf = Object.getPrototypeOf;
+    var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-var defineProperty = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
+    return function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+        if (typeof sourceComponent !== 'string') {
+            // don't hoist over string (html) components
 
-module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-    if (typeof sourceComponent !== 'string') {
-        // don't hoist over string (html) components
-
-        if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            if (objectPrototype) {
+                var inheritedComponent = getPrototypeOf(sourceComponent);
+                if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                    hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+                }
             }
-        }
 
-        var keys = getOwnPropertyNames(sourceComponent);
+            var keys = getOwnPropertyNames(sourceComponent);
 
-        if (getOwnPropertySymbols) {
-            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-        }
-
-        for (var i = 0; i < keys.length; ++i) {
-            var key = keys[i];
-            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
-                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                try {
-                    // Avoid failures from read-only properties
-                    defineProperty(targetComponent, key, descriptor);
-                } catch (e) {}
+            if (getOwnPropertySymbols) {
+                keys = keys.concat(getOwnPropertySymbols(sourceComponent));
             }
+
+            for (var i = 0; i < keys.length; ++i) {
+                var key = keys[i];
+                if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                    var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                    try {
+                        // Avoid failures from read-only properties
+                        defineProperty(targetComponent, key, descriptor);
+                    } catch (e) {}
+                }
+            }
+
+            return targetComponent;
         }
 
         return targetComponent;
-    }
-
-    return targetComponent;
-};
+    };
+});
 
 /***/ }),
 
-/***/ 454:
+/***/ 455:
 /*!**********************************************************!*\
   !*** ./bundles/experiment-page/src/TSnePlotViewRoute.js ***!
   \**********************************************************/
@@ -15208,11 +15227,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 15);
+var _urijs = __webpack_require__(/*! urijs */ 17);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _expressionAtlasExperimentPageTsnePlot = __webpack_require__(/*! expression-atlas-experiment-page-tsne-plot */ 455);
+var _expressionAtlasExperimentPageTsnePlot = __webpack_require__(/*! expression-atlas-experiment-page-tsne-plot */ 456);
 
 var _expressionAtlasExperimentPageTsnePlot2 = _interopRequireDefault(_expressionAtlasExperimentPageTsnePlot);
 
@@ -15275,7 +15294,7 @@ exports.default = TSnePlotViewRoute;
 
 /***/ }),
 
-/***/ 455:
+/***/ 456:
 /*!******************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/index.js ***!
   \******************************************************************************************************/
@@ -15290,7 +15309,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _TSnePlotView = __webpack_require__(/*! ./TSnePlotView */ 456);
+var _TSnePlotView = __webpack_require__(/*! ./TSnePlotView */ 457);
 
 var _TSnePlotView2 = _interopRequireDefault(_TSnePlotView);
 
@@ -15302,7 +15321,7 @@ exports.default = _TSnePlotView2.default;
 
 /***/ }),
 
-/***/ 456:
+/***/ 457:
 /*!*************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/TSnePlotView.js ***!
   \*************************************************************************************************************/
@@ -15337,15 +15356,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 15);
+var _urijs = __webpack_require__(/*! urijs */ 17);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _ClusterTSnePlot = __webpack_require__(/*! ./ClusterTSnePlot */ 457);
+var _ClusterTSnePlot = __webpack_require__(/*! ./ClusterTSnePlot */ 458);
 
 var _ClusterTSnePlot2 = _interopRequireDefault(_ClusterTSnePlot);
 
-var _GeneExpressionTSnePlot = __webpack_require__(/*! ./GeneExpressionTSnePlot */ 470);
+var _GeneExpressionTSnePlot = __webpack_require__(/*! ./GeneExpressionTSnePlot */ 471);
 
 var _GeneExpressionTSnePlot2 = _interopRequireDefault(_GeneExpressionTSnePlot);
 
@@ -15435,6 +15454,8 @@ var ExperimentPageView = function (_React$Component) {
 
     _this.state = {
       data: {
+        max: null,
+        min: null,
         series: [],
         unit: ''
       },
@@ -15593,7 +15614,7 @@ exports.default = ExperimentPageView;
 
 /***/ }),
 
-/***/ 457:
+/***/ 458:
 /*!****************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/ClusterTSnePlot.js ***!
   \****************************************************************************************************************/
@@ -15627,11 +15648,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _color = __webpack_require__(/*! color */ 193);
+var _color = __webpack_require__(/*! color */ 196);
 
 var _color2 = _interopRequireDefault(_color);
 
-var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 196);
+var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 199);
 
 var _PlotLoader2 = _interopRequireDefault(_PlotLoader);
 
@@ -15744,7 +15765,7 @@ exports._colourizeClusters = _colourizeClusters;
 
 /***/ }),
 
-/***/ 458:
+/***/ 459:
 /*!********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-string/index.js ***!
   \********************************************************************/
@@ -15756,8 +15777,8 @@ exports._colourizeClusters = _colourizeClusters;
 
 
 /* MIT license */
-var colorNames = __webpack_require__(/*! color-name */ 194);
-var swizzle = __webpack_require__(/*! simple-swizzle */ 459);
+var colorNames = __webpack_require__(/*! color-name */ 197);
+var swizzle = __webpack_require__(/*! simple-swizzle */ 460);
 
 var reverseNames = {};
 
@@ -15977,7 +15998,7 @@ function hexDouble(num) {
 
 /***/ }),
 
-/***/ 459:
+/***/ 460:
 /*!**********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/simple-swizzle/index.js ***!
   \**********************************************************************/
@@ -15988,7 +16009,7 @@ function hexDouble(num) {
 "use strict";
 
 
-var isArrayish = __webpack_require__(/*! is-arrayish */ 460);
+var isArrayish = __webpack_require__(/*! is-arrayish */ 461);
 
 var concat = Array.prototype.concat;
 var slice = Array.prototype.slice;
@@ -16018,7 +16039,7 @@ swizzle.wrap = function (fn) {
 
 /***/ }),
 
-/***/ 460:
+/***/ 461:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/is-arrayish/index.js ***!
   \*******************************************************************/
@@ -16039,7 +16060,7 @@ module.exports = function isArrayish(obj) {
 
 /***/ }),
 
-/***/ 461:
+/***/ 462:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/index.js ***!
   \*********************************************************************/
@@ -16052,8 +16073,8 @@ module.exports = function isArrayish(obj) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var conversions = __webpack_require__(/*! ./conversions */ 195);
-var route = __webpack_require__(/*! ./route */ 462);
+var conversions = __webpack_require__(/*! ./conversions */ 198);
+var route = __webpack_require__(/*! ./route */ 463);
 
 var convert = {};
 
@@ -16133,7 +16154,7 @@ module.exports = convert;
 
 /***/ }),
 
-/***/ 462:
+/***/ 463:
 /*!*********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/color-convert/route.js ***!
   \*********************************************************************/
@@ -16144,7 +16165,7 @@ module.exports = convert;
 "use strict";
 
 
-var conversions = __webpack_require__(/*! ./conversions */ 195);
+var conversions = __webpack_require__(/*! ./conversions */ 198);
 
 /*
 	this function routes a model to all other models.
@@ -16157,11 +16178,10 @@ var conversions = __webpack_require__(/*! ./conversions */ 195);
 	conversions that are not possible simply are not included.
 */
 
-// https://jsperf.com/object-keys-vs-for-in-with-closure/3
-var models = Object.keys(conversions);
-
 function buildGraph() {
 	var graph = {};
+	// https://jsperf.com/object-keys-vs-for-in-with-closure/3
+	var models = Object.keys(conversions);
 
 	for (var len = models.length, i = 0; i < len; i++) {
 		graph[models[i]] = {
@@ -16244,7 +16264,7 @@ module.exports = function (fromModel) {
 
 /***/ }),
 
-/***/ 463:
+/***/ 464:
 /*!**************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/LoadingOverlay.js ***!
   \**************************************************************************************************************************/
@@ -16267,7 +16287,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 15);
+var _urijs = __webpack_require__(/*! urijs */ 17);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -16283,7 +16303,7 @@ var LoadingOverlay = function LoadingOverlay(props) {
       background: 'rgba(255,255,255,0.8)',
       alignItems: 'center',
       justifyContent: 'center'
-    } }, _react2.default.createElement('div', { style: { textAlign: 'center' } }, _react2.default.createElement('p', null, 'Loading, please wait...'), _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 464), props.resourcesUrl).toString() }), _react2.default.createElement('p', null, _react2.default.createElement('small', null, 'Powered by ', _react2.default.createElement('a', { href: 'https://loading.io' }, 'loading.io')))));
+    } }, _react2.default.createElement('div', { style: { textAlign: 'center' } }, _react2.default.createElement('p', null, 'Loading, please wait...'), _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 465), props.resourcesUrl).toString() }), _react2.default.createElement('p', null, _react2.default.createElement('small', null, 'Powered by ', _react2.default.createElement('a', { href: 'https://loading.io' }, 'loading.io')))));
 };
 
 LoadingOverlay.propTypes = {
@@ -16299,7 +16319,7 @@ exports.default = LoadingOverlay;
 
 /***/ }),
 
-/***/ 464:
+/***/ 465:
 /*!*****************************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/svg/flask-loader.svg ***!
   \*****************************************************************************************************************************/
@@ -16311,7 +16331,7 @@ module.exports = __webpack_require__.p + "bbe30b27d9320f575e5452cf2b930c40.svg";
 
 /***/ }),
 
-/***/ 465:
+/***/ 466:
 /*!***********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/plotloader/ScatterPlot.js ***!
   \***********************************************************************************************************************/
@@ -16334,23 +16354,23 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 466);
+var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 467);
 
 var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
 
-var _exporting = __webpack_require__(/*! highcharts/modules/exporting */ 467);
+var _exporting = __webpack_require__(/*! highcharts/modules/exporting */ 468);
 
 var _exporting2 = _interopRequireDefault(_exporting);
 
-var _boost = __webpack_require__(/*! highcharts/modules/boost */ 468);
+var _boost = __webpack_require__(/*! highcharts/modules/boost */ 469);
 
 var _boost2 = _interopRequireDefault(_boost);
 
-var _deepmerge = __webpack_require__(/*! deepmerge */ 469);
+var _deepmerge = __webpack_require__(/*! deepmerge */ 470);
 
 var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
-var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 198);
+var _SeriesPropTypes = __webpack_require__(/*! ./SeriesPropTypes */ 201);
 
 var _SeriesPropTypes2 = _interopRequireDefault(_SeriesPropTypes);
 
@@ -16457,10 +16477,10 @@ exports.default = ScatterPlot;
 
 /***/ }),
 
-/***/ 466:
-/*!***********************************************************************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/node_modules/react-highcharts/dist/ReactHighcharts.js ***!
-  \***********************************************************************************************************************************************/
+/***/ 467:
+/*!***************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/react-highcharts/dist/ReactHighcharts.js ***!
+  \***************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -16471,7 +16491,7 @@ exports.default = ScatterPlot;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function webpackUniversalModuleDefinition(root, factory) {
-  if (( false ? 'undefined' : _typeof(exports)) === 'object' && ( false ? 'undefined' : _typeof(module)) === 'object') module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 197));else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 197)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+  if (( false ? 'undefined' : _typeof(exports)) === 'object' && ( false ? 'undefined' : _typeof(module)) === 'object') module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 200));else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 200)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') exports["ReactHighcharts"] = factory(require("react"), require("highcharts"));else root["ReactHighcharts"] = factory(root["React"], root["Highcharts"]);
@@ -18678,11 +18698,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     /******/)
   );
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
 
 /***/ }),
 
-/***/ 467:
+/***/ 468:
 /*!******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/modules/exporting.js ***!
   \******************************************************************************/
@@ -18879,7 +18899,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 468:
+/***/ 469:
 /*!**************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/highcharts/modules/boost.js ***!
   \**************************************************************************/
@@ -19272,7 +19292,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 469:
+/***/ 470:
 /*!*******************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/deepmerge/dist/es.js ***!
   \*******************************************************************/
@@ -19315,58 +19335,58 @@ function emptyTarget(val) {
 	return Array.isArray(val) ? [] : {};
 }
 
-function cloneUnlessOtherwiseSpecified(value, optionsArgument) {
-	var clone = !optionsArgument || optionsArgument.clone !== false;
-
-	return clone && isMergeableObject(value) ? deepmerge(emptyTarget(value), value, optionsArgument) : value;
+function cloneUnlessOtherwiseSpecified(value, options) {
+	return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
 }
 
-function defaultArrayMerge(target, source, optionsArgument) {
+function defaultArrayMerge(target, source, options) {
 	return target.concat(source).map(function (element) {
-		return cloneUnlessOtherwiseSpecified(element, optionsArgument);
+		return cloneUnlessOtherwiseSpecified(element, options);
 	});
 }
 
-function mergeObject(target, source, optionsArgument) {
+function mergeObject(target, source, options) {
 	var destination = {};
-	if (isMergeableObject(target)) {
+	if (options.isMergeableObject(target)) {
 		Object.keys(target).forEach(function (key) {
-			destination[key] = cloneUnlessOtherwiseSpecified(target[key], optionsArgument);
+			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
 		});
 	}
 	Object.keys(source).forEach(function (key) {
-		if (!isMergeableObject(source[key]) || !target[key]) {
-			destination[key] = cloneUnlessOtherwiseSpecified(source[key], optionsArgument);
+		if (!options.isMergeableObject(source[key]) || !target[key]) {
+			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
 		} else {
-			destination[key] = deepmerge(target[key], source[key], optionsArgument);
+			destination[key] = deepmerge(target[key], source[key], options);
 		}
 	});
 	return destination;
 }
 
-function deepmerge(target, source, optionsArgument) {
+function deepmerge(target, source, options) {
+	options = options || {};
+	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+
 	var sourceIsArray = Array.isArray(source);
 	var targetIsArray = Array.isArray(target);
-	var options = optionsArgument || { arrayMerge: defaultArrayMerge };
 	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
 
 	if (!sourceAndTargetTypesMatch) {
-		return cloneUnlessOtherwiseSpecified(source, optionsArgument);
+		return cloneUnlessOtherwiseSpecified(source, options);
 	} else if (sourceIsArray) {
-		var arrayMerge = options.arrayMerge || defaultArrayMerge;
-		return arrayMerge(target, source, optionsArgument);
+		return options.arrayMerge(target, source, options);
 	} else {
-		return mergeObject(target, source, optionsArgument);
+		return mergeObject(target, source, options);
 	}
 }
 
-deepmerge.all = function deepmergeAll(array, optionsArgument) {
+deepmerge.all = function deepmergeAll(array, options) {
 	if (!Array.isArray(array)) {
 		throw new Error('first argument should be an array');
 	}
 
 	return array.reduce(function (prev, next) {
-		return deepmerge(prev, next, optionsArgument);
+		return deepmerge(prev, next, options);
 	}, {});
 };
 
@@ -19376,7 +19396,7 @@ exports.default = deepmerge_1;
 
 /***/ }),
 
-/***/ 470:
+/***/ 471:
 /*!***********************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/GeneExpressionTSnePlot.js ***!
   \***********************************************************************************************************************/
@@ -19410,23 +19430,23 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _color = __webpack_require__(/*! color */ 193);
+var _color = __webpack_require__(/*! color */ 196);
 
 var _color2 = _interopRequireDefault(_color);
 
-var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 196);
+var _PlotLoader = __webpack_require__(/*! ./plotloader/PlotLoader */ 199);
 
 var _PlotLoader2 = _interopRequireDefault(_PlotLoader);
 
-var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 471);
+var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 472);
 
 var _expressionAtlasAutocomplete2 = _interopRequireDefault(_expressionAtlasAutocomplete);
 
-var _MultiStopGradient = __webpack_require__(/*! ./MultiStopGradient */ 478);
+var _MultiStopGradient = __webpack_require__(/*! ./MultiStopGradient */ 479);
 
 var _MultiStopGradient2 = _interopRequireDefault(_MultiStopGradient);
 
-__webpack_require__(/*! ./util/MathRound */ 199);
+__webpack_require__(/*! ./util/MathRound */ 202);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -19441,6 +19461,10 @@ var _colourize = function _colourize(colourRanges) {
   return function (val) {
     if (isNaN(val)) {
       return (0, _color2.default)(defaultColour).alpha(alpha).rgb().toString();
+    }
+
+    if (val === 0) {
+      return (0, _color2.default)('lightgrey').alpha(alpha).rgb().toString();
     }
 
     var rangeIndex = val <= 0 ? 0 : colourRanges.findIndex(function (colourRange) {
@@ -19525,7 +19549,7 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
     }
   };
 
-  var renderGradient = plotData.max && plotData.min && plotData.max > plotData.min;
+  var renderGradient = plotData.max > 0;
   var chartClassName = renderGradient ? 'small-10 columns' : 'small-12 columns';
   var gradient = renderGradient ? _react2.default.createElement(_MultiStopGradient2.default, { height: height,
     showTicks: true,
@@ -19603,7 +19627,7 @@ exports._colourizeExpressionLevel = _colourizeExpressionLevel;
 
 /***/ }),
 
-/***/ 471:
+/***/ 472:
 /*!*****************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/index.js ***!
   \*****************************************************************************************/
@@ -19618,7 +19642,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 472);
+var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 473);
 
 var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
 
@@ -19630,7 +19654,7 @@ exports.default = _AtlasAutocomplete2.default;
 
 /***/ }),
 
-/***/ 472:
+/***/ 473:
 /*!*****************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
   \*****************************************************************************************************/
@@ -19665,15 +19689,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 473);
+var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 474);
 
 var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
-var _urijs = __webpack_require__(/*! urijs */ 15);
+var _urijs = __webpack_require__(/*! urijs */ 17);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 477);
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 478);
 
 var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
 
@@ -19821,10 +19845,10 @@ exports.default = AtlasAutocomplete;
 
 /***/ }),
 
-/***/ 473:
-/*!**************************************************************************************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
-  \**************************************************************************************************************************************/
+/***/ 474:
+/*!*******************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
+  \*******************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -19875,10 +19899,10 @@ function _inherits(subClass, superClass) {
 var React = __webpack_require__(/*! react */ 0);
 var PropTypes = __webpack_require__(/*! prop-types */ 2);
 
-var _require = __webpack_require__(/*! react-dom */ 18),
+var _require = __webpack_require__(/*! react-dom */ 20),
     findDOMNode = _require.findDOMNode;
 
-var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 474);
+var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 475);
 
 var IMPERATIVE_API = ['blur', 'checkValidity', 'click', 'focus', 'select', 'setCustomValidity', 'setSelectionRange', 'setRangeText'];
 
@@ -20016,7 +20040,12 @@ var Autocomplete = function (_React$Component) {
           getItemValue = props.getItemValue;
 
       var index = highlightedIndex === null ? 0 : highlightedIndex;
-      var matchedItem = this.getFilteredItems(props)[index];
+      var items = this.getFilteredItems(props);
+      for (var i = 0; i < items.length; i++) {
+        if (props.isItemSelectable(items[index])) break;
+        index = (index + 1) % items.length;
+      }
+      var matchedItem = items[index] && props.isItemSelectable(items[index]) ? items[index] : null;
       if (value !== '' && matchedItem) {
         var itemValue = getItemValue(matchedItem);
         var itemValueDoesMatch = itemValue.toLowerCase().indexOf(value.toLowerCase()) === 0;
@@ -20082,12 +20111,12 @@ var Autocomplete = function (_React$Component) {
       var items = this.getFilteredItems(this.props).map(function (item, index) {
         var element = _this4.props.renderItem(item, _this4.state.highlightedIndex === index, { cursor: 'default' });
         return React.cloneElement(element, {
-          onMouseEnter: function onMouseEnter() {
+          onMouseEnter: _this4.props.isItemSelectable(item) ? function () {
             return _this4.highlightItemFromMouse(index);
-          },
-          onClick: function onClick() {
+          } : null,
+          onClick: _this4.props.isItemSelectable(item) ? function () {
             return _this4.selectItemFromMouse(item);
-          },
+          } : null,
           ref: function ref(e) {
             return _this4.refs['item-' + index] = e;
           }
@@ -20104,6 +20133,9 @@ var Autocomplete = function (_React$Component) {
           return _this4.refs.menu = e;
         },
         // Ignore blur to prevent menu from de-rendering before we can process click
+        onTouchStart: function onTouchStart() {
+          return _this4.setIgnoreBlur(true);
+        },
         onMouseEnter: function onMouseEnter() {
           return _this4.setIgnoreBlur(true);
         },
@@ -20269,6 +20301,14 @@ Autocomplete.propTypes = {
    */
   shouldItemRender: PropTypes.func,
   /**
+   * Arguments: `item: Any`
+   *
+   * Invoked when attempting to select an item. The return value is used to
+   * determine whether the item should be selectable or not.
+   * By default all items are selectable.
+   */
+  isItemSelectable: PropTypes.func,
+  /**
    * Arguments: `itemA: Any, itemB: Any, value: String`
    *
    * The function which is used to sort `items` before display.
@@ -20374,6 +20414,9 @@ Autocomplete.defaultProps = {
   },
   onChange: function onChange() {},
   onSelect: function onSelect() {},
+  isItemSelectable: function isItemSelectable() {
+    return true;
+  },
   renderMenu: function renderMenu(items, value, style) {
     return React.createElement('div', { style: _extends({}, style, this.menuStyle), children: items });
   },
@@ -20394,33 +20437,53 @@ Autocomplete.defaultProps = {
 Autocomplete.keyDownHandlers = {
   ArrowDown: function ArrowDown(event) {
     event.preventDefault();
-    var itemsLength = this.getFilteredItems(this.props).length;
-    if (!itemsLength) return;
+    var items = this.getFilteredItems(this.props);
+    if (!items.length) return;
     var highlightedIndex = this.state.highlightedIndex;
 
-    var index = highlightedIndex === null || highlightedIndex === itemsLength - 1 ? 0 : highlightedIndex + 1;
-    this.setState({
-      highlightedIndex: index,
-      isOpen: true
-    });
+    var index = highlightedIndex === null ? -1 : highlightedIndex;
+    for (var i = 0; i < items.length; i++) {
+      var p = (index + i + 1) % items.length;
+      if (this.props.isItemSelectable(items[p])) {
+        index = p;
+        break;
+      }
+    }
+    if (index > -1 && index !== highlightedIndex) {
+      this.setState({
+        highlightedIndex: index,
+        isOpen: true
+      });
+    }
   },
   ArrowUp: function ArrowUp(event) {
     event.preventDefault();
-    var itemsLength = this.getFilteredItems(this.props).length;
-    if (!itemsLength) return;
+    var items = this.getFilteredItems(this.props);
+    if (!items.length) return;
     var highlightedIndex = this.state.highlightedIndex;
 
-    var index = highlightedIndex === 0 || highlightedIndex === null ? itemsLength - 1 : highlightedIndex - 1;
-    this.setState({
-      highlightedIndex: index,
-      isOpen: true
-    });
+    var index = highlightedIndex === null ? items.length : highlightedIndex;
+    for (var i = 0; i < items.length; i++) {
+      var p = (index - (1 + i) + items.length) % items.length;
+      if (this.props.isItemSelectable(items[p])) {
+        index = p;
+        break;
+      }
+    }
+    if (index !== items.length) {
+      this.setState({
+        highlightedIndex: index,
+        isOpen: true
+      });
+    }
   },
   Enter: function Enter(event) {
     var _this7 = this;
 
     // Key code 229 is used for selecting items from character selectors (Pinyin, Kana, etc)
     if (event.keyCode !== 13) return;
+    // In case the user is currently hovering over the menu
+    this.setIgnoreBlur(false);
     if (!this.isOpen()) {
       // menu is closed so there is no selection to accept -> do nothing
       return;
@@ -20461,11 +20524,11 @@ Autocomplete.keyDownHandlers = {
 };
 
 module.exports = Autocomplete;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../../../node_modules/webpack/buildin/global.js */ 9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 11)))
 
 /***/ }),
 
-/***/ 474:
+/***/ 475:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/index.js ***!
   \****************************************************************************/
@@ -20476,11 +20539,11 @@ module.exports = Autocomplete;
 "use strict";
 
 
-module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 475);
+module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 476);
 
 /***/ }),
 
-/***/ 475:
+/***/ 476:
 /*!***********************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
   \***********************************************************************************************/
@@ -20491,7 +20554,7 @@ module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 475);
 "use strict";
 
 
-var util = __webpack_require__(/*! ./util */ 476);
+var util = __webpack_require__(/*! ./util */ 477);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -20608,7 +20671,7 @@ module.exports = scrollIntoView;
 
 /***/ }),
 
-/***/ 476:
+/***/ 477:
 /*!*******************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/dom-scroll-into-view/lib/util.js ***!
   \*******************************************************************************/
@@ -21053,7 +21116,7 @@ mix(utils, domUtils);
 
 /***/ }),
 
-/***/ 477:
+/***/ 478:
 /*!*************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-autocomplete/lib/SpeciesSelect.js ***!
   \*************************************************************************************************/
@@ -21088,7 +21151,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 15);
+var _urijs = __webpack_require__(/*! urijs */ 17);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -21239,7 +21302,7 @@ exports.default = SpeciesSelect;
 
 /***/ }),
 
-/***/ 478:
+/***/ 479:
 /*!******************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/MultiStopGradient.js ***!
   \******************************************************************************************************************/
@@ -21262,11 +21325,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _expressionAtlasNumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 479);
+var _expressionAtlasNumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 480);
 
 var _expressionAtlasNumberFormat2 = _interopRequireDefault(_expressionAtlasNumberFormat);
 
-__webpack_require__(/*! ./util/MathRound */ 199);
+__webpack_require__(/*! ./util/MathRound */ 202);
+
+var _MultiStopGradient = __webpack_require__(/*! ./MultiStopGradient.css */ 482);
+
+var _MultiStopGradient2 = _interopRequireDefault(_MultiStopGradient);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -21291,11 +21358,13 @@ var putInRange = function putInRange(ranges, val) {
 };
 
 var lineHeight = 24;
+
 var Tick = function Tick(_ref) {
   var value = _ref.value,
-      colour = _ref.colour,
-      top = _ref.top;
-  return _react2.default.createElement('div', { style: { position: 'absolute', height: '2px', width: '20px', background: colour, top: top + lineHeight + 'px' } }, _react2.default.createElement('div', { style: { position: 'absolute', marginLeft: '24px', marginTop: '-' + lineHeight / 2 + 'px' } }, _react2.default.createElement('small', { style: { color: colour } }, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: Math.round10(value, -2) }))));
+      tickStyle = _ref.tickStyle,
+      top = _ref.top,
+      position = _ref.position;
+  return _react2.default.createElement('div', { className: _MultiStopGradient2.default[tickStyle], style: { top: top + lineHeight + 'px' } }, _react2.default.createElement('div', { className: _MultiStopGradient2.default[position] }, _react2.default.createElement('small', { style: { color: tickStyle } }, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: Math.round10(value, -2) }))));
 };
 
 var MultiStopGradient = function MultiStopGradient(_ref2) {
@@ -21313,14 +21382,11 @@ var MultiStopGradient = function MultiStopGradient(_ref2) {
   var minExpressionTopPosition = Math.min(gradientHeight - minMaxExpressionTickHeight, gradientHeight - gradientHeight * putInRange(colourRanges, plotData.min));
   var maxExpressionTopPosition = Math.max(minMaxExpressionTickHeight, gradientHeight - gradientHeight * putInRange(colourRanges, plotData.max));
 
-  return _react2.default.createElement('div', { className: 'small-2 columns text-center' }, _react2.default.createElement('div', null, _react2.default.createElement('small', null, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: colourRanges[colourRanges.length - 1].threshold }), ' ', plotData.unit)), _react2.default.createElement('div', {
+  return _react2.default.createElement('div', { className: 'small-2 columns text-center' }, _react2.default.createElement('small', null, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: colourRanges[colourRanges.length - 1].threshold }), ' ', plotData.unit), _react2.default.createElement('div', { className: _MultiStopGradient2.default.gradient,
     style: {
-      width: '20px',
       height: gradientHeight + 'px',
-      background: 'linear-gradient(0deg, ' + bg + ')',
-      verticalAlign: 'middle',
-      margin: 'auto' } }, _react2.default.createElement(Tick, { value: plotData.max, colour: 'dimgray', top: maxExpressionTopPosition }), _react2.default.createElement(Tick, { value: plotData.min, colour: 'dimgray', top: minExpressionTopPosition }), showTicks && colourRanges.slice(1, -1).map(function (colourRange) {
-    return _react2.default.createElement(Tick, { key: colourRange.threshold, value: colourRange.threshold, colour: 'lightgray', top: gradientHeight - gradientHeight * putInRange(colourRanges, colourRange.threshold) });
+      background: 'linear-gradient(0deg, ' + bg + ')' } }, _react2.default.createElement(Tick, { value: plotData.max, tickStyle: 'dimgray', top: maxExpressionTopPosition, position: 'left' }), plotData.min < plotData.max && _react2.default.createElement(Tick, { value: plotData.min, tickStyle: 'dimgray', top: minExpressionTopPosition, position: 'left' }), showTicks && colourRanges.slice(1, -1).map(function (colourRange) {
+    return _react2.default.createElement(Tick, { key: colourRange.threshold, value: colourRange.threshold, tickStyle: 'lightgray', top: gradientHeight - gradientHeight * putInRange(colourRanges, colourRange.threshold), position: 'right' });
   })), _react2.default.createElement('div', null, _react2.default.createElement('small', null, _react2.default.createElement(_expressionAtlasNumberFormat2.default, { value: colourRanges[0].threshold }), ' ', plotData.unit)));
 };
 
@@ -21343,7 +21409,7 @@ exports.default = MultiStopGradient;
 
 /***/ }),
 
-/***/ 479:
+/***/ 480:
 /*!******************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-number-format/lib/index.js ***!
   \******************************************************************************************/
@@ -21358,7 +21424,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ScientificNotationNumber = __webpack_require__(/*! ./ScientificNotationNumber.js */ 480);
+var _ScientificNotationNumber = __webpack_require__(/*! ./ScientificNotationNumber.js */ 481);
 
 var _ScientificNotationNumber2 = _interopRequireDefault(_ScientificNotationNumber);
 
@@ -21370,7 +21436,7 @@ exports.default = _ScientificNotationNumber2.default;
 
 /***/ }),
 
-/***/ 480:
+/***/ 481:
 /*!*************************************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/expression-atlas-number-format/lib/ScientificNotationNumber.js ***!
   \*************************************************************************************************************/
@@ -21436,67 +21502,668 @@ exports.default = ScientificNotationNumber;
 
 /***/ }),
 
-/***/ 8:
-/*!*******************************************************************!*\
-  !*** ./bundles/experiment-page/node_modules/invariant/browser.js ***!
-  \*******************************************************************/
+/***/ 482:
+/*!*******************************************************************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/MultiStopGradient.css ***!
+  \*******************************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--0-1!./MultiStopGradient.css */ 483);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ 485)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../../../node_modules/css-loader/index.js??ref--0-1!./MultiStopGradient.css", function() {
+		var newContent = require("!!../../../../../node_modules/css-loader/index.js??ref--0-1!./MultiStopGradient.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 483:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--0-1!./bundles/experiment-page/node_modules/expression-atlas-experiment-page-tsne-plot/lib/MultiStopGradient.css ***!
+  \*******************************************************************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ 484)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".MultiStopGradient__gradient___Se9XR {\n    width: 20px;\n    vertical-align: middle;\n    margin: auto;\n}\n\n.MultiStopGradient__tick___2xmr0 {\n    position: absolute;\n    height: 2px;\n    width: 20px;\n}\n\n.MultiStopGradient__lightgray___2s1Fp {\n  background: lightgray;\n  z-index: 1;\n}\n\n.MultiStopGradient__dimgray___3tgEx {\n  background: dimgray;\n  z-index: 2;\n}\n\n.MultiStopGradient__tickLabel___gzIdb {\n    position: absolute;\n    white-space: nowrap;\n    margin-top: -12px;\n}\n\n.MultiStopGradient__left___zHgsB {\n    right: 20px;\n    padding-right: 5px;\n}\n\n.MultiStopGradient__right___3RAqq {\n    left: 20px;\n    padding-left: 5px;\n}\n", ""]);
+
+// exports
+exports.locals = {
+	"gradient": "MultiStopGradient__gradient___Se9XR",
+	"tick": "MultiStopGradient__tick___2xmr0",
+	"lightgray": "MultiStopGradient__lightgray___2s1Fp MultiStopGradient__tick___2xmr0",
+	"dimgray": "MultiStopGradient__dimgray___3tgEx MultiStopGradient__tick___2xmr0",
+	"tickLabel": "MultiStopGradient__tickLabel___gzIdb",
+	"left": "MultiStopGradient__left___zHgsB MultiStopGradient__tickLabel___gzIdb",
+	"right": "MultiStopGradient__right___3RAqq MultiStopGradient__tickLabel___gzIdb"
+};
+
+/***/ }),
+
+/***/ 484:
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader/lib/css-base.js ***!
+  \*************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Copyright 2013-2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
 
 
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function (useSourceMap) {
+	var list = [];
 
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if (item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
 
-var invariant = function invariant(condition, format, a, b, c, d, e, f) {
-  if (true) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  }
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
+	// import a list of modules into the list
+	list.i = function (modules, mediaQuery) {
+		if (typeof modules === "string") modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for (var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if (typeof id === "number") alreadyImportedModules[id] = true;
+		}
+		for (i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if (mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if (mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
 };
 
-module.exports = invariant;
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
 
 /***/ }),
 
-/***/ 81:
+/***/ 485:
+/*!****************************************************!*\
+  !*** ./node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getTarget = function (target) {
+  return document.querySelector(target);
+};
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(target) {
+                // If passing function in options, then use it for resolve "head" element.
+                // Useful for Shadow Root style i.e
+                // {
+                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
+                // }
+                if (typeof target === 'function') {
+                        return target();
+                }
+                if (typeof memo[target] === "undefined") {
+			var styleTarget = getTarget.call(this, target);
+			// Special case to return head of iframe instead of iframe itself
+			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+				try {
+					// This will throw an exception if access to iframe is blocked
+					// due to cross-origin restrictions
+					styleTarget = styleTarget.contentDocument.head;
+				} catch(e) {
+					styleTarget = null;
+				}
+			}
+			memo[target] = styleTarget;
+		}
+		return memo[target]
+	};
+})();
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(/*! ./urls */ 486);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+        if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+		var nextSibling = getElement(options.insertInto + " " + options.insertAt.before);
+		target.insertBefore(style, nextSibling);
+	} else {
+		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	options.attrs.type = "text/css";
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+
+/***/ 486:
+/*!***********************************************!*\
+  !*** ./node_modules/style-loader/lib/urls.js ***!
+  \***********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+	// get current location
+	var location = typeof window !== "undefined" && window.location;
+
+	if (!location) {
+		throw new Error("fixUrls requires window.location");
+	}
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+		return css;
+	}
+
+	var baseUrl = location.protocol + "//" + location.host;
+	var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+ This regular expression is just a way to recursively match brackets within
+ a string.
+ 	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+    (  = Start a capturing group
+      (?:  = Start a non-capturing group
+          [^)(]  = Match anything that isn't a parentheses
+          |  = OR
+          \(  = Match a start parentheses
+              (?:  = Start another non-capturing groups
+                  [^)(]+  = Match anything that isn't a parentheses
+                  |  = OR
+                  \(  = Match a start parentheses
+                      [^)(]*  = Match anything that isn't a parentheses
+                  \)  = Match a end parentheses
+              )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+  \)  = Match a close parens
+ 	 /gi  = Get all matches, not the first.  Be case insensitive.
+  */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function (fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl.trim().replace(/^"(.*)"$/, function (o, $1) {
+			return $1;
+		}).replace(/^'(.*)'$/, function (o, $1) {
+			return $1;
+		});
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+			return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+			//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+/***/ }),
+
+/***/ 85:
 /*!***********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/LocationUtils.js ***!
   \***********************************************************************/
@@ -21520,15 +22187,15 @@ var _extends = Object.assign || function (target) {
   }return target;
 };
 
-var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 183);
+var _resolvePathname = __webpack_require__(/*! resolve-pathname */ 186);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(/*! value-equal */ 184);
+var _valueEqual = __webpack_require__(/*! value-equal */ 187);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
-var _PathUtils = __webpack_require__(/*! ./PathUtils */ 28);
+var _PathUtils = __webpack_require__(/*! ./PathUtils */ 29);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -21596,7 +22263,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 
 /***/ }),
 
-/***/ 82:
+/***/ 86:
 /*!*********************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/createTransitionManager.js ***!
   \*********************************************************************************/
@@ -21695,7 +22362,7 @@ exports.default = createTransitionManager;
 
 /***/ }),
 
-/***/ 83:
+/***/ 87:
 /*!****************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router-dom/es/Router.js ***!
   \****************************************************************************/
@@ -21710,7 +22377,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Router = __webpack_require__(/*! react-router/es/Router */ 84);
+var _Router = __webpack_require__(/*! react-router/es/Router */ 88);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -21720,7 +22387,7 @@ exports.default = _Router2.default; // Written in this round about way for babel
 
 /***/ }),
 
-/***/ 84:
+/***/ 88:
 /*!************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/Router.js ***!
   \************************************************************************/
@@ -21741,7 +22408,7 @@ var _warning = __webpack_require__(/*! warning */ 3);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(/*! invariant */ 8);
+var _invariant = __webpack_require__(/*! invariant */ 9);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -21876,7 +22543,7 @@ exports.default = Router;
 
 /***/ }),
 
-/***/ 85:
+/***/ 89:
 /*!***************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-router/es/matchPath.js ***!
   \***************************************************************************/
@@ -21891,7 +22558,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _pathToRegexp = __webpack_require__(/*! path-to-regexp */ 436);
+var _pathToRegexp = __webpack_require__(/*! path-to-regexp */ 437);
 
 var _pathToRegexp2 = _interopRequireDefault(_pathToRegexp);
 
@@ -21967,7 +22634,65 @@ exports.default = matchPath;
 
 /***/ }),
 
-/***/ 86:
+/***/ 9:
+/*!*******************************************************************!*\
+  !*** ./bundles/experiment-page/node_modules/invariant/browser.js ***!
+  \*******************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function invariant(condition, format, a, b, c, d, e, f) {
+  if (true) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+/***/ }),
+
+/***/ 90:
 /*!************************************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/history/es/createTransitionManager.js ***!
   \************************************************************************************/
@@ -22066,5 +22791,5 @@ exports.default = createTransitionManager;
 
 /***/ })
 
-},[421]);
+},[422]);
 //# sourceMappingURL=experimentPage.bundle.js.map

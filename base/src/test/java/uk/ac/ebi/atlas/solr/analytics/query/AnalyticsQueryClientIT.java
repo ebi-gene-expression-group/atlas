@@ -67,20 +67,6 @@ public class AnalyticsQueryClientIT {
     }
 
     @Test
-    public void queryWithNoCategoryAlsoPicksUpAKeywordTerm() {
-
-        String queryMade = subject.queryBuilder()
-                .bioentityIdentifierFacets(-1)
-                .queryIdentifierSearch(SemanticQuery.create(SemanticQueryTerm.create("GO:1234567")))
-                .inExperiment("E-MTAB-513")
-                .fetch();
-
-        assertThat(queryMade, containsString("keyword_go"));
-        assertThat(queryMade, containsString("\"GO:1234567\""));
-        assertThat(queryMade, containsString("E-MTAB-513"));
-    }
-
-    @Test
     public void queryWithNoCategoryButObviouslyAnEnsemblIdDoesABioentityIdentifierQuery() {
 
         String queryMade = subject.queryBuilder()

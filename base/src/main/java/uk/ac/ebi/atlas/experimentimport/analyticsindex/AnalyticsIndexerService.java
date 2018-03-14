@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentInputStream;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.UpdateResponse;
