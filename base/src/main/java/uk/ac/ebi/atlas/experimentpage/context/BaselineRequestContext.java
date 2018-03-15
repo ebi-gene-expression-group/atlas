@@ -19,10 +19,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 @Named
 @Scope("request")
 public class BaselineRequestContext<U extends ExpressionUnit.Absolute>
-        extends RequestContext<AssayGroup, BaselineExperiment, BaselineRequestPreferences<U>>
+        extends RequestContext<AssayGroup, U, BaselineExperiment, BaselineRequestPreferences<U>>
         implements BaselineProfileStreamOptions<U> {
 
     private LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup =
@@ -44,12 +46,12 @@ public class BaselineRequestContext<U extends ExpressionUnit.Absolute>
 
     private List<String> typesWhoseValuesToDisplay() {
 
-        List<FactorGroup> factorGroups = dataColumnsToBeReturned().transform(experiment::getFactors).toList();
+        List<FactorGroup> factorGroups = dataColumnsToBeReturned().map(experiment::getFactors).collect(toList());
 
         List<String> typesInOrderWeWant = Stream.concat(
                 experiment.getDisplayDefaults().prescribedOrderOfFilters().stream(),
                 factorGroups.stream().flatMap(factors -> ImmutableList.copyOf(factors).stream().map(Factor::getType)).sorted()
-            ).map(Factor::normalize).distinct().collect(Collectors.toList());
+            ).map(Factor::normalize).distinct().collect(toList());
 
         List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
                 RichFactorGroup.filterOutTypesWithCommonValues(
@@ -65,7 +67,7 @@ public class BaselineRequestContext<U extends ExpressionUnit.Absolute>
     private ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup() {
         ImmutableMap.Builder<AssayGroup, String> b = ImmutableMap.builder();
 
-        for (AssayGroup assayGroup : dataColumnsToBeReturned()) {
+        dataColumnsToBeReturned().forEach(assayGroup -> {
             final FactorGroup factorGroup = experiment.getFactors(assayGroup);
 
             b.put(
@@ -74,7 +76,7 @@ public class BaselineRequestContext<U extends ExpressionUnit.Absolute>
                             .map(type -> factorGroup.factorOfType(Factor.normalize(type)).getValue())
                             .collect(Collectors.joining(", "))
             );
-        }
+        });
 
         return b.build();
     }
