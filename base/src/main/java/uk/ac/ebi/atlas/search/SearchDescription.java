@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.search;
 import org.apache.commons.lang3.StringUtils;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 
 public class SearchDescription {
 
@@ -13,37 +11,37 @@ public class SearchDescription {
     }
 
     public static String get(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        if (isEmpty(geneQuery) && isEmpty(conditionQuery)) {
+        if (geneQuery.isEmpty() && conditionQuery.isEmpty()) {
             return "default query";
         }
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (isNotEmpty(geneQuery)) {
+        if (geneQuery.isNotEmpty()) {
             String geneQueryString = geneQuery.description();
 
-            if (geneQuery.size() > 1 && isNotEmpty(conditionQuery)) {
+            if (geneQuery.size() > 1 && conditionQuery.isNotEmpty()) {
                 stringBuilder.append("(").append(geneQueryString).append(")");
             } else {
                 stringBuilder.append(geneQueryString);
             }
         }
 
-        if (isNotEmpty(geneQuery) && isNotEmpty(conditionQuery)) {
+        if (geneQuery.isNotEmpty() && conditionQuery.isNotEmpty()) {
             stringBuilder.append(" AND ");
         }
 
-        if (isNotEmpty(conditionQuery)) {
+        if (conditionQuery.isNotEmpty()) {
             String conditionQueryString = conditionQuery.description();
 
-            if (conditionQuery.size() > 1 && isNotEmpty(geneQuery)) {
+            if (conditionQuery.size() > 1 && geneQuery.isNotEmpty()) {
                 stringBuilder.append("(").append(conditionQueryString).append(")");
             } else {
                 stringBuilder.append(conditionQueryString);
             }
         }
 
-        if ((isNotEmpty(geneQuery) || isNotEmpty(conditionQuery)) && isNotBlank(species)) {
+        if ((geneQuery.isNotEmpty() || conditionQuery.isNotEmpty()) && isNotBlank(species)) {
             stringBuilder.append(" AND ");
         }
 

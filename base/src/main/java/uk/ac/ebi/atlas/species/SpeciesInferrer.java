@@ -12,7 +12,6 @@ import javax.inject.Named;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 
 @Named
 public class SpeciesInferrer {
@@ -47,7 +46,7 @@ public class SpeciesInferrer {
     }
 
     private Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
-        if (isEmpty(geneQuery) && isEmpty(conditionQuery)) {
+        if (geneQuery.isNotEmpty() && conditionQuery.isEmpty()) {
             return speciesFactory.createUnknownSpecies();
         }
 

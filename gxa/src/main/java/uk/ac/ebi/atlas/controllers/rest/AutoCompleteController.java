@@ -37,7 +37,7 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
 //            return StringUtils.EMPTY;
 //        }
 
-        return new Gson().toJson(suggesterService.fetchPropertySuggestions(query, speciesFactory.create(species), suggestCount));
+        return gson.toJson(suggesterService.fetchPropertySuggestions(query, speciesFactory.create(species), suggestCount));
     }
 
 }

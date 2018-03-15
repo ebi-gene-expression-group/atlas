@@ -5,8 +5,6 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import java.util.regex.Pattern;
 
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
-
 public class GeneSetUtil {
 
     private static final Pattern GO_REGEX = Pattern.compile("GO:\\d+", Pattern.CASE_INSENSITIVE);
@@ -53,20 +51,14 @@ public class GeneSetUtil {
     }
 
     public static boolean matchesGeneSetCategoryOrGeneSetValue(SemanticQuery geneQuery) {
-        if (isEmpty(geneQuery) || geneQuery.size() > 1) {
+        if (geneQuery.isEmpty() || geneQuery.size() > 1) {
             return false;
         }
 
         SemanticQueryTerm term = geneQuery.iterator().next();
-        if (term.hasNoCategory()) {
-            if (!matchesGeneSetAccession(term.value())) {
-                return false;
-            }
-        } else if (!hasGeneSetCategory(term.category())) {
-            return false;
-        }
-
-        return true;
+        return term.category().isPresent() ?
+                hasGeneSetCategory(term.category().get()) :
+                matchesGeneSetAccession(term.value());
     }
 
 }
