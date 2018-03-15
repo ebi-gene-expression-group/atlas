@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.Range;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit> {
@@ -16,9 +15,8 @@ public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit>
     private static final int HEATMAP_SIZE_MIN = 1;
     private static final int HEATMAP_SIZE_MAX = 1000;
 
-    @NotNull
     @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
-    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
+    private int heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
 
     private SemanticQuery geneQuery = getDefaultGeneQuery();
     private double cutoff = getDefaultCutoff();
@@ -42,7 +40,7 @@ public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit>
         this.heatmapMatrixSize = heatmapMatrixSize;
     }
 
-    public Integer getHeatmapMatrixSize() {
+    public int getHeatmapMatrixSize() {
         return this.heatmapMatrixSize;
     }
 
@@ -62,7 +60,7 @@ public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit>
         this.cutoff = cutoff;
     }
 
-    public Double getCutoff() {
+    public double getCutoff() {
         return this.cutoff;
     }
 
@@ -100,7 +98,7 @@ public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit>
     If someone chooses to ask for zeros we need to go through the original text file.
      */
     public String serializationShortString() {
-        return getClass().getSimpleName() + getCutoff().equals(0.0d);
+        return getClass().getSimpleName() + (cutoff == 0.0d);
     }
 
     @Override
