@@ -26,7 +26,8 @@ module.exports = {
     libraryTarget: 'var',
     library: '[name]',
     path: path.resolve(__dirname, '../webapp/resources/js-bundles'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    publicPath: '/gxa_sc/resources/js-bundles/'
   },
 
   plugins: [
