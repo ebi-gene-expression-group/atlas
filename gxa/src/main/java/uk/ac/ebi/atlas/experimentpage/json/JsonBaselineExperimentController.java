@@ -1,12 +1,16 @@
 package uk.ac.ebi.atlas.experimentpage.json;
 
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatmapsWranglerFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.HistogramService;
+import uk.ac.ebi.atlas.experimentpage.withsolr.BaselineExperimentProfilesService;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -32,6 +36,7 @@ import static uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences.VERY_SMALL_NO
 public class JsonBaselineExperimentController extends JsonExperimentController {
     private final BaselineExperimentPageService rnaSeqBaselineExperimentPageService;
     private final BaselineExperimentPageService proteomicsBaselineExperimentPageService;
+    private final BaselineExperimentProfilesService baselineExperimentProfilesService;
     private final SpeciesInferrer speciesInferrer;
     private final HistogramService.RnaSeq rnaSeqHistograms;
     private final HistogramService.Proteomics proteomicsHistograms;
@@ -42,18 +47,27 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                                             SolrQueryService solrQueryService,
                                             RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
                                             ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory,
-                                            SpeciesInferrer speciesInferrer) {
+                                            SpeciesInferrer speciesInferrer,
+                                            BaselineExperimentProfilesService baselineExperimentProfilesService) {
         super(experimentTrader);
 
         this.rnaSeqBaselineExperimentPageService =
                 new BaselineExperimentPageService(
+                        baselineExperimentProfilesService,
+                        coexpressedGenesService,
                         new BaselineProfilesHeatmapsWranglerFactory(
-                                rnaSeqBaselineProfileStreamFactory, solrQueryService, coexpressedGenesService));
+                                rnaSeqBaselineProfileStreamFactory,
+                                solrQueryService,
+                                coexpressedGenesService));
 
         this.proteomicsBaselineExperimentPageService =
                 new BaselineExperimentPageService(
+                        baselineExperimentProfilesService,
+                        coexpressedGenesService,
                         new BaselineProfilesHeatmapsWranglerFactory(
-                                proteomicsBaselineProfileStreamFactory, solrQueryService, coexpressedGenesService));
+                                proteomicsBaselineProfileStreamFactory,
+                                solrQueryService,
+                                coexpressedGenesService));
 
         this.rnaSeqHistograms =
                 new HistogramService.RnaSeq(rnaSeqBaselineProfileStreamFactory, experimentTrader);
@@ -62,6 +76,8 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                 new HistogramService.Proteomics(proteomicsBaselineProfileStreamFactory, experimentTrader);
 
         this.speciesInferrer = speciesInferrer;
+
+        this.baselineExperimentProfilesService = baselineExperimentProfilesService;
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -70,9 +86,12 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     public String baselineRnaSeqExperimentData(@Valid RnaSeqBaselineRequestPreferences preferences,
                                                @PathVariable String experimentAccession,
                                                @RequestParam(defaultValue = "") String accessKey) {
+        BaselineExperiment experiment =
+                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+
         return gson.toJson(
                 rnaSeqBaselineExperimentPageService.getResultsForExperiment(
-                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                        experiment,
                         accessKey,
                         preferences));
     }
