@@ -21,7 +21,7 @@ import static uk.ac.ebi.atlas.solr.BioentityPropertyName.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient.Field.IDENTIFIER_SEARCH;
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsSolrQueryTree.Operator.OR;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 public class AnalyticsSolrQueryTree {
     private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
@@ -171,7 +171,7 @@ public class AnalyticsSolrQueryTree {
     }
 
     private static String decideOnKeywordField(SemanticQueryTerm term) {
-        if (term.hasNoCategory()) {
+        if (!term.category().isPresent()) {
             if (ENSEMBL_ID_REGEX_FROM_THE_INTERNET.matcher(term.value()).matches()) {
                 return BIOENTITY_IDENTIFIER.name;
             }
@@ -182,9 +182,9 @@ public class AnalyticsSolrQueryTree {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
             }
         } else {
-            return BIOENTITY_IDENTIFIER.name.equals(term.category())
+            return BIOENTITY_IDENTIFIER.name.equals(term.category().get())
                     ? BIOENTITY_IDENTIFIER.name
-                    : "keyword_" + term.category();
+                    : "keyword_" + term.category().get();
         }
     }
 
@@ -227,7 +227,7 @@ public class AnalyticsSolrQueryTree {
 
             Function<Leaf, TreeNode> makeTreeForSymbol = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
-                    return new Leaf(asAnalyticsSchemaKeyword(SYMBOL), leaf.searchValue);
+                    return new Leaf(asAnalyticsSchemaField(SYMBOL).name(), leaf.searchValue);
                 } else {
                     return leaf;
                 }
@@ -268,8 +268,9 @@ public class AnalyticsSolrQueryTree {
     private static ImmutableList<String> identifierKeywords() {
         return ImmutableList.copyOf(
                 ExperimentDataPoint.bioentityPropertyNames.stream()
-                        .filter(bioentityPropertyName -> bioentityPropertyName.isId)
-                        .map(AnalyticsCollectionProxy::asAnalyticsSchemaKeyword)
+                        .filter(bioentityPropertyName -> bioentityPropertyName.isKeyword)
+                        .map(AnalyticsCollectionProxy::asAnalyticsSchemaField)
+                        .map(AnalyticsCollectionProxy.AnalyticsSchemaField::name)
                         .collect(toList()));
     }
 }

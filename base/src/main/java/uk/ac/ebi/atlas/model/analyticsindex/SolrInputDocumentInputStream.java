@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInputDocument> {
 
@@ -66,8 +67,8 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
             Collection<String> values = bioentityProperties.get(bioentityPropertyName);
             if (values != null) {
                 for (String value : values) {
-                    if (bioentityPropertyName.isId) {
-                        solrInputDocument.addField(asAnalyticsSchemaKeyword(bioentityPropertyName), value);
+                    if (bioentityPropertyName.isKeyword) {
+                        solrInputDocument.addField(asAnalyticsSchemaField(bioentityPropertyName).name(), value);
                     } else {
                         nonKeywordProperties.add(value);
                     }
@@ -80,8 +81,7 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
         add experiment.getDisplayName() to identifierSearch too?
          */
 
-        solrInputDocument.addField(
-                BioentityPropertyName.IDENTIFIER_SEARCH.name, Joiner.on(" ").join(nonKeywordProperties));
+        solrInputDocument.addField(IDENTIFIER_SEARCH.name(), Joiner.on(" ").join(nonKeywordProperties));
 
         return solrInputDocument;
     }

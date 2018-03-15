@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.species.Species;
 
+import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
+
 /**
  * This is a builder, keep always in mind that builders are potentially stateful.
  * If you need to build different query strings within the same client process
@@ -22,7 +24,7 @@ public class BioentityIdentifierQueryBuilder {
     private String queryString;
 
     public BioentityIdentifierQueryBuilder forTerm(SemanticQueryTerm term){
-        this.queryString = term.asBioentitiesIndexQueryLiteral();
+        this.queryString = asBioentitiesCollectionQuery(term);
         return this;
     }
 

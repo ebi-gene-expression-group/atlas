@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
+
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient.Field.*;
 
 @Named
@@ -188,7 +188,7 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryIdentifierSearch(SemanticQuery geneQuery) {
-            if(isNotEmpty(geneQuery)){
+            if(geneQuery.isNotEmpty()){
                 queryClausesBuilder.add(AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery));
             }
             return this;
@@ -204,7 +204,7 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {
-            if (isNotEmpty(conditionQuery)) {
+            if (conditionQuery.isNotEmpty()) {
                 queryClausesBuilder.add(conditionsSearchQuery(conditionQuery));
             }
             return this;

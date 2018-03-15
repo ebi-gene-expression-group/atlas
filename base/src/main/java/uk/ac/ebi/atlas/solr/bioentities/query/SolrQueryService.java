@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
+import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
 
 @Named
 // Can be singleton because HttpSolrClient is thread safe, do not to add any other non thread safe state!
@@ -57,7 +57,7 @@ public class SolrQueryService {
     }
 
     public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, Species species) {
-        if (isEmpty(geneQuery)) {
+        if (geneQuery.isEmpty()) {
             return new GeneQueryResponse();
         }
         GeneQueryResponse geneQueryResponse = fetchGeneIdsGroupedByGeneQueryToken(geneQuery, species);
@@ -76,7 +76,7 @@ public class SolrQueryService {
         SolrQuery query = new SolrQuery();
         query.setRows(1);
 
-        if (geneQueryTerm.hasNoCategory()) {
+        if (!geneQueryTerm.category().isPresent()) {
             query.setQuery(MessageFormat.format("bioentity_identifier:\"{0}\"", geneQueryTerm.value()));
         }
 
@@ -85,7 +85,7 @@ public class SolrQueryService {
             return queryResults;
         }
 
-        query.setQuery(geneQueryTerm.asBioentitiesIndexQueryLiteral());
+        query.setQuery(asBioentitiesCollectionQuery(geneQueryTerm));
         return solrClient.query(query, false, "species");
     }
 }
