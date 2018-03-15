@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.solr.cloud.fullanalytics.tuplestreamers;
 
 import com.google.common.collect.ImmutableMap;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
@@ -15,6 +17,7 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL_FPKM;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.BioentityIdentifierSearchService.AVERAGE_EXPRESSION_KEY;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.BioentityIdentifierSearchService.GENE_KEY;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.BioentityIdentifierSearchService.SPECIFICITY_KEY;
@@ -29,14 +32,29 @@ public class BaselineTupleStreamerFactory {
     }
 
     public TupleStreamer createForBaselineNonSpecific(String experimentAccession,
+                                                      SemanticQuery geneQuery,
                                                       double expressionLevelCutoff,
                                                       int limit,
+                                                      ExpressionUnit unit,
                                                       String... assayGroupIds) {
+        AnalyticsCollectionProxy.AnalyticsSchemaField expressionLevelField =
+                unit == ExpressionUnit.Absolute.Rna.FPKM ?
+                    EXPRESSION_LEVEL_FPKM :
+                    EXPRESSION_LEVEL;
+
         FacetStreamBuilder<AnalyticsCollectionProxy> facetStreamBuilder =
                 new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
                         .addFilterTermsClause(EXPERIMENT_ACCESSION, experimentAccession)
-                        .addFilterLowerRangeClause(EXPRESSION_LEVEL, expressionLevelCutoff)
-                        .sortByAbsoluteAverageDescending(EXPRESSION_LEVEL);
+                        .addFilterLowerRangeClause(expressionLevelField, expressionLevelCutoff)
+                        .sortByAbsoluteAverageDescending(expressionLevelField);
+
+        if (geneQuery.size() > 0) {
+            AnalyticsCollectionProxy.asAnalyticsGeneQuery(geneQuery).forEach(
+                    (analyticsSchemaField, searchValues) ->
+                            facetStreamBuilder.addQueryTermsClause(
+                                    analyticsSchemaField,
+                                    searchValues.toArray(new String[0])));
+        }
 
         if (assayGroupIds.length > 0) {
             facetStreamBuilder.addQueryTermsClause(ASSAY_GROUP_ID, assayGroupIds);
@@ -47,7 +65,7 @@ public class BaselineTupleStreamerFactory {
                         .addFieldMapping(
                                 ImmutableMap.of(
                                         BIOENTITY_IDENTIFIER.name(), GENE_KEY,
-                                        "avg(abs(" + EXPRESSION_LEVEL.name() + "))", AVERAGE_EXPRESSION_KEY));
+                                        "avg(abs(" + expressionLevelField.name() + "))", AVERAGE_EXPRESSION_KEY));
 
         TopStreamBuilder<AnalyticsCollectionProxy> topStreamBuilder =
                 new TopStreamBuilder<>(selectStreamBuilder, limit, AVERAGE_EXPRESSION_KEY);
@@ -56,14 +74,29 @@ public class BaselineTupleStreamerFactory {
     }
 
     public TupleStreamer createForBaselineSpecific(String experimentAccession,
+                                                   SemanticQuery geneQuery,
                                                    double expressionLevelCutoff,
+                                                   ExpressionUnit unit,
                                                    String... assayGroupIds) {
+        AnalyticsCollectionProxy.AnalyticsSchemaField expressionLevelField =
+                unit == ExpressionUnit.Absolute.Rna.FPKM ?
+                        EXPRESSION_LEVEL_FPKM :
+                        EXPRESSION_LEVEL;
+
         FacetStreamBuilder<AnalyticsCollectionProxy> facetStreamBuilder =
                 new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
                         .addFilterTermsClause(EXPERIMENT_ACCESSION, experimentAccession)
-                        .addFilterLowerRangeClause(EXPRESSION_LEVEL, expressionLevelCutoff)
+                        .addFilterLowerRangeClause(expressionLevelField, expressionLevelCutoff)
                         .sortByCountsAscending()
-                        .withAbsoluteAverageOf(EXPRESSION_LEVEL);
+                        .withAbsoluteAverageOf(expressionLevelField);
+
+        if (geneQuery.size() > 0) {
+            AnalyticsCollectionProxy.asAnalyticsGeneQuery(geneQuery).forEach(
+                    (analyticsSchemaField, searchValues) ->
+                            facetStreamBuilder.addQueryTermsClause(
+                                    analyticsSchemaField,
+                                    searchValues.toArray(new String[0])));
+        }
 
         if (assayGroupIds.length > 0) {
             facetStreamBuilder.addQueryTermsClause(ASSAY_GROUP_ID, assayGroupIds);
@@ -74,7 +107,7 @@ public class BaselineTupleStreamerFactory {
                         .addFieldMapping(
                                 ImmutableMap.of(
                                         BIOENTITY_IDENTIFIER.name(), GENE_KEY,
-                                        "avg(abs(" + EXPRESSION_LEVEL.name() + "))", AVERAGE_EXPRESSION_KEY,
+                                        "avg(abs(" + expressionLevelField.name() + "))", AVERAGE_EXPRESSION_KEY,
                                         "count(*)", SPECIFICITY_KEY));
 
         return TupleStreamer.of(selectStreamBuilder.build());

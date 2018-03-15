@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.solr.cloud.fullanalytics.tuplestreamers;
 
 import com.google.common.collect.ImmutableMap;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
@@ -30,6 +31,7 @@ public class DifferentialTupleStreamerFactory {
     }
 
     public TupleStreamer createForDifferentialNonSpecific(String experimentAccession,
+                                                          SemanticQuery geneQuery,
                                                           double log2FoldChangeCutoff,
                                                           double adjustedPValueCutoff,
                                                           int limit,
@@ -43,6 +45,14 @@ public class DifferentialTupleStreamerFactory {
 
         if (contrastIds.length > 0) {
             facetStreamBuilder.addQueryTermsClause(CONTRAST_ID, contrastIds);
+        }
+
+        if (geneQuery.size() > 0) {
+            AnalyticsCollectionProxy.asAnalyticsGeneQuery(geneQuery).forEach(
+                    (analyticsSchemaField, searchValues) ->
+                            facetStreamBuilder.addQueryTermsClause(
+                                    analyticsSchemaField,
+                                    searchValues.toArray(new String[0])));
         }
 
         SelectStreamBuilder<AnalyticsCollectionProxy> selectStreamBuilder =
@@ -59,6 +69,7 @@ public class DifferentialTupleStreamerFactory {
     }
 
     public TupleStreamer createForDifferentialSpecific(String experimentAccession,
+                                                       SemanticQuery geneQuery,
                                                        double log2FoldChangeCutoff,
                                                        double adjustedPValueCutoff,
                                                        String... contrastIds) {
@@ -72,6 +83,14 @@ public class DifferentialTupleStreamerFactory {
 
         if (contrastIds.length > 0) {
             facetStreamBuilder.addQueryTermsClause(CONTRAST_ID, contrastIds);
+        }
+
+        if (geneQuery.size() > 0) {
+            AnalyticsCollectionProxy.asAnalyticsGeneQuery(geneQuery).forEach(
+                    (analyticsSchemaField, searchValues) ->
+                            facetStreamBuilder.addQueryTermsClause(
+                                    analyticsSchemaField,
+                                    searchValues.toArray(new String[0])));
         }
 
         SelectStreamBuilder<AnalyticsCollectionProxy> selectStreamBuilder =
