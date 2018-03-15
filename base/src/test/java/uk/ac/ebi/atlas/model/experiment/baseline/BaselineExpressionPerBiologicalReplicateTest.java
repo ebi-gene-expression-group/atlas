@@ -16,7 +16,7 @@ public class BaselineExpressionPerBiologicalReplicateTest {
     The data production pipeline uses the same method.
      */
     @Test
-    public void expressionLevelIsTheMedian() throws Exception {
+    public void expressionLevelIsTheMedian() {
 
         assertThat(
                 new BaselineExpressionPerBiologicalReplicate(

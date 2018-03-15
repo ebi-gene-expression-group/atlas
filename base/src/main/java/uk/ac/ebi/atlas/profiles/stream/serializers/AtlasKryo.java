@@ -36,18 +36,14 @@ public class AtlasKryo {
 
             @Override
             public BaselineExpression read(Kryo kryo, Input input, Class<BaselineExpression> aClass) {
-                if(input.readBoolean()){
-                    return new BaselineExpression(
-                            input.readDouble(),
-                            input.readDouble(),
-                            input.readDouble(),
-                            input.readDouble(),
-                            input.readDouble()
-                    );
+                if (input.readBoolean()) {
+                    return new BaselineExpression(input.readDouble(),
+                                                  input.readDouble(),
+                                                  input.readDouble(),
+                                                  input.readDouble(),
+                                                  input.readDouble());
                 } else {
-                    return new BaselineExpression(
-                            input.readDouble()
-                    );
+                    return new BaselineExpression(input.readDouble());
                 }
             }
         });

@@ -5,7 +5,6 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import java.util.Collection;
 
 public class BaselineProfilesList extends GeneProfilesList<BaselineProfile> {
-
     public BaselineProfilesList() {
     }
 

@@ -21,12 +21,11 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.util.stream.Collectors.toList;
 
-public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
-                              Expr extends Expression,
-                              Self extends Profile<DataColumnDescriptor, Expr, Self>> implements
-        KryoSerializable {
+public abstract class Profile<D extends DescribesDataColumns,
+                              E extends Expression,
+                              P extends Profile<D, E, P>> implements KryoSerializable {
 
-    protected Map<String, Expr> expressionsByCondition = new HashMap<>();
+    protected Map<String, E> expressionsByCondition = new HashMap<>();
     private String id;
     private String name;
 
@@ -60,7 +59,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return expressionsByCondition.isEmpty();
     }
 
-    public boolean hasAllExpressionsEqualZero(){
+    public boolean hasAllExpressionsEqualZero() {
         return expressionsByCondition.values().stream().noneMatch(expr -> expr.getLevel() != 0);
     }
 
@@ -68,7 +67,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return expressionsByCondition.values().stream().filter(expr -> expr.getLevel() != 0).count();
     }
 
-    public long getSpecificity(Collection<DataColumnDescriptor> conditions) {
+    public long getSpecificity(Collection<D> conditions) {
         List<String> dataColumnDescriptorIds = conditions.stream().map(DescribesDataColumns::getId).collect(toList());
 
         return expressionsByCondition.entrySet().stream()
@@ -76,20 +75,17 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
                 .count();
     }
 
-    public boolean isExpressedAnywhereOn(Collection<DataColumnDescriptor> conditions){
+    public boolean isExpressedAnywhereOn(Collection<D> conditions) {
         return expressionsByCondition.size() > 0 && conditions.stream().anyMatch(this::isExpressedOn);
     }
 
-    private boolean isExpressedOn(DataColumnDescriptor condition){
+    private boolean isExpressedOn(D condition) {
         Expression expression = getExpression(condition);
-        if (expression != null) {
-            return expression.getLevel() != 0 ;
-        }
-        return false;
+        return expression != null && expression.getLevel() != 0;
     }
 
     @Nullable
-    public Double getExpressionLevel(DataColumnDescriptor condition) {
+    public Double getExpressionLevel(D condition) {
         Expression expression = getExpression(condition);
         if (expression != null) {
             return expression.getLevel();
@@ -97,10 +93,10 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return null;
     }
 
-    public double getMaxExpressionLevelOn(Collection<DataColumnDescriptor> conditions) {
+    public double getMaxExpressionLevelOn(Collection<D> conditions) {
         double expressionLevel = 0D;
 
-        for (DataColumnDescriptor condition : conditions) {
+        for (D condition : conditions) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = max(expressionLevel, Math.abs(level));
@@ -109,12 +105,12 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return expressionLevel;
     }
 
-    public double getAverageExpressionLevelOn(Collection<DataColumnDescriptor> conditions) {
+    public double getAverageExpressionLevelOn(Collection<D> conditions) {
         checkArgument(!CollectionUtils.isEmpty(conditions));
 
         double expressionLevel = 0D;
 
-        for (DataColumnDescriptor condition : conditions) {
+        for (D condition : conditions) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel += Math.abs(level);
@@ -124,11 +120,11 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return expressionLevel / conditions.size();
     }
 
-    public void add(DataColumnDescriptor condition, Expr expression) {
+    public void add(D condition, E expression) {
         expressionsByCondition.put(condition.getId(), expression);
     }
 
-    public Expr getExpression(DataColumnDescriptor condition) {
+    public E getExpression(D condition) {
         return expressionsByCondition.get(condition.getId());
     }
 
@@ -140,8 +136,8 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return name;
     }
 
-    public Self filter(Predicate<Expr> keepExpressions){
-        Self result = createEmptyCopy();
+    public P filter(Predicate<E> keepExpressions) {
+        P result = createEmptyCopy();
 
         expressionsByCondition.entrySet().stream()
                 .filter(e -> keepExpressions.test(e.getValue()))
@@ -150,7 +146,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return result;
     }
 
-    protected abstract Self createEmptyCopy();
+    protected abstract P createEmptyCopy();
 
     @Override
     public String toString() {
@@ -161,11 +157,11 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
                 .toString();
     }
 
-    public Map<String,String> properties(){
+    public Map<String,String> properties() {
         return ImmutableMap.of("id", id, "name", getName());
     }
 
-    public String[] identifiers(){
+    public String[] identifiers() {
         return new String[]{id, getName()};
     }
 

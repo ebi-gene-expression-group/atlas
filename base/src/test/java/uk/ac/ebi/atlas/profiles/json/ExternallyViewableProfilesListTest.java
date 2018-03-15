@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 
-import javax.annotation.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -28,7 +27,7 @@ import static org.junit.Assert.assertThat;
 public class ExternallyViewableProfilesListTest {
 
     @Test
-    public void weCanSerializeDataForTheWidget() throws Exception {
+    public void weCanSerializeDataForTheWidget() {
         String defaultQueryFactorType = "type1";
 
         BaselineExperimentProfile firstProfile =
@@ -74,16 +73,12 @@ public class ExternallyViewableProfilesListTest {
 
 
     @Test
-    public void weCanSerializeDataForTheBaselinePage() throws Exception {
-        Function<BaselineProfile, URI> provideLinkToProfile = new Function<BaselineProfile, URI>() {
-            @Nullable
-            @Override
-            public URI apply(@Nullable BaselineProfile o) {
-                try {
-                    return new URI("https://www.ebi.ac.uk/gxa/genes/" + o.getId());
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                }
+    public void weCanSerializeDataForTheBaselinePage() {
+        Function<BaselineProfile, URI> provideLinkToProfile = o -> {
+            try {
+                return new URI("https://www.ebi.ac.uk/gxa/genes/" + o.getId());
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
             }
         };
 
@@ -120,16 +115,12 @@ public class ExternallyViewableProfilesListTest {
     }
 
     @Test
-    public void weCanSerializeDataForTheDifferentialPage() throws Exception {
-        Function<RnaSeqProfile, URI> provideLinkToProfile = new Function<RnaSeqProfile, URI>() {
-            @Nullable
-            @Override
-            public URI apply(@Nullable RnaSeqProfile o) {
-                try {
-                    return new URI("https://www.ebi.ac.uk/gxa/genes/" + o.getId());
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                }
+    public void weCanSerializeDataForTheDifferentialPage() {
+        Function<RnaSeqProfile, URI> provideLinkToProfile = o -> {
+            try {
+                return new URI("https://www.ebi.ac.uk/gxa/genes/" + o.getId());
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
             }
         };
 

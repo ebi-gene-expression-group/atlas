@@ -182,7 +182,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
     }
 
     @Test
-    public void canProvideQuartiles(){
+    public void canProvideQuartiles() {
         assertThat(
                 subject.howToReadLine(twoAssayGroupBaselineExperiment, x -> true)
                         .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()})

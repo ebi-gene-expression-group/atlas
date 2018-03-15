@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 
 import org.apache.commons.math.stat.descriptive.rank.Median;
 import org.apache.commons.math.stat.descriptive.rank.Percentile;
-import org.apache.commons.math.util.MathUtils;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.Expression;
 

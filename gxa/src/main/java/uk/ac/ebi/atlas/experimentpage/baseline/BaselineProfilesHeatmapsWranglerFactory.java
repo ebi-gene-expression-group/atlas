@@ -14,13 +14,18 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 public class BaselineProfilesHeatmapsWranglerFactory {
 
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
-
     private final SolrQueryService solrQueryService;
     private final CoexpressedGenesService coexpressedGenesService;
 
-    public BaselineProfilesHeatmapsWranglerFactory(ProfileStreamFactory<AssayGroup, BaselineExpression,
-            BaselineExperiment, ? extends BaselineProfileStreamOptions<?>,BaselineProfile> inputStreamFactory
-            , SolrQueryService solrQueryService, CoexpressedGenesService coexpressedGenesService) {
+    public BaselineProfilesHeatmapsWranglerFactory(
+            ProfileStreamFactory
+                    <AssayGroup,
+                     BaselineExpression,
+                     BaselineExperiment,
+                     ? extends BaselineProfileStreamOptions<?>,
+                     BaselineProfile> inputStreamFactory,
+            SolrQueryService solrQueryService,
+            CoexpressedGenesService coexpressedGenesService) {
         this.baselineProfilesHeatMap = new BaselineProfilesHeatMap<>(inputStreamFactory);
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
@@ -30,7 +35,9 @@ public class BaselineProfilesHeatmapsWranglerFactory {
             BaselineRequestPreferences<? extends ExpressionUnit.Absolute> preferences,
             BaselineExperiment experiment) {
         return new BaselineProfilesHeatmapsWrangler<>(
-                baselineProfilesHeatMap, solrQueryService, coexpressedGenesService,
+                baselineProfilesHeatMap,
+                solrQueryService,
+                coexpressedGenesService,
                 preferences,
                 experiment);
     }
