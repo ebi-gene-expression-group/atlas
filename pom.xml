@@ -518,6 +518,18 @@
             <timezone>0</timezone>
             <properties/>
         </developer>
+        <developer>
+            <id>monica</id>
+            <name>Monica Jianu</name>
+            <email>monica@ebi.ac.uk</email>
+            <organization>EBI</organization>
+            <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties/>
+        </developer>
     </developers>
 
     <profiles>

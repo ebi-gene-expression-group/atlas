@@ -17,12 +17,7 @@ import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Named
@@ -93,11 +88,12 @@ public class BioEntityCardModelFactory {
             JsonArray values = new JsonArray();
 
             for (PropertyLink propertyLink :
-                    fetchPropertyLinks(
+                    createLinks(
                             identifier,
-                            species,
                             bioentityPropertyName,
-                            propertyValuesByType.get(bioentityPropertyName))) {
+                            propertyValuesByType.get(bioentityPropertyName),
+                            species)
+                    ) {
                 values.add(propertyLink.toJson());
             }
 
@@ -111,12 +107,6 @@ public class BioEntityCardModelFactory {
         }
 
         return result;
-    }
-
-    private List<PropertyLink> fetchPropertyLinks(String identifier, Species species,
-                                                  BioentityPropertyName bioentityPropertyName,
-                                                  Set<String> propertyValues) {
-        return createLinks(identifier, bioentityPropertyName, propertyValues, species);
     }
 
     private void addDesignElements(String identifier,Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
@@ -145,7 +135,7 @@ public class BioEntityCardModelFactory {
                                            Collection<String> propertyValues,
                                            Species species) {
 
-        return bioEntityPropertyService.mapToLinkText(propertyName, propertyValues).entrySet().stream()
+        List<PropertyLink> links = bioEntityPropertyService.mapToLinkText(propertyName, propertyValues).entrySet().stream()
                 .map(
                         linkWithText ->
                                 createLink(
@@ -156,8 +146,11 @@ public class BioEntityCardModelFactory {
                                         species,
                                         bioEntityPropertyService.assessRelevance(propertyName, linkWithText.getKey())
                                 )
-                ).collect(Collectors.toList());
+                )
+                .sorted(Comparator.comparing(PropertyLink::getRelevance).reversed())
+                .collect(Collectors.toList());
 
+        return links;
     }
 
     private PropertyLink createLink(String text, String identifier, BioentityPropertyName propertyName,

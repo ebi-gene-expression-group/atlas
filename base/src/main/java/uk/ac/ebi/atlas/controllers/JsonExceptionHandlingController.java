@@ -19,6 +19,14 @@ public abstract class JsonExceptionHandlingController {
 
     protected final Gson gson = new Gson();
 
+    @ExceptionHandler(BioentityNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String handleException(BioentityNotFoundException e) {
+        LOGGER.error("{} - {}", e.getMessage(), Joiner.on("\n\t").join(e.getStackTrace()));
+        return gson.toJson(jsonError(isBlank(e.getMessage()) ? "Unknown error" : e.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
