@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -13,21 +12,23 @@ import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolute> {
 
     private GeneQueryResponse geneQueryResponseForProfiles;
 
-    private BaselineProfilesList jsonProfiles;
+    private BaselineProfilesList baselineProfilesList;
 
-    private final BaselineProfilesHeatMap baselineProfilesHeatMap;
+    private final BaselineProfilesHeatMap<BaselineProfileStreamOptions<Unit>> baselineProfilesHeatMap;
     private final SolrQueryService solrQueryService;
     private final BaselineExperiment experiment;
     private final BaselineRequestContext<Unit> requestContext;
@@ -41,7 +42,7 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
     };
 
     public BaselineProfilesHeatmapsWrangler(
-            BaselineProfilesHeatMap baselineProfilesHeatMap,
+            BaselineProfilesHeatMap<BaselineProfileStreamOptions<Unit>> baselineProfilesHeatMap,
             SolrQueryService solrQueryService,
             CoexpressedGenesService coexpressedGenesService,
             BaselineRequestPreferences<Unit> preferences,
@@ -55,7 +56,7 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
 
     }
 
-    private GeneQueryResponse getGeneQueryResponseForProfiles()  {
+    private GeneQueryResponse getGeneQueryResponseForProfiles() {
         if (geneQueryResponseForProfiles == null) {
             geneQueryResponseForProfiles =
                     solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
@@ -63,33 +64,34 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
         return geneQueryResponseForProfiles;
     }
 
-    private void fetchProfilesIfMissing()   {
-        if (jsonProfiles == null) {
-            jsonProfiles =
+    private void fetchProfilesIfMissing() {
+        if (baselineProfilesList == null) {
+            baselineProfilesList =
                     baselineProfilesHeatMap.fetch(experiment, requestContext, getGeneQueryResponseForProfiles());
         }
     }
 
-    public JsonObject getJsonProfiles()  {
+    public JsonObject getJsonProfiles() {
         fetchProfilesIfMissing();
-        return new ExternallyViewableProfilesList<>(jsonProfiles, new LinkToGene<>(),
+        return new ExternallyViewableProfilesList<>(baselineProfilesList, new LinkToGene<>(),
                 requestContext.getDataColumnsToReturn(), provideUnits).asJson();
     }
 
-    public java.util.Optional<String> getTheOnlyId(){
-        return ExperimentPageService.getTheOnlyId(jsonProfiles);
+    public java.util.Optional<String> getTheOnlyId() {
+        return ExperimentPageService.getTheOnlyId(baselineProfilesList);
     }
 
-    public JsonArray getJsonCoexpressions()   {
+    public JsonArray getJsonCoexpressions() {
         fetchProfilesIfMissing();
         JsonArray result = new JsonArray();
 
-        if (jsonProfiles.size() == 1) {
-            BaselineProfile baselineProfile = jsonProfiles.get(0);
+        if (baselineProfilesList.size() == 1) {
+            BaselineProfile baselineProfile = baselineProfilesList.get(0);
 
             Optional<Pair<GeneQueryResponse, List<String>>> coexpressedStuff =
                     coexpressedGenesService.tryGetRelatedCoexpressions(
-                            experiment, getGeneQueryResponseForProfiles(),
+                            experiment,
+                            getGeneQueryResponseForProfiles(),
                             ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));
 
             if (coexpressedStuff.isPresent()) {
