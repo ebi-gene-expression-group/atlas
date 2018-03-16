@@ -39,14 +39,15 @@ public class JsonSingleCellExperimentControllerWIT {
     }
 
     @Test
-    public void payloadIsGoodJson() throws Exception {
+    public void validJsonForExpressedGeneId() throws Exception {
+        int[] perplexities = {1, 5, 10, 15, 20};
         int k = ThreadLocalRandom.current().nextInt(2, 11);
-        int perplexity = ThreadLocalRandom.current().nextInt(1, 7);
+        int perplexity = perplexities[ThreadLocalRandom.current().nextInt(perplexities.length)];
 
         this.mockMvc
                 .perform(get(
                         "/json/experiments/E-MTAB-5061/tsneplot/" + perplexity +
-                        "/clusters/" + k + "/expression/ENSFOOBAR"))
+                        "/clusters/" + k + "/expression/ENSG00000000003"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min", isA(Number.class)))
@@ -54,6 +55,24 @@ public class JsonSingleCellExperimentControllerWIT {
                 .andExpect(jsonPath("$.max", isA(Number.class)))
                 .andExpect(jsonPath("$.max", is(greaterThan(0.0))))
                 .andExpect(jsonPath("$.unit", isOneOf("TPM")))
-                .andExpect(jsonPath("$.series", hasSize(k)));
+                .andExpect(jsonPath("$.series", hasSize(greaterThan(0))));
+    }
+
+    @Test
+    public void validJsonForInvalidGeneId() throws Exception {
+        int[] perplexities = {1, 5, 10, 15, 20};
+        int k = ThreadLocalRandom.current().nextInt(2, 11);
+        int perplexity = perplexities[ThreadLocalRandom.current().nextInt(perplexities.length)];
+
+        this.mockMvc
+                .perform(get(
+                        "/json/experiments/E-MTAB-5061/tsneplot/" + perplexity +
+                                "/clusters/" + k + "/expression/FOOBAR"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.min").doesNotExist())
+                .andExpect(jsonPath("$.max").doesNotExist())
+                .andExpect(jsonPath("$.unit", isOneOf("TPM")))
+                .andExpect(jsonPath("$.series", hasSize(greaterThan(0))));
     }
 }
