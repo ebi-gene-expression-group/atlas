@@ -21,8 +21,12 @@ import java.util.Collection;
 import java.util.Map;
 
 @Named
-public class RnaSeqBaselineProfileStreamFactory extends ProfileStreamKryoLayer<AssayGroup, BaselineExpression,
-        BaselineExperiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>, BaselineProfile> {
+public class RnaSeqBaselineProfileStreamFactory
+        extends ProfileStreamKryoLayer<AssayGroup,
+                                       BaselineExpression,
+                                       BaselineExperiment,
+                                       BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>,
+                                       BaselineProfile> {
 
     @Inject
     public RnaSeqBaselineProfileStreamFactory(DataFileHub dataFileHub) {

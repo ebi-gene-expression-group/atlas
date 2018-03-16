@@ -45,13 +45,10 @@ implements CreatesProfileStream<D, E, T, O, P> {
                                                       O streamOptions,
                                                       Collection<String> keepGeneIds){
         return new GeneProfilesList<>(ImmutableList.copyOf(
-                new IterableObjectInputStream<>(getProfiles(
-                        experiment,
-                        streamOptions,
-                        keepGeneIds,
-                        profile -> true
-                ))
-        ));
+                new IterableObjectInputStream<>(getProfiles(experiment,
+                                                            streamOptions,
+                                                            keepGeneIds,
+                                                            profile -> true))));
     }
 
     public long write(T experiment,

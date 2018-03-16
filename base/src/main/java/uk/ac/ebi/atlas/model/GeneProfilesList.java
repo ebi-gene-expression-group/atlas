@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
-
+public class GeneProfilesList<P extends Profile> extends ArrayList<P> {
     private Integer totalResultCount = 0;
 
-    public GeneProfilesList(Collection<T> collection) {
+    public GeneProfilesList(Collection<P> collection) {
         super(collection);
     }
 
@@ -25,9 +24,7 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
         this.totalResultCount = totalResultCount;
     }
 
-
     public Map<String, String> properties() {
         return ImmutableMap.of("searchResultTotal", Integer.toString(getTotalResultCount()));
     }
-
 }
