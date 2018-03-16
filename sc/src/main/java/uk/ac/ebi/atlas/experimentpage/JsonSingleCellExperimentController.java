@@ -81,6 +81,7 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
                 .map(TSnePoint::expressionLevel)
                 .filter(Optional::isPresent)
                 .mapToDouble(Optional::get)
+                .filter(d -> d > 0)
                 .max();
 
         OptionalDouble min = clusterPointsWithExpression.values().stream()
