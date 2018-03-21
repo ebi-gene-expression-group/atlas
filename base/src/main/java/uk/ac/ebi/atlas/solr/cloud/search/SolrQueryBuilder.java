@@ -1,14 +1,13 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
 import com.google.common.collect.ImmutableSet;
-import org.apache.solr.common.params.ModifiableSolrParams;
-import org.apache.solr.common.params.SolrParams;
+import org.apache.solr.client.solrj.SolrQuery;
 
-import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public class SolrParamsBuilder {
+import static java.util.stream.Collectors.joining;
+
+public class SolrQueryBuilder {
     // A general way to do single and multiple value field searches
     private static final String TERMS_CLAUSE_TEMPLATE = "({!terms f=%s}%s)";
     // If we want to add an exclusive value syntax: %s:{%f TO *]
@@ -18,53 +17,70 @@ public class SolrParamsBuilder {
 
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
+    private ImmutableSet.Builder<String> flBuilder = ImmutableSet.builder();
+    private int rows = Integer.MAX_VALUE;
 
-    public SolrParamsBuilder addQueryTermsClause(String field, String... values) {
+    public SolrQueryBuilder addQueryTermsClause(String field, String... values) {
         qClausesBuilder.add(createTermsQuery(field, ImmutableSet.copyOf(values)));
         return this;
     }
 
-    public SolrParamsBuilder addFilterTermsClause(String field, String... values) {
+    public SolrQueryBuilder addFilterTermsClause(String field, String... values) {
         fqClausesBuilder.add(createTermsQuery(field, ImmutableSet.copyOf(values)));
         return this;
     }
 
-    public SolrParamsBuilder addQueryUpperRangeClause(String field, Double rangeUpperBound) {
+    public SolrQueryBuilder addQueryUpperRangeClause(String field, Double rangeUpperBound) {
         qClausesBuilder.add(createUpperRangeQuery(field, rangeUpperBound));
         return this;
     }
 
-    public SolrParamsBuilder addFilterUpperRangeClause(String field, Double rangeUpperBound) {
+    public SolrQueryBuilder addFilterUpperRangeClause(String field, Double rangeUpperBound) {
         fqClausesBuilder.add(createUpperRangeQuery(field, rangeUpperBound));
         return this;
     }
 
-    public SolrParamsBuilder addQueryLowerRangeClause(String field, Double rangeLowerBound) {
+    public SolrQueryBuilder addQueryLowerRangeClause(String field, Double rangeLowerBound) {
         qClausesBuilder.add(createLowerRangeQuery(field, rangeLowerBound));
         return this;
     }
 
-    public SolrParamsBuilder addFilterLowerRangeClause(String field, Double rangeLowerBound) {
+    public SolrQueryBuilder addFilterLowerRangeClause(String field, Double rangeLowerBound) {
         fqClausesBuilder.add(createLowerRangeQuery(field, rangeLowerBound));
         return this;
     }
 
-    public SolrParamsBuilder addQueryDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
+    public SolrQueryBuilder addQueryDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
         qClausesBuilder.add(createDoubleRangeQuery(field, rangeUpperBound, rangeLowerBound));
         return this;
     }
 
-    public SolrParamsBuilder addFilterDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
-            fqClausesBuilder.add(createDoubleRangeQuery(field, rangeUpperBound, rangeLowerBound));
+    public SolrQueryBuilder addFilterDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
+        fqClausesBuilder.add(createDoubleRangeQuery(field, rangeUpperBound, rangeLowerBound));
         return this;
     }
 
+    public SolrQueryBuilder setFieldList(String... fields) {
+        flBuilder.add(fields);
+        return this;
+    }
 
-    public SolrParams build() {
+    public SolrQueryBuilder setRows(int rows) {
+        this.rows = rows;
+        return this;
+    }
+
+    public SolrQuery build() {
         ImmutableSet<String> fqClauses = fqClausesBuilder.build();
         ImmutableSet<String> qClauses = qClausesBuilder.build();
+        ImmutableSet<String> fl = flBuilder.build();
 
-        return mapParams("fq", joinWithAnd(fqClauses), "q", qClauses.isEmpty() ? "*:*" : joinWithAnd(qClauses));
+        return mapParams(
+                "fq", fqClauses.stream().collect(joining(" AND ")),
+                "q", qClauses.isEmpty() ? "*:*" : qClauses.stream().collect(joining(" AND ")),
+                "fl", fl.isEmpty() ? "*" : fl.stream().collect(joining(",")),
+                "rows", Integer.toString(rows));
+                // fl can also be left empty to return all fields, but "*" shows an explicit intent
     }
 
     private static String createTermsQuery(String field, Set<String> searchValues) {
@@ -74,7 +90,7 @@ public class SolrParamsBuilder {
                 searchValues.stream()
                         // The terms query parser searches for values verbatim, no escaping is necessary
                         // .map(ClientUtils::escapeQueryChars)
-                        .collect(Collectors.joining(",")));
+                        .collect(joining(",")));
     }
 
     private static String createUpperRangeQuery(String field, Double rangeEnd) {
@@ -96,16 +112,12 @@ public class SolrParamsBuilder {
 //        return this;
 //    }
 
-    private static String joinWithAnd(Collection<String> clauses) {
-        return clauses.stream().collect(Collectors.joining(" AND "));
-    }
-
-    private static SolrParams mapParams(String... vals) {
-        ModifiableSolrParams params = new ModifiableSolrParams();
+    private static SolrQuery mapParams(String... vals) {
+        SolrQuery solrQuery = new SolrQuery();
         for (int idx = 0; idx < vals.length; idx += 2) {
-            params.add(vals[idx], vals[idx + 1]);
+            solrQuery.add(vals[idx], vals[idx + 1]);
         }
 
-        return params;
+        return solrQuery;
     }
 }
