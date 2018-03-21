@@ -95,7 +95,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     @RequestMapping(value = "/json/baseline_refexperiment", produces = "application/json;charset=UTF-8")
     public String jsonBaselineRefExperiment(
             @RequestParam(value = "geneQuery") SemanticQuery geneQuery,
-            @RequestParam(value = "species", required = false) String speciesString,
+            @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
             @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
             HttpServletRequest request) {
 

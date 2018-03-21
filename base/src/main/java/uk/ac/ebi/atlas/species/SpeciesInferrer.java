@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.analytics.AnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,7 +30,9 @@ public class SpeciesInferrer {
         this.speciesFactory = speciesFactory;
     }
 
-    public Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery, String speciesString) {
+    public Species inferSpecies(@Nonnull SemanticQuery geneQuery,
+                                @Nonnull SemanticQuery conditionQuery,
+                                @Nonnull String speciesString) {
         if (isBlank(speciesString)) {
             return inferSpecies(geneQuery, conditionQuery);
         }
@@ -37,16 +40,16 @@ public class SpeciesInferrer {
         return speciesFactory.create(speciesString);
     }
 
-    public Species inferSpeciesForGeneQuery(SemanticQuery geneQuery) {
+    public Species inferSpeciesForGeneQuery(@Nonnull SemanticQuery geneQuery) {
         return inferSpecies(geneQuery, SemanticQuery.create());
     }
 
-    public Species inferSpeciesForGeneQuery(SemanticQuery geneQuery, String speciesString) {
+    public Species inferSpeciesForGeneQuery(@Nonnull SemanticQuery geneQuery, @Nonnull String speciesString) {
         return inferSpecies(geneQuery, SemanticQuery.create(), speciesString);
     }
 
     private Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
-        if (geneQuery.isEmpty() && conditionQuery.isEmpty()) {
+        if (geneQuery == null || geneQuery.isEmpty() && conditionQuery.isEmpty()) {
             return speciesFactory.createUnknownSpecies();
         }
 
