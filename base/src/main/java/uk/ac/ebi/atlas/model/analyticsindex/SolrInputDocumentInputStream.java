@@ -69,9 +69,8 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
                 for (String value : values) {
                     if (bioentityPropertyName.isKeyword) {
                         solrInputDocument.addField(asAnalyticsSchemaField(bioentityPropertyName).name(), value);
-                    } else {
-                        nonKeywordProperties.add(value);
                     }
+                    nonKeywordProperties.add(value);
                 }
             }
         }
