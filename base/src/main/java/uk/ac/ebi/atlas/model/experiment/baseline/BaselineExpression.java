@@ -16,7 +16,7 @@ public class BaselineExpression implements Expression {
     private final ImmutableList<Double> quartiles;
 
     public BaselineExpression(double level) {
-        this(level, new double[] { level });
+        this(level, new double[0]);
     }
 
     public BaselineExpression(double min,
