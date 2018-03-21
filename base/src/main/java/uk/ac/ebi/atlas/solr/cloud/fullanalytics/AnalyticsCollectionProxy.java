@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
@@ -27,6 +29,8 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     public static final AnalyticsSchemaField CONTRAST_ID = new AnalyticsSchemaField("contrast_id");
     public static final AnalyticsSchemaField EXPRESSION_LEVEL = new AnalyticsSchemaField("expression_level");
     public static final AnalyticsSchemaField EXPRESSION_LEVEL_FPKM = new AnalyticsSchemaField("expression_level_fpkm");
+    public static final AnalyticsSchemaField EXPRESSION_LEVELS = new AnalyticsSchemaField("expression_levels");
+    public static final AnalyticsSchemaField EXPRESSION_LEVELS_FPKM = new AnalyticsSchemaField("expressions_levels_fpkm");
     public static final AnalyticsSchemaField LOG_2_FOLD_CHANGE = new AnalyticsSchemaField("fold_change");
     public static final AnalyticsSchemaField ADJUSTED_P_VALUE = new AnalyticsSchemaField("p_value");
     public static final AnalyticsSchemaField IDENTIFIER_SEARCH = new AnalyticsSchemaField("identifier_search");
@@ -55,5 +59,9 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
 
     public AnalyticsCollectionProxy(SolrClient solrClient) {
         super(solrClient, "analytics");
+    }
+
+    public FieldStatsInfo fieldStats(SchemaField<AnalyticsCollectionProxy> field, SolrQuery solrQuery) {
+        return super.fieldStats(field.name(), solrQuery);
     }
 }
