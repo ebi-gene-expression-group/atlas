@@ -46,7 +46,7 @@ public class SpeciesInferrer {
     }
 
     private Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
-        if (geneQuery.isNotEmpty() && conditionQuery.isEmpty()) {
+        if (geneQuery.isEmpty() && conditionQuery.isEmpty()) {
             return speciesFactory.createUnknownSpecies();
         }
 
