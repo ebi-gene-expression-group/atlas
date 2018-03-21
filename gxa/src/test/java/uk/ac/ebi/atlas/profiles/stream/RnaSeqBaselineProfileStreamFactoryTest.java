@@ -47,9 +47,8 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
     BaselineExperiment twoAssayGroupBaselineExperiment;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(baselineExperiment.getAccession()).thenReturn("accession");
-        when(baselineExperiment.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         when(baselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroup));
         when(baselineExperiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
 
@@ -76,7 +75,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
 
     @Test
-    public void tpmsAndFpkmsAreDifferentFiles() throws Exception {
+    public void tpmsAndFpkmsAreDifferentFiles() {
         setExpressionValuesTpmAndFpkm(42.0, 1.337);
 
         RnaSeqBaselineRequestPreferences rnaSeqBaselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
@@ -110,7 +109,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
     }
 
     @Test
-    public void canFilterThroughDataFile(){
+    public void canFilterThroughDataFile() {
         dataFileHub.addTpmsExpressionFile(baselineExperiment.getAccession(), ImmutableList.of(
                 new String[]{"Gene ID", "Gene name", "g1"},
                 new String[]{"id_1", "name_1", "1.0"},
@@ -144,7 +143,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
     }
 
     @Test
-    public void tpmFilesAndFpkmFilesNeedNotHaveColumnsInTheSameOrder(){
+    public void tpmFilesAndFpkmFilesNeedNotHaveColumnsInTheSameOrder() {
         dataFileHub.addTpmsExpressionFile(twoAssayGroupBaselineExperiment.getAccession(), ImmutableList.of(
                 new String[]{"Gene ID", "Gene name", "g1", "g2"},
                 new String[]{"id_1", "name_1", "1.0", "2.0"}
