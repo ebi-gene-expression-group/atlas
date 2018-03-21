@@ -10,7 +10,7 @@ public class BaselineExpressionTest {
     @Test
     public void singleValuesDontHaveQuartiles() {
         assertThat(BaselineExpression.create("1.0").getQuartiles())
-                .hasSize(1);
+                .isEmpty();
     }
 
     @Test
