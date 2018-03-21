@@ -4,6 +4,7 @@ import com.esotericsoftware.kryo.io.UnsafeInput;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -112,7 +113,7 @@ public class ProfileStreamKryoLayerTest {
         assertThat(dataFileHub.getKryoFile(experiment.getAccession(), profileStreamOptions).exists(), is(true));
     }
 
-    @Test
+    @Ignore
     public void kryoPersistsAllOurObjectsAndWeGetThemBack() {
 
         ObjectInputStream objectInputStream = mock(ObjectInputStream.class);
