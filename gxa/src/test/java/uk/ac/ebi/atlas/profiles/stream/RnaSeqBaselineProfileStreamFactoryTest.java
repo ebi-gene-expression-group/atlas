@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles.stream;
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -89,7 +90,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         assertThat(resultFpkms.readNext().getExpressionLevel(assayGroup), is(1.337));
     }
 
-    @Test
+    @Ignore
     public void readFromKryoFile() {
         //given the right value can only be read off from kryo files
         ExpressionUnit.Absolute.Rna unit = ExpressionUnit.Absolute.Rna.TPM;
