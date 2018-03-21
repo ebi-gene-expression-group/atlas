@@ -54,6 +54,7 @@ public class ExternallyViewableProfilesList<D extends DescribesDataColumns,
 
     public JsonObject asJson() {
         JsonObject result = new JsonObject();
+
         for(Map.Entry<String, String> e: profiles.properties().entrySet()){
             result.addProperty(e.getKey(), e.getValue());
         }
@@ -62,6 +63,7 @@ public class ExternallyViewableProfilesList<D extends DescribesDataColumns,
         for(P profile : profiles) {
             rows.add(convert(profile));
         }
+
         result.add("rows", rows);
 
         return result;

@@ -233,7 +233,7 @@ public class AnalyticsSolrQueryTree {
                 }
             };
 
-            // Queries for keyword_*, keyoword_symbol is left, the extra complexity isn’t worth it
+            // Queries for keyword_*, keyword_symbol is left, the extra complexity isn’t worth it
             Function<Leaf, TreeNode> makeTreeForKeywords = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
                     return new Parent(

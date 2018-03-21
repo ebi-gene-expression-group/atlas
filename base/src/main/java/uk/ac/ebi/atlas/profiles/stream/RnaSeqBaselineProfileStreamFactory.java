@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -55,7 +54,6 @@ public class RnaSeqBaselineProfileStreamFactory
                 AssayGroup assayGroup = experiment.getDataColumnDescriptor(s);
                 Validate.notNull(assayGroup, MessageFormat.format("Unknown identifier in position {0}: {1}", i, s));
                 b.put(i, assayGroup);
-
             }
 
             Map<Integer, AssayGroup> result = b.build();
