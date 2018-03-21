@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +55,7 @@ public class AutoCompleteControllerTest {
         String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS, 15);
 
         //then
-        assertThat(jsonResponse, is("[{\"value\":\"Value1\",\"category\":\"\"},{\"value\":\"Value2\",\"category\":\"\"}]"));
+        assertThat(jsonResponse, is("[{\"value\":\"Value1\"},{\"value\":\"Value2\"}]"));
     }
 
     @Test
@@ -68,7 +69,12 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> termSourceList = Lists.newArrayList(queryTerm1, queryTerm2, queryTerm3, queryTerm4);
 
-        Gson gson = new Gson();
+        final Gson gson =
+                new GsonBuilder()
+                        .registerTypeAdapter(
+                                SemanticQueryTerm.create("").getClass(),
+                                SemanticQueryTerm.getGsonTypeAdapter())
+                        .create();
 
         String suggestions = gson.toJson(termSourceList);
 
