@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,8 +26,9 @@ public class CoexpressedGenesDaoTest {
 
     @Test
     public void noResultsReturnsEmptyList() {
+        // This is a Spring thing, see JdbcTemplate L818 and L795, DataAccessUtils L68
         when(jdbcTemplate.queryForObject(CE_GENES_SQL_QUERY_TEMPLATE, String.class, "E-FOOBAR", "ENSGFOOBAR"))
-                .thenReturn(null);
+                .thenThrow(new EmptyResultDataAccessException(1));
 
         assertThat(subject.coexpressedGenesFor("E-FOOBAR", "ENSGFOOBAR")).isEmpty();
     }
