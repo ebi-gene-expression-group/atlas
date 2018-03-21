@@ -5,13 +5,21 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class BaselineAnalytics {
     public static BaselineAnalytics create(String geneId,
-                                           String assayGroupId,
-                                           double expressionLevel,
-                                           double expressionLevelFpkm,
-                                           double[] expressionLevels,
-                                           double[] expressionLevelsFpkm) {
+                                            String assayGroupId,
+                                            double expressionLevel,
+                                            double expressionLevelFpkm,
+                                            double[] expressionLevels,
+                                            double[] expressionLevelsFpkm) {
         return new AutoValue_BaselineAnalytics(
                 geneId, assayGroupId, expressionLevel, expressionLevelFpkm, expressionLevels, expressionLevelsFpkm);
+    }
+
+    public static BaselineAnalytics create(String geneId,
+                                           String assayGroupId,
+                                           double expressionLevel,
+                                           double expressionLevelFpkm) {
+        return new AutoValue_BaselineAnalytics(
+                geneId, assayGroupId, expressionLevel, expressionLevelFpkm, new double[0], new double[0]);
     }
 
     public abstract String geneId();
