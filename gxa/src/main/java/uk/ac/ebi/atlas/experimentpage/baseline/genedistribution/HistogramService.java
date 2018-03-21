@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.ExecutionException;
 
 /*
@@ -31,26 +32,29 @@ If you want to support drawing the charts for arbitrary columns of data
 
 The last part became harder because choices of filters and cutoffs now appear orthogonal in the UI
  */
-public class HistogramService<StreamOptions extends ProfileStreamOptions<?>, E extends Experiment<?>> {
+public class HistogramService<O extends ProfileStreamOptions<?>, T extends Experiment<?>> {
 
     protected final ExperimentTrader experimentTrader;
-    private final LoadingCache<HistogramCacheKey<StreamOptions>, HistogramAcrossGenes> cache;
+    private final LoadingCache<HistogramCacheKey<O>, HistogramAcrossGenes> cache;
 
 
-    public HistogramService(final ProfileStreamFactory<?, ?, E, StreamOptions, ?> profileStreamFactory,
+    public HistogramService(final ProfileStreamFactory<?, ?, T, O, ?> profileStreamFactory,
                             final ExperimentTrader experimentTrader, final double [] cutoffBins){
         this.experimentTrader = experimentTrader;
-        this.cache = CacheBuilder.newBuilder().build(new CacheLoader<HistogramCacheKey<StreamOptions>, HistogramAcrossGenes>() {
+        this.cache = CacheBuilder.newBuilder().build(new CacheLoader<HistogramCacheKey<O>, HistogramAcrossGenes>() {
             @Override
-            public HistogramAcrossGenes load(HistogramCacheKey<StreamOptions> cacheKey) throws Exception {
-                return new HistogramAcrossGenes(profileStreamFactory.histogram((E)
-                        experimentTrader.getExperiment(cacheKey.accession(), cacheKey.accessKey()), cacheKey.streamOptions(), cutoffBins),
+            public HistogramAcrossGenes load(@Nonnull HistogramCacheKey<O> cacheKey) {
+                return new HistogramAcrossGenes(
+                        profileStreamFactory.histogram(
+                                (T) experimentTrader.getExperiment(cacheKey.accession(), cacheKey.accessKey()),
+                                cacheKey.streamOptions(),
+                                cutoffBins),
                         cutoffBins);
             }
         });
     }
 
-    protected HistogramAcrossGenes get(String accession, String accessKey, StreamOptions streamOptions){
+    protected HistogramAcrossGenes get(String accession, String accessKey, O streamOptions){
         try {
             return cache.get(HistogramCacheKey.create(accession, accessKey, streamOptions));
         } catch (ExecutionException e) {
@@ -58,41 +62,59 @@ public class HistogramService<StreamOptions extends ProfileStreamOptions<?>, E e
         }
     }
 
-    static class Baseline<Unit extends ExpressionUnit.Absolute, Preferences extends BaselineRequestPreferences<Unit>>
-            extends HistogramService<BaselineProfileStreamOptions<Unit>, BaselineExperiment> {
+    static class Baseline<U extends ExpressionUnit.Absolute, P extends BaselineRequestPreferences<U>>
+            extends HistogramService<BaselineProfileStreamOptions<U>, BaselineExperiment> {
 
-        public Baseline(ProfileStreamFactory<?, ?, BaselineExperiment, BaselineProfileStreamOptions<Unit>, ?> profileStreamFactory, ExperimentTrader experimentTrader, double[] cutoffBins) {
+        public Baseline(
+                ProfileStreamFactory<?,
+                                     ?,
+                                     BaselineExperiment,
+                                     BaselineProfileStreamOptions<U>,
+                                     ?> profileStreamFactory,
+                ExperimentTrader experimentTrader,
+                double[] cutoffBins) {
             super(profileStreamFactory, experimentTrader, cutoffBins);
         }
 
-        public HistogramAcrossGenes get(String accession ,String accessKey, Preferences preferences){
-            return get(accession, accessKey, new BaselineRequestContext<>(preferences, (BaselineExperiment) experimentTrader.getExperiment(accession, accessKey)));
+        public HistogramAcrossGenes get(String accession ,String accessKey, P preferences){
+            return get(
+                    accession,
+                    accessKey,
+                    new BaselineRequestContext<>(
+                            preferences,
+                            (BaselineExperiment) experimentTrader.getExperiment(accession, accessKey)));
         }
     }
 
-    public static class RnaSeq extends Baseline<ExpressionUnit.Absolute.Rna, RnaSeqBaselineRequestPreferences> {
-        public RnaSeq(RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory, ExperimentTrader experimentTrader){
+    public static class RnaSeq
+            extends Baseline<ExpressionUnit.Absolute.Rna, RnaSeqBaselineRequestPreferences> {
+
+        public RnaSeq(RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
+                      ExperimentTrader experimentTrader) {
             super(rnaSeqBaselineProfileStreamFactory, experimentTrader, new CutoffScale.Scaled().get());
         }
+
     }
 
-    public static class Proteomics extends Baseline<ExpressionUnit.Absolute.Protein, ProteomicsBaselineRequestPreferences> {
-        public Proteomics(ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory, ExperimentTrader experimentTrader){
+    public static class Proteomics
+            extends Baseline<ExpressionUnit.Absolute.Protein, ProteomicsBaselineRequestPreferences> {
+
+        public Proteomics(ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory,
+                          ExperimentTrader experimentTrader) {
             super(proteomicsBaselineProfileStreamFactory, experimentTrader, new CutoffScale.Logarithmic().get());
         }
+
     }
 
-
-
     @AutoValue
-    public static abstract class HistogramCacheKey<StreamOptions extends ProfileStreamOptions<?>>{
-
+    public static abstract class HistogramCacheKey<O extends ProfileStreamOptions<?>> {
         abstract String accession();
         abstract String accessKey();
-        abstract StreamOptions streamOptions();
+        abstract O streamOptions();
 
-        static <StreamOptions extends ProfileStreamOptions<?>> HistogramCacheKey<StreamOptions>
-            create(String accession, String accessKey, StreamOptions streamOptions){
+        static <O extends ProfileStreamOptions<?>> HistogramCacheKey<O> create(String accession,
+                                                                               String accessKey,
+                                                                               O streamOptions) {
             return new AutoValue_HistogramService_HistogramCacheKey<>(accession, accessKey, streamOptions);
         }
 
@@ -101,6 +123,7 @@ public class HistogramService<StreamOptions extends ProfileStreamOptions<?>, E e
             if (this == object) {
                 return true;
             }
+
             if ((null == object) || (getClass() != object.getClass())) {
                 return false;
             }
@@ -108,16 +131,15 @@ public class HistogramService<StreamOptions extends ProfileStreamOptions<?>, E e
             HistogramCacheKey other = (HistogramCacheKey) object;
 
             return Objects.equal(this.accession(), other.accession()) &&
-                    Objects.equal(this.accessKey(), other.accessKey()) &&
-                    Objects.equal(this.streamOptions().serializationShortString(), other.streamOptions().serializationShortString());
+                   Objects.equal(this.accessKey(), other.accessKey()) &&
+                   Objects.equal(
+                           this.streamOptions().serializationShortString(),
+                           other.streamOptions().serializationShortString());
         }
-
 
         @Override
         public int hashCode() {
             return Objects.hashCode(accession(), accessKey(), this.streamOptions().serializationShortString());
         }
-
-
     }
 }
