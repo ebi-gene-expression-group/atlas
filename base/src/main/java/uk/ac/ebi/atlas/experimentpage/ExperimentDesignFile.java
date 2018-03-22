@@ -1,9 +1,8 @@
-package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
+package uk.ac.ebi.atlas.experimentpage;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
-import uk.ac.ebi.atlas.experimentpage.ExternallyAvailableContentController;
-import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
+import uk.ac.ebi.atlas.experimentpage.differential.CanStreamSupplier;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
