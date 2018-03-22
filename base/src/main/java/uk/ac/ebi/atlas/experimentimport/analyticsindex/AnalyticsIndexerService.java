@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -81,8 +82,10 @@ public class AnalyticsIndexerService {
         try {
             solrClient.deleteByQuery("experiment_accession:" + accession);
             solrClient.commit();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Done deleting documents for {}", accession);
     }
@@ -93,8 +96,10 @@ public class AnalyticsIndexerService {
             solrClient.deleteByQuery("*:*");
             solrClient.commit();
             solrClient.optimize();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Done deleting all documents");
     }
@@ -103,8 +108,10 @@ public class AnalyticsIndexerService {
         LOGGER.info("Committing the index");
         try {
             solrClient.commit();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Index committed successfully");
     }
@@ -113,19 +120,18 @@ public class AnalyticsIndexerService {
         LOGGER.info("Optimizing index");
         try {
             solrClient.optimize();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Index optimized successfully");
     }
 
-    private void rollBackAndPropagateException(Exception exception) {
-        try {
-            LOGGER.error(exception.getMessage(), exception);
-            solrClient.rollback();
-            throw new RuntimeException(exception);
-        } catch (IOException | SolrServerException e) {
-            LOGGER.error(e.getMessage());
-        }
+    private void logAndPropagateException(IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            // Roll back not available in SolrCloud D:
+            // solrClient.rollback();
+            throw new UncheckedIOException(e);
     }
 }
