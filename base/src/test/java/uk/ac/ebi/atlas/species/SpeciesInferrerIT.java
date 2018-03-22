@@ -37,12 +37,21 @@ public class SpeciesInferrerIT {
     public void inferSpeciesForGeneQuery() throws Exception {
         Species species1 = subject.inferSpeciesForGeneQuery(HUMAN_GENE_QUERY);
         Species species2 = subject.inferSpeciesForGeneQuery(HUMAN_GENE_QUERY, "");
-        Species species3 = subject.inferSpeciesForGeneQuery(PLANT_GENE_QUERY);
 
         assertThat(species1.getReferenceName(), is(HOMO_SAPIENS));
         assertThat(species2.getReferenceName(), is(HOMO_SAPIENS));
-        assertThat(species3.getReferenceName(), is(GLYCINE_MAX));
-        assertThat(species3.isPlant(),is(true));
+    }
+
+    @Test
+    public void inferSpeciesForPlantGeneQuery() throws Exception {
+        Species species1 = subject.inferSpeciesForGeneQuery(PLANT_GENE_QUERY, "");
+        Species species2 = subject.inferSpeciesForGeneQuery(PLANT_GENE_QUERY);
+
+        assertThat(species1.getReferenceName(), is(GLYCINE_MAX));
+        assertThat(species2.getReferenceName(), is(GLYCINE_MAX));
+
+        assertThat(species1.isPlant(),is(true));
+        assertThat(species2.isPlant(),is(true));
     }
 
     @Test

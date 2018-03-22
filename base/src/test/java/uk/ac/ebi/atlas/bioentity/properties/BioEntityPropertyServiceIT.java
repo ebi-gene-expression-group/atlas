@@ -25,7 +25,7 @@ public class BioEntityPropertyServiceIT {
     public void knownSpeciesAreAddedToOrthologs() throws Exception {
         Map<String, String> result =
                 subject.mapToLinkText(
-                        BioentityPropertyName.ORTHOLOG, ImmutableSet.of("ENSMUSG00000019082", "FBgn0260743"));
+                        BioentityPropertyName.ORTHOLOG, ImmutableSet.of("ENSMUSG00000019082", "FBgn0260743"),false);
 
         assertThat(result, hasEntry("ENSMUSG00000019082", "Slc25a22 (Mus musculus)"));
         assertThat(result, hasEntry("FBgn0260743", "GC1 (Drosophila melanogaster)"));

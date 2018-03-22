@@ -47,7 +47,7 @@ public class GeneSetPageController extends BioentityPageController {
 
         Species species = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(identifier));
 
-        return super.showBioentityPage(identifier, speciesReferenceName, identifier, model, experimentTypes,
+        return super.showBioentityPage(identifier, species.getName(), identifier, model, experimentTypes,
                 GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier,species.isPlant()));
     }
 

@@ -62,7 +62,7 @@ public class BioEntityCardModelFactoryTest {
 
     @Test
     public void outputLooksRight() throws Exception {
-        when(linkBuilder.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("value")))
+        when(linkBuilder.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("value"),false))
                 .thenReturn(ImmutableMap.of("value", "value"));
 
         JsonArray result =

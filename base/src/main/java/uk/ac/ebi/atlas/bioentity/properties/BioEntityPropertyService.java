@@ -42,6 +42,35 @@ public class BioEntityPropertyService {
 
     }
 
+    Map<String, String> mapToLinkText(BioentityPropertyName propertyName, Collection<String> propertyValues, boolean isPlantSpecies) {
+        switch (propertyName) {
+            case ORTHOLOG:
+                return propertyValues.stream()
+                        .collect(Collectors.toMap(Function.identity(), this::fetchSymbolAndSpeciesForOrtholog));
+            case PATHWAYID:
+                if(isPlantSpecies){
+                    return reactomeClient.getPlantPathwayNames(propertyValues);
+                }
+                else{
+                    return reactomeClient.getPathwayNames(propertyValues);
+                }
+            case GO: case PO:
+                return propertyValues.stream()
+                        .collect(
+                                Collectors.toMap(
+                                        Function.identity(),
+                                        p -> goPoTermTrader.get(p).map(OntologyTerm::name).orElse(p)));
+            case INTERPRO:
+                return propertyValues.stream()
+                        .collect(
+                                Collectors.toMap(
+                                        Function.identity(),
+                                        p -> interProTermTrader.get(p).map(OntologyTerm::name).orElse(p)));
+            default:
+                return propertyValues.stream().collect(Collectors.toMap(Function.identity(), Function.identity()));
+        }
+    }
+
     Map<String, String> mapToLinkText(BioentityPropertyName propertyName, Collection<String> propertyValues) {
         switch (propertyName) {
             case ORTHOLOG:
@@ -95,5 +124,4 @@ public class BioEntityPropertyService {
         return identifier + speciesToken;
 
     }
-
 }
