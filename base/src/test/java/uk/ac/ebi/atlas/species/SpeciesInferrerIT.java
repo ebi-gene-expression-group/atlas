@@ -24,7 +24,10 @@ public class SpeciesInferrerIT {
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
     private static final SemanticQuery PLANT_CONDITION_QUERY = SemanticQuery.create(LEAF_TERM);
     private static final SemanticQuery HUMAN_GENE_QUERY = SemanticQuery.create(HUMAN_REACTOME_TERM);
-    private static final SemanticQuery MIXED_SPECIES_GENE_QUERY = SemanticQuery.create(SemanticQueryTerm.create("OS03G0852700", "ensgene"), SemanticQueryTerm.create("ENSMUSG00000002055", "ensgene"));
+    private static final SemanticQuery MIXED_SPECIES_GENE_QUERY =
+            SemanticQuery.create(
+                    SemanticQueryTerm.create("OS12G0438400", "ensgene"),
+                    SemanticQueryTerm.create("ENSMUSG00000002055", "ensgene"));
 
     @Inject
     private SpeciesInferrer subject;
