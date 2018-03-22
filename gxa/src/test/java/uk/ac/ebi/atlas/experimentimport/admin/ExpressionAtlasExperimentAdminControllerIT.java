@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -38,7 +39,8 @@ public class ExpressionAtlasExperimentAdminControllerIT {
         subject.doOp(ACCESSION, Op.DELETE.name(), new MockHttpServletResponse());
         subject.doOp(ACCESSION, Op.CLEAR_LOG.name(), new MockHttpServletResponse());
     }
-    @Test
+
+    @Ignore
     public void ourScenario() throws IOException {
         MockHttpServletResponse response;
 
@@ -57,28 +59,28 @@ public class ExpressionAtlasExperimentAdminControllerIT {
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(ACCESSION,Op.CACHE_READ.name(), response);
+        subject.doOp(ACCESSION, Op.CACHE_READ.name(), response);
         isOk(
                 "Cache read after load is fine",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(ACCESSION,Op.DELETE.name(), response);
+        subject.doOp(ACCESSION, Op.DELETE.name(), response);
         isOk(
                 "Delete is fine",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(ACCESSION,Op.CACHE_READ.name(), response);
+        subject.doOp(ACCESSION, Op.CACHE_READ.name(), response);
         isError(
                 "After delete cache read should report not found",
                 response.getContentAsString()
         );
 
         response = new MockHttpServletResponse();
-        subject.doOp(ACCESSION,Op.CLEAR_LOG.name(), response);
+        subject.doOp(ACCESSION, Op.CLEAR_LOG.name(), response);
         isOk(
                 "Clear log is fine",
                 response.getContentAsString()
@@ -111,7 +113,7 @@ public class ExpressionAtlasExperimentAdminControllerIT {
         assertThat(
                 message,
                 object.has("error"),
-                not(is(expectedSuccessful))
+                is(not(expectedSuccessful))
         );
     }
 
