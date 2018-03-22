@@ -8,22 +8,15 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.fail;
-
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class AnalyticsIndexerManagerIT {
-
     @Inject
-    AnalyticsIndexerManager subject;
+    private AnalyticsIndexerManager subject;
 
     @Test
-    public void testIndexAllPublicExperiments() throws Exception {
-        try {
-            subject.addToAnalyticsIndex("E-PROT-1");
-        } catch(Exception e){
-            fail(e.getMessage());
-        }
+    public void indexProteomicsExperiment() {
+        subject.addToAnalyticsIndex("E-PROT-1");
     }
 }
