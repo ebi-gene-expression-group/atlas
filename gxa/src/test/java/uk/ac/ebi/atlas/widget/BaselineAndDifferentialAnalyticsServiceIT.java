@@ -19,7 +19,6 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import javax.inject.Inject;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -32,7 +31,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixture {
 
-    static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
+    private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 
     public static final String BASELINE_GENE = "ENSG00000000003";
     public static final String DIFFERENTIAL_GENE = "ENSSSCG00000000024";
@@ -57,17 +56,24 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
     @Test
     public void geneExpressedInDifferentialExperimentsOnly() {
         assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN)),
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(
+                        SemanticQuery.create(DIFFERENTIAL_GENE),
+                        SemanticQuery.create(),
+                        new Species("Foous baris", SpeciesProperties.UNKNOWN)),
                 is(new JsonObject()));
+
         assertThat(
                 differentialAnalyticsSearchService.fetchFacets(SemanticQuery.create(DIFFERENTIAL_GENE), EMPTY_QUERY)
-                        .entrySet(), not(Matchers.<Map.Entry<String,JsonElement>>empty()));
+                        .entrySet(), not(Matchers.empty()));
     }
 
     @Test
     public void nonExistentGene() {
         assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN)),
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(
+                        SemanticQuery.create(NON_EXISTENT_GENE),
+                        SemanticQuery.create(),
+                        new Species("Foous baris", SpeciesProperties.UNKNOWN)),
                 is(new JsonObject()));
         assertThat(
                 differentialAnalyticsSearchService.fetchResults(SemanticQuery.create(NON_EXISTENT_GENE), EMPTY_QUERY)
@@ -77,7 +83,8 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
 
     @Test
     public void differentialAnalyticsSearchServiceHasTheRightReturnFormat(){
-        JsonObject result = differentialAnalyticsSearchService.fetchResults(SemanticQuery.create("GO:0008150"), EMPTY_QUERY);
+        JsonObject result =
+                differentialAnalyticsSearchService.fetchResults(SemanticQuery.create("GO:0008150"), EMPTY_QUERY);
         testDifferentialResultsAreInRightFormat(result);
     }
 
