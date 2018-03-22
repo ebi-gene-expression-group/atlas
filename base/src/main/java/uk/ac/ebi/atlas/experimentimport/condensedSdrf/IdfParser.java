@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class IdfParser {
     private static final String INVESTIGATION_TITLE_ID = "Investigation Title";
     private static final String PUBMED_ID = "PubMed ID";
+    private static final String AE_EXPERIMENT_DISPLAY_NAME = "Comment[AEExperimentDisplayName]";
 
     private IdfStreamerFactory idfReaderFactory;
 
@@ -22,15 +23,26 @@ public class IdfParser {
 
     public ImmutablePair<String, ImmutableSet<String>> parse(String experimentAccession) {
 
-        try (TsvStreamer titleIdfStreamer = idfReaderFactory.create(experimentAccession);
+        try (TsvStreamer aeTitleIdfStreamer = idfReaderFactory.create(experimentAccession);
+             TsvStreamer titleIdfStreamer = idfReaderFactory.create(experimentAccession);
              TsvStreamer pubmedIdfStreamer = idfReaderFactory.create(experimentAccession)) {
-            String title =
-                    titleIdfStreamer.get()
-                            .filter(line -> line.length > 1)
-                            .filter(line -> INVESTIGATION_TITLE_ID.equalsIgnoreCase(line[0].trim()))
-                            .map(line -> line[1])
-                            .findFirst()
-                            .orElse("");
+            String title = "";
+
+            title = aeTitleIdfStreamer.get()
+                        .filter(line -> line.length > 1)
+                        .filter(line -> AE_EXPERIMENT_DISPLAY_NAME.equalsIgnoreCase(line[0].trim()))
+                        .map(line-> line[1])
+                        .findFirst()
+                        .orElse("");
+
+            if(title.isEmpty()) {
+                title = titleIdfStreamer.get()
+                                .filter(line -> line.length > 1)
+                                .filter(line -> INVESTIGATION_TITLE_ID.equalsIgnoreCase(line[0].trim()))
+                                .map(line -> line[1])
+                                .findFirst()
+                                .orElse("");
+            }
 
             ImmutableSet<String> pubmedIds = ImmutableSet.copyOf(
                     pubmedIdfStreamer.get()
