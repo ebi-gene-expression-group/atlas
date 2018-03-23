@@ -45,7 +45,117 @@
       {
         type: 'experiment-design',
         name: 'Experiment Design',
-        props: {}
+        props: {
+          downloadUrl: 'experiments-content/E-MTAB-2388/resources/experiment-design',
+          table: {
+            headers: [
+              {
+                name: "",
+                values: [
+                  "Cell"
+                ]
+              },
+              {
+                name: "Sample Characteristics",
+                values: [
+                  "age",
+                  "body mass index",
+                  "cell type",
+                  "disease",
+                  "individual",
+                  "organism",
+                  "organism part",
+                  "sex",
+                  "single cell well quality"
+                ]
+              },
+              {
+                name: "Experimental Variables",
+                values: [
+                  "cell type",
+                  "disease"
+                ]
+              }
+            ],
+            data: [
+              {
+                properties: {
+                  analysed: true
+                },
+                values: [
+                  [
+                    "ERR1630013"
+                  ],
+                  [
+                    "43 year",
+                    "30.8",
+                    "not applicable",
+                    "normal",
+                    "AZ",
+                    "Homo sapiens",
+                    "pancreas",
+                    "male",
+                    "low quality cell"
+                  ],
+                  [
+                    "not applicable",
+                    "normal"
+                  ]
+                ]
+              },
+              {
+                properties: {
+                  analysed: true
+                },
+                values: [
+                  [
+                    "ERR1630014"
+                  ],
+                  [
+                    "43 year",
+                    "30.8",
+                    "delta cell",
+                    "normal",
+                    "AZ",
+                    "Homo sapiens",
+                    "pancreas",
+                    "male",
+                    "OK"
+                  ],
+                  [
+                    "delta cell",
+                    "normal"
+                  ]
+                ]
+              },
+              {
+                properties: {
+                  analysed: true
+                },
+                values: [
+                  [
+                    "ERR1630015"
+                  ],
+                  [
+                    "43 year",
+                    "30.8",
+                    "alpha cell",
+                    "normal",
+                    "AZ",
+                    "Homo sapiens",
+                    "pancreas",
+                    "male",
+                    "OK"
+                  ],
+                  [
+                    "alpha cell",
+                    "normal"
+                  ]
+                ]
+              }
+            ]
+          }
+        }
       },
       {
         type: '',
@@ -63,6 +173,7 @@
         atlasUrl: 'http://localhost:8080/gxa_sc/',
         content: {
           experimentAccession: 'E-MTAB-4388',
+          experimentType: 'SINGLE_CELL_RNASEQ_MRNA_BASELINE',
           tabs: tabs
         }
     }, 'container');

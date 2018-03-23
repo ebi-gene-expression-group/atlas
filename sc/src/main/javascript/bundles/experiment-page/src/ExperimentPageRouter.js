@@ -5,7 +5,7 @@ import {BrowserRouter, Route, Redirect, Switch, NavLink, withRouter} from 'react
 import URI from 'urijs'
 
 import TSnePlotViewRoute from './TSnePlotViewRoute'
-
+import ExperimentDesignRoute from './ExperimentDesignRoute'
 
 const RoutePropTypes = {
   match: PropTypes.object.isRequired,
@@ -24,8 +24,8 @@ const TabCommonPropTypes = {
 // What component each tab type should render, coupled to ExperimentController.java
 const tabTypeComponent = {
   // 'multipart' : ``,
-  't-sne-plot' : TSnePlotViewRoute
-  // 'experiment-design' : `ExperimntDesign`,
+  't-sne-plot' : TSnePlotViewRoute,
+  'experiment-design' : ExperimentDesignRoute,
   // 'resources' : `Resources`,
   // 'static-table' : StaticTable,
   // 'qc-report' : QCReport
