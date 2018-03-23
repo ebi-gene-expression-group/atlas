@@ -14,22 +14,24 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.serializers.AtlasKryo;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Predicate;
 
-public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
-        E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
-        Prof extends Profile<DataColumnDescriptor, Expr, Prof>> extends ProfileStreamFactory<DataColumnDescriptor, Expr, E, StreamOptions, Prof> {
+public class ProfileStreamKryoLayer<D extends DescribesDataColumns,
+                                    E extends Expression,
+                                    T extends Experiment<D>,
+                                    O extends ProfileStreamOptions<D>,
+                                    P extends Profile<D, E, P>>
+        extends ProfileStreamFactory<D, E, T, O, P> {
 
-    private final CreatesProfilesFromTsvFiles<DataColumnDescriptor, Expr, E, StreamOptions, Prof> profileStreamFactory;
+    private final CreatesProfilesFromTsvFiles<D, E, T, O, P> profileStreamFactory;
 
-    public ProfileStreamKryoLayer(CreatesProfilesFromTsvFiles<DataColumnDescriptor, Expr, E, StreamOptions, Prof> profileStreamFactory) {
+    public ProfileStreamKryoLayer(CreatesProfilesFromTsvFiles<D, E, T, O, P> profileStreamFactory) {
         this.profileStreamFactory = profileStreamFactory;
     }
 
-    public ObjectInputStream<Prof> create(E experiment, StreamOptions options, Collection<String> keepGeneIds) {
+    public ObjectInputStream<P> create(T experiment, O options, Collection<String> keepGeneIds) {
         AtlasResource<KryoFile.Handle> kryoFile = getKryoFile(experiment, options);
         if (kryoFile.exists()) {
             return createFromKryoFile(kryoFile.get(), profileStreamFactory.filterExpressions(experiment, options), keepGeneIds);
@@ -38,16 +40,16 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
         }
     }
 
-    private ObjectInputStream<Prof> createFromKryoFile(KryoFile.Handle kryoFile, final Predicate<Expr> keepExpressions, Collection<String> keepGeneIds) {
+    private ObjectInputStream<P> createFromKryoFile(KryoFile.Handle kryoFile, final Predicate<E> keepExpressions, Collection<String> keepGeneIds) {
         final UnsafeInput input = kryoFile.read();
         final Kryo kryo = AtlasKryo.get();
 
         if (!keepGeneIds.isEmpty()) {
-            return new ObjectInputStream<Prof>() {
+            return new ObjectInputStream<P>() {
                 @Override
-                public Prof readNext() {
+                public P readNext() {
                     while (!input.eof()) {
-                        Prof p = ((Prof) kryo.readClassAndObject(input));
+                        P p = ((P) kryo.readClassAndObject(input));
                         if (keepGeneIds.contains(p.getId())) {
                             return p.filter(keepExpressions);
                         }
@@ -61,13 +63,13 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
                 }
             };
         } else {
-            return new ObjectInputStream<Prof>() {
+            return new ObjectInputStream<P>() {
                 @Override
-                public Prof readNext() {
+                public P readNext() {
                     if (input.eof()) {
                         return null;
                     } else {
-                        return ((Prof) kryo.readClassAndObject(input)).filter(keepExpressions);
+                        return ((P) kryo.readClassAndObject(input)).filter(keepExpressions);
                     }
                 }
 
@@ -80,20 +82,20 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
 
     }
 
-    protected ObjectInputStream<Prof> createFromTsvFile(E experiment, StreamOptions options, Collection<String> keepGeneIds) {
+    protected ObjectInputStream<P> createFromTsvFile(T experiment, O options, Collection<String> keepGeneIds) {
         return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
-    private AtlasResource<KryoFile.Handle> getKryoFile(E experiment, StreamOptions options) {
+    private AtlasResource<KryoFile.Handle> getKryoFile(T experiment, O options) {
         return profileStreamFactory.dataFileHub.getKryoFile(experiment.getAccession(), options);
     }
 
-    public void persist(E experiment, StreamOptions options) {
+    public void persist(T experiment, O options) {
         KryoFile.Handle kryoFileHandle = getKryoFile(experiment, options).get();
         final Kryo kryo = AtlasKryo.get();
 
         final UnsafeOutput output = kryoFileHandle.write();
-        for (Prof profile : new IterableObjectInputStream<>(
+        for (P profile : new IterableObjectInputStream<>(
                 createFromTsvFile(experiment, options, Collections.emptySet())
         )) {
             kryo.writeClassAndObject(output, profile);

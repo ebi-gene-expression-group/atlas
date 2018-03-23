@@ -1,71 +1,73 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Queue;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-/*
- * Reads tsv input of:
- *
- * Gene ID Gene Name g1 g2 g3 g4 g5
- * mus1    musName    1  2  3  0  5
- *
- * and returns BaselineAnalytics of:
- *
- * mus1, g1, 1
- * mus1, g2, 2
- * mus1, g3, 3
- * mus1, g5, 5
- *
- * NB: the following expression levels are skipped: 0, LOWDATA, FAIL, NA
- */
-public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<BaselineAnalytics> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqBaselineAnalyticsInputStream.class);
+public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<BaselineAnalytics>, AutoCloseable {
 
     private static final int GENE_ID_COLUMN_INDEX = 0;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
 
-    private final CSVReader csvReader;
+    private final Optional<Reader> tpms;
+    private final Optional<Reader> fpkms;
+    private final Optional<Iterator<String[]>> tsvIteratorTpm;
+    private final Optional<Iterator<String[]>> tsvIteratorFpkm;
     private final Queue<BaselineAnalytics> queue = new LinkedList<>();
     private final String[] assayGroupIds;
-    private final String name;
-    private int lineNumber = 0;
 
-    public RnaSeqBaselineAnalyticsInputStream(Reader reader, String name) throws IOException {
-        this.name = name;
-        this.csvReader = new CSVReader(reader, '\t');
-        String[] headers = readCsvLine();
+    public RnaSeqBaselineAnalyticsInputStream(Optional<Reader> tpms, Optional<Reader> fpkms) {
+        this.tpms = tpms;
+        this.fpkms = fpkms;
+        tsvIteratorTpm = tpms.map(reader -> new TsvStreamer(reader).get().iterator());
+        tsvIteratorFpkm = fpkms.map(reader -> new TsvStreamer(reader).get().iterator());
+
+        Pair<Optional<String[]>, Optional<String[]>> headerLines = readNextLines();
+        if (headerLines.getLeft().isPresent() && headerLines.getRight().isPresent()) {
+            String[] leftHeader = headerLines.getLeft().get();
+            String[] rightHeader = headerLines.getRight().get();
+
+            checkArgument(
+                    Arrays.deepEquals(
+                            Arrays.copyOfRange(leftHeader, FIRST_EXPRESSION_LEVEL_INDEX, leftHeader.length),
+                            Arrays.copyOfRange(rightHeader, FIRST_EXPRESSION_LEVEL_INDEX, leftHeader.length)),
+                    "TPMs and FPKMs header lines don’t match!");
+        }
+        String[] headers = headerLines.getLeft().orElseGet(() -> headerLines.getRight().get());
         this.assayGroupIds = ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
     }
 
-    @Override
-    public void close() throws IOException {
-        csvReader.close();
+    private boolean hasNext() {
+        // If both files are present, their hasNext() method must match
+        if (tsvIteratorTpm.isPresent() && tsvIteratorFpkm.isPresent()) {
+            checkArgument(tsvIteratorTpm.get().hasNext() == tsvIteratorFpkm.get().hasNext(),
+                    "Number of lines of FPKM and TPM files don’t match");
+        }
+
+        // We checked in the constructor that at least one TsvStreamer is present, so either the first clause will be
+        // evaluated if we have both or only TPMs, or the second if only FPKMs are available
+        return tsvIteratorTpm.isPresent() && tsvIteratorTpm.get().hasNext() ||
+                tsvIteratorFpkm.isPresent() && tsvIteratorFpkm.get().hasNext();
     }
 
-    private String[] readCsvLine() {
-        lineNumber++;
-        try {
-            return csvReader.readNext();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
-        }
+    private Pair<Optional<String[]>, Optional<String[]>> readNextLines() {
+        return Pair.of(tsvIteratorTpm.map(Iterator::next), tsvIteratorFpkm.map(Iterator::next));
     }
 
     @Override
@@ -84,17 +86,53 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
         return queue.remove();
     }
 
-    private ImmutableList<BaselineAnalytics> readNextNonZeroLine() {
+    @Override
+    public void close() {
+        tpms.ifPresent(reader -> {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
+        });
 
-        String[] line = readCsvLine();
-        if (line == null) {
-            // EOF
+        fpkms.ifPresent(reader -> {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
+        });
+
+    }
+
+    private ImmutableList<BaselineAnalytics> readNextNonZeroLine() {
+        if (!hasNext()) {
             return null;
         }
 
-        String geneId = line[GENE_ID_COLUMN_INDEX];
-        String[] expressionLevels = ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
-        ImmutableList<BaselineAnalytics> baselineAnalytics = createList(geneId, assayGroupIds, expressionLevels);
+        Pair<Optional<String[]>, Optional<String[]>> lines = readNextLines();
+        if (lines.getLeft().isPresent() && lines.getRight().isPresent()) {
+            checkArgument(
+                    lines.getLeft().get()[GENE_ID_COLUMN_INDEX].equals(lines.getRight().get()[GENE_ID_COLUMN_INDEX]),
+                    String.format("Gene IDs %s and %s in the same line of TPM and FPKM file don’t match",
+                            lines.getLeft().get()[GENE_ID_COLUMN_INDEX],
+                            lines.getRight().get()[GENE_ID_COLUMN_INDEX]));
+        }
+
+        String geneId = lines.getLeft().orElseGet(() -> lines.getRight().get())[GENE_ID_COLUMN_INDEX];
+
+        Optional<String[]> expressionLevelsTpm =
+                lines.getLeft().map(line -> ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length));
+        Optional<String[]> expressionLevelsFpkm =
+                lines.getRight().map(line -> ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length));
+
+        ImmutableList<BaselineAnalytics> baselineAnalytics =
+                createList(
+                        geneId,
+                        assayGroupIds,
+                        expressionLevelsTpm.orElse(new String[0]),
+                        expressionLevelsFpkm.orElse(new String[0]));
 
         if (baselineAnalytics.isEmpty()) {
             return readNextNonZeroLine();
@@ -103,27 +141,43 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
         return baselineAnalytics;
     }
 
-    private ImmutableList<BaselineAnalytics> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
-        checkArgument(StringUtils.isNotBlank(geneId), "Cannot load baseline analytics - gene id is blank");
-        checkArgument(assayGroupIds.length ==
-                expressionLevels.length, String.format(
-                        "Cannot load baseline analytics - expecting [%s] expressions but got [%s] instead.",
-                        Joiner.on(", ").join(assayGroupIds), Joiner.on(", ").join(expressionLevels)));
+    private ImmutableList<BaselineAnalytics> createList(String geneId,
+                                                        String[] assayGroupIds,
+                                                        String[] expressionLevelsTpm,
+                                                        String[] expressionLevelsFpkm) {
+        checkArgument(StringUtils.isNotBlank(geneId), "Cannot read baseline analytics: gene ID is blank");
+        checkArgument(
+                expressionLevelsTpm.length == 0 || expressionLevelsTpm.length == assayGroupIds.length,
+                String.format(
+                        "Incorrect number of TPM expression levels, expected %d but got [%s]",
+                        assayGroupIds.length,
+                        Arrays.deepToString(expressionLevelsTpm)));
+        checkArgument(
+                expressionLevelsFpkm.length == 0 || expressionLevelsFpkm.length == assayGroupIds.length,
+                String.format(
+                        "Incorrect number of FPKM expression levels, expected %d but got [%s]",
+                        assayGroupIds.length,
+                        Arrays.deepToString(expressionLevelsFpkm)));
+
+        BaselineExpression[] baselineExpressionsTpm =
+                Stream.of(expressionLevelsTpm).map(BaselineExpression::create).toArray(BaselineExpression[]::new);
+
+        BaselineExpression[] baselineExpressionsFpkm =
+                Stream.of(expressionLevelsFpkm).map(BaselineExpression::create).toArray(BaselineExpression[]::new);
 
         ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
-
-        for (int i = 0; i < expressionLevels.length; i++) {
-
-            BaselineExpression baselineExpression = BaselineExpression.create(expressionLevels[i]);
-            if(baselineExpression.getLevel() > 0) {
-                builder.add(new BaselineAnalytics(
+        for (int i = 0 ; i < Math.max(baselineExpressionsTpm.length, baselineExpressionsFpkm.length) ; i++) {
+            if (baselineExpressionsTpm.length > 0 && baselineExpressionsTpm[i].getLevel() > 0.0 ||
+                    baselineExpressionsFpkm.length > 0 && baselineExpressionsFpkm[i].getLevel() > 0.0) {
+                builder.add(BaselineAnalytics.create(
                         geneId,
                         assayGroupIds[i],
-                        baselineExpression.getLevel()
-                ));
+                        baselineExpressionsTpm.length > 0 ? baselineExpressionsTpm[i].getLevel() : 0.0,
+                        baselineExpressionsFpkm.length > 0 ? baselineExpressionsFpkm[i].getLevel() : 0.0,
+                        baselineExpressionsTpm.length > 0 ? baselineExpressionsTpm[i].getQuartiles() : new double[0],
+                        baselineExpressionsFpkm.length > 0 ? baselineExpressionsFpkm[i].getQuartiles() : new double[0]));
             }
         }
-
         return builder.build();
     }
 

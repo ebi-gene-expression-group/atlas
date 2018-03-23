@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import javax.inject.Inject;
 
@@ -19,10 +19,10 @@ import static org.junit.Assert.assertThat;
 public class BioEntityPropertyServiceIT {
 
     @Inject
-    BioEntityPropertyService subject;
+    private BioEntityPropertyService subject;
 
     @Test
-    public void knownSpeciesAreAddedToOrthologs() throws Exception {
+    public void knownSpeciesAreAddedToOrthologs() {
         Map<String, String> result =
                 subject.mapToLinkText(
                         BioentityPropertyName.ORTHOLOG, ImmutableSet.of("ENSMUSG00000019082", "FBgn0260743"),false);

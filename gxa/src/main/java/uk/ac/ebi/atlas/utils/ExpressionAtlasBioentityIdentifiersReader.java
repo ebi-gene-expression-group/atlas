@@ -72,7 +72,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
                          baselineAnalyticsInputStreamFactory.create(experimentAccession, experimentType)) {
                 BaselineAnalytics analytics = inputStream.readNext();
                 while (analytics != null) {
-                    bioentityIdentifiers.add(analytics.getGeneId());
+                    bioentityIdentifiers.add(analytics.geneId());
                     analytics = inputStream.readNext();
                 }
             } catch (Exception exception) {
@@ -138,7 +138,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
                     (experimentAccession, experiment.getType())) {
                 BaselineAnalytics analytics = inputStream.readNext();
                 while (analytics != null) {
-                    bioentityIdentifiers.add(analytics.getGeneId());
+                    bioentityIdentifiers.add(analytics.geneId());
                     analytics = inputStream.readNext();
                 }
             } catch (Exception exception) {

@@ -6,24 +6,17 @@ import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import javax.validation.constraints.Min;
 
 public class DifferentialRequestPreferences extends ExperimentPageRequestPreferences<ExpressionUnit.Relative> {
-
-    public static final double DEFAULT_CUTOFF = 0.05d;
-
-    public static final double DEFAULT_FOLD_CHANGE_CUTOFF = 1d;
+    private static final double DEFAULT_CUTOFF = 0.05d;
+    private static final double DEFAULT_FOLD_CHANGE_CUTOFF = 1d;
 
     private Regulation regulation = Regulation.UP_DOWN;
 
-    @Min(value = 0, message = "Log2-fold change cut off is an absolute amount, and so must be greater than zero")
+    @Min(value = 0, message = "log_2 fold change cutoff is an absolute amount, and so must be greater than zero")
     private double foldChangeCutoff = DEFAULT_FOLD_CHANGE_CUTOFF;
 
     @Override
     public double getDefaultCutoff() {
         return DEFAULT_CUTOFF;
-    }
-
-    // exposed as JavaBean getter so JSP can read it
-    public double getDefaultFoldChangeCutoff() {
-        return DEFAULT_FOLD_CHANGE_CUTOFF;
     }
 
     public Regulation getRegulation() {

@@ -1,27 +1,28 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.coexpression;
 
-import com.google.common.base.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 @Named
 public class CoexpressedGenesService {
 
-    final CoexpressedGenesDao coexpressedGenesDao;
+    private final CoexpressedGenesDao coexpressedGenesDao;
 
     @Inject
-    public CoexpressedGenesService(JdbcTemplate jdbcTemplate) {
-        this.coexpressedGenesDao =new CoexpressedGenesDao(jdbcTemplate);
-    }
-
     public CoexpressedGenesService(CoexpressedGenesDao coexpressedGenesDao) {
-        this.coexpressedGenesDao =coexpressedGenesDao;
+        this.coexpressedGenesDao = coexpressedGenesDao;
     }
 
     Pair<GeneQueryResponse, List<String>> extendGeneQueryResponseWithCoexpressions(GeneQueryResponse originalResponse,
@@ -54,18 +55,10 @@ public class CoexpressedGenesService {
         return Pair.of(newGeneQuery,prescribedOrder);
     }
 
-    List<String> fetchCoexpressions(String experimentAccession, String identifier, Integer requestedAmount) {
+    public List<String> fetchCoexpressions(String experimentAccession, String identifier, int requestedAmount) {
         List<String> coexpressedGenes = coexpressedGenesDao.coexpressedGenesFor(experimentAccession, identifier);
         return coexpressedGenes.subList(0, Math.min(Math.max(0, requestedAmount), coexpressedGenes.size()));
     }
-
-    public GeneQueryResponse extendGeneQueryResponseWithCoexpressions(BaselineExperiment experiment,
-                                                                      GeneQueryResponse geneQueryResponse,
-                                                                      Map<String, Integer> coexpressionsRequested) {
-        return extendGeneQueryResponseWithCoexpressions(geneQueryResponse,
-                experiment,coexpressionsRequested,true).getLeft();
-    }
-
 
     public Optional<Pair<GeneQueryResponse, List<String>>> tryGetRelatedCoexpressions(BaselineExperiment experiment,
                                                                                       GeneQueryResponse geneQueryResponse,
@@ -73,7 +66,7 @@ public class CoexpressedGenesService {
         Pair<GeneQueryResponse, List<String>> result =
                 extendGeneQueryResponseWithCoexpressions(geneQueryResponse, experiment, coexpressionsRequested, false);
         return result.getLeft().getAllGeneIds().isEmpty()
-                ? Optional.<Pair<GeneQueryResponse, List<String>>>absent()
+                ? Optional.empty()
                 : Optional.of(result);
     }
 }

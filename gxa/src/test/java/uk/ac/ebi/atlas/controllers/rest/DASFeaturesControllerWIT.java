@@ -38,18 +38,17 @@ public class DASFeaturesControllerWIT {
 
         this.mockMvc.perform(
                 get("/das/s4/features")
-                        .param("geneId", geneId)
+                        .param("segment", geneId)
                         .param("conditionQuery", conditionQuery))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("das-features"));
     }
 
     @Test
-    public void differentialJsonResultsFailWithoutQuery() throws Exception
-    {
+    public void differentialJsonResultsFailWithoutQuery() throws Exception {
         this.mockMvc.perform(
                 get("/das/s4/features"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 
 }

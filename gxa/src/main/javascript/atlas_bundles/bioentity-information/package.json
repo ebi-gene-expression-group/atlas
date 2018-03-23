@@ -17,17 +17,17 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "clean-webpack-plugin": "^0.1.17",
-    "css-loader": "^0.28.9",
-    "file-loader": "^1.1.6",
-    "image-webpack-loader": "^4.0.0",
+    "clean-webpack-plugin": "^0.1.18",
+    "css-loader": "^0.28.10",
+    "file-loader": "^1.1.11",
+    "image-webpack-loader": "^4.1.0",
     "json-loader": "^0.5.7",
-    "request": "^2.83.0",
-    "style-loader": "^0.19.1",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "request": "^2.85.0",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.0.1",
+    "webpack-dev-server": "^3.1.0"
   }
 }

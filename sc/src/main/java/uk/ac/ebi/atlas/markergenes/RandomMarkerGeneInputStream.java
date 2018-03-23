@@ -4,17 +4,14 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.leftPad;
 
 public class RandomMarkerGeneInputStream implements ObjectInputStream<Object[]> {
-
     // Change to higher or lower values to decrease or increase, respectively, the probability of a gene being in the
     // same experiment with different cluster IDs
     private final int NUMBER_OF_GENES = 10;
@@ -38,7 +35,7 @@ public class RandomMarkerGeneInputStream implements ObjectInputStream<Object[]> 
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 

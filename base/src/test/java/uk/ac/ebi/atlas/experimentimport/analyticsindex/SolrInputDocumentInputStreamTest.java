@@ -13,7 +13,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import java.util.Map;
 import java.util.Set;
@@ -26,9 +26,10 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.GO;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.GOTERM;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.ORTHOLOG;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GOTERM;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ORTHOLOG;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrInputDocumentInputStreamTest {
@@ -51,7 +52,7 @@ public class SolrInputDocumentInputStreamTest {
 
     private BaselineExperimentDataPoint baselineExperimentDataPoint = new BaselineExperimentDataPoint(
             BaselineExperimentTest.mockExperiment(),
-            new BaselineAnalytics(bioentityIdentifier, "column_name", 13.37),
+            BaselineAnalytics.create(bioentityIdentifier, "column_name", 13.37, 0.0),
             "condition search");
 
     private SolrInputDocumentInputStream subject;
@@ -63,7 +64,7 @@ public class SolrInputDocumentInputStreamTest {
     }
 
     @Test
-    public void testSingleBaselineRecord(){
+    public void testSingleBaselineRecord() {
         SolrInputDocument result = subject.readNext();
 
         //Generic fields for any record
@@ -75,11 +76,11 @@ public class SolrInputDocumentInputStreamTest {
         assertThat(result.get("expression_level").getValue(), is(13.37));
 
         //identifier search
-        assertThat(result.keySet(), hasItems(GO.asAnalyticsIndexKeyword(), "identifier_search"));
+        assertThat(result.keySet(), hasItems(asAnalyticsSchemaField(GO).name(), "identifier_search"));
         assertThat(result.get("identifier_search").toString(), containsString("pancake"));
 
         //we do not index everything
-        assertThat(result.keySet(), not(hasItem(ORTHOLOG.asAnalyticsIndexKeyword())));
+        assertThat(result.keySet(), not(hasItem(asAnalyticsSchemaField(ORTHOLOG).name())));
 
         assertThat(subject.readNext(), is(nullValue()));
     }

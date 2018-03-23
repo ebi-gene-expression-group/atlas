@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.model.resource;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
 
 import java.util.stream.Stream;
 

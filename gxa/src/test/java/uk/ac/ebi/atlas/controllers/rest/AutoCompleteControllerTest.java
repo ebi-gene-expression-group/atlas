@@ -4,12 +4,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.solr.query.SolrBioentitiesSuggesterService;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrBioentitiesSuggesterService;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
@@ -36,7 +37,7 @@ public class AutoCompleteControllerTest {
     private AutoCompleteController subject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         SemanticQueryTerm queryTerm1 = SemanticQueryTerm.create("Value1");
         SemanticQueryTerm queryTerm2 = SemanticQueryTerm.create("Value2");
 
@@ -49,16 +50,16 @@ public class AutoCompleteControllerTest {
     }
 
     @Test
-    public void fetchTopSuggestions() throws Exception {
+    public void fetchTopSuggestions() {
         //given
         String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS, 15);
 
         //then
-        assertThat(jsonResponse, is("[{\"value\":\"Value1\",\"category\":\"\"},{\"value\":\"Value2\",\"category\":\"\"}]"));
+        assertThat(jsonResponse, is("[{\"value\":\"Value1\"},{\"value\":\"Value2\"}]"));
     }
 
     @Test
-    public void fetchTermSource() throws Exception {
+    public void fetchTermSource() {
 
         SemanticQueryTerm queryTerm1 = SemanticQueryTerm.create("TERM1", "CATEGORY1");
         SemanticQueryTerm queryTerm2 = SemanticQueryTerm.create("TERM2", "CATEGORY2");
@@ -68,7 +69,12 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> termSourceList = Lists.newArrayList(queryTerm1, queryTerm2, queryTerm3, queryTerm4);
 
-        Gson gson = new Gson();
+        final Gson gson =
+                new GsonBuilder()
+                        .registerTypeAdapter(
+                                SemanticQueryTerm.create("").getClass(),
+                                SemanticQueryTerm.getGsonTypeAdapter())
+                        .create();
 
         String suggestions = gson.toJson(termSourceList);
 

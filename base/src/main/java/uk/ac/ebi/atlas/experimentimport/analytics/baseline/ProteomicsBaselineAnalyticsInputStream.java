@@ -47,7 +47,7 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
     private final String name;
     private int lineNumber = 0;
 
-    public ProteomicsBaselineAnalyticsInputStream(Reader reader, String name) throws IOException {
+    public ProteomicsBaselineAnalyticsInputStream(Reader reader, String name) {
         this.name = name;
         this.csvReader = new CSVReader(reader, '\t');
         String[] headers = readCsvLine();
@@ -126,8 +126,15 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
 
             if (!"NA".equalsIgnoreCase(expressionLevelString)) {
                 Double expressionLevel = Double.parseDouble(expressionLevels[i]);
-                if (expressionLevel != 0.0) {
-                    builder.add(new BaselineAnalytics(geneId, StringUtils.removeEnd(assayGroupId, SAMPLE_ABUNDANCE_QUALIFIER), expressionLevel));
+                if (expressionLevel > 0.0) {
+                    builder.add(
+                            BaselineAnalytics.create(
+                                    geneId,
+                                    StringUtils.removeEnd(assayGroupId, SAMPLE_ABUNDANCE_QUALIFIER),
+                                    expressionLevel,
+                                    0.0,
+                                    new double[0],
+                                    new double[0]));
                 }
             }
         }

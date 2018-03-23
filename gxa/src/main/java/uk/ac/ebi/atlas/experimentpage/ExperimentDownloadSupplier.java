@@ -26,8 +26,8 @@ import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqDifferentialProfilesWriterFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
@@ -69,13 +69,18 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
 
         protected abstract void write(Writer writer, Prefs preferences, E experiment);
 
-        protected ExternallyAvailableContent getOne(final E experiment, final Prefs preferences, final String id, String description) {
+        protected ExternallyAvailableContent getOne(final E experiment,
+                                                    final Prefs preferences,
+                                                    final String id,
+                                                    String description) {
             return new ExternallyAvailableContent(makeUri(id),
                     ExternallyAvailableContent.Description.create("icon-tsv", description), response -> {
                 try {
                     response.setHeader(
                             "Content-Disposition",
-                            MessageFormat.format("attachment; filename=\"{0}-query-results.{1}\"", experiment.getAccession(), id));
+                            MessageFormat.format("attachment; filename=\"{0}-query-results.{1}\"",
+                                    experiment.getAccession(),
+                                    id));
                     response.setContentType("text/plain; charset=utf-8");
 
                     write(response.getWriter(), preferences, experiment);
@@ -125,7 +130,12 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
 
         @Override
         public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment) {
-            return Collections.singleton(getOne(experiment, ProteomicsBaselineRequestPreferences.requestAllData(), "tsv", "Expression values across all genes"));
+            return Collections.singleton(
+                    getOne(
+                            experiment,
+                            ProteomicsBaselineRequestPreferences.requestAllData(),
+                            "tsv",
+                            "Expression values across all genes"));
         }
     }
 

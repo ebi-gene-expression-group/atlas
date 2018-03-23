@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
@@ -120,14 +120,14 @@ public class DataFileHub {
     }
 
     public class ExperimentFiles {
-        public final AtlasResource<TsvReader> analysisMethods;
+        public final AtlasResource<TsvStreamer> analysisMethods;
         public final AtlasResource<XmlReader> configuration;
-        public final AtlasResource<TsvReader> condensedSdrf;
-        public final AtlasResource<TsvReader> idf;
+        public final AtlasResource<TsvStreamer> condensedSdrf;
+        public final AtlasResource<TsvStreamer> idf;
         public final AtlasResource<Set<Path>> qcFolder;
-        public final AtlasResource<TsvReader> experimentDesign;
+        public final AtlasResource<TsvStreamer> experimentDesign;
         public final AtlasResource<TsvWriter> experimentDesignWrite;
-        public final AtlasResource<TsvReader> adminOpLog;
+        public final AtlasResource<TsvStreamer> adminOpLog;
         public final AtlasResource<TsvWriter> adminOpLogWrite;
         public final AtlasResource<TsvWriter> adminOpLogAppend;
 
@@ -176,7 +176,7 @@ public class DataFileHub {
                             experimentAccession);
         }
 
-        public AtlasResource<TsvReader> reactomePathwaysFiles(String experimentAccession, String comparison) {
+        public AtlasResource<TsvStreamer> reactomePathwaysFiles(String experimentAccession, String comparison) {
             return new TsvFile.ReadOnly(
                     experimentsFilesLocation,
                     REACTOME_PATHWAYS_FILE_PATH_TEMPLATE,
@@ -261,7 +261,7 @@ public class DataFileHub {
         public final DifferentialExperimentFiles differentialExperimentFiles;
 
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
-        public final AtlasResource<TsvReader> rawCounts;
+        public final AtlasResource<TsvStreamer> rawCounts;
 
         RnaSeqDifferentialExperimentFiles(String experimentAccession) {
             experimentFiles = new ExperimentFiles(experimentAccession);
@@ -285,8 +285,8 @@ public class DataFileHub {
         public final DifferentialExperimentFiles differentialExperimentFiles;
 
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
-        public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1-colour specific
-        public final AtlasResource<TsvReader> logFoldChanges;           // Microarray 2-colour specific
+        public final AtlasResource<TsvStreamer> normalizedExpressions;    // Microarray 1-colour specific
+        public final AtlasResource<TsvStreamer> logFoldChanges;           // Microarray 2-colour specific
 
         MicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
             experimentFiles = new ExperimentFiles(experimentAccession);
@@ -319,9 +319,9 @@ public class DataFileHub {
         public final ExperimentFiles experimentFiles;
 
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
-        public final AtlasResource<TsvReader> geneIdsTsv;
-        public final AtlasResource<TsvReader> cellIdsTsv;
-        public final Map<Integer, AtlasResource<TsvReader>> tSnePlotTsvs;
+        public final AtlasResource<TsvStreamer> geneIdsTsv;
+        public final AtlasResource<TsvStreamer> cellIdsTsv;
+        public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
 
         SingleCellExperimentFiles(String experimentAccession) {
             experimentFiles = new ExperimentFiles(experimentAccession);

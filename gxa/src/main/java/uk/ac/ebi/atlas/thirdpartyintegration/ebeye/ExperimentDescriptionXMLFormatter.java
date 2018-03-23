@@ -44,7 +44,7 @@ public class ExperimentDescriptionXMLFormatter {
     }
 
     public String formatExperimentDescription(ExperimentDescription ed) {
-        String escapedDescription = StringEscapeUtils.escapeXml(ed.getDescription());
+        String escapedDescription = StringEscapeUtils.escapeXml11(ed.getDescription());
         return MessageFormat.format(ENTRY, ed.getAccession(), escapedDescription);
     }
 }

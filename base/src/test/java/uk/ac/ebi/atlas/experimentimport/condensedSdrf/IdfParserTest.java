@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 
 import java.util.stream.Stream;
 
@@ -33,26 +33,26 @@ public class IdfParserTest {
     };
 
     @Mock
-    private TsvReader titleIdfReaderMock;
+    private TsvStreamer titleIdfStreamerMock;
 
     @Mock
-    private TsvReader pubmedsIdfReaderMock;
+    private TsvStreamer pubmedsIdfStreamerMock;
 
     @Mock
-    private IdfReaderFactory idfReaderFactoryMock;
+    private IdfStreamerFactory idfStreamerFactoryMock;
 
     @InjectMocks
     private IdfParser subject;
 
     @Before
     public void setUp() {
-        when(idfReaderFactoryMock.create(E_MTAB_513)).thenReturn(titleIdfReaderMock, pubmedsIdfReaderMock);
+        when(idfStreamerFactoryMock.create(E_MTAB_513)).thenReturn(titleIdfStreamerMock, pubmedsIdfStreamerMock);
     }
 
     @Test
     public void parse() {
-        when(titleIdfReaderMock.stream()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
-        when(pubmedsIdfReaderMock.stream()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
+        when(titleIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
+        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
 
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
 
@@ -62,8 +62,8 @@ public class IdfParserTest {
 
     @Test
     public void parseNoPubmedIds() {
-        when(titleIdfReaderMock.stream()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0]));
-        when(pubmedsIdfReaderMock.stream()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0]));
+        when(titleIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0]));
+        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0]));
 
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
 
@@ -73,8 +73,8 @@ public class IdfParserTest {
 
     @Test
     public void parseNoTitle() {
-        when(titleIdfReaderMock.stream()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[1]));
-        when(pubmedsIdfReaderMock.stream()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[1]));
+        when(titleIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[1]));
+        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[1]));
 
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
 
@@ -84,8 +84,8 @@ public class IdfParserTest {
 
     @Test
     public void parseNothing() {
-        when(titleIdfReaderMock.stream()).thenReturn(Stream.empty());
-        when(pubmedsIdfReaderMock.stream()).thenReturn(Stream.empty());
+        when(titleIdfStreamerMock.get()).thenReturn(Stream.empty());
+        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.empty());
 
 
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);

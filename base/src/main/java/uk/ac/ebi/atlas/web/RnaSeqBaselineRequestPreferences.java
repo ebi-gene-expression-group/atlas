@@ -1,32 +1,23 @@
 package uk.ac.ebi.atlas.web;
 
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 public class RnaSeqBaselineRequestPreferences extends BaselineRequestPreferences<ExpressionUnit.Absolute.Rna> {
-
     private static final double DEFAULT_CUTOFF = 0.5d;
-
-    private ExpressionUnit.Absolute.Rna unit = getDefaultUnit();
+    private ExpressionUnit.Absolute.Rna unit = ExpressionUnit.Absolute.Rna.TPM;
 
     @Override
     public double getDefaultCutoff() {
         return DEFAULT_CUTOFF;
     }
 
-    public static RnaSeqBaselineRequestPreferences requestAllData(ExpressionUnit.Absolute.Rna unit){
+    public static RnaSeqBaselineRequestPreferences requestAllData(ExpressionUnit.Absolute.Rna unit) {
         RnaSeqBaselineRequestPreferences preferences = new RnaSeqBaselineRequestPreferences();
-        BaselineRequestPreferences.setRequestAllData(preferences);
+        preferences.setCutoff(VERY_SMALL_NON_ZERO_VALUE);
+        preferences.setGeneQuery(SemanticQuery.create());
         preferences.setUnit(unit);
         return preferences;
-    }
-
-    public ExpressionUnit.Absolute.Rna getDefaultUnit(){
-        return ExpressionUnit.Absolute.Rna.TPM;
-    }
-
-    @Override
-    public ExpressionUnit.Absolute.Rna getUnit() {
-        return unit;
     }
 
     public void setUnit(ExpressionUnit.Absolute.Rna unit) {
@@ -34,8 +25,12 @@ public class RnaSeqBaselineRequestPreferences extends BaselineRequestPreferences
     }
 
     @Override
-    public String serializationShortString(){
-        return super.serializationShortString()+unit;
+    public ExpressionUnit.Absolute.Rna getUnit() {
+        return unit;
     }
 
+    @Override
+    public String serializationShortString() {
+        return super.serializationShortString() + unit;
+    }
 }

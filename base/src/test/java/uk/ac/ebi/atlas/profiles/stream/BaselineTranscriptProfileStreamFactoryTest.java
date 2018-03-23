@@ -3,19 +3,13 @@ package uk.ac.ebi.atlas.profiles.stream;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.experimentpage.LinkToGene;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
@@ -30,20 +24,19 @@ import static org.junit.Assert.assertThat;
 
 public class BaselineTranscriptProfileStreamFactoryTest {
 
-    MockDataFileHub dataFileHub;
+    private MockDataFileHub dataFileHub;
 
-    BaselineTranscriptProfileStreamFactory subject;
+    private BaselineTranscriptProfileStreamFactory subject;
 
-    String[] header = new String[]{"gene id", "gene name", "transcript name", "assay_1", "assay_2", "assay_3"};
+    private String[] header = new String[]{"gene id", "gene name", "transcript name", "assay_1", "assay_2", "assay_3"};
 
-    BiologicalReplicate assay_1 = new BiologicalReplicate("assay_1");
-    BiologicalReplicate assay_2 = new BiologicalReplicate("assay_2");
-    BiologicalReplicate assay_3 = new BiologicalReplicate("assay_3");
-    AssayGroup g1 = new AssayGroup("g1", ImmutableSet.of(assay_1));
-    AssayGroup g2 = new AssayGroup("g2", ImmutableSet.of(assay_2, assay_3));
+    private BiologicalReplicate assay_1 = new BiologicalReplicate("assay_1");
+    private BiologicalReplicate assay_2 = new BiologicalReplicate("assay_2");
+    private BiologicalReplicate assay_3 = new BiologicalReplicate("assay_3");
+    private AssayGroup g1 = new AssayGroup("g1", ImmutableSet.of(assay_1));
+    private AssayGroup g2 = new AssayGroup("g2", ImmutableSet.of(assay_2, assay_3));
 
-    BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(ImmutableList.of(g1, g2), "accession");
-
+    private BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(ImmutableList.of(g1, g2), "accession");
 
     @Before
     public void setUp() throws Exception {
@@ -55,33 +48,38 @@ public class BaselineTranscriptProfileStreamFactoryTest {
     public void whenTheFileIsNotPresentReturnEmptyStream(){
         assertThat(
                 ImmutableList.copyOf(
-                        new IterableObjectInputStream<>(subject.create(experiment, new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment), Collections.emptySet()))
-                ),
-                empty()
-        );
+                        new IterableObjectInputStream<>(
+                                subject.create(
+                                        experiment,
+                                        new BaselineRequestContext<>(
+                                                new RnaSeqBaselineRequestPreferences(), experiment),
+                                        Collections.emptySet()))),
+                empty());
     }
 
 
-    void testCase(List<String[]> dataLines, Collection<String> getGeneIds, List<BaselineExpressionPerReplicateProfile> expected) {
+    private void testCase(List<String[]> dataLines,
+                          Collection<String> getGeneIds,
+                          List<BaselineExpressionPerReplicateProfile> expected) {
         dataFileHub.addTranscriptsTpmsExpressionFile(experiment.getAccession(), dataLines);
         assertThat(
                 ImmutableList.copyOf(
-                        new IterableObjectInputStream<>(subject.create(experiment, new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment), getGeneIds))
-                ),
+                        new IterableObjectInputStream<>(
+                                subject.create(
+                                        experiment,
+                                        new BaselineRequestContext<>(
+                                                new RnaSeqBaselineRequestPreferences(), experiment),
+                                        getGeneIds))),
                 is(expected)
         );
     }
 
-    BaselineExpressionPerReplicateProfile profile(String id,
-                                                  BaselineExpressionPerBiologicalReplicate expressionForG1,
-                                                  BaselineExpressionPerBiologicalReplicate expressionForG2) {
+    private BaselineExpressionPerReplicateProfile profile(String id,
+                                                          BaselineExpressionPerBiologicalReplicate expressionForG1,
+                                                          BaselineExpressionPerBiologicalReplicate expressionForG2) {
         BaselineExpressionPerReplicateProfile profile = new BaselineExpressionPerReplicateProfile(id, id);
-        Optional.ofNullable(expressionForG1).ifPresent(e ->
-                profile.add(g1, e)
-        );
-        Optional.ofNullable(expressionForG2).ifPresent(e ->
-                profile.add(g2, e)
-        );
+        Optional.ofNullable(expressionForG1).ifPresent(e -> profile.add(g1, e));
+        Optional.ofNullable(expressionForG2).ifPresent(e -> profile.add(g2, e));
         return profile;
     }
 
@@ -217,5 +215,4 @@ public class BaselineTranscriptProfileStreamFactoryTest {
                 )
         );
     }
-
 }

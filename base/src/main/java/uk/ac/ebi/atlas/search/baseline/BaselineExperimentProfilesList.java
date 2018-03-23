@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class BaselineExperimentProfilesList extends GeneProfilesList<BaselineExperimentProfile> {
-
     public BaselineExperimentProfilesList() {
     }
 
@@ -20,8 +19,4 @@ public class BaselineExperimentProfilesList extends GeneProfilesList<BaselineExp
 
         return ImmutableList.copyOf(result);
     }
-
-
-
-
 }

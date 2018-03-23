@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.*;
 
 @Named
 public class GeneSetPropertyService {

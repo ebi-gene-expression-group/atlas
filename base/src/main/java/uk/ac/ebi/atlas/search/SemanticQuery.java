@@ -1,28 +1,38 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nullable;
+import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @AutoValue
 public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
-
-    private static final String OR_OPERATOR = " OR ";
+    // According to Google Gson is thread-safe:
+    // https://github.com/google/gson/blob/master/UserGuide.md#using-gson
+    // Remove static if Google is lying!
+    private static final Gson GSON =
+            new GsonBuilder()
+                    .registerTypeAdapter(
+                            SemanticQueryTerm.create("").getClass(),
+                            SemanticQueryTerm.getGsonTypeAdapter())
+                    .create();
 
     public abstract ImmutableSet<SemanticQueryTerm> terms();
 
@@ -31,7 +41,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
     }
 
     public static SemanticQuery create() {
-        return new AutoValue_SemanticQuery(ImmutableSet.<SemanticQueryTerm>of());
+        return new AutoValue_SemanticQuery(ImmutableSet.of());
     }
 
     public static SemanticQuery create(SemanticQueryTerm... queryTerms) {
@@ -43,12 +53,16 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return new AutoValue_SemanticQuery(ImmutableSet.of(SemanticQueryTerm.create(queryTermValue)));
     }
 
-    public static boolean isEmpty(SemanticQuery query) {
-        return query == null || query.isEmpty();
-    }
-
-    public static boolean isNotEmpty(SemanticQuery query) {
-        return query != null && !query.isEmpty();
+    public Map<String, Set<String>> groupValuesByCategory() {
+        return terms().stream()
+                .collect(groupingBy(SemanticQueryTerm::category)).entrySet().stream()
+                .collect(toMap(
+                        categorySemanticQueryTerm -> categorySemanticQueryTerm.getKey().orElse(""),
+                        categorySemanticQueryTerm ->
+                                categorySemanticQueryTerm.getValue().stream()
+                                        .filter(SemanticQueryTerm::hasValue)
+                                        .map(SemanticQueryTerm::value)
+                                        .collect(toSet())));
     }
 
     @Override
@@ -56,7 +70,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return terms().iterator();
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         for (SemanticQueryTerm term : terms()) {
             if (term.hasValue()) {
                 return false;
@@ -65,25 +79,30 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return true;
     }
 
+    // Fail-fast version of !isEmpty()
+    public boolean isNotEmpty() {
+        for (SemanticQueryTerm term : terms()) {
+            if (term.hasValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int size() {
         return terms().size();
     }
 
-    //Don't rename me. experiment.jsp: var geneQueryTagsPopulatedInTemplate = ${preferences.geneQuery.json};
-    public String getJson(){
-        return toJson();
-    }
-
     public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(terms());
+        return GSON.toJson(terms());
     }
 
-    public String toUrlEncodedJson(){
+    public String toUrlEncodedJson() {
         try {
             return URLEncoder.encode(toJson(), "UTF-8");
-        } catch(UnsupportedEncodingException e){
-            throw new RuntimeException(e);
+        } catch(UnsupportedEncodingException e) {
+            // Unreachable , UTF-8 will always be supported, even on an infinite time scale :P
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -92,26 +111,19 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
             return create();
         }
 
-        Gson gson = new Gson();
-        return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
+        return create(ImmutableSet.copyOf(GSON.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
     }
 
-    public static SemanticQuery fromUrlEncodedJson(String json) throws MalformedJsonException {
+    public static SemanticQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException {
         if (isBlank(json)) {
             return create();
         }
 
-        Gson gson = new Gson();
-        String decoded;
-        try {
-            decoded = URLDecoder.decode(json, "UTF-8");
-        }  catch(UnsupportedEncodingException e){
-                throw new RuntimeException(e);
-        }
+        String decoded = URLDecoder.decode(json, "UTF-8");
          try {
-             return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(decoded, AutoValue_SemanticQueryTerm[].class)));
+             return create(ImmutableSet.copyOf(GSON.fromJson(decoded, AutoValue_SemanticQueryTerm[].class)));
         } catch (NullPointerException | JsonSyntaxException e) {
-            String geneQueryString = gson.fromJson(StringUtils.wrap(decoded, "\""), String.class);
+            String geneQueryString = GSON.fromJson(StringUtils.wrap(decoded, "\""), String.class);
 
             ImmutableSet.Builder<SemanticQueryTerm> builder = ImmutableSet.builder();
             for (String geneQueryTerm : geneQueryString.split(" ")) {
@@ -121,18 +133,14 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         }
     }
 
-    @Override
-    public String toString() {
-        return toJson();
-    }
+//    @Override
+//    public String toString() {
+//        return toJson();
+//    }
 
     public String description() {
-        return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm, String>() {
-            @Nullable
-            @Override
-            public String apply(SemanticQueryTerm semanticQueryTerm) {
-                return semanticQueryTerm.description();
-            }
-        }));
+        return terms().stream()
+                .map(SemanticQueryTerm::description)
+                .collect(Collectors.joining(" OR "));
     }
 }

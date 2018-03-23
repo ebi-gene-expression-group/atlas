@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -512,8 +512,8 @@ public class EvidenceService<
     }
 
     private String getMethodDescriptionFromAnalysisMethodsFile(E experiment) {
-        try (TsvReader tsvReader = dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
-            return tsvReader.stream()
+        try (TsvStreamer tsvStreamer = dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
+            return tsvStreamer.get()
                     .filter(line -> line.length > 1)
                     .filter(line -> line[0].toLowerCase().contains("differential expression"))
                     .map(line -> line[1].trim().replace("<.+?>", ""))

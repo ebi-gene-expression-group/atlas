@@ -10,10 +10,8 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import java.util.Map;
 
 public class LinkToBaselineProfile extends LinkToExperimentPage<BaselineExperimentProfile> {
-
     public LinkToBaselineProfile(SemanticQuery geneQuery) {
         super(geneQuery);
-
     }
 
     @Override

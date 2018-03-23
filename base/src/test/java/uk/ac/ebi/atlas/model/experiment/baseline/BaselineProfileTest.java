@@ -27,9 +27,9 @@ public class BaselineProfileTest {
     private AssayGroup g3 = new AssayGroup("g3", "run31", "run32");
     private AssayGroup g4 = new AssayGroup("g4", "g41");
 
-    private BaselineExpression expression_1 = new BaselineExpression(2.2D);
+    private BaselineExpression expression_1 = new BaselineExpression(2.2);
     private BaselineExpression expression_2 = new BaselineExpression(3D);
-    private BaselineExpression expression_3 = new BaselineExpression(3.001D);
+    private BaselineExpression expression_3 = new BaselineExpression(3.001);
 
     private BaselineProfile subject;
 
@@ -49,7 +49,7 @@ public class BaselineProfileTest {
     }
 
     @Test
-    public void testGetGeneSpecificity() throws Exception {
+    public void testGetGeneSpecificity() {
         assertThat(subject.getSpecificity(), is(3L));
     }
 

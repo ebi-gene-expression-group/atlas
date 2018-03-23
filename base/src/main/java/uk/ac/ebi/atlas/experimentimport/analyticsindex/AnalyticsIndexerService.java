@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentInputStream;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.UpdateResponse;
@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,15 +28,12 @@ public class AnalyticsIndexerService {
 
     private final SolrClient solrClient;
     private final ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
-    private final AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator;
 
     @Inject
     public AnalyticsIndexerService(@Qualifier("solrClientAnalytics") SolrClient solrClient,
-                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory,
-                                   AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator) {
+                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory) {
         this.solrClient = solrClient;
         this.experimentDataPointStreamFactory = experimentDataPointStreamFactory;
-        this.analyticsIndexDocumentValidator = analyticsIndexDocumentValidator;
     }
 
     public int index(
@@ -55,18 +53,17 @@ public class AnalyticsIndexerService {
             while (it.hasNext()) {
                 while (addedIntoThisBatch < batchSize && it.hasNext()) {
                     SolrInputDocument analyticsInputDocument = it.next();
-                    if (analyticsIndexDocumentValidator.validate(analyticsInputDocument)) {
-                        toLoad.add(analyticsInputDocument);
-                        addedIntoThisBatch++;
-                    }
+                    toLoad.add(analyticsInputDocument);
+                    addedIntoThisBatch++;
                 }
                 if (addedIntoThisBatch > 0) {
                     UpdateResponse r = solrClient.add(toLoad);
-                    LOGGER.info("Sent {} documents for {}, qTime:{}",
+                    LOGGER.info(
+                            "Sent {} documents for {}, qTime:{}",
                             addedIntoThisBatch, experiment.getAccession(), r.getQTime());
                     addedInTotal += addedIntoThisBatch;
                     addedIntoThisBatch = 0;
-                    toLoad = new ArrayList<>(batchSize);
+                    toLoad.clear();
                 }
             }
 
@@ -85,8 +82,10 @@ public class AnalyticsIndexerService {
         try {
             solrClient.deleteByQuery("experiment_accession:" + accession);
             solrClient.commit();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Done deleting documents for {}", accession);
     }
@@ -97,8 +96,10 @@ public class AnalyticsIndexerService {
             solrClient.deleteByQuery("*:*");
             solrClient.commit();
             solrClient.optimize();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Done deleting all documents");
     }
@@ -107,8 +108,10 @@ public class AnalyticsIndexerService {
         LOGGER.info("Committing the index");
         try {
             solrClient.commit();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Index committed successfully");
     }
@@ -117,19 +120,18 @@ public class AnalyticsIndexerService {
         LOGGER.info("Optimizing index");
         try {
             solrClient.optimize();
-        } catch (IOException | SolrServerException e) {
-            rollBackAndPropagateException(e);
+        } catch (IOException e) {
+            logAndPropagateException(e);
+        } catch (SolrServerException e) {
+            logAndPropagateException(new IOException(e));
         }
         LOGGER.info("Index optimized successfully");
     }
 
-    private void rollBackAndPropagateException(Exception exception) {
-        try {
-            LOGGER.error(exception.getMessage(), exception);
-            solrClient.rollback();
-            throw new RuntimeException(exception);
-        } catch (IOException | SolrServerException e) {
-            LOGGER.error(e.getMessage());
-        }
+    private void logAndPropagateException(IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            // Roll back not available in SolrCloud D:
+            // solrClient.rollback();
+            throw new UncheckedIOException(e);
     }
 }

@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
@@ -59,11 +59,11 @@ public class DifferentialPathwaysComparisonService <Expr extends DifferentialExp
     }
 
     private List<String> fetchPathwaysFromFile (String experimentAccession, ExperimentType experimentType, Contrast comparison) {
-        try (TsvReader tsvReader =
+        try (TsvStreamer tsvStremer =
                      dataFileHub.getDifferentialExperimentFiles(experimentAccession)
                              .reactomePathwaysFiles(experimentAccession, comparison.getId())
                              .get()) {
-            return tsvReader.stream()
+            return tsvStremer.get()
                     .skip(1)
                     .filter(line -> line.length > 4)
                     .filter(line -> Double.parseDouble(line[4]) < 0.05)

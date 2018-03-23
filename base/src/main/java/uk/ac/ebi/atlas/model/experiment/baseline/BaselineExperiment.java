@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -17,11 +16,21 @@ import java.util.List;
 
 public class BaselineExperiment extends Experiment<AssayGroup> {
 
-    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
-                       String description, String displayName, String disclaimer, Species species,
-                       Collection<String> pubMedIds, ExperimentDesign experimentDesign,
-                       List<AssayGroup> assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription,
-                       List<String> alternativeViews, List<String> alternativeViewDescriptions, ExperimentDisplayDefaults experimentDisplayDefaults) {
+    BaselineExperiment(ExperimentType experimentType,
+                       String accession,
+                       Date lastUpdate,
+                       String description,
+                       String displayName,
+                       String disclaimer,
+                       Species species,
+                       Collection<String> pubMedIds,
+                       ExperimentDesign experimentDesign,
+                       List<AssayGroup> assayGroups,
+                       List<String> dataProviderURL,
+                       List<String> dataProviderDescription,
+                       List<String> alternativeViews,
+                       List<String> alternativeViewDescriptions,
+                       ExperimentDisplayDefaults experimentDisplayDefaults) {
 
         super(experimentType, accession, lastUpdate, displayName, description, disclaimer, species,
               pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
@@ -51,7 +60,8 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
         ExperimentDesign experimentDesign = getExperimentDesign();
         ExperimentDisplayDefaults experimentDisplayDefaults = getDisplayDefaults();
 
-        DataColumnGroup.DataColumnGroupList dataColumnGroupList = new DataColumnGroup.DataColumnGroupList(experimentDisplayDefaults);
+        DataColumnGroup.DataColumnGroupList<AssayGroup> dataColumnGroupList =
+                new DataColumnGroup.DataColumnGroupList<>(experimentDisplayDefaults);
 
         //populate the keys in the order we want later
         for(String factorHeader: experimentDisplayDefaults.prescribedOrderOfFilters()){
@@ -65,14 +75,18 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
         }
 
         // add the information about which headers go to which categories
-        for(DescribesDataColumns dataColumnDescriptor: getDataColumnDescriptors()){
-            for(String assayAnalyzedForThisDataColumn : dataColumnDescriptor.assaysAnalyzedForThisDataColumn()){
-                for(Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)){
-                    dataColumnGroupList.addValueToGroupingInGroup(factor.getHeader(), factor.getValue(), dataColumnDescriptor);
+        for(AssayGroup dataColumnDescriptor: getDataColumnDescriptors()){
+            for(String assayAnalyzedForThisDataColumn :
+                    dataColumnDescriptor.assaysAnalyzedForThisDataColumn()) {
+                for(Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)) {
+                    dataColumnGroupList.addValueToGroupingInGroup(
+                            factor.getHeader(), factor.getValue(), dataColumnDescriptor);
                 }
+
                 for(SampleCharacteristic sampleCharacteristic
-                        : experimentDesign.getSampleCharacteristics(assayAnalyzedForThisDataColumn)){
-                    dataColumnGroupList.addValueToGroupingInGroup(sampleCharacteristic.header(), sampleCharacteristic.value(), dataColumnDescriptor);
+                        : experimentDesign.getSampleCharacteristics(assayAnalyzedForThisDataColumn)) {
+                    dataColumnGroupList.addValueToGroupingInGroup(
+                            sampleCharacteristic.header(), sampleCharacteristic.value(), dataColumnDescriptor);
                 }
             }
         }

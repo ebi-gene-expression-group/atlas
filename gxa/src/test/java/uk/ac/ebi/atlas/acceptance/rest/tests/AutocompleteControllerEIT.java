@@ -37,7 +37,7 @@ public class AutocompleteControllerEIT {
     }
 
     @Test
-    public void shouldReturnNonEmptyJSonObject(){
+    public void shouldReturnNonEmptyJSonObject() {
         //given
         ResponseBody responseBody = subject.getResponse().body();
         String jsonString = responseBody.asString();
@@ -46,7 +46,7 @@ public class AutocompleteControllerEIT {
         SemanticQueryTerm firstTerm = query.iterator().next();
         //then
         assertThat(firstTerm.value(), startsWith(QUERY_TEXT));
-        assertThat(firstTerm.category(), is("symbol"));
+        assertThat(firstTerm.category().get(), is("symbol"));
         assertThat(query.size(), greaterThan(5));
 
     }
