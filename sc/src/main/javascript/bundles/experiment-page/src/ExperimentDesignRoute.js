@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import URI from 'urijs'
 import {uniq, curry} from 'lodash'
 import toPlural from 'pluralize'
-import 'react-table/react-table.css'
-import TSnePlotViewRoute from './TSnePlotViewRoute'
+import '!style-loader!css-loader!react-table/react-table.css'
+import '!style-loader!css-loader!./experiment-table.css'
 
 //http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
 const toTitleCase = (str) => str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -68,21 +68,16 @@ const ExperimentDesignRoute = (props) => {
 
   return (
     <div>
-      <div>
-        <div className="row expanded column margin-top-large">
-          <a className="button float-right margin-bottom-none" href={URI(props.downloadUrl, props.atlasUrl).toString()}>
-            <span className="icon icon-functional" data-icon="="/>
-            Download
-          </a>
-        </div>
-        <div className="row expanded column margin-top-large">
-          <BaselineExperimentDesign data={props.table.data} headers={props.table.headers}/>
-        </div>
+      <div className="row expanded column margin-top-large">
+        <a className="button float-right margin-bottom-none" href={URI(props.downloadUrl, props.atlasUrl).toString()}>
+          <span className="icon icon-functional" data-icon="="/>
+          Download
+        </a>
       </div>
-
+      <div className="row expanded column margin-top-large">
+        <BaselineExperimentDesign data={props.table.data} headers={props.table.headers}/>
+      </div>
     </div>
-
-
   )
 }
 
@@ -94,18 +89,20 @@ ExperimentDesignRoute.propTypes = {
   resourcesUrl: PropTypes.string,
   experimentAccession: PropTypes.string.isRequired,
   downloadUrl: PropTypes.string.isRequired,
-  table: PropTypes.arrayOf(PropTypes.shape({
-    properties: PropTypes.oneOfType([
-      PropTypes.shape({
-        analysed: PropTypes.bool.isRequired
-      }).isRequired
-    ]),
-    values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired).isRequired).isRequired
-  }).isRequired).isRequired,
-  headers: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    values: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
-  }).isRequired).isRequired
+  table: PropTypes.shape({
+    headers: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      values: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+    }).isRequired).isRequired,
+    data: PropTypes.arrayOf(PropTypes.shape({
+      properties: PropTypes.oneOfType([
+        PropTypes.shape({
+          analysed: PropTypes.bool.isRequired
+        }).isRequired
+      ]),
+      values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired).isRequired).isRequired
+    }).isRequired).isRequired
+  }).isRequired
 }
 
 
