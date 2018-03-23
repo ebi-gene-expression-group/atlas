@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
-import com.google.gson.Gson;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrBioentitiesSuggesterService;
 import org.springframework.context.annotation.Scope;
@@ -33,11 +32,8 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
             @RequestParam(value = "species", required = false, defaultValue = "") String species,
             @RequestParam(value = "suggestCount", required = false, defaultValue = "15") int suggestCount) {
 
-//        if (StringUtils.isBlank(query)) {
-//            return StringUtils.EMPTY;
-//        }
-
-        return gson.toJson(suggesterService.fetchPropertySuggestions(query, speciesFactory.create(species), suggestCount));
+        return gson.toJson(
+                suggesterService.fetchPropertySuggestions(query, speciesFactory.create(species), suggestCount));
     }
 
 }
