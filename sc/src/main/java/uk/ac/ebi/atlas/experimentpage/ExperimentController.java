@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
@@ -19,11 +21,13 @@ import java.util.Arrays;
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
     private final ScxaExperimentTrader experimentTrader;
+    private final DataFileHub dataFileHub;
     private static final Gson gson = new Gson();
     
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub){
         this.experimentTrader = experimentTrader;
+        this.dataFileHub = dataFileHub;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -44,7 +48,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         JsonObject result = new JsonObject();
 
         result.addProperty("experimentAccession", experiment.getAccession());
-        result.addProperty("experimentType", experiment.getType().name());
         result.addProperty("accessKey", accessKey);
         result.addProperty("species", experiment.getSpecies().getReferenceName());
         result.addProperty("disclaimer", experiment.getDisclaimer());
@@ -53,13 +56,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
         availableTabs.add(tSnePlotTab(experiment));
 
-        availableTabs.add(customContentTab("none", "Experiment Design", new JsonObject()));
-//        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
-//            availableTabs.add(
-//                    experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
-//                            ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey))
-//            );
-//        }
+        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
+            availableTabs.add(
+                    experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
+                            ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey))
+            );
+        }
 
         availableTabs.add(customContentTab("none", "Supplementary Information", new JsonObject()));
 //        availableTabs.add(
@@ -181,11 +183,11 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return customContentTab("t-sne-plot", "Results", props);
     }
 
-//    private JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
-//        JsonObject props = new JsonObject();
-//        props.add("table", table);
-//        props.addProperty("downloadUrl", downloadUrl);
-//        return customContentTab("experiment-design", "Experiment Design", props);
-//    }
+    private JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
+        JsonObject props = new JsonObject();
+        props.add("table", table);
+        props.addProperty("downloadUrl", downloadUrl);
+        return customContentTab("experiment-design", "Experiment Design", props);
+    }
 
 }
