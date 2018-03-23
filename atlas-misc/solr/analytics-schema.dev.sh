@@ -99,7 +99,8 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":
   {
     "name": "assay_group_id",
-    "type": "string"
+    "type": "string",
+    "docValues": true
   }
 }' http://$HOST/solr/$CORE/schema
 
