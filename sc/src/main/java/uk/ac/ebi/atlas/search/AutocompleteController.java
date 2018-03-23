@@ -1,18 +1,16 @@
 package uk.ac.ebi.atlas.search;
 
 import com.atlassian.util.concurrent.LazyReference;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrBioentitiesSuggesterService;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
@@ -22,10 +20,9 @@ import uk.ac.ebi.atlas.species.services.PopularSpeciesService;
 import javax.inject.Inject;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Controller
+@RestController
 @Scope("request")
 public class AutocompleteController extends JsonExceptionHandlingController {
-
     private static final int FEATURED_SPECIES = 6;
     private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
     private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
@@ -36,7 +33,7 @@ public class AutocompleteController extends JsonExceptionHandlingController {
     private final SpeciesFactory speciesFactory;
     private final LazyReference<String> speciesSelectJson = new LazyReference<String>() {
         @Override
-        protected String create() throws Exception {
+        protected String create() {
             return getter();
         }
     };
@@ -52,22 +49,22 @@ public class AutocompleteController extends JsonExceptionHandlingController {
         this.speciesFactory = speciesFactory;
     }
 
-    @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET,
+    @RequestMapping(value = "/json/suggestions",
+                    method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public String fetchTopSuggestions(
             @RequestParam(value = "query") String query,
             @RequestParam(value = "species", required = false, defaultValue = "") String species,
             @RequestParam(value = "suggestCount", required = false, defaultValue = "15") int suggestCount) {
-
-        return new Gson().toJson(suggesterService.fetchBioentitySuggestions(query, speciesFactory.create(species), suggestCount));
+        return gson.toJson(
+                suggesterService.fetchBioentitySuggestions(query, speciesFactory.create(species), suggestCount));
     }
 
-    @RequestMapping(value = "/json/suggestions/species", method = RequestMethod.GET,
-            produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/json/suggestions/species",
+                    method = RequestMethod.GET,
+                    produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public String fetchTopSuggestions() {
         return speciesSelectJson.get();
     }
@@ -84,9 +81,10 @@ public class AutocompleteController extends JsonExceptionHandlingController {
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("topSpecies", topSixSpecies);
         jsonObject.add("allSpecies", allSpecies);
-        jsonObject.addProperty("separator", ThreadLocalRandom.current().nextDouble() > 0.999 ? BEST_SEPARATOR : NORMAL_SEPARATOR);
+        jsonObject.addProperty("separator",
+                               ThreadLocalRandom.current().nextDouble() > 0.999 ?
+                                       BEST_SEPARATOR : NORMAL_SEPARATOR);
 
         return gson.toJson(jsonObject);
     }
-
 }
