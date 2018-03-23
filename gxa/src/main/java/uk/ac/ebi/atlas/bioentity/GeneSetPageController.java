@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.bioentity.geneset.GeneSetPropertyService;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
 import javax.inject.Inject;
 import java.util.Map;
