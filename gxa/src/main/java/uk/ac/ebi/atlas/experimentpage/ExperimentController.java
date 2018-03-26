@@ -83,7 +83,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                             "Plots",
                             "url",
                             new JsonPrimitive(
-                                    ExternallyAvailableContentController.listResourcesUrl(
+                                    ExternallyAvailableContentService.listResourcesUrl(
                                             experiment.getAccession(),
                                             accessKey,
                                             ExternallyAvailableContent.ContentType.PLOTS))));
@@ -107,7 +107,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "resources",
                         "Downloads",
                         "url",
-                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
+                        new JsonPrimitive(ExternallyAvailableContentService.listResourcesUrl(
                                 experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA))));
 
         result.add("tabs", availableTabs);
@@ -145,7 +145,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "Resources",
                         "url",
                         new JsonPrimitive(
-                                ExternallyAvailableContentController.listResourcesUrl(
+                                ExternallyAvailableContentService.listResourcesUrl(
                                         experiment.getAccession(),
                                         accessKey,
                                         ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))

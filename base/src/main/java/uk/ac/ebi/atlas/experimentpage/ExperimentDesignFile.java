@@ -69,7 +69,7 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
     }
 
     public static String makeUrl(String experimentAccession, String accessKey) {
-        return ExternallyAvailableContentController.streamResourcesUrl(
+        return ExternallyAvailableContentService.streamResourcesUrl(
                 experimentAccession, accessKey, "experiment-design");
     }
 
