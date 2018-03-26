@@ -19799,7 +19799,8 @@ var ExperimentDesign = function ExperimentDesign(_ref) {
             id: ix * 1000 + jx + 1,
             accessor: function accessor(r) {
               return r.values[ix][jx];
-            }
+            },
+            width: 98
           };
         })
       };
