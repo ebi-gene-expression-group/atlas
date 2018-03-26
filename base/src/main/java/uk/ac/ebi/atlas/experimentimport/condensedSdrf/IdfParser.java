@@ -7,8 +7,6 @@ import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
