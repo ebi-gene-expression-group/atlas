@@ -214,13 +214,9 @@ public class AnalyticsSolrQueryTree {
         if (n.equals(EmptyTree.INSTANCE)) {
             return ImmutableList.of(toString());
         } else {
-            /*
-            If there were somehow two identifier search queries, this would be wrong, because we would search for both
-            as keywords and then for both as text, missing the case when one matches as keyword and the other as text.
-            */
             Function<Leaf, TreeNode> makeTreeForBioentityIdentifier = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
-                    return new Leaf(BIOENTITY_IDENTIFIER.name, leaf.searchValue);
+                    return new Leaf(BIOENTITY_IDENTIFIER_SEARCH.name(), leaf.searchValue);
                 } else {
                     return leaf;
                 }

@@ -192,7 +192,7 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryIdentifierSearch(SemanticQuery geneQuery) {
-            if(geneQuery.isNotEmpty()){
+            if (geneQuery.isNotEmpty()) {
                 queryClausesBuilder.add(AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery));
             }
             return this;
