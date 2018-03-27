@@ -19,8 +19,9 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
-import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient.Field.IDENTIFIER_SEARCH;
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsSolrQueryTree.Operator.OR;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 public class AnalyticsSolrQueryTree {
@@ -173,17 +174,17 @@ public class AnalyticsSolrQueryTree {
     private static String decideOnKeywordField(SemanticQueryTerm term) {
         if (!term.category().isPresent()) {
             if (ENSEMBL_ID_REGEX_FROM_THE_INTERNET.matcher(term.value()).matches()) {
-                return BIOENTITY_IDENTIFIER.name;
+                return BIOENTITY_IDENTIFIER_SEARCH.name();
             }
             // A multiword string cannot be a keyword
             if (term.value().trim().contains(" ")) {
-                return IDENTIFIER_SEARCH.name;
+                return IDENTIFIER_SEARCH.name();
             } else {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
             }
         } else {
             return BIOENTITY_IDENTIFIER.name.equals(term.category().get())
-                    ? BIOENTITY_IDENTIFIER.name
+                    ? BIOENTITY_IDENTIFIER_SEARCH.name()
                     : "keyword_" + term.category().get();
         }
     }
@@ -250,7 +251,7 @@ public class AnalyticsSolrQueryTree {
             // Query for identifier_search
             Function<Leaf, TreeNode> makeTreeForFreeTextSearch = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
-                    return new Leaf(IDENTIFIER_SEARCH.name, leaf.searchValue);
+                    return new Leaf(IDENTIFIER_SEARCH.name(), leaf.searchValue);
                 } else {
                     return leaf;
                 }

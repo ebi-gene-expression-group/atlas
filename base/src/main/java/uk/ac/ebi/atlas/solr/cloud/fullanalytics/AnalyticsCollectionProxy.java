@@ -34,6 +34,9 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     public static final AnalyticsSchemaField LOG_2_FOLD_CHANGE = new AnalyticsSchemaField("fold_change");
     public static final AnalyticsSchemaField ADJUSTED_P_VALUE = new AnalyticsSchemaField("p_value");
     public static final AnalyticsSchemaField IDENTIFIER_SEARCH = new AnalyticsSchemaField("identifier_search");
+    public static final AnalyticsSchemaField CONDITIONS_SEARCH = new AnalyticsSchemaField("conditions_search");
+    public static final AnalyticsSchemaField SPECIES = new AnalyticsSchemaField("species");
+    public static final AnalyticsSchemaField DEFAULT_FACTOR_TYPE = new AnalyticsSchemaField("default_query_factor_type");
 
     public static AnalyticsSchemaField asAnalyticsSchemaField(BioentityPropertyName bioentityPropertyName) {
         if (bioentityPropertyName == UNKNOWN) {
