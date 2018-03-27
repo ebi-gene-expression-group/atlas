@@ -7,6 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
@@ -135,7 +136,7 @@ public class BioEntityCardModelFactory {
                                            Collection<String> propertyValues,
                                            Species species) {
 
-        List<PropertyLink> links = bioEntityPropertyService.mapToLinkText(propertyName, propertyValues).entrySet().stream()
+        return bioEntityPropertyService.mapToLinkText(propertyName, propertyValues, species.isPlant()).entrySet().stream()
                 .map(
                         linkWithText ->
                                 createLink(
@@ -155,18 +156,34 @@ public class BioEntityCardModelFactory {
 
     private PropertyLink createLink(String text, String identifier, BioentityPropertyName propertyName,
                             String propertyValue, Species species, int relevance) {
-        return new PropertyLink(
-                text,
-                Optional.ofNullable(BioEntityCardProperties.linkTemplates.get(propertyName)).map(
-                        linkTemplate -> MessageFormat.format(
-                                linkTemplate,
-                                getEncodedString(propertyName, propertyValue),
-                                species.getEnsemblName(),
-                                identifier
-                        )
-                ).orElse(""),
-                relevance
-        );
+        if(propertyName == BioentityPropertyName.PATHWAYID){
+            return new PropertyLink(
+                    text,
+                    Optional.ofNullable(BioEntityCardProperties.getUrlTemplate(propertyName,species.getKingdom())).map(
+                            linkTemplate -> MessageFormat.format(
+                                    linkTemplate,
+                                    getEncodedString(propertyName, propertyValue),
+                                    species.getEnsemblName(),
+                                    identifier
+                            )
+                    ).orElse(""),
+                    relevance
+            );
+        }
+        else{
+            return new PropertyLink(
+                    text,
+                    Optional.ofNullable(BioEntityCardProperties.getUrlTemplate(propertyName)).map(
+                            linkTemplate -> MessageFormat.format(
+                                    linkTemplate,
+                                    getEncodedString(propertyName, propertyValue),
+                                    species.getEnsemblName(),
+                                    identifier
+                            )
+                    ).orElse(""),
+                    relevance
+            );
+        }
     }
 
     private String getEncodedString(BioentityPropertyName propertyName, String value) {

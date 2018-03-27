@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -28,6 +27,7 @@ public class ReactomeClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactomeClient.class);
 
     static final String URL = "http://reactome.org/ContentService/data/query/ids";
+    static final String PLANT_URL="http://plantreactome.gramene.org/ContentService/data/query/ids";
     static final int QUERY_MAX_SIZE = 20;  // https://reactome.org/ContentService/#!/query/findByIdsUsingPOST
     private static final Gson GSON = new Gson();
     private static final String STATIC_ID_FIELD = "stId";
@@ -40,29 +40,56 @@ public class ReactomeClient {
         this.restTemplate = restTemplate;
     }
 
+
     public Optional<String> getPathwayName(String reactomeId) {
-        return Optional.ofNullable(getPathwayNames(ImmutableList.of(reactomeId)).get(reactomeId));
+            return Optional.ofNullable(getPathwayNames(ImmutableList.of(reactomeId)).get(reactomeId));
+    }
+
+    public Optional<String> getPlantPathwayName(String reactomeId) {
+        return Optional.ofNullable(getPlantPathwayNames(ImmutableList.of(reactomeId)).get(reactomeId));
     }
 
     public ImmutableMap<String, String> getPathwayNames(Collection<String> stableIds) {
-        List<List<String>> partitions = Lists.partition(ImmutableList.copyOf(stableIds), QUERY_MAX_SIZE);
-
         ImmutableMap.Builder<String, String> mappedStableIdsBuilder = ImmutableMap.builder();
-        for (List<String> partition : partitions) {
+        for (List<String> partition : getPartitions(stableIds)) {
             mappedStableIdsBuilder.putAll(fetchPathwayNames(partition));
         }
+        return getMappedIds(stableIds,mappedStableIdsBuilder);
+    }
+
+    public ImmutableMap<String, String> getPlantPathwayNames(Collection<String> stableIds) {
+        ImmutableMap.Builder<String, String> mappedStableIdsBuilder = ImmutableMap.builder();
+        for (List<String> partition : getPartitions(stableIds)) {
+            mappedStableIdsBuilder.putAll(fetchPlantPathwayNames(partition));
+        }
+        return getMappedIds(stableIds,mappedStableIdsBuilder);
+    }
+
+    private List<List<String>> getPartitions(Collection<String> stableIds){
+        return Lists.partition(ImmutableList.copyOf(stableIds), QUERY_MAX_SIZE);
+    }
+
+    private ImmutableMap<String, String> getMappedIds(Collection<String> stableIds, ImmutableMap.Builder<String, String> mappedStableIdsBuilder) {
 
         ImmutableMap<String, String> mappedStableIds = mappedStableIdsBuilder.build();
         logMissingIds(stableIds, mappedStableIds);
-
         return mappedStableIds;
     }
 
     private ImmutableMap<String, String> fetchPathwayNames(Collection<String> stableIds) {
+
+        return parseResponse(stableIds,URL);
+    }
+
+    private ImmutableMap<String, String> fetchPlantPathwayNames(Collection<String> stableIds) {
+        return parseResponse(stableIds,PLANT_URL);
+    }
+
+    private ImmutableMap<String, String> parseResponse(Collection<String> stableIds, String url) {
         String postData = stableIds.stream().collect(Collectors.joining(","));
 
         try {
-            return parseJsonResponse(restTemplate.postForObject(URL, postData, String.class), stableIds);
+            return parseJsonResponse(restTemplate.postForObject(url, postData, String.class), stableIds);
         } catch (JsonSyntaxException e) {
             LOGGER.error("Invalid JSON returned from Reactome API");
             return ImmutableMap.of();
