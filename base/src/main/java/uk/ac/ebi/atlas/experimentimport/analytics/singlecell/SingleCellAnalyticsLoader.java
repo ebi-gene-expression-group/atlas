@@ -12,18 +12,18 @@ import javax.inject.Named;
 public class SingleCellAnalyticsLoader implements AnalyticsLoader {
 
     private final SingleCellAnalyticsDao analyticsDao;
-    private final SingleCellAnalyticsStreamFactory analyticsStreamFactory;
+    private final SingleCellAnalyticsStreamerFactory analyticsStreamerFactory;
 
     private final TSnePlotDao tSnePlotDao;
     private final TSnePlotStreamerFactory tSnePlotStreamFactory;
 
     @Inject
     SingleCellAnalyticsLoader(SingleCellAnalyticsDao analyticsDao,
-                              SingleCellAnalyticsStreamFactory analyticsStreamFactory,
+                              SingleCellAnalyticsStreamerFactory analyticsStreamerFactory,
                               TSnePlotDao tSnePlotDao,
                               TSnePlotStreamerFactory tSnePlotStreamFactory) {
         this.analyticsDao = analyticsDao;
-        this.analyticsStreamFactory = analyticsStreamFactory;
+        this.analyticsStreamerFactory = analyticsStreamerFactory;
 
         this.tSnePlotDao = tSnePlotDao;
         this.tSnePlotStreamFactory = tSnePlotStreamFactory;
@@ -31,9 +31,9 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
 
     @Override
     public void loadAnalytics(String accession) {
-        try (SingleCellAnalyticsStream analyticsStream = analyticsStreamFactory.create(accession);
+        try (SingleCellAnalyticsStreamer analyticsStreamer = analyticsStreamerFactory.create(accession);
              TSnePlotStreamer tSnePlotStreamer = tSnePlotStreamFactory.create(accession)) {
-            analyticsDao.loadAnalytics(accession, analyticsStream.stream());
+            analyticsDao.loadAnalytics(accession, analyticsStreamer.get());
             tSnePlotStreamer.availablePerplexities()
                     .forEach(p -> tSnePlotDao.loadTSnePlot(accession, p, tSnePlotStreamer.stream(p)));
         }

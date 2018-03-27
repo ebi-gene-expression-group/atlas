@@ -1,7 +1,7 @@
 var atlasAutocomplete =
 webpackJsonp_name_([2],{
 
-/***/ 114:
+/***/ 120:
 /*!*********************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/emptyFunction.js ***!
   \*********************************************************************/
@@ -49,7 +49,7 @@ module.exports = emptyFunction;
 
 /***/ }),
 
-/***/ 115:
+/***/ 121:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/invariant.js ***!
   \*****************************************************************/
@@ -114,7 +114,7 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ 116:
+/***/ 122:
 /*!***************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/warning.js ***!
   \***************************************************************/
@@ -133,7 +133,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 114);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 120);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -188,7 +188,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 117:
+/***/ 123:
 /*!**********************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \**********************************************************************************/
@@ -212,7 +212,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 118:
+/***/ 124:
 /*!************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/URI.js ***!
   \************************************************************/
@@ -228,7 +228,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*!
  * URI.js - Mutating URLs
  *
- * Version: 1.19.0
+ * Version: 1.19.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -243,10 +243,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   if (( false ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 119), __webpack_require__(/*! ./IPv6 */ 120), __webpack_require__(/*! ./SecondLevelDomains */ 121));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 125), __webpack_require__(/*! ./IPv6 */ 126), __webpack_require__(/*! ./SecondLevelDomains */ 127));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 119), __webpack_require__(/*! ./IPv6 */ 120), __webpack_require__(/*! ./SecondLevelDomains */ 121)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 125), __webpack_require__(/*! ./IPv6 */ 126), __webpack_require__(/*! ./SecondLevelDomains */ 127)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -314,7 +314,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     );
   }
 
-  URI.version = '1.19.0';
+  URI.version = '1.19.1';
 
   var p = URI.prototype;
   var hasOwn = Object.prototype.hasOwnProperty;
@@ -1466,9 +1466,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     } else if (_URI || _object) {
       var src = _URI ? href._parts : href;
       for (key in src) {
+        if (key === 'query') {
+          continue;
+        }
         if (hasOwn.call(this._parts, key)) {
           this._parts[key] = src[key];
         }
+      }
+      if (src.query) {
+        this.query(src.query, false);
       }
     } else {
       throw new TypeError('invalid input');
@@ -2532,11 +2538,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   return URI;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
 
 /***/ }),
 
-/***/ 119:
+/***/ 125:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/punycode.js ***!
   \*****************************************************************/
@@ -3055,10 +3061,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	/** Expose `punycode` */
 	// Some AMD build optimizers, like r.js, check for specific condition patterns
 	// like the following:
-	if ("function" == 'function' && _typeof(__webpack_require__(/*! !webpack amd options */ 10)) == 'object' && __webpack_require__(/*! !webpack amd options */ 10)) {
-		!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	if ("function" == 'function' && _typeof(__webpack_require__(/*! !webpack amd options */ 13)) == 'object' && __webpack_require__(/*! !webpack amd options */ 13)) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return punycode;
-		}.call(exports, __webpack_require__, exports, module),
+		}).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else if (freeExports && freeModule) {
 		if (module.exports == freeExports) {
@@ -3075,11 +3081,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		root.punycode = punycode;
 	}
 })(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 11)))
 
 /***/ }),
 
-/***/ 120:
+/***/ 126:
 /*!*************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/IPv6.js ***!
   \*************************************************************/
@@ -3096,7 +3102,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * URI.js - Mutating URLs
  * IPv6 Support
  *
- * Version: 1.19.0
+ * Version: 1.19.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -3282,11 +3288,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     noConflict: noConflict
   };
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
 
 /***/ }),
 
-/***/ 121:
+/***/ 127:
 /*!***************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/SecondLevelDomains.js ***!
   \***************************************************************************/
@@ -3303,7 +3309,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * URI.js - Mutating URLs
  * Second Level Domain (SLD) Support
  *
- * Version: 1.19.0
+ * Version: 1.19.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -3550,11 +3556,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   return SLD;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
 
 /***/ }),
 
-/***/ 252:
+/***/ 254:
 /*!************************************!*\
   !*** multi ./bundles/autocomplete ***!
   \************************************/
@@ -3562,12 +3568,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/autocomplete */253);
+module.exports = __webpack_require__(/*! ./bundles/autocomplete */255);
 
 
 /***/ }),
 
-/***/ 253:
+/***/ 255:
 /*!***************************************!*\
   !*** ./bundles/autocomplete/index.js ***!
   \***************************************/
@@ -3587,11 +3593,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 18);
+var _reactDom = __webpack_require__(/*! react-dom */ 16);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 268);
+var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 270);
 
 var _expressionAtlasAutocomplete2 = _interopRequireDefault(_expressionAtlasAutocomplete);
 
@@ -3605,7 +3611,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 268:
+/***/ 270:
 /*!**************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/index.js ***!
   \**************************************************************************************/
@@ -3620,7 +3626,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 269);
+var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 271);
 
 var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
 
@@ -3632,7 +3638,7 @@ exports.default = _AtlasAutocomplete2.default;
 
 /***/ }),
 
-/***/ 269:
+/***/ 271:
 /*!**************************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
   \**************************************************************************************************/
@@ -3663,19 +3669,19 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 55);
+var _propTypes = __webpack_require__(/*! prop-types */ 57);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 273);
+var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 275);
 
 var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
-var _urijs = __webpack_require__(/*! urijs */ 118);
+var _urijs = __webpack_require__(/*! urijs */ 124);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 277);
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 279);
 
 var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
 
@@ -3823,7 +3829,7 @@ exports.default = AtlasAutocomplete;
 
 /***/ }),
 
-/***/ 270:
+/***/ 272:
 /*!*********************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \*********************************************************************************/
@@ -3843,13 +3849,13 @@ exports.default = AtlasAutocomplete;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 114);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 115);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 116);
-var assign = __webpack_require__(/*! object-assign */ 271);
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 120);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 121);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 122);
+var assign = __webpack_require__(/*! object-assign */ 273);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 117);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 272);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 123);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 274);
 
 module.exports = function (isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -4353,7 +4359,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 271:
+/***/ 273:
 /*!******************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/object-assign/index.js ***!
   \******************************************************************/
@@ -4455,7 +4461,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 272:
+/***/ 274:
 /*!************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/checkPropTypes.js ***!
   \************************************************************************/
@@ -4476,9 +4482,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 115);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 116);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 117);
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 121);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 122);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 123);
   var loggedTypeFailures = {};
 }
 
@@ -4528,10 +4534,10 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 273:
-/*!***********************************************************************************************************************************!*\
-  !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
-  \***********************************************************************************************************************************/
+/***/ 275:
+/*!****************************************************************************************!*\
+  !*** ./bundles/autocomplete/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
+  \****************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4580,12 +4586,12 @@ function _inherits(subClass, superClass) {
 }
 
 var React = __webpack_require__(/*! react */ 0);
-var PropTypes = __webpack_require__(/*! prop-types */ 55);
+var PropTypes = __webpack_require__(/*! prop-types */ 57);
 
-var _require = __webpack_require__(/*! react-dom */ 18),
+var _require = __webpack_require__(/*! react-dom */ 16),
     findDOMNode = _require.findDOMNode;
 
-var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 274);
+var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 276);
 
 var IMPERATIVE_API = ['blur', 'checkValidity', 'click', 'focus', 'select', 'setCustomValidity', 'setSelectionRange', 'setRangeText'];
 
@@ -4723,7 +4729,12 @@ var Autocomplete = function (_React$Component) {
           getItemValue = props.getItemValue;
 
       var index = highlightedIndex === null ? 0 : highlightedIndex;
-      var matchedItem = this.getFilteredItems(props)[index];
+      var items = this.getFilteredItems(props);
+      for (var i = 0; i < items.length; i++) {
+        if (props.isItemSelectable(items[index])) break;
+        index = (index + 1) % items.length;
+      }
+      var matchedItem = items[index] && props.isItemSelectable(items[index]) ? items[index] : null;
       if (value !== '' && matchedItem) {
         var itemValue = getItemValue(matchedItem);
         var itemValueDoesMatch = itemValue.toLowerCase().indexOf(value.toLowerCase()) === 0;
@@ -4789,12 +4800,12 @@ var Autocomplete = function (_React$Component) {
       var items = this.getFilteredItems(this.props).map(function (item, index) {
         var element = _this4.props.renderItem(item, _this4.state.highlightedIndex === index, { cursor: 'default' });
         return React.cloneElement(element, {
-          onMouseEnter: function onMouseEnter() {
+          onMouseEnter: _this4.props.isItemSelectable(item) ? function () {
             return _this4.highlightItemFromMouse(index);
-          },
-          onClick: function onClick() {
+          } : null,
+          onClick: _this4.props.isItemSelectable(item) ? function () {
             return _this4.selectItemFromMouse(item);
-          },
+          } : null,
           ref: function ref(e) {
             return _this4.refs['item-' + index] = e;
           }
@@ -4811,6 +4822,9 @@ var Autocomplete = function (_React$Component) {
           return _this4.refs.menu = e;
         },
         // Ignore blur to prevent menu from de-rendering before we can process click
+        onTouchStart: function onTouchStart() {
+          return _this4.setIgnoreBlur(true);
+        },
         onMouseEnter: function onMouseEnter() {
           return _this4.setIgnoreBlur(true);
         },
@@ -4976,6 +4990,14 @@ Autocomplete.propTypes = {
    */
   shouldItemRender: PropTypes.func,
   /**
+   * Arguments: `item: Any`
+   *
+   * Invoked when attempting to select an item. The return value is used to
+   * determine whether the item should be selectable or not.
+   * By default all items are selectable.
+   */
+  isItemSelectable: PropTypes.func,
+  /**
    * Arguments: `itemA: Any, itemB: Any, value: String`
    *
    * The function which is used to sort `items` before display.
@@ -5081,6 +5103,9 @@ Autocomplete.defaultProps = {
   },
   onChange: function onChange() {},
   onSelect: function onSelect() {},
+  isItemSelectable: function isItemSelectable() {
+    return true;
+  },
   renderMenu: function renderMenu(items, value, style) {
     return React.createElement('div', { style: _extends({}, style, this.menuStyle), children: items });
   },
@@ -5101,33 +5126,53 @@ Autocomplete.defaultProps = {
 Autocomplete.keyDownHandlers = {
   ArrowDown: function ArrowDown(event) {
     event.preventDefault();
-    var itemsLength = this.getFilteredItems(this.props).length;
-    if (!itemsLength) return;
+    var items = this.getFilteredItems(this.props);
+    if (!items.length) return;
     var highlightedIndex = this.state.highlightedIndex;
 
-    var index = highlightedIndex === null || highlightedIndex === itemsLength - 1 ? 0 : highlightedIndex + 1;
-    this.setState({
-      highlightedIndex: index,
-      isOpen: true
-    });
+    var index = highlightedIndex === null ? -1 : highlightedIndex;
+    for (var i = 0; i < items.length; i++) {
+      var p = (index + i + 1) % items.length;
+      if (this.props.isItemSelectable(items[p])) {
+        index = p;
+        break;
+      }
+    }
+    if (index > -1 && index !== highlightedIndex) {
+      this.setState({
+        highlightedIndex: index,
+        isOpen: true
+      });
+    }
   },
   ArrowUp: function ArrowUp(event) {
     event.preventDefault();
-    var itemsLength = this.getFilteredItems(this.props).length;
-    if (!itemsLength) return;
+    var items = this.getFilteredItems(this.props);
+    if (!items.length) return;
     var highlightedIndex = this.state.highlightedIndex;
 
-    var index = highlightedIndex === 0 || highlightedIndex === null ? itemsLength - 1 : highlightedIndex - 1;
-    this.setState({
-      highlightedIndex: index,
-      isOpen: true
-    });
+    var index = highlightedIndex === null ? items.length : highlightedIndex;
+    for (var i = 0; i < items.length; i++) {
+      var p = (index - (1 + i) + items.length) % items.length;
+      if (this.props.isItemSelectable(items[p])) {
+        index = p;
+        break;
+      }
+    }
+    if (index !== items.length) {
+      this.setState({
+        highlightedIndex: index,
+        isOpen: true
+      });
+    }
   },
   Enter: function Enter(event) {
     var _this7 = this;
 
     // Key code 229 is used for selecting items from character selectors (Pinyin, Kana, etc)
     if (event.keyCode !== 13) return;
+    // In case the user is currently hovering over the menu
+    this.setIgnoreBlur(false);
     if (!this.isOpen()) {
       // menu is closed so there is no selection to accept -> do nothing
       return;
@@ -5168,11 +5213,11 @@ Autocomplete.keyDownHandlers = {
 };
 
 module.exports = Autocomplete;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../../../node_modules/webpack/buildin/global.js */ 9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 11)))
 
 /***/ }),
 
-/***/ 274:
+/***/ 276:
 /*!*************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/index.js ***!
   \*************************************************************************/
@@ -5183,11 +5228,11 @@ module.exports = Autocomplete;
 "use strict";
 
 
-module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 275);
+module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 277);
 
 /***/ }),
 
-/***/ 275:
+/***/ 277:
 /*!********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
   \********************************************************************************************/
@@ -5198,7 +5243,7 @@ module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 275);
 "use strict";
 
 
-var util = __webpack_require__(/*! ./util */ 276);
+var util = __webpack_require__(/*! ./util */ 278);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -5315,7 +5360,7 @@ module.exports = scrollIntoView;
 
 /***/ }),
 
-/***/ 276:
+/***/ 278:
 /*!****************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/util.js ***!
   \****************************************************************************/
@@ -5760,7 +5805,7 @@ mix(utils, domUtils);
 
 /***/ }),
 
-/***/ 277:
+/***/ 279:
 /*!**********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/SpeciesSelect.js ***!
   \**********************************************************************************************/
@@ -5791,11 +5836,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 55);
+var _propTypes = __webpack_require__(/*! prop-types */ 57);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 118);
+var _urijs = __webpack_require__(/*! urijs */ 124);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -5946,7 +5991,7 @@ exports.default = SpeciesSelect;
 
 /***/ }),
 
-/***/ 55:
+/***/ 57:
 /*!***************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/index.js ***!
   \***************************************************************/
@@ -5976,7 +6021,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 270)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 272)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -5985,5 +6030,5 @@ if (true) {
 
 /***/ })
 
-},[252]);
+},[254]);
 //# sourceMappingURL=atlasAutocomplete.bundle.js.map

@@ -34,7 +34,7 @@ public class SpeciesInferrerIT {
     SpeciesInferrer subject;
 
     @Test
-    public void inferSpeciesForGeneQuery() throws Exception {
+    public void inferSpeciesForGeneQuery() {
         Species species1 = subject.inferSpeciesForGeneQuery(HUMAN_GENE_QUERY);
         Species species2 = subject.inferSpeciesForGeneQuery(HUMAN_GENE_QUERY, "");
         Species species3 = subject.inferSpeciesForGeneQuery(PLANT_GENE_QUERY);

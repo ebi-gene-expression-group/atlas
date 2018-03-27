@@ -1,0 +1,6 @@
+{
+  "userProps":{"update.autoCreateFields":"false"},
+  "updateProcessor":{"uniqueId":{
+      "name":"uniqueId",
+      "class":"solr.UUIDUpdateProcessorFactory",
+      "fieldName":"id"}}}

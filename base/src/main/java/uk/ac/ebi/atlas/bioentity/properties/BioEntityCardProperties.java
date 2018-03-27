@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import com.google.common.collect.*;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Multimap;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import static org.restlet.engine.util.StringUtils.isNullOrEmpty;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.*;
 
 public class BioEntityCardProperties {
 

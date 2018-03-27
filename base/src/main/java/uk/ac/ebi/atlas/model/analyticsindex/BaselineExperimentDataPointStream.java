@@ -49,7 +49,7 @@ public class BaselineExperimentDataPointStream implements ObjectInputStream<Base
 
         if (baselineAnalytics != null) {
             return new BaselineExperimentDataPoint(
-                    experiment, baselineAnalytics, getConditionSearchTerms(baselineAnalytics.getAssayGroupId()));
+                    experiment, baselineAnalytics, getConditionSearchTerms(baselineAnalytics.assayGroupId()));
         } else {
             return null;
         }

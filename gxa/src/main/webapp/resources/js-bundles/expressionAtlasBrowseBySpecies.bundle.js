@@ -1,7 +1,7 @@
 var expressionAtlasBrowseBySpecies =
 webpackJsonp_name_([3],{
 
-/***/ 1181:
+/***/ 1186:
 /*!**************************************************!*\
   !*** ./atlas_bundles/browse-by-species/index.js ***!
   \**************************************************/
@@ -17,7 +17,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _browseBySpeciesRenderer = __webpack_require__(/*! ./src/browseBySpeciesRenderer.jsx */ 1182);
+var _browseBySpeciesRenderer = __webpack_require__(/*! ./src/browseBySpeciesRenderer.jsx */ 1187);
 
 var _browseBySpeciesRenderer2 = _interopRequireDefault(_browseBySpeciesRenderer);
 
@@ -27,7 +27,7 @@ exports.render = _browseBySpeciesRenderer2.default;
 
 /***/ }),
 
-/***/ 1182:
+/***/ 1187:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/browseBySpeciesRenderer.jsx ***!
   \*************************************************************************/
@@ -58,7 +58,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _BrowseBySpecies = __webpack_require__(/*! ./BrowseBySpecies.jsx */ 1183);
+var _BrowseBySpecies = __webpack_require__(/*! ./BrowseBySpecies.jsx */ 1188);
 
 var _BrowseBySpecies2 = _interopRequireDefault(_BrowseBySpecies);
 
@@ -68,7 +68,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 1183:
+/***/ 1188:
 /*!*****************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/BrowseBySpecies.jsx ***!
   \*****************************************************************/
@@ -89,7 +89,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SpeciesItem = __webpack_require__(/*! ./SpeciesItem.jsx */ 1184);
+var _SpeciesItem = __webpack_require__(/*! ./SpeciesItem.jsx */ 1189);
 
 var _SpeciesItem2 = _interopRequireDefault(_SpeciesItem);
 
@@ -123,7 +123,7 @@ exports.default = BrowseBySpecies;
 
 /***/ }),
 
-/***/ 1184:
+/***/ 1189:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/SpeciesItem.jsx ***!
   \*************************************************************/
@@ -146,7 +146,7 @@ var _urijs = __webpack_require__(/*! urijs */ 20);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _reactEbiSpecies = __webpack_require__(/*! react-ebi-species */ 271);
+var _reactEbiSpecies = __webpack_require__(/*! react-ebi-species */ 274);
 
 var _reactEbiSpecies2 = _interopRequireDefault(_reactEbiSpecies);
 
@@ -220,7 +220,7 @@ exports.default = SpeciesItem;
 
 /***/ }),
 
-/***/ 271:
+/***/ 274:
 /*!*****************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/index.js ***!
   \*****************************************************/
@@ -244,7 +244,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EbiSpeciesIcon = __webpack_require__(/*! ./EbiSpeciesIcon.js */ 272);
+var _EbiSpeciesIcon = __webpack_require__(/*! ./EbiSpeciesIcon.js */ 275);
 
 var _EbiSpeciesIcon2 = _interopRequireDefault(_EbiSpeciesIcon);
 
@@ -259,7 +259,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 272:
+/***/ 275:
 /*!**************************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/EbiSpeciesIcon.js ***!
   \**************************************************************/
@@ -282,9 +282,9 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-__webpack_require__(/*! ./ebi-visual-species.css */ 273);
+__webpack_require__(/*! ./ebi-visual-species.css */ 276);
 
-var _mapping = __webpack_require__(/*! ./mapping.js */ 275);
+var _mapping = __webpack_require__(/*! ./mapping.js */ 278);
 
 var _mapping2 = _interopRequireDefault(_mapping);
 
@@ -322,7 +322,7 @@ exports.default = EbiSpeciesIcon;
 
 /***/ }),
 
-/***/ 273:
+/***/ 276:
 /*!*******************************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/ebi-visual-species.css ***!
   \*******************************************************************/
@@ -330,36 +330,55 @@ exports.default = EbiSpeciesIcon;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
 
-// load the styles
-var content = __webpack_require__(/*! !../../css-loader!./ebi-visual-species.css */ 274);
+var content = __webpack_require__(/*! !../../css-loader!./ebi-visual-species.css */ 277);
+
 if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
+
 var transform;
+var insertInto;
+
+
 
 var options = {"hmr":true}
+
 options.transform = transform
-// add the styles to the DOM
+options.insertInto = undefined;
+
 var update = __webpack_require__(/*! ../../style-loader/lib/addStyles.js */ 17)(content, options);
+
 if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
+
 if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./ebi-visual-species.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./ebi-visual-species.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
+	module.hot.accept("!!../../css-loader/index.js!./ebi-visual-species.css", function() {
+		var newContent = require("!!../../css-loader/index.js!./ebi-visual-species.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
 	module.hot.dispose(function() { update(); });
 }
 
 /***/ }),
 
-/***/ 274:
+/***/ 277:
 /*!*********************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/react-ebi-species/lib/ebi-visual-species.css ***!
   \*********************************************************************************************/
@@ -379,7 +398,7 @@ exports.push([module.i, "/* Taken from: https://github.com/ebiwd/EBI-Icon-fonts 
 
 /***/ }),
 
-/***/ 275:
+/***/ 278:
 /*!*******************************************************!*\
   !*** ./node_modules/react-ebi-species/lib/mapping.js ***!
   \*******************************************************/
@@ -502,5 +521,5 @@ exports.getAllSpecies = getAllSpecies;
 
 /***/ })
 
-},[1181]);
+},[1186]);
 //# sourceMappingURL=expressionAtlasBrowseBySpecies.bundle.js.map

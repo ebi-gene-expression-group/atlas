@@ -2,9 +2,13 @@ package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -65,8 +69,8 @@ public class CondensedSdrfParser {
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
 
-        try (TsvReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get()) {
-            for (Iterator<String[]> tsvIterator = tsvReader.stream().iterator() ; tsvIterator.hasNext() ; ) {
+        try (TsvStreamer tsvStreamer = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get()) {
+            for (Iterator<String[]> tsvIterator = tsvStreamer.get().iterator(); tsvIterator.hasNext() ; ) {
                 String[] tsvLine = tsvIterator.next();
 
                 switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {

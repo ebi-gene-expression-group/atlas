@@ -26,7 +26,8 @@ module.exports = {
     libraryTarget: 'var',
     library: '[name]',
     path: path.resolve(__dirname, '../webapp/resources/js-bundles'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    publicPath: '/gxa_sc/resources/js-bundles/'
   },
 
   plugins: [
@@ -53,7 +54,13 @@ module.exports = {
         test: /\.css$/,
         use: [
           {loader: 'style-loader'},
-          {loader: 'css-loader', options: {modules: false}}
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
+          }
         ]
       },
       {

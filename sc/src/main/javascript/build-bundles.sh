@@ -18,13 +18,13 @@ do
     pushd . > /dev/null
     echo "Upgrading $dir:"
     cd $dir
-    #yarn upgrade
-    ncu -a
-    yarn install
+    # Upgrade everything but React and Webpack to their latest versions
+    ncu -x '/(react.*)|(webpack.*)/' -a
+    npm install
     popd > /dev/null
 done
 
-#yarn upgrade
-ncu -a
-yarn install
-yarn run $1
+# Upgrade everything but React and Webpack to their latest versions
+ncu -x '/(react.*)|(webpack.*)/' -a
+npm install
+npm run $1

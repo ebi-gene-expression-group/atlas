@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.SingleCellAnalyticsStream;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.SingleCellAnalyticsStreamer;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.DataFileHub.SingleCellExperimentFiles;
 
@@ -33,11 +33,11 @@ public class SingleCellAnalyticsCsvWriterIT {
     public void write() throws Exception {
         SingleCellExperimentFiles scFiles = dataFileHub.getSingleCellExperimentFiles("E-MTAB-5061");
 
-        SingleCellAnalyticsStream scaStream =
-                new SingleCellAnalyticsStream(scFiles.tpmsMatrix, scFiles.geneIdsTsv, scFiles.cellIdsTsv);
+        SingleCellAnalyticsStreamer scaStreamer =
+                new SingleCellAnalyticsStreamer(scFiles.tpmsMatrix, scFiles.geneIdsTsv, scFiles.cellIdsTsv);
 
         subject = new SingleCellAnalyticsCsvWriter(new FileWriter("/tmp/blah.csv"));
-        subject.write(scaStream);
+        subject.write(scaStreamer);
     }
 
 }

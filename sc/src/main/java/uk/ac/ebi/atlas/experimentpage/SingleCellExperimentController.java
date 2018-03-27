@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -95,14 +95,14 @@ public class SingleCellExperimentController extends HtmlExceptionHandlingControl
         JsonArray supplementaryInformationTabs = new JsonArray();
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()) {
-            try (TsvReader analysisMethodsTsvReader =
+            try (TsvStreamer analysisMethodsTsvStreamer =
                          dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
                 supplementaryInformationTabs.add(
                         customContentTab(
                                 "static-table",
                                 "Analysis Methods",
                                 "data",
-                                formatTable(analysisMethodsTsvReader.stream().collect(Collectors.toList()))));
+                                formatTable(analysisMethodsTsvStreamer.get().collect(Collectors.toList()))));
             }
         }
 

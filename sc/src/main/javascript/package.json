@@ -15,22 +15,26 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "^7.1.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
-    "file-loader": "^1.1.5",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "image-webpack-loader": "^4.2.0",
+    "style-loader": "^0.20.3",
     "webpack": "^3.8.1"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.1",
     "react": "^16.1.1",
     "react-autocomplete": "^1.7.2",
     "react-dom": "^16.1.1",
     "react-refetch": "^1.0.3",
-    "urijs": "^1.19.0",
+    "urijs": "^1.19.1",
     "whatwg-fetch": "^2.0.3"
   }
 }

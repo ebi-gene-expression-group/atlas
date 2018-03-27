@@ -1,18 +1,19 @@
 package uk.ac.ebi.atlas.model.experimentimport.analytics.baseline;
 
-import com.google.common.base.Joiner;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.RnaSeqBaselineAnalyticsInputStream;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.spy;
+import static java.util.stream.Collectors.joining;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.verify;
 
 public class RnaSeqBaselineAnalyticsInputStreamTest {
@@ -22,110 +23,215 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
     private static final String GENE_NAME_1 = "Arl8b";
     private static final String GENE_NAME_2 = "METTL25";
 
-    private static final String TSV_HEADER = Joiner.on("\t").join(new String[]{"Gene ID", "Gene Name", "g1", "g2", "g3", "g4", "g5"});
-    private static final String TSV_LINE_1 = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "1", "2", "3", "4", "0.5"});
-    private static final String TSV_LINE_2 = Joiner.on("\t").join(new String[]{GENE_ID_2, GENE_NAME_2, "0.00", "0", "1", "0", "1"});
-    private static final String TSV_LINE_NO_EXPRESSION = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0"});
-    private static final String TSV_LINE_NA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "NA", "1", "2"});
-    private static final String TSV_LINE_QUARTILES = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "1,1,1,1,1", "2,2,2,2,2", "3,3,3,3,3", "4,4,4,4,4", "0.5,0.5,0.5,0.5,0.5"});
+    private static final String TSV_HEADER =
+            Stream.of("Gene ID", "Gene Name", "g1", "g2", "g3", "g4", "g5").collect(joining("\t"));
 
-    private static String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
+    private static final String TSV_LINE_1_TPM =
+            Stream.of(GENE_ID_1, GENE_NAME_1, "1", "2", "3", "4", "0.5").collect(joining("\t"));
+    private static final String TSV_LINE_2_TPM =
+            Stream.of(GENE_ID_2, GENE_NAME_2, "0.00", "0.1", "1", "0", "1").collect(joining("\t"));
+    private static String TSV_CONTENTS_TPM =
+            Stream.of(TSV_HEADER, TSV_LINE_1_TPM, TSV_LINE_2_TPM).collect(joining("\n"));
 
+    private static final String TSV_LINE_1_FPKM =
+            Stream.of(GENE_ID_1, GENE_NAME_1, "0.5", "0.8", "2", "2.9", "0.1").collect(joining("\t"));
+    private static final String TSV_LINE_2_FPKM =
+            Stream.of(GENE_ID_2, GENE_NAME_2, "0.00", "0", "0.5", "0", "0.5").collect(joining("\t"));
+    private static String TSV_CONTENTS_FPKM =
+            Stream.of(TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
+
+    private static final String NOT_REALLY_BAD_TSV_HEADER =
+            Stream.of("GeneID", "GeneName", "g1", "g2", "g3", "g4", "g5").collect(joining("\t"));
+    private static String TSV_CONTENTS_FPKM_NOT_REALLY_BAD_HEADER =
+            Stream.of(NOT_REALLY_BAD_TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
+
+    private static final String BAD_TSV_HEADER =
+            Stream.of("Gene ID", "Gene Name", "g1", "g2", "g3", "g5", "g4").collect(joining("\t"));
+    private static String TSV_CONTENTS_FPKM_BAD_HEADER =
+            Stream.of(BAD_TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
+
+    private static String TSV_CONTENTS_FPKM_BAD_GENE_IDS =
+            Stream.of(TSV_HEADER, TSV_LINE_2_FPKM, TSV_LINE_1_FPKM).collect(joining("\n"));
+
+    private static String TSV_CONTENTS_FPKM_ONE_LINE =
+            Stream.of(TSV_HEADER, TSV_LINE_1_FPKM).collect(joining("\n"));
+
+    private static final String TSV_LINE_NO_EXPRESSION =
+            Stream.of(GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0").collect(joining("\t"));
+    private static final String TSV_CONTENTS_TPM_WITH_ZERO_LINE =
+            Stream.of(TSV_HEADER, TSV_LINE_NO_EXPRESSION, TSV_LINE_2_TPM).collect(joining("\n"));
+    private static final String TSV_CONTENTS_FPKM_WITH_ZERO_LINE =
+            Stream.of(TSV_HEADER, TSV_LINE_NO_EXPRESSION, TSV_LINE_2_FPKM).collect(joining("\n"));
+
+
+    private static final String TSV_LINE_QUARTILES =
+            Stream.of(
+                    GENE_ID_1, GENE_NAME_1, "1,1,1,1,1", "2,2,2,2,2", "3,3,3,3,3", "4,4,4,4,4", "0.5,0.5,0.5,0.5,0.5")
+                    .collect(joining("\t"));
 
     @Test
-    public void readTwoTsvLines() throws IOException {
-        Reader reader = new StringReader(TSV_CONTENTS);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
+    public void skipsZeroes() {
+        try (RnaSeqBaselineAnalyticsInputStream subject =
+                     new RnaSeqBaselineAnalyticsInputStream(
+                             Optional.of(new StringReader(TSV_CONTENTS_TPM)),
+                             Optional.of(new StringReader(TSV_CONTENTS_FPKM)))) {
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g1", 1.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g2", 2.0, 0.8));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g3", 3.0, 2.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g4", 4.0, 2.9));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g5", 0.5, 0.1));
 
-        BaselineAnalytics line1g1 = new BaselineAnalytics(GENE_ID_1, "g1", 1.0);
-        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 2.0);
-        BaselineAnalytics line1g3 = new BaselineAnalytics(GENE_ID_1, "g3", 3.0);
-        BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g4", 4.0);
-        BaselineAnalytics line1g5 = new BaselineAnalytics(GENE_ID_1, "g5", 0.5);
-
-        BaselineAnalytics line2g3 = new BaselineAnalytics(GENE_ID_2, "g3", 1.0);
-        BaselineAnalytics line2g5 = new BaselineAnalytics(GENE_ID_2, "g5", 1.0);
-
-        assertThat(subject.readNext(), is(line1g1));
-        assertThat(subject.readNext(), is(line1g2));
-        assertThat(subject.readNext(), is(line1g3));
-        assertThat(subject.readNext(), is(line1g4));
-        assertThat(subject.readNext(), is(line1g5));
-
-        assertThat(subject.readNext(), is(line2g3));
-        assertThat(subject.readNext(), is(line2g5));
-        assertThat(subject.readNext(), is(nullValue()));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g2", 0.1, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g3", 1.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g5", 1.0, 0.5));
+        }
     }
 
     @Test
-    public void readTsvLineWithNoExpression() throws IOException {
-        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NO_EXPRESSION});
+    public void readTpmsOnly() {
+        try (RnaSeqBaselineAnalyticsInputStream subject =
+                     new RnaSeqBaselineAnalyticsInputStream(
+                             Optional.of(new StringReader(TSV_CONTENTS_TPM)),
+                             Optional.empty())) {
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g1", 1.0, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g2", 2.0, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g3", 3.0, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g4", 4.0, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g5", 0.5, 0.0));
 
-        Reader reader = new StringReader(tsvContents);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
-
-        assertThat(subject.readNext(), is(nullValue()));
-    }
-
-
-    @Test
-    public void readTsvLineWithNA() throws IOException {
-        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NA});
-
-        Reader reader = new StringReader(tsvContents);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
-
-        assertThat(subject.readNext(), is(new BaselineAnalytics(GENE_ID_1, "g4", 1.0)));
-        assertThat(subject.readNext(), is(new BaselineAnalytics(GENE_ID_1, "g5", 2.0)));
-
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g2", 0.1, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g3", 1.0, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g5", 1.0, 0.0));
+        }
     }
 
     @Test
-    public void readTsvLineWithQuartiles() throws IOException {
-        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_QUARTILES});
+    public void readFpkmsOnly() {
+        try (RnaSeqBaselineAnalyticsInputStream subject =
+                     new RnaSeqBaselineAnalyticsInputStream(
+                             Optional.empty(),
+                             Optional.of(new StringReader(TSV_CONTENTS_FPKM)))) {
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g1", 0.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g2", 0.0, 0.8));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g3", 0.0, 2.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g4", 0.0, 2.9));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g5", 0.0, 0.1));
 
-        Reader reader = new StringReader(tsvContents);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
-
-        BaselineAnalytics line1g1 = new BaselineAnalytics(GENE_ID_1, "g1", 1.0);
-        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 2.0);
-        BaselineAnalytics line1g3 = new BaselineAnalytics(GENE_ID_1, "g3", 3.0);
-        BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g4", 4.0);
-        BaselineAnalytics line1g5 = new BaselineAnalytics(GENE_ID_1, "g5", 0.5);
-
-        assertThat(subject.readNext(), is(line1g1));
-        assertThat(subject.readNext(), is(line1g2));
-        assertThat(subject.readNext(), is(line1g3));
-        assertThat(subject.readNext(), is(line1g4));
-        assertThat(subject.readNext(), is(line1g5));
-
-        assertThat(subject.readNext(), is(nullValue()));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g3", 0.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g5", 0.0, 0.5));
+        }
     }
 
+    @Test
+    public void skipFullZeroLines() {
+        try (RnaSeqBaselineAnalyticsInputStream subject =
+                     new RnaSeqBaselineAnalyticsInputStream(
+                             Optional.of(new StringReader(TSV_CONTENTS_TPM_WITH_ZERO_LINE)),
+                             Optional.of(new StringReader(TSV_CONTENTS_FPKM_WITH_ZERO_LINE)))) {
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g2", 0.1, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g3", 1.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g5", 1.0, 0.5));
+        }
+    }
 
     @Test
-    public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
-        Reader reader = spy(new StringReader(TSV_CONTENTS));
+    public void backingReadersAreAutoclosed() {
+        StringReader readerTpmsSpy = Mockito.spy(new StringReader(TSV_CONTENTS_TPM));
+        StringReader readerFpkmsSpy = Mockito.spy(new StringReader(TSV_CONTENTS_FPKM));
 
-        try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test")) {
-            subject.readNext();
+        try (RnaSeqBaselineAnalyticsInputStream subject =
+                     new RnaSeqBaselineAnalyticsInputStream(Optional.of(readerTpmsSpy), Optional.of(readerFpkmsSpy))) {
+            while(subject.readNext() != null) {
+
+            }
         }
 
-        verify(reader).close();
+        verify(readerTpmsSpy).close();
+        verify(readerFpkmsSpy).close();
     }
 
     @Test
-    public void tryResourcesAutoClosesUnderlyingReaderOnException() throws IOException {
-        Reader reader = spy(new StringReader(TSV_CONTENTS));
+    public void ignoresHeaderFieldsWhichAreNotAssayGroupIds() {
+        try (RnaSeqBaselineAnalyticsInputStream subject =
+                     new RnaSeqBaselineAnalyticsInputStream(
+                             Optional.of(new StringReader(TSV_CONTENTS_TPM)),
+                             Optional.of(new StringReader(TSV_CONTENTS_FPKM_NOT_REALLY_BAD_HEADER)))) {
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g1", 1.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g2", 2.0, 0.8));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g3", 3.0, 2.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g4", 4.0, 2.9));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_1, "g5", 0.5, 0.1));
 
-        try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test")) {
-            subject.readNext();
-            throw new RuntimeException("foobar");
-        } catch (RuntimeException e) {
-            // ignore
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g2", 0.1, 0.0));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g3", 1.0, 0.5));
+            assertThat(subject.readNext()).isEqualTo(BaselineAnalytics.create(GENE_ID_2, "g5", 1.0, 0.5));
         }
+    }
 
-        verify(reader).close();
+    @Ignore
+    public void ioExceptionsAreWrapped() {
+        // Beacuse RnaSeqBaselineAnalyticsInputStream takes a Reader, sends it to TsvStream, which in turns wraps it in
+        // a BufferedReader makes this case very hard to test, even using mocks. Left as an exercise to a future Atlas
+        // developer with enough time to spare and better skills. :(
+    }
+
+    @Test
+    public void throwsIfReadersAreEmpty() {
+        assertThatExceptionOfType(NoSuchElementException.class)
+                .isThrownBy(() -> {
+                    try (RnaSeqBaselineAnalyticsInputStream subject =
+                                 new RnaSeqBaselineAnalyticsInputStream(Optional.empty(), Optional.empty())) {
+                        // Use subject
+                    }
+                });
+    }
+
+    @Test
+    public void throwsIfHeadersDontMatch() {
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(
+                        () -> {
+                            try (RnaSeqBaselineAnalyticsInputStream subject =
+                                         new RnaSeqBaselineAnalyticsInputStream(
+                                                 Optional.of(new StringReader(TSV_CONTENTS_TPM)),
+                                                 Optional.of(new StringReader(TSV_CONTENTS_FPKM_BAD_HEADER)))) {
+                                // Use subject
+                            }
+                        })
+                .withMessage("TPMs and FPKMs header lines don’t match!");
+    }
+
+    @Test
+    public void throwsIfGeneIdsDontMatch() {
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(
+                        () -> {
+                            try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(
+                                    Optional.of(new StringReader(TSV_CONTENTS_TPM)),
+                                    Optional.of(new StringReader(TSV_CONTENTS_FPKM_BAD_GENE_IDS)))) {
+                                while (subject.readNext() != null) {
+
+                                }
+                            }
+                        })
+                .withMessageStartingWith("Gene IDs ")
+                .withMessageEndingWith(" in the same line of TPM and FPKM file don’t match");
+    }
+
+    @Test
+    public void throwsIfNumberOfLinesDontMatch() {
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(
+                        () -> {
+                            try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(
+                                    Optional.of(new StringReader(TSV_CONTENTS_TPM)),
+                                    Optional.of(new StringReader(TSV_CONTENTS_FPKM_ONE_LINE)))) {
+                                while (subject.readNext() != null) {
+
+                                }
+                            }
+                        })
+                .withMessageStartingWith("Number of lines of FPKM and TPM files don’t match");
     }
 
 }

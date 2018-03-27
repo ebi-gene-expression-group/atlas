@@ -6,8 +6,8 @@ const jsonToTsv = (results)  => {
 
   return (
     [
-      [`Gene`, `Organism`, `Experiment Accession`, `Comparison`, `log2foldchange`, `pValue`]
-        .concat(arrayResults.some((diffResults) => diffResults.tStatistics !== null) ? [`tStatistics`] :[])
+      [`Gene`, `Species`, `Experiment accession`, `Comparison`, `log_2 fold change`, `Adjusted p-value`]
+        .concat(arrayResults.some((diffResults) => diffResults.tStatistics !== null) ? [`t-statistic`] :[])
         .join(`\t`)
     ].concat(
       arrayResults
@@ -22,7 +22,7 @@ const jsonToTsv = (results)  => {
             diffResults.tStatistics
           ]
             .filter(el => el !== null)    // tStatistics might be missing
-          // .join(`\t`)
+            .join(`\t`)
         )
     ).join(`\n`)
   )

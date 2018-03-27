@@ -17,7 +17,6 @@
 <script type="text/javascript">
     experimentPage.render({
         atlasUrl: '${pageContext.request.contextPath}/',
-        pathToFolderWithBundledResources: '${pageContext.request.contextPath}/resources/js-bundles/',
         content: ${content},
         target: 'experiment-page'
     });

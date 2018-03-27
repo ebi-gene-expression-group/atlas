@@ -9,8 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
@@ -19,12 +18,7 @@ import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Named
@@ -95,11 +89,12 @@ public class BioEntityCardModelFactory {
             JsonArray values = new JsonArray();
 
             for (PropertyLink propertyLink :
-                    fetchPropertyLinks(
+                    createLinks(
                             identifier,
-                            species,
                             bioentityPropertyName,
-                            propertyValuesByType.get(bioentityPropertyName))) {
+                            propertyValuesByType.get(bioentityPropertyName),
+                            species)
+                    ) {
                 values.add(propertyLink.toJson());
             }
 
@@ -113,12 +108,6 @@ public class BioEntityCardModelFactory {
         }
 
         return result;
-    }
-
-    private List<PropertyLink> fetchPropertyLinks(String identifier, Species species,
-                                                  BioentityPropertyName bioentityPropertyName,
-                                                  Set<String> propertyValues) {
-        return createLinks(identifier, bioentityPropertyName, propertyValues, species);
     }
 
     private void addDesignElements(String identifier,Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
@@ -158,8 +147,11 @@ public class BioEntityCardModelFactory {
                                         species,
                                         bioEntityPropertyService.assessRelevance(propertyName, linkWithText.getKey())
                                 )
-                ).collect(Collectors.toList());
+                )
+                .sorted(Comparator.comparing(PropertyLink::getRelevance).reversed())
+                .collect(Collectors.toList());
 
+        return links;
     }
 
     private PropertyLink createLink(String text, String identifier, BioentityPropertyName propertyName,

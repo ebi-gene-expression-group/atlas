@@ -1,54 +1,47 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.FLYBASE_GENE_ID;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GENE_BIOTYPE;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.INTERPRO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PATHWAYID;
 
 public class BioEntityCardPropertiesTest {
-
-    private BioEntityCardProperties subject;
-
-    String plantUrl = "http://plantreactome.gramene.org/content/detail/{0}";
-    String reactomeUrl = "https://reactome.org/content/detail/{0}";
-    String interProUrl = "http://www.ebi.ac.uk/interpro/entry/{0}";
-
-    @Before
-    public void setUp() throws Exception {
-        subject = new BioEntityCardProperties();
-    }
+    private static final String PLANT_REACTOME_URL_TEMPLATE = "http://plantreactome.gramene.org/content/detail/{0}";
+    private static final String REACTOME_URL_TEMPLATE = "https://reactome.org/content/detail/{0}";
+    private static final String INTERPRO_URL_TEMPLATE = "http://www.ebi.ac.uk/interpro/entry/{0}";
 
     @Test
     public void linkPlantPathwayWithPlantUrl() {
-        assertThat(subject.getUrlTemplate(PATHWAYID,"plants"),is(plantUrl));
+        assertThat(BioEntityCardProperties.getUrlTemplate(PATHWAYID,"plants"),is(PLANT_REACTOME_URL_TEMPLATE));
     }
 
     @Test
     public void linkPathwayWithReactomeUrl() {
-        assertThat(subject.getUrlTemplate(PATHWAYID,"animals"),is(reactomeUrl));
+        assertThat(BioEntityCardProperties.getUrlTemplate(PATHWAYID,"animals"),is(REACTOME_URL_TEMPLATE));
     }
 
     @Test
     public void linkOtherBioentityPropertyWithUrl() {
-        assertThat(subject.getUrlTemplate(INTERPRO),is(interProUrl));
+        assertThat(BioEntityCardProperties.getUrlTemplate(INTERPRO),is(INTERPRO_URL_TEMPLATE));
     }
 
     @Test
     public void BioentityPropertyWithNoUrl() {
-        assertThat(subject.getUrlTemplate(FLYBASE_GENE_ID),is(""));
+        assertThat(BioEntityCardProperties.getUrlTemplate(FLYBASE_GENE_ID),is(""));
     }
 
     @Test
     public void unknownSpeciesWithSpeciesSpecificProperties() {
-        assertThat(subject.getUrlTemplate(PATHWAYID, ""), is(""));
-        assertThat(subject.getUrlTemplate(PATHWAYID, null), is(""));
+        assertThat(BioEntityCardProperties.getUrlTemplate(PATHWAYID, ""), is(""));
+        assertThat(BioEntityCardProperties.getUrlTemplate(PATHWAYID, null), is(""));
     }
-
 
     @Test
     public void linkTemplatesExceptGeneBiotypeHaveFormatElements() {

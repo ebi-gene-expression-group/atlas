@@ -34,17 +34,17 @@ public class ProteomicsBaselineAnalyticsInputStreamTest {
     private static String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
 
     @Test
-    public void readTwoTsvLines() throws IOException {
+    public void readTwoTsvLines() {
         Reader reader = new StringReader(TSV_CONTENTS);
         ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(reader, "Test");
 
-        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 5010000);
-        BaselineAnalytics line1g3 = new BaselineAnalytics(GENE_ID_1, "g3", 0.0000133);
-        BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g4", 0.0000079);
+        BaselineAnalytics line1g2 = BaselineAnalytics.create(GENE_ID_1, "g2", 5010000, 0.0);
+        BaselineAnalytics line1g3 = BaselineAnalytics.create(GENE_ID_1, "g3", 0.0000133, 0.0);
+        BaselineAnalytics line1g4 = BaselineAnalytics.create(GENE_ID_1, "g4", 0.0000079, 0.0);
 
-        BaselineAnalytics line2g1 = new BaselineAnalytics(GENE_ID_2, "g1", 0.000309075);
-        BaselineAnalytics line2g4 = new BaselineAnalytics(GENE_ID_2, "g4", 2820000);
-        BaselineAnalytics line2g5 = new BaselineAnalytics(GENE_ID_2, "g5", 0.0000849);
+        BaselineAnalytics line2g1 = BaselineAnalytics.create(GENE_ID_2, "g1", 0.000309075, 0.0);
+        BaselineAnalytics line2g4 = BaselineAnalytics.create(GENE_ID_2, "g4", 2820000, 0.0);
+        BaselineAnalytics line2g5 = BaselineAnalytics.create(GENE_ID_2, "g5", 0.0000849, 0.0);
 
         assertThat(subject.readNext(), is(line1g2));
         assertThat(subject.readNext(), is(line1g3));
@@ -57,7 +57,7 @@ public class ProteomicsBaselineAnalyticsInputStreamTest {
     }
 
     @Test
-    public void readTsvLineWithNoExpression() throws IOException {
+    public void readTsvLineWithNoExpression() {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NO_EXPRESSION});
 
         Reader reader = new StringReader(tsvContents);
@@ -67,38 +67,38 @@ public class ProteomicsBaselineAnalyticsInputStreamTest {
     }
 
     @Test
-    public void readTsvLineWithLowData() throws IOException {
+    public void readTsvLineWithLowData() {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_LOWDATA});
 
         Reader reader = new StringReader(tsvContents);
         ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(reader, "Test");
 
-        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g4", 0.0000079);
+        BaselineAnalytics line1g2 = BaselineAnalytics.create(GENE_ID_1, "g4", 0.0000079, 0.0);
         assertThat(subject.readNext(), is(line1g2));
         assertThat(subject.readNext(), is(nullValue()));
     }
 
     @Test
-    public void readTsvLineWithNA() throws IOException {
+    public void readTsvLineWithNA() {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NA});
 
         Reader reader = new StringReader(tsvContents);
         ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(reader, "Test");
 
-        BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g2", 0.0000079);
+        BaselineAnalytics line1g4 = BaselineAnalytics.create(GENE_ID_1, "g2", 0.0000079, 0.0);
         assertThat(subject.readNext(), is(line1g4));
         assertThat(subject.readNext(), is(nullValue()));
 
     }
 
     @Test
-    public void readTsvLineWithFail() throws IOException {
+    public void readTsvLineWithFail() {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_FAIL});
 
         Reader reader = new StringReader(tsvContents);
         ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(reader, "Test");
 
-        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g5", 0.0000079);
+        BaselineAnalytics line1g2 = BaselineAnalytics.create(GENE_ID_1, "g5", 0.0000079, 0.0);
         assertThat(subject.readNext(), is(line1g2));
         assertThat(subject.readNext(), is(nullValue()));
     }

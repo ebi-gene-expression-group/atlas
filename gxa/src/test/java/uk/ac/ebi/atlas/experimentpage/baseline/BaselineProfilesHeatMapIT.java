@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -15,16 +18,19 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -33,6 +39,8 @@ import static org.hamcrest.Matchers.greaterThan;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class BaselineProfilesHeatMapIT {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMapIT.class);
 
     static final ImmutableSet<String> EXPERIMENTS_ACCESSIONS_WITH_NO_PROTEIN_CODING_RESULTS =
             ImmutableSet.of("E-MTAB-2037", "E-MTAB-3028");
@@ -59,9 +67,6 @@ public class BaselineProfilesHeatMapIT {
 
     @Before
     public void initRequestContext() throws ExecutionException {
-        ImmutableList<String> experimentAccessions = ImmutableList.copyOf(experimentTrader.getAllBaselineExperimentAccessions());
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, experimentAccessions.size());
-//        baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccessions.get(randomIndex));
         baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-2037");
 
         if (baselineExperiment.getType().isRnaSeqBaseline()) {
@@ -73,6 +78,25 @@ public class BaselineProfilesHeatMapIT {
             baselineRequestContext = new BaselineRequestContext<>(requestPreferences, baselineExperiment);
             subject = new BaselineProfilesHeatMap(proteomicsBaselineProfileStreamFactory);
         }
+    }
+
+    @Ignore
+    public void benchmark() throws Exception {
+        Set<String> assayGroupIds =
+                IntStream.rangeClosed(1, 800).boxed().map(i -> "g" + Integer.toString(i)).collect(Collectors.toSet());
+        baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-2770");
+
+        requestPreferences = new RnaSeqBaselineRequestPreferences();
+        requestPreferences.setCutoff(1.0);
+        requestPreferences.setSpecific(true);
+        requestPreferences.setSelectedColumnIds(assayGroupIds);
+        baselineRequestContext = new BaselineRequestContext<>(requestPreferences, baselineExperiment);
+        subject = new BaselineProfilesHeatMap(rnaSeqBaselineProfileStreamFactory);
+        BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        subject.fetch(baselineExperiment, requestContext, new GeneQueryResponse());
+        LOGGER.info("Specific search across {} assay groups finished in {} ms", assayGroupIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
     @Test
