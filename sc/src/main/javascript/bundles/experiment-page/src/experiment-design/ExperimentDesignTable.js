@@ -30,7 +30,7 @@ const ExperimentDesign = ({
               Header: header,
               id: ix*1000 +jx +1,
               accessor: r => r.values[ix][jx],
-              width: 98
+              width: 95
             }))
         }
       ))

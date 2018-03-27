@@ -19800,7 +19800,7 @@ var ExperimentDesign = function ExperimentDesign(_ref) {
             accessor: function accessor(r) {
               return r.values[ix][jx];
             },
-            width: 98
+            width: 95
           };
         })
       };
