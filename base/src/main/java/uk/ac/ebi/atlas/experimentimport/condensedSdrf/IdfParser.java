@@ -32,9 +32,9 @@ public class IdfParser {
             Map<String, String> titles = titleIdfStreamer.get()
                     .filter(line -> line.length > 1)
                     .filter(line -> AE_EXPERIMENT_DISPLAY_NAME.equalsIgnoreCase(line[0].trim()) || INVESTIGATION_TITLE_ID.equalsIgnoreCase(line[0].trim()))
-                    .collect(Collectors.toMap(line -> line[0], line-> line[1]));
+                    .collect(Collectors.toMap(line -> line[0].toUpperCase().trim(), line-> line[1]));
 
-            String title = titles.getOrDefault(AE_EXPERIMENT_DISPLAY_NAME, titles.getOrDefault(INVESTIGATION_TITLE_ID, ""));
+            String title = titles.getOrDefault(AE_EXPERIMENT_DISPLAY_NAME.toUpperCase(), titles.getOrDefault(INVESTIGATION_TITLE_ID.toUpperCase(), ""));
 
             ImmutableSet<String> pubmedIds = ImmutableSet.copyOf(
                     pubmedIdfStreamer.get()

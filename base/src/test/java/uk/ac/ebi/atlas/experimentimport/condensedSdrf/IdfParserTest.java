@@ -35,6 +35,13 @@ public class IdfParserTest {
             {"PubMed ID", E_MTAB_513_PUBMED_IDS_ARRAY[0], E_MTAB_513_PUBMED_IDS_ARRAY[1], E_MTAB_513_PUBMED_IDS_ARRAY[2]}
     };
 
+    private static final String[][] E_MTAB_513_IDF_TXT_MIXED_CASE = {
+            {"INVESTIGATION TITLE   ", E_MTAB_513_TITLE},
+            {" comment[AEExperimentDisplayName]", E_MTAB_513_AE_DISPLAY_NAME},
+            {"PubMed id", E_MTAB_513_PUBMED_IDS_ARRAY[0], E_MTAB_513_PUBMED_IDS_ARRAY[1], E_MTAB_513_PUBMED_IDS_ARRAY[2]}
+    };
+
+
     @Mock
     private TsvStreamer titleIdfStreamerMock;
 
@@ -56,6 +63,17 @@ public class IdfParserTest {
     public void parse() {
         when(titleIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
         when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
+
+        Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
+
+        assertThat(idfParserOutput.getLeft(), is(E_MTAB_513_AE_DISPLAY_NAME));
+        assertThat(idfParserOutput.getRight(), is(E_MTAB_513_PUBMED_IDS));
+    }
+
+    @Test
+    public void parseMixedCaseKeys() {
+        when(titleIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT_MIXED_CASE));
+        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT_MIXED_CASE));
 
         Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
 
