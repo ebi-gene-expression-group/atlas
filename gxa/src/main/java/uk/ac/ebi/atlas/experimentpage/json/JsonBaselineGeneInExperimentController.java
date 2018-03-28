@@ -41,8 +41,7 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
         this.baselineTranscriptProfileStreamFactory = baselineTranscriptProfileStreamFactory;
     }
 
-
-    @RequestMapping(value = "/json/experiments/{experimentAccession}/genes/{geneId}",
+    @RequestMapping(value = "/json/experiments/{experimentAccession}/genes/{geneId:.+}", // Gene IDs may contain dots!
             produces = "application/json;charset=UTF-8",
             params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineRnaSeqDataForOneGeneInExperiment(
