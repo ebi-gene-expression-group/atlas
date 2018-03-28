@@ -2,22 +2,15 @@ package uk.ac.ebi.atlas.model.experiment.differential;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-@RunWith(MockitoJUnitRunner.class)
 public class DifferentialExpressionTest {
 
     public static final double P_VALUE = 0.0005;
     public static final double FOLD_CHANGE = 42.0;
     public static final double SMALL_P_VALUE = 1.17501162847487E-242;
-
-    @Mock
-    Contrast contrastMock;
 
     DifferentialExpression subject;
 
@@ -57,7 +50,7 @@ public class DifferentialExpressionTest {
     }
 
     @Test
-    public void testUnderExpressedGeneIsForRegulation() throws Exception {
+    public void testUnderExpressedGeneIsForRegulation() {
         //when
         DifferentialExpression expression = new DifferentialExpression(1.0, -1.0);
 
@@ -68,7 +61,7 @@ public class DifferentialExpressionTest {
     }
 
     @Test
-    public void testOverExpressedGeneIsForRegulation() throws Exception {
+    public void testOverExpressedGeneIsForRegulation() {
         //when
         DifferentialExpression expression = new DifferentialExpression(1.0, 1.0);
 

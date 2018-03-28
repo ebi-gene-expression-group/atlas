@@ -14,15 +14,12 @@ public class ExperimentPageRequestPreferencesTest {
     private ExperimentPageRequestPreferences subject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         subject = new RnaSeqBaselineRequestPreferences();
     }
     
     @Test
     public void heatmapMatrixSizeIsSetToTheDefaultRankingSizeIfRequestDoesntSpecifyAnyValue() {
-        //given
-        subject.setHeatmapMatrixSize(null);
-        //then
         assertThat(subject.getHeatmapMatrixSize(), is(ExperimentPageRequestPreferences.DEFAULT_NUMBER_OF_RANKED_GENES));
         //and given
         subject.setHeatmapMatrixSize(33);

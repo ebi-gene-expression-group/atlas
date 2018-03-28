@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.controllers;
 
 import com.google.common.base.Joiner;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -17,7 +19,12 @@ public abstract class JsonExceptionHandlingController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonExceptionHandlingController.class);
 
-    protected final Gson gson = new Gson();
+    protected final Gson gson =
+            new GsonBuilder()
+                    .registerTypeAdapter(
+                            SemanticQueryTerm.create("").getClass(),
+                            SemanticQueryTerm.getGsonTypeAdapter())
+                    .create();
 
     @ExceptionHandler(BioentityNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)

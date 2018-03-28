@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.FluentIterable;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -12,11 +10,20 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns,E extends
-        Experiment<DataColumnDescriptor>, K extends ExperimentPageRequestPreferences>
-    implements ProfileStreamOptions<DataColumnDescriptor>{
+import static java.util.stream.Collectors.toList;
+
+public abstract class RequestContext
+        <D extends DescribesDataColumns,
+         U extends ExpressionUnit,
+         E extends Experiment<D>,
+         K extends ExperimentPageRequestPreferences<U>>
+        implements ProfileStreamOptions<D> {
+
     protected final K requestPreferences;
     protected final E experiment;
 
@@ -41,27 +48,27 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         return requestPreferences.getHeatmapMatrixSize();
     }
 
-    public List<DataColumnDescriptor> getAllDataColumns(){
+    public List<D> getAllDataColumns(){
         return experiment.getDataColumnDescriptors();
     }
 
-    protected FluentIterable<DataColumnDescriptor> dataColumnsToBeReturned(){
+    protected Stream<D> dataColumnsToBeReturned(){
         final Collection<String> selectedIds = requestPreferences.getSelectedColumnIds();
-        Predicate<DataColumnDescriptor> keepColumns =
-                selectedIds.isEmpty() ? Predicates.<DataColumnDescriptor>alwaysTrue()
-                        : dataColumnDescriptor -> selectedIds.contains(dataColumnDescriptor.getId());
-        return FluentIterable.from(experiment.getDataColumnDescriptors()).filter(keepColumns);
+
+        Predicate<D> keepColumns = selectedIds.isEmpty() ?
+                dataColumnDescriptor -> true :
+                dataColumnDescriptor -> selectedIds.contains(dataColumnDescriptor.getId());
+
+        return experiment.getDataColumnDescriptors().stream().filter(keepColumns);
     }
 
-    public List<DataColumnDescriptor> getDataColumnsToReturn() {
+    public List<D> getDataColumnsToReturn() {
         return experiment.getDisplayDefaults().preserveColumnOrder()
-                ? dataColumnsToBeReturned().toList()
-                : dataColumnsToBeReturned().toSortedList((o1, o2) -> displayNameForColumn(o1).compareTo(displayNameForColumn(o2)));
+                ? dataColumnsToBeReturned().collect(toList())
+                : dataColumnsToBeReturned().sorted(Comparator.comparing(this::displayNameForColumn)).collect(toList());
     }
 
-
-
-    public abstract String displayNameForColumn(DataColumnDescriptor dataColumnDescriptor);
+    public abstract String displayNameForColumn(D dataColumnDescriptor);
 
     public Species getSpecies() {
         return experiment.getSpecies();

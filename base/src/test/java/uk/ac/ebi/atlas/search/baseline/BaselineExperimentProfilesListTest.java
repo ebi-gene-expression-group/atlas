@@ -15,7 +15,7 @@ public class BaselineExperimentProfilesListTest {
     String factorHeader = "type1";
 
     @Test
-    public void testGetFactorsAcrossExperiments() throws Exception {
+    public void testGetFactorsAcrossExperiments() {
         BaselineExperimentProfilesList result = new BaselineExperimentProfilesList();
 
         BaselineExperimentProfile p1 = new BaselineExperimentProfile(BaselineExperimentTest.mockExperiment(), new FactorSet());
@@ -32,7 +32,7 @@ public class BaselineExperimentProfilesListTest {
     }
 
     @Test
-    public void zerosDoMakeItToTheList() throws Exception {
+    public void zerosDoMakeItToTheList() {
         BaselineExperimentProfilesList result = new BaselineExperimentProfilesList();
 
         BaselineExperimentProfile p1 = new BaselineExperimentProfile(BaselineExperimentTest.mockExperiment(), new FactorSet());

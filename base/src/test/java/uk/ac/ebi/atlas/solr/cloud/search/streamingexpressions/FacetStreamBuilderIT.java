@@ -9,12 +9,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
-import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.FacetStreamBuilder;
 
 import javax.inject.Inject;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -30,7 +28,7 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class FacetStreamBuilderIT {
-    public static final String E_MTAB_2706 = "E-MTAB-2706";
+    public static final String E_MTAB_513 = "E-MTAB-513";
 
     @Inject
     private SolrCloudCollectionProxyFactory collectionProxyFactory;
@@ -46,7 +44,7 @@ public class FacetStreamBuilderIT {
 
     @Test
     public void filtersAndQueriesRestrictResults() {
-        String[] assayGroups = IntStream.range(1, 100).boxed().map(i -> "g" + i.toString()).toArray(String[]::new);
+        String[] assayGroups = IntStream.range(1, 16).boxed().map(i -> "g" + i.toString()).toArray(String[]::new);
 
         int previousStepSize;
 
@@ -115,12 +113,12 @@ public class FacetStreamBuilderIT {
                                      .addFilterLowerRangeClause(EXPRESSION_LEVEL, 10.0)
                                      .addFilterUpperRangeClause(EXPRESSION_LEVEL, 10000.0)
                                      .addFilterDoubleRangeClause(EXPRESSION_LEVEL, 300.0, 600.0)
-                                     .addQueryTermsClause(EXPERIMENT_ACCESSION, E_MTAB_2706)
+                                     .addQueryTermsClause(EXPERIMENT_ACCESSION, E_MTAB_513)
                                      .sortByCountsAscending()
                                      .build())) {
             List<Tuple> results = filteredStreamer.get().collect(toList());
             assertThat(results.size()).isLessThan(previousStepSize);
-            previousStepSize = results.size();
+            // previousStepSize = results.size();
         }
 
     }
@@ -136,7 +134,7 @@ public class FacetStreamBuilderIT {
                             .build());
             TupleStreamer streamer =
                     TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_2706)
+                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_513)
                             .sortByCountsAscending()
                             .build())) {
             unfilteredResults = unfilteredStreamer.get().collect(toList());
@@ -173,12 +171,12 @@ public class FacetStreamBuilderIT {
 
         try (TupleStreamer filteredByExperimentStreamer =
                      TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_2706)
+                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_513)
                             .sortByCountsAscending()
                             .build());
             TupleStreamer filteredByExperimentAndExpressionLevelStreamer =
                     TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_2706)
+                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_513)
                             .addFilterLowerRangeClause(EXPRESSION_LEVEL, 10.0)
                             .sortByCountsAscending()
                             .build())) {
@@ -196,7 +194,7 @@ public class FacetStreamBuilderIT {
     public void includeAverage() {
         try (TupleStreamer filteredByExperimentStreamer =
                      TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_2706)
+                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_513)
                             .withAbsoluteAverageOf(EXPRESSION_LEVEL)
                             .sortByCountsAscending()
                             .build())) {
@@ -212,16 +210,16 @@ public class FacetStreamBuilderIT {
 
         try (TupleStreamer twoAssayGroupsStreamer =
                      TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_2706)
+                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_513)
                             .addFilterLowerRangeClause(EXPRESSION_LEVEL, 10.0)
-                            .addQueryTermsClause(ASSAY_GROUP_ID, "g39", "g341")
+                            .addQueryTermsClause(ASSAY_GROUP_ID, "g10", "g5")
                             .sortByCountsAscending()
                             .build()) ;
             TupleStreamer oneAssayGroupsStreamer =
                     TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_2706)
+                            .addFilterTermsClause(EXPERIMENT_ACCESSION, E_MTAB_513)
                             .addFilterLowerRangeClause(EXPRESSION_LEVEL, 10.0)
-                            .addQueryTermsClause(ASSAY_GROUP_ID, "g39")
+                            .addQueryTermsClause(ASSAY_GROUP_ID, "g10")
                             .sortByCountsAscending()
                             .build())) {
             twoAssayGroupsResult = twoAssayGroupsStreamer.get().collect(toList());

@@ -3,8 +3,10 @@ package uk.ac.ebi.atlas.solr.cloud;
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.request.UpdateRequest;
+import org.apache.solr.common.params.SolrParams;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +37,7 @@ public class CollectionProxyTest {
 
     @Test
     public void queryIOExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.query(anyString(), any(SolrQuery.class)))
+        when(solrClientMock.query(anyString(), any(SolrParams.class), eq(SolrRequest.METHOD.POST)))
                 .thenThrow(new IOException());
 
         assertThatExceptionOfType(UncheckedIOException.class)
@@ -44,7 +46,7 @@ public class CollectionProxyTest {
 
     @Test
     public void querySolrServerExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.query(anyString(), any(SolrQuery.class)))
+        when(solrClientMock.query(anyString(), any(SolrParams.class), eq(SolrRequest.METHOD.POST)))
                 .thenThrow(new SolrServerException(""));
 
         assertThatExceptionOfType(UncheckedIOException.class)

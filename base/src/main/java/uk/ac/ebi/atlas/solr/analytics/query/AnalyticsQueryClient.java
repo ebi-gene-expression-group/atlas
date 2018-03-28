@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.utils.ResourceUtils;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
@@ -27,8 +28,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
-import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient.Field.*;
+
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.CONDITIONS_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.DEFAULT_FACTOR_TYPE;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.SPECIES;
 
 @Named
 @Scope("prototype")
@@ -172,9 +176,9 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        private void addQueryClause(Field searchField, String searchValue) {
+        private void addQueryClause(AnalyticsCollectionProxy.AnalyticsSchemaField searchField, String searchValue) {
             if (!isBlank(searchValue)) {
-                queryClausesBuilder.add(new AnalyticsSolrQueryTree(searchField.toString(), searchValue));
+                queryClausesBuilder.add(new AnalyticsSolrQueryTree(searchField.name(), searchValue));
             }
         }
 
@@ -188,7 +192,7 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryIdentifierSearch(SemanticQuery geneQuery) {
-            if(isNotEmpty(geneQuery)){
+            if (geneQuery.isNotEmpty()) {
                 queryClausesBuilder.add(AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery));
             }
             return this;
@@ -200,18 +204,18 @@ public class AnalyticsQueryClient {
                             .filter(SemanticQueryTerm::hasValue)
                             .map(SemanticQueryTerm::value);
 
-            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), var.toArray(String[]::new));
+            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.name(), var.toArray(String[]::new));
         }
 
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {
-            if (isNotEmpty(conditionQuery)) {
+            if (conditionQuery.isNotEmpty()) {
                 queryClausesBuilder.add(conditionsSearchQuery(conditionQuery));
             }
             return this;
         }
 
         public Builder withFactorType(String factorType) {
-            addQueryClause(FACTOR_TYPE, factorType);
+            addQueryClause(DEFAULT_FACTOR_TYPE, factorType);
             return this;
         }
 
@@ -254,28 +258,6 @@ public class AnalyticsQueryClient {
                             AnalyticsSolrQueryTree.Operator.AND,
                             queryClauses.toArray(new AnalyticsSolrQueryTree[0])
                     ).toQueryPlan();
-        }
-    }
-
-    enum Field {
-        EXPERIMENT_TYPE("experiment_type"),
-        EXPERIMENT_ACCESSION("experiment_accession"),
-        BIOENTITY_IDENTIFIER("bioentity_identifier"),
-        SPECIES("species"),
-        IDENTIFIER_SEARCH("identifier_search"),
-        CONDITIONS_SEARCH("conditions_search"),
-        FACTOR_TYPE("default_query_factor_type"),
-        ASSAY_GROUP_ID("assay_group_id"),
-        EXPRESSION_LEVEL("expression_level");
-        final String name;
-
-        Field(String name){
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
         }
     }
 }

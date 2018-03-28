@@ -39,19 +39,18 @@ public enum BioentityPropertyName {
     UNIPROT("uniprot", true, "UniProt"),
     WBPSGENE("wbpsgene", false, "WBPS gene"),
     WBPSTRANSCRIPT("wbpstranscript", true, "WBPS transcript"),
-    WBPSPROTEIN("wbpsprotein", true, "WBPS protein"),   // Not used for analytics index now
-    IDENTIFIER_SEARCH("identifier_search", false, "");  // Not exposed to the UI in any way, indexed unstored field
+    WBPSPROTEIN("wbpsprotein", true, "WBPS protein");   // Not used for analytics index now
 
     final static private ImmutableMap<String, BioentityPropertyName> PROPERTIES_BY_NAME =
             ImmutableMap.copyOf(Arrays.stream(values()).collect(Collectors.toMap(v -> v.name, v -> v)));
 
     public final String name;
-    public final boolean isId;
+    public final boolean isKeyword;
     public final String label;
 
-    BioentityPropertyName(String name, boolean isId, String label) {
+    BioentityPropertyName(String name, boolean isKeyword, String label) {
         this.name = name;
-        this.isId = isId;
+        this.isKeyword = isKeyword;
         this.label = label;
     }
 

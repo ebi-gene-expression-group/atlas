@@ -1,85 +1,158 @@
 package uk.ac.ebi.atlas.search;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.ReadContext;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
+import java.io.UncheckedIOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class SemanticQueryTest {
 
-    private final SemanticQuery GENE_QUERY_BRCA2 = SemanticQuery.create(SemanticQueryTerm.create("BRCA2", "symbol"), SemanticQueryTerm.create("BRCA2B", "synonym"), SemanticQueryTerm.create("BRCA2 repeat"));
-    private final String GENE_QUERY_BRCA2_JSON = "[{\"value\":\"BRCA2\",\"category\":\"symbol\"},{\"value\":\"BRCA2B\",\"category\":\"synonym\"},{\"value\":\"BRCA2 repeat\",\"category\":\"\"}]";
-    private final String GENE_QUERY_BRCA2_JSON_WITH_REPEATS = "[{\"value\":\"BRCA2\",\"category\":\"symbol\"},{\"value\":\"BRCA2\",\"category\":\"symbol\"},{\"value\":\"BRCA2B\",\"category\":\"synonym\"},{\"value\":\"BRCA2 repeat\",\"category\":\"\"}]";
-    private final String GENE_QUERY_BRCA2_ENCODED_JSON = "%5B%7B%22value%22%3A%22BRCA2%22%2C%22category%22%3A%22symbol%22%7D%2C%7B%22value%22%3A%22BRCA2B%22%2C%22category%22%3A%22synonym%22%7D%2C%7B%22value%22%3A%22BRCA2+repeat%22%2C%22category%22%3A%22%22%7D%5D";
+    private SemanticQuery subject =
+            SemanticQuery.create(
+                    SemanticQueryTerm.create("BRCA2", "symbol"),
+                    SemanticQueryTerm.create("BRCA2B", "synonym"),
+                    SemanticQueryTerm.create("BRCA2 repeat"));
+
+    @Test
+    public void basicProperties() {
+        assertThat(SemanticQuery.create().size()).isEqualTo(0);
+        assertThat(SemanticQuery.create().isEmpty()).isTrue();
+        assertThat(SemanticQuery.create().isNotEmpty()).isFalse();
+
+        assertThat(subject.size()).isEqualTo(3);
+        assertThat(subject.isEmpty()).isFalse();
+        assertThat(subject.isNotEmpty()).isTrue();
+    }
+
+    @Test
+    public void createWithASingleValue() {
+        assertThat(SemanticQuery.create("Crocubot"))
+                .isEqualTo(SemanticQuery.create(SemanticQueryTerm.create("Crocubot")));
+    }
+
+    @Test
+    public void isIterable() {
+        for (SemanticQueryTerm semanticQueryTerm : subject) {
+            assertThat(semanticQueryTerm).hasFieldOrProperty("value");
+        }
+    }
 
     @Test
     public void testEmptyGeneQuery() {
-        SemanticQuery subject = SemanticQuery.create(SemanticQueryTerm.create("", "symbol"), SemanticQueryTerm.create(" ", "synonym"), SemanticQueryTerm.create("\t"));
-        assertThat(isEmpty(subject), is(true));
+        SemanticQuery subject =
+                SemanticQuery.create(
+                        SemanticQueryTerm.create("", "symbol"),
+                        SemanticQueryTerm.create(" ", "synonym"),
+                        SemanticQueryTerm.create("\t"));
+        assertThat(subject.isEmpty()).isTrue();
     }
 
     @Test
     public void testRemovesRepeatedTerms() {
-        SemanticQuery subject = SemanticQuery.create(SemanticQueryTerm.create("BRCA2", "symbol"), SemanticQueryTerm.create("BRCA2", "symbol"));
-        assertThat(subject.terms(), hasSize(1));
+        SemanticQuery subject =
+                SemanticQuery.create(
+                        SemanticQueryTerm.create("BRCA2", "symbol"),
+                        SemanticQueryTerm.create("BRCA2", "symbol"));
+        assertThat(subject.terms()).hasSize(1);
     }
 
     @Test
-    public void testToJson() {
-        assertEquals(GENE_QUERY_BRCA2.toJson(), GENE_QUERY_BRCA2_JSON);
+    public void jsonSerialization() {
+        String json = subject.toJson();
+        ReadContext ctx = JsonPath.parse(json);
+
+        assertThat(ctx.<List<Map<String, String>>>read("$")).hasSize(3);
+        assertThat(ctx.<List<Map<String, String>>>read("$"))
+                .extracting("category").containsExactlyInAnyOrder("symbol", "synonym", null);
+        assertThat(ctx.<List<Map<String, String>>>read("$"))
+                .extracting("value").containsExactlyInAnyOrder("BRCA2", "BRCA2B", "BRCA2 repeat");
+
+        assertThat(SemanticQuery.fromJson(subject.toJson()))
+                .isEqualTo(subject);
     }
 
     @Test
-    public void testToUrlEncodedJson() throws Exception {
-        assertThat(GENE_QUERY_BRCA2.toUrlEncodedJson(), is(GENE_QUERY_BRCA2_ENCODED_JSON));
+    public void urlEncodedJsonSerialization() throws UnsupportedEncodingException {
+        assertThat(SemanticQuery.fromUrlEncodedJson(subject.toUrlEncodedJson()))
+                .isEqualTo(subject);
+
     }
 
     @Test
-    public void fromJson() {
-        assertThat(SemanticQuery.fromJson(GENE_QUERY_BRCA2_JSON), is(GENE_QUERY_BRCA2));
+    public void fromJson() throws UnsupportedEncodingException {
+        assertThat(SemanticQuery.fromJson(""))
+                .isEqualTo(SemanticQuery.fromUrlEncodedJson(""))
+                .isEqualTo(SemanticQuery.create());
     }
 
     @Test
     public void fromJsonWithRepeats() {
-        assertThat(SemanticQuery.fromJson(GENE_QUERY_BRCA2_JSON_WITH_REPEATS), is(GENE_QUERY_BRCA2));
+        // This can come from the search page if a user enters repeated terms
+        String geneQueryBrca2WithRepeats =
+                "[" +
+                        "{\"value\":\"BRCA2\",\"category\":\"symbol\"}," +
+                        "{\"value\":\"BRCA2\",\"category\":\"symbol\"}," +
+                        "{\"value\":\"BRCA2B\",\"category\":\"synonym\"}," +
+                        "{\"value\":\"BRCA2B\",\"category\":\"synonym\"}," +
+                        "{\"value\":\"BRCA2 repeat\",\"category\":\"\"}," +
+                        "{\"value\":\"BRCA2 repeat\",\"category\":\"\"}" +
+                "]";
+
+        assertThat(SemanticQuery.fromJson(geneQueryBrca2WithRepeats))
+                .isEqualTo(subject);
     }
 
     @Test
-    public void fromUrlEncodedJson() throws Exception {
-        assertThat(SemanticQuery.fromUrlEncodedJson(GENE_QUERY_BRCA2_ENCODED_JSON), is(GENE_QUERY_BRCA2));
+    public void deserializeLenientOrNotReallyJson() throws UnsupportedEncodingException {
+        assertThat(SemanticQuery.fromUrlEncodedJson("BRCA2A"))
+                .isEqualTo(SemanticQuery.fromUrlEncodedJson("BRCA2A BRCA2A"))
+                .isEqualTo(SemanticQuery.create("BRCA2A"));
+
+        assertThat(SemanticQuery.fromUrlEncodedJson("BRCA2A BRCA2B"))
+                .isEqualTo(
+                        SemanticQuery.create(
+                                SemanticQueryTerm.create("BRCA2A"),
+                                SemanticQueryTerm.create("BRCA2B")));
     }
 
     @Test
-    public void differentOrderAndTypeOfInitializingParametersProduceTheSameObject() throws Exception {
-        SemanticQueryTerm semanticQueyTerm1 = SemanticQueryTerm.create("value1", "category1");
-        SemanticQueryTerm semanticQueyTerm2 = SemanticQueryTerm.create("value2", "category2");
-        assertThat(SemanticQuery.create(ImmutableSet.of(semanticQueyTerm1, semanticQueyTerm2)), is(SemanticQuery.create(ImmutableSet.of(semanticQueyTerm2, semanticQueyTerm1))));
-        assertThat(SemanticQuery.create(semanticQueyTerm1, semanticQueyTerm2), is(SemanticQuery.create(ImmutableSet.of(semanticQueyTerm2, semanticQueyTerm1))));
+    public void groupingByCategory() {
+        SemanticQuery subject =
+                SemanticQuery.create(
+                        SemanticQueryTerm.create("BRCA2", "symbol"),
+                        SemanticQueryTerm.create("BRCA2B", "synonym"),
+                        SemanticQueryTerm.create("BRCA2A", "synonym"),
+                        SemanticQueryTerm.create("BRCA2 repeat"));
+
+        assertThat(subject.groupValuesByCategory())
+                .containsAllEntriesOf(
+                        ImmutableMap.of(
+                                "symbol", ImmutableSet.of("BRCA2"),
+                                "synonym", ImmutableSet.of("BRCA2B", "BRCA2A"),
+                                "", ImmutableSet.of("BRCA2 repeat")));
     }
 
     @Test
-    public void parsesJsonWithoutCategories() throws Exception {
-        SemanticQuery subject = SemanticQuery.fromJson("[{\"value\":\"zinc finger\"},{\"value\":\"BRCA2B\"}]");
-        assertThat(isNotEmpty(subject), is(true));
-        assertThat(subject.size(), is(2));
+    public void descriptionForUsers() {
+        assertThat(subject.description().split(" OR ")).hasSize(3);
     }
 
-    @Test
-    public void splitsPlainTextAtSpaces() throws Exception {
-        SemanticQuery subject = SemanticQuery.fromUrlEncodedJson("ASPM BRCA2");
-        assertThat(subject.size(), is(2));
-    }
 
-    @Test
-    public void splitsPlainTextAtUrlEncodedSpaces() throws Exception {
-        assertThat(SemanticQuery.fromUrlEncodedJson("ASPM%20BRCA2").size(), is(2));
-        assertThat(SemanticQuery.fromUrlEncodedJson("ASPM+BRCA2").size(), is(2));
-    }
+//    @Test
+//    public void unsupportedEncodingExceptionsAreWrapped() {
+//        assertThatExceptionOfType(UncheckedIOException.class)
+//                .isThrownBy(() ->
+//                );
+//    }
 
 }

@@ -1,8 +1,11 @@
 package uk.ac.ebi.atlas.solr.cloud.bioentities;
 
 import org.apache.solr.client.solrj.SolrClient;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
+
+import static uk.ac.ebi.atlas.utils.StringUtil.escapeDoubleQuotes;
 
 public class BioentitiesCollectionProxy extends CollectionProxy {
     public static class BioentitiesSchemaField extends SchemaField<BioentitiesCollectionProxy> {
@@ -18,5 +21,16 @@ public class BioentitiesCollectionProxy extends CollectionProxy {
 
     public BioentitiesCollectionProxy(SolrClient solrClient) {
         super(solrClient, "analytics");
+    }
+
+    public static String asBioentitiesCollectionQuery(SemanticQueryTerm geneQuery) {
+        return geneQuery.category()
+                .map(
+                        category ->
+                                String.format(
+                                        PROPERTY_NAME.name() + ":\"%s\" AND " + PROPERTY_VALUE.name() + ":\"%s\"",
+                                        escapeDoubleQuotes(category),
+                                        escapeDoubleQuotes(geneQuery.value())))
+                .orElse(String.format(PROPERTY_VALUE.name() + ":\"%s\"", escapeDoubleQuotes(geneQuery.value())));
     }
 }

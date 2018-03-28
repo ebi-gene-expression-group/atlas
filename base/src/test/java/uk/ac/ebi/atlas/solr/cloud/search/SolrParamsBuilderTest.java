@@ -9,7 +9,7 @@ public class SolrParamsBuilderTest {
 
     @Test
     public void byDefaultQueryAll() {
-        SolrParams solrParams = new SolrParamsBuilder().build();
+        SolrParams solrParams = new SolrQueryBuilder().build();
 
         assertThat(solrParams.get("fq")).isEmpty();
         assertThat(solrParams.get("q")).isEqualTo("*:*");
@@ -18,7 +18,7 @@ public class SolrParamsBuilderTest {
     @Test
     public void multipleQueryClausesAreJoinedWithAnd() {
         SolrParams solrParams =
-                new SolrParamsBuilder()
+                new SolrQueryBuilder()
                         .addQueryTermsClause("field1", "value1")
                         .addQueryTermsClause("field2", "value21", "value22")
                         .addQueryLowerRangeClause("field3", 1D)
@@ -31,7 +31,7 @@ public class SolrParamsBuilderTest {
     @Test
     public void multipleFilterClausesAreJoinedWithAnd() {
         SolrParams solrParams =
-                new SolrParamsBuilder()
+                new SolrQueryBuilder()
                         .addFilterTermsClause("field1", "value1")
                         .addFilterTermsClause("field2", "value21", "value22")
                         .addFilterLowerRangeClause("field3", 1D)
@@ -44,7 +44,7 @@ public class SolrParamsBuilderTest {
     @Test
     public void doubleRangeFiltersAreJoinedWithOr() {
         SolrParams solrParams =
-                new SolrParamsBuilder()
+                new SolrQueryBuilder()
                         .addFilterDoubleRangeClause("field", -1D, 1D)
                         .build();
 
@@ -54,7 +54,7 @@ public class SolrParamsBuilderTest {
     @Test
     public void doubleRangeQueriesAreJoinedWithOr() {
         SolrParams solrParams =
-                new SolrParamsBuilder()
+                new SolrQueryBuilder()
                         .addQueryDoubleRangeClause("field", -1D, 1D)
                         .build();
 
@@ -64,7 +64,7 @@ public class SolrParamsBuilderTest {
     @Test
     public void searchValuesAreDeduped() {
         SolrParams solrParams =
-                new SolrParamsBuilder()
+                new SolrQueryBuilder()
                         .addQueryTermsClause(
                                 "field1", "value1", "value2", "value2", "value3", "value3", "value3")
                         .build();

@@ -11,7 +11,7 @@ import javax.inject.Named;
 public class SolrCloudCollectionProxyFactory {
     private final CloudSolrClient cloudSolrClient;
 
-    public SolrCloudCollectionProxyFactory(@Value("#{configuration['solrZkHost']}") String zkHost) {
+    public SolrCloudCollectionProxyFactory(@Value("#{configuration['zk.host']}:2181") String zkHost) {
         cloudSolrClient = new CloudSolrClient.Builder().withZkHost(zkHost).build();
     }
 

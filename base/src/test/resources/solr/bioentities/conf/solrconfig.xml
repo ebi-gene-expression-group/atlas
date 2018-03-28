@@ -1424,6 +1424,7 @@
   <searchComponent name="suggest" class="solr.SuggestComponent">
     <lst name="suggester">
       <str name="name">propertySuggester</str>
+      <str name="indexPath">propertyAnalyzingInfixSuggesterIndexDir</str>
       <str name="lookupImpl">AnalyzingInfixLookupFactory</str>
       <str name="dictionaryImpl">DocumentDictionaryFactory</str>
       <str name="field">property_value</str>
@@ -1437,6 +1438,7 @@
 
     <lst name="suggester">
       <str name="name">bioentitySuggester</str>
+      <str name="indexPath">bioentityAnalyzingInfixSuggesterIndexDir</str>
       <str name="lookupImpl">AnalyzingInfixLookupFactory</str>
       <str name="dictionaryImpl">DocumentDictionaryFactory</str>
       <str name="field">property_value</str>

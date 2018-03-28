@@ -57,7 +57,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             @RequestParam(value = "source", required = false) String source,
             @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
             Model model) {
-        Preconditions.checkState(!(SemanticQuery.isEmpty(geneQuery) && SemanticQuery.isEmpty(conditionQuery)),
+        Preconditions.checkState(!(geneQuery.isEmpty() && conditionQuery.isEmpty()),
                 "Please specify a gene query or a condition query");
 
         Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);

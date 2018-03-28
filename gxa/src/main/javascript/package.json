@@ -18,7 +18,7 @@
   "license": "Apache-2.0",
   "private": true,
   "devDependencies": {
-    "ajv": "^6.3.0",
+    "ajv": "^6.4.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -34,6 +34,7 @@
     "less-loader": "^4.1.0",
     "style-loader": "^0.20.3",
     "webpack": "^3.11.0",
+    "webpack-dev-server": "^3.1.0",
     "webpack-shell-plugin": "^0.5.0"
   },
   "dependencies": {
@@ -42,11 +43,11 @@
     "downloadjs": "^1.4.7",
     "expression-atlas-experiment-page": "^1.7.0",
     "expression-atlas-feedback": "./atlas_modules/expression-atlas-feedback-v1.3.0.tgz",
-    "expression-atlas-heatmap-highcharts": "^4.2.0",
+    "expression-atlas-heatmap-highcharts": "^4.4.1",
     "expression-atlas-number-format": "^2.1.0",
     "he": "^1.1.1",
     "highcharts": "^6.0.7",
-    "highcharts-custom-events": "^2.1.1",
+    "highcharts-custom-events": "^2.1.2",
     "jquery": "^3.3.1",
     "jquery-ui-bundle": "^1.12.1",
     "lodash": "^4.17.5",
