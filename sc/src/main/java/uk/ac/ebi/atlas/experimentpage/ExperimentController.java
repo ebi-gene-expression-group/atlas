@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
+import uk.ac.ebi.atlas.download.FilePathService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -23,11 +24,13 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private final ScxaExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
     private static final Gson gson = new Gson();
+    private final FilePathService filePathService;
     
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, FilePathService filePathService){
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
+        this.filePathService = filePathService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -59,7 +62,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
                     experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
-                            ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey))
+                            filePathService.getFileUri(experiment.getAccession(), "experiment-design", accessKey).toString())
             );
         }
 
@@ -100,21 +103,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 //                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
 //                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
 //        );
-//
-//        if(experiment.getType().isMicroarray() &&
-//                dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()){
-//            supplementaryInformationTabs.add(customContentTab("qc-report", "QC Report",
-//                    "reports",
-//                    pairsToArrayOfObjects("name", "url",
-//                            new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
-//                                    .getArrayDesignsThatHaveQcReports().stream().map(arrayDesign -> Pair.of(
-//                                    "QC for array design " + arrayDesign,
-//                                    QCReportController.getQcReportUrl(experiment.getAccession(), arrayDesign, accessKey
-//                                    )
-//                            )).collect(Collectors.toList())
-//                    )
-//            ));
-//        }
 //
 //        return supplementaryInformationTabs;
 //    }

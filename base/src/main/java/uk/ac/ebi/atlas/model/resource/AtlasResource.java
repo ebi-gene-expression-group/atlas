@@ -31,6 +31,10 @@ public abstract class AtlasResource<T> {
         return Files.isReadable(path);
     }
 
+    public Path getPath() {
+        return path;
+    }
+
     public abstract T get();
 
     public Optional<T> maybeGet() {
