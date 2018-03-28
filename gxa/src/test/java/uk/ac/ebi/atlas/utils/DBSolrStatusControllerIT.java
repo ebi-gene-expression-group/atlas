@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.utils;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +13,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +26,7 @@ public class DBSolrStatusControllerIT {
     @Test
     public void dbAndSolrStatus() throws Exception {
         String message = subject.dbAndSolrStatus();
-        Map<String, Object> status = new Gson().fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
+        Map<String, Object> status = GSON.fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
         // Or the unsafer(?) Map status = new Gson().fromJson(message, Map.class);
 
         assertThat(status.get("DB"), is("UP"));

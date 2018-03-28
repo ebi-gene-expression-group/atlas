@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -19,13 +18,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 /*
 I provide additional behaviour to factorGroup without refactoring.
 
 TODO get rid of FactorSet and me, make FactorGroup a class around an immutable map - potentially with a builder -  and put all the methods there!
  */
 public class RichFactorGroup {
-
     private final FactorGroup factorGroup;
 
     public RichFactorGroup(FactorGroup factorGroup) {
@@ -40,7 +40,7 @@ public class RichFactorGroup {
 
     public String asUrlEncodedJson() {
         try {
-            return URLEncoder.encode(new Gson().toJson(asJson()), "UTF-8");
+            return URLEncoder.encode(GSON.toJson(asJson()), "UTF-8");
         } catch(UnsupportedEncodingException e){
             throw new RuntimeException(e);
         }
@@ -67,7 +67,10 @@ public class RichFactorGroup {
         }
 
         return allValuesPerType.asMap().entrySet().stream()
-                .filter(stringCollectionEntry -> stringCollectionEntry.getValue().size() >= 2 && ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2)
+                .filter(
+                        stringCollectionEntry ->
+                                stringCollectionEntry.getValue().size() >= 2 &&
+                                ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
     }

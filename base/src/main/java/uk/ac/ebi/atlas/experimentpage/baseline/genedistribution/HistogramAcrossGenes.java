@@ -1,12 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.base.Preconditions;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-public class HistogramAcrossGenes {
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
-    private static final Gson gson = new Gson();
+public class HistogramAcrossGenes {
     private final int[] histogram;
     private final double [] cutoffs;
 
@@ -21,8 +20,8 @@ public class HistogramAcrossGenes {
     public JsonObject asJson(){
         JsonObject result = new JsonObject();
 
-        result.add("bins", gson.toJsonTree(cutoffs).getAsJsonArray());
-        result.add("counts", gson.toJsonTree(histogram).getAsJsonArray());
+        result.add("bins", GSON.toJsonTree(cutoffs).getAsJsonArray());
+        result.add("counts", GSON.toJsonTree(histogram).getAsJsonArray());
 
         return result;
     }

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.markergenes;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Controller
 public class MarkerGenesSearchController {
-
-    private final MarkerGenesSearchService markerGenesSearchService;
-    private final Gson gson = new Gson();
+    final MarkerGenesSearchService markerGenesSearchService;
 
     @Inject
     public MarkerGenesSearchController(MarkerGenesSearchService markerGenesSearchService) {
@@ -52,7 +51,7 @@ public class MarkerGenesSearchController {
             markerProfiles.add(markerProfile);
         });
 
-        return gson.toJson(markerProfiles);
+        return GSON.toJson(markerProfiles);
     }
 
 }

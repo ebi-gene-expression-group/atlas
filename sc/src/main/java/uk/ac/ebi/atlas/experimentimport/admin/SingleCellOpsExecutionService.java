@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
@@ -22,14 +21,13 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class SingleCellOpsExecutionService implements ExperimentOpsExecutionService {
-
     private final ExperimentCrud experimentCrud;
     private final ExperimentTrader experimentTrader;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final MarkerGeneDao markerGeneDao;
-    private final Gson gson = new Gson();
 
     public SingleCellOpsExecutionService(ExperimentCrud experimentCrud,
                                          ExperimentTrader experimentTrader,
@@ -57,7 +55,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
             case LIST:
                 return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
-                return Optional.of(gson.toJsonTree(experimentTrader.getExperiment(accession,
+                return Optional.of(GSON.toJsonTree(experimentTrader.getExperiment(accession,
                         experimentCrud.findExperiment(accession).getAccessKey()).getAttributes()));
             default:
                 return Optional.empty();

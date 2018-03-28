@@ -20,6 +20,8 @@ import uk.ac.ebi.atlas.species.services.PopularSpeciesService;
 import javax.inject.Inject;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @RestController
 @Scope("request")
 public class AutocompleteController extends JsonExceptionHandlingController {
@@ -57,7 +59,7 @@ public class AutocompleteController extends JsonExceptionHandlingController {
             @RequestParam(value = "query") String query,
             @RequestParam(value = "species", required = false, defaultValue = "") String species,
             @RequestParam(value = "suggestCount", required = false, defaultValue = "15") int suggestCount) {
-        return gson.toJson(
+        return GSON.toJson(
                 suggesterService.fetchBioentitySuggestions(query, speciesFactory.create(species), suggestCount));
     }
 
@@ -85,6 +87,6 @@ public class AutocompleteController extends JsonExceptionHandlingController {
                                ThreadLocalRandom.current().nextDouble() > 0.999 ?
                                        BEST_SEPARATOR : NORMAL_SEPARATOR);
 
-        return gson.toJson(jsonObject);
+        return GSON.toJson(jsonObject);
     }
 }

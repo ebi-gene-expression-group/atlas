@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.hamcrest.Matchers;
@@ -19,6 +18,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class GenePageControllerIT {
 
     @Inject
-    GenePageController subject;
+    private GenePageController subject;
 
     @Test
     public void bioentityProperties() {
@@ -39,7 +39,7 @@ public class GenePageControllerIT {
         Model model = new BindingAwareModelMap();
         subject.showGenePage(bioentityIdentifier, model);
 
-        JsonArray bioentityProperties = new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
+        JsonArray bioentityProperties = GSON.fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
 
         assertTrue(bioentityIdentifier+" should have properties" , bioentityProperties.size()>=expectedMinimalSize);
 

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experiments;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,12 +13,11 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 import javax.inject.Inject;
 
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.*;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 @Scope("request")
 public class ExperimentsListController {
-
-    private Gson gson = new Gson();
     private ExperimentInfoListService experimentInfoListService;
 
     @Inject
@@ -36,7 +34,7 @@ public class ExperimentsListController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getExperimentsList() {
-        return gson.toJson(experimentInfoListService.getExperimentsJson());
+        return GSON.toJson(experimentInfoListService.getExperimentsJson());
     }
 
 }

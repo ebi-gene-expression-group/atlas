@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
@@ -16,11 +15,12 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 import javax.inject.Inject;
 import java.util.Arrays;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
     private final ScxaExperimentTrader experimentTrader;
-    private static final Gson gson = new Gson();
-    
+
     @Inject
     public ExperimentController(ScxaExperimentTrader experimentTrader){
         this.experimentTrader = experimentTrader;
@@ -35,7 +35,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
-        model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, accessKey)));
+        model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 
         return "experiment-page";
     }

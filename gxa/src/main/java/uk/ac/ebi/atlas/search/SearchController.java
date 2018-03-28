@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.solr.common.SolrException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,18 +26,17 @@ import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 @Scope("prototype")
 public class SearchController extends HtmlExceptionHandlingController {
-
     @Autowired
     private Environment env;
 
     private final AnalyticsSearchService analyticsSearchService;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final SpeciesFactory speciesFactory;
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     public SearchController(AnalyticsSearchService analyticsSearchService,
@@ -117,7 +114,7 @@ public class SearchController extends HtmlExceptionHandlingController {
             if (hasBaselineResults) {
                 model.addAttribute(
                         "jsonFacets",
-                        gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch(
+                        GSON.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch(
                                 geneQuery, conditionQuery, species)));
             }
 

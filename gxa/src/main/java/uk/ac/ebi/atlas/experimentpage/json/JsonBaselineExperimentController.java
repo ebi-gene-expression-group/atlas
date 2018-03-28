@@ -29,6 +29,7 @@ import javax.validation.Valid;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 import static uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences.VERY_SMALL_NON_ZERO_VALUE;
 
 @RestController
@@ -72,7 +73,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         BaselineExperiment experiment =
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        return gson.toJson(
+        return GSON.toJson(
                 rnaSeqBaselineExperimentPageService.getResultsForExperiment(
                         experiment,
                         accessKey,
@@ -85,7 +86,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     public String baselineProteomicsExperimentData(@Valid ProteomicsBaselineRequestPreferences preferences,
                                                    @PathVariable String experimentAccession,
                                                    @RequestParam(defaultValue = "") String accessKey) {
-        return gson.toJson(
+        return GSON.toJson(
                 proteomicsBaselineExperimentPageService.getResultsForExperiment(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                         accessKey,
@@ -132,7 +133,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         preferences.setCutoff(VERY_SMALL_NON_ZERO_VALUE);
         preferences.setGeneQuery(SemanticQuery.create());
 
-        return gson.toJson(rnaSeqHistograms.get(experimentAccession, accessKey, preferences).asJson());
+        return GSON.toJson(rnaSeqHistograms.get(experimentAccession, accessKey, preferences).asJson());
     }
 
     @RequestMapping(value = GENE_DISTRIBUTION_URL,
@@ -144,7 +145,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         preferences.setCutoff(VERY_SMALL_NON_ZERO_VALUE);
         preferences.setGeneQuery(SemanticQuery.create());
 
-        return gson.toJson(proteomicsHistograms.get(experimentAccession, accessKey, preferences).asJson());
+        return GSON.toJson(proteomicsHistograms.get(experimentAccession, accessKey, preferences).asJson());
     }
 
 }

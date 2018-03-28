@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.species.SpeciesFactory;
 import javax.inject.Inject;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 @Scope("request")
@@ -54,10 +55,10 @@ produces = "application/json;charset=UTF-8")
                                             String species) {
 
         if (isBlank(species)) {
-            return gson.toJson(differentialAnalyticsSearchService.fetchFacets(geneQuery, conditionQuery));
+            return GSON.toJson(differentialAnalyticsSearchService.fetchFacets(geneQuery, conditionQuery));
         }
 
-        return gson.toJson(
+        return GSON.toJson(
                 differentialAnalyticsSearchService.fetchFacets(
                         geneQuery, conditionQuery, speciesFactory.create(species)));
     }
@@ -73,10 +74,10 @@ produces = "application/json;charset=UTF-8")
                                              String species) {
 
         if (isBlank(species)) {
-            return gson.toJson(differentialAnalyticsSearchService.fetchResults(geneQuery, conditionQuery));
+            return GSON.toJson(differentialAnalyticsSearchService.fetchResults(geneQuery, conditionQuery));
         }
 
-        return gson.toJson(
+        return GSON.toJson(
                 differentialAnalyticsSearchService.fetchResults(
                         geneQuery, conditionQuery, speciesFactory.create(species)));
     }

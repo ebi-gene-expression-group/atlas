@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.controllers.rest;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AutoCompleteControllerTest {
@@ -69,14 +68,7 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> termSourceList = Lists.newArrayList(queryTerm1, queryTerm2, queryTerm3, queryTerm4);
 
-        final Gson gson =
-                new GsonBuilder()
-                        .registerTypeAdapter(
-                                SemanticQueryTerm.create("").getClass(),
-                                SemanticQueryTerm.getGsonTypeAdapter())
-                        .create();
-
-        String suggestions = gson.toJson(termSourceList);
+        String suggestions = GSON.toJson(termSourceList);
 
         assertThat(suggestions, is(
                 "[{\"value\":\"TERM1\",\"category\":\"CATEGORY1\"},{\"value\":\"TERM2\",\"category\":\"CATEGORY2\"}," +

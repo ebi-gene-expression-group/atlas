@@ -34,6 +34,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 
 @Controller
 @Scope("request")
@@ -96,7 +98,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey) {
-        return gson.toJson(diffMicroarrayExperimentPageService.getResultsForExperiment(
+        return GSON.toJson(diffMicroarrayExperimentPageService.getResultsForExperiment(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 accessKey, preferences));
     }
@@ -109,7 +111,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey) {
-        return gson.toJson(diffRnaSeqExperimentPageService.getResultsForExperiment(
+        return GSON.toJson(diffRnaSeqExperimentPageService.getResultsForExperiment(
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 accessKey, preferences));
     }
@@ -136,7 +138,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
             requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
             return new MicroarrayRequestContext(requestPreferences, experiment);
-        }, o -> w.println(gson.toJson(o)));
+        }, o -> w.println(GSON.toJson(o)));
 
     }
 
@@ -158,6 +160,6 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
             requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
             return new RnaSeqRequestContext(requestPreferences, experiment);
-        }, o-> w.println(gson.toJson(o)));
+        }, o-> w.println(GSON.toJson(o)));
     }
 }

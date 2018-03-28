@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +23,10 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @RestController
 public class JsonSingleCellExperimentController extends JsonExperimentController {
-
-    private final Gson gson;
     private final TSnePlotDao tSnePlotDao;
 
     @Inject
@@ -36,8 +34,6 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
                                               TSnePlotDao tSnePlotDao) {
         super(experimentTrader);
         this.tSnePlotDao = tSnePlotDao;
-
-        gson = new GsonBuilder().registerTypeAdapter(TSnePoint.create(0.0, 0.0, "").getClass(), TSnePoint.getGsonTypeAdapter()).create();
     }
 
     @RequestMapping(
@@ -111,7 +107,7 @@ public class JsonSingleCellExperimentController extends JsonExperimentController
             model.put("min", min.getAsDouble());
         }
 
-        return gson.toJson(model);
+        return GSON.toJson(model);
     }
 
 }

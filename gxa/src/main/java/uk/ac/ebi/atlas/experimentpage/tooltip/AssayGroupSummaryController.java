@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummary;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Controller
 @Scope("request")
 public class AssayGroupSummaryController {
-
     private ExperimentTrader experimentTrader;
-
 
     @Inject
     public AssayGroupSummaryController(ExperimentTrader experimentTrader) {
@@ -42,7 +41,7 @@ public class AssayGroupSummaryController {
         AssayGroupSummary assayGroupSummary = new AssayGroupSummaryBuilder().withExperimentDesign(experimentDesign).forAssayGroup(assayGroup)
                 .build();
 
-        return new Gson().toJson(assayGroupSummary);
+        return GSON.toJson(assayGroupSummary);
     }
 
 

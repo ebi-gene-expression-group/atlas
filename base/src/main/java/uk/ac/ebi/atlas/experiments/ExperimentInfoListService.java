@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experiments;
 
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -13,10 +12,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 public class ExperimentInfoListService {
     private final ExperimentTrader experimentTrader;
     private final Collection<ExperimentType> experimentTypes;
-    private final Gson gson = new Gson();
 
     public ExperimentInfoListService(ExperimentTrader experimentTrader,
                                      Collection<ExperimentType> experimentTypes) {
@@ -26,13 +26,13 @@ public class ExperimentInfoListService {
 
     public String getExperimentJson(String experimentAccession, String accessKey) {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        return gson.toJson(experiment.buildExperimentInfo());
+        return GSON.toJson(experiment.buildExperimentInfo());
     }
 
     public JsonObject getExperimentsJson() {
         List<ExperimentInfo> experimentInfos = listPublicExperiments();
         Collections.sort(experimentInfos);
-        return gson.toJsonTree(new ExperimentInfoWrapper(experimentInfos)).getAsJsonObject();
+        return GSON.toJsonTree(new ExperimentInfoWrapper(experimentInfos)).getAsJsonObject();
     }
 
     /**

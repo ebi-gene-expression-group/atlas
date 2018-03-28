@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.controllers.page;
 
 import com.google.common.base.Joiner;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.velocity.util.StringUtils;
@@ -30,12 +29,11 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 @Scope("request")
 public class GeneSetEnrichmentController extends HtmlExceptionHandlingController {
-
-    private final Gson gson = new Gson();
     private final ExperimentMetadataEnrichmentService experimentMetadataEnrichmentService;
     private final GeneSetEnrichmentClient geneSetEnrichmentClient;
     private final SpeciesInferrer speciesInferrer;
@@ -74,7 +72,7 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
             model.addAttribute("queryShort", Joiner.on(" ").join(Arrays.asList(query.split("\\W+")).subList(0,3)));
             model.addAttribute("query", query);
             model.addAttribute(
-                    "data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
+                    "data", GSON.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
             return "gene-set-enrichment-results";
         } else {
             // An error occurred during enriched gene retrieval

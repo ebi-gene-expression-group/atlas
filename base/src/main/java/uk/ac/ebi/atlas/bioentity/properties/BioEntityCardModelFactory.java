@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.collections.CollectionUtils;
@@ -20,13 +19,14 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Named
 public class BioEntityCardModelFactory {
 
     // These are displayed in the header, so we don’t show them in the card table
     private final static ImmutableList<BioentityPropertyName> SKIP_PROPERTY_LIST =
             ImmutableList.of(BioentityPropertyName.DESCRIPTION, BioentityPropertyName.SYMBOL);
-    private final static Gson GSON = new Gson();
 
     private final ArrayDesignDAO arrayDesignDao;
     private final BioEntityPropertyService bioEntityPropertyService;

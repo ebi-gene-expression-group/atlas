@@ -1,25 +1,9 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.HandlerMapping;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.text.MessageFormat;
-import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -43,7 +27,6 @@ public class ExternallyAvailableContentController {
                 + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
     }
     private final SingleCellContentService singleCellContentService;
-    private static final Gson gson = new Gson();
 
     @Inject
     public ExternallyAvailableContentController(SingleCellContentService singleCellContentService){

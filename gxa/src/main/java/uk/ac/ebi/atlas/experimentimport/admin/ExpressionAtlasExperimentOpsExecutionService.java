@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
@@ -21,15 +20,14 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentOpsExecutionService {
-
     private final ExperimentCrud experimentCrud;
     private final BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     private final AnalyticsIndexerManager analyticsIndexerManager;
     private final ExpressionSerializerService expressionSerializerService;
     private final ExperimentTrader experimentTrader;
-    private final Gson gson = new Gson();
 
     public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
                                                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
@@ -54,7 +52,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case LIST:
                 return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
-                return Optional.of(gson.toJsonTree(getAnyExperimentWithAdminAccess(accession).getAttributes()));
+                return Optional.of(GSON.toJsonTree(getAnyExperimentWithAdminAccess(accession).getAttributes()));
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
                 return Optional.of(ExperimentOps.DEFAULT_SUCCESS_RESULT);

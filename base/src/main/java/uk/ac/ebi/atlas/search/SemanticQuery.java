@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,19 +19,13 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @AutoValue
 public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
     // According to Google Gson is thread-safe:
     // https://github.com/google/gson/blob/master/UserGuide.md#using-gson
     // Remove static if Google is lying!
-    private static final Gson GSON =
-            new GsonBuilder()
-                    .registerTypeAdapter(
-                            SemanticQueryTerm.create("").getClass(),
-                            SemanticQueryTerm.getGsonTypeAdapter())
-                    .create();
-
     public abstract ImmutableSet<SemanticQueryTerm> terms();
 
     public static SemanticQuery create(Collection<SemanticQueryTerm> queryTerms) {

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
@@ -22,6 +21,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 public class ExternallyAvailableContentController {
@@ -43,7 +43,6 @@ public class ExternallyAvailableContentController {
                 + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
     }
     private final ExpressionAtlasContentService expressionAtlasContentService;
-    private static final Gson gson = new Gson();
 
     @Inject
     public ExternallyAvailableContentController(ExpressionAtlasContentService expressionAtlasContentService){
@@ -92,7 +91,7 @@ public class ExternallyAvailableContentController {
     public String list(@PathVariable String experimentAccession,@PathVariable String contentType, @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
                        HttpServletRequest request) {
 
-        return gson.toJson(
+        return GSON.toJson(
                 contentAsJson(expressionAtlasContentService.list(experimentAccession, accessKey, ExternallyAvailableContent.ContentType.valueOf(contentType)),
                 experimentAccession, accessKey, request
                 ));

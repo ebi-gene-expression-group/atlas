@@ -12,6 +12,8 @@ import uk.ac.ebi.atlas.solr.analytics.AnalyticsSearchService;
 
 import javax.inject.Inject;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @RestController
 @Scope("request")
 public final class ExpressionDataController extends JsonExceptionHandlingController {
@@ -27,7 +29,7 @@ public final class ExpressionDataController extends JsonExceptionHandlingControl
                     method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8")
     public String hasTissueExpressionWithRequestParameter(@RequestParam(value = "geneId") String geneId ) {
-        return gson.toJson(ImmutableMap.of(geneId, hasBaselineTissueExpression(geneId)));
+        return GSON.toJson(ImmutableMap.of(geneId, hasBaselineTissueExpression(geneId)));
     }
 
 //    @RequestMapping(value = "/json/expressionData/{geneId}",

@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class TSnePointTest {
     private TSnePoint randomValuedPoint(String name) {
@@ -42,17 +41,12 @@ public class TSnePointTest {
     public void toJson() {
         TSnePoint autoValuedInstance = TSnePoint.create(0.0, 0.0, "");
 
-        Gson gson =
-                new GsonBuilder()
-                        .registerTypeAdapter(autoValuedInstance.getClass(), TSnePoint.getGsonTypeAdapter())
-                        .create();
-
         TSnePoint tSnePointWithoutExpression = TSnePoint.create(0.0, 0.0, "A");
-        assertThat(gson.fromJson(gson.toJson(tSnePointWithoutExpression), autoValuedInstance.getClass()))
+        assertThat(GSON.fromJson(GSON.toJson(tSnePointWithoutExpression), autoValuedInstance.getClass()))
                 .isEqualTo(tSnePointWithoutExpression);
 
         TSnePoint tSnePointWithExpression = TSnePoint.create(0.0, 0.0, 1.0, "A");
-        assertThat(gson.fromJson(gson.toJson(tSnePointWithExpression), autoValuedInstance.getClass()))
+        assertThat(GSON.fromJson(GSON.toJson(tSnePointWithExpression), autoValuedInstance.getClass()))
                 .isEqualTo(tSnePointWithExpression);
 
     }

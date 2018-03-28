@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.utils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,6 +20,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Named
 public class ReactomeClient {
 
@@ -29,7 +30,6 @@ public class ReactomeClient {
     static final String URL = "http://reactome.org/ContentService/data/query/ids";
     static final String PLANT_URL="http://plantreactome.gramene.org/ContentService/data/query/ids";
     static final int QUERY_MAX_SIZE = 20;  // https://reactome.org/ContentService/#!/query/findByIdsUsingPOST
-    private static final Gson GSON = new Gson();
     private static final String STATIC_ID_FIELD = "stId";
     private static final String DISPLAY_NAME_FIELD = "displayName";
 

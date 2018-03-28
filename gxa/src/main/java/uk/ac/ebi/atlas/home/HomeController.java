@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.home;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -19,9 +18,10 @@ import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import javax.inject.Inject;
 import java.util.Random;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Controller
 public class HomeController {
-
     @Autowired
     protected Environment env;
 
@@ -29,8 +29,6 @@ public class HomeController {
     private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
     private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
     private static final Random RANDOM = new Random();
-
-    private static final Gson gson = new Gson();
 
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final PopularSpeciesService popularSpeciesService;
@@ -78,10 +76,10 @@ public class HomeController {
 
 
 
-        model.addAttribute("speciesList", gson.toJson(popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)));
-        model.addAttribute("animalsList", gson.toJson(popularSpeciesService.getPopularSpecies("animals", FEATURED_SPECIES)));
-        model.addAttribute("plantsList", gson.toJson(popularSpeciesService.getPopularSpecies("plants", FEATURED_SPECIES)));
-        model.addAttribute("fungiList", gson.toJson(popularSpeciesService.getPopularSpecies("fungi", FEATURED_SPECIES)));
+        model.addAttribute("speciesList", GSON.toJson(popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)));
+        model.addAttribute("animalsList", GSON.toJson(popularSpeciesService.getPopularSpecies("animals", FEATURED_SPECIES)));
+        model.addAttribute("plantsList", GSON.toJson(popularSpeciesService.getPopularSpecies("plants", FEATURED_SPECIES)));
+        model.addAttribute("fungiList", GSON.toJson(popularSpeciesService.getPopularSpecies("fungi", FEATURED_SPECIES)));
 
         model.addAttribute("organismPath", ""); // Required by Spring form tag
 

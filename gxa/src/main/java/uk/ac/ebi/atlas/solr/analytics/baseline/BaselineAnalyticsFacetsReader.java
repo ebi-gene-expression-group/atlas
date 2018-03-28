@@ -2,13 +2,14 @@ package uk.ac.ebi.atlas.solr.analytics.baseline;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.TreeMultimap;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class BaselineAnalyticsFacetsReader {
 
@@ -33,7 +34,7 @@ public class BaselineAnalyticsFacetsReader {
             }
         }
 
-        return new Gson().toJsonTree(facetTreeMultimap.asMap()).getAsJsonObject();
+        return GSON.toJsonTree(facetTreeMultimap.asMap()).getAsJsonObject();
     }
 
     private static class HomoSapiensFirstComparator implements Comparator<String> {

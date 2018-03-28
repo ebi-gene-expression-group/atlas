@@ -25,6 +25,8 @@ import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @RestController
 public class JsonBaselineGeneInExperimentController extends JsonExperimentController {
     private final BaselineExperimentProfilesService baselineExperimentProfilesService;
@@ -83,7 +85,7 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
                     BaselineExperimentProfilesListSerializer.serialize(geneExpression, requestContext));
         }
 
-        return gson.toJson(result);
+        return GSON.toJson(result);
     }
 
     private JsonArray columnHeaders(BaselineRequestContext<?> requestContext) {
@@ -101,7 +103,7 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
      we use the "cutoff", which otherwise doesn't do anything but got selected in the UI, to draw the user something visual
     */
     private JsonObject config(BaselineExperiment experiment, ExperimentPageRequestPreferences preferences) {
-        JsonObject config = gson.toJsonTree(preferences).getAsJsonObject();
+        JsonObject config = GSON.toJsonTree(preferences).getAsJsonObject();
         config.addProperty("cutoff", preferences.getCutoff());
         config.addProperty("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         config.addProperty("species", experiment.getSpecies().getName());
