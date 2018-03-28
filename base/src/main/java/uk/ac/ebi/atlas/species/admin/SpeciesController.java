@@ -9,10 +9,11 @@ import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
 import javax.inject.Inject;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @RestController
 @Scope("request")
 public class SpeciesController extends JsonExceptionHandlingController {
-
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
 
     @Inject
@@ -22,7 +23,6 @@ public class SpeciesController extends JsonExceptionHandlingController {
 
     @RequestMapping(value = "/json/species/{speciesName}", produces = "application/json;charset=UTF-8")
     public String getSpeciesInfo(@PathVariable("speciesName") String speciesName) {
-        return gson.toJson(speciesPropertiesTrader.get(speciesName));
+        return GSON.toJson(speciesPropertiesTrader.get(speciesName));
     }
-
 }

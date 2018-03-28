@@ -13,6 +13,8 @@ import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @RestController
 @Scope("request")
 public class AutoCompleteController extends JsonExceptionHandlingController {
@@ -33,7 +35,7 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
             @RequestParam(value = "query") String query,
             @RequestParam(value = "species", required = false, defaultValue = "") String species,
             @RequestParam(value = "suggestCount", required = false, defaultValue = "15") int suggestCount) {
-        return gson.toJson(
+        return GSON.toJson(
                 suggesterService.fetchPropertySuggestions(query, speciesFactory.create(species), suggestCount));
     }
 }
