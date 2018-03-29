@@ -62,7 +62,7 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
         }
 
         List<String> nonKeywordProperties = new LinkedList<>();
-
+        nonKeywordProperties.add(experimentDataPoint.bioentityIdentifier);
         for (BioentityPropertyName bioentityPropertyName : experimentDataPoint.getRelevantBioentityPropertyNames()) {
             for (String value : bioentityProperties.getOrDefault(bioentityPropertyName, Collections.emptySet())) {
                 if (bioentityPropertyName.isKeyword) {

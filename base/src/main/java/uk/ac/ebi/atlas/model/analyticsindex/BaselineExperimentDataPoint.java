@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
-public class BaselineExperimentDataPoint extends ExperimentDataPoint{
+public class BaselineExperimentDataPoint extends ExperimentDataPoint {
 
     public BaselineExperimentDataPoint(BaselineExperiment experiment,
                                        BaselineAnalytics baselineAnalytics,
