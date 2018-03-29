@@ -61,6 +61,10 @@
     <bean id="solrAnalyticsServerURL" class="java.lang.String">
         <constructor-arg value="http://${solr.host}:8983/solr/analytics/"/>
     </bean>
+
+    <bean id="zkHost" class="java.lang.String">
+        <constructor-arg value="${zk.host}:2181"/>
+    </bean>
     <!-- End of Solr configuration -->
 
     <!-- Legacy Solr stuff -->
