@@ -45,10 +45,6 @@ public class AnalyticsIndexerServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        UpdateResponse r = Mockito.mock(UpdateResponse.class);
-        when(r.getQTime()).thenReturn(10);
-        when(solrClient.add(anyCollection())).thenReturn(r);
-
         subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory);
     }
 
@@ -105,8 +101,6 @@ public class AnalyticsIndexerServiceTest {
 
     @Test(expected=RuntimeException.class)
     public void exceptionsFromSolrAreWrappedAndThrown() throws Exception {
-        when(solrClient.add(anyCollection())).thenThrow(new IOException(""));
-
         final BaselineExperimentDataPoint baselineExperimentDataPointMock =
                 Mockito.mock(BaselineExperimentDataPoint.class);
         when(baselineExperimentDataPointMock.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList.of());
