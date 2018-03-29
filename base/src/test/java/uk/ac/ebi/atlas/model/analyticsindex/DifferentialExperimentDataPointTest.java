@@ -3,24 +3,22 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalytics;
-import uk.ac.ebi.atlas.solr.BioentityPropertyName;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperimentTest;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DifferentialExperimentDataPointTest {
 
     @Test
-    public void testGetRelevantBioentityPropertyNames() throws Exception {
-        List<BioentityPropertyName> propertyNames = new DifferentialExperimentDataPoint(DifferentialExperimentTest.mockExperiment("E-GEOD-54705", ImmutableList.<Contrast>of()),new RnaSeqDifferentialAnalytics("","",0.03, 1.23),"",5)
-                .getRelevantBioentityPropertyNames();
+    public void testGetRelevantBioentityPropertyNames() {
+        DifferentialExperimentDataPoint subject =
+                new DifferentialExperimentDataPoint(DifferentialExperimentTest.mockExperiment("E-GEOD-54705",
+                                                                                              ImmutableList.of()),
+                                                    new RnaSeqDifferentialAnalytics("","",0.03, 1.23),"",5);
 
-        assertThat(propertyNames.contains(BioentityPropertyName.INTERPRO), is(true));
-        assertThat(propertyNames.contains(BioentityPropertyName.UNIPROT), is(true));
-        assertThat(propertyNames.contains(BioentityPropertyName.DESIGN_ELEMENT), is(false));
+        assertThat(subject.getProperties())
+                .containsKeys("factors", "regulation", "contrast_id", "num_replicates", "fold_change", "p_value")
+                .doesNotContainKeys("expression_level", "expression_level_fpkm", "expression_levels",
+                                    "expression_levels_fpkm", "assay_group_id");
     }
 }
