@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.download.FilePathService;
+import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
+import uk.ac.ebi.atlas.download.ExperimentFileType;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -17,18 +18,18 @@ import java.io.File;
 @Controller
 public class FileDownloadController {
 
-    private FilePathService filePathService;
+    private ExperimentFileLocationService experimentFileLocationService;
 
     @Inject
-    public FileDownloadController(FilePathService filePathService) {
-        this.filePathService = filePathService;
+    public FileDownloadController(ExperimentFileLocationService experimentFileLocationService) {
+        this.experimentFileLocationService = experimentFileLocationService;
     }
 
     @RequestMapping(value = "experiment/{experimentAccession}/download", method = RequestMethod.GET)
     public ResponseEntity<FileSystemResource> download(@PathVariable String experimentAccession,
-                                                  @RequestParam(value= "fileType", defaultValue = "") String fileType, @RequestParam(value="accessKey") String accessKey) {
+                                                       @RequestParam(value= "fileType", defaultValue = "") String fileTypeId, @RequestParam(value="accessKey") String accessKey) {
 
-        File file = filePathService.getFilePath(experimentAccession, fileType).toFile();
+        File file = experimentFileLocationService.getFilePath(experimentAccession, ExperimentFileType.fromId(fileTypeId)).toFile();
         FileSystemResource resource = new FileSystemResource(file);
 
         return ResponseEntity.ok()

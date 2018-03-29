@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
-import uk.ac.ebi.atlas.download.FilePathService;
+import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
+import uk.ac.ebi.atlas.download.ExperimentFileType;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -24,13 +25,13 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private final ScxaExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
     private static final Gson gson = new Gson();
-    private final FilePathService filePathService;
+    private final ExperimentFileLocationService experimentFileLocationService;
     
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, FilePathService filePathService){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentFileLocationService experimentFileLocationService){
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
-        this.filePathService = filePathService;
+        this.experimentFileLocationService = experimentFileLocationService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -62,7 +63,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
                     experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
-                            filePathService.getFileUri(experiment.getAccession(), "experiment-design", accessKey).toString())
+                            experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN.getId(), accessKey).toString())
             );
         }
 
