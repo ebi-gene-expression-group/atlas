@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ExperimentDataPoint {
-
     public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
         BioentityPropertyName.ENSGENE,
         BioentityPropertyName.GENE_BIOTYPE,
@@ -54,5 +53,7 @@ public abstract class ExperimentDataPoint {
         return propertyMap;
     }
 
-    public abstract ImmutableList<BioentityPropertyName> getRelevantBioentityPropertyNames();
+    public ImmutableList<BioentityPropertyName> getRelevantBioentityPropertyNames() {
+        return bioentityPropertyNames;
+    }
 }

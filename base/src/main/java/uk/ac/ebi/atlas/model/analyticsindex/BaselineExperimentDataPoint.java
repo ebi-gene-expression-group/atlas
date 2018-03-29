@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.model.analyticsindex;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Doubles;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 public class BaselineExperimentDataPoint extends ExperimentDataPoint {
 
@@ -26,10 +24,4 @@ public class BaselineExperimentDataPoint extends ExperimentDataPoint {
             propertyMap.put("expression_levels_fpkm", Doubles.asList(baselineAnalytics.expressionLevelsFpkm()));
         }
     }
-
-    @Override
-    public ImmutableList<BioentityPropertyName> getRelevantBioentityPropertyNames() {
-        return bioentityPropertyNames.subList(0, bioentityPropertyNames.size() - 1);
-    }
-
 }
