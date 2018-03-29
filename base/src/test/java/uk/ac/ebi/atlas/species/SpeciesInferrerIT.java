@@ -17,17 +17,16 @@ import static org.junit.Assert.assertThat;
 public class SpeciesInferrerIT {
     private static final String HOMO_SAPIENS = "homo sapiens";
     private static final String ARABIDOPSIS_THALIANA = "arabidopsis thaliana";
-    private static final String GLYCINE_MAX = "glycine max";
 
     private static final SemanticQueryTerm HUMAN_REACTOME_TERM = SemanticQueryTerm.create("R-HSA-597592", "pathwayid");
-    private static final SemanticQueryTerm PLANT_REACTOME_TERM = SemanticQueryTerm.create("R-GMA-2744341", "pathwayid");
+    private static final SemanticQueryTerm PLANT_REACTOME_TERM = SemanticQueryTerm.create("R-ATH-191273", "pathwayid");
     private static final SemanticQueryTerm LEAF_TERM = SemanticQueryTerm.create("leaf");
 
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
     private static final SemanticQuery PLANT_CONDITION_QUERY = SemanticQuery.create(LEAF_TERM);
     private static final SemanticQuery HUMAN_GENE_QUERY = SemanticQuery.create(HUMAN_REACTOME_TERM);
     private static final SemanticQuery PLANT_GENE_QUERY = SemanticQuery.create(PLANT_REACTOME_TERM);
-    private static final SemanticQuery MIXED_SPECIES_GENE_QUERY = SemanticQuery.create(SemanticQueryTerm.create("OS03G0852700", "ensgene"), SemanticQueryTerm.create("ENSMUSG00000002055", "ensgene"));
+    private static final SemanticQuery MIXED_SPECIES_GENE_QUERY = SemanticQuery.create(SemanticQueryTerm.create("OS01G0101700", "ensgene"), SemanticQueryTerm.create("ENSMUSG00000002055", "ensgene"));
 
     @Inject
     private SpeciesInferrer subject;
@@ -40,22 +39,11 @@ public class SpeciesInferrerIT {
 
         assertThat(species1.getReferenceName(), is(HOMO_SAPIENS));
         assertThat(species2.getReferenceName(), is(HOMO_SAPIENS));
-        assertThat(species3.getReferenceName(), is(GLYCINE_MAX));
-        assertThat(species3.isPlant(),is(true));
+        assertThat(species3.isPlant(), is(true));
     }
 
-    @Test
-    public void inferSpeciesForPlantGeneQuery() {
-        Species species1 = subject.inferSpeciesForGeneQuery(PLANT_GENE_QUERY, "");
-        Species species2 = subject.inferSpeciesForGeneQuery(PLANT_GENE_QUERY);
-
-        assertThat(species1.getReferenceName(), is(GLYCINE_MAX));
-        assertThat(species2.getReferenceName(), is(GLYCINE_MAX));
-
-        assertThat(species1.isPlant(),is(true));
-        assertThat(species2.isPlant(),is(true));
-    }
-
+    // TODO conflicting and mixed species are kind of flakey because they depend on gene IDs being present in analytics
+    // TODO but they might be in bioentities and *not* in analytics, review when possible
     @Test
     public void conflictingSearch() {
         assertThat(subject.inferSpecies(HUMAN_GENE_QUERY, EMPTY_QUERY, "").isUnknown(), is(false));
