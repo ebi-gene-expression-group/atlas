@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.download.ExperimentFileType;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -18,7 +19,7 @@ import javax.inject.Inject;
 import java.io.File;
 
 @Controller
-public class FileDownloadController {
+public class FileDownloadController extends HtmlExceptionHandlingController {
 
     private ExperimentFileLocationService experimentFileLocationService;
     private ScxaExperimentTrader experimentTrader;
@@ -31,7 +32,7 @@ public class FileDownloadController {
 
     @RequestMapping(value = "experiment/{experimentAccession}/download", method = RequestMethod.GET)
     public ResponseEntity<FileSystemResource> download(@PathVariable String experimentAccession,
-                                                       @RequestParam(value= "fileType", defaultValue = "") String fileTypeId, @RequestParam(value="accessKey") String accessKey) {
+                                                       @RequestParam(value= "fileType") String fileTypeId, @RequestParam(value="accessKey", defaultValue = "") String accessKey) {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 

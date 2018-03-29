@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.download;
 
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+
 public enum ExperimentFileType {
 
     // Could include icon name (similar to Description class in ExternallyAvailableContent)
@@ -35,6 +37,6 @@ public enum ExperimentFileType {
             }
         }
 
-        throw new IllegalArgumentException("No experiment file type with ID" + id + "was found");
+        throw new ResourceNotFoundException("No experiment file type with ID " + id + " was found");
     }
 }
