@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.download.ExperimentFileType;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -19,17 +21,21 @@ import java.io.File;
 public class FileDownloadController {
 
     private ExperimentFileLocationService experimentFileLocationService;
+    private ScxaExperimentTrader experimentTrader;
 
     @Inject
-    public FileDownloadController(ExperimentFileLocationService experimentFileLocationService) {
+    public FileDownloadController(ExperimentFileLocationService experimentFileLocationService, ScxaExperimentTrader experimentTrader) {
         this.experimentFileLocationService = experimentFileLocationService;
+        this.experimentTrader = experimentTrader;
     }
 
     @RequestMapping(value = "experiment/{experimentAccession}/download", method = RequestMethod.GET)
     public ResponseEntity<FileSystemResource> download(@PathVariable String experimentAccession,
                                                        @RequestParam(value= "fileType", defaultValue = "") String fileTypeId, @RequestParam(value="accessKey") String accessKey) {
 
-        File file = experimentFileLocationService.getFilePath(experimentAccession, ExperimentFileType.fromId(fileTypeId)).toFile();
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+
+        File file = experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.fromId(fileTypeId)).toFile();
         FileSystemResource resource = new FileSystemResource(file);
 
         return ResponseEntity.ok()
