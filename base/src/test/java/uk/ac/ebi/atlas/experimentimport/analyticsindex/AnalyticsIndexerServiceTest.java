@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,7 +16,6 @@ import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
-import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.Arrays;
 import java.util.HashMap;
