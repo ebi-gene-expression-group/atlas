@@ -25,16 +25,16 @@ public class BioEntityCardModelFactoryTest {
     private static final Species SPECIES = new SpeciesFactory(null).createUnknownSpecies();
 
     @Mock
-    private ArrayDesignDAO arrayDesignDAO;
+    private ArrayDesignDAO arrayDesignDaoMock;
 
     @Mock
-    private BioEntityPropertyService linkBuilder;
+    private BioEntityPropertyService linkBuilderMock;
 
     private BioEntityCardModelFactory subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BioEntityCardModelFactory(linkBuilder, arrayDesignDAO);
+        subject = new BioEntityCardModelFactory(linkBuilderMock, arrayDesignDaoMock);
     }
 
 
@@ -69,7 +69,7 @@ public class BioEntityCardModelFactoryTest {
 
     @Test
     public void outputLooksRight() {
-        when(linkBuilder.mapToLinkText(BIOENTITY_PROPERTY_NAME_GO, ImmutableSet.of("value")))
+        when(linkBuilderMock.mapToLinkText(BIOENTITY_PROPERTY_NAME_GO, ImmutableSet.of("value"), false))
                 .thenReturn(ImmutableMap.of("value", "value"));
 
         JsonArray result =
