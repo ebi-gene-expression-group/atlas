@@ -1,16 +1,16 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.download.ExperimentFileType;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -19,6 +19,8 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
@@ -67,10 +69,9 @@ public class ExperimentController extends HtmlExceptionHandlingController {
             );
         }
 
-        availableTabs.add(customContentTab("none", "Supplementary Information", new JsonObject()));
-//        availableTabs.add(
-//                customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
-//        );
+        availableTabs.add(
+                customContentTab("supplementary-information", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
+        );
 
         availableTabs.add(customContentTab("none", "Downloads", new JsonObject()));
 //        availableTabs.add(
@@ -91,36 +92,44 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return availableDataUnits;
     }
 
-//    private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
-//        JsonArray supplementaryInformationTabs = new JsonArray();
-//        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
-//            supplementaryInformationTabs.add(customContentTab("static-table", "Analysis Methods", "data",
-//                    formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()
-//                            )
-//            ));
-//        }
-//        supplementaryInformationTabs.add(
-//                customContentTab("resources", "Resources", "url",
-//                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-//                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
-//        );
-//
-//        return supplementaryInformationTabs;
-//    }
+    private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
+        JsonArray supplementaryInformationTabs = new JsonArray();
+        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
+            try (TsvStreamer tsvStreamer =
+                         dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
+                supplementaryInformationTabs.add(
+                        customContentTab(
+                                "static-table",
+                                "Analysis Methods",
+                                "data",
+                                formatTable(tsvStreamer.get().collect(Collectors.toList()))));
+            }
+        }
+        supplementaryInformationTabs.add(
+                customContentTab("resources", "Resources", "url",
+                        new JsonPrimitive(
+                                ExternallyAvailableContentService.listResourcesUrl(
+                                        experiment.getAccession(),
+                                        accessKey,
+                                        ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
+        );
+
+        return supplementaryInformationTabs;
+    }
 
 
-//    private JsonArray formatTable(List<String []> rows){
-//
-//        JsonArray result = new JsonArray();
-//        for (String[] row : rows) {
-//            //skip empty rows and other unexpected input
-//            if (row.length == 2) {
-//                result.add(twoElementArray(row[0], row[1]));
-//            }
-//        }
-//
-//        return result;
-//    }
+    private JsonArray formatTable(List<String []> rows){
+
+        JsonArray result = new JsonArray();
+        for (String[] row : rows) {
+            //skip empty rows and other unexpected input
+            if (row.length == 2) {
+                result.add(twoElementArray(row[0], row[1]));
+            }
+        }
+
+        return result;
+    }
 
 //    private JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs){
 //        JsonArray result = new JsonArray();
@@ -133,18 +142,18 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 //        return result;
 //    }
 
-//    private JsonArray twoElementArray(String x, String y){
-//        JsonArray result = new JsonArray();
-//        result.add(new JsonPrimitive(x));
-//        result.add(new JsonPrimitive(y));
-//        return result;
-//    }
+    private JsonArray twoElementArray(String x, String y){
+        JsonArray result = new JsonArray();
+        result.add(new JsonPrimitive(x));
+        result.add(new JsonPrimitive(y));
+        return result;
+    }
 
-//    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
-//        JsonObject props =  new JsonObject();
-//        props.add(onlyPropName, value);
-//        return customContentTab(tabType, name, props);
-//    }
+    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
+        JsonObject props =  new JsonObject();
+        props.add(onlyPropName, value);
+        return customContentTab(tabType, name, props);
+    }
 
     private JsonObject customContentTab(String tabType, String name, JsonObject props) {
         JsonObject result = new JsonObject();
