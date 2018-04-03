@@ -23,7 +23,7 @@
     "react-table": "^6.7.6",
     "sc-atlas-bioentity-information": "^1.2.0",
     "urijs": "^1.19.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.5",
     "pluralize": "^7.0.0"
   },
   "devDependencies": {
@@ -41,6 +41,6 @@
     "style-loader": "^0.20.3",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.4"
   }
 }
