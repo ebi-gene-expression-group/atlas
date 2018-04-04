@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
@@ -17,10 +16,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties.BIOENTITY_PROPERTY_NAMES;
+
 @Controller
 public class GenePageController extends BioentityPageController {
-
-    @RequestMapping(value = "/genes/{identifier:.*}",produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/genes/{identifier:.*}", produces = "text/html;charset=UTF-8")
     public String showGenePage(@PathVariable String identifier, Model model) {
         if(identifier.toUpperCase().startsWith("MGI")){
             Set<String> correspondingEnsemblIdentifiers = bioentityPropertyDao.fetchGeneIdsForPropertyValue
@@ -41,8 +41,14 @@ public class GenePageController extends BioentityPageController {
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, speciesReferenceName.getName(), geneName, model, experimentTypes,
-                BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType);
+        return super.showBioentityPage(
+                identifier,
+                speciesReferenceName.getName(),
+                geneName,
+                model,
+                experimentTypes,
+                BIOENTITY_PROPERTY_NAMES,
+                propertyValuesByType);
     }
 
     @Override
