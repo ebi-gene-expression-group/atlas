@@ -62,7 +62,7 @@
             </div>
 
             <div class="tabs-panel" id="search-gene-set-enrichment" style="background-color: #e6e6e6;">
-                <form action="genesetenrichment" method="get" id="home-genesetenrichment-atlas-form">
+                <form method="get" action="${pageContext.request.contextPath}/genesetenrichment" id="home-genesetenrichment-atlas-form">
                     <div class="row expanded">
                         <div class="small-12 columns">
                             <label>Provide a set of Ensembl gene identifiers to test enrichment against differentially expressed genes by comparison</label>
