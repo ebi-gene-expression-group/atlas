@@ -33,4 +33,4 @@ Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired
 }
 
-export default Table;
+export default Table
