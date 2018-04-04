@@ -8,10 +8,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
-import java.net.URI;
 import java.util.List;
-import java.util.function.Function;
 @Named
 public class SingleCellContentService {
 
@@ -37,13 +34,6 @@ public class SingleCellContentService {
                 );
 
         this.experimentTrader = experimentTrader;
-    }
-
-    public Function<HttpServletResponse, Void> stream(String experimentAccession, String accessKey, final URI uri) {
-        Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-
-        return rnaSeqBaselineExperimentExternallyAvailableContentService.stream((BaselineExperiment) experiment, uri);
-
     }
 
     public List<ExternallyAvailableContent> list(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType) {

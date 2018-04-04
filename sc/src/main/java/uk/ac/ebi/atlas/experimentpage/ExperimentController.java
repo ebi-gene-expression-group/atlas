@@ -18,9 +18,15 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
@@ -28,12 +34,14 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private final DataFileHub dataFileHub;
     private static final Gson gson = new Gson();
     private final ExperimentFileLocationService experimentFileLocationService;
+    private final SingleCellContentService singleCellContentService;
     
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentFileLocationService experimentFileLocationService){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentFileLocationService experimentFileLocationService, SingleCellContentService singleCellContentService){
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
         this.experimentFileLocationService = experimentFileLocationService;
+        this.singleCellContentService = singleCellContentService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -92,6 +100,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return availableDataUnits;
     }
 
+    // TODO: Move this to new ExperimentPageContentService class
     private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
         JsonArray supplementaryInformationTabs = new JsonArray();
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
@@ -105,19 +114,50 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                 formatTable(tsvStreamer.get().collect(Collectors.toList()))));
             }
         }
+
+        // Links to resources
+        List<ExternallyAvailableContent> contents = singleCellContentService.list(experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION);
+        JsonArray result = new JsonArray();
+        for(ExternallyAvailableContent content: contents){
+            result.add(contentAsJson(content, experiment.getAccession(), accessKey));
+        }
+
         supplementaryInformationTabs.add(
-                customContentTab("resources", "Resources", "url",
-                        new JsonPrimitive(
-                                ExternallyAvailableContentService.listResourcesUrl(
-                                        experiment.getAccession(),
-                                        accessKey,
-                                        ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
-        );
+                customContentTab(
+                        "resources",
+                        "Resources",
+                        "data",
+                        result
+                ));
 
         return supplementaryInformationTabs;
     }
 
+    // TODO: Move this to ExternallyAvailableContent class as toJson() method
+    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey){
+        JsonObject result = content.description.asJson();
+        if("redirect".equals(content.uri.getScheme())){
+            try {
+                result.addProperty("url", new URL(content.uri.getSchemeSpecificPart()).toExternalForm());
 
+            } catch (MalformedURLException e) {
+                result.addProperty("url",
+                        MessageFormat.format("{0}{1}",
+                                content.uri.getSchemeSpecificPart(),
+                                isNotEmpty(accessKey) ? "?accessKey="+accessKey : "")
+                );
+            }
+
+        } else {
+            result.addProperty("url",
+                    MessageFormat.format("experiments-content/{0}/resources/{1}{2}",
+                            accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
+                    ));
+        }
+        return result;
+    }
+
+    // TODO: Move to a new JSON Utils class
     private JsonArray formatTable(List<String []> rows){
 
         JsonArray result = new JsonArray();
@@ -142,6 +182,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 //        return result;
 //    }
 
+    // TODO: Move to a new JSON Utils class
     private JsonArray twoElementArray(String x, String y){
         JsonArray result = new JsonArray();
         result.add(new JsonPrimitive(x));
@@ -163,6 +204,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
+    // TODO: Move this to new ExperimentPageContentService class
     private JsonObject tSnePlotTab(Experiment experiment) {
         JsonObject props = new JsonObject();
 
@@ -181,6 +223,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return customContentTab("t-sne-plot", "Results", props);
     }
 
+    // TODO: Move this to new ExperimentPageContentService class
     private JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
         JsonObject props = new JsonObject();
         props.add("table", table);
