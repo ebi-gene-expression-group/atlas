@@ -67,7 +67,7 @@ public class BioEntityPropertyService {
                         .collect(toMap(identity(),
                                        p -> interProTermTrader.get(p).map(OntologyTerm::name).orElse(p)));
             default:
-                return propertyValues.stream().collect(Collectors.toMap(Function.identity(), Function.identity()));
+                return propertyValues.stream().collect(toMap(identity(), identity()));
         }
     }
 
