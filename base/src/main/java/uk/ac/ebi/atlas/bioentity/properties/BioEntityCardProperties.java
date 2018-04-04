@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.*;
@@ -72,5 +73,9 @@ public class BioEntityCardProperties {
 
     public static String getUrlTemplate(BioentityPropertyName propertyName, Species species) {
         return PROPERTY_LINK_MAPPER.getOrDefault(propertyName, s -> "").apply(species);
+    }
+
+    static Set<BioentityPropertyName> linkedPropertynames() {
+        return PROPERTY_LINK_MAPPER.keySet();
     }
 }
