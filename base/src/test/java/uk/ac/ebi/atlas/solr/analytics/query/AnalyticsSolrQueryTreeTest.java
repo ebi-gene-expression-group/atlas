@@ -15,7 +15,7 @@ public class AnalyticsSolrQueryTreeTest {
         assertThat(subject.toQueryPlan())
                 .hasSize(4);
         assertThat(subject.toQueryPlan().subList(0, 2))
-                .containsExactly("bioentity_identifier:\"SLC4A4\"", "keyword_symbol:\"SLC4A4\"");
+                .containsExactly("bioentity_identifier_search:\"SLC4A4\"", "keyword_symbol:\"SLC4A4\"");
     }
 
 }

@@ -4,12 +4,16 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
@@ -49,7 +53,12 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     }
 
     public static Map<AnalyticsSchemaField, Set<String>> asAnalyticsGeneQuery(SemanticQuery geneQuery) {
-        return geneQuery.groupValuesByCategory().entrySet().stream()
+        // Since there are gene IDs unavailable in bioentities because they’re in scaffolds which we don’t have or from
+        // past Ensembl releases which we don’t support, the only way to search for such genes is through a free-text
+        // search from the main page.
+
+        Map<AnalyticsSchemaField, Set<String>> queryMap =
+                geneQuery.groupValuesByCategory().entrySet().stream()
                 .collect(toMap(
                         entry -> asAnalyticsSchemaField(BioentityPropertyName.getByName(entry.getKey())),
                         entry -> entry.getValue().stream()
@@ -58,6 +67,15 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
                                                 // to here. If only there existed a multiple field query parser... :(
                                                  .map(String::toLowerCase)
                                                  .collect(toSet())));
+
+        Set<String> bioentityIdentifierSearchValues =
+                queryMap.getOrDefault(BIOENTITY_IDENTIFIER_SEARCH, new HashSet<>());
+        bioentityIdentifierSearchValues.addAll(
+                geneQuery.terms().stream().map(SemanticQueryTerm::value).collect(toSet()));
+
+        queryMap.put(BIOENTITY_IDENTIFIER_SEARCH, bioentityIdentifierSearchValues);
+
+        return queryMap;
     }
 
     public AnalyticsCollectionProxy(SolrClient solrClient) {

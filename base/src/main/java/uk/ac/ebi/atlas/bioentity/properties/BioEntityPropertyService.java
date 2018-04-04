@@ -71,30 +71,6 @@ public class BioEntityPropertyService {
         }
     }
 
-    Map<String, String> mapToLinkText(BioentityPropertyName propertyName, Collection<String> propertyValues) {
-        switch (propertyName) {
-            case ORTHOLOG:
-                return propertyValues.stream()
-                        .collect(Collectors.toMap(Function.identity(), this::fetchSymbolAndSpeciesForOrtholog));
-            case PATHWAYID:
-                return reactomeClient.getPathwayNames(propertyValues);
-            case GO: case PO:
-                return propertyValues.stream()
-                        .collect(
-                                Collectors.toMap(
-                                        Function.identity(),
-                                        p -> goPoTermTrader.get(p).map(OntologyTerm::name).orElse(p)));
-            case INTERPRO:
-                return propertyValues.stream()
-                        .collect(
-                                Collectors.toMap(
-                                        Function.identity(),
-                                        p -> interProTermTrader.get(p).map(OntologyTerm::name).orElse(p)));
-            default:
-                return propertyValues.stream().collect(Collectors.toMap(Function.identity(), Function.identity()));
-        }
-    }
-
     int assessRelevance(BioentityPropertyName bioentityPropertyName, String propertyValue) {
         if (ImmutableList.of(BioentityPropertyName.GO, BioentityPropertyName.PO).contains(bioentityPropertyName)) {
             return goPoTermTrader.get(propertyValue).map(OntologyTerm::depth).orElse(0);

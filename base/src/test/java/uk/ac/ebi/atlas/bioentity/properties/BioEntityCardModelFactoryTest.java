@@ -25,16 +25,16 @@ public class BioEntityCardModelFactoryTest {
     private static final Species SPECIES = new SpeciesFactory(null).createUnknownSpecies();
 
     @Mock
-    private ArrayDesignDAO arrayDesignDAO;
+    private ArrayDesignDAO arrayDesignDaoMock;
 
     @Mock
-    private BioEntityPropertyService linkBuilder;
+    private BioEntityPropertyService linkBuilderMock;
 
     private BioEntityCardModelFactory subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BioEntityCardModelFactory(linkBuilder, arrayDesignDAO);
+        subject = new BioEntityCardModelFactory(linkBuilderMock, arrayDesignDaoMock);
     }
 
 
@@ -69,7 +69,7 @@ public class BioEntityCardModelFactoryTest {
 
     @Test
     public void outputLooksRight() {
-        when(linkBuilder.mapToLinkText(BIOENTITY_PROPERTY_NAME_GO, ImmutableSet.of("value")))
+        when(linkBuilderMock.mapToLinkText(BIOENTITY_PROPERTY_NAME_GO, ImmutableSet.of("value"), false))
                 .thenReturn(ImmutableMap.of("value", "value"));
 
         JsonArray result =
@@ -87,7 +87,7 @@ public class BioEntityCardModelFactoryTest {
         JsonObject value = property.get("values").getAsJsonArray().get(0).getAsJsonObject();
         assertThat(value.get("text").getAsString()).isEqualTo("value");
         assertThat(value.get("url").getAsString())
-                .isEqualTo("http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value");
+                .isEqualTo("https://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value");
         assertThat(value.get("relevance").getAsInt()).isEqualTo(0);
     }
 

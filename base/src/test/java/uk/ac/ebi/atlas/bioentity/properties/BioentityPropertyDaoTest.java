@@ -1,52 +1,115 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import com.google.common.collect.ImmutableSet;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
-import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
+import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 
 import java.util.HashMap;
-import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.BDDMockito.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.AdditionalMatchers.not;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties.BIOENTITY_PROPERTY_NAMES;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSGENE;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BioentityPropertyDaoTest {
+    private static <K,V> HashMap<K, V> hashMapOf() {
+        return new HashMap<>();
+    }
 
-    private static final String BIOENTITY_IDENTIFIER = "ENSG00000132604";
-    private static final String GENE_SYMBOL = "TERF2";
+    private static <K,V> HashMap<K, V> hashMapOf(K key, V value) {
+        HashMap<K, V> map = new HashMap<>();
+        map.put(key, value);
+        return map;
+    }
+
+    private static final String ID_IN_BIOENTITIES = "ENSG00000132604";
+    private static final String ID_IN_BIOENTITIES_SYMBOL = "TERF2";
+    private static final String ID_IN_ANALYTICS = "ENSG00000005955";
 
     @Mock
-    private BioentitiesSolrClient gxaSolrClientMock;
+    private BioentitiesSolrClient bioentitiesCollectionMock;
+
+    @Mock
+    private SolrCloudCollectionProxyFactory collectionProxyFactoryMock;
+
+    @Mock
+    private AnalyticsCollectionProxy analyticsCollectionProxyMock;
+
+    @Mock
+    private QueryResponse oneResultQueryResponseMock;
+
+    @Mock
+    private QueryResponse noResultsQueryResponseMock;
 
     private BioEntityPropertyDao subject;
 
     @Before
     public void setUp() throws Exception {
-        HashMap<BioentityPropertyName, Set<String>> propertiesMap = Maps.newHashMap();
-        propertiesMap.put(BioentityPropertyName.SYMBOL, Sets.newHashSet(GENE_SYMBOL));
-        given(gxaSolrClientMock.getMap(BIOENTITY_IDENTIFIER, ImmutableList.of(BioentityPropertyName.SYMBOL))).willReturn(propertiesMap);
+        when(bioentitiesCollectionMock.getMap(ID_IN_BIOENTITIES, BIOENTITY_PROPERTY_NAMES))
+                .thenReturn(hashMapOf(SYMBOL, ImmutableSet.of(ID_IN_BIOENTITIES_SYMBOL)));
+        when(bioentitiesCollectionMock.getMap(not(eq(ID_IN_BIOENTITIES)), anyList()))
+                .thenReturn(hashMapOf());
 
-        subject = new BioEntityPropertyDao(gxaSolrClientMock);
+        when(collectionProxyFactoryMock.createAnalyticsCollectionProxy())
+                .thenReturn(analyticsCollectionProxyMock);
+
+        SolrDocumentList oneResultSolrDocumentList = new SolrDocumentList();
+        oneResultSolrDocumentList.add(new SolrDocument(hashMapOf("bioentity_identifier", ID_IN_BIOENTITIES)));
+        when(oneResultQueryResponseMock.getResults()).thenReturn(oneResultSolrDocumentList);
+        when(noResultsQueryResponseMock.getResults()).thenReturn(new SolrDocumentList());
+
+        subject = new BioEntityPropertyDao(bioentitiesCollectionMock, collectionProxyFactoryMock);
     }
 
     @Test(expected = BioentityNotFoundException.class)
-    public void shouldThrowException() throws Exception {
-        subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER);
+    public void geneIdNotFoundInBioentitiesNorAnalyticsCollectionThrows() {
+        when(analyticsCollectionProxyMock.query(
+                argThat(solrParams -> !solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS))))
+                .thenReturn(noResultsQueryResponseMock);
+
+        subject.fetchGenePageProperties("ENSFOOBAR");
     }
 
     @Test
-    public void testFindPropertyValuesForGeneId() throws Exception {
-        assertThat(subject.fetchPropertyValuesForGeneId(BIOENTITY_IDENTIFIER, BioentityPropertyName.SYMBOL), hasItem(GENE_SYMBOL));
+    public void ifGeneIdInBioentitiesWeDontQueryAnalytics() {
+        assertThat(subject.fetchGenePageProperties(ID_IN_BIOENTITIES))
+                .containsOnlyKeys(SYMBOL)
+                .containsValues(ImmutableSet.of(ID_IN_BIOENTITIES_SYMBOL));
+
+        verifyZeroInteractions(analyticsCollectionProxyMock);
+    }
+
+    @Test
+    public void ifGeneIdNotInBioentitiesButInAnalytics() {
+        when(analyticsCollectionProxyMock.query(
+                argThat(solrParams -> solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS))))
+                .thenReturn(oneResultQueryResponseMock);
+
+        assertThat(subject.fetchGenePageProperties(ID_IN_ANALYTICS))
+                .containsOnlyKeys(ENSGENE);
+
+        verify(analyticsCollectionProxyMock)
+                .query(argThat(
+                        solrParams ->
+                                solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS)));
     }
 
 }
