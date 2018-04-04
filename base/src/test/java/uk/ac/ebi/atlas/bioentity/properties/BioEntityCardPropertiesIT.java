@@ -103,9 +103,14 @@ public class BioEntityCardPropertiesIT {
 
     @Test
     public void unknownSpeciesReturnsEmptyTemplate() {
-        for (BioentityPropertyName propertyName : BioEntityCardProperties.BIOENTITY_PROPERTY_NAMES) {
-            assertThat(BioEntityCardProperties.getUrlTemplate(
-                    propertyName, speciesFactory.createUnknownSpecies())).isEqualTo("");
+        for (BioentityPropertyName propertyName : BioEntityCardProperties.linkedPropertynames()) {
+            if (propertyName.toString().startsWith("ENS") || propertyName.toString().startsWith("WBPS")) {
+                assertThat(BioEntityCardProperties.getUrlTemplate(
+                        propertyName, speciesFactory.createUnknownSpecies())).isEmpty();
+            } else {
+                assertThat(BioEntityCardProperties.getUrlTemplate(
+                        propertyName, speciesFactory.createUnknownSpecies())).isNotEmpty();
+            }
         }
     }
 }
