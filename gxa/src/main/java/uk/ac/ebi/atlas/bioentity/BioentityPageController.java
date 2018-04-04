@@ -43,7 +43,8 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
     }
 
     @Inject
-    public void setDifferentialAnalyticsSearchService(DifferentialAnalyticsSearchService differentialAnalyticsSearchService) {
+    public void setDifferentialAnalyticsSearchService(
+            DifferentialAnalyticsSearchService differentialAnalyticsSearchService) {
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
     }
 
@@ -103,13 +104,16 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
         TODO For now the callback might match slightly too much which is a bug.
          */
         model.addAttribute("geneQuery", SemanticQuery.create(identifier).toUrlEncodedJson());
-        model.addAllAttributes(bioEntityCardModelFactory.modelAttributes(identifier, species, desiredOrderOfPropertyNames,
-                entityName, propertyValuesByType));
+        model.addAllAttributes(
+                bioEntityCardModelFactory.modelAttributes(
+                        identifier, species, desiredOrderOfPropertyNames, entityName, propertyValuesByType));
 
 
         return "search-results";
     }
 
-    protected abstract Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName);
+    protected abstract Map<String, Object> pageDescriptionAttributes(String identifier,
+                                                                     Species species,
+                                                                     String entityName);
 
 }

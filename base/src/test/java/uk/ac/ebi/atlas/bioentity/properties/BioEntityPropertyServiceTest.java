@@ -67,7 +67,7 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void unmappedPropertiesAreReturnedUnchanged() throws Exception {
+    public void unmappedPropertiesAreReturnedUnchanged() {
         for (BioentityPropertyName bioentityPropertyName : BioentityPropertyName.values()) {
             if (!UNMAPPED_PROPERTY_NAMES.contains(bioentityPropertyName)) {
                 assertThat(
@@ -79,7 +79,7 @@ public class BioEntityPropertyServiceTest {
 
 
     @Test
-    public void reactomeTermsAreMapped() throws Exception {
+    public void reactomeTermsAreMapped() {
         when(reactomeClientMock.getPathwayNames(any())).thenReturn(ImmutableMap.of("R-HSA-31337", "foobar"));
         subject.mapToLinkText(BioentityPropertyName.PATHWAYID, ImmutableSet.of("R-HSA-31337"),false);
 
@@ -87,7 +87,7 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void goTermsAreMapped() throws Exception {
+    public void goTermsAreMapped() {
         when(goPoTermTraderMock.get(anyString())).thenReturn(Optional.of(OntologyTerm.create("foobar")));
         subject.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("foobar"),false);
 
@@ -95,7 +95,7 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void poTermsAreMapped() throws Exception {
+    public void poTermsAreMapped() {
         when(goPoTermTraderMock.get(anyString())).thenReturn(Optional.of(OntologyTerm.create("foobar")));
         subject.mapToLinkText(BioentityPropertyName.PO, ImmutableSet.of("foobar"),false);
 
@@ -103,7 +103,7 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void interproTermsAreMapped() throws Exception {
+    public void interproTermsAreMapped() {
         when(interProTermTraderMock.get(anyString())).thenReturn(Optional.of(OntologyTerm.create("foobar")));
         subject.mapToLinkText(BioentityPropertyName.INTERPRO, ImmutableSet.of("foobar"),false);
 
@@ -111,7 +111,7 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void unknownSpeciesAreOmittedFromOrthologs() throws Exception {
+    public void unknownSpeciesAreOmittedFromOrthologs() {
         // Unknown species are species not found in the analytics core, i.e. with no genes above default threshold
         when(speciesInferrerMock.inferSpeciesForGeneQuery(
                 argThat(semanticQuery -> semanticQuery.iterator().next().value().startsWith("ENSCING"))))
@@ -125,7 +125,7 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void useGeneIdIfNoGeneNameAvailable() throws Exception {
+    public void useGeneIdIfNoGeneNameAvailable() {
         when(speciesInferrerMock.inferSpeciesForGeneQuery(
                 argThat(semanticQuery -> semanticQuery.iterator().next().value().startsWith("VIT"))))
                 .thenReturn(new Species("Vitis vinifera",
@@ -142,7 +142,7 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void onlyGoTermsHaveDepth() throws Exception {
+    public void onlyGoTermsHaveDepth() {
         when(goPoTermTraderMock.get("GO:0000001")).thenReturn(Optional.of(GO_0000001));
 
         for (BioentityPropertyName bioentityPropertyName : BioentityPropertyName.values()) {
