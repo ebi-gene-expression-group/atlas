@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import org.apache.solr.client.solrj.SolrServerException;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
@@ -28,7 +25,7 @@ public class BioEntityPropertyDaoIT {
     private BioEntityPropertyDao subject;
 
     @Test
-    public void fetchGenePageProperties() throws Exception {
+    public void fetchGenePageProperties() {
         // given
         Map<BioentityPropertyName, Set<String>> properties =
                 subject.fetchGenePageProperties("ENSMUSG00000029816");
@@ -50,19 +47,7 @@ public class BioEntityPropertyDaoIT {
     }
 
     @Test
-    public void fetchTooltipProperties() throws Exception {
-        // given
-        Map<BioentityPropertyName, Set<String>> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
-
-        assertThat(numberOfValues(properties), is(greaterThan(30)));
-        assertThat(properties.get(BioentityPropertyName.SYNONYM).size(), Matchers.is(5));
-        assertThat(properties.get(BioentityPropertyName.SYNONYM), hasItems("Calmbp1", "MCPH5", "ASP"));
-        assertThat(properties.get(BioentityPropertyName.GOTERM), hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
-        assertThat(properties.get(BioentityPropertyName.INTERPROTERM), hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
-    }
-
-    @Test
-    public void findPropertyValuesForGeneId() throws SolrServerException {
+    public void findPropertyValuesForGeneId() {
         assertThat(subject.fetchPropertyValuesForGeneId("ENSG00000179218", BioentityPropertyName.SYMBOL), hasItem("CALR"));
         assertThat(subject.fetchPropertyValuesForGeneId("ENSMUSG00000029816", BioentityPropertyName.SYMBOL), hasItem("Gpnmb"));
     }
