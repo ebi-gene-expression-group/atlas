@@ -44,7 +44,6 @@ public class RequestPreferencesTest {
 
     @Test
     public void testDefaultUnit(){
-        assertThat(new RnaSeqBaselineRequestPreferences().getDefaultUnit(), is(rnaSeqBaselineDefault.getUnit()));
         assertThat(rnaSeqBaselineDefault.getUnit(), is(ExpressionUnit.Absolute.Rna.TPM));
     }
 

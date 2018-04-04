@@ -12,14 +12,14 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class ExperimentAdminController extends JsonExceptionHandlingController {
 
@@ -75,10 +75,10 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
                             .orElse(ImmutableList.of(usageMessage(opParameter)));
 
             for (JsonElement element : result) {
-                gson.toJson(element, writer);
+                GSON.toJson(element, writer);
             }
         } catch (Exception e) {
-            gson.toJson(errorMessage(accessionParameter, e), writer);
+            GSON.toJson(errorMessage(accessionParameter, e), writer);
         } finally {
             writer.endArray();
             writer.flush();
@@ -110,10 +110,10 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
 
     private Collection<String> readAccessions(String accessionParameter) {
         if (accessionParameter.contains("*")) {
-            List<String> result = new ArrayList<>();
             Pattern pattern = Pattern.compile(accessionParameter.replaceAll("\\*", ".*"));
-            result.addAll(experimentOps.findAllExperiments().stream().filter(experimentAccession -> pattern.matcher(experimentAccession).matches()).collect(Collectors.toList()));
-            return result;
+            return experimentOps.findAllExperiments().stream()
+                    .filter(experimentAccession ->
+                            pattern.matcher(experimentAccession).matches()).collect(toList());
         } else {
             return Arrays.asList(accessionParameter.split(","));
         }

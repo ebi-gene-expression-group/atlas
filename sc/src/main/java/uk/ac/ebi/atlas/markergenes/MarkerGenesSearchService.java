@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.markergenes;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.utils.URIBuilder;
@@ -14,16 +13,15 @@ import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Named
 public class MarkerGenesSearchService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkerGenesSearchService.class);
 
     static final double DEFAULT_P_THRESHOLD = 0.85;
 
     private final MarkerGeneDao markerGeneDao;
-    private final Gson gson = new Gson();
 
     @Inject
     public MarkerGenesSearchService(MarkerGeneDao markerGeneDao) {
@@ -46,7 +44,10 @@ public class MarkerGenesSearchService {
                             .setPath("/gxa_sc/experiments/" + markerGeneProfile.experimentAccession())
                             .addParameter("geneId", geneId)
                             .addParameter("k", Integer.toString(markerGeneProfile.k()))
-                            .addParameter("clusterId", gson.toJson(markerGeneProfile.clusters().stream().map(Pair::getLeft).collect(toList())))
+                            .addParameter(
+                                    "clusterId",
+                                    GSON.toJson(markerGeneProfile.clusters().stream()
+                                            .map(Pair::getLeft).collect(toList())))
                             .build()
                             .toString());
         } catch (URISyntaxException e) {

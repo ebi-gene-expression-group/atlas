@@ -19,9 +19,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
-        E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
-        Prof extends Profile<DataColumnDescriptor, Expr, Prof>> extends ProfileStreamFactory<DataColumnDescriptor, Expr, E, StreamOptions, Prof> {
+public abstract class CreatesProfilesFromTsvFiles<D extends DescribesDataColumns,
+                                                  E extends Expression,
+                                                  T extends Experiment<D>,
+                                                  O extends ProfileStreamOptions<D>,
+                                                  P extends Profile<D, E, P>>
+        extends ProfileStreamFactory<D, E, T, O, P> {
 
     protected DataFileHub dataFileHub;
 
@@ -29,7 +32,7 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
         this.dataFileHub = dataFileHub;
     }
 
-    protected abstract Predicate<Expr> filterExpressions(E experiment, StreamOptions options);
+    protected abstract Predicate<E> filterExpressions(T experiment, O options);
 
     /*
     Assumption: all Atlas data files have ids in the first column.
@@ -42,47 +45,50 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
                 line -> keepGeneIds.contains(line[0]);
     }
 
-    protected final Pair<Predicate<String[]>, Predicate<Expr>> filter(E experiment, StreamOptions options, Collection<String>keepGeneIds) {
+    protected final Pair<Predicate<String[]>, Predicate<E>> filter(T experiment,
+                                                                   O options,
+                                                                   Collection<String>keepGeneIds) {
         return Pair.of(keepLine(keepGeneIds), filterExpressions(experiment, options));
     }
 
-    public ObjectInputStream<Prof> create(E experiment, StreamOptions options, Collection<String> keepGeneIds) {
+    public ObjectInputStream<P> create(T experiment, O options, Collection<String> keepGeneIds) {
 
-        Vector<ObjectInputStream<Prof>> outputs =
+        Vector<ObjectInputStream<P>> outputs =
                 getDataFiles(experiment, options)
                         .stream()
                         .map(dataFile -> readNextLineStream(
                                 howToReadLine(experiment, filterExpressions(experiment, options)),
                                 keepLine(keepGeneIds),
-                                dataFile
-                        ))
+                                dataFile))
                         .collect(Collectors.toCollection(Vector::new));
 
         return new SequenceObjectInputStream<>(outputs.elements());
 
     }
 
-    abstract class GoThroughTsvLineAndPickUpExpressionsByIndex implements Function<String[], Prof> {
-        protected final Map<Integer, DataColumnDescriptor> lookUpIndices;
-        private final Predicate<Expr> expressionFilter;
+    abstract class GoThroughTsvLineAndPickUpExpressionsByIndex implements Function<String[], P> {
+        protected final Map<Integer, D> lookUpIndices;
+        private final Predicate<E> expressionFilter;
 
-        protected GoThroughTsvLineAndPickUpExpressionsByIndex(Map<Integer, DataColumnDescriptor> lookUpIndices, Predicate<Expr> expressionFilter) {
+        protected GoThroughTsvLineAndPickUpExpressionsByIndex(Map<Integer, D> lookUpIndices,
+                                                              Predicate<E> expressionFilter) {
             this.lookUpIndices = lookUpIndices;
             this.expressionFilter = expressionFilter;
         }
 
         @Nullable
-        protected abstract Expr nextExpression(Integer index, DataColumnDescriptor correspondingColumn, String[] currentLine);
+        protected abstract E nextExpression(Integer index, D correspondingColumn, String[] currentLine);
 
-        protected abstract Prof newProfile(String[] currentLine);
+        protected abstract P newProfile(String[] currentLine);
 
         @Override
-        public Prof apply(String[] currentLine) {
-            Prof profile = newProfile(currentLine);
+        public P apply(String[] currentLine) {
+            P profile = newProfile(currentLine);
             for (Integer index : lookUpIndices.keySet()) {
-                DataColumnDescriptor correspondingColumn = lookUpIndices.get(index);
-                Expr nextExpression = nextExpression(index, correspondingColumn, currentLine);
-                if (nextExpression != null && nextExpression.getLevel() != 0.0 && expressionFilter.test(nextExpression)) {
+                D correspondingColumn = lookUpIndices.get(index);
+                E nextExpression = nextExpression(index, correspondingColumn, currentLine);
+                if (nextExpression != null &&
+                        nextExpression.getLevel() != 0.0 && expressionFilter.test(nextExpression)) {
                     profile.add(correspondingColumn, nextExpression);
                 }
             }
@@ -90,18 +96,19 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
         }
     }
 
-    protected abstract Function<String[], Function<String[], Prof>> howToReadLine(E experiment, Predicate<Expr> expressionFilter);
+    protected abstract Function<String[], Function<String[], P>> howToReadLine(T experiment,
+                                                                               Predicate<E> expressionFilter);
 
-    protected abstract Collection<ObjectInputStream<String[]>> getDataFiles(E experiment, StreamOptions options);
+    protected abstract Collection<ObjectInputStream<String[]>> getDataFiles(T experiment, O options);
 
-    private ObjectInputStream<Prof> readNextLineStream(Function<String[], Function<String[], Prof>> howToReadLine,
-                                                       final Predicate<String[]> keepLines,
-                                                       final ObjectInputStream<String[]> lines) {
+    private ObjectInputStream<P> readNextLineStream(Function<String[], Function<String[], P>> howToReadLine,
+                                                    final Predicate<String[]> keepLines,
+                                                    final ObjectInputStream<String[]> lines) {
 
-        final Function<String[], Prof> readLine = howToReadLine.apply(lines.readNext());
-        return new ObjectInputStream<Prof>() {
+        final Function<String[], P> readLine = howToReadLine.apply(lines.readNext());
+        return new ObjectInputStream<P>() {
             @Override
-            public Prof readNext() {
+            public P readNext() {
                 String[] next;
                 while ((next = lines.readNext())!= null) {
                     if (keepLines.test(next)) {

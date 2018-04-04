@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.solr.analytics.differential;
 
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.Configuration;
@@ -26,17 +25,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Named
 public class DifferentialResultsReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialResultsReader.class);
 
-    private final ExperimentTrader experimentTrader;
-
     private static final String DOCS_PATH = "$.response.docs[*]";
+    private static final ParseContext PARSE_CONTEXT =
+            JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST));
 
-    private static final ParseContext parser = JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST));
-
-    private final Gson gson = new Gson();
+    private final ExperimentTrader experimentTrader;
 
     @Inject
     public DifferentialResultsReader(ExperimentTrader experimentTrader) {
@@ -52,9 +51,9 @@ public class DifferentialResultsReader {
         double maxDownLevel = 0.0;
 
         List<JsonObject> filteredDocuments = Lists.newArrayList();
-        List<Map<String, Object>> documents = parser.parse(solrResponseAsJson).read(DOCS_PATH);
+        List<Map<String, Object>> documents = PARSE_CONTEXT.parse(solrResponseAsJson).read(DOCS_PATH);
         JsonArray results = new JsonArray();
-        goThroughDocuments:
+
         for (Map<String, Object> document : documents) {
             String experimentAccession = (String) document.get("experiment_accession");
             String contrastId = (String) document.get("contrast_id");
@@ -83,12 +82,12 @@ public class DifferentialResultsReader {
                 experiment= (DifferentialExperiment)  experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
             } catch (ExecutionException e) {
                 LOGGER.error("Error adding differential result: {}", e.getMessage());
-                continue goThroughDocuments;
+                continue;
             }
 
             Contrast contrast = experiment.getDataColumnDescriptor(contrastId);
 
-            JsonObject o = gson.toJsonTree(document).getAsJsonObject();
+            JsonObject o = GSON.toJsonTree(document).getAsJsonObject();
             o.addProperty("bioentityIdentifier", (String) document.get("bioentity_identifier"));
             o.addProperty("numReplicates", (int) document.get("num_replicates"));
             o.addProperty("bioentityName", bioentityName);

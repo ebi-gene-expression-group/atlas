@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class PropertyLinkTest {
     @Test
@@ -17,10 +17,11 @@ public class PropertyLinkTest {
     }
 
     @Test
-    public void toJson() throws Exception {
-
-
-        assertThat(new PropertyLink("foobar", "http://foobar.com/foobar", 0).toJson(), is(new Gson().fromJson("{\"text\":\"foobar\",\"url\":\"http://foobar.com/foobar\",\"relevance\":0}", JsonObject.class)));
-
+    public void toJson() {
+        assertThat(
+                new PropertyLink("foobar", "http://foobar.com/foobar", 0).toJson(),
+                is(GSON.fromJson(
+                        "{\"text\":\"foobar\",\"url\":\"http://foobar.com/foobar\",\"relevance\":0}",
+                        JsonObject.class)));
     }
 }

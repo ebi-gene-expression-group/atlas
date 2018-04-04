@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.analytics.baseline;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.Test;
@@ -12,10 +11,11 @@ import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class BaselineAnalyticsFacetsReaderTest {
 
-    private final static JsonObject RESPONSE_2_JSON_FACETS = new Gson().fromJson(
+    private final static JsonObject RESPONSE_2_JSON_FACETS = GSON.fromJson(
             "{\n" +
             "  \"homo sapiens\": [\n" +
             "    {\n" +

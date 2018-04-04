@@ -350,6 +350,12 @@
 
         <dependency>
             <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
             <artifactId>commons-configuration2</artifactId>
             <version>2.1</version>
         </dependency>
@@ -412,13 +418,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${org.springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -518,6 +517,18 @@
             <timezone>0</timezone>
             <properties/>
         </developer>
+        <developer>
+            <id>monica</id>
+            <name>Monica Jianu</name>
+            <email>monica@ebi.ac.uk</email>
+            <organization>EBI</organization>
+            <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties/>
+        </developer>
     </developers>
 
     <profiles>
@@ -528,6 +539,7 @@
                 <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</jdbc.url>
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>YxyR9PKvOAtY</jdbc.password>
+                <zk.host>lime</zk.host>
                 <solr.host>lime</solr.host>
                 <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>
@@ -542,6 +554,7 @@
                 <jdbc.url>jdbc:postgresql:gxpatlasloc</jdbc.url>
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>atlas3dev</jdbc.password>
+                <zk.host>localhost</zk.host>
                 <solr.host>localhost</solr.host>
                 <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>
@@ -557,6 +570,7 @@
                 <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
                 <jdbc.username>atlas3it</jdbc.username>
                 <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
+                <zk.host>lime.ebi.ac.uk</zk.host>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <log.flush>true</log.flush>
                 <log.level.root>info</log.level.root>

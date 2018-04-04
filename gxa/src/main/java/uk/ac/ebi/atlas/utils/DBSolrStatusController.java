@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
 import org.apache.solr.client.solrj.SolrClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,8 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 
 import javax.inject.Inject;
+
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 /*
 On 4 Oct 2016, at 12:04, Andrea Cristofori via RT <www-prod@ebi.ac.uk> wrote:
@@ -68,6 +69,6 @@ public final class DBSolrStatusController extends JsonExceptionHandlingControlle
             solrStatus = "DOWN";
         }
 
-        return new Gson().toJson(ImmutableMap.of("DB", dbStatus, "Solr", solrStatus));
+        return GSON.toJson(ImmutableMap.of("DB", dbStatus, "Solr", solrStatus));
     }
 }

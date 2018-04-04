@@ -13,7 +13,7 @@ import org.apache.solr.client.solrj.io.stream.metrics.Metric;
 import org.apache.solr.common.params.SolrParams;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
-import uk.ac.ebi.atlas.solr.cloud.search.SolrParamsBuilder;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -22,7 +22,7 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
     private final T collectionProxy;
     private final Bucket[] buckets;
 
-    private SolrParamsBuilder solrParamsBuilder = new SolrParamsBuilder();
+    private SolrQueryBuilder solrQueryBuilder = new SolrQueryBuilder();
     private ImmutableSet.Builder<Metric> metricsBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<FieldComparator> sortsBuilder = ImmutableSet.builder();
 
@@ -38,42 +38,42 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
     }
 
     public FacetStreamBuilder<T> addQueryTermsClause(SchemaField<T> field, String... values) {
-        solrParamsBuilder.addQueryTermsClause(field.name(), values);
+        solrQueryBuilder.addQueryTermsClause(field.name(), values);
         return this;
     }
 
     public FacetStreamBuilder<T> addFilterTermsClause(SchemaField<T> field, String... values) {
-        solrParamsBuilder.addFilterTermsClause(field.name(), values);
+        solrQueryBuilder.addFilterTermsClause(field.name(), values);
         return this;
     }
 
 //    public FacetStreamBuilder<T> addQueryUpperRangeClause(SchemaField<T> field, Double rangeUpperBound) {
-//        solrParamsBuilder.addQueryUpperRangeClause(field.name(), rangeUpperBound);
+//        solrQueryBuilder.addQueryUpperRangeClause(field.name(), rangeUpperBound);
 //        return this;
 //    }
 
     public FacetStreamBuilder<T> addFilterUpperRangeClause(SchemaField<T> field, Double rangeUpperBound) {
-        solrParamsBuilder.addFilterUpperRangeClause(field.name(), rangeUpperBound);
+        solrQueryBuilder.addFilterUpperRangeClause(field.name(), rangeUpperBound);
         return this;
     }
 
 //    public FacetStreamBuilder<T> addQueryLowerRangeClause(SchemaField<T> field, Double rangeLowerBound) {
-//        solrParamsBuilder.addQueryLowerRangeClause(field.name(), rangeLowerBound);
+//        solrQueryBuilder.addQueryLowerRangeClause(field.name(), rangeLowerBound);
 //        return this;
 //    }
 
     public FacetStreamBuilder<T> addFilterLowerRangeClause(SchemaField<T> field, Double rangeLowerBound) {
-        solrParamsBuilder.addFilterLowerRangeClause(field.name(), rangeLowerBound);
+        solrQueryBuilder.addFilterLowerRangeClause(field.name(), rangeLowerBound);
         return this;
     }
 
 //    public FacetStreamBuilder<T> addQueryDoubleRangeClause(SchemaField<T> field, Double rangeUpperBound, Double rangeLowerBound) {
-//        solrParamsBuilder.addQueryDoubleRangeClause(field.name(), rangeUpperBound, rangeLowerBound);
+//        solrQueryBuilder.addQueryDoubleRangeClause(field.name(), rangeUpperBound, rangeLowerBound);
 //        return this;
 //    }
 
     public FacetStreamBuilder<T> addFilterDoubleRangeClause(SchemaField<T> field, Double rangeUpperBound, Double rangeLowerBound) {
-        solrParamsBuilder.addFilterDoubleRangeClause(field.name(), rangeUpperBound, rangeLowerBound);
+        solrQueryBuilder.addFilterDoubleRangeClause(field.name(), rangeUpperBound, rangeLowerBound);
         return this;
     }
 
@@ -96,7 +96,7 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
 
     @Override
     protected TupleStream getRawTupleStream() {
-        SolrParams solrParams = solrParamsBuilder.build();
+        SolrParams solrParams = solrQueryBuilder.build();
         Metric[] metrics = metricsBuilder.build().toArray(new Metric[0]);
         FieldComparator[] sorts = sortsBuilder.build().toArray(new FieldComparator[0]);
         int limit = Integer.MAX_VALUE;  // retrieve all, see https://issues.apache.org/jira/browse/SOLR-11836

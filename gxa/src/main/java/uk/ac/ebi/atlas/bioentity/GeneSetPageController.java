@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.bioentity.geneset.GeneSetPropertyService;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -22,10 +23,13 @@ import static uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil.matchesReactomeID;
 public class GeneSetPageController extends BioentityPageController {
 
     private GeneSetPropertyService geneSetPropertyService;
+    private SpeciesInferrer speciesInferrer;
 
     @Inject
-    public void setGeneSetPropertyService(GeneSetPropertyService geneSetPropertyService) {
+    public void setGeneSetPropertyService(GeneSetPropertyService geneSetPropertyService,
+                                          SpeciesInferrer speciesInferrer) {
         this.geneSetPropertyService = geneSetPropertyService;
+        this.speciesInferrer = speciesInferrer;
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}",
@@ -41,8 +45,10 @@ public class GeneSetPageController extends BioentityPageController {
             throw new BioentityNotFoundException("Gene set <em>" + identifier + "</em> not found.");
         }
 
-        return super.showBioentityPage(identifier, speciesReferenceName, identifier, model, experimentTypes,
-                GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier));
+        Species species = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(identifier));
+
+        return super.showBioentityPage(identifier, species.getName(), identifier, model, experimentTypes,
+                GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier,species.isPlant()));
     }
 
     @Override

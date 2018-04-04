@@ -3,9 +3,9 @@
 <!-- https://www.ebi.ac.uk/style-lab/websites/patterns/banner-elixir.html -->
 <div id="elixir-banner"
      data-color="none"
-     data-use-cdr-logo="true"
+     data-use-cdr-logo="false"
      data-name="This service"
-     data-description="Expression Atlas is an ELIXIR Core Data Resource"
+     data-description="Expression Atlas is an ELIXIR database service"
      data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
      data-use-basic-styles="false">
 </div>
@@ -17,7 +17,7 @@
             <a href="https://www.ebi.ac.uk/" title="EMBL-EBI"><span class="ebi-logo"></span></a>
             <ul></ul>
         </div>
-        <div class="columns small-6 medium-2 ">
+        <div class="columns small-6 medium-2">
             <h5 class="services"><a class="services-color" href="https://www.ebi.ac.uk/services">Services</a></h5>
             <ul>
                 <li class="first"><a href="https://www.ebi.ac.uk/services">By topic</a></li>
@@ -25,7 +25,7 @@
                 <li class="last"><a href="https://www.ebi.ac.uk/support">Help &amp; Support</a></li>
             </ul>
         </div>
-        <div class="columns small-6 medium-2 ">
+        <div class="columns small-6 medium-2">
             <h5 class="research"><a class="research-color" href="https://www.ebi.ac.uk/research">Research</a></h5>
             <ul>
                 <li><a href="https://www.ebi.ac.uk/research/publications">Publications</a></li>
@@ -33,7 +33,7 @@
                 <li class="last"><a href="https://www.ebi.ac.uk/research/postdocs">Postdocs</a> &amp; <a href="https://www.ebi.ac.uk/research/eipp">PhDs</a></li>
             </ul>
         </div>
-        <div class="columns small-6 medium-2 ">
+        <div class="columns small-6 medium-2">
             <h5 class="training"><a class="training-color" href="https://www.ebi.ac.uk/training">Training</a></h5>
             <ul>
                 <li><a href="https://www.ebi.ac.uk/training/handson">Train at EBI</a></li>
@@ -42,7 +42,7 @@
                 <li class="last"><a href="https://www.ebi.ac.uk/training/contact-us">Contact organisers</a></li>
             </ul>
         </div>
-        <div class="columns small-6 medium-2 ">
+        <div class="columns small-6 medium-2">
             <h5 class="industry"><a class="industry-color" href="https://www.ebi.ac.uk/industry">Industry</a></h5>
             <ul>
                 <li><a href="https://www.ebi.ac.uk/industry/private">Members Area</a></li>
@@ -51,7 +51,7 @@
                 <li class="last"><a href="https://www.ebi.ac.uk/industry/contact">Contact Industry programme</a></li>
             </ul>
         </div>
-        <div class="columns small-6 medium-2 ">
+        <div class="columns small-6 medium-2">
             <h5 class="about"><a class="ebi-color" href="https://www.ebi.ac.uk/about">About EMBL-EBI</a></h5>
             <ul>
                 <li><a href="https://www.ebi.ac.uk/about/contact">Contact us</a></li>

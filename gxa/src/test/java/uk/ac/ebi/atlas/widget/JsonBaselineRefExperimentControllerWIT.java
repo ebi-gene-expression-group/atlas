@@ -50,7 +50,7 @@ public class JsonBaselineRefExperimentControllerWIT {
                 .andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")));
                 // Unfortunately, Spring 3.2.2 requires json-path 0.8.1 which is super ancient and breaks all sorts of
                 // things... :(
-                //.andExpect(jsonPath("$.error").value(is("blah")));
+                //.andExpect(jsonPath("$.error").value(is("searchTopGeneProfiles")));
     }
 
 }

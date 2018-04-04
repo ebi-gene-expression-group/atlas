@@ -8,17 +8,17 @@ import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInputDocument> {
-
     private final ObjectInputStream<? extends ExperimentDataPoint> experimentDataPointInputStream;
     private final Iterator<? extends ExperimentDataPoint> experimentDataPointIterator;
     private final Map<String,Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier;
@@ -61,27 +61,17 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
         }
 
         List<String> nonKeywordProperties = new LinkedList<>();
-
+        nonKeywordProperties.add(experimentDataPoint.bioentityIdentifier);
         for (BioentityPropertyName bioentityPropertyName : experimentDataPoint.getRelevantBioentityPropertyNames()) {
-            Collection<String> values = bioentityProperties.get(bioentityPropertyName);
-            if (values != null) {
-                for (String value : values) {
-                    if (bioentityPropertyName.isId) {
-                        solrInputDocument.addField(asAnalyticsSchemaKeyword(bioentityPropertyName), value);
-                    } else {
-                        nonKeywordProperties.add(value);
-                    }
+            for (String value : bioentityProperties.getOrDefault(bioentityPropertyName, Collections.emptySet())) {
+                if (bioentityPropertyName.isKeyword) {
+                    solrInputDocument.addField(asAnalyticsSchemaField(bioentityPropertyName).name(), value);
                 }
+                nonKeywordProperties.add(value);
             }
         }
 
-        /*
-        Improvement:
-        add experiment.getDisplayName() to identifierSearch too?
-         */
-
-        solrInputDocument.addField(
-                BioentityPropertyName.IDENTIFIER_SEARCH.name, Joiner.on(" ").join(nonKeywordProperties));
+        solrInputDocument.addField(IDENTIFIER_SEARCH.name(), Joiner.on(" ").join(nonKeywordProperties));
 
         return solrInputDocument;
     }

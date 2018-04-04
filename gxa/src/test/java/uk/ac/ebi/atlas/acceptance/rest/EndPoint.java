@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.rest;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import com.jayway.restassured.specification.RequestSpecification;
@@ -15,6 +13,7 @@ import java.util.List;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class EndPoint {
     private static final String USERNAME = "TEST_USER";
@@ -51,7 +50,7 @@ public class EndPoint {
         //TODO does not work for experiment page endpoints
         // assertThat(response.getContentType(), is("application/json;charset=UTF-8"));
 
-        return new Gson().fromJson(response.getBody().asString(), JsonElement.class);
+        return GSON.fromJson(response.getBody().asString(), JsonElement.class);
     }
 
     public EndPoint auth() {

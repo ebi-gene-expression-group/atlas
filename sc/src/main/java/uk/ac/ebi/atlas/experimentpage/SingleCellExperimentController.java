@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,13 +20,13 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Controller
 public class SingleCellExperimentController extends HtmlExceptionHandlingController {
-
     private final ScxaExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
-    private static final Gson gson = new Gson();
-    
+
     @Inject
     public SingleCellExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub) {
         this.experimentTrader = experimentTrader;
@@ -43,7 +42,7 @@ public class SingleCellExperimentController extends HtmlExceptionHandlingControl
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
-        model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, accessKey)));
+        model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 
         return "experiment-page";
     }

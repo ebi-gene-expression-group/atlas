@@ -15,10 +15,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 public class DifferentialExperimentDataPointStream implements ObjectInputStream<DifferentialExperimentDataPoint> {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialExperimentDataPointStream.class);
 
     protected final DifferentialExperiment experiment;
@@ -56,8 +55,16 @@ public class DifferentialExperimentDataPointStream implements ObjectInputStream<
     }
 
     private int getNumReplicates(String contrastId) {
-        int numReplicates = numReplicatesByContrastId.get(contrastId);
-        checkNotNull(numReplicates, "No replicates for contrast " + contrastId);
+        // This is an experiment for which John Collins, the data provider, explicitly requested to leave a contrast
+        // out. However, this check is useful to check for experiment sanity (it has proved it more than once), so we
+        // are only leaving that experiment’s case out and we check the precondition for everything else
+        if (experiment.getAccession().equalsIgnoreCase("E-MTAB-5224") && contrastId.equalsIgnoreCase("g2_g1")) {
+            return 0;
+        }
+
+        int numReplicates = numReplicatesByContrastId.getOrDefault(contrastId, 0);
+        checkState(numReplicates != 0, "No replicates for contrast " + contrastId);
+
         return numReplicates;
     }
 

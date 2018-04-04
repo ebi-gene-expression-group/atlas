@@ -22,8 +22,9 @@ public enum BioentityPropertyName {
     HGNC_SYMBOL("hgnc_symbol", true, "HGNC symbol"),
     INTERPRO("interpro", true, "InterPro"),
     INTERPROTERM("interproterm", false, "InterPro term"),
-    MGI_DESCRIPTION("mgi_description", false, "MGI description"),
     MGI_ID("mgi_id", true, "MGI ID"),
+    MGI_DESCRIPTION("mgi_description", false, "MGI description"),
+    MGI_SYMBOL("mgi_symbol", false, "MGI symbol"),
     MIRBASE_ACCESSION("mirbase_accession", false, "miRBase accession"),
     MIRBASE_ID("mirbase_id", false, "miRBase ID"),
     MIRBASE_NAME("mirbase_name", true, "miRBase name"),
@@ -37,21 +38,20 @@ public enum BioentityPropertyName {
     SYMBOL("symbol", true, "Symbol"),
     SYNONYM("synonym", true, "Synonym"),
     UNIPROT("uniprot", true, "UniProt"),
-    WBPSGENE("wbpsgene", false, "WBPS gene"),
+    WBPSGENE("wbpsgene", true, "WBPS gene"),
     WBPSTRANSCRIPT("wbpstranscript", true, "WBPS transcript"),
-    WBPSPROTEIN("wbpsprotein", true, "WBPS protein"),   // Not used for analytics index now
-    IDENTIFIER_SEARCH("identifier_search", false, "");  // Not exposed to the UI in any way, indexed unstored field
+    WBPSPROTEIN("wbpsprotein", true, "WBPS protein");
 
     final static private ImmutableMap<String, BioentityPropertyName> PROPERTIES_BY_NAME =
             ImmutableMap.copyOf(Arrays.stream(values()).collect(Collectors.toMap(v -> v.name, v -> v)));
 
     public final String name;
-    public final boolean isId;
+    public final boolean isKeyword;
     public final String label;
 
-    BioentityPropertyName(String name, boolean isId, String label) {
+    BioentityPropertyName(String name, boolean isKeyword, String label) {
         this.name = name;
-        this.isId = isId;
+        this.isKeyword = isKeyword;
         this.label = label;
     }
 

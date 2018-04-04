@@ -3,4 +3,4 @@ var expressionAtlasHeatmapHighcharts=webpackJsonp_name_([5],{466:/*!************
   \***************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
-function(e,r,a){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.render=void 0;var n=a(/*! expression-atlas-heatmap-highcharts */147);r.render=n.render}},[466]);
+function(e,r,a){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.render=void 0;var n=a(/*! expression-atlas-heatmap-highcharts */146);r.render=n.render}},[466]);

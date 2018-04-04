@@ -4,68 +4,74 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import org.hibernate.validator.constraints.Range;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
-import javax.validation.constraints.NotNull;
-import java.util.Collections;
 import java.util.Set;
 
-public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUnit> extends SearchRequest {
-
-    public static final double nonZeroButVerySmallCutoffValue = Double.MIN_VALUE;
+public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit> {
+    public static final double VERY_SMALL_NON_ZERO_VALUE = Double.MIN_VALUE;
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
     private static final int HEATMAP_SIZE_MIN = 1;
     private static final int HEATMAP_SIZE_MAX = 1000;
 
-    private double cutoff = getDefaultCutoff();
-    private Set<String> selectedColumnIds = Collections.emptySet();
-    @NotNull
     @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
-    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
+    private int heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
+
+    private SemanticQuery geneQuery = getDefaultGeneQuery();
+    private double cutoff = getDefaultCutoff();
+    private Set<String> selectedColumnIds = ImmutableSet.of();
     private boolean specific = true;
 
     protected ExperimentPageRequestPreferences() {
     }
 
-    @SuppressWarnings("unused")
-    public void setSelectedColumnIds(Set<String> selectedColumnIds){
-        this.selectedColumnIds = (selectedColumnIds == null) ? Collections.<String>emptySet() : ImmutableSet.copyOf(selectedColumnIds);
+    public void setSelectedColumnIds(Set<String> selectedColumnIds) {
+        if (selectedColumnIds != null) {
+            this.selectedColumnIds = ImmutableSet.copyOf(selectedColumnIds);
+        }
     }
 
     public Set<String> getSelectedColumnIds(){
         return selectedColumnIds;
     }
 
-    public Integer getHeatmapMatrixSize() {
+    public void setHeatmapMatrixSize(int heatmapMatrixSize) {
+        this.heatmapMatrixSize = heatmapMatrixSize;
+    }
+
+    public int getHeatmapMatrixSize() {
         return this.heatmapMatrixSize;
     }
 
-    public void setHeatmapMatrixSize(Integer heatmapMatrixSize) {
-        if (heatmapMatrixSize != null) {
-            this.heatmapMatrixSize = heatmapMatrixSize;
-        }
+    public void setGeneQuery(SemanticQuery geneQuery) {
+        this.geneQuery = geneQuery;
     }
 
-    public Double getCutoff() {
+    public SemanticQuery getGeneQuery() {
+        return this.geneQuery;
+    }
+
+    protected SemanticQuery getDefaultGeneQuery() {
+        return SemanticQuery.create();
+    }
+
+    public void setCutoff(double cutoff) {
+        this.cutoff = cutoff;
+    }
+
+    public double getCutoff() {
         return this.cutoff;
     }
 
-    //must be public because the jsp needs to access it
     public abstract double getDefaultCutoff();
 
-    public void setCutoff(Double cutoff) {
-        if (cutoff != null) {
-            this.cutoff = cutoff;
-        }
+    public void setSpecific(boolean specific) {
+        this.specific = specific;
     }
 
     public boolean isSpecific() {
         return this.specific;
-    }
-
-    public void setSpecific(boolean specific) {
-        this.specific = specific;
     }
 
     public String toString() {
@@ -76,22 +82,23 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
                 .toString();
     }
 
-    public abstract Unit getUnit();
+    public abstract U getUnit();
 
     /*
     Used for equality of cache keys.
     Currently:
     - Kryo serialized files
     - Histograms
-    This combined with experiment accession should 1-1 map to a data file. The design is unclear and a bit of a wart. Sorry. :)
+    This combined with experiment accession should 1-1 map to a data file. The design is unclear and a bit of a wart.
+    Sorry. :)
 
     When we serialize files, calculate histograms, or request everything for download, we mean "everything but zero"
     On the other hand we also offer an option in the UI to explicitly ask for zeros.
     We can't afford to kryo serialize these - the format is only better because we take advantage of data sparsity.
     If someone chooses to ask for zeros we need to go through the original text file.
      */
-    public String serializationShortString(){
-        return getClass().getSimpleName()+getCutoff().equals(0.0d);
+    public String serializationShortString() {
+        return getClass().getSimpleName() + (cutoff == 0.0d);
     }
 
     @Override
@@ -106,5 +113,4 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
     public int hashCode() {
         return serializationShortString().hashCode();
     }
-
 }

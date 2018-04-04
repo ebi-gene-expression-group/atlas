@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.solr.analytics.baseline;
 
+import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.Option;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;
@@ -34,7 +36,9 @@ public class BaselineAnalyticsSearchDao {
                 .queryConditionsSearch(conditionQuery)
                 .ofSpecies(species)
                 .fetch();
-        return JsonPath.read(response, FACET_TREE_PATH);
+        Configuration jsonPathConfiguration =
+                Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS);
+        return JsonPath.using(jsonPathConfiguration).parse(response).read(FACET_TREE_PATH);
     }
 
     List<Map<String, Object>> fetchExpressionLevelsPayload(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {

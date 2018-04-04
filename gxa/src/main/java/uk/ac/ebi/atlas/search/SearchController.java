@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.solr.common.SolrException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,20 +26,17 @@ import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 @Scope("prototype")
 public class SearchController extends HtmlExceptionHandlingController {
-
     @Autowired
     private Environment env;
 
     private final AnalyticsSearchService analyticsSearchService;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final SpeciesFactory speciesFactory;
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     public SearchController(AnalyticsSearchService analyticsSearchService,
@@ -60,11 +55,10 @@ public class SearchController extends HtmlExceptionHandlingController {
                                           SemanticQuery conditionQuery,
                                           @RequestParam(value = "organism", required = false, defaultValue = "")
                                           String speciesString,
-                                          Model model, RedirectAttributes redirectAttributes)
-            throws UnsupportedEncodingException {
+                                          Model model, RedirectAttributes redirectAttributes) {
 
         checkArgument(
-                isNotEmpty(geneQuery) || isNotEmpty(conditionQuery),
+                geneQuery.isNotEmpty() || conditionQuery.isNotEmpty(),
                 "Please specify a gene query or a condition query.");
 
         Species species = speciesFactory.create(speciesString);
@@ -76,7 +70,7 @@ public class SearchController extends HtmlExceptionHandlingController {
 
         // Matches gene set ID -> Gene set page
         // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
-        if (isEmpty(conditionQuery) && GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(geneQuery)) {
+        if (conditionQuery.isEmpty() && GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(geneQuery)) {
             String geneSetId = geneQuery.terms().iterator().next().value();
 
             StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
@@ -99,7 +93,7 @@ public class SearchController extends HtmlExceptionHandlingController {
         }
 
         // Resolves to a single Gene ID -> Gene page
-        if (isEmpty(conditionQuery) && geneIds.size() == 1) {
+        if (conditionQuery.isEmpty() && geneIds.size() == 1) {
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
             return "redirect:/genes/" + geneIds.iterator().next();
         }
@@ -120,7 +114,7 @@ public class SearchController extends HtmlExceptionHandlingController {
             if (hasBaselineResults) {
                 model.addAttribute(
                         "jsonFacets",
-                        gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch(
+                        GSON.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch(
                                 geneQuery, conditionQuery, species)));
             }
 

@@ -46,7 +46,7 @@ public class AutocompleteControllerEIT {
         SemanticQueryTerm firstTerm = query.iterator().next();
         //then
         assertThat(firstTerm.value(), startsWith(QUERY_TEXT));
-        assertThat(firstTerm.category(), is("symbol"));
+        assertThat(firstTerm.category().get(), is("symbol"));
         assertThat(query.size(), greaterThan(5));
 
     }

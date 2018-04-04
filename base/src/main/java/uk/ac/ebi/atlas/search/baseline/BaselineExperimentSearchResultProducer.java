@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.search.baseline;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
@@ -12,33 +10,37 @@ import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BaselineExperimentSearchResultProducer {
+import static java.util.stream.Collectors.toList;
 
+public class BaselineExperimentSearchResultProducer {
     private final ExperimentTrader experimentTrader;
 
     public BaselineExperimentSearchResultProducer(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 
-    public BaselineExperimentProfilesList buildProfilesForExperiments(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
-                                                                      String factorType) {
+    public BaselineExperimentProfilesList buildProfilesForExperiments(
+            Map<String, Map<String, Double>> expressionsPerColumnPerExperiment, String factorType) {
         return trimAndSort(profilesForExpressions(expressionsPerColumnPerExperiment, factorType));
     }
 
     private BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
-        BaselineExperimentProfilesList result = profiles.stream().filter(profile -> !profile.hasAllExpressionsEqualZero()).collect(Collectors.toCollection(BaselineExperimentProfilesList::new));
-        Collections.sort(result);
+        BaselineExperimentProfilesList result =
+                profiles.stream()
+                        .filter(profile -> !profile.hasAllExpressionsEqualZero())
+                        .sorted()
+                        .collect(Collectors.toCollection(BaselineExperimentProfilesList::new));
         result.setTotalResultCount(result.size());
         return result;
     }
 
-    private Collection<BaselineExperimentProfile> profilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
-                                                                 final String factorType) {
+    private Collection<BaselineExperimentProfile> profilesForExpressions(
+            Map<String, Map<String, Double>> expressionsPerColumnPerExperiment, final String factorType) {
         BaselineExperimentProfilesList resultRows = new BaselineExperimentProfilesList();
 
         for(Map.Entry<String, Map<String, Double>> e: expressionsPerColumnPerExperiment.entrySet()) {
@@ -47,7 +49,12 @@ public class BaselineExperimentSearchResultProducer {
             Map<String, Double> assayGroupIdAndExpression = e.getValue();
 
             final Set<String> commonFactorTypes =
-                    RichFactorGroup.typesWithCommonValues(assayGroupIdAndExpression.keySet().stream().map(idOfAssayGroupWithExpression -> experiment.getFactors(experiment.getDataColumnDescriptor(idOfAssayGroupWithExpression)).withoutTypes(ImmutableList.of(factorType))).collect(Collectors.toList()));
+                    RichFactorGroup.typesWithCommonValues(assayGroupIdAndExpression.keySet().stream()
+                            .map(idOfAssayGroupWithExpression ->
+                                    experiment.getFactors(
+                                            experiment.getDataColumnDescriptor(idOfAssayGroupWithExpression))
+                                            .withoutTypes(ImmutableList.of(factorType)))
+                            .collect(toList()));
 
             final Set<FactorGroup> factorGroups = experiment.getDataColumnDescriptors().stream().map(assayGroup -> {
                 FactorGroup factorGroup = experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType));
@@ -61,14 +68,20 @@ public class BaselineExperimentSearchResultProducer {
             for(final FactorGroup factorGroup: factorGroups){
                 BaselineExperimentProfile baselineExperimentProfile =
                         new BaselineExperimentProfile(experiment,factorGroup);
-                for(AssayGroup assayGroup: FluentIterable.from(experiment.getDataColumnDescriptors()).filter(assayGroup1 -> {
-                    return RichFactorGroup.isSubgroup(experiment.getFactors(assayGroup1), factorGroup);
-                })){
+
+                for (AssayGroup assayGroup :
+                        experiment.getDataColumnDescriptors().stream()
+                                .filter(assayGroup ->
+                                        RichFactorGroup.isSubgroup(experiment.getFactors(assayGroup), factorGroup))
+                                .collect(toList())) {
                     baselineExperimentProfile.add(
                             new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType)),
-                            new BaselineExpression(Optional.fromNullable(assayGroupIdAndExpression.get(assayGroup.getId())).or(0.0d))
+                            new BaselineExpression(
+                                    Optional.ofNullable(assayGroupIdAndExpression.get(assayGroup.getId()))
+                                            .orElse(0.0))
                     );
                 }
+
                 resultRows.add(baselineExperimentProfile);
             }
         }

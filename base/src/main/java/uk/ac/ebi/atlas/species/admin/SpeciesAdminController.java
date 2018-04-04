@@ -35,6 +35,7 @@ public class SpeciesAdminController extends JsonExceptionHandlingController {
             // If the source of species properties changes, change the above. I don’t think it’s worth to expose the
             // paths in AtlasResource and add one more collaborator here for just this.
 
+
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private final SpeciesPropertiesTrader speciesPropertiesTrader;

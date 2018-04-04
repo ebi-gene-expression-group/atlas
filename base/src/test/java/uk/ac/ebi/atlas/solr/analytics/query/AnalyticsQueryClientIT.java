@@ -76,7 +76,7 @@ public class AnalyticsQueryClientIT {
 
         assertThat(queryMade, containsString("ENSG00000006432"));
         assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, not(containsString("identifier_search")));
+        //assertThat(queryMade, not(containsString("identifier_search")));
         assertThat(queryMade, containsString("bioentity_identifier"));
 
     }

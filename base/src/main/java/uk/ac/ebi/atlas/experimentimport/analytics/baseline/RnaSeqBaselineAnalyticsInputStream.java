@@ -173,7 +173,9 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
                         geneId,
                         assayGroupIds[i],
                         baselineExpressionsTpm.length > 0 ? baselineExpressionsTpm[i].getLevel() : 0.0,
-                        baselineExpressionsFpkm.length > 0 ? baselineExpressionsFpkm[i].getLevel() : 0.0));
+                        baselineExpressionsFpkm.length > 0 ? baselineExpressionsFpkm[i].getLevel() : 0.0,
+                        baselineExpressionsTpm.length > 0 ? baselineExpressionsTpm[i].getQuartiles() : new double[0],
+                        baselineExpressionsFpkm.length > 0 ? baselineExpressionsFpkm[i].getQuartiles() : new double[0]));
             }
         }
         return builder.build();

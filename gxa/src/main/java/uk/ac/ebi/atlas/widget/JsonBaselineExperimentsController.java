@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Controller
 @Scope("request")
 public final class JsonBaselineExperimentsController extends JsonExceptionHandlingController {
@@ -57,7 +59,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             @RequestParam(value = "source", required = false) String source,
             @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
             Model model) {
-        Preconditions.checkState(!(SemanticQuery.isEmpty(geneQuery) && SemanticQuery.isEmpty(conditionQuery)),
+        Preconditions.checkState(!(geneQuery.isEmpty() && conditionQuery.isEmpty()),
                 "Please specify a gene query or a condition query");
 
         Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);
@@ -98,7 +100,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         model.addAttribute("species", species.getReferenceName());
 
         result.add("config", configAsJsonObject(model.asMap()));
-        return gson.toJson(result);
+        return GSON.toJson(result);
     }
 
     private JsonArray constructColumnHeaders(List<FactorAcrossExperiments> dataColumnsToReturn){

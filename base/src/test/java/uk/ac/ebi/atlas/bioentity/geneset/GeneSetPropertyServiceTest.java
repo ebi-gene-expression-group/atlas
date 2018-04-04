@@ -33,6 +33,7 @@ public class GeneSetPropertyServiceTest {
     private final static OntologyTerm PO_TERM = OntologyTerm.create("PO:FOOBAR", "some PO term name");
     private final static OntologyTerm INTERPRO_TERM = OntologyTerm.create("IPR3117", "some InterPro term name");
 
+
     @Mock
     GoPoTrader goPoTermTraderMock;
 
@@ -56,7 +57,7 @@ public class GeneSetPropertyServiceTest {
     @Test
     public void propertyValuesByTypeReactome() throws Exception {
         assertThat(
-                subject.propertyValuesByType("R-HSA-0000000"),
+                subject.propertyValuesByType("R-HSA-0000000",false),
                 hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
 
         verify(reactomeClientMock).getPathwayName(anyString());
@@ -64,9 +65,19 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
+    public void propertyValuesByTypePlantReactome() throws Exception {
+        assertThat(
+                subject.propertyValuesByType("R-GMA-2744341",true),
+                hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
+
+        verify(reactomeClientMock).getPlantPathwayName(anyString());
+        verifyZeroInteractions(goPoTermTraderMock, interProTermTraderMock);
+    }
+
+    @Test
     public void propertyValuesByTypeGeneOntology() throws Exception {
         assertThat(
-                subject.propertyValuesByType("GO:0000000"),
+                subject.propertyValuesByType("GO:0000000",false),
                 hasEntry(is(BioentityPropertyName.GO), isA(Set.class)));
 
         verify(goPoTermTraderMock).get("GO:0000000");
@@ -76,7 +87,7 @@ public class GeneSetPropertyServiceTest {
     @Test
     public void propertyValuesByTypePlantOntology() throws Exception {
         assertThat(
-                subject.propertyValuesByType("PO:0000000"),
+                subject.propertyValuesByType("PO:0000000",false),
                 hasEntry(is(BioentityPropertyName.PO), isA(Set.class)));
 
         verify(goPoTermTraderMock).get("PO:0000000");
@@ -86,7 +97,7 @@ public class GeneSetPropertyServiceTest {
     @Test
     public void propertyValuesByTypeInterPro() throws Exception {
         assertThat(
-                subject.propertyValuesByType("IPR0000000"),
+                subject.propertyValuesByType("IPR0000000",false),
                 hasEntry(is(BioentityPropertyName.INTERPRO), isA(Set.class)));
 
         verify(interProTermTraderMock).get("IPR0000000");
@@ -96,16 +107,16 @@ public class GeneSetPropertyServiceTest {
     @Test
     public void typeIsCaseInsensitive() throws Exception {
         assertThat(
-                subject.propertyValuesByType("r-hsa-0000000"),
+                subject.propertyValuesByType("r-hsa-0000000",false),
                 hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
         assertThat(
-                subject.propertyValuesByType("go:0000000"),
+                subject.propertyValuesByType("go:0000000",false),
                 hasEntry(is(BioentityPropertyName.GO), isA(Set.class)));
         assertThat(
-                subject.propertyValuesByType("po:0000000"),
+                subject.propertyValuesByType("po:0000000",false),
                 hasEntry(is(BioentityPropertyName.PO), isA(Set.class)));
         assertThat(
-                subject.propertyValuesByType("ipr0000000"),
+                subject.propertyValuesByType("ipr0000000",false),
                 hasEntry(is(BioentityPropertyName.INTERPRO), isA(Set.class)));
     }
 
@@ -113,7 +124,7 @@ public class GeneSetPropertyServiceTest {
     public void propertyValuesByTypeUnknown() throws Exception {
         Map<BioentityPropertyName, Set<String>> emptyMapOfPropertyValuesByType = ImmutableMap.of();
 
-        assertThat(subject.propertyValuesByType("foobar"), is(emptyMapOfPropertyValuesByType));
+        assertThat(subject.propertyValuesByType("foobar",false), is(emptyMapOfPropertyValuesByType));
 
         verifyZeroInteractions(reactomeClientMock, goPoTermTraderMock, interProTermTraderMock);
     }

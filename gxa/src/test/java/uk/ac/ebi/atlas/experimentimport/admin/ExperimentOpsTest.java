@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -51,6 +50,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentOpsTest {
@@ -300,8 +300,7 @@ public class ExperimentOpsTest {
         MockHttpServletResponse responseObject = new MockHttpServletResponse();
         new ExperimentAdminController(subject).doOp(accession, "STATUS",responseObject);
 
-        JsonArray response =
-                new Gson().fromJson(responseObject.getContentAsString(), JsonArray.class).getAsJsonArray();
+        JsonArray response = GSON.fromJson(responseObject.getContentAsString(), JsonArray.class).getAsJsonArray();
 
         return response.get(0).getAsJsonObject().get("result").getAsString();
     }

@@ -2,21 +2,18 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class BaselineExpressionPerBiologicalReplicateTest {
-
-    /*
-    The data production pipeline uses the same method.
-     */
+    // The data production pipeline uses the same method
     @Test
-    public void expressionLevelIsTheMedian() throws Exception {
+    public void expressionLevelIsTheMedian() {
 
         assertThat(
                 new BaselineExpressionPerBiologicalReplicate(
@@ -54,7 +51,7 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                                 new BiologicalReplicate("assay_2"), new BaselineExpression(2.0),
                                 new BiologicalReplicate("t1", ImmutableSet.of("assay_3", "assay_4")), new BaselineExpression(0.5)
                         )
-                ).toJson(), is(new Gson().fromJson(
+                ).toJson(), is(GSON.fromJson(
                         "{\n" +
                                 "    \"stats\": {\n" +
                                 "        \"total\": 3.5,\n" +

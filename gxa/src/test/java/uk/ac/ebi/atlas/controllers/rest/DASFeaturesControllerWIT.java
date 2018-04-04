@@ -31,25 +31,33 @@ public class DASFeaturesControllerWIT {
     }
 
     @Test
-    public void getDifferentialJsonResults() throws Exception {
-
+    public void getResultsWithSegment() throws Exception {
         String geneId = "ENSG00000000457";
-        String conditionQuery = "";
 
         this.mockMvc.perform(
                 get("/das/s4/features")
-                        .param("geneId", geneId)
-                        .param("conditionQuery", conditionQuery))
+                        .param("segment", geneId)
+                        .param("conditionQuery", ""))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("das-features"));
     }
 
     @Test
-    public void differentialJsonResultsFailWithoutQuery() throws Exception
-    {
+    public void getResultsWithCondition() throws Exception {
+        this.mockMvc.perform(
+                get("/das/s4/features")
+                        .param("segment", "")
+                        .param("conditionQuery", "cancer"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("das-features"));
+    }
+
+
+    @Test
+    public void failWithoutQuery() throws Exception {
         this.mockMvc.perform(
                 get("/das/s4/features"))
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest());
     }
 
 }

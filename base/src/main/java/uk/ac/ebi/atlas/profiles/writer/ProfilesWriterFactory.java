@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -11,16 +9,15 @@ import uk.ac.ebi.atlas.search.SearchDescription;
 
 import javax.annotation.Nullable;
 import java.io.Writer;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.wrap;
 
-public abstract class ProfilesWriterFactory<DataColumnDescriptor extends DescribesDataColumns,
-        Expr extends Expression,
-        Prof extends Profile<DataColumnDescriptor, Expr, Prof>,
-        R extends RequestContext<DataColumnDescriptor,?, ?>> {
+public abstract class ProfilesWriterFactory<D extends DescribesDataColumns,
+                                            E extends Expression,
+                                            P extends Profile<D, E, P>,
+                                            R extends RequestContext<D, ?, ?, ?>> {
 
     protected abstract String getTsvFileMasthead(R requestContext, String queryDescription);
 
@@ -28,38 +25,39 @@ public abstract class ProfilesWriterFactory<DataColumnDescriptor extends Describ
         return new String[]{"Gene ID", "Gene Name"};
     }
 
-    protected Iterable<String> labelsForColumn(R requestContext, DataColumnDescriptor dataColumnDescriptor){
-        return Collections.singleton(requestContext.displayNameForColumn(dataColumnDescriptor));
+    protected Stream<String> labelsForColumn(R requestContext, D dataColumnDescriptor){
+        return Stream.of(requestContext.displayNameForColumn(dataColumnDescriptor));
     }
 
-    protected Iterable<String> valuesFromColumn(R requestContext, @Nullable Expr expression) {
-        return Collections.singleton(expression == null ? "" : Double.toString(expression.getLevel()));
+    protected Stream<String> valuesFromColumn(R requestContext, @Nullable E expression) {
+        return Stream.of(expression == null ? "" : Double.toString(expression.getLevel()));
     }
 
-    public final ProfilesWriter<Prof> create(Writer responseWriter, final R requestContext) {
-        final List<DataColumnDescriptor> columns = requestContext.getDataColumnsToReturn();
+    public final ProfilesWriter<P> create(Writer responseWriter, final R requestContext) {
+        final List<D> columns = requestContext.getDataColumnsToReturn();
         return new ProfilesWriter<>(
                 responseWriter,
                 getTsvFileMasthead(requestContext, wrap(SearchDescription.get(requestContext.getGeneQuery()), "'")),
                 buildCsvHeaderLine(requestContext, columns),
-                prof -> buildCsvRow(prof.identifiers(), FluentIterable.from(columns).transformAndConcat(
-                        dataColumnDescriptor -> valuesFromColumn(requestContext, prof.getExpression(dataColumnDescriptor)))
-                       .toArray(String.class)));
+                prof ->
+                        buildCsvRow(
+                                prof.identifiers(),
+                                columns.stream()
+                                       .flatMap(
+                                               dataColumnDescriptor ->
+                                                       valuesFromColumn(
+                                                               requestContext,
+                                                               prof.getExpression(dataColumnDescriptor)))
+                                       .toArray(String[]::new))
+        );
     }
 
-    private String[] buildCsvHeaderLine(final R requestContext, final List<DataColumnDescriptor> columns) {
-        return buildCsvRow(getProfileIdColumnHeaders(requestContext),
-                FluentIterable.from(columns)
-                        .transformAndConcat(new Function<DataColumnDescriptor, Iterable<String>>() {
-                            @Nullable
-                            @Override
-                            public Iterable<String> apply(@Nullable DataColumnDescriptor dataColumnDescriptor) {
-                                return labelsForColumn(requestContext, dataColumnDescriptor);
-                            }
-                        })
-                        .toArray(String.class)
-
-        );
+    private String[] buildCsvHeaderLine(final R requestContext, final List<D> columns) {
+        return buildCsvRow(
+                getProfileIdColumnHeaders(requestContext),
+                columns.stream()
+                       .flatMap(dataColumnDescriptor -> labelsForColumn(requestContext, dataColumnDescriptor))
+                       .toArray(String[]::new));
     }
 
     private String[] buildCsvRow(String[] rowHeaders, String[] values) {

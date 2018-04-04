@@ -1,18 +1,17 @@
 package uk.ac.ebi.atlas.web;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class RnaSeqBaselineRequestPreferencesTest {
 
     @Test
     public void toJson(){
         assertThat(
-                new Gson().toJsonTree(new RnaSeqBaselineRequestPreferences()).getAsJsonObject().has("cutoff"),
+                GSON.toJsonTree(new RnaSeqBaselineRequestPreferences()).getAsJsonObject().has("cutoff"),
                 is(true)
         );
     }

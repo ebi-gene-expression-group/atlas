@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GOTERM;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ORTHOLOG;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrInputDocumentInputStreamTest {
@@ -64,7 +64,7 @@ public class SolrInputDocumentInputStreamTest {
     }
 
     @Test
-    public void testSingleBaselineRecord(){
+    public void testSingleBaselineRecord() {
         SolrInputDocument result = subject.readNext();
 
         //Generic fields for any record
@@ -76,11 +76,11 @@ public class SolrInputDocumentInputStreamTest {
         assertThat(result.get("expression_level").getValue(), is(13.37));
 
         //identifier search
-        assertThat(result.keySet(), hasItems(asAnalyticsSchemaKeyword(GO), "identifier_search"));
+        assertThat(result.keySet(), hasItems(asAnalyticsSchemaField(GO).name(), "identifier_search"));
         assertThat(result.get("identifier_search").toString(), containsString("pancake"));
 
         //we do not index everything
-        assertThat(result.keySet(), not(hasItem(asAnalyticsSchemaKeyword(ORTHOLOG))));
+        assertThat(result.keySet(), not(hasItem(asAnalyticsSchemaField(ORTHOLOG).name())));
 
         assertThat(subject.readNext(), is(nullValue()));
     }

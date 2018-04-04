@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Joiner;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.utils.URIBuilder;
@@ -14,7 +12,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.tracks.GenomeBrowserController;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
@@ -23,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class ExperimentPageService {
-    protected final Gson gson = new Gson();
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
+public class ExperimentPageService {
     protected Map<String, JsonElement> payloadAttributes(Experiment experiment,
                                                          String accessKey,
                                                          ExperimentPageRequestPreferences requestPreferences,
@@ -112,15 +109,11 @@ public class ExperimentPageService {
                                                    ExperimentPageRequestPreferences requestPreferences) {
         try {
             URIBuilder builder = new URIBuilder(urlBase);
-            for (Map.Entry<String, String> e : BeanUtils.describe(requestPreferences).entrySet()) {
-                if (e.getKey().equals("class")  // name of the class from reflection on the object - we don't want that
-                        || e.getKey().startsWith("default") // the bean has these for Spring to use as default values
-                        || e.getKey().equals("selectedColumnIds") //Quirk / bug of BeanUtils - picks up first value only
-                        ) {
-                    continue;
-                }
-                builder.addParameter(e.getKey(), e.getValue());
-            }
+
+            builder.addParameter("geneQuery", requestPreferences.getGeneQuery().toJson());
+            builder.addParameter("unit", requestPreferences.getUnit().toString());
+            builder.addParameter("cutoff", Double.toString(requestPreferences.getCutoff()));
+            builder.addParameter("heatmapMatrixSize", Integer.toString(requestPreferences.getHeatmapMatrixSize()));
             builder.addParameter("selectedColumnIds", Joiner.on(",").join(requestPreferences.getSelectedColumnIds()));
             if (StringUtils.isNotBlank(accessKey)) {
                 builder.addParameter("accessKey", accessKey);
@@ -129,7 +122,7 @@ public class ExperimentPageService {
             builder.addParameter("type", experimentType.getParent().name().toUpperCase());
             return builder.build();
 
-        } catch (URISyntaxException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -146,8 +139,10 @@ public class ExperimentPageService {
                 requestPreferences);
     }
 
-    URI geneSpecificResultsLink(Experiment experiment, String gene,
-                                String accessKey, ExperimentPageRequestPreferences requestPreferences) {
+    URI geneSpecificResultsLink(Experiment experiment,
+                                String gene,
+                                String accessKey,
+                                ExperimentPageRequestPreferences requestPreferences) {
         return callbackLinkWithRequestPreferences(
                 MessageFormat.format("json/experiments/{0}/genes/{1}", experiment.getAccession(), gene),
                 experiment.getType(),
@@ -163,7 +158,7 @@ public class ExperimentPageService {
         JsonObject config = new JsonObject();
         config.addProperty("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         config.addProperty("species", experiment.getSpecies().getName());
-        config.add("genomeBrowsers", gson.toJsonTree(experiment.getGenomeBrowserNames()));
+        config.add("genomeBrowsers", GSON.toJsonTree(experiment.getGenomeBrowserNames()));
         config.addProperty("disclaimer", experiment.getDisclaimer());
         //only for the multiexperiment heatmap
         config.addProperty("columnType", "");

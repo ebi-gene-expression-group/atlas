@@ -19,9 +19,10 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
-import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient.Field.IDENTIFIER_SEARCH;
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsSolrQueryTree.Operator.OR;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaKeyword;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 public class AnalyticsSolrQueryTree {
     private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
@@ -171,20 +172,20 @@ public class AnalyticsSolrQueryTree {
     }
 
     private static String decideOnKeywordField(SemanticQueryTerm term) {
-        if (term.hasNoCategory()) {
+        if (!term.category().isPresent()) {
             if (ENSEMBL_ID_REGEX_FROM_THE_INTERNET.matcher(term.value()).matches()) {
-                return BIOENTITY_IDENTIFIER.name;
+                return BIOENTITY_IDENTIFIER_SEARCH.name();
             }
             // A multiword string cannot be a keyword
             if (term.value().trim().contains(" ")) {
-                return IDENTIFIER_SEARCH.name;
+                return IDENTIFIER_SEARCH.name();
             } else {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
             }
         } else {
-            return BIOENTITY_IDENTIFIER.name.equals(term.category())
-                    ? BIOENTITY_IDENTIFIER.name
-                    : "keyword_" + term.category();
+            return BIOENTITY_IDENTIFIER.name.equals(term.category().get())
+                    ? BIOENTITY_IDENTIFIER_SEARCH.name()
+                    : "keyword_" + term.category().get();
         }
     }
 
@@ -213,13 +214,9 @@ public class AnalyticsSolrQueryTree {
         if (n.equals(EmptyTree.INSTANCE)) {
             return ImmutableList.of(toString());
         } else {
-            /*
-            If there were somehow two identifier search queries, this would be wrong, because we would search for both
-            as keywords and then for both as text, missing the case when one matches as keyword and the other as text.
-            */
             Function<Leaf, TreeNode> makeTreeForBioentityIdentifier = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
-                    return new Leaf(BIOENTITY_IDENTIFIER.name, leaf.searchValue);
+                    return new Leaf(BIOENTITY_IDENTIFIER_SEARCH.name(), leaf.searchValue);
                 } else {
                     return leaf;
                 }
@@ -227,13 +224,13 @@ public class AnalyticsSolrQueryTree {
 
             Function<Leaf, TreeNode> makeTreeForSymbol = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
-                    return new Leaf(asAnalyticsSchemaKeyword(SYMBOL), leaf.searchValue);
+                    return new Leaf(asAnalyticsSchemaField(SYMBOL).name(), leaf.searchValue);
                 } else {
                     return leaf;
                 }
             };
 
-            // Queries for keyword_*, keyoword_symbol is left, the extra complexity isn’t worth it
+            // Queries for keyword_*, keyword_symbol is left, the extra complexity isn’t worth it
             Function<Leaf, TreeNode> makeTreeForKeywords = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
                     return new Parent(
@@ -250,7 +247,7 @@ public class AnalyticsSolrQueryTree {
             // Query for identifier_search
             Function<Leaf, TreeNode> makeTreeForFreeTextSearch = leaf -> {
                 if (leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)) {
-                    return new Leaf(IDENTIFIER_SEARCH.name, leaf.searchValue);
+                    return new Leaf(IDENTIFIER_SEARCH.name(), leaf.searchValue);
                 } else {
                     return leaf;
                 }
@@ -268,8 +265,9 @@ public class AnalyticsSolrQueryTree {
     private static ImmutableList<String> identifierKeywords() {
         return ImmutableList.copyOf(
                 ExperimentDataPoint.bioentityPropertyNames.stream()
-                        .filter(bioentityPropertyName -> bioentityPropertyName.isId)
-                        .map(AnalyticsCollectionProxy::asAnalyticsSchemaKeyword)
+                        .filter(bioentityPropertyName -> bioentityPropertyName.isKeyword)
+                        .map(AnalyticsCollectionProxy::asAnalyticsSchemaField)
+                        .map(AnalyticsCollectionProxy.AnalyticsSchemaField::name)
                         .collect(toList()));
     }
 }

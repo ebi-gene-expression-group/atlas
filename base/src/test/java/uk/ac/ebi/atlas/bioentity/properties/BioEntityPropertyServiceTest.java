@@ -67,11 +67,11 @@ public class BioEntityPropertyServiceTest {
     }
 
     @Test
-    public void unmappedPropertiesAreReturnedUnchanged() throws Exception {
+    public void unmappedPropertiesAreReturnedUnchanged() {
         for (BioentityPropertyName bioentityPropertyName : BioentityPropertyName.values()) {
             if (!UNMAPPED_PROPERTY_NAMES.contains(bioentityPropertyName)) {
                 assertThat(
-                        subject.mapToLinkText(bioentityPropertyName, ImmutableSet.of("foobar")),
+                        subject.mapToLinkText(bioentityPropertyName, ImmutableSet.of("foobar"),false),
                         hasEntry(is("foobar"), is("foobar")));
             }
         }
@@ -79,39 +79,39 @@ public class BioEntityPropertyServiceTest {
 
 
     @Test
-    public void reactomeTermsAreMapped() throws Exception {
+    public void reactomeTermsAreMapped() {
         when(reactomeClientMock.getPathwayNames(any())).thenReturn(ImmutableMap.of("R-HSA-31337", "foobar"));
-        subject.mapToLinkText(BioentityPropertyName.PATHWAYID, ImmutableSet.of("R-HSA-31337"));
+        subject.mapToLinkText(BioentityPropertyName.PATHWAYID, ImmutableSet.of("R-HSA-31337"),false);
 
         verify(reactomeClientMock, times(1)).getPathwayNames(eq(ImmutableSet.of("R-HSA-31337")));
     }
 
     @Test
-    public void goTermsAreMapped() throws Exception {
+    public void goTermsAreMapped() {
         when(goPoTermTraderMock.get(anyString())).thenReturn(Optional.of(OntologyTerm.create("foobar")));
-        subject.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("foobar"));
+        subject.mapToLinkText(BioentityPropertyName.GO, ImmutableSet.of("foobar"),false);
 
         verify(goPoTermTraderMock, times(1)).get(eq("foobar"));
     }
 
     @Test
-    public void poTermsAreMapped() throws Exception {
+    public void poTermsAreMapped() {
         when(goPoTermTraderMock.get(anyString())).thenReturn(Optional.of(OntologyTerm.create("foobar")));
-        subject.mapToLinkText(BioentityPropertyName.PO, ImmutableSet.of("foobar"));
+        subject.mapToLinkText(BioentityPropertyName.PO, ImmutableSet.of("foobar"),false);
 
         verify(goPoTermTraderMock, times(1)).get(eq("foobar"));
     }
 
     @Test
-    public void interproTermsAreMapped() throws Exception {
+    public void interproTermsAreMapped() {
         when(interProTermTraderMock.get(anyString())).thenReturn(Optional.of(OntologyTerm.create("foobar")));
-        subject.mapToLinkText(BioentityPropertyName.INTERPRO, ImmutableSet.of("foobar"));
+        subject.mapToLinkText(BioentityPropertyName.INTERPRO, ImmutableSet.of("foobar"),false);
 
         verify(interProTermTraderMock, times(1)).get(eq("foobar"));
     }
 
     @Test
-    public void unknownSpeciesAreOmittedFromOrthologs() throws Exception {
+    public void unknownSpeciesAreOmittedFromOrthologs() {
         // Unknown species are species not found in the analytics core, i.e. with no genes above default threshold
         when(speciesInferrerMock.inferSpeciesForGeneQuery(
                 argThat(semanticQuery -> semanticQuery.iterator().next().value().startsWith("ENSCING"))))
@@ -119,13 +119,13 @@ public class BioEntityPropertyServiceTest {
 
         // ENSCING00000014543 is an ortholog of e.g. ENSPANG00000000529
         assertThat(
-                subject.mapToLinkText(BioentityPropertyName.ORTHOLOG, ImmutableSet.of("ENSCING00000014543")),
+                subject.mapToLinkText(BioentityPropertyName.ORTHOLOG, ImmutableSet.of("ENSCING00000014543"),false),
                 hasEntry("ENSCING00000014543", "ENSCING00000014543"));
         verifyZeroInteractions(bioEntityPropertyDaoMock);
     }
 
     @Test
-    public void useGeneIdIfNoGeneNameAvailable() throws Exception {
+    public void useGeneIdIfNoGeneNameAvailable() {
         when(speciesInferrerMock.inferSpeciesForGeneQuery(
                 argThat(semanticQuery -> semanticQuery.iterator().next().value().startsWith("VIT"))))
                 .thenReturn(new Species("Vitis vinifera",
@@ -137,12 +137,12 @@ public class BioEntityPropertyServiceTest {
                 .thenReturn(ImmutableSet.of());
 
         assertThat(
-                subject.mapToLinkText(BioentityPropertyName.ORTHOLOG, ImmutableSet.of("VIT_01s0026g00140")),
+                subject.mapToLinkText(BioentityPropertyName.ORTHOLOG, ImmutableSet.of("VIT_01s0026g00140"),false),
                 hasEntry("VIT_01s0026g00140", "VIT_01s0026g00140 (Vitis vinifera)"));
     }
 
     @Test
-    public void onlyGoTermsHaveDepth() throws Exception {
+    public void onlyGoTermsHaveDepth() {
         when(goPoTermTraderMock.get("GO:0000001")).thenReturn(Optional.of(GO_0000001));
 
         for (BioentityPropertyName bioentityPropertyName : BioentityPropertyName.values()) {

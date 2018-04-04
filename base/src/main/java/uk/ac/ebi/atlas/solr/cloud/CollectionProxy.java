@@ -2,11 +2,14 @@ package uk.ac.ebi.atlas.solr.cloud;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.request.UpdateRequest;
+import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.params.SolrParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,10 +31,26 @@ public abstract class CollectionProxy {
         this.nameOrAlias = nameOrAlias;
     }
 
-    public QueryResponse query(SolrQuery solrQuery) {
+    protected FieldStatsInfo fieldStats(String fieldName, SolrQuery solrQuery) {
+        try {
+            solrQuery.setRows(0);
+            solrQuery.setGetFieldStatistics(true);
+            solrQuery.setGetFieldStatistics(fieldName);
+            solrQuery.addStatsFieldCalcDistinct(fieldName, true);
+            return solrClient.query(nameOrAlias, solrQuery).getFieldStatsInfo().get(fieldName);
+        } catch (IOException e) {
+            logException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            logException(e);
+            throw new UncheckedIOException(new IOException(e));
+        }
+    }
+
+    public QueryResponse query(SolrParams solrParams) {
         try {
             // Change maybe to: return new QueryRequest()
-            return solrClient.query(nameOrAlias, solrQuery);
+            return solrClient.query(nameOrAlias, solrParams, SolrRequest.METHOD.POST);
         } catch (IOException e) {
             logException(e);
             throw new UncheckedIOException(e);

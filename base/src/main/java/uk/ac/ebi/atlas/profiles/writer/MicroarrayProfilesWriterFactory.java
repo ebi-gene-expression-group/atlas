@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
@@ -8,11 +7,11 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfil
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
+import java.util.stream.Stream;
 
 @Named
-public class MicroarrayProfilesWriterFactory extends DifferentialProfilesWriterFactory<MicroarrayExpression,
-        MicroarrayProfile,
-        MicroarrayRequestContext> {
+public class MicroarrayProfilesWriterFactory
+        extends DifferentialProfilesWriterFactory<MicroarrayExpression, MicroarrayProfile, MicroarrayRequestContext> {
 
     @Override
     protected String[] getProfileIdColumnHeaders(MicroarrayRequestContext requestContext) {
@@ -20,21 +19,18 @@ public class MicroarrayProfilesWriterFactory extends DifferentialProfilesWriterF
     }
 
     @Override
-    protected Iterable<String> labelsForColumn(MicroarrayRequestContext requestContext,
-                                               Contrast dataColumnDescriptor){
+    protected Stream<String> labelsForColumn(MicroarrayRequestContext requestContext,
+                                             Contrast dataColumnDescriptor){
         String name = requestContext.displayNameForColumn(dataColumnDescriptor);
-        return ImmutableList.of(
-                name+".foldChange",
-                name+".pValue",
-                name+".tStat");
+        return Stream.of(name+".foldChange", name+".pValue", name+".tStat");
     }
 
     @Override
-    protected Iterable<String> valuesFromColumn(MicroarrayRequestContext requestContext, @Nullable MicroarrayExpression expression) {
-        return expression == null ? ImmutableList.of("","", "") :
-                ImmutableList.of(
-                Double.toString(expression.getFoldChange()),
-                Double.toString(expression.getPValue()),
-                Double.toString(expression.getTstatistic()));
+    protected Stream<String> valuesFromColumn(MicroarrayRequestContext requestContext, @Nullable MicroarrayExpression expression) {
+        return expression == null ?
+                Stream.of("","", "") :
+                Stream.of(Double.toString(expression.getFoldChange()),
+                          Double.toString(expression.getPValue()),
+                          Double.toString(expression.getTstatistic()));
     }
 }

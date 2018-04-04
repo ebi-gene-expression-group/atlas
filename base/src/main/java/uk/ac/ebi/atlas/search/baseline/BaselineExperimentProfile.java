@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
@@ -14,15 +13,18 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, BaselineExpression, BaselineExperimentProfile> implements Comparable<BaselineExperimentProfile> {
+public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments,
+                                                       BaselineExpression,
+                                                       BaselineExperimentProfile>
+        implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
-
-    private BaselineExperiment experiment;
+    private final BaselineExperiment experiment;
 
     public BaselineExperimentProfile(BaselineExperiment experiment, FactorGroup filterFactors) {
         super(joinIntoText(
@@ -56,12 +58,12 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
     }
 
     @Override
-    /**
+    /*
      * RNA-seq experiments should come before other types of baseline experiments;
      * Within the same experiment type, the experiments with more conditions with expressions in them should come to the top.
      * If the number of conditions with expression is the same, the sorting should be alphabetic - by the experiment display name.
      */
-    public int compareTo(BaselineExperimentProfile other) {
+    public int compareTo(@Nonnull BaselineExperimentProfile other) {
         return ComparisonChain.start()
                 .compareFalseFirst(other.experiment.getType().isRnaSeqBaseline(),this.experiment.getType().isRnaSeqBaseline())
                 .compare(other.getSpecificity(), this.getSpecificity())
@@ -98,7 +100,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
         return sb.toString();
     }
 
-    static String shorten(String name) {
+    private static String shorten(String name) {
         if (StringUtils.startsWithAny(name,
                 new String[]{
                         "Tissues - ",
@@ -118,7 +120,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
         }
     }
 
-    String getShortName() {
+    private String getShortName() {
         return joinIntoText(shorten(super.getName()),
                 filterFactors.containsOnlyOrganism() ? new FactorSet() : filterFactors
                 );

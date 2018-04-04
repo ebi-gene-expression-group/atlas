@@ -1,33 +1,33 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 
 import javax.annotation.Nullable;
-import java.io.Writer;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Stream;
 
-
-public abstract class DifferentialProfilesWriterFactory<Expr extends DifferentialExpression, Prof extends
-        DifferentialProfile<Expr, Prof>, R extends DifferentialRequestContext<?,?>> extends
-        ProfilesWriterFactory<Contrast, Expr, Prof, R> {
+public abstract class DifferentialProfilesWriterFactory<E extends DifferentialExpression,
+                                                        P extends DifferentialProfile<E, P>,
+                                                        R extends DifferentialRequestContext<?, ?>>
+        extends ProfilesWriterFactory<Contrast, E, P, R> {
 
     @Override
-    protected Iterable<String> labelsForColumn(R requestContext,
-                                               Contrast dataColumnDescriptor){
+    protected Stream<String> labelsForColumn(R requestContext,
+                                             Contrast dataColumnDescriptor){
         String name = requestContext.displayNameForColumn(dataColumnDescriptor);
-        return ImmutableList.of(name+".foldChange", name+".pValue");
+        return Stream.of(name+".foldChange", name+".pValue");
     }
 
     @Override
-    protected Iterable<String> valuesFromColumn(R requestContext, @Nullable Expr expression) {
-        return expression == null ? ImmutableList.of("","") :
-                ImmutableList.of(Double.toString(expression.getFoldChange()), Double.toString(expression.getPValue()));
+    protected Stream<String> valuesFromColumn(R requestContext, @Nullable E expression) {
+        return expression == null ?
+                Stream.of("","") :
+                Stream.of(Double.toString(expression.getFoldChange()), Double.toString(expression.getPValue()));
     }
 
     @Override

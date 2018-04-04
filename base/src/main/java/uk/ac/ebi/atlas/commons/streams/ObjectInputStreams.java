@@ -5,9 +5,10 @@ import java.util.function.Predicate;
 
 public class ObjectInputStreams {
 
-    private ObjectInputStreams(){}
+    private ObjectInputStreams() {
+    }
 
-    public static  <X> ObjectInputStream<X> filter(final ObjectInputStream<X> unfiltered, final Predicate<X> keep){
+    public static <X> ObjectInputStream<X> filter(final ObjectInputStream<X> unfiltered, final Predicate<X> keep) {
         return new ObjectInputStream<X>() {
             @Override
             public X readNext() {
