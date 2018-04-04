@@ -1,7 +1,7 @@
 var atlasAutocomplete =
 webpackJsonp_name_([2],{
 
-/***/ 121:
+/***/ 123:
 /*!*********************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/emptyFunction.js ***!
   \*********************************************************************/
@@ -49,7 +49,7 @@ module.exports = emptyFunction;
 
 /***/ }),
 
-/***/ 122:
+/***/ 124:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/invariant.js ***!
   \*****************************************************************/
@@ -114,7 +114,7 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ 123:
+/***/ 125:
 /*!***************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/warning.js ***!
   \***************************************************************/
@@ -133,7 +133,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 121);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 123);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -188,7 +188,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 124:
+/***/ 126:
 /*!**********************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \**********************************************************************************/
@@ -213,7 +213,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 125:
+/***/ 127:
 /*!************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/URI.js ***!
   \************************************************************/
@@ -238,10 +238,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   // https://github.com/umdjs/umd/blob/master/returnExports.js
   if (typeof module === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 126), __webpack_require__(/*! ./IPv6 */ 127), __webpack_require__(/*! ./SecondLevelDomains */ 128));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 128), __webpack_require__(/*! ./IPv6 */ 129), __webpack_require__(/*! ./SecondLevelDomains */ 130));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 126), __webpack_require__(/*! ./IPv6 */ 127), __webpack_require__(/*! ./SecondLevelDomains */ 128)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 128), __webpack_require__(/*! ./IPv6 */ 129), __webpack_require__(/*! ./SecondLevelDomains */ 130)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2566,7 +2566,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 126:
+/***/ 128:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/punycode.js ***!
   \*****************************************************************/
@@ -3111,7 +3111,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 127:
+/***/ 129:
 /*!*************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/IPv6.js ***!
   \*************************************************************/
@@ -3312,7 +3312,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 128:
+/***/ 130:
 /*!***************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/SecondLevelDomains.js ***!
   \***************************************************************************/
@@ -3678,7 +3678,7 @@ var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 277);
 
 var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
-var _urijs = __webpack_require__(/*! urijs */ 125);
+var _urijs = __webpack_require__(/*! urijs */ 127);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -3704,7 +3704,7 @@ var AtlasAutocomplete = function (_React$Component) {
 
     _this.state = {
       selectedItem: _this.props.initialValue,
-      species: '',
+      species: _this.props.defaultSpecies,
       currentSuggestions: []
     };
 
@@ -3805,7 +3805,7 @@ var AtlasAutocomplete = function (_React$Component) {
         this.props.enableSpeciesFilter && _react2.default.createElement(
           'div',
           { className: this.props.speciesFilterClassName },
-          _react2.default.createElement(_SpeciesSelect2.default, { atlasUrl: this.props.atlasUrl, onChange: this.speciesSelectOnChange })
+          _react2.default.createElement(_SpeciesSelect2.default, { atlasUrl: this.props.atlasUrl, onChange: this.speciesSelectOnChange, selectedValue: this.state.species })
         )
       );
     }
@@ -3822,7 +3822,8 @@ AtlasAutocomplete.propTypes = {
   onSelect: _propTypes2.default.func,
   wrapperClassName: _propTypes2.default.string,
   autocompleteClassName: _propTypes2.default.string,
-  speciesFilterClassName: _propTypes2.default.string
+  speciesFilterClassName: _propTypes2.default.string,
+  defaultSpecies: _propTypes2.default.string
 };
 
 AtlasAutocomplete.defaultProps = {
@@ -3831,7 +3832,8 @@ AtlasAutocomplete.defaultProps = {
   onSelect: function onSelect() {},
   wrapperClassName: '',
   autocompleteClassName: '',
-  speciesFilterClassName: ''
+  speciesFilterClassName: '',
+  defaultSpecies: ''
 };
 
 exports.default = AtlasAutocomplete;
@@ -3856,12 +3858,12 @@ exports.default = AtlasAutocomplete;
 
 
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 121);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 122);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 123);
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 123);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 124);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 125);
 var assign = __webpack_require__(/*! object-assign */ 275);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 124);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 126);
 var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 276);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
@@ -4515,9 +4517,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 122);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 123);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 124);
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 124);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 125);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 126);
   var loggedTypeFailures = {};
 }
 
@@ -5847,7 +5849,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 57);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 125);
+var _urijs = __webpack_require__(/*! urijs */ 127);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -5944,7 +5946,7 @@ var SpeciesSelect = function (_React$Component) {
           _option(this.state.errorMessage)
         ) : _react2.default.createElement(
           'select',
-          { onChange: this.props.onChange },
+          { onChange: this.props.onChange, value: this.props.selectedValue },
           _react2.default.createElement(
             'option',
             { value: '' },
@@ -5993,7 +5995,8 @@ var SpeciesSelect = function (_React$Component) {
 
 SpeciesSelect.propTypes = {
   atlasUrl: _propTypes2.default.string.isRequired,
-  onChange: _propTypes2.default.func.isRequired
+  onChange: _propTypes2.default.func.isRequired,
+  selectedValue: _propTypes2.default.string
 };
 
 exports.default = SpeciesSelect;
