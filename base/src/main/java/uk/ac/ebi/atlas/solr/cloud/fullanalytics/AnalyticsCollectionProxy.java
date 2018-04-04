@@ -69,7 +69,7 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
         Set<String> bioentityIdentifierSearchValues =
                 queryMap.getOrDefault(BIOENTITY_IDENTIFIER_SEARCH, new HashSet<>());
         bioentityIdentifierSearchValues.addAll(
-                geneQuery.terms().stream().map(SemanticQueryTerm::value).collect(toSet()));
+                geneQuery.terms().stream().map(SemanticQueryTerm::value).map(String::toLowerCase).collect(toSet()));
 
         queryMap.put(BIOENTITY_IDENTIFIER_SEARCH, bioentityIdentifierSearchValues);
 
