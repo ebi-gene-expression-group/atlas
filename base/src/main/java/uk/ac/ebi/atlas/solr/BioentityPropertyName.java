@@ -22,8 +22,9 @@ public enum BioentityPropertyName {
     HGNC_SYMBOL("hgnc_symbol", true, "HGNC symbol"),
     INTERPRO("interpro", true, "InterPro"),
     INTERPROTERM("interproterm", false, "InterPro term"),
-    MGI_DESCRIPTION("mgi_description", false, "MGI description"),
     MGI_ID("mgi_id", true, "MGI ID"),
+    MGI_DESCRIPTION("mgi_description", false, "MGI description"),
+    MGI_SYMBOL("mgi_symbol", false, "MGI symbol"),
     MIRBASE_ACCESSION("mirbase_accession", false, "miRBase accession"),
     MIRBASE_ID("mirbase_id", false, "miRBase ID"),
     MIRBASE_NAME("mirbase_name", true, "miRBase name"),
@@ -37,9 +38,9 @@ public enum BioentityPropertyName {
     SYMBOL("symbol", true, "Symbol"),
     SYNONYM("synonym", true, "Synonym"),
     UNIPROT("uniprot", true, "UniProt"),
-    WBPSGENE("wbpsgene", false, "WBPS gene"),
+    WBPSGENE("wbpsgene", true, "WBPS gene"),
     WBPSTRANSCRIPT("wbpstranscript", true, "WBPS transcript"),
-    WBPSPROTEIN("wbpsprotein", true, "WBPS protein");   // Not used for analytics index now
+    WBPSPROTEIN("wbpsprotein", true, "WBPS protein");
 
     final static private ImmutableMap<String, BioentityPropertyName> PROPERTIES_BY_NAME =
             ImmutableMap.copyOf(Arrays.stream(values()).collect(Collectors.toMap(v -> v.name, v -> v)));
