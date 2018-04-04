@@ -87,7 +87,7 @@ public class BioEntityCardModelFactoryTest {
         JsonObject value = property.get("values").getAsJsonArray().get(0).getAsJsonObject();
         assertThat(value.get("text").getAsString()).isEqualTo("value");
         assertThat(value.get("url").getAsString())
-                .isEqualTo("http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value");
+                .isEqualTo("https://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/value");
         assertThat(value.get("relevance").getAsInt()).isEqualTo(0);
     }
 
