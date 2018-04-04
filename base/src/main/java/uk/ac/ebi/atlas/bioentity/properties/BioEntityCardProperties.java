@@ -14,15 +14,16 @@ public class BioEntityCardProperties {
     // As long as all species in species-properties.json are properly annotated and both geneome browser and gene info
     // come from the same place we won’t need a fallback URL such as http://www.ensemblgenomes.org/id-gene/{0} and save
     // the user one click
+
     private static final Map<BioentityPropertyName, Function<Species, String>> PROPERTY_LINK_MAPPER =
             ImmutableMap.<BioentityPropertyName, Function<Species, String>>builder()
-                    .put(ENSGENE, species -> species.getGenomeBrowsers().asList().get(0).get("url") + "/Gene/Summary?g={0}")
-                    .put(WBPSGENE, species -> species.getGenomeBrowsers().asList().get(0).get("url") + "/Gene/Summary?g={0}")
-                    .put(ENSTRANSCRIPT, species -> species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/Summary?t={0}")
-                    .put(WBPSTRANSCRIPT, species -> species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/Summary?t={0}")
-                    .put(ENSPROTEIN, species -> species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/ProteinSummary?t={0}")
-                    .put(WBPSPROTEIN, species -> species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/ProteinSummary?t={0}")
-                    .put(ENSFAMILY_DESCRIPTION, species -> species.getGenomeBrowsers().asList().get(0).get("url") + "/Gene/Family?g={1}")
+                    .put(ENSGENE, species -> species.isUnknown() ? "" : species.getGenomeBrowsers().asList().get(0).get("url") + "/Gene/Summary?g={0}")
+                    .put(WBPSGENE, species -> species.isUnknown() ? "" : species.getGenomeBrowsers().asList().get(0).get("url") + "/Gene/Summary?g={0}")
+                    .put(ENSTRANSCRIPT, species -> species.isUnknown() ? "" : species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/Summary?t={0}")
+                    .put(WBPSTRANSCRIPT, species -> species.isUnknown() ? "" : species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/Summary?t={0}")
+                    .put(ENSPROTEIN, species -> species.isUnknown() ? "" : species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/ProteinSummary?t={0}")
+                    .put(WBPSPROTEIN, species -> species.isUnknown() ? "" : species.getGenomeBrowsers().asList().get(0).get("url") + "/Transcript/ProteinSummary?t={0}")
+                    .put(ENSFAMILY_DESCRIPTION, species -> species.isUnknown() ? "" : species.getGenomeBrowsers().asList().get(0).get("url") + "/Gene/Family?g={1}")
                     .put(PATHWAYID,
                             species -> species.isPlant() ?
                             "http://plantreactome.gramene.org/content/detail/{0}" :
@@ -70,8 +71,6 @@ public class BioEntityCardProperties {
             MIRBASE_SEQUENCE);
 
     public static String getUrlTemplate(BioentityPropertyName propertyName, Species species) {
-        return species.isUnknown() ?
-                "" :
-                PROPERTY_LINK_MAPPER.getOrDefault(propertyName, s -> "").apply(species);
+        return PROPERTY_LINK_MAPPER.getOrDefault(propertyName, s -> "").apply(species);
     }
 }
