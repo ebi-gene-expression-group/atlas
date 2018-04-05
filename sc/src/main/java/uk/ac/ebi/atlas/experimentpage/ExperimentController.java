@@ -18,7 +18,6 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -81,14 +80,38 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                 customContentTab("supplementary-information", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
         );
 
-        availableTabs.add(customContentTab("none", "Downloads", new JsonObject()));
-//        availableTabs.add(
-//                customContentTab("resources", "Downloads", "url",
-//                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-//                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
-//        );
+        availableTabs.add(
+                customContentTab(
+                        "resources",
+                        "Downloads",
+                        "data",
+                        getDownloadsTabContent(experiment.getAccession(), accessKey))
+        );
 
         result.add("tabs", availableTabs);
+
+        return result;
+    }
+
+    private JsonArray getDownloadsTabContent(String experimentAccession, String accessKey) {
+        JsonArray resources = new JsonArray();
+
+        resources.add(experimentFileToJson(ExperimentFileType.SDRF, experimentAccession, accessKey));
+        resources.add(experimentFileToJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
+
+        return  resources;
+    }
+
+    private JsonObject experimentFileToJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
+        String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType.getId(), accessKey).toString();
+
+        JsonObject result = new JsonObject();
+
+        // TODO: how to add properties of one JsonObject (ExperimentFileType.toJson) to another?
+        result.addProperty("url", url);
+        result.addProperty("type", experimentFileType.getIconType().getName());
+        result.addProperty("description",  experimentFileType.getDescription());
+        result.addProperty("isDownload", true);
 
         return result;
     }
@@ -115,26 +138,31 @@ public class ExperimentController extends HtmlExceptionHandlingController {
             }
         }
 
-        // Links to resources
-        List<ExternallyAvailableContent> contents = singleCellContentService.list(experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION);
-        JsonArray result = new JsonArray();
-        for(ExternallyAvailableContent content: contents){
-            result.add(contentAsJson(content, experiment.getAccession(), accessKey));
-        }
-
         supplementaryInformationTabs.add(
                 customContentTab(
                         "resources",
                         "Resources",
                         "data",
-                        result
+                        resourcesAsJson(experiment.getAccession(), accessKey,  ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)
                 ));
 
         return supplementaryInformationTabs;
     }
 
+    private JsonArray resourcesAsJson(String experimentAccesssion, String accessKey, ExternallyAvailableContent.ContentType contentType) {
+        JsonArray result = new JsonArray();
+
+        List<ExternallyAvailableContent> contents = singleCellContentService.list(experimentAccesssion, accessKey, contentType);
+        for(ExternallyAvailableContent content : contents){
+            result.add(contentAsJson(content, experimentAccesssion, accessKey));
+        }
+
+        return result;
+    }
+
     // TODO: Move this to ExternallyAvailableContent class as toJson() method
     private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey){
+        System.out.println(content.uri.toString());
         JsonObject result = content.description.asJson();
         if("redirect".equals(content.uri.getScheme())){
             try {

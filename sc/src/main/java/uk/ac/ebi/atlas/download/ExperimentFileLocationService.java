@@ -22,6 +22,8 @@ public class ExperimentFileLocationService {
         switch (fileType) {
             case EXPERIMENT_DESIGN:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.experimentDesign.getPath();
+            case SDRF:
+                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).sdrf.getPath();
 
             default:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.experimentDesign.getPath();
