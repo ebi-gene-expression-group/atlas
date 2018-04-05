@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StaticTable from './supplementary-information/StaticTable'
-import LinkToResource from './supplementary-information/LinkToResource'
+import LinksToResources from './supplementary-information/LinksToResources'
 
 const sectionTypeComponent = {
   'static-table' : StaticTable,
-  'resources' : LinkToResource
+  'resources' : LinksToResources
 }
 
 const SectionContent = ({type, props}) => {
@@ -16,8 +16,7 @@ const SectionContent = ({type, props}) => {
   )
 
 }
-const SupplementaryInformationPageRoute = (props) => {
-  console.log(props)
+const SupplementaryInformationRoute = (props) => {
   const sections = props.sections.map((section) =>
     <div key={section.name}>
       <h4>{section.name}</h4>
@@ -26,13 +25,13 @@ const SupplementaryInformationPageRoute = (props) => {
   )
 
   return (
-    <div>
+    <div className={"margin-top-large"}>
       {sections}
     </div>
   )
 }
 
-SupplementaryInformationPageRoute.propTypes = {
+SupplementaryInformationRoute.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
@@ -46,4 +45,4 @@ SupplementaryInformationPageRoute.propTypes = {
   }))
 }
 
-export default SupplementaryInformationPageRoute
+export default SupplementaryInformationRoute

@@ -46,7 +46,7 @@
         type: 'experiment-design',
         name: 'Experiment Design',
         props: {
-          downloadUrl: 'experiments-content/E-MTAB-4388/resources/experiment-design',
+          downloadUrl: 'experiment/E-MTAB-5061/download?fileType=experiment-design&accessKey=',
           table: {
             headers: [
               {
@@ -191,9 +191,18 @@
         }
       },
       {
-        type: '',
+        type: 'resources',
         name: 'Downloads',
-        props: {}
+        props: {
+          data: [
+            {
+              description: 'The SDRF file',
+              type: 'icon-tsv',
+              url: 'experiment/E-MTAB-5061/download?fileType=sdrf&accessKey=',
+              isDownload: true
+            }
+          ]
+        }
       }
     ]
 

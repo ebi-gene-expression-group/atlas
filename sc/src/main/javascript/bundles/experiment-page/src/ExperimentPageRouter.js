@@ -6,7 +6,8 @@ import URI from 'urijs'
 
 import TSnePlotViewRoute from './TSnePlotViewRoute'
 import ExperimentDesignRoute from './ExperimentDesignRoute'
-import SupplementaryInformationPageRoute from './SupplementaryInformationPageRoute'
+import SupplementaryInformationRoute from './SupplementaryInformationRoute'
+import DownloadsRoute from './DownloadsRoute'
 
 const RoutePropTypes = {
   match: PropTypes.object.isRequired,
@@ -26,10 +27,8 @@ const TabCommonPropTypes = {
 const tabTypeComponent = {
   't-sne-plot' : TSnePlotViewRoute,
   'experiment-design' : ExperimentDesignRoute,
-  'supplementary-information' : SupplementaryInformationPageRoute
-  // 'resources' : `Resources`,
-  // 'static-table' : StaticTable,
-  // 'qc-report' : QCReport
+  'supplementary-information' : SupplementaryInformationRoute,
+  'resources' : DownloadsRoute
 }
 
 const TopRibbon = ({tabNames, routeProps}) =>
@@ -74,7 +73,6 @@ const RedirectWithLocation = withRouter(RedirectWithSearchAndHash)
 
 
 const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, accessKey, tabs}) => {
-
   const tabCommonProps = {
     atlasUrl,
     resourcesUrl,

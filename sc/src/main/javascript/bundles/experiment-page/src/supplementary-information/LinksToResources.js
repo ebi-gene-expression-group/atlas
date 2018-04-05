@@ -1,14 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import URI from 'urijs'
 
 import styles from './link-to-resource.css'
 
-const LinkToResource = ({data}) => {
+const LinksToResources = ({data, atlasUrl}) => {
   const links =  data.map((service, index) => (
     <div  key={index} className={styles.resource}>
       <span>
         <Icon type={service.type} />
-        <a  href={service.url}>{service.description}</a>
+        {
+          service.isDownload && atlasUrl ? (
+            <a href={URI(service.url, atlasUrl)}>{service.description}</a>
+          ) : (
+            <a href={service.url}>{service.description}</a>
+          )
+        }
       </span>
     </div>
   ))
@@ -38,14 +45,16 @@ const Icon = ({type}) => {
 }
 
 
-LinkToResource.propTypes = {
+LinksToResources.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     group: PropTypes.string,
     type: PropTypes.string,
     description: PropTypes.string,
-    url: PropTypes.string.isRequired
-  })).isRequired
+    url: PropTypes.string.isRequired,
+    isDownload: PropTypes.bool
+  })).isRequired,
+  atlasUrl: PropTypes.string
 }
 
-export default LinkToResource
+export default LinksToResources
 
