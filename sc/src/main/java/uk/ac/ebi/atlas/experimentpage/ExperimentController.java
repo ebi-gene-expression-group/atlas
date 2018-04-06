@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
-import uk.ac.ebi.atlas.download.ExperimentFileType;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
@@ -21,7 +18,6 @@ import javax.inject.Inject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,13 +30,15 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private static final Gson gson = new Gson();
     private final ExperimentFileLocationService experimentFileLocationService;
     private final SingleCellContentService singleCellContentService;
+    private final ExperimentPageContentService experimentPageContentService;
     
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentFileLocationService experimentFileLocationService, SingleCellContentService singleCellContentService){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentFileLocationService experimentFileLocationService, SingleCellContentService singleCellContentService, ExperimentPageContentService experimentPageContentService){
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
         this.experimentFileLocationService = experimentFileLocationService;
         this.singleCellContentService = singleCellContentService;
+        this.experimentPageContentService = experimentPageContentService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -58,26 +56,31 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     }
 
     private JsonObject experimentPageContentForExperiment(final Experiment experiment, final String accessKey){
-        JsonObject result = new JsonObject();
-
-        result.addProperty("experimentAccession", experiment.getAccession());
-        result.addProperty("accessKey", accessKey);
-        result.addProperty("species", experiment.getSpecies().getReferenceName());
-        result.addProperty("disclaimer", experiment.getDisclaimer());
+        JsonObject result = experimentPageContentService.getExperimentInformation(experiment, accessKey);
 
         JsonArray availableTabs = new JsonArray();
 
-        availableTabs.add(tSnePlotTab(experiment));
+        availableTabs.add(
+                customContentTab(
+                        "t-sne-plot",
+                        "Results",
+                        experimentPageContentService.getTsnePlotModel()));
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
-                    experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
-                            experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN.getId(), accessKey).toString())
+                    customContentTab(
+                            "experiment-design",
+                            "Experiment Design",
+                            experimentPageContentService.getExperimentDesignModel(experiment, accessKey))
             );
         }
 
         availableTabs.add(
-                customContentTab("supplementary-information", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
+                customContentTab(
+                        "supplementary-information",
+                        "Supplementary Information",
+                        "sections",
+                        supplementaryInformationTabs(experiment, accessKey))
         );
 
         availableTabs.add(
@@ -85,43 +88,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "resources",
                         "Downloads",
                         "data",
-                        getDownloadsTabContent(experiment.getAccession(), accessKey))
+                        experimentPageContentService.getDownloadsModel(experiment.getAccession(), accessKey))
         );
 
         result.add("tabs", availableTabs);
 
         return result;
-    }
-
-    private JsonArray getDownloadsTabContent(String experimentAccession, String accessKey) {
-        JsonArray resources = new JsonArray();
-
-        resources.add(experimentFileToJson(ExperimentFileType.SDRF, experimentAccession, accessKey));
-        resources.add(experimentFileToJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey));
-        resources.add(experimentFileToJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
-
-        return  resources;
-    }
-
-    private JsonObject experimentFileToJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
-        String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType.getId(), accessKey).toString();
-
-        JsonObject result = new JsonObject();
-
-        // TODO: how to add properties of one JsonObject (ExperimentFileType.toJson) to another?
-        result.addProperty("url", url);
-        result.addProperty("type", experimentFileType.getIconType().getName());
-        result.addProperty("description",  experimentFileType.getDescription());
-        result.addProperty("isDownload", true);
-
-        return result;
-    }
-
-    private JsonArray availableDataUnits(String experimentAccession, ExperimentType experimentType){
-        JsonArray availableDataUnits = new JsonArray();
-        // TODO Do something here: get units from experiment design, from data files (like we do in gxa)
-        availableDataUnits.add("TPM");
-        return availableDataUnits;
     }
 
     // TODO: Move this to new ExperimentPageContentService class
@@ -163,7 +135,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
     // TODO: Move this to ExternallyAvailableContent class as toJson() method
     private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey){
-        System.out.println(content.uri.toString());
         JsonObject result = content.description.asJson();
         if("redirect".equals(content.uri.getScheme())){
             try {
@@ -200,17 +171,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-//    private JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs){
-//        JsonArray result = new JsonArray();
-//        for(Pair<String, String> p : pairs){
-//            JsonObject o = new JsonObject();
-//            o.addProperty(leftName, p.getLeft());
-//            o.addProperty(rightName, p.getRight());
-//            result.add(o);
-//        }
-//        return result;
-//    }
-
     // TODO: Move to a new JSON Utils class
     private JsonArray twoElementArray(String x, String y){
         JsonArray result = new JsonArray();
@@ -232,32 +192,4 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         result.add("props", props);
         return result;
     }
-
-    // TODO: Move this to new ExperimentPageContentService class
-    private JsonObject tSnePlotTab(Experiment experiment) {
-        JsonObject props = new JsonObject();
-
-        JsonArray availableClusters = new JsonArray();
-        Arrays.stream(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}).forEach(availableClusters::add);
-
-        props.addProperty("suggesterEndpoint", "json/suggestions");
-        props.add("ks", availableClusters);
-
-        // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174
-        JsonArray perplexityArray = new JsonArray();
-        Arrays.stream(new int[] {1, 5, 10, 15, 20}).forEach(perplexityArray::add);
-        props.add("perplexities", perplexityArray);
-
-        props.add("units", availableDataUnits(experiment.getAccession(), experiment.getType()));
-        return customContentTab("t-sne-plot", "Results", props);
-    }
-
-    // TODO: Move this to new ExperimentPageContentService class
-    private JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
-        JsonObject props = new JsonObject();
-        props.add("table", table);
-        props.addProperty("downloadUrl", downloadUrl);
-        return customContentTab("experiment-design", "Experiment Design", props);
-    }
-
 }

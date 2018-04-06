@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.download;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;

@@ -31,8 +31,8 @@ public class ExperimentFileLocationService {
         }
     }
 
-    public URI getFileUri(String experimentAccession, String fileTypeId, String accessKey) {
-        String uri = MessageFormat.format(EXPERIMENT_FILES_URI_TEMPLATE, experimentAccession, fileTypeId, accessKey);
+    public URI getFileUri(String experimentAccession, ExperimentFileType fileType, String accessKey) {
+        String uri = MessageFormat.format(EXPERIMENT_FILES_URI_TEMPLATE, experimentAccession, fileType.getId(), accessKey);
 
         return URI.create(uri);
     }
