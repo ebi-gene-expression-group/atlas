@@ -97,6 +97,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         JsonArray resources = new JsonArray();
 
         resources.add(experimentFileToJson(ExperimentFileType.SDRF, experimentAccession, accessKey));
+        resources.add(experimentFileToJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey));
         resources.add(experimentFileToJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
 
         return  resources;

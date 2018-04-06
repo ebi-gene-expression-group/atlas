@@ -24,7 +24,8 @@ public class ExperimentFileLocationService {
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.experimentDesign.getPath();
             case SDRF:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).sdrf.getPath();
-
+            case CLUSTERING:
+                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).clusters.getPath();
             default:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.experimentDesign.getPath();
         }

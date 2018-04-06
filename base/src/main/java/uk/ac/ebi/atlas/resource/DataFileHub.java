@@ -70,6 +70,8 @@ public class DataFileHub {
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_cols";
     final static String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tsne_perp_{1}.tsv";
     final static String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.sdrf.txt";
+    final static String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.clusters.tsv";
+
 
     @Inject
     public DataFileHub(@Value("#{configuration['experimentsFilesLocation']}") String experimentsFilesLocation) {
@@ -323,6 +325,7 @@ public class DataFileHub {
         public final AtlasResource<TsvStreamer> geneIdsTsv;
         public final AtlasResource<TsvStreamer> cellIdsTsv;
         public final AtlasResource<TsvStreamer> sdrf;
+        public final AtlasResource<TsvStreamer> clusters;
         public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
 
         SingleCellExperimentFiles(String experimentAccession) {
@@ -331,6 +334,11 @@ public class DataFileHub {
             sdrf = new TsvFile.ReadOnly(
                     experimentsFilesLocation,
                     SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE,
+                    experimentAccession);
+
+            clusters = new TsvFile.ReadOnly(
+                    experimentsFilesLocation,
+                    SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE,
                     experimentAccession);
 
             tpmsMatrix =

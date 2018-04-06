@@ -6,9 +6,9 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 public enum ExperimentFileType {
 
     // Could include icon name (similar to Description class in ExternallyAvailableContent)
-    EXPERIMENT_DESIGN ("experiment-design", "Experiment Design", "A file outlying the experimental design", IconType.EXPERIMENT_DESIGN),
-    SDRF("sdrf", "SDRF file", "The SDRF file", IconType.TSV),
-    CLUSTERING("cluster", "Clustering file", "The clustering file", IconType.TSV);
+    EXPERIMENT_DESIGN ("experiment-design", "Experiment Design", "Experiment design file", IconType.EXPERIMENT_DESIGN),
+    SDRF("sdrf", "SDRF file", "SDRF file", IconType.TSV),
+    CLUSTERING("cluster", "Clustering file", "Clustering file", IconType.TSV);
 
 
     // IDs should be used when generating URLs
