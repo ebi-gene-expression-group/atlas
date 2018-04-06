@@ -18,7 +18,7 @@ const TSnePlotViewRoute = (props) => {
   const search = URI(location.search).search(true)
 
   return (
-    <div>
+    <div className={"margin-top-large"}>
       <TSnePlotView atlasUrl={atlasUrl}
                     suggesterEndpoint={suggesterEndpoint}
                     experimentAccession={experimentAccession}
@@ -33,6 +33,11 @@ const TSnePlotViewRoute = (props) => {
                     onChangeK={ (k) => { updateUrlSearch({ name: `k`, value: k }) } }
                     onChangePerplexity={ (perplexity) => { updateUrlSearch({ name: `perplexity`, value: perplexity }) } }
       />
+      {
+        search.geneId ? (
+          <h4 className={"margin-top-large"}> Information about gene {search.geneId} </h4>
+        ) : null
+      }
       <BioentityInformation atlasUrl={atlasUrl} geneId={search.geneId || ``} />
     </div>
 
