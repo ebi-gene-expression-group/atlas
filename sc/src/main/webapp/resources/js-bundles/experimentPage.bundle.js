@@ -42278,7 +42278,7 @@ DownloadsRoute.propTypes = {
   data: _propTypes2.default.arrayOf(_propTypes2.default.shape({
     description: _propTypes2.default.string,
     type: _propTypes2.default.string,
-    url: _propTypes2.default.object
+    url: _propTypes2.default.string
   }))
 };
 

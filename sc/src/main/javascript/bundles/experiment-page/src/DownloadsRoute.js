@@ -20,7 +20,7 @@ DownloadsRoute.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string,
     type: PropTypes.string,
-    url: PropTypes.object
+    url: PropTypes.string
   }))
 }
 
