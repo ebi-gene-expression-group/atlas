@@ -1,71 +1,124 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
 import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 
 import static java.util.stream.Collectors.joining;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.apache.solr.client.solrj.util.ClientUtils.escapeQueryChars;
 
-public class SolrQueryBuilder {
-    // A general way to do single and multiple value field searches
-    private static final String TERMS_CLAUSE_TEMPLATE = "({!terms f=%s}%s)";
-    // If we want to add an exclusive value syntax: %s:{%f TO *]
-    private static final String RANGE_UPPER_BOUND_CLAUSE_TEMPLATE = "%s:[* TO %f]";
-    private static final String RANGE_LOWER_BOUND_CLAUSE_TEMPLATE = "%s:[%f TO *]";
-    private static final String RANGE_DOUBLE_BOUND_CLAUSE_TEMPLATE = "%s:([* TO %f] OR [%f TO *])";
+public class SolrQueryBuilder<T extends CollectionProxy> {
+    // I don’t think using the Standard Query Parser
+    // (https://lucene.apache.org/solr/guide/7_1/the-standard-query-parser.html#the-standard-query-parser) for fields
+    // such as assay_group_id or experiment_accession doesn’t incur in a performance penalty since there’s no analysis
+    // that can be done for those fields. My educated guess is that the term(s) query parser improves performance when
+    // it’s used on a tokenised/filtered field because it avoids that processing step.
+    private static final String STANDARD_QUERY_PARSER_FIELD_QUERY_TEMPLATE = "%s:(%s)";
+    private static final String STANDARD_QUERY_PARSER_LOWER_BOUND_RANGE_QUERY_TEMPLATE = "%s:[%f TO *]";
+    private static final String STANDARD_QUERY_PARSER_UPPER_BOUND_RANGE_QUERY_TEMPLATE = "%s:[* TO %f]";
+    private static final String STANDARD_QUERY_PARSER_DOUBLE_BOUND_RANGE_QUERY_TEMPLATE = "%s:[%f TO %f]";
 
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> flBuilder = ImmutableSet.builder();
-    private int rows = Integer.MAX_VALUE;
+    // Some magic Solr number, from the logs:
+    // ERROR (qtp511707818-76) [   ] o.a.s.s.HttpSolrCall null:java.lang.IllegalArgumentException: maxSize must be <= 2147483630; got: 2147483646
+    private int rows = 1000;
 
-    public SolrQueryBuilder addQueryTermsClause(String field, String... values) {
-        qClausesBuilder.add(createTermsQuery(field, ImmutableSet.copyOf(values)));
+    private static String normalize(String str) {
+        return "\"" + escapeQueryChars(str.trim()) + "\"";
+    }
+
+    public static String createOrBooleanQuery(SchemaField field, String... values) {
+        return values.length > 0 ?
+                String.format(
+                        STANDARD_QUERY_PARSER_FIELD_QUERY_TEMPLATE,
+                        field.name(),
+                        Arrays.stream(values)
+                                .filter(StringUtils::isNotBlank)
+                                .map(SolrQueryBuilder::normalize)
+                                .collect(joining(" OR "))) :
+                "";
+    }
+
+    public static String createOrBooleanQuery(SchemaField field, Collection<String> values) {
+        return createOrBooleanQuery(field, values.toArray(new String[0]));
+    }
+
+    public static String createFieldQuery(SchemaField field, String value) {
+        return isNotBlank(value) ?
+                String.format(STANDARD_QUERY_PARSER_FIELD_QUERY_TEMPLATE, field.name(), normalize(value)) :
+                "";
+    }
+
+    public static String createLowBoundRangeQuery(SchemaField field, double value) {
+        return String.format(STANDARD_QUERY_PARSER_LOWER_BOUND_RANGE_QUERY_TEMPLATE, field.name(), value);
+    }
+
+    public static String createUpperBoundRangeQuery(SchemaField field, double value) {
+        return String.format(STANDARD_QUERY_PARSER_UPPER_BOUND_RANGE_QUERY_TEMPLATE, field.name(), value);
+    }
+
+    public static String createDoubleBoundRangeQuery(SchemaField field, double lower, double upper) {
+        return String.format(STANDARD_QUERY_PARSER_DOUBLE_BOUND_RANGE_QUERY_TEMPLATE, field.name(), lower, upper);
+    }
+
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> filterField(U field, String value) {
+        fqClausesBuilder.add(createFieldQuery(field, value));
         return this;
     }
 
-    public SolrQueryBuilder addFilterTermsClause(String field, String... values) {
-        fqClausesBuilder.add(createTermsQuery(field, ImmutableSet.copyOf(values)));
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> queryField(U field, String value) {
+        qClausesBuilder.add(createFieldQuery(field, value));
         return this;
     }
 
-    public SolrQueryBuilder addQueryUpperRangeClause(String field, Double rangeUpperBound) {
-        qClausesBuilder.add(createUpperRangeQuery(field, rangeUpperBound));
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> queryFieldOr(U field, String... values) {
+        qClausesBuilder.add(createOrBooleanQuery(field, values));
         return this;
     }
 
-    public SolrQueryBuilder addFilterUpperRangeClause(String field, Double rangeUpperBound) {
-        fqClausesBuilder.add(createUpperRangeQuery(field, rangeUpperBound));
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> queryFieldOr(U field, Collection<String> values) {
+        return queryFieldOr(field, values.toArray(new String[0]));
+    }
+
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> filterFieldOr(U field, String... values) {
+        fqClausesBuilder.add(createOrBooleanQuery(field, values));
         return this;
     }
 
-    public SolrQueryBuilder addQueryLowerRangeClause(String field, Double rangeLowerBound) {
-        qClausesBuilder.add(createLowerRangeQuery(field, rangeLowerBound));
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> filterFieldLowerRange(U field, double value) {
+        fqClausesBuilder.add(createLowBoundRangeQuery(field, value));
         return this;
     }
 
-    public SolrQueryBuilder addFilterLowerRangeClause(String field, Double rangeLowerBound) {
-        fqClausesBuilder.add(createLowerRangeQuery(field, rangeLowerBound));
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> filterFieldUpperRange(U field, double value) {
+        fqClausesBuilder.add(createUpperBoundRangeQuery(field, value));
         return this;
     }
 
-    public SolrQueryBuilder addQueryDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
-        qClausesBuilder.add(createDoubleRangeQuery(field, rangeUpperBound, rangeLowerBound));
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> filterFieldDoubleRange(U field, double lower, double upper) {
+        fqClausesBuilder.add(createDoubleBoundRangeQuery(field, lower, upper));
         return this;
     }
 
-    public SolrQueryBuilder addFilterDoubleRangeClause(String field, Double rangeUpperBound, Double rangeLowerBound) {
-        fqClausesBuilder.add(createDoubleRangeQuery(field, rangeUpperBound, rangeLowerBound));
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> setFieldList(U... fields) {
+        for (SchemaField<T> field : fields) {
+            flBuilder.add(field.name());
+        }
         return this;
     }
 
-    public SolrQueryBuilder setFieldList(String... fields) {
-        flBuilder.add(fields);
-        return this;
-    }
-
-    public SolrQueryBuilder setRows(int rows) {
+    public SolrQueryBuilder<T> setRows(int rows) {
         this.rows = rows;
         return this;
     }
@@ -76,45 +129,16 @@ public class SolrQueryBuilder {
         ImmutableSet<String> fl = flBuilder.build();
 
         return mapParams(
-                "fq", fqClauses.stream().collect(joining(" AND ")),
-                "q", qClauses.isEmpty() ? "*:*" : qClauses.stream().collect(joining(" AND ")),
-                "fl", fl.isEmpty() ? "*" : fl.stream().collect(joining(",")),
+                "fq", fqClauses.stream().filter(StringUtils::isNotBlank).collect(joining(" AND ")),
+                "q", qClauses.isEmpty() ? "*:*" : qClauses.stream().filter(StringUtils::isNotBlank).collect(joining(" AND ")),
+                "fl", fl.isEmpty() ? "*" : fl.stream().filter(StringUtils::isNotBlank).collect(joining(",")),
                 "rows", Integer.toString(rows));
                 // fl can also be left empty to return all fields, but "*" shows an explicit intent
     }
 
-    private static String createTermsQuery(String field, Set<String> searchValues) {
-        return String.format(
-                TERMS_CLAUSE_TEMPLATE,
-                field,
-                searchValues.stream()
-                        // The terms query parser searches for values verbatim, no escaping is necessary
-                        // .map(ClientUtils::escapeQueryChars)
-                        .collect(joining(",")));
-    }
-
-    private static String createUpperRangeQuery(String field, Double rangeEnd) {
-        return String.format(RANGE_UPPER_BOUND_CLAUSE_TEMPLATE, field, rangeEnd);
-    }
-
-    private static String createLowerRangeQuery(String field, Double rangeStart) {
-        return String.format(RANGE_LOWER_BOUND_CLAUSE_TEMPLATE, field, rangeStart);
-    }
-
-    private static String createDoubleRangeQuery(String field, Double rangeEnd, Double rangeStart) {
-        return String.format(RANGE_DOUBLE_BOUND_CLAUSE_TEMPLATE, field, rangeEnd, rangeStart);
-    }
-
-//    public FacetStreamingExpressionBuilder queryIdentifierSearch(SemanticQuery semanticQuery) {
-//        if(isNotEmpty(semanticQuery)){
-//            AnalyticsQueryTree.createForIdentifierSearch(semanticQuery);
-//        }
-//        return this;
-//    }
-
     private static SolrQuery mapParams(String... vals) {
         SolrQuery solrQuery = new SolrQuery();
-        for (int idx = 0; idx < vals.length; idx += 2) {
+        for (int idx = 0 ; idx < vals.length ; idx += 2) {
             solrQuery.add(vals[idx], vals[idx + 1]);
         }
 

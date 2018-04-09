@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
 
 import com.google.common.collect.ImmutableSet;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.apache.solr.client.solrj.io.comp.ComparatorOrder;
 import org.apache.solr.client.solrj.io.comp.FieldComparator;
@@ -22,7 +23,7 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
     private final T collectionProxy;
     private final Bucket[] buckets;
 
-    private SolrQueryBuilder solrQueryBuilder = new SolrQueryBuilder();
+    private SolrQuery solrQuery;
     private ImmutableSet.Builder<Metric> metricsBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<FieldComparator> sortsBuilder = ImmutableSet.builder();
 
@@ -35,46 +36,8 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
                         .map(SchemaField::name)
                         .map(Bucket::new)
                         .toArray(Bucket[]::new);
-    }
 
-    public FacetStreamBuilder<T> addQueryTermsClause(SchemaField<T> field, String... values) {
-        solrQueryBuilder.addQueryTermsClause(field.name(), values);
-        return this;
-    }
-
-    public FacetStreamBuilder<T> addFilterTermsClause(SchemaField<T> field, String... values) {
-        solrQueryBuilder.addFilterTermsClause(field.name(), values);
-        return this;
-    }
-
-//    public FacetStreamBuilder<T> addQueryUpperRangeClause(SchemaField<T> field, Double rangeUpperBound) {
-//        solrQueryBuilder.addQueryUpperRangeClause(field.name(), rangeUpperBound);
-//        return this;
-//    }
-
-    public FacetStreamBuilder<T> addFilterUpperRangeClause(SchemaField<T> field, Double rangeUpperBound) {
-        solrQueryBuilder.addFilterUpperRangeClause(field.name(), rangeUpperBound);
-        return this;
-    }
-
-//    public FacetStreamBuilder<T> addQueryLowerRangeClause(SchemaField<T> field, Double rangeLowerBound) {
-//        solrQueryBuilder.addQueryLowerRangeClause(field.name(), rangeLowerBound);
-//        return this;
-//    }
-
-    public FacetStreamBuilder<T> addFilterLowerRangeClause(SchemaField<T> field, Double rangeLowerBound) {
-        solrQueryBuilder.addFilterLowerRangeClause(field.name(), rangeLowerBound);
-        return this;
-    }
-
-//    public FacetStreamBuilder<T> addQueryDoubleRangeClause(SchemaField<T> field, Double rangeUpperBound, Double rangeLowerBound) {
-//        solrQueryBuilder.addQueryDoubleRangeClause(field.name(), rangeUpperBound, rangeLowerBound);
-//        return this;
-//    }
-
-    public FacetStreamBuilder<T> addFilterDoubleRangeClause(SchemaField<T> field, Double rangeUpperBound, Double rangeLowerBound) {
-        solrQueryBuilder.addFilterDoubleRangeClause(field.name(), rangeUpperBound, rangeLowerBound);
-        return this;
+        solrQuery = new SolrQueryBuilder<T>().build();
     }
 
     public FacetStreamBuilder<T> sortByCountsAscending() {
@@ -94,9 +57,18 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
         return this;
     }
 
+    public FacetStreamBuilder<T> withQueryBuilder(SolrQueryBuilder<T> solrQueryBuilder) {
+        this.solrQuery = solrQueryBuilder.build();
+        return this;
+    }
+
+    public FacetStreamBuilder<T> withQuery(SolrQuery solrQuery) {
+        this.solrQuery = solrQuery;
+        return this;
+    }
+
     @Override
     protected TupleStream getRawTupleStream() {
-        SolrParams solrParams = solrQueryBuilder.build();
         Metric[] metrics = metricsBuilder.build().toArray(new Metric[0]);
         FieldComparator[] sorts = sortsBuilder.build().toArray(new FieldComparator[0]);
         int limit = Integer.MAX_VALUE;  // retrieve all, see https://issues.apache.org/jira/browse/SOLR-11836
@@ -105,7 +77,7 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
             // Will throw ClassCastException if SolrClient isn’t CloudSolrClient, beware in testing
             String zkHost = ((CloudSolrClient) collectionProxy.solrClient).getZkHost();
             String collectionNameOrAlias = collectionProxy.nameOrAlias;
-            return new FacetStream(zkHost, collectionNameOrAlias, solrParams, buckets, metrics, sorts, limit);
+            return new FacetStream(zkHost, collectionNameOrAlias, solrQuery, buckets, metrics, sorts, limit);
         } catch (IOException e) {
             // Can only happen if multiple sorters with different names are set, the class API prevents it :)
             throw new UncheckedIOException(e);
