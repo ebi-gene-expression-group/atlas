@@ -1,27 +1,45 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.download.ExperimentFileType;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Component
 public class ExperimentPageContentService {
 
     private ExperimentFileLocationService experimentFileLocationService;
+    private final DataFileHub dataFileHub;
+    private final SingleCellContentService singleCellContentService;
 
-    public ExperimentPageContentService(ExperimentFileLocationService experimentFileLocationService) {
+    private static final Gson gson = new Gson();
+
+    public ExperimentPageContentService(ExperimentFileLocationService experimentFileLocationService,
+                                        DataFileHub dataFileHub,
+                                        SingleCellContentService singleCellContentService) {
         this.experimentFileLocationService = experimentFileLocationService;
+        this.dataFileHub = dataFileHub;
+        this.singleCellContentService = singleCellContentService;
     }
 
-    public JsonObject getExperimentInformation(Experiment experiment, String accessKey) {
+    public JsonObject getExperimentInformationAsJson(Experiment experiment, String accessKey) {
         JsonObject result = new JsonObject();
 
         result.addProperty("experimentAccession", experiment.getAccession());
@@ -32,7 +50,7 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    public JsonObject getTsnePlotModel() {
+    public JsonObject getTsnePlotDataAsJson() {
         JsonObject result = new JsonObject();
 
         JsonArray availableClusters = new JsonArray();
@@ -55,31 +73,50 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    public JsonObject getExperimentDesignModel(Experiment experiment, String accessKey) {
+    public JsonObject getExperimentDesignAsJson(Experiment experiment, String accessKey) {
         JsonObject result = new JsonObject();
 
-        ExperimentDesignTable table = new ExperimentDesignTable(experiment);
         result.add("table", new ExperimentDesignTable(experiment).asJson());
 
         String fileUri = experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN, accessKey).toString();
-        // Should change this key name (here and in JSON model received by the React component) to file URI. URL is created by the component.
-        // Or should this service be responsible for making the full URL, and make the component dumber
         result.addProperty("downloadUrl", fileUri);
 
         return result;
     }
 
-    public JsonArray getDownloadsModel(String experimentAccession, String accessKey) {
+    public JsonArray getDownloadsAsJson(String experimentAccession, String accessKey) {
         JsonArray result = new JsonArray();
 
-        result.add(getExperimentFileModel(ExperimentFileType.SDRF, experimentAccession, accessKey));
-        result.add(getExperimentFileModel(ExperimentFileType.CLUSTERING, experimentAccession, accessKey));
-        result.add(getExperimentFileModel(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
+        result.add(getExperimentFileAsJson(ExperimentFileType.SDRF, experimentAccession, accessKey));
+        result.add(getExperimentFileAsJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey));
+        result.add(getExperimentFileAsJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
 
         return result;
     }
 
-    private JsonObject getExperimentFileModel(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
+    public JsonElement getAnalysisMethodsAsJson(String experimentAccession) {
+        JsonElement result;
+
+        try (TsvStreamer tsvStreamer =
+                     dataFileHub.getExperimentFiles(experimentAccession).analysisMethods.get()) {
+                            result = gson.toJsonTree(tsvStreamer.get().collect(Collectors.toList()));
+        };
+
+        return result;
+    }
+
+    public JsonArray getResourcesAsJson(String experimentAccesssion, String accessKey, ExternallyAvailableContent.ContentType contentType) {
+        JsonArray result = new JsonArray();
+
+        List<ExternallyAvailableContent> contents = singleCellContentService.list(experimentAccesssion, accessKey, contentType);
+        for(ExternallyAvailableContent content : contents){
+            result.add(contentAsJson(content, experimentAccesssion, accessKey));
+        }
+
+        return result;
+    }
+
+    private JsonObject getExperimentFileAsJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
         String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey).toString();
 
         JsonObject result = new JsonObject();
@@ -91,5 +128,29 @@ public class ExperimentPageContentService {
 
         return result;
     }
+
+    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey){
+        JsonObject result = content.description.asJson();
+        if("redirect".equals(content.uri.getScheme())){
+            try {
+                result.addProperty("url", new URL(content.uri.getSchemeSpecificPart()).toExternalForm());
+
+            } catch (MalformedURLException e) {
+                result.addProperty("url",
+                        MessageFormat.format("{0}{1}",
+                                content.uri.getSchemeSpecificPart(),
+                                isNotEmpty(accessKey) ? "?accessKey="+accessKey : "")
+                );
+            }
+
+        } else {
+            result.addProperty("url",
+                    MessageFormat.format("experiments-content/{0}/resources/{1}{2}",
+                            accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
+                    ));
+        }
+        return result;
+    }
+
 
 }
