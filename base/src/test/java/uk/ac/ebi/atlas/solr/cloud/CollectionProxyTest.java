@@ -35,23 +35,23 @@ public class CollectionProxyTest {
         subject = new CollectionProxy(solrClientMock, "mocked_collection") {};
     }
 
-    @Test
-    public void queryIOExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.query(anyString(), any(SolrParams.class), eq(SolrRequest.METHOD.POST)))
-                .thenThrow(new IOException());
+//    @Test
+//    public void queryIOExceptionIsWrapped() throws IOException, SolrServerException {
+//        when(solrClientMock.query(anyString(), any(SolrParams.class), eq(SolrRequest.METHOD.POST)))
+//                .thenThrow(new IOException());
+//
+//        assertThatExceptionOfType(UncheckedIOException.class)
+//                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
+//    }
 
-        assertThatExceptionOfType(UncheckedIOException.class)
-                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
-    }
-
-    @Test
-    public void querySolrServerExceptionIsWrapped() throws IOException, SolrServerException {
-        when(solrClientMock.query(anyString(), any(SolrParams.class), eq(SolrRequest.METHOD.POST)))
-                .thenThrow(new SolrServerException(""));
-
-        assertThatExceptionOfType(UncheckedIOException.class)
-                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
-    }
+//    @Test
+//    public void querySolrServerExceptionIsWrapped() throws IOException, SolrServerException {
+//        when(solrClientMock.query(anyString(), any(SolrParams.class), eq(SolrRequest.METHOD.POST)))
+//                .thenThrow(new SolrServerException(""));
+//
+//        assertThatExceptionOfType(UncheckedIOException.class)
+//                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
+//    }
 
     @Test
     public void addAndCommitIOExceptionIsWrapped() throws IOException, SolrServerException {
