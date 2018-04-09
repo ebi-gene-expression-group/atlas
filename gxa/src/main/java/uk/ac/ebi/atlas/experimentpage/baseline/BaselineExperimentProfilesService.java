@@ -115,7 +115,7 @@ public class BaselineExperimentProfilesService {
 
             thisGeneIdDocs.forEach(solrDoc -> {
                 BaselineExpression baselineExpression =
-                        solrDoc.containsKey(expressionLevelFieldNames.getRight()) ?
+                        solrDoc.containsKey(expressionLevelFieldNames.getRight().name()) ?
                                 parseSolrFieldValue(solrDoc.getFieldValues(expressionLevelFieldNames.getRight().name())) :
                                 parseSolrFieldValue(solrDoc.getFieldValue(expressionLevelFieldNames.getLeft().name()));
 
