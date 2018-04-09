@@ -40396,22 +40396,19 @@ var Table = function Table(_ref) {
         _react2.default.createElement(
           'tr',
           null,
-          _react2.default.createElement(
-            'th',
-            null,
-            'Analysis Step'
-          ),
-          _react2.default.createElement(
-            'th',
-            null,
-            'Description'
-          )
+          data[0].map(function (element, index) {
+            return _react2.default.createElement(
+              'th',
+              { key: index },
+              element
+            );
+          })
         )
       ),
       _react2.default.createElement(
         'tbody',
         null,
-        data.map(function (row, index) {
+        data.slice(1, data.length).map(function (row, index) {
           return _react2.default.createElement(
             'tr',
             { key: index },

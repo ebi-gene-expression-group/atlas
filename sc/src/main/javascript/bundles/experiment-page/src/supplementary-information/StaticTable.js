@@ -6,13 +6,16 @@ const Table = ({data}) => (
     <table>
       <thead>
         <tr>
-          <th>Analysis Step</th>
-          <th>Description</th>
+          {
+            data[0].map((element, index) => (
+              <th key={index}>{element}</th>
+            ))
+          }
         </tr>
-        </thead>
+      </thead>
       <tbody>
       {
-        data.map((row, index) => (
+        data.slice(1, data.length).map((row, index) => (
           <tr key={index}>
             {
               row.map( (element, index) => (
