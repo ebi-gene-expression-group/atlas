@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Linkify from 'linkifyjs/react'
+
 const Table = ({data}) => (
   <div className="row column expanded">
     <table>
@@ -20,7 +22,7 @@ const Table = ({data}) => (
             {
               row.map( (element, index) => (
                 <td key={index}>
-                  <div dangerouslySetInnerHTML={{__html: element}} />
+                  <Linkify>{element}</Linkify>
                 </td>
               ))
             }
