@@ -2,12 +2,12 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import org.apache.solr.client.solrj.SolrQuery;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 import static uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties.BIOENTITY_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSGENE;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
 
 @Named
 public class BioEntityPropertyDao {
@@ -47,8 +48,9 @@ public class BioEntityPropertyDao {
                 solrClient.getMap(identifier, BIOENTITY_PROPERTY_NAMES);
 
         if (propertiesByName.isEmpty()) {
-            if (analyticsCollectionProxy.query(new SolrQuery("bioentity_identifier_search:" + identifier))
-                    .getResults().isEmpty()) {
+            SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
+            solrQueryBuilder.queryField(BIOENTITY_IDENTIFIER_SEARCH, identifier);
+            if (analyticsCollectionProxy.queryWithBuilder(solrQueryBuilder).getResults().isEmpty()) {
                 throw new BioentityNotFoundException("Gene/protein <em>" + identifier + "</em> not found.");
             } else {
                 // We can do this because propertiesByName is a HashMap; arguably we should create a copy of the map if

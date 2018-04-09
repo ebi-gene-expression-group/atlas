@@ -47,19 +47,6 @@ public abstract class CollectionProxy {
         }
     }
 
-    public QueryResponse query(SolrParams solrParams) {
-        try {
-            // Change maybe to: return new QueryRequest()
-            return solrClient.query(nameOrAlias, solrParams, SolrRequest.METHOD.POST);
-        } catch (IOException e) {
-            logException(e);
-            throw new UncheckedIOException(e);
-        } catch (SolrServerException e) {
-            logException(e);
-            throw new UncheckedIOException(new IOException(e));
-        }
-    }
-
     public UpdateResponse addAndCommit(Collection<SolrInputDocument> docs) {
         try {
             return new UpdateRequest().add(docs).commit(solrClient, nameOrAlias);
@@ -84,7 +71,7 @@ public abstract class CollectionProxy {
         }
     }
 
-    private void logException(Exception e) {
+    protected void logException(Exception e) {
         LOGGER.error(
                 "Problem connecting to SolrCloud {} with collection {}, full stack trace follows:\n\t{}",
                 solrClient.getClass().getSimpleName(),

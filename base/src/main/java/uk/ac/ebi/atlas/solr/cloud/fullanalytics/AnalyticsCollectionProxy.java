@@ -2,13 +2,18 @@ package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -51,33 +56,49 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     }
 
     public static Map<AnalyticsSchemaField, Set<String>> asAnalyticsGeneQuery(SemanticQuery geneQuery) {
-        // Since there are gene IDs unavailable in bioentities because they’re in scaffolds which we don’t have or from
-        // past Ensembl releases which we don’t support, the only way to search for such genes is through a free-text
-        // search from the main page.
-
         Map<AnalyticsSchemaField, Set<String>> queryMap =
                 geneQuery.groupValuesByCategory().entrySet().stream()
                 .collect(toMap(
                         entry -> asAnalyticsSchemaField(BioentityPropertyName.getByName(entry.getKey())),
                         entry -> entry.getValue().stream()
-                                                // Lower case is a hack to use the terms query parser on a lowercase
-                                                // field. This has the drawback that Solr details leak all the way
-                                                // to here. If only there existed a multiple field query parser... :(
+                                                // Lower case is a hack se we can use the terms query parser on a
+                                                // lowercase field. If only there existed a multiple field query
+                                                // parser... :(
                                                  .map(String::toLowerCase)
                                                  .collect(toSet())));
 
-        Set<String> bioentityIdentifierSearchValues =
-                queryMap.getOrDefault(BIOENTITY_IDENTIFIER_SEARCH, new HashSet<>());
-        bioentityIdentifierSearchValues.addAll(
-                geneQuery.terms().stream().map(SemanticQueryTerm::value).map(String::toLowerCase).collect(toSet()));
+        // Since there are gene IDs unavailable in bioentities because they’re in scaffolds which we don’t have or from
+        // past Ensembl releases which we don’t support, the only way to search for such genes is through a free-text
+        // search matched against the bioentity identifier. This requirement can be removed after
 
-        queryMap.put(BIOENTITY_IDENTIFIER_SEARCH, bioentityIdentifierSearchValues);
+        Set<String> identifierSearchValues = queryMap.getOrDefault(IDENTIFIER_SEARCH, new HashSet<>());
+        Set<String> bioentityIdentifierSearchValues = new HashSet<>(queryMap.getOrDefault(BIOENTITY_IDENTIFIER_SEARCH, new HashSet<>()));
+        bioentityIdentifierSearchValues.addAll(identifierSearchValues);
+        if (!bioentityIdentifierSearchValues.isEmpty()) {
+            queryMap.put(BIOENTITY_IDENTIFIER_SEARCH, bioentityIdentifierSearchValues);
+        }
+
+        // We could implicitly change the contents of the map with just this... nasty!
+        // queryMap.getOrDefault(BIOENTITY_IDENTIFIER_SEARCH, new HashSet<>()).addAll(identifierSearchValues);
 
         return queryMap;
     }
 
     public AnalyticsCollectionProxy(SolrClient solrClient) {
         super(solrClient, "analytics");
+    }
+
+    public QueryResponse queryWithBuilder(SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder) {
+        try {
+            // Change maybe to: return new QueryRequest()
+            return solrClient.query(nameOrAlias, solrQueryBuilder.build(), SolrRequest.METHOD.POST);
+        } catch (IOException e) {
+            logException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            logException(e);
+            throw new UncheckedIOException(new IOException(e));
+        }
     }
 
     public FieldStatsInfo fieldStats(SchemaField<AnalyticsCollectionProxy> field, SolrQuery solrQuery) {
