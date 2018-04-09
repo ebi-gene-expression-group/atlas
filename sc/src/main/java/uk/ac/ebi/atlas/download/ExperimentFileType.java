@@ -6,11 +6,11 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 public enum ExperimentFileType {
 
     // Could include icon name (similar to Description class in ExternallyAvailableContent)
-    EXPERIMENT_DESIGN ("experiment-design", "Experiment Design", "Experiment design file", IconType.EXPERIMENT_DESIGN),
-    SDRF("sdrf", "SDRF file", "SDRF file", IconType.TSV),
-    CLUSTERING("cluster", "Clustering file", "Clustering file", IconType.TSV),
-    QUANTIFICATION_RAW("quantification-raw", "Raw Quantification", "Raw quantification files (MatrixMarket format)", IconType.TSV),
-    QUANTIFICATION_FILTERED("quantification-filtered", "Filtered Quantification", "Filetered quantification files (MatrixMarket format)", IconType.TSV);
+    EXPERIMENT_DESIGN ("experiment-design", "Experiment Design", "Experiment design file (.tsv)", IconType.EXPERIMENT_DESIGN),
+    SDRF("sdrf", "SDRF file", "SDRF file (.tsv)", IconType.TSV),
+    CLUSTERING("cluster", "Clustering file", "Clustering file (.tsv)", IconType.TSV),
+    QUANTIFICATION_RAW("quantification-raw", "Raw Quantification", "Raw quantification files (MatrixMarket)", IconType.TSV),
+    QUANTIFICATION_FILTERED("quantification-filtered", "Filtered Quantification", "Filtered quantification files (MatrixMarket)", IconType.TSV);
 
     // IDs should be used when generating URLs
     private final String id;

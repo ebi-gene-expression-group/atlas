@@ -64,8 +64,9 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         List<Path> paths = experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId(fileTypeId));
 
+        String archiveName = experimentAccession + "-" + fileTypeId + "-files.zip";
         response.setStatus(HttpServletResponse.SC_OK);
-        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + "test.zip");
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
         for(Path path : paths) {
@@ -78,7 +79,6 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
 
             fileInputStream.close();
             zipOutputStream.closeEntry();
-
         }
 
         zipOutputStream.close();
