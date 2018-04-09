@@ -78,7 +78,7 @@ public class ExperimentPageContentService {
 
         result.add("table", new ExperimentDesignTable(experiment).asJson());
 
-        String fileUri = experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN, accessKey).toString();
+        String fileUri = experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN, accessKey, false).toString();
         result.addProperty("downloadUrl", fileUri);
 
         return result;
@@ -87,9 +87,10 @@ public class ExperimentPageContentService {
     public JsonArray getDownloadsAsJson(String experimentAccession, String accessKey) {
         JsonArray result = new JsonArray();
 
-        result.add(getExperimentFileAsJson(ExperimentFileType.SDRF, experimentAccession, accessKey));
-        result.add(getExperimentFileAsJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey));
-        result.add(getExperimentFileAsJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
+        result.add(getExperimentFileAsJson(ExperimentFileType.SDRF, experimentAccession, accessKey, false));
+        result.add(getExperimentFileAsJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey, false));
+        result.add(getExperimentFileAsJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey, false));
+        result.add(getExperimentFileAsJson(ExperimentFileType.QUANTIFICATION_FILTERED, experimentAccession, accessKey, true));
 
         return result;
     }
@@ -116,8 +117,8 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    private JsonObject getExperimentFileAsJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
-        String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey).toString();
+    private JsonObject getExperimentFileAsJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey, boolean isArchive) {
+        String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey, isArchive).toString();
 
         JsonObject result = new JsonObject();
 
