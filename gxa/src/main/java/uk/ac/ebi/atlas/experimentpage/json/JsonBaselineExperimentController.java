@@ -102,7 +102,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
 
         //different default - reference experiments always had FPKMs, no need to change this now
         if (!request.getParameterMap().containsKey("unit")) {
-            preferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
+            preferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
         }
 
         Species species = speciesInferrer.inferSpeciesForGeneQuery(geneQuery, speciesString);
