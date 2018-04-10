@@ -47,10 +47,10 @@ public class ExperimentFileLocationService {
         }
     }
 
-    public URI getFileUri(String experimentAccession, ExperimentFileType fileType, String accessKey, boolean isArchive) {
+    public URI getFileUri(String experimentAccession, ExperimentFileType fileType, String accessKey) {
         String uri;
 
-        if(isArchive) {
+        if(fileType.isArchive()) {
             uri = MessageFormat.format(EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE, experimentAccession, fileType.getId(), accessKey);
         }
         else {

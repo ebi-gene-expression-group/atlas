@@ -78,7 +78,7 @@ public class ExperimentPageContentService {
 
         result.add("table", new ExperimentDesignTable(experiment).asJson());
 
-        String fileUri = experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN, accessKey, false).toString();
+        String fileUri = experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN, accessKey).toString();
         result.addProperty("downloadUrl", fileUri);
 
         return result;
@@ -118,7 +118,7 @@ public class ExperimentPageContentService {
     }
 
     private JsonObject getExperimentFileAsJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey, boolean isArchive) {
-        String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey, isArchive).toString();
+        String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey).toString();
 
         JsonObject result = new JsonObject();
 
