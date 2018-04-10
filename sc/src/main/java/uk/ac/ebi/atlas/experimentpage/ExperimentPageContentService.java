@@ -25,7 +25,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Component
 public class ExperimentPageContentService {
 
-    private ExperimentFileLocationService experimentFileLocationService;
+    private final ExperimentFileLocationService experimentFileLocationService;
     private final DataFileHub dataFileHub;
     private final SingleCellContentService singleCellContentService;
 
@@ -37,17 +37,6 @@ public class ExperimentPageContentService {
         this.experimentFileLocationService = experimentFileLocationService;
         this.dataFileHub = dataFileHub;
         this.singleCellContentService = singleCellContentService;
-    }
-
-    public JsonObject getExperimentInformationAsJson(Experiment experiment, String accessKey) {
-        JsonObject result = new JsonObject();
-
-        result.addProperty("experimentAccession", experiment.getAccession());
-        result.addProperty("accessKey", accessKey);
-        result.addProperty("species", experiment.getSpecies().getReferenceName());
-        result.addProperty("disclaimer", experiment.getDisclaimer());
-
-        return result;
     }
 
     public JsonObject getTsnePlotDataAsJson() {
@@ -67,18 +56,17 @@ public class ExperimentPageContentService {
 
         result.add("units", units);
 
-        // TODO Should this be the responsibility of the ExperimentController?
         result.addProperty("suggesterEndpoint", "json/suggestions");
 
         return result;
     }
 
-    public JsonObject getExperimentDesignAsJson(Experiment experiment, String accessKey) {
+    public JsonObject getExperimentDesignAsJson(String experimentAccession, JsonObject experimentDesignTableAsJson, String accessKey) {
         JsonObject result = new JsonObject();
 
-        result.add("table", new ExperimentDesignTable(experiment).asJson());
+        result.add("table", experimentDesignTableAsJson);
 
-        String fileUri = experimentFileLocationService.getFileUri(experiment.getAccession(), ExperimentFileType.EXPERIMENT_DESIGN, accessKey).toString();
+        String fileUri = experimentFileLocationService.getFileUri(experimentAccession, ExperimentFileType.EXPERIMENT_DESIGN, accessKey).toString();
         result.addProperty("downloadUrl", fileUri);
 
         return result;
@@ -87,10 +75,10 @@ public class ExperimentPageContentService {
     public JsonArray getDownloadsAsJson(String experimentAccession, String accessKey) {
         JsonArray result = new JsonArray();
 
-        result.add(getExperimentFileAsJson(ExperimentFileType.SDRF, experimentAccession, accessKey, false));
-        result.add(getExperimentFileAsJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey, false));
-        result.add(getExperimentFileAsJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey, false));
-        result.add(getExperimentFileAsJson(ExperimentFileType.QUANTIFICATION_FILTERED, experimentAccession, accessKey, true));
+        result.add(getExperimentFileAsJson(ExperimentFileType.SDRF, experimentAccession, accessKey));
+        result.add(getExperimentFileAsJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey));
+        result.add(getExperimentFileAsJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
+        result.add(getExperimentFileAsJson(ExperimentFileType.QUANTIFICATION_FILTERED, experimentAccession, accessKey));
 
         return result;
     }
@@ -117,7 +105,7 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    private JsonObject getExperimentFileAsJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey, boolean isArchive) {
+    private JsonObject getExperimentFileAsJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
         String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey).toString();
 
         JsonObject result = new JsonObject();
