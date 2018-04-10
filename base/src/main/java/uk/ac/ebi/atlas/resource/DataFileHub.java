@@ -68,7 +68,7 @@ public class DataFileHub {
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_rows";
     final static String SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_cols";
-    final static String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tsne_perp_{1}.tsv";
+    final static String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.tsne_perp_{1}.tsv";
     final static String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.sdrf.txt";
     final static String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.clusters.tsv";
 
