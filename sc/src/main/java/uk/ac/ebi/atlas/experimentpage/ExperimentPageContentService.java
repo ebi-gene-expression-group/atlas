@@ -83,12 +83,12 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    public JsonElement getAnalysisMethodsAsJson(String experimentAccession) {
-        JsonElement result;
+    public JsonArray getAnalysisMethodsAsJson(String experimentAccession) {
+        JsonArray result;
 
         try (TsvStreamer tsvStreamer =
                      dataFileHub.getExperimentFiles(experimentAccession).analysisMethods.get()) {
-                            result = gson.toJsonTree(tsvStreamer.get().collect(Collectors.toList()));
+                            result = gson.toJsonTree(tsvStreamer.get().collect(Collectors.toList())).getAsJsonArray();
         };
 
         return result;
