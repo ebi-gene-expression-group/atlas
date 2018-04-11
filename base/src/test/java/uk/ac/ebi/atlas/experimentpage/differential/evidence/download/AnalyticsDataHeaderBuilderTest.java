@@ -1,10 +1,11 @@
-package uk.ac.ebi.atlas.experimentpage.differential.download;
+package uk.ac.ebi.atlas.experimentpage.differential.evidence.download;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentpage.differential.download.AnalyticsDataHeaderBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
