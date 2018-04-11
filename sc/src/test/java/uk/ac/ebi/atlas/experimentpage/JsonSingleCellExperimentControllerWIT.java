@@ -28,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class JsonSingleCellExperimentControllerWIT {
+
+    private final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
+
     @Autowired
     WebApplicationContext wac;
 
@@ -46,7 +49,7 @@ public class JsonSingleCellExperimentControllerWIT {
 
         this.mockMvc
                 .perform(get(
-                        "/json/experiments/E-MTAB-5061/tsneplot/" + perplexity +
+                        "/json/experiments/" + EXPERIMENT_ACCESSION + "/tsneplot/" + perplexity +
                         "/clusters/" + k + "/expression/ENSG00000000003"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -66,7 +69,7 @@ public class JsonSingleCellExperimentControllerWIT {
 
         this.mockMvc
                 .perform(get(
-                        "/json/experiments/E-MTAB-5061/tsneplot/" + perplexity +
+                        "/json/experiments/" + EXPERIMENT_ACCESSION + "/tsneplot/" + perplexity +
                                 "/clusters/" + k + "/expression/FOOBAR"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))

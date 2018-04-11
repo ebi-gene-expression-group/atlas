@@ -25,7 +25,7 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentPageContentServiceIT {
 
-    private final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
+    private final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
 
     @Inject
     private ExperimentFileLocationService experimentFileLocationService;

@@ -60,7 +60,7 @@ public class ExperimentCrudIT {
         subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
     }
 
-    public static final String SINGLE_CELL_ACCESSION = "TEST-SC";
+    public static final String SINGLE_CELL_ACCESSION = "E-GEOD-106540";
 
     @After
     public void tryCleanUp() {
@@ -106,7 +106,6 @@ public class ExperimentCrudIT {
     public void importNewExperimentInsertsDB(String experimentAccession, ExperimentType experimentType) throws IOException {
         assumeThat(experimentCount(experimentAccession), is(0));
         assumeThat(expressionsCount(experimentAccession), is(0));
-        assumeThat(dataFileHub.getExperimentFiles(experimentAccession).configuration.exists(), is(true));
 
         subject.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));

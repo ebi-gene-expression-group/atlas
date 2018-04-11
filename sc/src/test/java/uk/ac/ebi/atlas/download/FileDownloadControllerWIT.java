@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.download;
 
 import com.google.common.net.HttpHeaders;
 import org.junit.Before;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class FileDownloadControllerWIT {
 
-    private final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
+    private final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
     private final String EXPERIMENT_DESIGN_FILE_NAME = "ExpDesign-{0}.tsv";
     private final String URL = "/experiment/{experimentAccession}/download";
 
