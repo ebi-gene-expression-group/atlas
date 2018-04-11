@@ -87,7 +87,7 @@ public class ExperimentPageContentService {
         JsonArray result;
 
         try (TsvStreamer tsvStreamer =
-                     dataFileHub.getExperimentFiles(experimentAccession).analysisMethods.get()) {
+                     dataFileHub.getSingleCellExperimentFiles(experimentAccession).softwareUsed.get()) {
                             result = gson.toJsonTree(tsvStreamer.get().collect(Collectors.toList())).getAsJsonArray();
         };
 

@@ -79,7 +79,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "supplementary-information",
                         "Supplementary Information",
                         "sections",
-                        supplementaryInformationTabs(experiment, accessKey))
+                        supplementaryInformationTabs(experiment))
         );
 
         availableTabs.add(
@@ -95,9 +95,9 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
+    private JsonArray supplementaryInformationTabs(final Experiment experiment) {
         JsonArray supplementaryInformationTabs = new JsonArray();
-        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
+        if(dataFileHub.getSingleCellExperimentFiles(experiment.getAccession()).softwareUsed.exists()){
                 supplementaryInformationTabs.add(
                         customContentTab(
                                 "static-table",
@@ -105,14 +105,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                 "data",
                                 experimentPageContentService.getAnalysisMethodsAsJson(experiment.getAccession())));
             }
-
-        supplementaryInformationTabs.add(
-                customContentTab(
-                        "resources",
-                        "Resources",
-                        "data",
-                        experimentPageContentService.getResourcesAsJson(experiment.getAccession(), accessKey,  ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)
-                ));
 
         return supplementaryInformationTabs;
     }
