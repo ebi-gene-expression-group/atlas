@@ -15,8 +15,6 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 
-import java.util.Arrays;
-
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
