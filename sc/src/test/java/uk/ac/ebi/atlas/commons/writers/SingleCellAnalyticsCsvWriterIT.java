@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.DataFileHub.SingleCellExperimentFiles;
 
 import javax.inject.Inject;
-
 import java.io.FileWriter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
