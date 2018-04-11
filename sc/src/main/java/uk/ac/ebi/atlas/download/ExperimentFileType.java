@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.download;
 
-import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+
+import java.util.Arrays;
 
 public enum ExperimentFileType {
 
@@ -49,21 +50,9 @@ public enum ExperimentFileType {
     }
 
     public static ExperimentFileType fromId(String id) {
-        for(ExperimentFileType fileType : ExperimentFileType.values()) {
-            if(fileType.id.equalsIgnoreCase(id)) {
-                return fileType;
-            }
-        }
-
-        throw new ResourceNotFoundException("No experiment file type with ID " + id + " was found");
-    }
-
-    public JsonObject toJson() {
-        JsonObject result = new JsonObject();
-
-        result.addProperty("icon", this.iconType.getName());
-        result.addProperty("description", this.description);
-
-        return result;
+        return Arrays.stream(ExperimentFileType.values())
+                .filter(value -> value.id.equalsIgnoreCase(id))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("No experiment file type with ID " + id + " was found"));
     }
 }
