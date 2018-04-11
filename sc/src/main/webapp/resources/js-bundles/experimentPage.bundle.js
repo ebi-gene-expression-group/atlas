@@ -20319,25 +20319,20 @@ var _ExperimentDesignTable2 = _interopRequireDefault(_ExperimentDesignTable);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ExperimentDesignRoute = function ExperimentDesignRoute(props) {
-  return _react2.default.createElement(
+  return [_react2.default.createElement(
     'div',
-    null,
+    { key: 'url', className: 'row expanded column margin-top-large' },
     _react2.default.createElement(
-      'div',
-      { className: 'row expanded column margin-top-large' },
-      _react2.default.createElement(
-        'a',
-        { className: 'button float-right margin-bottom-none', href: (0, _urijs2.default)(props.downloadUrl, props.atlasUrl).toString() },
-        _react2.default.createElement('span', { className: 'icon icon-spacer icon-functional', 'data-icon': '=' }),
-        'Download'
-      )
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'row expanded column margin-top-large' },
-      _react2.default.createElement(_ExperimentDesignTable2.default, { data: props.table.data, headers: props.table.headers })
+      'a',
+      { className: 'button float-right margin-bottom-none', href: (0, _urijs2.default)(props.downloadUrl, props.atlasUrl).toString() },
+      _react2.default.createElement('span', { className: 'icon icon-spacer icon-functional', 'data-icon': '=' }),
+      'Download'
     )
-  );
+  ), _react2.default.createElement(
+    'div',
+    { key: 'table', className: 'row expanded column margin-top-large' },
+    _react2.default.createElement(_ExperimentDesignTable2.default, { data: props.table.data, headers: props.table.headers })
+  )];
 };
 
 ExperimentDesignRoute.propTypes = {
@@ -20407,7 +20402,7 @@ var aggregateText = function aggregateText(name, vals) {
   return xs.length === 1 || xs.length < 5 && xs.join(', ').length < 30 ? xs.join(', ') : (0, _pluralize2.default)(name.toLowerCase(), xs.length, true);
 };
 
-var ExperimentDesign = function ExperimentDesign(_ref) {
+var Table = function Table(_ref) {
   var data = _ref.data,
       headers = _ref.headers,
       _ref$options = _ref.options,
@@ -20437,10 +20432,10 @@ var ExperimentDesign = function ExperimentDesign(_ref) {
   }, options));
 };
 
-var BaselineExperimentDesign = function BaselineExperimentDesign(_ref2) {
+var ExperimentDesignTable = function ExperimentDesignTable(_ref2) {
   var data = _ref2.data,
       headers = _ref2.headers;
-  return ExperimentDesign({
+  return Table({
     data: data.map(function (_ref3) {
       var properties = _ref3.properties,
           values = _ref3.values;
@@ -20452,7 +20447,7 @@ var BaselineExperimentDesign = function BaselineExperimentDesign(_ref2) {
   });
 };
 
-exports.default = BaselineExperimentDesign;
+exports.default = ExperimentDesignTable;
 
 /***/ }),
 /* 504 */

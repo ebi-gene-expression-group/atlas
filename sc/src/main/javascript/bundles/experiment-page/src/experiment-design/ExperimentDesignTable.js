@@ -14,7 +14,7 @@ const aggregateText = (name, vals) => {
   )
 }
 
-const ExperimentDesign = ({
+const Table = ({
                             data,
                             headers,
                             options={}
@@ -44,11 +44,11 @@ const ExperimentDesign = ({
   />
 )
 
-const BaselineExperimentDesign = ({
+const ExperimentDesignTable = ({
                                     data,
                                     headers
                                   }) => (
-  ExperimentDesign({
+  Table({
     data:
       data
         .map(({properties, values}) => ({
@@ -59,4 +59,4 @@ const BaselineExperimentDesign = ({
   })
 )
 
-export default BaselineExperimentDesign
+export default ExperimentDesignTable

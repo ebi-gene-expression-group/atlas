@@ -2,22 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import URI from 'urijs'
 
-import BaselineExperimentDesign from './experiment-design/ExperimentDesignTable'
+import ExperimentDesignTable from './experiment-design/ExperimentDesignTable'
 
 const ExperimentDesignRoute = (props) => {
-  return (
-    <div>
-      <div className="row expanded column margin-top-large">
-        <a className="button float-right margin-bottom-none" href={URI(props.downloadUrl, props.atlasUrl).toString()}>
-          <span className="icon icon-spacer icon-functional" data-icon="="/>
-          Download
-        </a>
-      </div>
-      <div className="row expanded column margin-top-large">
-        <BaselineExperimentDesign data={props.table.data} headers={props.table.headers}/>
-      </div>
+  return [
+    <div key='url' className='row expanded column margin-top-large'>
+      <a className='button float-right margin-bottom-none' href={URI(props.downloadUrl, props.atlasUrl).toString()}>
+        <span className='icon icon-spacer icon-functional' data-icon='='/>
+        Download
+      </a>
+    </div>,
+    <div key='table' className='row expanded column margin-top-large'>
+      <ExperimentDesignTable data={props.table.data} headers={props.table.headers}/>
     </div>
-  )
+  ]
 }
 
 ExperimentDesignRoute.propTypes = {
