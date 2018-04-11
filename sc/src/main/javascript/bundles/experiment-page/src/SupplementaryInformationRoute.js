@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import StaticTable from './supplementary-information/StaticTable'
+import AnalysisMethodsTable from './supplementary-information/AnalysisMethodsTable'
 import LinksToResources from './supplementary-information/LinksToResources'
 
 const sectionTypeComponent = {
-  'static-table' : StaticTable,
+  'static-table' : AnalysisMethodsTable,
   'resources' : LinksToResources
 }
 

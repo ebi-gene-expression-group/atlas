@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Linkify from 'linkifyjs/react'
 
-const Table = ({data}) => (
+const AnalysisMethodsTable = ({data}) => (
   <div className="row column expanded">
     <table>
       <thead>
@@ -34,8 +34,8 @@ const Table = ({data}) => (
   </div>
 )
 
-Table.propTypes = {
+AnalysisMethodsTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired
 }
 
-export default Table
+export default AnalysisMethodsTable

@@ -40807,9 +40807,9 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _StaticTable = __webpack_require__(/*! ./supplementary-information/StaticTable */ 518);
+var _AnalysisMethodsTable = __webpack_require__(/*! ./supplementary-information/AnalysisMethodsTable */ 518);
 
-var _StaticTable2 = _interopRequireDefault(_StaticTable);
+var _AnalysisMethodsTable2 = _interopRequireDefault(_AnalysisMethodsTable);
 
 var _LinksToResources = __webpack_require__(/*! ./supplementary-information/LinksToResources */ 211);
 
@@ -40818,7 +40818,7 @@ var _LinksToResources2 = _interopRequireDefault(_LinksToResources);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var sectionTypeComponent = {
-  'static-table': _StaticTable2.default,
+  'static-table': _AnalysisMethodsTable2.default,
   'resources': _LinksToResources2.default
 };
 
@@ -40869,9 +40869,9 @@ exports.default = SupplementaryInformationRoute;
 
 /***/ }),
 /* 518 */
-/*!******************************************************************************!*\
-  !*** ./bundles/experiment-page/src/supplementary-information/StaticTable.js ***!
-  \******************************************************************************/
+/*!***************************************************************************************!*\
+  !*** ./bundles/experiment-page/src/supplementary-information/AnalysisMethodsTable.js ***!
+  \***************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -40897,7 +40897,7 @@ var _react4 = _interopRequireDefault(_react3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Table = function Table(_ref) {
+var AnalysisMethodsTable = function AnalysisMethodsTable(_ref) {
   var data = _ref.data;
   return _react2.default.createElement(
     'div',
@@ -40945,11 +40945,11 @@ var Table = function Table(_ref) {
   );
 };
 
-Table.propTypes = {
+AnalysisMethodsTable.propTypes = {
   data: _propTypes2.default.arrayOf(_propTypes2.default.arrayOf(_propTypes2.default.string)).isRequired
 };
 
-exports.default = Table;
+exports.default = AnalysisMethodsTable;
 
 /***/ }),
 /* 519 */
