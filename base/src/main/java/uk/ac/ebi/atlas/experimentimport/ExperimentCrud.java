@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +84,37 @@ public class ExperimentCrud {
         // We only insert in the DB differential and single cell experiments expressions
         analyticsLoaderFactory
                 .getLoader(experimentConfiguration.getExperimentType())
+                .loadAnalytics(experimentAccession);
+
+        UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
+        experimentDao.addExperiment(experimentDTO, accessKeyUuid);
+        updateWithNewExperimentDesign(condensedSdrfParserOutput.getExperimentDesign(), experimentDTO);
+
+        return accessKeyUuid;
+    }
+
+    public UUID importSingleCellExperiment(String experimentAccession, boolean isPrivate) throws IOException {
+        checkNotNull(experimentAccession);
+
+        Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
+
+        CondensedSdrfParserOutput condensedSdrfParserOutput =
+                condensedSdrfParser.parse(experimentAccession, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
+
+        ExperimentDTO experimentDTO = ExperimentDTO.create(
+                condensedSdrfParserOutput,
+                condensedSdrfParserOutput
+                        .getExperimentDesign()
+                        .getSpeciesForAssays(ImmutableSet.of()),
+                isPrivate);
+
+        if (accessKey.isPresent()) {
+            deleteExperiment(experimentAccession);
+        }
+
+        // We only insert in the DB differential and single cell experiments expressions
+        analyticsLoaderFactory
+                .getLoader(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE)
                 .loadAnalytics(experimentAccession);
 
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
