@@ -18,6 +18,7 @@ const RoutePropTypes = {
 const TabCommonPropTypes = {
   atlasUrl: PropTypes.string.isRequired,
   experimentAccession: PropTypes.string.isRequired,
+  species: PropTypes.string.isRequired,
   accessKey: PropTypes.string,
   resourcesUrl: PropTypes.string
 }
@@ -72,11 +73,12 @@ const RedirectWithSearchAndHash = (props) =>
 const RedirectWithLocation = withRouter(RedirectWithSearchAndHash)
 
 
-const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, accessKey, tabs}) => {
+const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, species, accessKey, tabs}) => {
   const tabCommonProps = {
     atlasUrl,
     resourcesUrl,
     experimentAccession,
+    species,
     accessKey
   }
 

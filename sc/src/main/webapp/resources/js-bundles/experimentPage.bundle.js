@@ -9102,6 +9102,7 @@ var RoutePropTypes = {
 var TabCommonPropTypes = {
   atlasUrl: _propTypes2.default.string.isRequired,
   experimentAccession: _propTypes2.default.string.isRequired,
+  species: _propTypes2.default.string.isRequired,
   accessKey: _propTypes2.default.string,
   resourcesUrl: _propTypes2.default.string
 
@@ -9168,6 +9169,7 @@ var ExperimentPageRouter = function ExperimentPageRouter(_ref3) {
   var atlasUrl = _ref3.atlasUrl,
       resourcesUrl = _ref3.resourcesUrl,
       experimentAccession = _ref3.experimentAccession,
+      species = _ref3.species,
       accessKey = _ref3.accessKey,
       tabs = _ref3.tabs;
 
@@ -9175,6 +9177,7 @@ var ExperimentPageRouter = function ExperimentPageRouter(_ref3) {
     atlasUrl: atlasUrl,
     resourcesUrl: resourcesUrl,
     experimentAccession: experimentAccession,
+    species: species,
     accessKey: accessKey
   };
 
@@ -13223,6 +13226,7 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
   var atlasUrl = props.atlasUrl,
       resourcesUrl = props.resourcesUrl;
   var suggesterEndpoint = props.suggesterEndpoint,
+      species = props.species,
       experimentAccession = props.experimentAccession,
       ks = props.ks,
       perplexities = props.perplexities;
@@ -13234,6 +13238,7 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
     { className: "margin-top-large" },
     _react2.default.createElement(_expressionAtlasExperimentPageTsnePlot2.default, { atlasUrl: atlasUrl,
       suggesterEndpoint: suggesterEndpoint,
+      speciesName: species,
       experimentAccession: experimentAccession,
       ks: ks,
       k: Number(search.k) || props.ks[0],
@@ -13252,14 +13257,13 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
         updateUrlSearch({ name: 'perplexity', value: perplexity });
       }
     }),
-    search.geneId ? _react2.default.createElement(
+    search.geneId && [_react2.default.createElement(
       'h4',
-      { className: "margin-top-large" },
+      { key: 'title', className: 'margin-top-large' },
       ' Information about gene ',
       search.geneId,
       ' '
-    ) : null,
-    _react2.default.createElement(_scAtlasBioentityInformation2.default, { atlasUrl: atlasUrl, geneId: search.geneId || '' })
+    ), _react2.default.createElement(_scAtlasBioentityInformation2.default, { key: 'gene-information', atlasUrl: atlasUrl, geneId: search.geneId })]
   );
 };
 
@@ -13470,6 +13474,7 @@ var ExperimentPageView = function (_React$Component) {
       var _props2 = this.props,
           suggesterEndpoint = _props2.suggesterEndpoint,
           geneId = _props2.geneId,
+          speciesName = _props2.speciesName,
           highlightClusters = _props2.highlightClusters,
           ks = _props2.ks,
           k = _props2.k,
@@ -13515,6 +13520,7 @@ var ExperimentPageView = function (_React$Component) {
             suggesterEndpoint: suggesterEndpoint,
             onSelectGeneId: onSelectGeneId,
             geneId: geneId,
+            speciesName: speciesName,
             highlightClusters: [],
             loading: loadingGeneExpression,
             resourcesUrl: resourcesUrl,
@@ -13545,6 +13551,7 @@ ExperimentPageView.propTypes = {
   perplexity: _propTypes2.default.number.isRequired,
   highlightClusters: _propTypes2.default.arrayOf(_propTypes2.default.number),
   geneId: _propTypes2.default.string.isRequired,
+  speciesName: _propTypes2.default.string.isRequired,
   height: _propTypes2.default.number,
   resourcesUrl: _propTypes2.default.string,
   onSelectGeneId: _propTypes2.default.func,
@@ -13555,6 +13562,7 @@ ExperimentPageView.propTypes = {
 ExperimentPageView.defaultProps = {
   highlightClusters: [],
   geneId: '',
+  speciesName: '',
   height: 600,
   onSelectGeneId: function onSelectGeneId() {},
   onKChange: function onKChange() {},
@@ -17596,7 +17604,8 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
   var atlasUrl = props.atlasUrl,
       suggesterEndpoint = props.suggesterEndpoint,
       geneId = props.geneId,
-      onSelectGeneId = props.onSelectGeneId; // Suggester
+      onSelectGeneId = props.onSelectGeneId,
+      speciesName = props.speciesName; // Suggester
 
   var height = props.height,
       plotData = props.plotData,
@@ -17637,6 +17646,7 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
     suggesterEndpoint: suggesterEndpoint,
     enableSpeciesFilter: false,
     initialValue: geneId,
+    defaultSpecies: speciesName,
     onSelect: function onSelect(event) {
       onSelectGeneId(event);
     }
@@ -17670,6 +17680,7 @@ GeneExpressionScatterPlot.propTypes = {
 
   atlasUrl: _propTypes2.default.string.isRequired,
   suggesterEndpoint: _propTypes2.default.string.isRequired,
+  speciesName: _propTypes2.default.string.isRequired,
   onSelectGeneId: _propTypes2.default.func.isRequired,
 
   loading: _propTypes2.default.bool.isRequired,
@@ -17780,7 +17791,7 @@ var AtlasAutocomplete = function (_React$Component) {
 
     _this.state = {
       selectedItem: _this.props.initialValue,
-      species: '',
+      species: _this.props.defaultSpecies,
       currentSuggestions: []
     };
 
@@ -17881,7 +17892,7 @@ var AtlasAutocomplete = function (_React$Component) {
         this.props.enableSpeciesFilter && _react2.default.createElement(
           'div',
           { className: this.props.speciesFilterClassName },
-          _react2.default.createElement(_SpeciesSelect2.default, { atlasUrl: this.props.atlasUrl, onChange: this.speciesSelectOnChange })
+          _react2.default.createElement(_SpeciesSelect2.default, { atlasUrl: this.props.atlasUrl, onChange: this.speciesSelectOnChange, selectedValue: this.state.species })
         )
       );
     }
@@ -17898,7 +17909,8 @@ AtlasAutocomplete.propTypes = {
   onSelect: _propTypes2.default.func,
   wrapperClassName: _propTypes2.default.string,
   autocompleteClassName: _propTypes2.default.string,
-  speciesFilterClassName: _propTypes2.default.string
+  speciesFilterClassName: _propTypes2.default.string,
+  defaultSpecies: _propTypes2.default.string
 };
 
 AtlasAutocomplete.defaultProps = {
@@ -17907,7 +17919,8 @@ AtlasAutocomplete.defaultProps = {
   onSelect: function onSelect() {},
   wrapperClassName: '',
   autocompleteClassName: '',
-  speciesFilterClassName: ''
+  speciesFilterClassName: '',
+  defaultSpecies: ''
 };
 
 exports.default = AtlasAutocomplete;
@@ -19285,7 +19298,7 @@ var SpeciesSelect = function (_React$Component) {
           _option(this.state.errorMessage)
         ) : _react2.default.createElement(
           'select',
-          { onChange: this.props.onChange },
+          { onChange: this.props.onChange, value: this.props.selectedValue },
           _react2.default.createElement(
             'option',
             { value: '' },
@@ -19334,7 +19347,8 @@ var SpeciesSelect = function (_React$Component) {
 
 SpeciesSelect.propTypes = {
   atlasUrl: _propTypes2.default.string.isRequired,
-  onChange: _propTypes2.default.func.isRequired
+  onChange: _propTypes2.default.func.isRequired,
+  selectedValue: _propTypes2.default.string
 };
 
 exports.default = SpeciesSelect;
