@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.Matchers.not;
@@ -88,5 +89,21 @@ public class ExperimentPageContentServiceIT {
         }
     }
 
+    @Test
+    public void getValidTsnePlotDataJson() {
+        JsonObject result = this.subject.getTsnePlotDataAsJson();
+
+        assertThat(result.has("suggesterEndpoint"), is(true));
+        assertThat(result.get("suggesterEndpoint").getAsString(), is("json/suggestions"));
+
+        assertThat(result.has("ks"), is(true));
+        assertThat(result.get("ks").getAsJsonArray().size(), is(greaterThanOrEqualTo(1)));
+
+        assertThat(result.has("perplexities"), is(true));
+        assertThat(result.get("perplexities").getAsJsonArray().size(), is(greaterThanOrEqualTo(1)));
+
+        assertThat(result.has("units"), is(true));
+        assertThat(result.get("units").getAsJsonArray().size(), is(greaterThanOrEqualTo(1)));
+    }
 
 }
