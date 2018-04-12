@@ -32,14 +32,12 @@ public class ExperimentPageContentServiceIT {
     private ExperimentFileLocationService experimentFileLocationService;
     @Inject
     private DataFileHub dataFileHub;
-    @Inject
-    private SingleCellContentService singleCellContentService;
 
     private ExperimentPageContentService subject;
 
     @Before
     public void setUp() {
-        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, singleCellContentService);
+        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub);
     }
 
     @Test

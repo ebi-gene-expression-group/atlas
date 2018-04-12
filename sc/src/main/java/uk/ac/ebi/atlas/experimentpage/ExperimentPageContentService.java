@@ -7,33 +7,23 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.download.ExperimentFileType;
-import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Component
 public class ExperimentPageContentService {
 
     private final ExperimentFileLocationService experimentFileLocationService;
     private final DataFileHub dataFileHub;
-    private final SingleCellContentService singleCellContentService;
 
     private static final Gson gson = new Gson();
 
     public ExperimentPageContentService(ExperimentFileLocationService experimentFileLocationService,
-                                        DataFileHub dataFileHub,
-                                        SingleCellContentService singleCellContentService) {
+                                        DataFileHub dataFileHub) {
         this.experimentFileLocationService = experimentFileLocationService;
         this.dataFileHub = dataFileHub;
-        this.singleCellContentService = singleCellContentService;
     }
 
     public JsonObject getTsnePlotDataAsJson() {
@@ -91,17 +81,6 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    public JsonArray getResourcesAsJson(String experimentAccesssion, String accessKey, ExternallyAvailableContent.ContentType contentType) {
-        JsonArray result = new JsonArray();
-
-        List<ExternallyAvailableContent> contents = singleCellContentService.list(experimentAccesssion, accessKey, contentType);
-        for(ExternallyAvailableContent content : contents){
-            result.add(contentAsJson(content, experimentAccesssion, accessKey));
-        }
-
-        return result;
-    }
-
     private JsonObject getExperimentFileAsJson(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
         String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey).toString();
 
@@ -114,29 +93,5 @@ public class ExperimentPageContentService {
 
         return result;
     }
-
-    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey){
-        JsonObject result = content.description.asJson();
-        if("redirect".equals(content.uri.getScheme())){
-            try {
-                result.addProperty("url", new URL(content.uri.getSchemeSpecificPart()).toExternalForm());
-
-            } catch (MalformedURLException e) {
-                result.addProperty("url",
-                        MessageFormat.format("{0}{1}",
-                                content.uri.getSchemeSpecificPart(),
-                                isNotEmpty(accessKey) ? "?accessKey="+accessKey : "")
-                );
-            }
-
-        } else {
-            result.addProperty("url",
-                    MessageFormat.format("experiments-content/{0}/resources/{1}{2}",
-                            accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
-                    ));
-        }
-        return result;
-    }
-
 
 }
