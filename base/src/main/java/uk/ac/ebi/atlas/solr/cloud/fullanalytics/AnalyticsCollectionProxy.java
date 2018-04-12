@@ -46,13 +46,9 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     public static final AnalyticsSchemaField DEFAULT_FACTOR_TYPE = new AnalyticsSchemaField("default_query_factor_type");
 
     public static AnalyticsSchemaField asAnalyticsSchemaField(BioentityPropertyName bioentityPropertyName) {
-        if (bioentityPropertyName == UNKNOWN) {
-            return IDENTIFIER_SEARCH;
-        }
-
         return bioentityPropertyName.isKeyword ?
                 new AnalyticsSchemaField(String.format("keyword_%s", bioentityPropertyName.name)) :
-                new AnalyticsSchemaField(bioentityPropertyName.name);
+                IDENTIFIER_SEARCH;
     }
 
     public static Map<AnalyticsSchemaField, Set<String>> asAnalyticsGeneQuery(SemanticQuery geneQuery) {
