@@ -10,12 +10,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.text.MessageFormat;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,7 +30,9 @@ public class FileDownloadControllerWIT {
 
     private final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
     private final String EXPERIMENT_DESIGN_FILE_NAME = "ExpDesign-{0}.tsv";
-    private final String URL = "/experiment/{experimentAccession}/download";
+    private final String ARCHIVE_NAME = "{0}-{1}-files.zip";
+    private final String FILE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download";
+    private final String ARCHIVE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download/zip";
 
     @Autowired
     WebApplicationContext wac;
@@ -41,9 +45,9 @@ public class FileDownloadControllerWIT {
     }
 
     @Test
-    public void validExperimentAccession() throws Exception {
+    public void downloadFileForValidExperimentAccession() throws Exception {
         String expectedFileName = MessageFormat.format(EXPERIMENT_DESIGN_FILE_NAME, EXPERIMENT_ACCESSION);
-        this.mockMvc.perform(get(URL, EXPERIMENT_ACCESSION)
+        this.mockMvc.perform(get(FILE_DOWNLOAD_URL, EXPERIMENT_ACCESSION)
                 .param("fileType", ExperimentFileType.EXPERIMENT_DESIGN.getId()))
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+expectedFileName))
@@ -51,16 +55,43 @@ public class FileDownloadControllerWIT {
     }
 
     @Test
-    public void invalidExperimentAccession() throws Exception {
-        this.mockMvc.perform(get(URL, "FOO")
+    public void downloadFileForInvalidExperimentAccession() throws Exception {
+        this.mockMvc.perform(get(FILE_DOWNLOAD_URL, "FOO")
                 .param("fileType", ExperimentFileType.EXPERIMENT_DESIGN.getId()))
                 .andExpect(status().is(400))
                 .andExpect(view().name("error-page"));
     }
 
     @Test
-    public void invalidExperimentFileType() throws Exception {
-        this.mockMvc.perform(get(URL, EXPERIMENT_ACCESSION)
+    public void downloadFileForInvalidExperimentFileType() throws Exception {
+        this.mockMvc.perform(get(FILE_DOWNLOAD_URL, EXPERIMENT_ACCESSION)
+                .param("fileType", "foo"))
+                .andExpect(status().is(404))
+                .andExpect(view().name("error-page"));
+    }
+
+    @Test
+    public void downloadArchiveForValidExperimentAccession() throws Exception {
+        String expectedArchiveName = MessageFormat.format(ARCHIVE_NAME, EXPERIMENT_ACCESSION, ExperimentFileType.QUANTIFICATION_FILTERED.getId());
+
+        this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_URL, EXPERIMENT_ACCESSION)
+                .param("fileType", ExperimentFileType.QUANTIFICATION_FILTERED.getId()))
+                .andExpect(status().isOk())
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+expectedArchiveName))
+                .andExpect(content().contentType("application/zip"));
+    }
+
+    @Test
+    public void downloadArchiveForInvalidExperimentAccession() throws Exception {
+        this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_URL, "FOO")
+                .param("fileType", ExperimentFileType.EXPERIMENT_DESIGN.getId()))
+                .andExpect(status().is(400))
+                .andExpect(view().name("error-page"));
+    }
+
+    @Test
+    public void downloadArchiveForInvalidExperimentFileType() throws Exception {
+        this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_URL, EXPERIMENT_ACCESSION)
                 .param("fileType", "foo"))
                 .andExpect(status().is(404))
                 .andExpect(view().name("error-page"));

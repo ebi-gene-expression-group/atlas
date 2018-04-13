@@ -65,6 +65,7 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
         String archiveName = experimentAccession + "-" + fileTypeId + "-files.zip";
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
+        response.setContentType("application/zip");
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
         for(Path path : paths) {
