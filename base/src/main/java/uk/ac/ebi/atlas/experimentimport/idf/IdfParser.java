@@ -1,19 +1,19 @@
 package uk.ac.ebi.atlas.experimentimport.idf;
 
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Named
 public class IdfParser {
@@ -23,9 +23,13 @@ public class IdfParser {
     private static final String AE_EXPERIMENT_DISPLAY_NAME_ID = "Comment[AEExperimentDisplayName]";
     private static final String EXPECTED_CLUSTERS_ID = "Comment[ExpectedClusters]";
 
+    private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, PUBMED_ID, PUBLICATION_TITLE_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID)
+                .map(String::toUpperCase)
+                .collect(Collectors.toSet());
+
     private IdfStreamerFactory idfReaderFactory;
 
-    private  Map<String, List<String>> parsedIdf;
+    private Map<String, List<String>> parsedIdf;
 
     @Inject
     public IdfParser(IdfStreamerFactory idfReaderFactory) {
@@ -35,16 +39,11 @@ public class IdfParser {
     public IdfParserOutput parse(String experimentAccession) {
         try (TsvStreamer idfStreamer = idfReaderFactory.create(experimentAccession)) {
 
-            parsedIdf =
-                    idfStreamer.get()
+            parsedIdf = idfStreamer.get()
                             .filter(line -> line.length > 1)
-                            .filter(line -> INVESTIGATION_TITLE_ID.equalsIgnoreCase(line[0].trim()) ||
-                                        AE_EXPERIMENT_DISPLAY_NAME_ID.equalsIgnoreCase(line[0].trim()) ||
-                                        PUBMED_ID.equalsIgnoreCase(line[0].trim()) ||
-                                        PUBLICATION_TITLE_ID.equalsIgnoreCase(line[0].trim()) ||
-                                        EXPECTED_CLUSTERS_ID.equalsIgnoreCase(line[0].trim()))
+                            .filter(line -> LINE_IDS.contains(line[0].trim().toUpperCase()))
                             .collect(Collectors.toMap(
-                                    line -> line[0].toUpperCase().trim(),
+                                    line -> line[0].trim().toUpperCase(),
                                     line -> Arrays.stream(line)
                                             .skip(1)
                                             .filter(item -> !item.isEmpty())
@@ -55,7 +54,7 @@ public class IdfParser {
                     .findFirst()
                     .orElse("");
 
-            Map<String, String> publicationDetails = getPublicationDetailsMap(
+            Map<String, String> publications = createPubMedIdToTitleMap(
                     getParsedOutputByKey(PUBMED_ID, Collections.emptyList()),
                     getParsedOutputByKey(PUBLICATION_TITLE_ID, Collections.emptyList()));
 
@@ -67,23 +66,25 @@ public class IdfParser {
 
             return new IdfParserOutput(
                     title,
-                    publicationDetails,
+                    publications,
                     expectedClusters
             );
 
         }
     }
 
-    private Map<String, String> getPublicationDetailsMap(List<String> pubmedIds, List<String> publicationTitles) {
+    private Map<String, String> createPubMedIdToTitleMap(List<String> pubmedIds, List<String> publicationTitles) {
         Map<String, String> publicationDetails = new HashMap<>();
 
-        if(pubmedIds.size() == publicationTitles.size()) {
-            for (int i = 0; i < pubmedIds.size(); i++) {
-                publicationDetails.put(pubmedIds.get(i), publicationTitles.get(i));
-            }
+        if (pubmedIds.size() != publicationTitles.size()) {
+            throw new IdfParserException(
+                    MessageFormat.format("There is a mismatch between the number of PubMed IDs ({0}) and the number of publication titles ({1})",
+                            pubmedIds.size(),
+                            publicationTitles.size()));
         }
-        else {
-            throw new IdfParserException("There is a mismatch between the number of PubMed IDs (" + pubmedIds.size() + ") and the number of publication titles (" + publicationTitles.size() + ")");
+
+        for (int i = 0; i < pubmedIds.size(); i++) {
+            publicationDetails.put(pubmedIds.get(i), publicationTitles.get(i));
         }
         
         return  publicationDetails;
