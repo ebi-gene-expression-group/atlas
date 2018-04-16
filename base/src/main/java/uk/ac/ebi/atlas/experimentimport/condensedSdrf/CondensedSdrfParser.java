@@ -13,11 +13,13 @@ import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /*
@@ -49,7 +51,6 @@ public class CondensedSdrfParser {
     private final DataFileHub dataFileHub;
     // TODO https://www.pivotaltracker.com/story/show/100371514
     // private final ValueAndUnitJoiner valueAndUnitJoiner;
-
 
     @Inject
     public CondensedSdrfParser(DataFileHub dataFileHub) {
@@ -86,13 +87,15 @@ public class CondensedSdrfParser {
         Multimap<String, String[]> assayRunToTsvLines = mapFactorTsvLinesByAssayRun(factorsBuilder.build());
         addFactorValuesToExperimentDesign(experimentDesign, assayRunToTsvLines);
         addCharacteristicToExperimentDesign(experimentDesign, sampleCharacteristicsBuilder.build());
+        String species = parseSpeciesFromCharacteristics(sampleCharacteristicsBuilder.build());
 
         addArraysToExperimentDesign(experimentDesign, assayRunToTsvLines);
 
         return new CondensedSdrfParserOutput(
                 experimentAccession,
                 experimentType,
-                experimentDesign);
+                experimentDesign,
+                species);
 
     }
 
@@ -249,6 +252,14 @@ public class CondensedSdrfParser {
 
     }
 
+    private String parseSpeciesFromCharacteristics(List<String[]> characteristics) {
+        return characteristics
+                .stream()
+                .filter(line -> line[CHARACTERISTIC_TYPE_INDEX].equalsIgnoreCase("organism"))
+                .findFirst()
+                .map(x -> x[CHARACTERISTIC_VALUE_INDEX])
+                .orElse("");
+    }
 
     class CondensedSdrfParserException extends RuntimeException {
         CondensedSdrfParserException(String message) {
