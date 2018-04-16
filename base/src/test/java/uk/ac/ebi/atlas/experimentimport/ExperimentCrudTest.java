@@ -11,7 +11,9 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -20,6 +22,7 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.HashMap;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -42,6 +45,12 @@ public class ExperimentCrudTest {
 
     @Mock
     private CondensedSdrfParser condensedSdrfParserMock;
+
+    @Mock
+    private IdfParser idfParserMock;
+
+    @Mock
+    private IdfParserOutput idfParserOutputMock;
 
     @Mock
     private CondensedSdrfParserOutput condensedSdrfParserOutputMock;
@@ -93,12 +102,15 @@ public class ExperimentCrudTest {
 
         given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
-        given(condensedSdrfParserOutputMock.getPubmedIds()).willReturn(new ImmutableSet.Builder<String>().build());
-        given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
+
+        given(idfParserMock.newParse(anyString()))
+                .willReturn(idfParserOutputMock);
+        given(idfParserOutputMock.getPublications()).willReturn(new HashMap<>());
+        given(idfParserOutputMock.getTitle()).willReturn("");
 
         ExperimentCrudFactory experimentCrudFactory =
                 new ExperimentCrudFactory(
-                        condensedSdrfParserMock, experimentDesignFileWriterService, configurationTrader);
+                        condensedSdrfParserMock, idfParserMock, experimentDesignFileWriterService, configurationTrader);
 
         subject = experimentCrudFactory.create(experimentDaoMock, experimentChecker, analyticsLoaderFactoryMock);
     }

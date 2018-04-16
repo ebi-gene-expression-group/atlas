@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,9 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -25,6 +26,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+//import static uk.ac.ebi.atlas.experimentimport.ExperimentDTO.create;
 
 /*
  * Responsible for:
@@ -42,12 +44,14 @@ public class ExperimentCrud {
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
+    private final IdfParser idfParser;
     private final ConfigurationTrader configurationTrader;
 
     public ExperimentCrud(ExperimentDao experimentDao,
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
                           CondensedSdrfParser condensedSdrfParser,
+                          IdfParser idfParser,
                           ExperimentDesignFileWriterService experimentDesignFileWriterService,
                           ConfigurationTrader configurationTrader) {
 
@@ -55,6 +59,7 @@ public class ExperimentCrud {
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.condensedSdrfParser = condensedSdrfParser;
+        this.idfParser = idfParser;
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.configurationTrader = configurationTrader;
     }
@@ -66,10 +71,13 @@ public class ExperimentCrud {
         ExperimentConfiguration experimentConfiguration = files.getLeft();
         CondensedSdrfParserOutput condensedSdrfParserOutput = files.getRight();
 
+        IdfParserOutput idfParserOutput = idfParser.newParse(experimentAccession);
+
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
 
         ExperimentDTO experimentDTO = ExperimentDTO.create(
                 condensedSdrfParserOutput,
+                idfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
                         .getSpeciesForAssays(
@@ -101,12 +109,16 @@ public class ExperimentCrud {
         CondensedSdrfParserOutput condensedSdrfParserOutput =
                 condensedSdrfParser.parse(experimentAccession, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
 
+        IdfParserOutput idfParserOutput = idfParser.newParse(experimentAccession);
+
         ExperimentDTO experimentDTO = ExperimentDTO.create(
-                condensedSdrfParserOutput,
-                condensedSdrfParserOutput
-                        .getExperimentDesign()
-                        .getSpeciesForAssays(ImmutableSet.of()),
-                isPrivate);
+                condensedSdrfParserOutput.getExperimentAccession(),
+                ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
+                "homo sapiens",
+                idfParserOutput.getPublications().keySet(),
+                idfParserOutput.getTitle(),
+                isPrivate
+        );
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);

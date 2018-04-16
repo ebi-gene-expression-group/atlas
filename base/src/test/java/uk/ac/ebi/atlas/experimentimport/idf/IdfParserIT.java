@@ -8,8 +8,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.commons.readers.ArrayExpressIdfStreamerFactory;
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.IdfParser;
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.IdfStreamerFactory;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 
 import javax.inject.Inject;
