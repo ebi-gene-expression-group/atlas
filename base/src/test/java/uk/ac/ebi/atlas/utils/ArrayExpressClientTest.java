@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.collect.ImmutableSet;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,8 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -45,7 +45,7 @@ public class ArrayExpressClientTest {
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
 
         when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION)))
-                .thenReturn(ImmutablePair.of(E_FOOBAR_IDF_TITLE, ImmutableSet.of()));
+                .thenReturn(new IdfParserOutput(E_FOOBAR_IDF_TITLE, new HashMap<>(), 0));
 
         subject = new ArrayExpressClient(restTemplate, idfParserMock);
     }
@@ -110,7 +110,7 @@ public class ArrayExpressClientTest {
     public void throwIfBothXmlAndIdfHaveNoName() {
         mockServer.expect(requestTo(MessageFormat.format(AE_URL_TEMPLATE, E_FOOBAR_ACCESSION)))
                 .andRespond(withSuccess("<xml><experiment></experiment></xml>", MediaType.APPLICATION_XML));
-        when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION))).thenReturn(ImmutablePair.of("", ImmutableSet.of()));
+        when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION))).thenReturn(new IdfParserOutput("", new HashMap<>(), 0));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> subject.fetchExperimentName(E_FOOBAR_ACCESSION));

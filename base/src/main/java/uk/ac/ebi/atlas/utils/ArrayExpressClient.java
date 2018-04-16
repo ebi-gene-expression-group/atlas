@@ -41,7 +41,7 @@ public class ArrayExpressClient {
             return parseExperimentName(experimentXML);
         } catch (Exception e) {
             LOGGER.warn("Could not retrieve experiment name from ArrayExpress, falling back to IDF file: " + e);
-            String experimentName = idfParser.parse(experimentAccession).getLeft();
+            String experimentName = idfParser.parse(experimentAccession).getTitle();
 
             if (experimentName.isEmpty()) {
                 throw new IllegalArgumentException(e);    // Give cache loaders a chance to set the name from the DTO
