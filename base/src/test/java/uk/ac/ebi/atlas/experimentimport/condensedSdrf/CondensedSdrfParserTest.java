@@ -1,15 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -21,7 +18,6 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CondensedSdrfParserTest {
@@ -55,8 +51,6 @@ public class CondensedSdrfParserTest {
     private static final String AGE = "age";
 
     private static final String E_MTAB_513 = "E-MTAB-513";
-    private static final String E_MTAB_513_TITLE = "RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)";
-    private static final ImmutableSet<String> E_MTAB_513_PUBMED_IDS = ImmutableSet.of("22496456", "22955988", "23258890");
     private static final String[] E_MTAB_513_ASSAYS = {"ERR030872", "ERR030873", "ERR030874", "ERR030875"};
 
     private static final String[][] E_MTAB_513_CONDENSED_SDRF_ARRAY = {
@@ -87,8 +81,6 @@ public class CondensedSdrfParserTest {
     };
 
     private static final String E_MEXP_1810 = "E-MEXP-1810";
-    private static final String E_MEXP_1810_TITLE = "Transcription profiling by array of C. elegans isolates treated with dauer larva-inducing pheromone";
-    private static final ImmutableSet<String> E_MEXP_1810_PUBMED_IDS = ImmutableSet.of("19615088");
     private static final String H_RIL_14_NON_DAUER_1 = "H_RIL-14 non-dauer 1";
     private static final String COMPOUND_VALUE = "none";
     private static final String DOSE_VALUE = "0 microliter";
@@ -108,9 +100,6 @@ public class CondensedSdrfParserTest {
             {E_MEXP_1810, "A-AFFY-60", H_RIL_14_NON_DAUER_1, "foobar", "strain", "RIL-14"}
     };
 
-    @Mock
-    IdfParser idfParserMock;
-
     private static MockDataFileHub dataFileHub;
 
     private CondensedSdrfParser subject;
@@ -125,19 +114,16 @@ public class CondensedSdrfParserTest {
 
     @Before
     public void setUp() {
-        subject = new CondensedSdrfParser(dataFileHub, idfParserMock);
+        subject = new CondensedSdrfParser(dataFileHub);
     }
 
     @Test
     public void parse() {
         dataFileHub.addCondensedSdrfFile(E_MTAB_513, Arrays.asList(E_MTAB_513_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.parse(E_MTAB_513)).willReturn(new ImmutablePair<>(E_MTAB_513_TITLE, E_MTAB_513_PUBMED_IDS));
 
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
         assertThat(output.getExperimentAccession(), is(E_MTAB_513));
         assertThat(output.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
-        assertThat(output.getTitle(), is (E_MTAB_513_TITLE));
-        assertThat(output.getPubmedIds(), containsInAnyOrder(E_MTAB_513_PUBMED_IDS.toArray()));
 
         ExperimentDesign experimentDesign = output.getExperimentDesign();
         assertThat(experimentDesign.getFactorHeaders(), hasItems(ORGANISM_PART));
@@ -153,7 +139,6 @@ public class CondensedSdrfParserTest {
     @Test
     public void parseRunWithoutFactorIsDiscarded() {
         dataFileHub.addCondensedSdrfFile(E_MTAB_513, ImmutableList.copyOf(Arrays.copyOfRange(E_MTAB_513_CONDENSED_SDRF_ARRAY, 0, E_MTAB_513_CONDENSED_SDRF_ARRAY.length - 1)));
-        given(idfParserMock.parse(E_MTAB_513)).willReturn(new ImmutablePair<>(E_MTAB_513_TITLE, E_MTAB_513_PUBMED_IDS));
 
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
 
@@ -165,7 +150,6 @@ public class CondensedSdrfParserTest {
     @Test
     public void parseAssayWithCompoundAndDose() {
         dataFileHub.addCondensedSdrfFile(E_MEXP_1810, Arrays.asList(E_MEXP_1810_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
 
         CondensedSdrfParserOutput output = subject.parse(E_MEXP_1810, ExperimentType.RNASEQ_MRNA_BASELINE);
 
@@ -176,7 +160,6 @@ public class CondensedSdrfParserTest {
     @Test
     public void parseAssayWithCompoundAndNoDose() {
         dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[1]));
-        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
 
         CondensedSdrfParserOutput output = subject.parse(E_MEXP_1810, ExperimentType.RNASEQ_MRNA_BASELINE);
 

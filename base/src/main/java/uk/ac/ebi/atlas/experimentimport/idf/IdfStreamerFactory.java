@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
+package uk.ac.ebi.atlas.experimentimport.idf;
 
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.readers.ArrayExpressIdfStreamerFactory;

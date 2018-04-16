@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.IdfParser;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 
 import java.text.MessageFormat;
 

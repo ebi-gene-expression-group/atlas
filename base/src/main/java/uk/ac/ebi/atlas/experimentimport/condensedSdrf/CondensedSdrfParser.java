@@ -7,12 +7,11 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -48,19 +47,15 @@ public class CondensedSdrfParser {
     private static final String CHARACTERISTIC = "characteristic";
 
     private final DataFileHub dataFileHub;
-    private final IdfParser idfParser;
     // TODO https://www.pivotaltracker.com/story/show/100371514
     // private final ValueAndUnitJoiner valueAndUnitJoiner;
 
 
     @Inject
-    public CondensedSdrfParser(DataFileHub dataFileHub, IdfParser idfParser) {
+    public CondensedSdrfParser(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
-        this.idfParser = idfParser;
         // this.valueAndUnitJoiner = valueAndUnitJoiner;
-
     }
-
 
     public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType)
             throws CondensedSdrfParserException {
@@ -94,13 +89,9 @@ public class CondensedSdrfParser {
 
         addArraysToExperimentDesign(experimentDesign, assayRunToTsvLines);
 
-        Pair<String, ImmutableSet<String>> titleAndPubMedIds = idfParser.parse(experimentAccession);
-
         return new CondensedSdrfParserOutput(
                 experimentAccession,
                 experimentType,
-                titleAndPubMedIds.getLeft(),
-                titleAndPubMedIds.getRight(),
                 experimentDesign);
 
     }
