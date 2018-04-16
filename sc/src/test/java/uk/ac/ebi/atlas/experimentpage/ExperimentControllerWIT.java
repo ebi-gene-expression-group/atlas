@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContextManager;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -36,9 +39,18 @@ public class ExperimentControllerWIT {
     public String experimentAccession;
 
     @Parameterized.Parameters
-    public static Iterable<? extends Object> data() {
-        // TODO Make static utility class using JdbcTestUtils/ScriptUtils that retrieves a list of all available experiment accessions
-        return Arrays.asList("E-GEOD-106540", "E-MTAB-5061");
+    public static Iterable<?> data() {
+        // I haven’t been able to think of a better way to get all public experiments from the data source configured
+        // applicationContext.xml. Since the application context isn’t loaded until @Before, we need to explicitly
+        // build it first. Interface ApplicationContextAware (as suggested, for example, in
+        // http://sujitpal.blogspot.co.uk/2007/03/accessing-spring-beans-from-legacy-code.html) doesn’t work because of
+        // the very same reason: the context, and the bean that can supply a static reference to the context, won’t be
+        // ready at this point. Fortunately Hikari doesn’t complain about opening two connection pools.
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        // I guess we could also retrive scxaEperimentTrader
+        JdbcTemplate jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
+        return jdbcTemplate.queryForList("SELECT accession FROM scxa_public_experiment", String.class);
+//        return Arrays.asList("E-GEOD-106540", "E-MTAB-5061");
     }
 
     @Before
