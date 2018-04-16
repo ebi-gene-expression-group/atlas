@@ -79,14 +79,14 @@ public class BioentityPropertyDaoTest {
         subject = new BioEntityPropertyDao(bioentitiesCollectionMock, collectionProxyFactoryMock);
     }
 
-//    @Test(expected = BioentityNotFoundException.class)
-//    public void geneIdNotFoundInBioentitiesNorAnalyticsCollectionThrows() {
-//        when(analyticsCollectionProxyMock.query(
-//                argThat(solrParams -> !solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS))))
-//                .thenReturn(noResultsQueryResponseMock);
-//
-//        subject.fetchGenePageProperties("ENSFOOBAR");
-//    }
+    @Test(expected = BioentityNotFoundException.class)
+    public void geneIdNotFoundInBioentitiesNorAnalyticsCollectionThrows() {
+        when(analyticsCollectionProxyMock.query(
+                argThat(solrParams -> !solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS))))
+                .thenReturn(noResultsQueryResponseMock);
+
+        subject.fetchGenePageProperties("ENSFOOBAR");
+    }
 
     @Test
     public void ifGeneIdInBioentitiesWeDontQueryAnalytics() {
@@ -97,19 +97,19 @@ public class BioentityPropertyDaoTest {
         verifyZeroInteractions(analyticsCollectionProxyMock);
     }
 
-//    @Test
-//    public void ifGeneIdNotInBioentitiesButInAnalytics() {
-//        when(analyticsCollectionProxyMock.query(
-//                argThat(solrParams -> solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS))))
-//                .thenReturn(oneResultQueryResponseMock);
-//
-//        assertThat(subject.fetchGenePageProperties(ID_IN_ANALYTICS))
-//                .containsOnlyKeys(ENSGENE);
-//
-//        verify(analyticsCollectionProxyMock)
-//                .query(argThat(
-//                        solrParams ->
-//                                solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS)));
-//    }
+    @Test
+    public void ifGeneIdNotInBioentitiesButInAnalytics() {
+        when(analyticsCollectionProxyMock.query(
+                argThat(solrParams -> solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS))))
+                .thenReturn(oneResultQueryResponseMock);
+
+        assertThat(subject.fetchGenePageProperties(ID_IN_ANALYTICS))
+                .containsOnlyKeys(ENSGENE);
+
+        verify(analyticsCollectionProxyMock)
+                .query(argThat(
+                        solrParams ->
+                                solrParams.get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS)));
+    }
 
 }

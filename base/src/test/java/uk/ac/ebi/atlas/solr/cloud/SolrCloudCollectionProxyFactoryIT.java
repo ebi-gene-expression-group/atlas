@@ -17,9 +17,9 @@ public class SolrCloudCollectionProxyFactoryIT {
     @Inject
     private SolrCloudCollectionProxyFactory subject;
 
-//    @Test
-//    public void createAnalyticsCollectionProxy() {
-//        assertThat(subject.createAnalyticsCollectionProxy().query(new SolrQuery("*:*")).getResults().size())
-//                .isGreaterThan(0);
-//    }
+    @Test
+    public void createAnalyticsCollectionProxy() {
+        assertThat(subject.createAnalyticsCollectionProxy().query(new SolrQuery("*:*")).getResults().size())
+                .isGreaterThan(0);
+    }
 }
