@@ -134,6 +134,7 @@ public class CondensedSdrfParserTest {
         assertThat(experimentDesign.getSampleCharacteristic(E_MTAB_513_ASSAYS[2], ETHNIC_GROUP).value(), is(AFRICAN_AMERICAN));
         assertThat(experimentDesign.getSampleCharacteristics(E_MTAB_513_ASSAYS[0]).size(), is(4));
         assertThat(experimentDesign.getSampleCharacteristics(E_MTAB_513_ASSAYS[3]).size(), is(5));
+        assertThat(output.getSpecies(), is(HOMO_SAPIENS));
     }
 
     @Test
