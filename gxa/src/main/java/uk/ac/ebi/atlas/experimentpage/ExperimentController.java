@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
-import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.json.JsonBaselineExperimentController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
@@ -83,7 +82,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                             "Plots",
                             "url",
                             new JsonPrimitive(
-                                    ExternallyAvailableContentController.listResourcesUrl(
+                                    ExternallyAvailableContentService.listResourcesUrl(
                                             experiment.getAccession(),
                                             accessKey,
                                             ExternallyAvailableContent.ContentType.PLOTS))));
@@ -107,7 +106,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "resources",
                         "Downloads",
                         "url",
-                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
+                        new JsonPrimitive(ExternallyAvailableContentService.listResourcesUrl(
                                 experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA))));
 
         result.add("tabs", availableTabs);
@@ -145,7 +144,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "Resources",
                         "url",
                         new JsonPrimitive(
-                                ExternallyAvailableContentController.listResourcesUrl(
+                                ExternallyAvailableContentService.listResourcesUrl(
                                         experiment.getAccession(),
                                         accessKey,
                                         ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))

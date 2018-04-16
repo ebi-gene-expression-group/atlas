@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all">
 
     <!-- Use this CSS file for any custom styling -->
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+    <!--<link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">-->
 
     <script src="/gxa_sc/vendorCommons.bundle.js"></script>
     <script src="/gxa_sc/experimentPage.bundle.js"></script>
@@ -45,17 +45,165 @@
       {
         type: 'experiment-design',
         name: 'Experiment Design',
-        props: {}
+        props: {
+          downloadUrl: 'experiment/E-MTAB-5061/download?fileType=experiment-design&accessKey=',
+          table: {
+            headers: [
+              {
+                name: "",
+                values: [
+                  "Cell"
+                ]
+              },
+              {
+                name: "Sample Characteristics",
+                values: [
+                  "age",
+                  "body mass index",
+                  "cell type",
+                  "disease",
+                  "individual",
+                  "organism",
+                  "organism part",
+                  "sex",
+                  "single cell well quality"
+                ]
+              },
+              {
+                name: "Experimental Variables",
+                values: [
+                  "cell type",
+                  "disease"
+                ]
+              }
+            ],
+            data: [
+              {
+                properties: {
+                  analysed: true
+                },
+                values: [
+                  [
+                    "ERR1630013"
+                  ],
+                  [
+                    "43 year",
+                    "30.8",
+                    "not applicable",
+                    "normal",
+                    "AZ",
+                    "Homo sapiens",
+                    "pancreas",
+                    "male",
+                    "low quality cell"
+                  ],
+                  [
+                    "not applicable",
+                    "normal"
+                  ]
+                ]
+              },
+              {
+                properties: {
+                  analysed: true
+                },
+                values: [
+                  [
+                    "ERR1630014"
+                  ],
+                  [
+                    "43 year",
+                    "30.8",
+                    "delta cell",
+                    "normal",
+                    "AZ",
+                    "Homo sapiens",
+                    "pancreas",
+                    "male",
+                    "OK"
+                  ],
+                  [
+                    "delta cell",
+                    "normal"
+                  ]
+                ]
+              },
+              {
+                properties: {
+                  analysed: true
+                },
+                values: [
+                  [
+                    "ERR1630015"
+                  ],
+                  [
+                    "43 year",
+                    "30.8",
+                    "alpha cell",
+                    "normal",
+                    "AZ",
+                    "Homo sapiens",
+                    "pancreas",
+                    "male",
+                    "OK"
+                  ],
+                  [
+                    "alpha cell",
+                    "normal"
+                  ]
+                ]
+              }
+            ]
+          }
+        }
       },
       {
-        type: '',
+        type: 'supplementary-information',
         name: 'Supplementary Information',
-        props: {}
+        props: {
+          sections: [{
+            name: 'Analysis Methods',
+            type: 'static-table',
+            props: {
+              data: [
+                ['Analysis Step', 'Method'],
+                ['Pipeline', 'Please see <a href=\"https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-4388\">https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-4388</a> for more information.'],
+                ['Step 1', 'This is a description of step 1 of the analysis'],
+                ['Step 2', 'This is a description of step 2 of the analysis']]
+            }
+          },{
+            name: 'Resources',
+            type: 'resources',
+            props: {
+              data: [{
+                group: '',
+                type: 'icon-ae',
+                description: 'ArrayExpress: experiment E-MTAB-4388',
+                url: 'https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-4388'
+              },
+                {
+                  group: '',
+                  type: 'icon-ae',
+                  description: 'Dummy Link',
+                  url: 'https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-4388'
+                }]
+            }
+          }]
+        }
       },
       {
-        type: '',
+        type: 'resources',
         name: 'Downloads',
-        props: {}
+        props: {
+          data: [
+            {
+              description: 'The SDRF file',
+              type: 'icon-tsv',
+              url: 'experiment/E-MTAB-5061/download?fileType=sdrf&accessKey=',
+              isDownload: true
+            }
+          ]
+        }
       }
     ]
 
@@ -63,6 +211,7 @@
         atlasUrl: 'http://localhost:8080/gxa_sc/',
         content: {
           experimentAccession: 'E-MTAB-4388',
+          experimentType: 'SINGLE_CELL_RNASEQ_MRNA_BASELINE',
           tabs: tabs
         }
     }, 'container');

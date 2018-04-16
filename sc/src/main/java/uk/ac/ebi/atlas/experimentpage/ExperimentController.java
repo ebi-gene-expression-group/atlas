@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,21 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 public class ExperimentController extends HtmlExceptionHandlingController {
     private final ScxaExperimentTrader experimentTrader;
-
+    private final DataFileHub dataFileHub;
+    private final ExperimentPageContentService experimentPageContentService;
+    
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentPageContentService experimentPageContentService){
         this.experimentTrader = experimentTrader;
+        this.dataFileHub = dataFileHub;
+        this.experimentPageContentService = experimentPageContentService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -44,116 +49,70 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         JsonObject result = new JsonObject();
 
         result.addProperty("experimentAccession", experiment.getAccession());
-        result.addProperty("experimentType", experiment.getType().name());
         result.addProperty("accessKey", accessKey);
         result.addProperty("species", experiment.getSpecies().getReferenceName());
         result.addProperty("disclaimer", experiment.getDisclaimer());
 
         JsonArray availableTabs = new JsonArray();
 
-        availableTabs.add(tSnePlotTab(experiment));
+        availableTabs.add(
+                customContentTab(
+                        "t-sne-plot",
+                        "Results",
+                        experimentPageContentService.getTsnePlotDataAsJson()));
 
-        availableTabs.add(customContentTab("none", "Experiment Design", new JsonObject()));
-//        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
-//            availableTabs.add(
-//                    experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
-//                            ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey))
-//            );
-//        }
+        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
+            availableTabs.add(
+                    customContentTab(
+                            "experiment-design",
+                            "Experiment Design",
+                            experimentPageContentService.getExperimentDesignAsJson(
+                                    experiment.getAccession(),
+                                    new ExperimentDesignTable(experiment).asJson(),
+                                    accessKey))
+            );
+        }
 
-        availableTabs.add(customContentTab("none", "Supplementary Information", new JsonObject()));
-//        availableTabs.add(
-//                customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
-//        );
+        availableTabs.add(
+                customContentTab(
+                        "supplementary-information",
+                        "Supplementary Information",
+                        "sections",
+                        supplementaryInformationTabs(experiment))
+        );
 
-        availableTabs.add(customContentTab("none", "Downloads", new JsonObject()));
-//        availableTabs.add(
-//                customContentTab("resources", "Downloads", "url",
-//                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-//                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
-//        );
+        availableTabs.add(
+                customContentTab(
+                        "resources",
+                        "Downloads",
+                        "data",
+                        experimentPageContentService.getDownloadsAsJson(experiment.getAccession(), accessKey))
+        );
 
         result.add("tabs", availableTabs);
 
         return result;
     }
 
-    private JsonArray availableDataUnits(String experimentAccession, ExperimentType experimentType){
-        JsonArray availableDataUnits = new JsonArray();
-        // TODO Do something here: get units from experiment design, from data files (like we do in gxa)
-        availableDataUnits.add("TPM");
-        return availableDataUnits;
+    private JsonArray supplementaryInformationTabs(final Experiment experiment) {
+        JsonArray supplementaryInformationTabs = new JsonArray();
+        if(dataFileHub.getSingleCellExperimentFiles(experiment.getAccession()).softwareUsed.exists()){
+                supplementaryInformationTabs.add(
+                        customContentTab(
+                                "static-table",
+                                "Analysis Methods",
+                                "data",
+                                experimentPageContentService.getAnalysisMethodsAsJson(experiment.getAccession())));
+            }
+
+        return supplementaryInformationTabs;
     }
 
-//    private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
-//        JsonArray supplementaryInformationTabs = new JsonArray();
-//        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
-//            supplementaryInformationTabs.add(customContentTab("static-table", "Analysis Methods", "data",
-//                    formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()
-//                            )
-//            ));
-//        }
-//        supplementaryInformationTabs.add(
-//                customContentTab("resources", "Resources", "url",
-//                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-//                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
-//        );
-//
-//        if(experiment.getType().isMicroarray() &&
-//                dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()){
-//            supplementaryInformationTabs.add(customContentTab("qc-report", "QC Report",
-//                    "reports",
-//                    pairsToArrayOfObjects("name", "url",
-//                            new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
-//                                    .getArrayDesignsThatHaveQcReports().stream().map(arrayDesign -> Pair.of(
-//                                    "QC for array design " + arrayDesign,
-//                                    QCReportController.getQcReportUrl(experiment.getAccession(), arrayDesign, accessKey
-//                                    )
-//                            )).collect(Collectors.toList())
-//                    )
-//            ));
-//        }
-//
-//        return supplementaryInformationTabs;
-//    }
-
-
-//    private JsonArray formatTable(List<String []> rows){
-//
-//        JsonArray result = new JsonArray();
-//        for (String[] row : rows) {
-//            //skip empty rows and other unexpected input
-//            if (row.length == 2) {
-//                result.add(twoElementArray(row[0], row[1]));
-//            }
-//        }
-//
-//        return result;
-//    }
-
-//    private JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs){
-//        JsonArray result = new JsonArray();
-//        for(Pair<String, String> p : pairs){
-//            JsonObject o = new JsonObject();
-//            o.addProperty(leftName, p.getLeft());
-//            o.addProperty(rightName, p.getRight());
-//            result.add(o);
-//        }
-//        return result;
-//    }
-
-//    private JsonArray twoElementArray(String x, String y){
-//        JsonArray result = new JsonArray();
-//        result.add(new JsonPrimitive(x));
-//        result.add(new JsonPrimitive(y));
-//        return result;
-//    }
-
-//    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
-//        JsonObject props =  new JsonObject();
-//        props.add(onlyPropName, value);
-//        return customContentTab(tabType, name, props);
-//    }
+    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
+        JsonObject props =  new JsonObject();
+        props.add(onlyPropName, value);
+        return customContentTab(tabType, name, props);
+    }
 
     private JsonObject customContentTab(String tabType, String name, JsonObject props) {
         JsonObject result = new JsonObject();
@@ -162,30 +121,4 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         result.add("props", props);
         return result;
     }
-
-    private JsonObject tSnePlotTab(Experiment experiment) {
-        JsonObject props = new JsonObject();
-
-        JsonArray availableClusters = new JsonArray();
-        Arrays.stream(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}).forEach(availableClusters::add);
-
-        props.addProperty("suggesterEndpoint", "json/suggestions");
-        props.add("ks", availableClusters);
-
-        // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174
-        JsonArray perplexityArray = new JsonArray();
-        Arrays.stream(new int[] {1, 5, 10, 15, 20}).forEach(perplexityArray::add);
-        props.add("perplexities", perplexityArray);
-
-        props.add("units", availableDataUnits(experiment.getAccession(), experiment.getType()));
-        return customContentTab("t-sne-plot", "Results", props);
-    }
-
-//    private JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
-//        JsonObject props = new JsonObject();
-//        props.add("table", table);
-//        props.addProperty("downloadUrl", downloadUrl);
-//        return customContentTab("experiment-design", "Experiment Design", props);
-//    }
-
 }

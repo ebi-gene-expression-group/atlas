@@ -5,7 +5,9 @@ import {BrowserRouter, Route, Redirect, Switch, NavLink, withRouter} from 'react
 import URI from 'urijs'
 
 import TSnePlotViewRoute from './TSnePlotViewRoute'
-
+import ExperimentDesignRoute from './ExperimentDesignRoute'
+import SupplementaryInformationRoute from './SupplementaryInformationRoute'
+import DownloadsRoute from './DownloadsRoute'
 
 const RoutePropTypes = {
   match: PropTypes.object.isRequired,
@@ -16,6 +18,7 @@ const RoutePropTypes = {
 const TabCommonPropTypes = {
   atlasUrl: PropTypes.string.isRequired,
   experimentAccession: PropTypes.string.isRequired,
+  species: PropTypes.string.isRequired,
   accessKey: PropTypes.string,
   resourcesUrl: PropTypes.string
 }
@@ -23,12 +26,10 @@ const TabCommonPropTypes = {
 
 // What component each tab type should render, coupled to ExperimentController.java
 const tabTypeComponent = {
-  // 'multipart' : ``,
-  't-sne-plot' : TSnePlotViewRoute
-  // 'experiment-design' : `ExperimntDesign`,
-  // 'resources' : `Resources`,
-  // 'static-table' : StaticTable,
-  // 'qc-report' : QCReport
+  't-sne-plot' : TSnePlotViewRoute,
+  'experiment-design' : ExperimentDesignRoute,
+  'supplementary-information' : SupplementaryInformationRoute,
+  'resources' : DownloadsRoute
 }
 
 const TopRibbon = ({tabNames, routeProps}) =>
@@ -72,12 +73,12 @@ const RedirectWithSearchAndHash = (props) =>
 const RedirectWithLocation = withRouter(RedirectWithSearchAndHash)
 
 
-const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, accessKey, tabs}) => {
-
+const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, species, accessKey, tabs}) => {
   const tabCommonProps = {
     atlasUrl,
     resourcesUrl,
     experimentAccession,
+    species,
     accessKey
   }
 

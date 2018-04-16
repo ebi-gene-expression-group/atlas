@@ -63,12 +63,16 @@ public class DataFileHub {
 
     final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.{1}.reactome.gsea.tsv";
 
-    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tpms.mtx";
+    final static String SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.expression_tpm.mtx";
     final static String SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_rows";
     final static String SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_cols";
-    final static String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "magetab/{0}/{0}-tsne_perp_{1}.tsv";
+    final static String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.tsne_perp_{1}.tsv";
+    final static String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.sdrf.txt";
+    final static String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.clusters.tsv";
+    final static String SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE = "magetab/{0}/{0}.software.tsv";
+
 
     @Inject
     public DataFileHub(@Value("#{configuration['experimentsFilesLocation']}") String experimentsFilesLocation) {
@@ -318,13 +322,31 @@ public class DataFileHub {
     public class SingleCellExperimentFiles {
         public final ExperimentFiles experimentFiles;
 
+        public final AtlasResource<TsvStreamer> softwareUsed;
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
         public final AtlasResource<TsvStreamer> geneIdsTsv;
         public final AtlasResource<TsvStreamer> cellIdsTsv;
+        public final AtlasResource<TsvStreamer> sdrf;
+        public final AtlasResource<TsvStreamer> clusters;
         public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
 
         SingleCellExperimentFiles(String experimentAccession) {
             experimentFiles = new ExperimentFiles(experimentAccession);
+
+            softwareUsed = new TsvFile.ReadOnly(
+                    experimentsFilesLocation,
+                    SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE,
+                    experimentAccession);
+
+            sdrf = new TsvFile.ReadOnly(
+                    experimentsFilesLocation,
+                    SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE,
+                    experimentAccession);
+
+            clusters = new TsvFile.ReadOnly(
+                    experimentsFilesLocation,
+                    SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE,
+                    experimentAccession);
 
             tpmsMatrix =
                     new MatrixMarketFile(

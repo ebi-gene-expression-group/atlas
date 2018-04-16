@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
-
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 

@@ -105,7 +105,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
                 isPrivate = false;
             case IMPORT:
                 experimentTrader.removeExperimentFromCache(accession);
-                UUID accessKeyUUID = experimentCrud.importExperiment(accession, isPrivate);
+                UUID accessKeyUUID = experimentCrud.importSingleCellExperiment(accession, isPrivate);
                 resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
                 break;
             case DELETE:

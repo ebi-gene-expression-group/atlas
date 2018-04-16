@@ -1,7 +1,7 @@
 var atlasAutocomplete =
 webpackJsonp_name_([2],{
 
-/***/ 120:
+/***/ 125:
 /*!*********************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/emptyFunction.js ***!
   \*********************************************************************/
@@ -49,7 +49,7 @@ module.exports = emptyFunction;
 
 /***/ }),
 
-/***/ 121:
+/***/ 126:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/invariant.js ***!
   \*****************************************************************/
@@ -114,7 +114,7 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ 122:
+/***/ 127:
 /*!***************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/warning.js ***!
   \***************************************************************/
@@ -133,7 +133,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 120);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 125);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -188,7 +188,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 123:
+/***/ 128:
 /*!**********************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \**********************************************************************************/
@@ -210,9 +210,10 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
+
 /***/ }),
 
-/***/ 124:
+/***/ 129:
 /*!************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/URI.js ***!
   \************************************************************/
@@ -220,12 +221,7 @@ module.exports = ReactPropTypesSecret;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/*!
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * URI.js - Mutating URLs
  *
  * Version: 1.19.1
@@ -240,13 +236,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function (root, factory) {
   'use strict';
   // https://github.com/umdjs/umd/blob/master/returnExports.js
-
-  if (( false ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+  if (typeof module === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 125), __webpack_require__(/*! ./IPv6 */ 126), __webpack_require__(/*! ./SecondLevelDomains */ 127));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 130), __webpack_require__(/*! ./IPv6 */ 131), __webpack_require__(/*! ./SecondLevelDomains */ 132));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 125), __webpack_require__(/*! ./IPv6 */ 126), __webpack_require__(/*! ./SecondLevelDomains */ 127)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 130), __webpack_require__(/*! ./IPv6 */ 131), __webpack_require__(/*! ./SecondLevelDomains */ 132)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -254,14 +249,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // Browser globals (root is window)
     root.URI = factory(root.punycode, root.IPv6, root.SecondLevelDomains, root);
   }
-})(undefined, function (punycode, IPv6, SLD, root) {
+}(this, function (punycode, IPv6, SLD, root) {
   'use strict';
   /*global location, escape, unescape */
   // FIXME: v2.0.0 renamce non-camelCase properties to uppercase
   /*jshint camelcase: false */
 
   // save current URI variable, if any
-
   var _URI = root && root.URI;
 
   function URI(url, base) {
@@ -310,8 +304,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }
 
   function isInteger(value) {
-    return (/^[0-9]+$/.test(value)
-    );
+    return /^[0-9]+$/.test(value);
   }
 
   URI.version = '1.19.1';
@@ -353,7 +346,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     for (i = 0, length = data.length; i < length; i++) {
       /*jshint laxbreak: true */
-      var _match = lookup && lookup[data[i]] !== undefined || !lookup && value.test(data[i]);
+      var _match = lookup && lookup[data[i]] !== undefined
+        || !lookup && value.test(data[i]);
       /*jshint laxbreak: false */
       if (_match) {
         data.splice(i, 1);
@@ -421,7 +415,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return text.replace(trim_expression, '');
   }
 
-  URI._parts = function () {
+  URI._parts = function() {
     return {
       protocol: null,
       username: null,
@@ -469,7 +463,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // trim trailing punctuation captured by end RegExp
     trim: /[`!()\[\]{};:'".,<>?«»“”„‘’]+$/,
     // balanced parens inclusion (), [], {}, <>
-    parens: /(\([^\)]*\)|\[[^\]]*\]|\{[^}]*\}|<[^>]*>)/g
+    parens: /(\([^\)]*\)|\[[^\]]*\]|\{[^}]*\}|<[^>]*>)/g,
   };
   // http://www.iana.org/assignments/uri-schemes.html
   // http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers#Well-known_ports
@@ -482,7 +476,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     wss: '443'
   };
   // list of protocols which always require a hostname
-  URI.hostProtocols = ['http', 'https'];
+  URI.hostProtocols = [
+    'http',
+    'https'
+  ];
 
   // allowed hostname characters according to RFC 3986
   // ALPHA DIGIT "-" "." "_" "~" "!" "$" "&" "'" "(" ")" "*" "+" "," ";" "=" %encoded
@@ -506,7 +503,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     'audio': 'src',
     'video': 'src'
   };
-  URI.getDomAttribute = function (node) {
+  URI.getDomAttribute = function(node) {
     if (!node || !node.nodeName) {
       return undefined;
     }
@@ -528,15 +525,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   // encoding / decoding according to RFC3986
   function strictEncodeURIComponent(string) {
     // see https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/encodeURIComponent
-    return encodeURIComponent(string).replace(/[!'()*]/g, escapeForDumbFirefox36).replace(/\*/g, '%2A');
+    return encodeURIComponent(string)
+      .replace(/[!'()*]/g, escapeForDumbFirefox36)
+      .replace(/\*/g, '%2A');
   }
   URI.encode = strictEncodeURIComponent;
   URI.decode = decodeURIComponent;
-  URI.iso8859 = function () {
+  URI.iso8859 = function() {
     URI.encode = escape;
     URI.decode = unescape;
   };
-  URI.unicode = function () {
+  URI.unicode = function() {
     URI.encode = strictEncodeURIComponent;
     URI.decode = decodeURIComponent;
   };
@@ -633,7 +632,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
     }
   };
-  URI.encodeQuery = function (string, escapeQuerySpace) {
+  URI.encodeQuery = function(string, escapeQuerySpace) {
     var escaped = URI.encode(string + '');
     if (escapeQuerySpace === undefined) {
       escapeQuerySpace = URI.escapeQuerySpace;
@@ -641,7 +640,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return escapeQuerySpace ? escaped.replace(/%20/g, '+') : escaped;
   };
-  URI.decodeQuery = function (string, escapeQuerySpace) {
+  URI.decodeQuery = function(string, escapeQuerySpace) {
     string += '';
     if (escapeQuerySpace === undefined) {
       escapeQuerySpace = URI.escapeQuerySpace;
@@ -649,7 +648,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     try {
       return URI.decode(escapeQuerySpace ? string.replace(/\+/g, '%20') : string);
-    } catch (e) {
+    } catch(e) {
       // we're not going to mess with weird encodings,
       // give up and return the undecoded original string
       // see https://github.com/medialize/URI.js/issues/87
@@ -658,12 +657,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
   };
   // generate encode/decode path functions
-  var _parts = { 'encode': 'encode', 'decode': 'decode' };
+  var _parts = {'encode':'encode', 'decode':'decode'};
   var _part;
-  var generateAccessor = function generateAccessor(_group, _part) {
-    return function (string) {
+  var generateAccessor = function(_group, _part) {
+    return function(string) {
       try {
-        return URI[_part](string + '').replace(URI.characters[_group][_part].expression, function (c) {
+        return URI[_part](string + '').replace(URI.characters[_group][_part].expression, function(c) {
           return URI.characters[_group][_part].map[c];
         });
       } catch (e) {
@@ -681,8 +680,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     URI[_part + 'UrnPathSegment'] = generateAccessor('urnpath', _parts[_part]);
   }
 
-  var generateSegmentedPathFunction = function generateSegmentedPathFunction(_sep, _codingFuncName, _innerCodingFuncName) {
-    return function (string) {
+  var generateSegmentedPathFunction = function(_sep, _codingFuncName, _innerCodingFuncName) {
+    return function(string) {
       // Why pass in names of functions, rather than the function objects themselves? The
       // definitions of some functions (but in particular, URI.decode) will occasionally change due
       // to URI.js having ISO8859 and Unicode modes. Passing in the name and getting it will ensure
@@ -691,7 +690,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (!_innerCodingFuncName) {
         actualCodingFunc = URI[_codingFuncName];
       } else {
-        actualCodingFunc = function actualCodingFunc(string) {
+        actualCodingFunc = function(string) {
           return URI[_codingFuncName](URI[_innerCodingFuncName](string));
         };
       }
@@ -714,7 +713,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   URI.encodeReserved = generateAccessor('reserved', 'encode');
 
-  URI.parse = function (string, parts) {
+  URI.parse = function(string, parts) {
     var pos;
     if (!parts) {
       parts = {
@@ -771,7 +770,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // and we're done
     return parts;
   };
-  URI.parseHost = function (string, parts) {
+  URI.parseHost = function(string, parts) {
     if (!string) {
       string = '';
     }
@@ -833,11 +832,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return string.substring(pos) || '/';
   };
-  URI.parseAuthority = function (string, parts) {
+  URI.parseAuthority = function(string, parts) {
     string = URI.parseUserinfo(string, parts);
     return URI.parseHost(string, parts);
   };
-  URI.parseUserinfo = function (string, parts) {
+  URI.parseUserinfo = function(string, parts) {
     // extract username:password
     var firstSlash = string.indexOf('/');
     var pos = string.lastIndexOf('@', firstSlash > -1 ? firstSlash : string.length - 1);
@@ -857,7 +856,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return string;
   };
-  URI.parseQuery = function (string, escapeQuerySpace) {
+  URI.parseQuery = function(string, escapeQuerySpace) {
     if (!string) {
       return {};
     }
@@ -894,7 +893,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return items;
   };
 
-  URI.build = function (parts) {
+  URI.build = function(parts) {
     var t = '';
 
     if (parts.protocol) {
@@ -905,7 +904,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       t += '//';
     }
 
-    t += URI.buildAuthority(parts) || '';
+    t += (URI.buildAuthority(parts) || '');
 
     if (typeof parts.path === 'string') {
       if (parts.path.charAt(0) !== '/' && typeof parts.hostname === 'string') {
@@ -924,7 +923,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
     return t;
   };
-  URI.buildHost = function (parts) {
+  URI.buildHost = function(parts) {
     var t = '';
 
     if (!parts.hostname) {
@@ -941,10 +940,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return t;
   };
-  URI.buildAuthority = function (parts) {
+  URI.buildAuthority = function(parts) {
     return URI.buildUserinfo(parts) + URI.buildHost(parts);
   };
-  URI.buildUserinfo = function (parts) {
+  URI.buildUserinfo = function(parts) {
     var t = '';
 
     if (parts.username) {
@@ -961,7 +960,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return t;
   };
-  URI.buildQuery = function (data, duplicateQueryParameters, escapeQuerySpace) {
+  URI.buildQuery = function(data, duplicateQueryParameters, escapeQuerySpace) {
     // according to http://tools.ietf.org/html/rfc3986 or http://labs.apache.org/webarch/uri/rfc/rfc3986.html
     // being »-._~!$&'()*+,;=:@/?« %HEX and alnum are allowed
     // the RFC explicitly states ?/foo being a valid use case, no mention of parameter syntax!
@@ -990,14 +989,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return t.substring(1);
   };
-  URI.buildQueryParameter = function (name, value, escapeQuerySpace) {
+  URI.buildQueryParameter = function(name, value, escapeQuerySpace) {
     // http://www.w3.org/TR/REC-html40/interact/forms.html#form-content-type -- application/x-www-form-urlencoded
     // don't append "=" for null values, according to http://dvcs.w3.org/hg/url/raw-file/tip/Overview.html#url-parameter-serialization
     return URI.encodeQuery(name, escapeQuerySpace) + (value !== null ? '=' + URI.encodeQuery(value, escapeQuerySpace) : '');
   };
 
-  URI.addQuery = function (data, name, value) {
-    if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+  URI.addQuery = function(data, name, value) {
+    if (typeof name === 'object') {
       for (var key in name) {
         if (hasOwn.call(name, key)) {
           URI.addQuery(data, key, name[key]);
@@ -1021,8 +1020,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
   };
 
-  URI.setQuery = function (data, name, value) {
-    if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+  URI.setQuery = function(data, name, value) {
+    if (typeof name === 'object') {
       for (var key in name) {
         if (hasOwn.call(name, key)) {
           URI.setQuery(data, key, name[key]);
@@ -1035,7 +1034,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
   };
 
-  URI.removeQuery = function (data, name, value) {
+  URI.removeQuery = function(data, name, value) {
     var i, length, key;
 
     if (isArray(name)) {
@@ -1048,7 +1047,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           data[key] = undefined;
         }
       }
-    } else if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+    } else if (typeof name === 'object') {
       for (key in name) {
         if (hasOwn.call(name, key)) {
           URI.removeQuery(data, key, name[key]);
@@ -1074,7 +1073,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       throw new TypeError('URI.removeQuery() accepts an object, string, RegExp as the first parameter');
     }
   };
-  URI.hasQuery = function (data, name, value, withinArray) {
+  URI.hasQuery = function(data, name, value, withinArray) {
     switch (getType(name)) {
       case 'String':
         // Nothing to do here
@@ -1141,7 +1140,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       case 'Number':
         value = String(value);
-      /* falls through */
+        /* falls through */
       case 'String':
         if (!isArray(data[name])) {
           return data[name] === value;
@@ -1158,7 +1157,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
   };
 
-  URI.joinPaths = function () {
+
+  URI.joinPaths = function() {
     var input = [];
     var segments = [];
     var nonEmptySegments = 0;
@@ -1191,7 +1191,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return uri.normalize();
   };
 
-  URI.commonPath = function (one, two) {
+  URI.commonPath = function(one, two) {
     var length = Math.min(one.length, two.length);
     var pos;
 
@@ -1215,7 +1215,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return one.substring(0, pos + 1);
   };
 
-  URI.withinString = function (string, callback, options) {
+  URI.withinString = function(string, callback, options) {
     options || (options = {});
     var _start = options.start || URI.findUri.start;
     var _end = options.end || URI.findUri.end;
@@ -1285,7 +1285,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return string;
   };
 
-  URI.ensureValidHostname = function (v, protocol) {
+  URI.ensureValidHostname = function(v, protocol) {
     // Theoretically URIs allow percent-encoding in Hostnames (according to RFC 3986)
     // they are not part of DNS and therefore ignored by URI.js
 
@@ -1316,7 +1316,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     var port = Number(v);
-    if (isInteger(port) && port > 0 && port < 65536) {
+    if (isInteger(port) && (port > 0) && (port < 65536)) {
       return;
     }
 
@@ -1324,7 +1324,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   // noConflict
-  URI.noConflict = function (removeAll) {
+  URI.noConflict = function(removeAll) {
     if (removeAll) {
       var unconflicted = {
         URI: this.noConflict()
@@ -1350,7 +1350,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return this;
   };
 
-  p.build = function (deferBuild) {
+  p.build = function(deferBuild) {
     if (deferBuild === true) {
       this._deferred_build = true;
     } else if (deferBuild === undefined || this._deferred_build) {
@@ -1361,16 +1361,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return this;
   };
 
-  p.clone = function () {
+  p.clone = function() {
     return new URI(this);
   };
 
-  p.valueOf = p.toString = function () {
+  p.valueOf = p.toString = function() {
     return this.build(false)._string;
   };
 
-  function generateSimpleAccessor(_part) {
-    return function (v, build) {
+
+  function generateSimpleAccessor(_part){
+    return function(v, build) {
       if (v === undefined) {
         return this._parts[_part] || '';
       } else {
@@ -1381,8 +1382,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
   }
 
-  function generatePrefixAccessor(_part, _key) {
-    return function (v, build) {
+  function generatePrefixAccessor(_part, _key){
+    return function(v, build) {
       if (v === undefined) {
         return this._parts[_part] || '';
       } else {
@@ -1408,16 +1409,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   p.query = generatePrefixAccessor('query', '?');
   p.fragment = generatePrefixAccessor('fragment', '#');
 
-  p.search = function (v, build) {
+  p.search = function(v, build) {
     var t = this.query(v, build);
-    return typeof t === 'string' && t.length ? '?' + t : t;
+    return typeof t === 'string' && t.length ? ('?' + t) : t;
   };
-  p.hash = function (v, build) {
+  p.hash = function(v, build) {
     var t = this.fragment(v, build);
-    return typeof t === 'string' && t.length ? '#' + t : t;
+    return typeof t === 'string' && t.length ? ('#' + t) : t;
   };
 
-  p.pathname = function (v, build) {
+  p.pathname = function(v, build) {
     if (v === undefined || v === true) {
       var res = this._parts.path || (this._parts.hostname ? '/' : '');
       return v ? (this._parts.urn ? URI.decodeUrnPath : URI.decodePath)(res) : res;
@@ -1432,7 +1433,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
   };
   p.path = p.pathname;
-  p.href = function (href, build) {
+  p.href = function(href, build) {
     var key;
 
     if (href === undefined) {
@@ -1443,7 +1444,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     this._parts = URI._parts();
 
     var _URI = href instanceof URI;
-    var _object = (typeof href === 'undefined' ? 'undefined' : _typeof(href)) === 'object' && (href.hostname || href.path || href.pathname);
+    var _object = typeof href === 'object' && (href.hostname || href.path || href.pathname);
     if (href.nodeName) {
       var attribute = URI.getDomAttribute(href);
       href = href[attribute] || '';
@@ -1466,9 +1467,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     } else if (_URI || _object) {
       var src = _URI ? href._parts : href;
       for (key in src) {
-        if (key === 'query') {
-          continue;
-        }
+        if (key === 'query') { continue; }
         if (hasOwn.call(this._parts, key)) {
           this._parts[key] = src[key];
         }
@@ -1485,7 +1484,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   // identification accessors
-  p.is = function (what) {
+  p.is = function(what) {
     var ip = false;
     var ip4 = false;
     var ip6 = false;
@@ -1555,7 +1554,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   var _port = p.port;
   var _hostname = p.hostname;
 
-  p.protocol = function (v, build) {
+  p.protocol = function(v, build) {
     if (v) {
       // accept trailing ://
       v = v.replace(/:(\/\/)?$/, '');
@@ -1568,7 +1567,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return _protocol.call(this, v, build);
   };
   p.scheme = p.protocol;
-  p.port = function (v, build) {
+  p.port = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1589,7 +1588,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
     return _port.call(this, v, build);
   };
-  p.hostname = function (v, build) {
+  p.hostname = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1611,7 +1610,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   // compound accessors
-  p.origin = function (v, build) {
+  p.origin = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1626,11 +1625,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return (protocol ? protocol + '://' : '') + this.authority();
     } else {
       var origin = URI(v);
-      this.protocol(origin.protocol()).authority(origin.authority()).build(!build);
+      this
+        .protocol(origin.protocol())
+        .authority(origin.authority())
+        .build(!build);
       return this;
     }
   };
-  p.host = function (v, build) {
+  p.host = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1647,7 +1649,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.authority = function (v, build) {
+  p.authority = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1664,16 +1666,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.userinfo = function (v, build) {
+  p.userinfo = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
 
     if (v === undefined) {
       var t = URI.buildUserinfo(this._parts);
-      return t ? t.substring(0, t.length - 1) : t;
+      return t ? t.substring(0, t.length -1) : t;
     } else {
-      if (v[v.length - 1] !== '@') {
+      if (v[v.length-1] !== '@') {
         v += '@';
       }
 
@@ -1682,7 +1684,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.resource = function (v, build) {
+  p.resource = function(v, build) {
     var parts;
 
     if (v === undefined) {
@@ -1698,7 +1700,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   // fraction accessors
-  p.subdomain = function (v, build) {
+  p.subdomain = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1734,7 +1736,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.domain = function (v, build) {
+  p.domain = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1758,7 +1760,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // grab tld and add another segment
       var end = this._parts.hostname.length - this.tld(build).length - 1;
-      end = this._parts.hostname.lastIndexOf('.', end - 1) + 1;
+      end = this._parts.hostname.lastIndexOf('.', end -1) + 1;
       return this._parts.hostname.substring(end) || '';
     } else {
       if (!v) {
@@ -1782,7 +1784,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.tld = function (v, build) {
+  p.tld = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1829,7 +1831,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.directory = function (v, build) {
+  p.directory = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1847,6 +1849,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var res = this._parts.path.substring(0, end) || (this._parts.hostname ? '/' : '');
 
       return v ? URI.decodePath(res) : res;
+
     } else {
       var e = this._parts.path.length - this.filename().length;
       var directory = this._parts.path.substring(0, e);
@@ -1874,7 +1877,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.filename = function (v, build) {
+  p.filename = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1885,7 +1888,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       var pos = this._parts.path.lastIndexOf('/');
-      var res = this._parts.path.substring(pos + 1);
+      var res = this._parts.path.substring(pos+1);
 
       return v ? URI.decodePathSegment(res) : res;
     } else {
@@ -1912,7 +1915,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.suffix = function (v, build) {
+  p.suffix = function(v, build) {
     if (this._parts.urn) {
       return v === undefined ? '' : this;
     }
@@ -1931,8 +1934,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       // suffix may only contain alnum characters (yup, I made this up.)
-      s = filename.substring(pos + 1);
-      res = /^[a-z0-9%]+$/i.test(s) ? s : '';
+      s = filename.substring(pos+1);
+      res = (/^[a-z0-9%]+$/i).test(s) ? s : '';
       return v ? URI.decodePathSegment(res) : res;
     } else {
       if (v.charAt(0) === '.') {
@@ -1963,7 +1966,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return this;
     }
   };
-  p.segment = function (segment, v, build) {
+  p.segment = function(segment, v, build) {
     var separator = this._parts.urn ? ':' : '/';
     var path = this.path();
     var absolute = path.substring(0, 1) === '/';
@@ -1990,18 +1993,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     if (v === undefined) {
       /*jshint laxbreak: true */
-      return segment === undefined ? segments : segments[segment];
+      return segment === undefined
+        ? segments
+        : segments[segment];
       /*jshint laxbreak: false */
     } else if (segment === null || segments[segment] === undefined) {
       if (isArray(v)) {
         segments = [];
         // collapse empty elements within array
-        for (var i = 0, l = v.length; i < l; i++) {
-          if (!v[i].length && (!segments.length || !segments[segments.length - 1].length)) {
+        for (var i=0, l=v.length; i < l; i++) {
+          if (!v[i].length && (!segments.length || !segments[segments.length -1].length)) {
             continue;
           }
 
-          if (segments.length && !segments[segments.length - 1].length) {
+          if (segments.length && !segments[segments.length -1].length) {
             segments.pop();
           }
 
@@ -2009,10 +2014,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       } else if (v || typeof v === 'string') {
         v = trimSlashes(v);
-        if (segments[segments.length - 1] === '') {
+        if (segments[segments.length -1] === '') {
           // empty trailing elements have to be overwritten
           // to prevent results such as /foo//bar
-          segments[segments.length - 1] = v;
+          segments[segments.length -1] = v;
         } else {
           segments.push(v);
         }
@@ -2031,7 +2036,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return this.path(segments.join(separator), build);
   };
-  p.segmentCoded = function (segment, v, build) {
+  p.segmentCoded = function(segment, v, build) {
     var segments, i, l;
 
     if (typeof segment !== 'number') {
@@ -2054,7 +2059,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     if (!isArray(v)) {
-      v = typeof v === 'string' || v instanceof String ? URI.encode(v) : v;
+      v = (typeof v === 'string' || v instanceof String) ? URI.encode(v) : v;
     } else {
       for (i = 0, l = v.length; i < l; i++) {
         v[i] = URI.encode(v[i]);
@@ -2066,7 +2071,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   // mutating query string
   var q = p.query;
-  p.query = function (v, build) {
+  p.query = function(v, build) {
     if (v === true) {
       return URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
     } else if (typeof v === 'function') {
@@ -2083,12 +2088,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return q.call(this, v, build);
     }
   };
-  p.setQuery = function (name, value, build) {
+  p.setQuery = function(name, value, build) {
     var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
 
     if (typeof name === 'string' || name instanceof String) {
       data[name] = value !== undefined ? value : null;
-    } else if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+    } else if (typeof name === 'object') {
       for (var key in name) {
         if (hasOwn.call(name, key)) {
           data[key] = name[key];
@@ -2106,7 +2111,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     this.build(!build);
     return this;
   };
-  p.addQuery = function (name, value, build) {
+  p.addQuery = function(name, value, build) {
     var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
     URI.addQuery(data, name, value === undefined ? null : value);
     this._parts.query = URI.buildQuery(data, this._parts.duplicateQueryParameters, this._parts.escapeQuerySpace);
@@ -2117,7 +2122,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     this.build(!build);
     return this;
   };
-  p.removeQuery = function (name, value, build) {
+  p.removeQuery = function(name, value, build) {
     var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
     URI.removeQuery(data, name, value);
     this._parts.query = URI.buildQuery(data, this._parts.duplicateQueryParameters, this._parts.escapeQuerySpace);
@@ -2128,7 +2133,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     this.build(!build);
     return this;
   };
-  p.hasQuery = function (name, value, withinArray) {
+  p.hasQuery = function(name, value, withinArray) {
     var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
     return URI.hasQuery(data, name, value, withinArray);
   };
@@ -2138,14 +2143,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   p.hasSearch = p.hasQuery;
 
   // sanitizing URLs
-  p.normalize = function () {
+  p.normalize = function() {
     if (this._parts.urn) {
-      return this.normalizeProtocol(false).normalizePath(false).normalizeQuery(false).normalizeFragment(false).build();
+      return this
+        .normalizeProtocol(false)
+        .normalizePath(false)
+        .normalizeQuery(false)
+        .normalizeFragment(false)
+        .build();
     }
 
-    return this.normalizeProtocol(false).normalizeHostname(false).normalizePort(false).normalizePath(false).normalizeQuery(false).normalizeFragment(false).build();
+    return this
+      .normalizeProtocol(false)
+      .normalizeHostname(false)
+      .normalizePort(false)
+      .normalizePath(false)
+      .normalizeQuery(false)
+      .normalizeFragment(false)
+      .build();
   };
-  p.normalizeProtocol = function (build) {
+  p.normalizeProtocol = function(build) {
     if (typeof this._parts.protocol === 'string') {
       this._parts.protocol = this._parts.protocol.toLowerCase();
       this.build(!build);
@@ -2153,7 +2170,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return this;
   };
-  p.normalizeHostname = function (build) {
+  p.normalizeHostname = function(build) {
     if (this._parts.hostname) {
       if (this.is('IDN') && punycode) {
         this._parts.hostname = punycode.toASCII(this._parts.hostname);
@@ -2167,7 +2184,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return this;
   };
-  p.normalizePort = function (build) {
+  p.normalizePort = function(build) {
     // remove port of it's the protocol's default
     if (typeof this._parts.protocol === 'string' && this._parts.port === URI.defaultPorts[this._parts.protocol]) {
       this._parts.port = null;
@@ -2176,7 +2193,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return this;
   };
-  p.normalizePath = function (build) {
+  p.normalizePath = function(build) {
     var _path = this._parts.path;
     if (!_path) {
       return this;
@@ -2210,7 +2227,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     // resolve simples
-    _path = _path.replace(/(\/(\.\/)+)|(\/\.$)/g, '/').replace(/\/{2,}/g, '/');
+    _path = _path
+      .replace(/(\/(\.\/)+)|(\/\.$)/g, '/')
+      .replace(/\/{2,}/g, '/');
 
     // remember leading parents
     if (_was_relative) {
@@ -2249,7 +2268,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return this;
   };
   p.normalizePathname = p.normalizePath;
-  p.normalizeQuery = function (build) {
+  p.normalizeQuery = function(build) {
     if (typeof this._parts.query === 'string') {
       if (!this._parts.query.length) {
         this._parts.query = null;
@@ -2262,7 +2281,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return this;
   };
-  p.normalizeFragment = function (build) {
+  p.normalizeFragment = function(build) {
     if (!this._parts.fragment) {
       this._parts.fragment = null;
       this.build(!build);
@@ -2273,7 +2292,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   p.normalizeSearch = p.normalizeQuery;
   p.normalizeHash = p.normalizeFragment;
 
-  p.iso8859 = function () {
+  p.iso8859 = function() {
     // expect unicode input, iso8859 output
     var e = URI.encode;
     var d = URI.decode;
@@ -2289,7 +2308,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return this;
   };
 
-  p.unicode = function () {
+  p.unicode = function() {
     // expect iso8859 input, unicode output
     var e = URI.encode;
     var d = URI.decode;
@@ -2305,7 +2324,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return this;
   };
 
-  p.readable = function () {
+  p.readable = function() {
     var uri = this.clone();
     // removing username, password, because they shouldn't be displayed according to RFC 3986
     uri.username('').password('').normalize();
@@ -2334,10 +2353,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var q = '';
       for (var i = 0, qp = uri._parts.query.split('&'), l = qp.length; i < l; i++) {
         var kv = (qp[i] || '').split('=');
-        q += '&' + URI.decodeQuery(kv[0], this._parts.escapeQuerySpace).replace(/&/g, '%26');
+        q += '&' + URI.decodeQuery(kv[0], this._parts.escapeQuerySpace)
+          .replace(/&/g, '%26');
 
         if (kv[1] !== undefined) {
-          q += '=' + URI.decodeQuery(kv[1], this._parts.escapeQuerySpace).replace(/&/g, '%26');
+          q += '=' + URI.decodeQuery(kv[1], this._parts.escapeQuerySpace)
+            .replace(/&/g, '%26');
         }
       }
       t += '?' + q.substring(1);
@@ -2348,7 +2369,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   // resolving relative and absolute URLs
-  p.absoluteTo = function (base) {
+  p.absoluteTo = function(base) {
     var resolved = this.clone();
     var properties = ['protocol', 'username', 'password', 'hostname', 'port'];
     var basedir, i, p;
@@ -2372,7 +2393,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return resolved;
     }
 
-    for (i = 0; p = properties[i]; i++) {
+    for (i = 0; (p = properties[i]); i++) {
       resolved._parts[p] = base._parts[p];
     }
 
@@ -2389,7 +2410,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (resolved.path().charAt(0) !== '/') {
         basedir = base.directory();
         basedir = basedir ? basedir : base.path().indexOf('/') === 0 ? '/' : '';
-        resolved._parts.path = (basedir ? basedir + '/' : '') + resolved._parts.path;
+        resolved._parts.path = (basedir ? (basedir + '/') : '') + resolved._parts.path;
         resolved.normalizePath();
       }
     }
@@ -2397,7 +2418,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     resolved.build();
     return resolved;
   };
-  p.relativeTo = function (base) {
+  p.relativeTo = function(base) {
     var relative = this.clone().normalize();
     var relativeParts, baseParts, common, relativePath, basePath;
 
@@ -2451,15 +2472,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       return relative.build();
     }
 
-    var parents = baseParts.path.substring(common.length).replace(/[^\/]*$/, '').replace(/.*?\//g, '../');
+    var parents = baseParts.path
+      .substring(common.length)
+      .replace(/[^\/]*$/, '')
+      .replace(/.*?\//g, '../');
 
-    relativeParts.path = parents + relativeParts.path.substring(common.length) || './';
+    relativeParts.path = (parents + relativeParts.path.substring(common.length)) || './';
 
     return relative.build();
   };
 
   // comparing URIs
-  p.equals = function (uri) {
+  p.equals = function(uri) {
     var one = this.clone();
     var two = new URI(uri);
     var one_map = {};
@@ -2521,28 +2545,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   // state
-  p.preventInvalidHostname = function (v) {
+  p.preventInvalidHostname = function(v) {
     this._parts.preventInvalidHostname = !!v;
     return this;
   };
 
-  p.duplicateQueryParameters = function (v) {
+  p.duplicateQueryParameters = function(v) {
     this._parts.duplicateQueryParameters = !!v;
     return this;
   };
 
-  p.escapeQuerySpace = function (v) {
+  p.escapeQuerySpace = function(v) {
     this._parts.escapeQuerySpace = !!v;
     return this;
   };
 
   return URI;
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+}));
+
 
 /***/ }),
 
-/***/ 125:
+/***/ 130:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/punycode.js ***!
   \*****************************************************************/
@@ -2550,52 +2574,47 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/*! https://mths.be/punycode v1.4.0 by @mathias */
-;(function (root) {
+/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.0 by @mathias */
+;(function(root) {
 
 	/** Detect free variables */
-	var freeExports = ( false ? 'undefined' : _typeof(exports)) == 'object' && exports && !exports.nodeType && exports;
-	var freeModule = ( false ? 'undefined' : _typeof(module)) == 'object' && module && !module.nodeType && module;
-	var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global;
-	if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal) {
+	var freeExports = typeof exports == 'object' && exports &&
+		!exports.nodeType && exports;
+	var freeModule = typeof module == 'object' && module &&
+		!module.nodeType && module;
+	var freeGlobal = typeof global == 'object' && global;
+	if (
+		freeGlobal.global === freeGlobal ||
+		freeGlobal.window === freeGlobal ||
+		freeGlobal.self === freeGlobal
+	) {
 		root = freeGlobal;
 	}
 
 	/**
-  * The `punycode` object.
-  * @name punycode
-  * @type Object
-  */
+	 * The `punycode` object.
+	 * @name punycode
+	 * @type Object
+	 */
 	var punycode,
 
-
 	/** Highest positive signed 32-bit float value */
-	maxInt = 2147483647,
-	    // aka. 0x7FFFFFFF or 2^31-1
+	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
 
 	/** Bootstring parameters */
 	base = 36,
-	    tMin = 1,
-	    tMax = 26,
-	    skew = 38,
-	    damp = 700,
-	    initialBias = 72,
-	    initialN = 128,
-	    // 0x80
-	delimiter = '-',
-	    // '\x2D'
+	tMin = 1,
+	tMax = 26,
+	skew = 38,
+	damp = 700,
+	initialBias = 72,
+	initialN = 128, // 0x80
+	delimiter = '-', // '\x2D'
 
 	/** Regular expressions */
 	regexPunycode = /^xn--/,
-	    regexNonASCII = /[^\x20-\x7E]/,
-	    // unprintable ASCII chars + non-ASCII chars
-	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g,
-	    // RFC 3490 separators
+	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
+	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
 
 	/** Error messages */
 	errors = {
@@ -2604,12 +2623,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		'invalid-input': 'Invalid input'
 	},
 
-
 	/** Convenience shortcuts */
 	baseMinusTMin = base - tMin,
-	    floor = Math.floor,
-	    stringFromCharCode = String.fromCharCode,
-
+	floor = Math.floor,
+	stringFromCharCode = String.fromCharCode,
 
 	/** Temporary variable */
 	key;
@@ -2617,23 +2634,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	/*--------------------------------------------------------------------------*/
 
 	/**
-  * A generic error utility function.
-  * @private
-  * @param {String} type The error type.
-  * @returns {Error} Throws a `RangeError` with the applicable error message.
-  */
+	 * A generic error utility function.
+	 * @private
+	 * @param {String} type The error type.
+	 * @returns {Error} Throws a `RangeError` with the applicable error message.
+	 */
 	function error(type) {
 		throw new RangeError(errors[type]);
 	}
 
 	/**
-  * A generic `Array#map` utility function.
-  * @private
-  * @param {Array} array The array to iterate over.
-  * @param {Function} callback The function that gets called for every array
-  * item.
-  * @returns {Array} A new array of values returned by the callback function.
-  */
+	 * A generic `Array#map` utility function.
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} callback The function that gets called for every array
+	 * item.
+	 * @returns {Array} A new array of values returned by the callback function.
+	 */
 	function map(array, fn) {
 		var length = array.length;
 		var result = [];
@@ -2644,15 +2661,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-  * A simple `Array#map`-like wrapper to work with domain name strings or email
-  * addresses.
-  * @private
-  * @param {String} domain The domain name or email address.
-  * @param {Function} callback The function that gets called for every
-  * character.
-  * @returns {Array} A new string of characters returned by the callback
-  * function.
-  */
+	 * A simple `Array#map`-like wrapper to work with domain name strings or email
+	 * addresses.
+	 * @private
+	 * @param {String} domain The domain name or email address.
+	 * @param {Function} callback The function that gets called for every
+	 * character.
+	 * @returns {Array} A new string of characters returned by the callback
+	 * function.
+	 */
 	function mapDomain(string, fn) {
 		var parts = string.split('@');
 		var result = '';
@@ -2670,18 +2687,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-  * Creates an array containing the numeric code points of each Unicode
-  * character in the string. While JavaScript uses UCS-2 internally,
-  * this function will convert a pair of surrogate halves (each of which
-  * UCS-2 exposes as separate characters) into a single code point,
-  * matching UTF-16.
-  * @see `punycode.ucs2.encode`
-  * @see <https://mathiasbynens.be/notes/javascript-encoding>
-  * @memberOf punycode.ucs2
-  * @name decode
-  * @param {String} string The Unicode input string (UCS-2).
-  * @returns {Array} The new array of code points.
-  */
+	 * Creates an array containing the numeric code points of each Unicode
+	 * character in the string. While JavaScript uses UCS-2 internally,
+	 * this function will convert a pair of surrogate halves (each of which
+	 * UCS-2 exposes as separate characters) into a single code point,
+	 * matching UTF-16.
+	 * @see `punycode.ucs2.encode`
+	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+	 * @memberOf punycode.ucs2
+	 * @name decode
+	 * @param {String} string The Unicode input string (UCS-2).
+	 * @returns {Array} The new array of code points.
+	 */
 	function ucs2decode(string) {
 		var output = [],
 		    counter = 0,
@@ -2693,8 +2710,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
 				// high surrogate, and there is a next character
 				extra = string.charCodeAt(counter++);
-				if ((extra & 0xFC00) == 0xDC00) {
-					// low surrogate
+				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
 					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
 				} else {
 					// unmatched surrogate; only append this code unit, in case the next
@@ -2710,15 +2726,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-  * Creates a string based on an array of numeric code points.
-  * @see `punycode.ucs2.decode`
-  * @memberOf punycode.ucs2
-  * @name encode
-  * @param {Array} codePoints The array of numeric code points.
-  * @returns {String} The new Unicode string (UCS-2).
-  */
+	 * Creates a string based on an array of numeric code points.
+	 * @see `punycode.ucs2.decode`
+	 * @memberOf punycode.ucs2
+	 * @name encode
+	 * @param {Array} codePoints The array of numeric code points.
+	 * @returns {String} The new Unicode string (UCS-2).
+	 */
 	function ucs2encode(array) {
-		return map(array, function (value) {
+		return map(array, function(value) {
 			var output = '';
 			if (value > 0xFFFF) {
 				value -= 0x10000;
@@ -2731,14 +2747,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-  * Converts a basic code point into a digit/integer.
-  * @see `digitToBasic()`
-  * @private
-  * @param {Number} codePoint The basic numeric code point value.
-  * @returns {Number} The numeric value of a basic code point (for use in
-  * representing integers) in the range `0` to `base - 1`, or `base` if
-  * the code point does not represent a value.
-  */
+	 * Converts a basic code point into a digit/integer.
+	 * @see `digitToBasic()`
+	 * @private
+	 * @param {Number} codePoint The basic numeric code point value.
+	 * @returns {Number} The numeric value of a basic code point (for use in
+	 * representing integers) in the range `0` to `base - 1`, or `base` if
+	 * the code point does not represent a value.
+	 */
 	function basicToDigit(codePoint) {
 		if (codePoint - 48 < 10) {
 			return codePoint - 22;
@@ -2753,16 +2769,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-  * Converts a digit/integer into a basic code point.
-  * @see `basicToDigit()`
-  * @private
-  * @param {Number} digit The numeric value of a basic code point.
-  * @returns {Number} The basic code point whose value (when used for
-  * representing integers) is `digit`, which needs to be in the range
-  * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
-  * used; else, the lowercase form is used. The behavior is undefined
-  * if `flag` is non-zero and `digit` has no uppercase form.
-  */
+	 * Converts a digit/integer into a basic code point.
+	 * @see `basicToDigit()`
+	 * @private
+	 * @param {Number} digit The numeric value of a basic code point.
+	 * @returns {Number} The basic code point whose value (when used for
+	 * representing integers) is `digit`, which needs to be in the range
+	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+	 * used; else, the lowercase form is used. The behavior is undefined
+	 * if `flag` is non-zero and `digit` has no uppercase form.
+	 */
 	function digitToBasic(digit, flag) {
 		//  0..25 map to ASCII a..z or A..Z
 		// 26..35 map to ASCII 0..9
@@ -2770,27 +2786,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-  * Bias adaptation function as per section 3.4 of RFC 3492.
-  * https://tools.ietf.org/html/rfc3492#section-3.4
-  * @private
-  */
+	 * Bias adaptation function as per section 3.4 of RFC 3492.
+	 * https://tools.ietf.org/html/rfc3492#section-3.4
+	 * @private
+	 */
 	function adapt(delta, numPoints, firstTime) {
 		var k = 0;
 		delta = firstTime ? floor(delta / damp) : delta >> 1;
 		delta += floor(delta / numPoints);
-		for (; /* no initialization */delta > baseMinusTMin * tMax >> 1; k += base) {
+		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
 			delta = floor(delta / baseMinusTMin);
 		}
 		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
 	}
 
 	/**
-  * Converts a Punycode string of ASCII-only symbols to a string of Unicode
-  * symbols.
-  * @memberOf punycode
-  * @param {String} input The Punycode string of ASCII-only symbols.
-  * @returns {String} The resulting string of Unicode symbols.
-  */
+	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+	 * symbols.
+	 * @memberOf punycode
+	 * @param {String} input The Punycode string of ASCII-only symbols.
+	 * @returns {String} The resulting string of Unicode symbols.
+	 */
 	function decode(input) {
 		// Don't use UCS-2
 		var output = [],
@@ -2807,9 +2823,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		    k,
 		    digit,
 		    t,
-
-		/** Cached calculation results */
-		baseMinusT;
+		    /** Cached calculation results */
+		    baseMinusT;
 
 		// Handle the basic code points: let `basic` be the number of input code
 		// points before the last delimiter, or `0` if there is none, then copy
@@ -2831,14 +2846,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		// Main decoding loop: start just after the last delimiter if any basic code
 		// points were copied; start at the beginning otherwise.
 
-		for (index = basic > 0 ? basic + 1 : 0; index < inputLength;) /* no final expression */{
+		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
 
 			// `index` is the index of the next character to be consumed.
 			// Decode a generalized variable-length integer into `delta`,
 			// which gets added to `i`. The overflow checking is easier
 			// if we increase `i` as we go, then subtract off its starting
 			// value at the end to obtain `delta`.
-			for (oldi = i, w = 1, k = base;; /* no condition */k += base) {
+			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
 
 				if (index >= inputLength) {
 					error('invalid-input');
@@ -2851,7 +2866,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}
 
 				i += digit * w;
-				t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
 
 				if (digit < t) {
 					break;
@@ -2863,6 +2878,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}
 
 				w *= baseMinusT;
+
 			}
 
 			out = output.length + 1;
@@ -2879,18 +2895,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			// Insert `n` at position `i` of the output
 			output.splice(i++, 0, n);
+
 		}
 
 		return ucs2encode(output);
 	}
 
 	/**
-  * Converts a string of Unicode symbols (e.g. a domain name label) to a
-  * Punycode string of ASCII-only symbols.
-  * @memberOf punycode
-  * @param {String} input The string of Unicode symbols.
-  * @returns {String} The resulting Punycode string of ASCII-only symbols.
-  */
+	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
+	 * Punycode string of ASCII-only symbols.
+	 * @memberOf punycode
+	 * @param {String} input The string of Unicode symbols.
+	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
+	 */
 	function encode(input) {
 		var n,
 		    delta,
@@ -2904,12 +2921,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		    t,
 		    currentValue,
 		    output = [],
-
-		/** `inputLength` will hold the number of code points in `input`. */
-		inputLength,
-
-		/** Cached calculation results */
-		handledCPCountPlusOne,
+		    /** `inputLength` will hold the number of code points in `input`. */
+		    inputLength,
+		    /** Cached calculation results */
+		    handledCPCountPlusOne,
 		    baseMinusT,
 		    qMinusT;
 
@@ -2973,14 +2988,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 				if (currentValue == n) {
 					// Represent delta as a generalized variable-length integer
-					for (q = delta, k = base;; /* no condition */k += base) {
-						t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+					for (q = delta, k = base; /* no condition */; k += base) {
+						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
 						if (q < t) {
 							break;
 						}
 						qMinusT = q - t;
 						baseMinusT = base - t;
-						output.push(stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0)));
+						output.push(
+							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+						);
 						q = floor(qMinusT / baseMinusT);
 					}
 
@@ -2993,41 +3010,46 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			++delta;
 			++n;
+
 		}
 		return output.join('');
 	}
 
 	/**
-  * Converts a Punycode string representing a domain name or an email address
-  * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
-  * it doesn't matter if you call it on a string that has already been
-  * converted to Unicode.
-  * @memberOf punycode
-  * @param {String} input The Punycoded domain name or email address to
-  * convert to Unicode.
-  * @returns {String} The Unicode representation of the given Punycode
-  * string.
-  */
+	 * Converts a Punycode string representing a domain name or an email address
+	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+	 * it doesn't matter if you call it on a string that has already been
+	 * converted to Unicode.
+	 * @memberOf punycode
+	 * @param {String} input The Punycoded domain name or email address to
+	 * convert to Unicode.
+	 * @returns {String} The Unicode representation of the given Punycode
+	 * string.
+	 */
 	function toUnicode(input) {
-		return mapDomain(input, function (string) {
-			return regexPunycode.test(string) ? decode(string.slice(4).toLowerCase()) : string;
+		return mapDomain(input, function(string) {
+			return regexPunycode.test(string)
+				? decode(string.slice(4).toLowerCase())
+				: string;
 		});
 	}
 
 	/**
-  * Converts a Unicode string representing a domain name or an email address to
-  * Punycode. Only the non-ASCII parts of the domain name will be converted,
-  * i.e. it doesn't matter if you call it with a domain that's already in
-  * ASCII.
-  * @memberOf punycode
-  * @param {String} input The domain name or email address to convert, as a
-  * Unicode string.
-  * @returns {String} The Punycode representation of the given domain name or
-  * email address.
-  */
+	 * Converts a Unicode string representing a domain name or an email address to
+	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
+	 * i.e. it doesn't matter if you call it with a domain that's already in
+	 * ASCII.
+	 * @memberOf punycode
+	 * @param {String} input The domain name or email address to convert, as a
+	 * Unicode string.
+	 * @returns {String} The Punycode representation of the given domain name or
+	 * email address.
+	 */
 	function toASCII(input) {
-		return mapDomain(input, function (string) {
-			return regexNonASCII.test(string) ? 'xn--' + encode(string) : string;
+		return mapDomain(input, function(string) {
+			return regexNonASCII.test(string)
+				? 'xn--' + encode(string)
+				: string;
 		});
 	}
 
@@ -3036,18 +3058,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	/** Define the public API */
 	punycode = {
 		/**
-   * A string representing the current Punycode.js version number.
-   * @memberOf punycode
-   * @type String
-   */
+		 * A string representing the current Punycode.js version number.
+		 * @memberOf punycode
+		 * @type String
+		 */
 		'version': '1.3.2',
 		/**
-   * An object of methods to convert from JavaScript's internal character
-   * representation (UCS-2) to Unicode code points, and back.
-   * @see <https://mathiasbynens.be/notes/javascript-encoding>
-   * @memberOf punycode
-   * @type Object
-   */
+		 * An object of methods to convert from JavaScript's internal character
+		 * representation (UCS-2) to Unicode code points, and back.
+		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+		 * @memberOf punycode
+		 * @type Object
+		 */
 		'ucs2': {
 			'decode': ucs2decode,
 			'encode': ucs2encode
@@ -3061,8 +3083,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	/** Expose `punycode` */
 	// Some AMD build optimizers, like r.js, check for specific condition patterns
 	// like the following:
-	if ("function" == 'function' && _typeof(__webpack_require__(/*! !webpack amd options */ 13)) == 'object' && __webpack_require__(/*! !webpack amd options */ 13)) {
-		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+	if (
+		true
+	) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
 			return punycode;
 		}).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -3080,12 +3104,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		// in Rhino or a web browser
 		root.punycode = punycode;
 	}
-})(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 11)))
+
+}(this));
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 8)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 7)))
 
 /***/ }),
 
-/***/ 126:
+/***/ 131:
 /*!*************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/IPv6.js ***!
   \*************************************************************/
@@ -3093,12 +3119,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/*!
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * URI.js - Mutating URLs
  * IPv6 Support
  *
@@ -3115,8 +3136,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function (root, factory) {
   'use strict';
   // https://github.com/umdjs/umd/blob/master/returnExports.js
-
-  if (( false ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+  if (typeof module === 'object' && module.exports) {
     // Node
     module.exports = factory();
   } else if (true) {
@@ -3130,18 +3150,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // Browser globals (root is window)
     root.IPv6 = factory(root);
   }
-})(undefined, function (root) {
+}(this, function (root) {
   'use strict';
 
   /*
   var _in = "fe80:0000:0000:0000:0204:61ff:fe9d:f156";
   var _out = IPv6.best(_in);
   var _expected = "fe80::204:61ff:fe9d:f156";
-   console.log(_in, _out, _expected, _out === _expected);
+
+  console.log(_in, _out, _expected, _out === _expected);
   */
 
   // save current IPv6 variable, if any
-
   var _IPv6 = root && root.IPv6;
 
   function bestPresentation(address) {
@@ -3202,9 +3222,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var _segments;
     for (var i = 0; i < total; i++) {
       _segments = segments[i].split('');
-      for (var j = 0; j < 3; j++) {
+      for (var j = 0; j < 3 ; j++) {
         if (_segments[0] === '0' && _segments.length > 1) {
-          _segments.splice(0, 1);
+          _segments.splice(0,1);
         } else {
           break;
         }
@@ -3254,7 +3274,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // assemble remaining segments
     var result = '';
-    if (segments[0] === '') {
+    if (segments[0] === '')  {
       result = ':';
     }
 
@@ -3287,12 +3307,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     best: bestPresentation,
     noConflict: noConflict
   };
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+}));
+
 
 /***/ }),
 
-/***/ 127:
+/***/ 132:
 /*!***************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/SecondLevelDomains.js ***!
   \***************************************************************************/
@@ -3300,12 +3320,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/*!
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * URI.js - Mutating URLs
  * Second Level Domain (SLD) Support
  *
@@ -3322,8 +3337,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function (root, factory) {
   'use strict';
   // https://github.com/umdjs/umd/blob/master/returnExports.js
-
-  if (( false ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+  if (typeof module === 'object' && module.exports) {
     // Node
     module.exports = factory();
   } else if (true) {
@@ -3337,11 +3351,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // Browser globals (root is window)
     root.SecondLevelDomains = factory(root);
   }
-})(undefined, function (root) {
+}(this, function (root) {
   'use strict';
 
   // save current SecondLevelDomains variable, if any
-
   var _SecondLevelDomains = root && root.SecondLevelDomains;
 
   var SLD = {
@@ -3353,140 +3366,140 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // issues browser have to deal with (SOP for cookies, etc) - but is way overboard for URI.js
     // ----
     list: {
-      'ac': ' com gov mil net org ',
-      'ae': ' ac co gov mil name net org pro sch ',
-      'af': ' com edu gov net org ',
-      'al': ' com edu gov mil net org ',
-      'ao': ' co ed gv it og pb ',
-      'ar': ' com edu gob gov int mil net org tur ',
-      'at': ' ac co gv or ',
-      'au': ' asn com csiro edu gov id net org ',
-      'ba': ' co com edu gov mil net org rs unbi unmo unsa untz unze ',
-      'bb': ' biz co com edu gov info net org store tv ',
-      'bh': ' biz cc com edu gov info net org ',
-      'bn': ' com edu gov net org ',
-      'bo': ' com edu gob gov int mil net org tv ',
-      'br': ' adm adv agr am arq art ato b bio blog bmd cim cng cnt com coop ecn edu eng esp etc eti far flog fm fnd fot fst g12 ggf gov imb ind inf jor jus lel mat med mil mus net nom not ntr odo org ppg pro psc psi qsl rec slg srv tmp trd tur tv vet vlog wiki zlg ',
-      'bs': ' com edu gov net org ',
-      'bz': ' du et om ov rg ',
-      'ca': ' ab bc mb nb nf nl ns nt nu on pe qc sk yk ',
-      'ck': ' biz co edu gen gov info net org ',
-      'cn': ' ac ah bj com cq edu fj gd gov gs gx gz ha hb he hi hl hn jl js jx ln mil net nm nx org qh sc sd sh sn sx tj tw xj xz yn zj ',
-      'co': ' com edu gov mil net nom org ',
-      'cr': ' ac c co ed fi go or sa ',
-      'cy': ' ac biz com ekloges gov ltd name net org parliament press pro tm ',
-      'do': ' art com edu gob gov mil net org sld web ',
-      'dz': ' art asso com edu gov net org pol ',
-      'ec': ' com edu fin gov info med mil net org pro ',
-      'eg': ' com edu eun gov mil name net org sci ',
-      'er': ' com edu gov ind mil net org rochest w ',
-      'es': ' com edu gob nom org ',
-      'et': ' biz com edu gov info name net org ',
-      'fj': ' ac biz com info mil name net org pro ',
-      'fk': ' ac co gov net nom org ',
-      'fr': ' asso com f gouv nom prd presse tm ',
-      'gg': ' co net org ',
-      'gh': ' com edu gov mil org ',
-      'gn': ' ac com gov net org ',
-      'gr': ' com edu gov mil net org ',
-      'gt': ' com edu gob ind mil net org ',
-      'gu': ' com edu gov net org ',
-      'hk': ' com edu gov idv net org ',
-      'hu': ' 2000 agrar bolt casino city co erotica erotika film forum games hotel info ingatlan jogasz konyvelo lakas media news org priv reklam sex shop sport suli szex tm tozsde utazas video ',
-      'id': ' ac co go mil net or sch web ',
-      'il': ' ac co gov idf k12 muni net org ',
-      'in': ' ac co edu ernet firm gen gov i ind mil net nic org res ',
-      'iq': ' com edu gov i mil net org ',
-      'ir': ' ac co dnssec gov i id net org sch ',
-      'it': ' edu gov ',
-      'je': ' co net org ',
-      'jo': ' com edu gov mil name net org sch ',
-      'jp': ' ac ad co ed go gr lg ne or ',
-      'ke': ' ac co go info me mobi ne or sc ',
-      'kh': ' com edu gov mil net org per ',
-      'ki': ' biz com de edu gov info mob net org tel ',
-      'km': ' asso com coop edu gouv k medecin mil nom notaires pharmaciens presse tm veterinaire ',
-      'kn': ' edu gov net org ',
-      'kr': ' ac busan chungbuk chungnam co daegu daejeon es gangwon go gwangju gyeongbuk gyeonggi gyeongnam hs incheon jeju jeonbuk jeonnam k kg mil ms ne or pe re sc seoul ulsan ',
-      'kw': ' com edu gov net org ',
-      'ky': ' com edu gov net org ',
-      'kz': ' com edu gov mil net org ',
-      'lb': ' com edu gov net org ',
-      'lk': ' assn com edu gov grp hotel int ltd net ngo org sch soc web ',
-      'lr': ' com edu gov net org ',
-      'lv': ' asn com conf edu gov id mil net org ',
-      'ly': ' com edu gov id med net org plc sch ',
-      'ma': ' ac co gov m net org press ',
-      'mc': ' asso tm ',
-      'me': ' ac co edu gov its net org priv ',
-      'mg': ' com edu gov mil nom org prd tm ',
-      'mk': ' com edu gov inf name net org pro ',
-      'ml': ' com edu gov net org presse ',
-      'mn': ' edu gov org ',
-      'mo': ' com edu gov net org ',
-      'mt': ' com edu gov net org ',
-      'mv': ' aero biz com coop edu gov info int mil museum name net org pro ',
-      'mw': ' ac co com coop edu gov int museum net org ',
-      'mx': ' com edu gob net org ',
-      'my': ' com edu gov mil name net org sch ',
-      'nf': ' arts com firm info net other per rec store web ',
-      'ng': ' biz com edu gov mil mobi name net org sch ',
-      'ni': ' ac co com edu gob mil net nom org ',
-      'np': ' com edu gov mil net org ',
-      'nr': ' biz com edu gov info net org ',
-      'om': ' ac biz co com edu gov med mil museum net org pro sch ',
-      'pe': ' com edu gob mil net nom org sld ',
-      'ph': ' com edu gov i mil net ngo org ',
-      'pk': ' biz com edu fam gob gok gon gop gos gov net org web ',
-      'pl': ' art bialystok biz com edu gda gdansk gorzow gov info katowice krakow lodz lublin mil net ngo olsztyn org poznan pwr radom slupsk szczecin torun warszawa waw wroc wroclaw zgora ',
-      'pr': ' ac biz com edu est gov info isla name net org pro prof ',
-      'ps': ' com edu gov net org plo sec ',
-      'pw': ' belau co ed go ne or ',
-      'ro': ' arts com firm info nom nt org rec store tm www ',
-      'rs': ' ac co edu gov in org ',
-      'sb': ' com edu gov net org ',
-      'sc': ' com edu gov net org ',
-      'sh': ' co com edu gov net nom org ',
-      'sl': ' com edu gov net org ',
-      'st': ' co com consulado edu embaixada gov mil net org principe saotome store ',
-      'sv': ' com edu gob org red ',
-      'sz': ' ac co org ',
-      'tr': ' av bbs bel biz com dr edu gen gov info k12 name net org pol tel tsk tv web ',
-      'tt': ' aero biz cat co com coop edu gov info int jobs mil mobi museum name net org pro tel travel ',
-      'tw': ' club com ebiz edu game gov idv mil net org ',
-      'mu': ' ac co com gov net or org ',
-      'mz': ' ac co edu gov org ',
-      'na': ' co com ',
-      'nz': ' ac co cri geek gen govt health iwi maori mil net org parliament school ',
-      'pa': ' abo ac com edu gob ing med net nom org sld ',
-      'pt': ' com edu gov int net nome org publ ',
-      'py': ' com edu gov mil net org ',
-      'qa': ' com edu gov mil net org ',
-      're': ' asso com nom ',
-      'ru': ' ac adygeya altai amur arkhangelsk astrakhan bashkiria belgorod bir bryansk buryatia cbg chel chelyabinsk chita chukotka chuvashia com dagestan e-burg edu gov grozny int irkutsk ivanovo izhevsk jar joshkar-ola kalmykia kaluga kamchatka karelia kazan kchr kemerovo khabarovsk khakassia khv kirov koenig komi kostroma kranoyarsk kuban kurgan kursk lipetsk magadan mari mari-el marine mil mordovia mosreg msk murmansk nalchik net nnov nov novosibirsk nsk omsk orenburg org oryol penza perm pp pskov ptz rnd ryazan sakhalin samara saratov simbirsk smolensk spb stavropol stv surgut tambov tatarstan tom tomsk tsaritsyn tsk tula tuva tver tyumen udm udmurtia ulan-ude vladikavkaz vladimir vladivostok volgograd vologda voronezh vrn vyatka yakutia yamal yekaterinburg yuzhno-sakhalinsk ',
-      'rw': ' ac co com edu gouv gov int mil net ',
-      'sa': ' com edu gov med net org pub sch ',
-      'sd': ' com edu gov info med net org tv ',
-      'se': ' a ac b bd c d e f g h i k l m n o org p parti pp press r s t tm u w x y z ',
-      'sg': ' com edu gov idn net org per ',
-      'sn': ' art com edu gouv org perso univ ',
-      'sy': ' com edu gov mil net news org ',
-      'th': ' ac co go in mi net or ',
-      'tj': ' ac biz co com edu go gov info int mil name net nic org test web ',
-      'tn': ' agrinet com defense edunet ens fin gov ind info intl mincom nat net org perso rnrt rns rnu tourism ',
-      'tz': ' ac co go ne or ',
-      'ua': ' biz cherkassy chernigov chernovtsy ck cn co com crimea cv dn dnepropetrovsk donetsk dp edu gov if in ivano-frankivsk kh kharkov kherson khmelnitskiy kiev kirovograd km kr ks kv lg lugansk lutsk lviv me mk net nikolaev od odessa org pl poltava pp rovno rv sebastopol sumy te ternopil uzhgorod vinnica vn zaporizhzhe zhitomir zp zt ',
-      'ug': ' ac co go ne or org sc ',
-      'uk': ' ac bl british-library co cym gov govt icnet jet lea ltd me mil mod national-library-scotland nel net nhs nic nls org orgn parliament plc police sch scot soc ',
-      'us': ' dni fed isa kids nsn ',
-      'uy': ' com edu gub mil net org ',
-      've': ' co com edu gob info mil net org web ',
-      'vi': ' co com k12 net org ',
-      'vn': ' ac biz com edu gov health info int name net org pro ',
-      'ye': ' co com gov ltd me net org plc ',
-      'yu': ' ac co edu gov org ',
-      'za': ' ac agric alt bourse city co cybernet db edu gov grondar iaccess imt inca landesign law mil net ngo nis nom olivetti org pix school tm web ',
-      'zm': ' ac co com edu gov net org sch ',
+      'ac':' com gov mil net org ',
+      'ae':' ac co gov mil name net org pro sch ',
+      'af':' com edu gov net org ',
+      'al':' com edu gov mil net org ',
+      'ao':' co ed gv it og pb ',
+      'ar':' com edu gob gov int mil net org tur ',
+      'at':' ac co gv or ',
+      'au':' asn com csiro edu gov id net org ',
+      'ba':' co com edu gov mil net org rs unbi unmo unsa untz unze ',
+      'bb':' biz co com edu gov info net org store tv ',
+      'bh':' biz cc com edu gov info net org ',
+      'bn':' com edu gov net org ',
+      'bo':' com edu gob gov int mil net org tv ',
+      'br':' adm adv agr am arq art ato b bio blog bmd cim cng cnt com coop ecn edu eng esp etc eti far flog fm fnd fot fst g12 ggf gov imb ind inf jor jus lel mat med mil mus net nom not ntr odo org ppg pro psc psi qsl rec slg srv tmp trd tur tv vet vlog wiki zlg ',
+      'bs':' com edu gov net org ',
+      'bz':' du et om ov rg ',
+      'ca':' ab bc mb nb nf nl ns nt nu on pe qc sk yk ',
+      'ck':' biz co edu gen gov info net org ',
+      'cn':' ac ah bj com cq edu fj gd gov gs gx gz ha hb he hi hl hn jl js jx ln mil net nm nx org qh sc sd sh sn sx tj tw xj xz yn zj ',
+      'co':' com edu gov mil net nom org ',
+      'cr':' ac c co ed fi go or sa ',
+      'cy':' ac biz com ekloges gov ltd name net org parliament press pro tm ',
+      'do':' art com edu gob gov mil net org sld web ',
+      'dz':' art asso com edu gov net org pol ',
+      'ec':' com edu fin gov info med mil net org pro ',
+      'eg':' com edu eun gov mil name net org sci ',
+      'er':' com edu gov ind mil net org rochest w ',
+      'es':' com edu gob nom org ',
+      'et':' biz com edu gov info name net org ',
+      'fj':' ac biz com info mil name net org pro ',
+      'fk':' ac co gov net nom org ',
+      'fr':' asso com f gouv nom prd presse tm ',
+      'gg':' co net org ',
+      'gh':' com edu gov mil org ',
+      'gn':' ac com gov net org ',
+      'gr':' com edu gov mil net org ',
+      'gt':' com edu gob ind mil net org ',
+      'gu':' com edu gov net org ',
+      'hk':' com edu gov idv net org ',
+      'hu':' 2000 agrar bolt casino city co erotica erotika film forum games hotel info ingatlan jogasz konyvelo lakas media news org priv reklam sex shop sport suli szex tm tozsde utazas video ',
+      'id':' ac co go mil net or sch web ',
+      'il':' ac co gov idf k12 muni net org ',
+      'in':' ac co edu ernet firm gen gov i ind mil net nic org res ',
+      'iq':' com edu gov i mil net org ',
+      'ir':' ac co dnssec gov i id net org sch ',
+      'it':' edu gov ',
+      'je':' co net org ',
+      'jo':' com edu gov mil name net org sch ',
+      'jp':' ac ad co ed go gr lg ne or ',
+      'ke':' ac co go info me mobi ne or sc ',
+      'kh':' com edu gov mil net org per ',
+      'ki':' biz com de edu gov info mob net org tel ',
+      'km':' asso com coop edu gouv k medecin mil nom notaires pharmaciens presse tm veterinaire ',
+      'kn':' edu gov net org ',
+      'kr':' ac busan chungbuk chungnam co daegu daejeon es gangwon go gwangju gyeongbuk gyeonggi gyeongnam hs incheon jeju jeonbuk jeonnam k kg mil ms ne or pe re sc seoul ulsan ',
+      'kw':' com edu gov net org ',
+      'ky':' com edu gov net org ',
+      'kz':' com edu gov mil net org ',
+      'lb':' com edu gov net org ',
+      'lk':' assn com edu gov grp hotel int ltd net ngo org sch soc web ',
+      'lr':' com edu gov net org ',
+      'lv':' asn com conf edu gov id mil net org ',
+      'ly':' com edu gov id med net org plc sch ',
+      'ma':' ac co gov m net org press ',
+      'mc':' asso tm ',
+      'me':' ac co edu gov its net org priv ',
+      'mg':' com edu gov mil nom org prd tm ',
+      'mk':' com edu gov inf name net org pro ',
+      'ml':' com edu gov net org presse ',
+      'mn':' edu gov org ',
+      'mo':' com edu gov net org ',
+      'mt':' com edu gov net org ',
+      'mv':' aero biz com coop edu gov info int mil museum name net org pro ',
+      'mw':' ac co com coop edu gov int museum net org ',
+      'mx':' com edu gob net org ',
+      'my':' com edu gov mil name net org sch ',
+      'nf':' arts com firm info net other per rec store web ',
+      'ng':' biz com edu gov mil mobi name net org sch ',
+      'ni':' ac co com edu gob mil net nom org ',
+      'np':' com edu gov mil net org ',
+      'nr':' biz com edu gov info net org ',
+      'om':' ac biz co com edu gov med mil museum net org pro sch ',
+      'pe':' com edu gob mil net nom org sld ',
+      'ph':' com edu gov i mil net ngo org ',
+      'pk':' biz com edu fam gob gok gon gop gos gov net org web ',
+      'pl':' art bialystok biz com edu gda gdansk gorzow gov info katowice krakow lodz lublin mil net ngo olsztyn org poznan pwr radom slupsk szczecin torun warszawa waw wroc wroclaw zgora ',
+      'pr':' ac biz com edu est gov info isla name net org pro prof ',
+      'ps':' com edu gov net org plo sec ',
+      'pw':' belau co ed go ne or ',
+      'ro':' arts com firm info nom nt org rec store tm www ',
+      'rs':' ac co edu gov in org ',
+      'sb':' com edu gov net org ',
+      'sc':' com edu gov net org ',
+      'sh':' co com edu gov net nom org ',
+      'sl':' com edu gov net org ',
+      'st':' co com consulado edu embaixada gov mil net org principe saotome store ',
+      'sv':' com edu gob org red ',
+      'sz':' ac co org ',
+      'tr':' av bbs bel biz com dr edu gen gov info k12 name net org pol tel tsk tv web ',
+      'tt':' aero biz cat co com coop edu gov info int jobs mil mobi museum name net org pro tel travel ',
+      'tw':' club com ebiz edu game gov idv mil net org ',
+      'mu':' ac co com gov net or org ',
+      'mz':' ac co edu gov org ',
+      'na':' co com ',
+      'nz':' ac co cri geek gen govt health iwi maori mil net org parliament school ',
+      'pa':' abo ac com edu gob ing med net nom org sld ',
+      'pt':' com edu gov int net nome org publ ',
+      'py':' com edu gov mil net org ',
+      'qa':' com edu gov mil net org ',
+      're':' asso com nom ',
+      'ru':' ac adygeya altai amur arkhangelsk astrakhan bashkiria belgorod bir bryansk buryatia cbg chel chelyabinsk chita chukotka chuvashia com dagestan e-burg edu gov grozny int irkutsk ivanovo izhevsk jar joshkar-ola kalmykia kaluga kamchatka karelia kazan kchr kemerovo khabarovsk khakassia khv kirov koenig komi kostroma kranoyarsk kuban kurgan kursk lipetsk magadan mari mari-el marine mil mordovia mosreg msk murmansk nalchik net nnov nov novosibirsk nsk omsk orenburg org oryol penza perm pp pskov ptz rnd ryazan sakhalin samara saratov simbirsk smolensk spb stavropol stv surgut tambov tatarstan tom tomsk tsaritsyn tsk tula tuva tver tyumen udm udmurtia ulan-ude vladikavkaz vladimir vladivostok volgograd vologda voronezh vrn vyatka yakutia yamal yekaterinburg yuzhno-sakhalinsk ',
+      'rw':' ac co com edu gouv gov int mil net ',
+      'sa':' com edu gov med net org pub sch ',
+      'sd':' com edu gov info med net org tv ',
+      'se':' a ac b bd c d e f g h i k l m n o org p parti pp press r s t tm u w x y z ',
+      'sg':' com edu gov idn net org per ',
+      'sn':' art com edu gouv org perso univ ',
+      'sy':' com edu gov mil net news org ',
+      'th':' ac co go in mi net or ',
+      'tj':' ac biz co com edu go gov info int mil name net nic org test web ',
+      'tn':' agrinet com defense edunet ens fin gov ind info intl mincom nat net org perso rnrt rns rnu tourism ',
+      'tz':' ac co go ne or ',
+      'ua':' biz cherkassy chernigov chernovtsy ck cn co com crimea cv dn dnepropetrovsk donetsk dp edu gov if in ivano-frankivsk kh kharkov kherson khmelnitskiy kiev kirovograd km kr ks kv lg lugansk lutsk lviv me mk net nikolaev od odessa org pl poltava pp rovno rv sebastopol sumy te ternopil uzhgorod vinnica vn zaporizhzhe zhitomir zp zt ',
+      'ug':' ac co go ne or org sc ',
+      'uk':' ac bl british-library co cym gov govt icnet jet lea ltd me mil mod national-library-scotland nel net nhs nic nls org orgn parliament plc police sch scot soc ',
+      'us':' dni fed isa kids nsn ',
+      'uy':' com edu gub mil net org ',
+      've':' co com edu gob info mil net org web ',
+      'vi':' co com k12 net org ',
+      'vn':' ac biz com edu gov health info int name net org pro ',
+      'ye':' co com gov ltd me net org plc ',
+      'yu':' ac co edu gov org ',
+      'za':' ac agric alt bourse city co cybernet db edu gov grondar iaccess imt inca landesign law mil net ngo nis nom olivetti org pix school tm web ',
+      'zm':' ac co com edu gov net org sch ',
       // https://en.wikipedia.org/wiki/CentralNic#Second-level_domains
       'com': 'ar br cn de eu gb gr hu jpn kr no qc ru sa se uk us uy za ',
       'net': 'gb jp se uk ',
@@ -3498,55 +3511,55 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // http://jsperf.com/uri-js-sld-regex-vs-binary-search/4
     // Following methods use lastIndexOf() rather than array.split() in order
     // to avoid any memory allocations.
-    has: function has(domain) {
+    has: function(domain) {
       var tldOffset = domain.lastIndexOf('.');
-      if (tldOffset <= 0 || tldOffset >= domain.length - 1) {
+      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
         return false;
       }
-      var sldOffset = domain.lastIndexOf('.', tldOffset - 1);
-      if (sldOffset <= 0 || sldOffset >= tldOffset - 1) {
+      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
+      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
         return false;
       }
-      var sldList = SLD.list[domain.slice(tldOffset + 1)];
+      var sldList = SLD.list[domain.slice(tldOffset+1)];
       if (!sldList) {
         return false;
       }
-      return sldList.indexOf(' ' + domain.slice(sldOffset + 1, tldOffset) + ' ') >= 0;
+      return sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') >= 0;
     },
-    is: function is(domain) {
+    is: function(domain) {
       var tldOffset = domain.lastIndexOf('.');
-      if (tldOffset <= 0 || tldOffset >= domain.length - 1) {
+      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
         return false;
       }
-      var sldOffset = domain.lastIndexOf('.', tldOffset - 1);
+      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
       if (sldOffset >= 0) {
         return false;
       }
-      var sldList = SLD.list[domain.slice(tldOffset + 1)];
+      var sldList = SLD.list[domain.slice(tldOffset+1)];
       if (!sldList) {
         return false;
       }
       return sldList.indexOf(' ' + domain.slice(0, tldOffset) + ' ') >= 0;
     },
-    get: function get(domain) {
+    get: function(domain) {
       var tldOffset = domain.lastIndexOf('.');
-      if (tldOffset <= 0 || tldOffset >= domain.length - 1) {
+      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
         return null;
       }
-      var sldOffset = domain.lastIndexOf('.', tldOffset - 1);
-      if (sldOffset <= 0 || sldOffset >= tldOffset - 1) {
+      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
+      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
         return null;
       }
-      var sldList = SLD.list[domain.slice(tldOffset + 1)];
+      var sldList = SLD.list[domain.slice(tldOffset+1)];
       if (!sldList) {
         return null;
       }
-      if (sldList.indexOf(' ' + domain.slice(sldOffset + 1, tldOffset) + ' ') < 0) {
+      if (sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') < 0) {
         return null;
       }
-      return domain.slice(sldOffset + 1);
+      return domain.slice(sldOffset+1);
     },
-    noConflict: function noConflict() {
+    noConflict: function(){
       if (root.SecondLevelDomains === this) {
         root.SecondLevelDomains = _SecondLevelDomains;
       }
@@ -3555,12 +3568,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   return SLD;
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 2)(module)))
+}));
+
 
 /***/ }),
 
-/***/ 254:
+/***/ 261:
 /*!************************************!*\
   !*** multi ./bundles/autocomplete ***!
   \************************************/
@@ -3568,12 +3581,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/autocomplete */255);
+module.exports = __webpack_require__(/*! ./bundles/autocomplete */262);
 
 
 /***/ }),
 
-/***/ 255:
+/***/ 262:
 /*!***************************************!*\
   !*** ./bundles/autocomplete/index.js ***!
   \***************************************/
@@ -3593,11 +3606,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 16);
+var _reactDom = __webpack_require__(/*! react-dom */ 15);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 270);
+var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 277);
 
 var _expressionAtlasAutocomplete2 = _interopRequireDefault(_expressionAtlasAutocomplete);
 
@@ -3611,7 +3624,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 270:
+/***/ 277:
 /*!**************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/index.js ***!
   \**************************************************************************************/
@@ -3626,19 +3639,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 271);
+var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 278);
 
 var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _AtlasAutocomplete2.default;
 
 /***/ }),
 
-/***/ 271:
+/***/ 278:
 /*!**************************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
   \**************************************************************************************************/
@@ -3649,63 +3660,39 @@ exports.default = _AtlasAutocomplete2.default;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 57);
+var _propTypes = __webpack_require__(/*! prop-types */ 58);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 275);
+var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 282);
 
 var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
-var _urijs = __webpack_require__(/*! urijs */ 124);
+var _urijs = __webpack_require__(/*! urijs */ 129);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 279);
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 286);
 
 var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var AtlasAutocomplete = function (_React$Component) {
   _inherits(AtlasAutocomplete, _React$Component);
@@ -3717,7 +3704,7 @@ var AtlasAutocomplete = function (_React$Component) {
 
     _this.state = {
       selectedItem: _this.props.initialValue,
-      species: '',
+      species: _this.props.defaultSpecies,
       currentSuggestions: []
     };
 
@@ -3778,27 +3765,49 @@ var AtlasAutocomplete = function (_React$Component) {
         zIndex: '1'
       };
 
-      return _react2.default.createElement('div', { className: this.props.wrapperClassName }, _react2.default.createElement('div', { className: this.props.autocompleteClassName }, _react2.default.createElement('label', null, 'Gene ID, gene name or gene feature'), _react2.default.createElement(_reactAutocomplete2.default, { wrapperStyle: { display: '' },
-        inputProps: { type: 'text', name: 'geneId' },
+      return _react2.default.createElement(
+        'div',
+        { className: this.props.wrapperClassName },
+        _react2.default.createElement(
+          'div',
+          { className: this.props.autocompleteClassName },
+          _react2.default.createElement(
+            'label',
+            null,
+            'Gene ID, gene name or gene feature'
+          ),
+          _react2.default.createElement(_reactAutocomplete2.default, { wrapperStyle: { display: '' },
+            inputProps: { type: 'text', name: 'geneId' },
 
-        value: this.state.selectedItem,
-        items: this.state.currentSuggestions,
+            value: this.state.selectedItem,
+            items: this.state.currentSuggestions,
 
-        getItemValue: function getItemValue(item) {
-          return item.category;
-        },
-        onSelect: function onSelect(value) {
-          _this3.setState({
-            selectedItem: value, currentSuggestions: [] });
-          _this3.props.onSelect(value);
-        },
-        onChange: this.updateSuggestions,
+            getItemValue: function getItemValue(item) {
+              return item.category;
+            },
+            onSelect: function onSelect(value) {
+              _this3.setState({
+                selectedItem: value, currentSuggestions: [] });
+              _this3.props.onSelect(value);
+            },
+            onChange: this.updateSuggestions,
 
-        renderItem: function renderItem(item, isHighlighted) {
-          return _react2.default.createElement('div', { key: item.value + '_' + item.category, style: { background: isHighlighted ? 'lightgray' : 'white', padding: '2px 10px' } }, _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: item.value + ' (' + item.category + ')' } }));
-        },
+            renderItem: function renderItem(item, isHighlighted) {
+              return _react2.default.createElement(
+                'div',
+                { key: item.value + '_' + item.category, style: { background: isHighlighted ? 'lightgray' : 'white', padding: '2px 10px' } },
+                _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: item.value + ' (' + item.category + ')' } })
+              );
+            },
 
-        menuStyle: menuStyle })), this.props.enableSpeciesFilter && _react2.default.createElement('div', { className: this.props.speciesFilterClassName }, _react2.default.createElement(_SpeciesSelect2.default, { atlasUrl: this.props.atlasUrl, onChange: this.speciesSelectOnChange })));
+            menuStyle: menuStyle })
+        ),
+        this.props.enableSpeciesFilter && _react2.default.createElement(
+          'div',
+          { className: this.props.speciesFilterClassName },
+          _react2.default.createElement(_SpeciesSelect2.default, { atlasUrl: this.props.atlasUrl, onChange: this.speciesSelectOnChange, selectedValue: this.state.species })
+        )
+      );
     }
   }]);
 
@@ -3813,7 +3822,8 @@ AtlasAutocomplete.propTypes = {
   onSelect: _propTypes2.default.func,
   wrapperClassName: _propTypes2.default.string,
   autocompleteClassName: _propTypes2.default.string,
-  speciesFilterClassName: _propTypes2.default.string
+  speciesFilterClassName: _propTypes2.default.string,
+  defaultSpecies: _propTypes2.default.string
 };
 
 AtlasAutocomplete.defaultProps = {
@@ -3822,14 +3832,15 @@ AtlasAutocomplete.defaultProps = {
   onSelect: function onSelect() {},
   wrapperClassName: '',
   autocompleteClassName: '',
-  speciesFilterClassName: ''
+  speciesFilterClassName: '',
+  defaultSpecies: ''
 };
 
 exports.default = AtlasAutocomplete;
 
 /***/ }),
 
-/***/ 272:
+/***/ 279:
 /*!*********************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \*********************************************************************************/
@@ -3847,17 +3858,15 @@ exports.default = AtlasAutocomplete;
 
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 125);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 126);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 127);
+var assign = __webpack_require__(/*! object-assign */ 280);
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 120);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 121);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 122);
-var assign = __webpack_require__(/*! object-assign */ 273);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 128);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 281);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 123);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 274);
-
-module.exports = function (isValidElement, throwOnDirectAccess) {
+module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
   var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
   var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
@@ -3952,7 +3961,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
     oneOf: createEnumTypeChecker,
     oneOfType: createUnionTypeChecker,
     shape: createShapeTypeChecker,
-    exact: createStrictShapeTypeChecker
+    exact: createStrictShapeTypeChecker,
   };
 
   /**
@@ -3999,14 +4008,30 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
       if (secret !== ReactPropTypesSecret) {
         if (throwOnDirectAccess) {
           // New behavior only for users of `prop-types` package
-          invariant(false, 'Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use `PropTypes.checkPropTypes()` to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
+          invariant(
+            false,
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
         } else if ("development" !== 'production' && typeof console !== 'undefined') {
           // Old behavior for people using React.PropTypes
           var cacheKey = componentName + ':' + propName;
-          if (!manualPropTypeCallCache[cacheKey] &&
-          // Avoid spamming the console because they are often not actionable except for lib authors
-          manualPropTypeWarningCount < 3) {
-            warning(false, 'You are manually calling a React.PropTypes validation ' + 'function for the `%s` prop on `%s`. This is deprecated ' + 'and will throw in the standalone `prop-types` package. ' + 'You may be seeing this warning due to a third-party PropTypes ' + 'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.', propFullName, componentName);
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            warning(
+              false,
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `%s` prop on `%s`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
+              propFullName,
+              componentName
+            );
             manualPropTypeCallCache[cacheKey] = true;
             manualPropTypeWarningCount++;
           }
@@ -4149,7 +4174,13 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
     for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
       var checker = arrayOfTypeCheckers[i];
       if (typeof checker !== 'function') {
-        warning(false, 'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' + 'received %s at index %s.', getPostfixForTypeWarning(checker), i);
+        warning(
+          false,
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'received %s at index %s.',
+          getPostfixForTypeWarning(checker),
+          i
+        );
         return emptyFunction.thatReturnsNull;
       }
     }
@@ -4212,7 +4243,11 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
       for (var key in allKeys) {
         var checker = shapeTypes[key];
         if (!checker) {
-          return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' + '\nBad object: ' + JSON.stringify(props[propName], null, '  ') + '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  '));
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
         }
         var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
         if (error) {
@@ -4226,7 +4261,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
   }
 
   function isNode(propValue) {
-    switch (typeof propValue === 'undefined' ? 'undefined' : _typeof(propValue)) {
+    switch (typeof propValue) {
       case 'number':
       case 'string':
       case 'undefined':
@@ -4293,7 +4328,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
   // Equivalent of `typeof` but with special handling for array and regexp.
   function getPropType(propValue) {
-    var propType = typeof propValue === 'undefined' ? 'undefined' : _typeof(propValue);
+    var propType = typeof propValue;
     if (Array.isArray(propValue)) {
       return 'array';
     }
@@ -4357,9 +4392,10 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
+
 /***/ }),
 
-/***/ 273:
+/***/ 280:
 /*!******************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/object-assign/index.js ***!
   \******************************************************************/
@@ -4376,7 +4412,6 @@ object-assign
 
 
 /* eslint-disable no-unused-vars */
-
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
@@ -4398,7 +4433,7 @@ function shouldUseNative() {
 		// Detect buggy property enumeration order in older V8 versions.
 
 		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 		test1[5] = 'de';
 		if (Object.getOwnPropertyNames(test1)[0] === '5') {
 			return false;
@@ -4421,7 +4456,8 @@ function shouldUseNative() {
 		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
 			test3[letter] = letter;
 		});
-		if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
 			return false;
 		}
 
@@ -4459,9 +4495,10 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
+
 /***/ }),
 
-/***/ 274:
+/***/ 281:
 /*!************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/checkPropTypes.js ***!
   \************************************************************************/
@@ -4479,12 +4516,10 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 121);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 122);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 123);
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 126);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 127);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 128);
   var loggedTypeFailures = {};
 }
 
@@ -4510,12 +4545,12 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
         try {
           // This is intentionally an invariant that gets caught. It's the same
           // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, _typeof(typeSpecs[typeSpecName]));
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
           error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
         } catch (ex) {
           error = ex;
         }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error === 'undefined' ? 'undefined' : _typeof(error));
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
         if (error instanceof Error && !(error.message in loggedTypeFailures)) {
           // Only monitor this failure once because there tends to be a lot of the
           // same error.
@@ -4532,9 +4567,10 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
+
 /***/ }),
 
-/***/ 275:
+/***/ 282:
 /*!****************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
   \****************************************************************************************/
@@ -4545,53 +4581,23 @@ module.exports = checkPropTypes;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ 0);
-var PropTypes = __webpack_require__(/*! prop-types */ 57);
+var PropTypes = __webpack_require__(/*! prop-types */ 58);
 
-var _require = __webpack_require__(/*! react-dom */ 16),
+var _require = __webpack_require__(/*! react-dom */ 15),
     findDOMNode = _require.findDOMNode;
 
-var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 276);
+var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 283);
 
 var IMPERATIVE_API = ['blur', 'checkValidity', 'click', 'focus', 'select', 'setCustomValidity', 'setSelectionRange', 'setRangeText'];
 
@@ -4941,19 +4947,29 @@ var Autocomplete = function (_React$Component) {
       var inputProps = this.props.inputProps;
 
       var open = this.isOpen();
-      return React.createElement('div', _extends({ style: _extends({}, this.props.wrapperStyle) }, this.props.wrapperProps), this.props.renderInput(_extends({}, inputProps, {
-        role: 'combobox',
-        'aria-autocomplete': 'list',
-        'aria-expanded': open,
-        autoComplete: 'off',
-        ref: this.exposeAPI,
-        onFocus: this.handleInputFocus,
-        onBlur: this.handleInputBlur,
-        onChange: this.handleChange,
-        onKeyDown: this.composeEventHandlers(this.handleKeyDown, inputProps.onKeyDown),
-        onClick: this.composeEventHandlers(this.handleInputClick, inputProps.onClick),
-        value: this.props.value
-      })), open && this.renderMenu(), this.props.debug && React.createElement('pre', { style: { marginLeft: 300 } }, JSON.stringify(this._debugStates.slice(Math.max(0, this._debugStates.length - 5), this._debugStates.length), null, 2)));
+      return React.createElement(
+        'div',
+        _extends({ style: _extends({}, this.props.wrapperStyle) }, this.props.wrapperProps),
+        this.props.renderInput(_extends({}, inputProps, {
+          role: 'combobox',
+          'aria-autocomplete': 'list',
+          'aria-expanded': open,
+          autoComplete: 'off',
+          ref: this.exposeAPI,
+          onFocus: this.handleInputFocus,
+          onBlur: this.handleInputBlur,
+          onChange: this.handleChange,
+          onKeyDown: this.composeEventHandlers(this.handleKeyDown, inputProps.onKeyDown),
+          onClick: this.composeEventHandlers(this.handleInputClick, inputProps.onClick),
+          value: this.props.value
+        })),
+        open && this.renderMenu(),
+        this.props.debug && React.createElement(
+          'pre',
+          { style: { marginLeft: 300 } },
+          JSON.stringify(this._debugStates.slice(Math.max(0, this._debugStates.length - 5), this._debugStates.length), null, 2)
+        )
+      );
     }
   }]);
 
@@ -5212,12 +5228,13 @@ Autocomplete.keyDownHandlers = {
   }
 };
 
+
 module.exports = Autocomplete;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 7)))
 
 /***/ }),
 
-/***/ 276:
+/***/ 283:
 /*!*************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/index.js ***!
   \*************************************************************************/
@@ -5225,14 +5242,12 @@ module.exports = Autocomplete;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 284);
 
-
-module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 277);
 
 /***/ }),
 
-/***/ 277:
+/***/ 284:
 /*!********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
   \********************************************************************************************/
@@ -5240,10 +5255,7 @@ module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 277);
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-var util = __webpack_require__(/*! ./util */ 278);
+var util = __webpack_require__(/*! ./util */ 285);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -5263,7 +5275,9 @@ function scrollIntoView(elem, container, config) {
   var elemOffset = util.offset(elem);
   var eh = util.outerHeight(elem);
   var ew = util.outerWidth(elem);
-  var containerOffset, ch, cw, containerScroll, diffTop, diffBottom, win, winScroll, ww, wh;
+  var containerOffset, ch, cw, containerScroll,
+    diffTop, diffBottom, win,
+    winScroll, ww, wh;
 
   if (isWin) {
     win = container;
@@ -5294,12 +5308,18 @@ function scrollIntoView(elem, container, config) {
     // elem 相对 container 可视视窗的距离
     // 注意边框, offset 是边框到根节点
     diffTop = {
-      left: elemOffset.left - (containerOffset.left + (parseFloat(util.css(container, 'borderLeftWidth')) || 0)),
-      top: elemOffset.top - (containerOffset.top + (parseFloat(util.css(container, 'borderTopWidth')) || 0))
+      left: elemOffset.left - (containerOffset.left +
+      (parseFloat(util.css(container, 'borderLeftWidth')) || 0)),
+      top: elemOffset.top - (containerOffset.top +
+      (parseFloat(util.css(container, 'borderTopWidth')) || 0))
     };
     diffBottom = {
-      left: elemOffset.left + ew - (containerOffset.left + cw + (parseFloat(util.css(container, 'borderRightWidth')) || 0)),
-      top: elemOffset.top + eh - (containerOffset.top + ch + (parseFloat(util.css(container, 'borderBottomWidth')) || 0))
+      left: elemOffset.left + ew -
+      (containerOffset.left + cw +
+      (parseFloat(util.css(container, 'borderRightWidth')) || 0)),
+      top: elemOffset.top + eh -
+      (containerOffset.top + ch +
+      (parseFloat(util.css(container, 'borderBottomWidth')) || 0))
     };
   }
 
@@ -5358,20 +5378,16 @@ function scrollIntoView(elem, container, config) {
 
 module.exports = scrollIntoView;
 
+
 /***/ }),
 
-/***/ 278:
+/***/ 285:
 /*!****************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/util.js ***!
   \****************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+/***/ (function(module, exports) {
 
 var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
 
@@ -5413,7 +5429,7 @@ function getClientPosition(elem) {
   x -= docElem.clientLeft || body.clientLeft || 0;
   y -= docElem.clientTop || body.clientTop || 0;
 
-  return { left: x, top: y };
+  return {left: x, top: y};
 }
 
 function getScroll(w, top) {
@@ -5452,7 +5468,7 @@ function _getComputedStyle(elem, name, computedStyle) {
   var d = elem.ownerDocument;
 
   // https://github.com/kissyteam/kissy/issues/61
-  if (computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null)) {
+  if ((computedStyle = (computedStyle || d.defaultView.getComputedStyle(elem, null)))) {
     val = computedStyle.getPropertyValue(name) || computedStyle[name];
   }
 
@@ -5461,10 +5477,10 @@ function _getComputedStyle(elem, name, computedStyle) {
 
 var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
 var RE_POS = /^(top|right|bottom|left)$/,
-    CURRENT_STYLE = 'currentStyle',
-    RUNTIME_STYLE = 'runtimeStyle',
-    LEFT = 'left',
-    PX = 'px';
+  CURRENT_STYLE = 'currentStyle',
+  RUNTIME_STYLE = 'runtimeStyle',
+  LEFT = 'left',
+  PX = 'px';
 
 function _getComputedStyleIE(elem, name) {
   // currentStyle maybe null
@@ -5484,14 +5500,14 @@ function _getComputedStyleIE(elem, name) {
   if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
     // Remember the original values
     var style = elem.style,
-        left = style[LEFT],
-        rsLeft = elem[RUNTIME_STYLE][LEFT];
+      left = style[LEFT],
+      rsLeft = elem[RUNTIME_STYLE][LEFT];
 
     // prevent flashing of content
     elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
 
     // Put in the new values to get a computed value out
-    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0;
+    style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
     ret = style.pixelLeft + PX;
 
     // Revert the changed values
@@ -5515,9 +5531,8 @@ function setOffset(elem, offset) {
   }
 
   var old = getOffset(elem),
-      ret = {},
-      current,
-      key;
+    ret = {},
+    current, key;
 
   for (key in offset) {
     current = parseFloat(css(elem, key)) || 0;
@@ -5537,15 +5552,15 @@ function isBorderBoxFn(elem) {
 }
 
 var BOX_MODELS = ['margin', 'border', 'padding'],
-    CONTENT_INDEX = -1,
-    PADDING_INDEX = 2,
-    BORDER_INDEX = 1,
-    MARGIN_INDEX = 0;
+  CONTENT_INDEX = -1,
+  PADDING_INDEX = 2,
+  BORDER_INDEX = 1,
+  MARGIN_INDEX = 0;
 
 function swap(elem, options, callback) {
   var old = {},
-      style = elem.style,
-      name;
+    style = elem.style,
+    name;
 
   // Remember the old values, and insert the new ones
   for (name in options) {
@@ -5562,10 +5577,7 @@ function swap(elem, options, callback) {
 }
 
 function getPBMWidth(elem, props, which) {
-  var value = 0,
-      prop,
-      j,
-      i;
+  var value = 0, prop, j, i;
   for (j = 0; j < props.length; j++) {
     prop = props[j];
     if (prop) {
@@ -5599,23 +5611,25 @@ each(['Width', 'Height'], function (name) {
   domUtils['doc' + name] = function (refWin) {
     var d = refWin.document;
     return Math.max(
-    //firefox chrome documentElement.scrollHeight< body.scrollHeight
-    //ie standard mode : documentElement.scrollHeight> body.scrollHeight
-    d.documentElement['scroll' + name],
-    //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
-    d.body['scroll' + name], domUtils['viewport' + name](d));
+      //firefox chrome documentElement.scrollHeight< body.scrollHeight
+      //ie standard mode : documentElement.scrollHeight> body.scrollHeight
+      d.documentElement['scroll' + name],
+      //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
+      d.body['scroll' + name],
+      domUtils['viewport' + name](d));
   };
 
   domUtils['viewport' + name] = function (win) {
     // pc browser includes scrollbar in window.innerWidth
     var prop = 'client' + name,
-        doc = win.document,
-        body = doc.body,
-        documentElement = doc.documentElement,
-        documentElementProp = documentElement[prop];
+      doc = win.document,
+      body = doc.body,
+      documentElement = doc.documentElement,
+      documentElementProp = documentElement[prop];
     // 标准模式取 documentElement
     // backcompat 取 body
-    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
+    return doc.compatMode === 'CSS1Compat' && documentElementProp ||
+      body && body[prop] || documentElementProp;
   };
 });
 
@@ -5634,7 +5648,7 @@ function getWH(elem, name, extra) {
     return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
   }
   var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'],
-      borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
+    borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
   var computedStyle = getComputedStyleX(elem);
   var isBorderBox = isBorderBoxFn(elem, computedStyle);
   var cssBoxValue = 0;
@@ -5642,7 +5656,7 @@ function getWH(elem, name, extra) {
     borderBoxValue = undefined;
     // Fall back to computed then un computed css if necessary
     cssBoxValue = getComputedStyleX(elem, name);
-    if (cssBoxValue == null || Number(cssBoxValue) < 0) {
+    if (cssBoxValue == null || (Number(cssBoxValue)) < 0) {
       cssBoxValue = elem.style[name] || 0;
     }
     // Normalize '', auto, and prepare for extra
@@ -5655,23 +5669,27 @@ function getWH(elem, name, extra) {
   var val = borderBoxValue || cssBoxValue;
   if (extra === CONTENT_INDEX) {
     if (borderBoxValueOrIsBorderBox) {
-      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
+      return val - getPBMWidth(elem, ['border', 'padding'],
+          which, computedStyle);
     } else {
       return cssBoxValue;
     }
   } else if (borderBoxValueOrIsBorderBox) {
-    return val + (extra === BORDER_INDEX ? 0 : extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle));
+    return val + (extra === BORDER_INDEX ? 0 :
+        (extra === PADDING_INDEX ?
+          -getPBMWidth(elem, ['border'], which, computedStyle) :
+          getPBMWidth(elem, ['margin'], which, computedStyle)));
   } else {
-    return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
+    return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra),
+        which, computedStyle);
   }
 }
 
-var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
+var cssShow = {position: 'absolute', visibility: 'hidden', display: 'block'};
 
 // fix #119 : https://github.com/kissyteam/kissy/issues/119
 function getWHIgnoreDisplay(elem) {
-  var val,
-      args = arguments;
+  var val, args = arguments;
   // in case elem is window
   // elem.offsetWidth === undefined
   if (elem.offsetWidth !== 0) {
@@ -5708,7 +5726,7 @@ each(['width', 'height'], function (name) {
 });
 
 function css(el, name, value) {
-  if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+  if (typeof name === 'object') {
     for (var i in name) {
       css(el, i, name[i]);
     }
@@ -5732,11 +5750,11 @@ function mix(to, from) {
 }
 
 var utils = module.exports = {
-  getWindow: function getWindow(node) {
+  getWindow: function (node) {
     var doc = node.ownerDocument || node;
     return doc.defaultView || doc.parentWindow;
   },
-  offset: function offset(el, value) {
+  offset: function (el, value) {
     if (typeof value !== 'undefined') {
       setOffset(el, value);
     } else {
@@ -5746,7 +5764,7 @@ var utils = module.exports = {
   isWindow: isWindow,
   each: each,
   css: css,
-  clone: function clone(obj) {
+  clone: function (obj) {
     var ret = {};
     for (var i in obj) {
       ret[i] = obj[i];
@@ -5760,7 +5778,7 @@ var utils = module.exports = {
     return ret;
   },
   mix: mix,
-  scrollLeft: function scrollLeft(w, v) {
+  scrollLeft: function (w, v) {
     if (isWindow(w)) {
       if (v === undefined) {
         return getScrollLeft(w);
@@ -5775,7 +5793,7 @@ var utils = module.exports = {
       }
     }
   },
-  scrollTop: function scrollTop(w, v) {
+  scrollTop: function (w, v) {
     if (isWindow(w)) {
       if (v === undefined) {
         return getScrollTop(w);
@@ -5790,7 +5808,7 @@ var utils = module.exports = {
       }
     }
   },
-  merge: function merge() {
+  merge: function () {
     var ret = {};
     for (var i = 0; i < arguments.length; i++) {
       utils.mix(ret, arguments[i]);
@@ -5803,9 +5821,10 @@ var utils = module.exports = {
 
 mix(utils, domUtils);
 
+
 /***/ }),
 
-/***/ 279:
+/***/ 286:
 /*!**********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/SpeciesSelect.js ***!
   \**********************************************************************************************/
@@ -5816,77 +5835,33 @@ mix(utils, domUtils);
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 57);
+var _propTypes = __webpack_require__(/*! prop-types */ 58);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 124);
+var _urijs = __webpack_require__(/*! urijs */ 129);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _asyncToGenerator(fn) {
-  return function () {
-    var gen = fn.apply(this, arguments);return new Promise(function (resolve, reject) {
-      function step(key, arg) {
-        try {
-          var info = gen[key](arg);var value = info.value;
-        } catch (error) {
-          reject(error);return;
-        }if (info.done) {
-          resolve(value);
-        } else {
-          return Promise.resolve(value).then(function (value) {
-            step("next", value);
-          }, function (err) {
-            step("throw", err);
-          });
-        }
-      }return step("next");
-    });
-  };
-}
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var fetchResponseJson = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(base, endpoint) {
@@ -5921,7 +5896,11 @@ var fetchResponseJson = function () {
 }();
 
 var _option = function _option(label) {
-  return _react2.default.createElement('option', { key: label, value: label }, label);
+  return _react2.default.createElement(
+    'option',
+    { key: label, value: label },
+    label
+  );
 };
 
 var SpeciesSelect = function (_React$Component) {
@@ -5949,7 +5928,39 @@ var SpeciesSelect = function (_React$Component) {
   _createClass(SpeciesSelect, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', null, _react2.default.createElement('label', null, 'Species'), this.state.loading ? _react2.default.createElement('select', { disabled: 'true' }, _option("Fetching species\u2026")) : this.state.errorMessage ? _react2.default.createElement('select', { disabled: 'true' }, _option(this.state.errorMessage)) : _react2.default.createElement('select', { onChange: this.props.onChange }, _react2.default.createElement('option', { value: '' }, 'Any'), this.state.species.topSpecies.map(_option), _react2.default.createElement('option', { value: '-', disabled: 'true' }, this.state.species.separator), this.state.species.allSpecies.map(_option)));
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'label',
+          null,
+          'Species'
+        ),
+        this.state.loading ? _react2.default.createElement(
+          'select',
+          { disabled: 'true' },
+          _option('Fetching species\u2026')
+        ) : this.state.errorMessage ? _react2.default.createElement(
+          'select',
+          { disabled: 'true' },
+          _option(this.state.errorMessage)
+        ) : _react2.default.createElement(
+          'select',
+          { onChange: this.props.onChange, value: this.props.selectedValue },
+          _react2.default.createElement(
+            'option',
+            { value: '' },
+            'Any'
+          ),
+          this.state.species.topSpecies.map(_option),
+          _react2.default.createElement(
+            'option',
+            { value: '-', disabled: 'true' },
+            this.state.species.separator
+          ),
+          this.state.species.allSpecies.map(_option)
+        )
+      );
     }
   }, {
     key: '_fetchAndSetState',
@@ -5984,25 +5995,21 @@ var SpeciesSelect = function (_React$Component) {
 
 SpeciesSelect.propTypes = {
   atlasUrl: _propTypes2.default.string.isRequired,
-  onChange: _propTypes2.default.func.isRequired
+  onChange: _propTypes2.default.func.isRequired,
+  selectedValue: _propTypes2.default.string
 };
 
 exports.default = SpeciesSelect;
 
 /***/ }),
 
-/***/ 57:
+/***/ 58:
 /*!***************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/index.js ***!
   \***************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -6012,23 +6019,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  */
 
 if (true) {
-  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
 
-  var isValidElement = function isValidElement(object) {
-    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
   };
 
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 272)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 279)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
 
+
 /***/ })
 
-},[254]);
+},[261]);
 //# sourceMappingURL=atlasAutocomplete.bundle.js.map

@@ -11,7 +11,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "expression-atlas-autocomplete": "^1.1.1",
+    "expression-atlas-autocomplete": "^1.2.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1"
   }
