@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -103,7 +102,7 @@ public class ExperimentCrudTest {
         given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
-        given(idfParserMock.newParse(anyString()))
+        given(idfParserMock.parse(anyString()))
                 .willReturn(idfParserOutputMock);
         given(idfParserOutputMock.getPublications()).willReturn(new HashMap<>());
         given(idfParserOutputMock.getTitle()).willReturn("");

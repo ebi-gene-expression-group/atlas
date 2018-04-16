@@ -71,7 +71,7 @@ public class ExperimentCrud {
         ExperimentConfiguration experimentConfiguration = files.getLeft();
         CondensedSdrfParserOutput condensedSdrfParserOutput = files.getRight();
 
-        IdfParserOutput idfParserOutput = idfParser.newParse(experimentAccession);
+        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
 
@@ -109,7 +109,7 @@ public class ExperimentCrud {
         CondensedSdrfParserOutput condensedSdrfParserOutput =
                 condensedSdrfParser.parse(experimentAccession, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
 
-        IdfParserOutput idfParserOutput = idfParser.newParse(experimentAccession);
+        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
         ExperimentDTO experimentDTO = ExperimentDTO.create(
                 condensedSdrfParserOutput.getExperimentAccession(),

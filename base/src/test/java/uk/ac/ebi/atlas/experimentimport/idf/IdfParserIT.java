@@ -40,7 +40,7 @@ public class IdfParserIT {
     @ParameterizedTest
     @ValueSource(strings = { "E-ENAD-13", "E-GEOD-106540"})
     public void testParserForSingleCell(String experimentAccession) {
-        IdfParserOutput result = subject.newParse(experimentAccession);
+        IdfParserOutput result = subject.parse(experimentAccession);
 
         assertThat(result.getExpectedClusters(), is(greaterThanOrEqualTo(0)));
         assertThat(result.getTitle(), is(not(isEmptyString())));

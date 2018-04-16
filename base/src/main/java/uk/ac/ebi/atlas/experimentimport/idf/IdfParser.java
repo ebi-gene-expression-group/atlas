@@ -32,32 +32,7 @@ public class IdfParser {
         this.idfReaderFactory = idfReaderFactory;
     }
 
-    public ImmutablePair<String, ImmutableSet<String>> parse(String experimentAccession) {
-
-        try (
-             TsvStreamer titleIdfStreamer = idfReaderFactory.create(experimentAccession);
-             TsvStreamer pubmedIdfStreamer = idfReaderFactory.create(experimentAccession)) {
-
-            Map<String, String> titles = titleIdfStreamer.get()
-                    .filter(line -> line.length > 1)
-                    .filter(line -> AE_EXPERIMENT_DISPLAY_NAME_ID.equalsIgnoreCase(line[0].trim()) || INVESTIGATION_TITLE_ID.equalsIgnoreCase(line[0].trim()))
-                    .collect(Collectors.toMap(line -> line[0].toUpperCase().trim(), line-> line[1]));
-
-            String title = titles.getOrDefault(AE_EXPERIMENT_DISPLAY_NAME_ID.toUpperCase(), titles.getOrDefault(INVESTIGATION_TITLE_ID.toUpperCase(), ""));
-
-            ImmutableSet<String> pubmedIds = ImmutableSet.copyOf(
-                    pubmedIdfStreamer.get()
-                            .filter(line -> line.length > 1)
-                            .filter(line -> PUBMED_ID.equalsIgnoreCase(line[0].trim()))
-                            .flatMap(line -> Arrays.stream(line).skip(1))
-                            .filter(item -> !item.isEmpty())
-                            .iterator());
-
-            return ImmutablePair.of(title, pubmedIds);
-        }
-    }
-
-    public IdfParserOutput newParse(String experimentAccession) {
+    public IdfParserOutput parse(String experimentAccession) {
         try (TsvStreamer idfStreamer = idfReaderFactory.create(experimentAccession)) {
 
             parsedIdf =
@@ -108,7 +83,7 @@ public class IdfParser {
             }
         }
         else {
-            throw new IdfParserException("There is a mismatch between the number of PubMed IDs (" + pubmedIds.size() + ") and the number of publication titles " + publicationTitles.size() + ")");
+            throw new IdfParserException("There is a mismatch between the number of PubMed IDs (" + pubmedIds.size() + ") and the number of publication titles (" + publicationTitles.size() + ")");
         }
         
         return  publicationDetails;

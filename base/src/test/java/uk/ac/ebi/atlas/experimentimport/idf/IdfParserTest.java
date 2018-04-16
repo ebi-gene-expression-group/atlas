@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.idf;
 
 import com.google.common.collect.ImmutableSet;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang.math.NumberUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
@@ -30,27 +29,23 @@ public class IdfParserTest {
     private static final String[] E_MTAB_513_PUBMED_IDS_ARRAY = {"22496456", "22955988", "23258890"};
     private static final String[] E_MTAB_513_PUBLICATIONS_ARRAY = {"Publication 1", "Another publication", "Yet another publication"};
     private static final ImmutableSet<String> E_MTAB_513_PUBMED_IDS = ImmutableSet.copyOf(E_MTAB_513_PUBMED_IDS_ARRAY);
+    private static final String E_MTAB_513_EXPECTED_CLUSTERS = "5";
 
     private static final String[][] E_MTAB_513_IDF_TXT = {
             {"Investigation Title", E_MTAB_513_TITLE},
             {"Comment[AEExperimentDisplayName]", E_MTAB_513_AE_DISPLAY_NAME},
             {"PubMed ID", E_MTAB_513_PUBMED_IDS_ARRAY[0], E_MTAB_513_PUBMED_IDS_ARRAY[1], E_MTAB_513_PUBMED_IDS_ARRAY[2]},
-            {"Publication Title", E_MTAB_513_PUBLICATIONS_ARRAY[0], E_MTAB_513_PUBLICATIONS_ARRAY[1], E_MTAB_513_PUBLICATIONS_ARRAY[2]}
+            {"Publication Title", E_MTAB_513_PUBLICATIONS_ARRAY[0], E_MTAB_513_PUBLICATIONS_ARRAY[1], E_MTAB_513_PUBLICATIONS_ARRAY[2]},
+            {"Comment[ExpectedClusters]", E_MTAB_513_EXPECTED_CLUSTERS}
     };
 
     private static final String[][] E_MTAB_513_IDF_TXT_MIXED_CASE = {
             {"INVESTIGATION TITLE   ", E_MTAB_513_TITLE},
             {" comment[AEExperimentDisplayName]", E_MTAB_513_AE_DISPLAY_NAME},
             {"PubMed id", E_MTAB_513_PUBMED_IDS_ARRAY[0], E_MTAB_513_PUBMED_IDS_ARRAY[1], E_MTAB_513_PUBMED_IDS_ARRAY[2]},
-            {"publication title", E_MTAB_513_PUBLICATIONS_ARRAY[0], E_MTAB_513_PUBLICATIONS_ARRAY[1], E_MTAB_513_PUBLICATIONS_ARRAY[2]}
+            {"publication title", E_MTAB_513_PUBLICATIONS_ARRAY[0], E_MTAB_513_PUBLICATIONS_ARRAY[1], E_MTAB_513_PUBLICATIONS_ARRAY[2]},
+            {"comment[expectedclusters]", E_MTAB_513_EXPECTED_CLUSTERS}
     };
-
-
-    @Mock
-    private TsvStreamer titleIdfStreamerMock;
-
-    @Mock
-    private TsvStreamer pubmedsIdfStreamerMock;
 
     @Mock
     private TsvStreamer idfStreamerMock;
@@ -63,85 +58,76 @@ public class IdfParserTest {
 
     @Before
     public void setUp() {
-        when(idfStreamerFactoryMock.create(E_MTAB_513)).thenReturn(titleIdfStreamerMock, pubmedsIdfStreamerMock, idfStreamerMock);
+        when(idfStreamerFactoryMock.create(E_MTAB_513)).thenReturn(idfStreamerMock);
     }
 
     @Test
     public void parse() {
-        when(titleIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
-        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
+        when(idfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT));
 
-        Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
-        assertThat(idfParserOutput.getLeft(), is(E_MTAB_513_AE_DISPLAY_NAME));
-        assertThat(idfParserOutput.getRight(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_AE_DISPLAY_NAME));
+        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getExpectedClusters(), is(NumberUtils.toInt(E_MTAB_513_EXPECTED_CLUSTERS)));
     }
 
     @Test
     public void parseMixedCaseKeys() {
-        when(titleIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT_MIXED_CASE));
-        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT_MIXED_CASE));
+        when(idfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT_MIXED_CASE));
 
-        Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
-        assertThat(idfParserOutput.getLeft(), is(E_MTAB_513_AE_DISPLAY_NAME));
-        assertThat(idfParserOutput.getRight(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_AE_DISPLAY_NAME));
+        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getExpectedClusters(), is(NumberUtils.toInt(E_MTAB_513_EXPECTED_CLUSTERS)));
     }
 
     @Test
     public void parseNoPubmedIds() {
-        when(titleIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[1]));
-        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[1]));
+        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[1]));
 
-        Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
-        assertThat(idfParserOutput.getLeft(), is(E_MTAB_513_AE_DISPLAY_NAME));
-        assertThat(idfParserOutput.getRight(), is(empty()));
+        assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_AE_DISPLAY_NAME));
+        assertThat(idfParserOutput.getPublications().isEmpty(), is(true));
     }
 
     @Test
     public void parseNoAeDisplayName() {
-        when(titleIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[2]));
-        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[2]));
+        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[2], E_MTAB_513_IDF_TXT[3]));
 
-        Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
-        assertThat(idfParserOutput.getLeft(), is(E_MTAB_513_TITLE));
-        assertThat(idfParserOutput.getRight(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_TITLE));
+        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
     }
 
     @Test
     public void parseNoAeDisplayNameNoTitle() {
-        when(titleIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[2]));
-        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[2]));
+        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[2], E_MTAB_513_IDF_TXT[3]));
 
-        Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
-        assertThat(idfParserOutput.getLeft().isEmpty(), is(true));
-        assertThat(idfParserOutput.getRight(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getTitle(), isEmptyString());
+        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
     }
 
     @Test
     public void parseNothing() {
-        when(titleIdfStreamerMock.get()).thenReturn(Stream.empty());
-        when(pubmedsIdfStreamerMock.get()).thenReturn(Stream.empty());
-
-
-        Pair<String, ImmutableSet<String>> idfParserOutput = subject.parse(E_MTAB_513);
-
-        assertThat(idfParserOutput.getLeft().isEmpty(), is(true));
-        assertThat(idfParserOutput.getRight(), is(empty()));
-    }
-
-    @Test
-    public void parseEmptyPublications() {
         when(idfStreamerMock.get()).thenReturn(Stream.empty());
 
-        IdfParserOutput idfParserOutput = subject.newParse(E_MTAB_513);
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
         assertThat(idfParserOutput.getTitle(), isEmptyString());
         assertThat(idfParserOutput.getPublications().isEmpty(), is(true));
         assertThat(idfParserOutput.getExpectedClusters(), is(0));
     }
 
+    @Test(expected = IdfParser.IdfParserException.class)
+    public void parsePubmedIdsWithNoPublicationTitles() {
+        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[2]));
+
+        subject.parse(E_MTAB_513);
+    }
 }
