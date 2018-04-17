@@ -26,7 +26,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-//import static uk.ac.ebi.atlas.experimentimport.ExperimentDTO.create;
 
 /*
  * Responsible for:
@@ -114,7 +113,7 @@ public class ExperimentCrud {
         ExperimentDTO experimentDTO = ExperimentDTO.create(
                 condensedSdrfParserOutput.getExperimentAccession(),
                 ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
-                "homo sapiens",
+                condensedSdrfParserOutput.getSpecies(),
                 idfParserOutput.getPublications().keySet(),
                 idfParserOutput.getTitle(),
                 isPrivate
