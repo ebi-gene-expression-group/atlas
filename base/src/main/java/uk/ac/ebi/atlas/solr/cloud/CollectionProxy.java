@@ -9,7 +9,6 @@ import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.params.SolrParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,13 +30,10 @@ public abstract class CollectionProxy {
         this.nameOrAlias = nameOrAlias;
     }
 
-    protected FieldStatsInfo fieldStats(String fieldName, SolrQuery solrQuery) {
+    protected QueryResponse query(SolrQuery solrQuery) {
         try {
-            solrQuery.setRows(0);
-            solrQuery.setGetFieldStatistics(true);
-            solrQuery.setGetFieldStatistics(fieldName);
-            solrQuery.addStatsFieldCalcDistinct(fieldName, true);
-            return solrClient.query(nameOrAlias, solrQuery).getFieldStatsInfo().get(fieldName);
+            // Change maybe to: return new QueryRequest()
+            return solrClient.query(nameOrAlias, solrQuery, SolrRequest.METHOD.POST);
         } catch (IOException e) {
             logException(e);
             throw new UncheckedIOException(e);
@@ -47,10 +43,13 @@ public abstract class CollectionProxy {
         }
     }
 
-    public QueryResponse query(SolrParams solrParams) {
+    protected FieldStatsInfo fieldStats(String fieldName, SolrQuery solrQuery) {
         try {
-            // Change maybe to: return new QueryRequest()
-            return solrClient.query(nameOrAlias, solrParams, SolrRequest.METHOD.POST);
+            solrQuery.setRows(0);
+            solrQuery.setGetFieldStatistics(true);
+            solrQuery.setGetFieldStatistics(fieldName);
+            solrQuery.addStatsFieldCalcDistinct(fieldName, true);
+            return solrClient.query(nameOrAlias, solrQuery).getFieldStatsInfo().get(fieldName);
         } catch (IOException e) {
             logException(e);
             throw new UncheckedIOException(e);

@@ -1,7 +1,7 @@
 {
   "bioentityIdentifier": {
     "type": "terms",
-    "field": "bioentity_identifier",
+    "field": "bioentity_identifier_search",
     "limit": -1
   }
 }

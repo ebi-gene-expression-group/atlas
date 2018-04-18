@@ -28,7 +28,7 @@ public class EmbeddedSolrCollectionProxyFactory {
         }
     }
 
-    public CollectionProxy createAnalyticsCollectionProxy() {
+    public AnalyticsCollectionProxy createAnalyticsCollectionProxy() {
         return new AnalyticsCollectionProxy(new EmbeddedSolrServer(coreContainer, "analytics"));
     }
 }

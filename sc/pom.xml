@@ -16,10 +16,10 @@
     <packaging>war</packaging>
 
     <name>Single Cell Atlas</name>
-    <url>https://www-test.ebi.ac.uk/gxa_sc/</url>
+    <url>https://www-test.ebi.ac.uk/scxa/</url>
 
     <build>
-        <finalName>gxa_sc</finalName>
+        <finalName>scxa</finalName>
 
         <resources>
             <resource>

@@ -3,11 +3,11 @@ package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.solr.client.solrj.io.Tuple;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.tuplestreamers.BaselineTupleStreamerFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.tuplestreamers.DifferentialTupleStreamerFactory;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,10 +16,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Ordering.natural;
-import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
 
 @Named
 public class BioentityIdentifierSearchService {
@@ -38,28 +36,18 @@ public class BioentityIdentifierSearchService {
     }
 
     public List<String> searchSpecificGenesInBaselineExperiment(String experimentAccession,
-                                                                SemanticQuery geneQuery,
-                                                                double expressionLevelCutoff,
-                                                                int maxSize,
-                                                                ExpressionUnit unit,
-                                                                String... assayGroupIds) {
+                                                                BaselineRequestPreferences<?> preferences) {
         try (TupleStreamer tupleStreamer =
-                     baselineTupleStreamerFactory.createForBaselineSpecific(
-                             experimentAccession, geneQuery, expressionLevelCutoff, unit, assayGroupIds)) {
-            return mapBySpecifictyAndSortByAverageExpression(tupleStreamer.get(), maxSize);
+                     baselineTupleStreamerFactory.createForBaselineSpecific(experimentAccession, preferences)) {
+            return mapBySpecifictyAndSortByAverageExpression(tupleStreamer.get(), preferences.getHeatmapMatrixSize());
         }
     }
 
     public List<String> searchSpecificGenesInDifferentialExperiment(String experimentAccession,
-                                                                    SemanticQuery geneQuery,
-                                                                    double log2FoldChangeCutoff,
-                                                                    double adjustedPValueCutoff,
-                                                                    int maxSize,
-                                                                    String... contrastIds) {
+                                                                    DifferentialRequestPreferences preferences) {
         try (TupleStreamer tupleStreamer =
-                     differentialTupleStreamerFactory.createForDifferentialSpecific(
-                             experimentAccession, geneQuery, log2FoldChangeCutoff, adjustedPValueCutoff, contrastIds)) {
-            return mapBySpecifictyAndSortByAverageExpression(tupleStreamer.get(), maxSize);
+                     differentialTupleStreamerFactory.createForDifferentialSpecific(experimentAccession, preferences)) {
+            return mapBySpecifictyAndSortByAverageExpression(tupleStreamer.get(), preferences.getHeatmapMatrixSize());
         }
     }
 
@@ -81,15 +69,12 @@ public class BioentityIdentifierSearchService {
                 .collect(toList());
     }
 
+
+
     public List<String> searchMostExpressedGenesInBaselineExperiment(String experimentAccession,
-                                                                     SemanticQuery geneQuery,
-                                                                     double expressionLevelCutoff,
-                                                                     int maxSize,
-                                                                     ExpressionUnit unit,
-                                                                     String... assayGroupIds) {
+                                                                     BaselineRequestPreferences<?> preferences) {
         try (TupleStreamer tupleStreamer =
-                     baselineTupleStreamerFactory.createForBaselineNonSpecific(
-                             experimentAccession, geneQuery, expressionLevelCutoff, maxSize, unit, assayGroupIds)) {
+                     baselineTupleStreamerFactory.createForBaselineNonSpecific(experimentAccession, preferences)) {
             return tupleStreamer.get()
                                 .map(tuple -> tuple.getString(GENE_KEY))
                                 .collect(toList());
@@ -97,14 +82,10 @@ public class BioentityIdentifierSearchService {
     }
 
     public List<String> searchMostExpressedGenesInDifferentialExperiment(String experimentAccession,
-                                                                         SemanticQuery geneQuery,
-                                                                         double log2FoldChangeCutoff,
-                                                                         double adjustedPValueCutoff,
-                                                                         int maxSize,
-                                                                         String... contrastIds) {
+                                                                         DifferentialRequestPreferences preferences) {
         try (TupleStreamer tupleStreamer =
                      differentialTupleStreamerFactory.createForDifferentialNonSpecific(
-                             experimentAccession, geneQuery, log2FoldChangeCutoff, adjustedPValueCutoff, maxSize, contrastIds)) {
+                             experimentAccession, preferences)) {
             return tupleStreamer.get()
                                 .map(tuple -> tuple.getString(GENE_KEY))
                                 .collect(toList());
