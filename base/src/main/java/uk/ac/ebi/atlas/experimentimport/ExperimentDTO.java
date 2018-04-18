@@ -7,13 +7,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
-import uk.ac.ebi.atlas.model.Publication;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /*
 Note the title is what's found in the IDF file. For display, we only use it as fallback, preferring Array Express titles.
