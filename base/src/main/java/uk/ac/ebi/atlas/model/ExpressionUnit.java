@@ -4,23 +4,17 @@ public interface ExpressionUnit {
 
     interface Absolute extends ExpressionUnit {
         enum Rna implements Absolute {
-            FPKM, TPM
+            FPKM,
+            TPM
         }
 
         enum Protein implements Absolute {
-            ANY("");
-
-            String name;
-
-            Protein(String name){
-                this.name = name;
-            }
+            ANY;
 
             @Override
             public String toString(){
                 return "";
             }
-
         }
     }
 
@@ -29,7 +23,7 @@ public interface ExpressionUnit {
 
         @Override
         public String toString(){
-            return "Log2-fold change";
+            return "Log2 fold change";
         }
     }
 
