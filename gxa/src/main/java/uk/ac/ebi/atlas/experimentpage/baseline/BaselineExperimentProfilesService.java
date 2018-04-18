@@ -64,8 +64,7 @@ public class BaselineExperimentProfilesService {
 
     public long fetchCount(String experimentAccession, BaselineRequestPreferences<?> preferences) {
         SolrQuery solrQuery =
-                ExperimentRequestPreferencesSolrQueryFactory.createSolrQueryForBaselineExperiment(
-                        experimentAccession, preferences);
+                ExperimentRequestPreferencesSolrQueryFactory.createSolrQuery(experimentAccession, preferences);
 
         return analyticsCollectionProxy.fieldStats(BIOENTITY_IDENTIFIER, solrQuery).getCountDistinct();
     }
@@ -83,10 +82,10 @@ public class BaselineExperimentProfilesService {
         Pair<AnalyticsCollectionProxy.AnalyticsSchemaField, AnalyticsCollectionProxy.AnalyticsSchemaField> expressionLevelFieldNames = getExpressionLevelFieldNames(preferences.getUnit());
 
         SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
-        solrQueryBuilder.filterField(EXPERIMENT_ACCESSION, experimentAccession)
-                        .filterFieldLowerRange(expressionLevelFieldNames.getLeft(), preferences.getCutoff())
-                        .queryFieldOr(BIOENTITY_IDENTIFIER_SEARCH, geneIds)
-                        .queryFieldOr(ASSAY_GROUP_ID, preferences.getSelectedColumnIds())
+        solrQueryBuilder.addFilterFieldByTerm(EXPERIMENT_ACCESSION, experimentAccession)
+                        .addFilterFieldByRangeMin(expressionLevelFieldNames.getLeft(), preferences.getCutoff())
+                        .addQueryFieldByTerm(BIOENTITY_IDENTIFIER_SEARCH, geneIds)
+                        .addQueryFieldByTerm(ASSAY_GROUP_ID, preferences.getSelectedColumnIds())
                         .setFieldList(
                                 BIOENTITY_IDENTIFIER,
                                 expressionLevelFieldNames.getLeft(),
@@ -95,7 +94,7 @@ public class BaselineExperimentProfilesService {
                                 asAnalyticsSchemaField(BioentityPropertyName.SYMBOL))
                         .setRows(maximumNumberOfDocs);
 
-        QueryResponse queryResponse = analyticsCollectionProxy.queryWithBuilder(solrQueryBuilder);
+        QueryResponse queryResponse = analyticsCollectionProxy.query(solrQueryBuilder);
 
         Map<String, List<SolrDocument>> resultsMap =
                 queryResponse.getResults().stream()
