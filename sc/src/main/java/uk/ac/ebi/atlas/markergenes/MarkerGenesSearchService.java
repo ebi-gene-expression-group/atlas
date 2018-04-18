@@ -41,7 +41,7 @@ public class MarkerGenesSearchService {
         try {
             return Optional.of(
                     new URIBuilder()
-                            .setPath("/gxa_sc/experiments/" + markerGeneProfile.experimentAccession())
+                            .setPath("/scxa/experiments/" + markerGeneProfile.experimentAccession())
                             .addParameter("geneId", geneId)
                             .addParameter("k", Integer.toString(markerGeneProfile.k()))
                             .addParameter(

@@ -12,7 +12,7 @@ config = {
         library: `[name]`,
         path: path.resolve(__dirname, `dist`),
         filename: `[name].bundle.js`,
-        publicPath: `/gxa_sc/`
+        publicPath: `/scxa/`
     },
 
     plugins: [
@@ -91,7 +91,7 @@ config = {
     devServer: {
         port: 9000,
         historyApiFallback: {
-          index: `/gxa_sc/experiments/E-MTAB-4388/index.html`
+          index: `/scxa/experiments/E-MTAB-4388/index.html`
         }
     }
 }
