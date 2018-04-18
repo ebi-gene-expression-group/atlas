@@ -100,7 +100,7 @@ public class BioentityPropertyDaoTest {
     @Test
     public void ifGeneIdNotInBioentitiesButInAnalytics() {
         when(analyticsCollectionProxyMock.query(
-                argThat(solrQueryBuilder -> solrQueryBuilder.build().get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS))))
+                argThat(solrQueryBuilder -> solrQueryBuilder.build().getQuery().equals("bioentity_identifier_search:(\"" + ID_IN_ANALYTICS + "\")"))))
                 .thenReturn(oneResultQueryResponseMock);
 
         assertThat(subject.fetchGenePageProperties(ID_IN_ANALYTICS))
@@ -109,7 +109,7 @@ public class BioentityPropertyDaoTest {
         verify(analyticsCollectionProxyMock)
                 .query(argThat(
                         solrQueryBuilder ->
-                                solrQueryBuilder.build().get("q").equals("bioentity_identifier_search:" + ID_IN_ANALYTICS)));
+                                solrQueryBuilder.build().getQuery().equals("bioentity_identifier_search:(\"" + ID_IN_ANALYTICS + "\")")));
     }
 
 }
