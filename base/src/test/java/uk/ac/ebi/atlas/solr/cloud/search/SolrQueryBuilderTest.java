@@ -1,77 +1,109 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
-import org.apache.solr.common.params.SolrParams;
-import org.junit.Test;
+import com.google.common.collect.ImmutableSet;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
+import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.Collections.emptySet;
+import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.SOLR_MAX_ROWS;
 
+// Correctness of query syntax tested in SolrQueryUtilsTest
 public class SolrQueryBuilderTest {
 
-    @Test
-    public void byDefaultQueryAll() {
-        SolrParams solrParams = new SolrQueryBuilder().build();
+    public static class DummySchemaField extends SchemaField<CollectionProxy> {
+        private DummySchemaField(String fieldName) {
+            super(fieldName);
+        }
+    }
 
-        assertThat(solrParams.get("fq")).isEmpty();
-        assertThat(solrParams.get("q")).isEqualTo("*:*");
+    public static final DummySchemaField FIELD1 = new DummySchemaField("field1");
+    public static final DummySchemaField FIELD2 = new DummySchemaField("field2");
+
+    @Test
+    void byDefaultQueryAllAndRetrieveAllFields() {
+        SolrQuery solrQuery = new SolrQueryBuilder().build();
+
+        assertThat(solrQuery.getFilterQueries()).isEmpty();
+        assertThat(solrQuery.getQuery()).isEqualTo("*:*");
+        assertThat(solrQuery.getFields()).isEqualTo("*");
     }
 
     @Test
-    public void multipleQueryClausesAreJoinedWithAnd() {
-        SolrParams solrParams =
+    void multipleQueryClausesAreJoinedWithAnd() {
+        SolrQuery solrQuery =
                 new SolrQueryBuilder()
-                        .addQueryTermsClause("field1", "value1")
-                        .addQueryTermsClause("field2", "value21", "value22")
-                        .addQueryLowerRangeClause("field3", 1D)
-                        .addQueryUpperRangeClause("field4", 1D)
+                        .addQueryFieldByTerm(FIELD1, "value1")
+                        .addQueryFieldByTerm(FIELD2, "value21", "value22")
                         .build();
 
-        assertThat(solrParams.get("q").split(" AND ")).hasSize(4);
+        assertThat(solrQuery.getQuery().split(" AND ")).hasSize(2);
     }
 
     @Test
-    public void multipleFilterClausesAreJoinedWithAnd() {
-        SolrParams solrParams =
-                new SolrQueryBuilder()
-                        .addFilterTermsClause("field1", "value1")
-                        .addFilterTermsClause("field2", "value21", "value22")
-                        .addFilterLowerRangeClause("field3", 1D)
-                        .addFilterUpperRangeClause("field4", 1D)
-                        .build();
+    void setsOrVarargs() {
+        assertThat(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1).build().getQuery())
+                .isEqualTo(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, emptySet()).build().getQuery());
 
-        assertThat(solrParams.get("fq").split(" AND ")).hasSize(4);
+        assertThat(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, "value1").build().getQuery())
+                .isEqualTo(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, singleton("value1")).build().getQuery());
+
+        assertThat(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, "value1", "value2").build().getQuery())
+                .isEqualTo(
+                        new SolrQueryBuilder()
+                                .addQueryFieldByTerm(FIELD1, ImmutableSet.of("value1", "value2")).build().getQuery());
     }
 
     @Test
-    public void doubleRangeFiltersAreJoinedWithOr() {
-        SolrParams solrParams =
+    void testFilterQueries() {
+        SolrQuery solrQuery =
                 new SolrQueryBuilder()
-                        .addFilterDoubleRangeClause("field", -1D, 1D)
+                        .addFilterFieldByTerm(FIELD1, "value1")
+                        .addFilterFieldByRangeMin(FIELD2, 0.0)
+                        .addFilterFieldByRangeMax(FIELD2, 0.0)
+                        .addFilterFieldByRangeMinMax(FIELD2, 0.0, 0.0)
                         .build();
 
-        assertThat(solrParams.get("fq").split(" OR ")).hasSize(2);
+        assertThat(solrQuery.getFilterQueries())
+                .hasSize(4)
+                .allMatch(str -> str.matches("field[12]:(.+)"));
     }
 
     @Test
-    public void doubleRangeQueriesAreJoinedWithOr() {
-        SolrParams solrParams =
-                new SolrQueryBuilder()
-                        .addQueryDoubleRangeClause("field", -1D, 1D)
-                        .build();
-
-        assertThat(solrParams.get("q").split(" OR ")).hasSize(2);
+    void testSetFieldList() {
+        assertThat(new SolrQueryBuilder().setFieldList(FIELD1, FIELD2).build().getFields().split(","))
+                .containsExactlyInAnyOrder(FIELD1.name(), FIELD2.name());
     }
 
     @Test
-    public void searchValuesAreDeduped() {
-        SolrParams solrParams =
+    @DisplayName("Default number of rows is “big enough”, whatever that means")
+    void defaultNumberOfRows() {
+        assertThat(new SolrQueryBuilder().build().getRows()).isGreaterThanOrEqualTo(1000000);
+    }
+
+    @Test
+    void testSetRows() {
+        int randomRows = ThreadLocalRandom.current().nextInt(1, SOLR_MAX_ROWS + 1);
+        assertThat(new SolrQueryBuilder().setRows(randomRows).build().getRows()).isEqualTo(randomRows);
+    }
+
+    @Test
+    void searchValuesAreDeduped() {
+        SolrQuery solrQuery =
                 new SolrQueryBuilder()
-                        .addQueryTermsClause(
-                                "field1", "value1", "value2", "value2", "value3", "value3", "value3")
+                        .addQueryFieldByTerm(FIELD1, "value1", "value2", "value2", "value3", "value3", "value3")
                         .build();
 
-        assertThat(solrParams.get("q")).containsOnlyOnce("value1");
-        assertThat(solrParams.get("q")).containsOnlyOnce("value2");
-        assertThat(solrParams.get("q")).containsOnlyOnce("value3");
+        assertThat(solrQuery.getQuery())
+                .containsOnlyOnce("value1")
+                .containsOnlyOnce("value2")
+                .containsOnlyOnce("value3");
     }
 
 }

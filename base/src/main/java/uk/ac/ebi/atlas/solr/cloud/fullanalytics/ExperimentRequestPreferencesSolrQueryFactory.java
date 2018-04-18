@@ -2,8 +2,10 @@ package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
@@ -11,37 +13,37 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL_FPKM;
-import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.createFieldQuery;
-import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.createLowBoundRangeQuery;
-import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.createOrBooleanQuery;
+import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryUtils.createOrBooleanQuery;
 
 public class ExperimentRequestPreferencesSolrQueryFactory {
-
-    public static <U extends ExpressionUnit.Absolute> SolrQuery createSolrQueryForBaselineExperiment(
-            String experimentAccession, BaselineRequestPreferences<U> reqPreferences) {
+    // The type of reqPreferences will determine the type of experiment. If you think this is confusing change the
+    // method names to createSolrQueryForBaselineExperiment or something like that.
+    public static SolrQuery createSolrQuery(String experimentAccession, BaselineRequestPreferences<?> reqPreferences) {
 
         AnalyticsCollectionProxy.AnalyticsSchemaField expressionLevelField =
                 reqPreferences.getUnit() == ExpressionUnit.Absolute.Rna.FPKM ?
                         EXPRESSION_LEVEL_FPKM :
                         EXPRESSION_LEVEL;
 
-        SolrQuery solrQuery = new SolrQuery();
+        SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
 
-        solrQuery.addFilterQuery(createFieldQuery(EXPERIMENT_ACCESSION, experimentAccession))
-                 .addFilterQuery(createLowBoundRangeQuery(expressionLevelField, reqPreferences.getCutoff()));
+        // A single term OR boolean query will result in a single field query: foo:"bar"
+        solrQueryBuilder
+                .addFilterFieldByTerm(EXPERIMENT_ACCESSION, experimentAccession)
+                .addFilterFieldByRangeMin(expressionLevelField, reqPreferences.getCutoff());
 
-        Stream<String> assayGroupIds =
+        Optional<String> assayGroupIds =
                 reqPreferences.getSelectedColumnIds().isEmpty() ?
-                        Stream.empty() :
-                        Stream.of(
+                        Optional.empty() :
+                        Optional.of(
                                 "(" +
                                 createOrBooleanQuery(ASSAY_GROUP_ID, reqPreferences.getSelectedColumnIds()) +
                                 ")");
 
-        Stream<String> geneQuery =
+        Optional<String> geneQuery =
                 reqPreferences.getGeneQuery().isEmpty() ?
-                        Stream.empty() :
-                        Stream.of(
+                        Optional.empty() :
+                        Optional.of(
                                 "(" +
                                 AnalyticsCollectionProxy.asAnalyticsGeneQuery(reqPreferences.getGeneQuery()).entrySet()
                                         .stream()
@@ -49,10 +51,13 @@ public class ExperimentRequestPreferencesSolrQueryFactory {
                                         .collect(joining(" OR ")) +
                                 ")");
 
-        solrQuery.setQuery(Stream.concat(assayGroupIds, geneQuery).collect(joining(" AND ")));
+        String query = Stream.concat(mapToStream(assayGroupIds), mapToStream(geneQuery)).collect(joining(" AND "));
 
-        return solrQuery;
+        return solrQueryBuilder.build().setQuery(query.isEmpty() ? "*:*" : query);
+    }
 
+    private static <T> Stream<T> mapToStream(Optional<T> optional) {
+        return optional.map(Stream::of).orElse(Stream.empty());
     }
 
 //    TODO
@@ -61,6 +66,4 @@ public class ExperimentRequestPreferencesSolrQueryFactory {
 //
 //    public static SolrQuery create(String experimentAccession, MicroarrayRequestPreferences reqPreferences) {
 //    }
-
-
 }

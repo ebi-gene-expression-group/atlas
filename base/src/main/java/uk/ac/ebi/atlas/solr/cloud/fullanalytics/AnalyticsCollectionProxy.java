@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrRequest;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -12,15 +10,12 @@ import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.UNKNOWN;
 
 public class AnalyticsCollectionProxy extends CollectionProxy {
     public static class AnalyticsSchemaField extends SchemaField<AnalyticsCollectionProxy> {
@@ -32,6 +27,7 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     public static final AnalyticsSchemaField BIOENTITY_IDENTIFIER = new AnalyticsSchemaField("bioentity_identifier");
     public static final AnalyticsSchemaField BIOENTITY_IDENTIFIER_SEARCH = new AnalyticsSchemaField("bioentity_identifier_search");
     public static final AnalyticsSchemaField EXPERIMENT_ACCESSION = new AnalyticsSchemaField("experiment_accession");
+    public static final AnalyticsSchemaField EXPERIMENT_TYPE = new AnalyticsSchemaField("experiment_type");
     public static final AnalyticsSchemaField ASSAY_GROUP_ID = new AnalyticsSchemaField("assay_group_id");
     public static final AnalyticsSchemaField CONTRAST_ID = new AnalyticsSchemaField("contrast_id");
     public static final AnalyticsSchemaField EXPRESSION_LEVEL = new AnalyticsSchemaField("expression_level");
@@ -84,17 +80,8 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
         super(solrClient, "analytics");
     }
 
-    public QueryResponse queryWithBuilder(SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder) {
-        try {
-            // Change maybe to: return new QueryRequest()
-            return solrClient.query(nameOrAlias, solrQueryBuilder.build(), SolrRequest.METHOD.POST);
-        } catch (IOException e) {
-            logException(e);
-            throw new UncheckedIOException(e);
-        } catch (SolrServerException e) {
-            logException(e);
-            throw new UncheckedIOException(new IOException(e));
-        }
+    public QueryResponse query(SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder) {
+        return query(solrQueryBuilder.build());
     }
 
     public FieldStatsInfo fieldStats(SchemaField<AnalyticsCollectionProxy> field, SolrQuery solrQuery) {

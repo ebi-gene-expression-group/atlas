@@ -11,8 +11,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.EmbeddedSolrCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
 
@@ -20,6 +22,10 @@ import java.util.Collection;
 
 import static org.apache.solr.client.solrj.util.ClientUtils.escapeQueryChars;
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_TYPE;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -75,7 +81,7 @@ public class AnalyticsCollectionProxyIT {
     @Inject
     private EmbeddedSolrCollectionProxyFactory embeddedSolrCollectionProxyFactory;
 
-    private CollectionProxy subject;
+    private AnalyticsCollectionProxy subject;
 
     @Before
     public void setUp() {
@@ -90,30 +96,34 @@ public class AnalyticsCollectionProxyIT {
 
         assertThat(updateResponse.getStatus()).isEqualTo(0);
 
-        assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(2);
-        assertThat(subject.query(new SolrQuery("bioentity_identifier:ENSG00000150991")).getResults()).hasSize(1);
-        assertThat(subject.query(new SolrQuery("keyword_go:\"GO:1902036\"")).getResults()).hasSize(1);
-        assertThat(subject.query(new SolrQuery("experiment_type:*DIFFERENTIAL")).getResults()).hasSize(1);
-        assertThat(subject.query(new SolrQuery("foobar")).getResults()).hasSize(0);
+        assertThat(subject.query(new SolrQueryBuilder<>()).getResults()).hasSize(2);
+        assertThat(
+                subject.query(new SolrQueryBuilder<AnalyticsCollectionProxy>().addQueryFieldByTerm(
+                        BIOENTITY_IDENTIFIER, "ENSG00000150991"))
+                        .getResults())
+                .hasSize(1);
+
+        assertThat(
+                subject.query(new SolrQueryBuilder<AnalyticsCollectionProxy>().addQueryFieldByTerm(
+                        asAnalyticsSchemaField(GO), "ENSG00000150991"))
+                        .getResults())
+                .hasSize(1);
+
+        assertThat(
+                subject.query(new SolrQueryBuilder<AnalyticsCollectionProxy>().addQueryFieldByTerm(
+                        EXPERIMENT_TYPE, "microarray_1colour_mrna_differential"))
+                        .getResults())
+                .hasSize(1);
     }
 
     @Test
     public void deleteAll() {
         subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT, MICROARRAY_DIFFERENTIAL_INPUT_DOCUMENT));
-        assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(2);
+        assertThat(subject.query(new SolrQueryBuilder<>()).getResults()).hasSize(2);
 
         UpdateResponse updateResponse = subject.deleteAllAndCommit();
         assertThat(updateResponse.getStatus()).isEqualTo(0);
-        assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(0);
-    }
-
-    @Test
-    public void hasNoDefaultSearchHandler() {
-        RNASEQ_BASELINE_INPUT_DOCUMENT.values().stream()
-                .flatMap(fieldValue -> fieldValue.getValues().stream())
-                .forEach(value ->
-                        assertThat(subject.query(new SolrQuery(escapeQueryChars(value.toString()))).getResults())
-                                .hasSize(0));
+        assertThat(subject.query(new SolrQueryBuilder<>()).getResults()).hasSize(0);
     }
 
     @Test
@@ -123,7 +133,7 @@ public class AnalyticsCollectionProxyIT {
         UpdateResponse updateResponse = subject.addAndCommit(ImmutableSet.of(RNASEQ_BASELINE_INPUT_DOCUMENT));
 
         assertThat(updateResponse.getStatus()).isEqualTo(0);
-        assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(1);
+        assertThat(subject.query(new SolrQueryBuilder<>()).getResults()).hasSize(1);
     }
 
     @Test
@@ -161,9 +171,9 @@ public class AnalyticsCollectionProxyIT {
                 subject.addAndCommit(ImmutableSet.of(modifiedDocument));
 
                 if (signatureFieldNames.contains(fieldName)) {
-                    assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(2);
+                    assertThat(subject.query(new SolrQueryBuilder<>()).getResults()).hasSize(2);
                 } else {
-                    assertThat(subject.query(new SolrQuery("*:*")).getResults()).hasSize(1);
+                    assertThat(subject.query(new SolrQueryBuilder<>()).getResults()).hasSize(1);
                 }
             }
         }

@@ -49,8 +49,8 @@ public class BioEntityPropertyDao {
 
         if (propertiesByName.isEmpty()) {
             SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
-            solrQueryBuilder.queryField(BIOENTITY_IDENTIFIER_SEARCH, identifier);
-            if (analyticsCollectionProxy.queryWithBuilder(solrQueryBuilder).getResults().isEmpty()) {
+            solrQueryBuilder.addQueryFieldByTerm(BIOENTITY_IDENTIFIER_SEARCH, identifier);
+            if (analyticsCollectionProxy.query(solrQueryBuilder).getResults().isEmpty()) {
                 throw new BioentityNotFoundException("Gene/protein <em>" + identifier + "</em> not found.");
             } else {
                 // We can do this because propertiesByName is a HashMap; arguably we should create a copy of the map if

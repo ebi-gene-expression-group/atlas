@@ -9,7 +9,6 @@ import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.params.SolrParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +28,19 @@ public abstract class CollectionProxy {
     protected CollectionProxy(SolrClient solrClient, String nameOrAlias) {
         this.solrClient = solrClient;
         this.nameOrAlias = nameOrAlias;
+    }
+
+    protected QueryResponse query(SolrQuery solrQuery) {
+        try {
+            // Change maybe to: return new QueryRequest()
+            return solrClient.query(nameOrAlias, solrQuery, SolrRequest.METHOD.POST);
+        } catch (IOException e) {
+            logException(e);
+            throw new UncheckedIOException(e);
+        } catch (SolrServerException e) {
+            logException(e);
+            throw new UncheckedIOException(new IOException(e));
+        }
     }
 
     protected FieldStatsInfo fieldStats(String fieldName, SolrQuery solrQuery) {
@@ -71,7 +83,7 @@ public abstract class CollectionProxy {
         }
     }
 
-    protected void logException(Exception e) {
+    private void logException(Exception e) {
         LOGGER.error(
                 "Problem connecting to SolrCloud {} with collection {}, full stack trace follows:\n\t{}",
                 solrClient.getClass().getSimpleName(),

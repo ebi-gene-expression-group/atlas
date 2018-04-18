@@ -39,7 +39,7 @@ public class BaselineTupleStreamerFactory {
                         EXPRESSION_LEVEL;
 
         SolrQuery solrQuery =
-                ExperimentRequestPreferencesSolrQueryFactory.createSolrQueryForBaselineExperiment(
+                ExperimentRequestPreferencesSolrQueryFactory.createSolrQuery(
                         experimentAccession, preferences);
 
         FacetStreamBuilder<AnalyticsCollectionProxy> facetStreamBuilder =
@@ -68,7 +68,7 @@ public class BaselineTupleStreamerFactory {
                         EXPRESSION_LEVEL;
 
         SolrQuery solrQuery =
-                ExperimentRequestPreferencesSolrQueryFactory.createSolrQueryForBaselineExperiment(
+                ExperimentRequestPreferencesSolrQueryFactory.createSolrQuery(
                         experimentAccession, preferences);
 
         FacetStreamBuilder<AnalyticsCollectionProxy> facetStreamBuilder =
