@@ -5,7 +5,7 @@ import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.trader.cache.loader.SingleCellRnaSeqBaselineExperimentFactory;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 public class ScxaExperimentTrader extends ExperimentTrader {
-    private final LoadingCache<String, BaselineExperiment> baselineExperimentsCache;
+    private final LoadingCache<String, SingleCellBaselineExperiment> baselineExperimentsCache;
 
     @Inject
     public ScxaExperimentTrader(ScxaExperimentDao experimentDao,

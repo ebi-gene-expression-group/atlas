@@ -33,7 +33,7 @@ public class SingleCellBaselineExperimentBuilder {
     private Set<String> pubMedIds;
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
-    private List<AssayGroup> assayGroups;
+    private List<Cell> cells;
     private ExperimentDisplayDefaults experimentDisplayDefaults;
     private ExperimentType experimentType;
     private List<String> alternativeViews = Collections.emptyList();
@@ -84,8 +84,8 @@ public class SingleCellBaselineExperimentBuilder {
         return this;
     }
 
-    public SingleCellBaselineExperimentBuilder withAssayGroups(List<AssayGroup> assayGroups) {
-        this.assayGroups = assayGroups;
+    public SingleCellBaselineExperimentBuilder withCells(List<Cell> cells) {
+        this.cells = cells;
         return this;
     }
 
@@ -112,13 +112,13 @@ public class SingleCellBaselineExperimentBuilder {
 
 
 
-    public BaselineExperiment create() {
+    public SingleCellBaselineExperiment create() {
         validate();
 
         return new
-                BaselineExperiment(experimentType, experimentAccession, lastUpdate, description,
-                displayName, disclaimer, species, pubMedIds, experimentDesign, assayGroups, dataProviderURL,
-                dataProviderDescription, alternativeViews, alternativeViewDescriptions , experimentDisplayDefaults);
+                SingleCellBaselineExperiment(experimentType, experimentAccession, lastUpdate, displayName,
+                description, disclaimer, species, pubMedIds, experimentDesign, dataProviderURL,
+                dataProviderDescription, alternativeViews, alternativeViewDescriptions, cells, experimentDisplayDefaults);
     }
 
     private void validate() {

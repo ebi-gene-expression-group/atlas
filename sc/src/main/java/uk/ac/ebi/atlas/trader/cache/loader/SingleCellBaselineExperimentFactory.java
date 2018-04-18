@@ -4,12 +4,13 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperimentBuilder;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import java.util.ArrayList;
 
-public abstract class SingleCellBaselineExperimentFactory implements ExperimentFactory<BaselineExperiment> {
+public abstract class SingleCellBaselineExperimentFactory implements ExperimentFactory<SingleCellBaselineExperiment> {
 
     private final ExperimentType experimentType;
     private final SpeciesFactory speciesFactory;
@@ -20,7 +21,7 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
     }
 
     @Override
-    public BaselineExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
+    public SingleCellBaselineExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
                                      ExperimentDesign experimentDesign) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
@@ -32,7 +33,7 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
                 .withPubMedIds(experimentDTO.getPubmedIds())
-                .withAssayGroups(new ArrayList<>())
+                .withCells(new ArrayList<>())
                 .withExperimentDesign(experimentDesign)
                 .withDataProviderDescription(new ArrayList<>())
                 .create();
