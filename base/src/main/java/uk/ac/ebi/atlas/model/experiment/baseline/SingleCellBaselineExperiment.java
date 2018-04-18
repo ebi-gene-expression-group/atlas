@@ -14,7 +14,6 @@ import java.util.List;
 
 public class SingleCellBaselineExperiment extends Experiment<Cell> {
 
-
     public SingleCellBaselineExperiment(ExperimentType type,
                                         String accession,
                                         Date lastUpdate,
@@ -45,4 +44,5 @@ public class SingleCellBaselineExperiment extends Experiment<Cell> {
     public JsonArray groupingsForHeatmap() {
         return null;
     }
+
 }

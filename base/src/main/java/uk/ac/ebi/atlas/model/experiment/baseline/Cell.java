@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 
@@ -14,7 +15,7 @@ public class Cell extends DescribesDataColumns {
 
     @Override
     public Set<String> assaysAnalyzedForThisDataColumn() {
-        return null;
+        return ImmutableSet.of(id);
     }
 
     @Override
