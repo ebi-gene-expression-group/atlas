@@ -2,9 +2,7 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -104,14 +102,6 @@ public class SingleCellBaselineExperimentBuilder {
         return this;
     }
 
-//    public SingleCellBaselineExperimentBuilder withAlternativeViews(Pair<List<String>, List<String>> p) {
-//        this.alternativeViews = p.getLeft();
-//        this.alternativeViewDescriptions = p.getRight();
-//        return this;
-//    }
-
-
-
     public SingleCellBaselineExperiment create() {
         validate();
 
@@ -124,9 +114,9 @@ public class SingleCellBaselineExperimentBuilder {
     private void validate() {
         checkNotNull(experimentType);
         checkState(experimentType.isBaseline());
-//        checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
+        checkNotNull(cells, "Please provide a non empty set of Cell objects");
         checkNotNull(species, "Please provide a species name");
-//        checkState(CollectionUtils.isNotEmpty(assayGroups), "Please provide a non empty set of AssayGroup objects");
+        checkState(CollectionUtils.isNotEmpty(cells), "Please provide a non empty set of Cell objects");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
         checkState(pubMedIds != null, "Please provide a pubMedIds object");
 
