@@ -80,7 +80,7 @@ public class SolrInputDocumentInputStreamTest {
         assertThat(result.get("identifier_search").toString(), containsString("pancake"));
 
         //we do not index everything
-        assertThat(result.keySet(), not(hasItem(asAnalyticsSchemaField(ORTHOLOG).name())));
+        assertThat(result.keySet(), not(hasItem("keyword_ortholog")));
 
         assertThat(subject.readNext(), is(nullValue()));
     }
