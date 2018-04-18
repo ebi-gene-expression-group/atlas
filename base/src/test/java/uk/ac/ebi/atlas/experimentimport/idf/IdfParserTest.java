@@ -9,9 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
-import uk.ac.ebi.atlas.model.Publication;
 
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
@@ -124,12 +122,5 @@ public class IdfParserTest {
         assertThat(idfParserOutput.getTitle(), isEmptyString());
         assertThat(idfParserOutput.getPublications().isEmpty(), is(true));
         assertThat(idfParserOutput.getExpectedClusters(), is(0));
-    }
-
-    @Test(expected = IdfParser.IdfParserException.class)
-    public void parsePubmedIdsWithNoPublicationTitles() {
-        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[2]));
-
-        subject.parse(E_MTAB_513);
     }
 }

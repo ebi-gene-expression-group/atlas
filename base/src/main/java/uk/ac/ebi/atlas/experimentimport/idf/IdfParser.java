@@ -74,7 +74,7 @@ public class IdfParser {
 
         }
     }
-    
+
     // For each publication title, retrieves corresponding PubMed ID and DOI (if they exist) and creates a list of Publication objects
     private List<Publication> createListOfPublications(List<String> pubmedIds, List<String> publicationTitles, List<String> publicationDois) {
         List<Publication> publications = new ArrayList<>();
