@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -104,7 +105,7 @@ public class ExperimentCrudTest {
 
         given(idfParserMock.parse(anyString()))
                 .willReturn(idfParserOutputMock);
-        given(idfParserOutputMock.getPublications()).willReturn(new HashMap<>());
+        given(idfParserOutputMock.getPublications()).willReturn(Collections.emptyList());
         given(idfParserOutputMock.getTitle()).willReturn("");
 
         ExperimentCrudFactory experimentCrudFactory =

@@ -82,7 +82,8 @@ public class ExperimentCrud {
                         .getSpeciesForAssays(
                                 experimentConfiguration.getAssayGroups().stream()
                                         .flatMap(assayGroup -> assayGroup.assaysAnalyzedForThisDataColumn().stream())
-                                        .collect(Collectors.toSet())), isPrivate);
+                                        .collect(Collectors.toSet())),
+                isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);
@@ -111,11 +112,9 @@ public class ExperimentCrud {
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
         ExperimentDTO experimentDTO = ExperimentDTO.create(
-                condensedSdrfParserOutput.getExperimentAccession(),
-                ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
+                condensedSdrfParserOutput,
+                idfParserOutput,
                 condensedSdrfParserOutput.getSpecies(),
-                idfParserOutput.getPublications().keySet(),
-                idfParserOutput.getTitle(),
                 isPrivate
         );
 
