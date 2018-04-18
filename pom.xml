@@ -36,6 +36,8 @@
         <junit.jupiter.version>5.2.0-M1</junit.jupiter.version>
         <junit.vintage.version>5.2.0-M1</junit.vintage.version>
         <junit.platform.version>1.2.0-M1</junit.platform.version>
+
+        <surefire.failsafe.version>2.21.0</surefire.failsafe.version>
     </properties>
 
     <build>
@@ -182,7 +184,7 @@
 
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.21.0</version>
+                <version>${surefire.failsafe.version}</version>
                 <configuration>
                     <!-- Sets the VM argument line used when unit tests are run. -->
                     <argLine>${surefireArgLine}</argLine>
@@ -198,7 +200,7 @@
 
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.21.0</version>
+                <version>${surefire.failsafe.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -210,6 +212,16 @@
                 <configuration>
                     <!-- Sets the VM argument line used when integration tests are run. -->
                     <argLine>${failsafeArgLine}</argLine>
+                    <systemProperties>
+                        <property>
+                            <name>selenium.test.host</name>
+                            <value>lime</value>
+                        </property>
+                        <property>
+                            <name>selenium.test.portnumber</name>
+                            <value>14092</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
                 <dependencies>
                     <dependency>

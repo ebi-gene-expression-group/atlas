@@ -48,36 +48,6 @@
         </testResources>
 
         <plugins>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.19.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <systemProperties>
-                        <property>
-                            <name>selenium.test.host</name>
-                            <value>lime</value>
-                        </property>
-                        <property>
-                            <name>selenium.test.portnumber</name>
-                            <value>14092</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
-            </plugin>
-
             <!-- Before running ITs, use running Tomcat to mount gxa nd then we can run EITs against
                  selenium.test.host:selenium.test.portnumber, usually lime:14092, see RestAssuredFixture or URLBuilder;
                  as noted below, if EITs depend on Spring’s MockMvc this section could be removed. -->
