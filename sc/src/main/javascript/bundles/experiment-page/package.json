@@ -21,7 +21,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-table": "^6.7.6",
-    "sc-atlas-bioentity-information": "^1.2.0",
+    "sc-atlas-bioentity-information": "^1.2.1",
     "urijs": "^1.19.1",
     "lodash": "^4.17.5",
     "pluralize": "^7.0.0"

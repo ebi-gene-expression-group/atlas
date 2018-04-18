@@ -14,11 +14,10 @@ const aggregateText = (name, vals) => {
   )
 }
 
-const Table = ({
-                            data,
-                            headers,
-                            options={}
-                          }) => (
+const ExperimentDesignTable = ({
+                                    data,
+                                    headers
+                                  }) => (
   <ReactTable
     columns={
       headers.map((headerGroup,ix)=> (
@@ -40,23 +39,7 @@ const Table = ({
       fontSize: 'small'
     }}
     data={data}
-    {...options}
   />
-)
-
-const ExperimentDesignTable = ({
-                                    data,
-                                    headers
-                                  }) => (
-  Table({
-    data:
-      data
-        .map(({properties, values}) => ({
-          values: [[properties.analysed? 'Yes' : 'No']].concat(values)
-        })),
-    headers:
-      [{name:"", values: ['Analysed']}].concat(headers)
-  })
 )
 
 export default ExperimentDesignTable
