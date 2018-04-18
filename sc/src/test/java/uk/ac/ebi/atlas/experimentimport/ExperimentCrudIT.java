@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +13,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentimport.analytics.ScxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -44,9 +42,6 @@ public class ExperimentCrudIT {
     private ScxaAnalyticsLoaderFactory analyticsLoaderFactory;
 
     @Inject
-    private DataFileHub dataFileHub;
-
-    @Inject
     private ScxaExperimentDao experimentDao;
 
     @Inject
@@ -55,7 +50,7 @@ public class ExperimentCrudIT {
     private ExperimentCrud subject;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
     }
@@ -82,7 +77,7 @@ public class ExperimentCrudIT {
     }
 
     @Test
-    public void importReloadDeleteExperiment() throws IOException, SolrServerException {
+    public void importReloadDeleteExperiment() throws IOException {
         testImportNewImportExistingAndDelete(
                 SINGLE_CELL_ACCESSION, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
         verify(experimentCheckerSpy, times(2))
@@ -90,20 +85,20 @@ public class ExperimentCrudIT {
     }
 
     @Test
-    public void findAllExperimentsFindsPrivateExperiemtns() throws Exception {
-        subject.importExperiment(SINGLE_CELL_ACCESSION, true);
+    public void findAllExperimentsFindsPrivateExperiments() throws Exception {
+        subject.importSingleCellExperiment(SINGLE_CELL_ACCESSION, true);
         assertThat(
                 subject.findAllExperiments(),
                 hasItem(hasProperty("experimentAccession", is(SINGLE_CELL_ACCESSION))));
     }
 
-    public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {
-        importNewExperimentInsertsDB(experimentAccession, experimentType);
+    public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException {
+        importNewExperimentInsertsDB(experimentAccession);
         importExistingExperimentUpdatesDB(experimentAccession, experimentType);
         deleteExperimentDeletesDB(experimentAccession);
     }
 
-    public void importNewExperimentInsertsDB(String experimentAccession, ExperimentType experimentType) throws IOException {
+    public void importNewExperimentInsertsDB(String experimentAccession) throws IOException {
         assumeThat(experimentCount(experimentAccession), is(0));
         assumeThat(expressionsCount(experimentAccession), is(0));
 
