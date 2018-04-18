@@ -20389,8 +20389,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -20416,12 +20414,40 @@ var aggregateText = function aggregateText(name, vals) {
   return xs.length === 1 || xs.length < 5 && xs.join(', ').length < 30 ? xs.join(', ') : (0, _pluralize2.default)(name.toLowerCase(), xs.length, true);
 };
 
-var Table = function Table(_ref) {
+// const Table = ({
+//                             data,
+//                             headers,
+//                             options={}
+//                           }) => (
+//   <ReactTable
+//     columns={
+//       headers.map((headerGroup,ix)=> (
+//         {
+//           Header: headerGroup.name,
+//           columns:
+//             headerGroup.values.map((header, jx) => ({
+//               aggregate: curry(aggregateText, 2)(header),
+//               Header: header,
+//               id: ix*1000 +jx +1,
+//               accessor: r => r.values[ix][jx],
+//               width: 95
+//             }))
+//         }
+//       ))
+//     }
+//     className='-striped'
+//     style={{
+//       fontSize: 'small'
+//     }}
+//     data={data}
+//     {...options}
+//   />
+// )
+
+var ExperimentDesignTable = function ExperimentDesignTable(_ref) {
   var data = _ref.data,
-      headers = _ref.headers,
-      _ref$options = _ref.options,
-      options = _ref$options === undefined ? {} : _ref$options;
-  return _react2.default.createElement(_reactTable2.default, _extends({
+      headers = _ref.headers;
+  return _react2.default.createElement(_reactTable2.default, {
     columns: headers.map(function (headerGroup, ix) {
       return {
         Header: headerGroup.name,
@@ -20443,21 +20469,6 @@ var Table = function Table(_ref) {
       fontSize: 'small'
     },
     data: data
-  }, options));
-};
-
-var ExperimentDesignTable = function ExperimentDesignTable(_ref2) {
-  var data = _ref2.data,
-      headers = _ref2.headers;
-  return Table({
-    data: data.map(function (_ref3) {
-      var properties = _ref3.properties,
-          values = _ref3.values;
-      return {
-        values: [[properties.analysed ? 'Yes' : 'No']].concat(values)
-      };
-    }),
-    headers: [{ name: "", values: ['Analysed'] }].concat(headers)
   });
 };
 
