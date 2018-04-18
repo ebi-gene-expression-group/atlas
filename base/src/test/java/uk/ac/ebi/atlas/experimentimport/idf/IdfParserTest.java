@@ -9,7 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.model.Publication;
 
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
@@ -68,7 +70,7 @@ public class IdfParserTest {
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
         assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_AE_DISPLAY_NAME));
-        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getPubmedIds(), is(E_MTAB_513_PUBMED_IDS));
         assertThat(idfParserOutput.getExpectedClusters(), is(NumberUtils.toInt(E_MTAB_513_EXPECTED_CLUSTERS)));
     }
 
@@ -79,7 +81,7 @@ public class IdfParserTest {
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
         assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_AE_DISPLAY_NAME));
-        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getPubmedIds(), is(E_MTAB_513_PUBMED_IDS));
         assertThat(idfParserOutput.getExpectedClusters(), is(NumberUtils.toInt(E_MTAB_513_EXPECTED_CLUSTERS)));
     }
 
@@ -100,7 +102,7 @@ public class IdfParserTest {
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
         assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_TITLE));
-        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getPubmedIds(), is(E_MTAB_513_PUBMED_IDS));
     }
 
     @Test
@@ -110,7 +112,7 @@ public class IdfParserTest {
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
         assertThat(idfParserOutput.getTitle(), isEmptyString());
-        assertThat(idfParserOutput.getPublications().keySet(), is(E_MTAB_513_PUBMED_IDS));
+        assertThat(idfParserOutput.getPubmedIds(), is(E_MTAB_513_PUBMED_IDS));
     }
 
     @Test
