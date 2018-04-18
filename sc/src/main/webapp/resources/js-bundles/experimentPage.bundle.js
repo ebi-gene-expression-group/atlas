@@ -3711,7 +3711,9 @@ function removeStyleElement (style) {
 function createStyleElement (options) {
 	var style = document.createElement("style");
 
-	options.attrs.type = "text/css";
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
 
 	addAttrs(style, options.attrs);
 	insertStyleElement(options, style);
@@ -3722,7 +3724,9 @@ function createStyleElement (options) {
 function createLinkElement (options) {
 	var link = document.createElement("link");
 
-	options.attrs.type = "text/css";
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
 	options.attrs.rel = "stylesheet";
 
 	addAttrs(link, options.attrs);
@@ -8222,7 +8226,9 @@ function removeStyleElement (style) {
 function createStyleElement (options) {
 	var style = document.createElement("style");
 
-	options.attrs.type = "text/css";
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
 
 	addAttrs(style, options.attrs);
 	insertStyleElement(options, style);
@@ -8233,7 +8239,9 @@ function createStyleElement (options) {
 function createLinkElement (options) {
 	var link = document.createElement("link");
 
-	options.attrs.type = "text/css";
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
 	options.attrs.rel = "stylesheet";
 
 	addAttrs(link, options.attrs);
@@ -20413,36 +20421,6 @@ var aggregateText = function aggregateText(name, vals) {
   var xs = (0, _lodash.uniq)(vals);
   return xs.length === 1 || xs.length < 5 && xs.join(', ').length < 30 ? xs.join(', ') : (0, _pluralize2.default)(name.toLowerCase(), xs.length, true);
 };
-
-// const Table = ({
-//                             data,
-//                             headers,
-//                             options={}
-//                           }) => (
-//   <ReactTable
-//     columns={
-//       headers.map((headerGroup,ix)=> (
-//         {
-//           Header: headerGroup.name,
-//           columns:
-//             headerGroup.values.map((header, jx) => ({
-//               aggregate: curry(aggregateText, 2)(header),
-//               Header: header,
-//               id: ix*1000 +jx +1,
-//               accessor: r => r.values[ix][jx],
-//               width: 95
-//             }))
-//         }
-//       ))
-//     }
-//     className='-striped'
-//     style={{
-//       fontSize: 'small'
-//     }}
-//     data={data}
-//     {...options}
-//   />
-// )
 
 var ExperimentDesignTable = function ExperimentDesignTable(_ref) {
   var data = _ref.data,
