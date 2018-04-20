@@ -70,22 +70,32 @@ public class ExperimentPageContentServiceIT {
     public void getValidDownloadsJson() {
         JsonArray result = this.subject.getDownloadsAsJson(EXPERIMENT_ACCESSION, "");
 
-        assertThat(result.size(), is(4));
+        assertThat(result.size(), is(2));
 
         for(JsonElement download : result) {
             JsonObject downloadObject = download.getAsJsonObject();
 
-            assertThat(downloadObject.has("url"), is(true));
-            assertThat(downloadObject.get("url").getAsString(), is(not(isEmptyString())));
+            assertThat(downloadObject.get("title").getAsString(), is(not(isEmptyString())));
 
-            assertThat(downloadObject.has("type"), is(true));
-            assertThat(downloadObject.get("type").getAsString(), is(not(isEmptyString())));
+            JsonArray downloadFiles = downloadObject.get("files").getAsJsonArray();
 
-            assertThat(downloadObject.has("description"), is(true));
-            assertThat(downloadObject.get("description").getAsString(), is(not(isEmptyString())));
+            assertThat(downloadFiles.size(), is(greaterThan(0)));
 
-            assertThat(downloadObject.has("isDownload"), is(true));
-            assertThat(downloadObject.get("isDownload").getAsBoolean(), is(true));
+            for(JsonElement file : downloadFiles) {
+                JsonObject fileObject = file.getAsJsonObject();
+
+                assertThat(fileObject.has("url"), is(true));
+                assertThat(fileObject.get("url").getAsString(), is(not(isEmptyString())));
+
+                assertThat(fileObject.has("type"), is(true));
+                assertThat(fileObject.get("type").getAsString(), is(not(isEmptyString())));
+
+                assertThat(fileObject.has("description"), is(true));
+                assertThat(fileObject.get("description").getAsString(), is(not(isEmptyString())));
+
+                assertThat(fileObject.has("isDownload"), is(true));
+                assertThat(fileObject.get("isDownload").getAsBoolean(), is(true));
+            }
         }
     }
 
