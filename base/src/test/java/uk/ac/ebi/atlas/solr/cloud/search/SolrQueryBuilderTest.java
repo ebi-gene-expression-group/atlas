@@ -28,7 +28,7 @@ public class SolrQueryBuilderTest {
 
     @Test
     void byDefaultQueryAllAndRetrieveAllFields() {
-        SolrQuery solrQuery = new SolrQueryBuilder().build();
+        SolrQuery solrQuery = new SolrQueryBuilder<>().build();
 
         assertThat(solrQuery.getFilterQueries()).isEmpty();
         assertThat(solrQuery.getQuery()).isEqualTo("*:*");
@@ -38,7 +38,7 @@ public class SolrQueryBuilderTest {
     @Test
     void multipleQueryClausesAreJoinedWithAnd() {
         SolrQuery solrQuery =
-                new SolrQueryBuilder()
+                new SolrQueryBuilder<>()
                         .addQueryFieldByTerm(FIELD1, "value1")
                         .addQueryFieldByTerm(FIELD2, "value21", "value22")
                         .build();
@@ -48,13 +48,13 @@ public class SolrQueryBuilderTest {
 
     @Test
     void setsOrVarargs() {
-        assertThat(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1).build().getQuery())
+        assertThat(new SolrQueryBuilder<>().addQueryFieldByTerm(FIELD1).build().getQuery())
                 .isEqualTo(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, emptySet()).build().getQuery());
 
-        assertThat(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, "value1").build().getQuery())
+        assertThat(new SolrQueryBuilder<>().addQueryFieldByTerm(FIELD1, "value1").build().getQuery())
                 .isEqualTo(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, singleton("value1")).build().getQuery());
 
-        assertThat(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, "value1", "value2").build().getQuery())
+        assertThat(new SolrQueryBuilder<>().addQueryFieldByTerm(FIELD1, "value1", "value2").build().getQuery())
                 .isEqualTo(
                         new SolrQueryBuilder()
                                 .addQueryFieldByTerm(FIELD1, ImmutableSet.of("value1", "value2")).build().getQuery());
@@ -63,7 +63,7 @@ public class SolrQueryBuilderTest {
     @Test
     void testFilterQueries() {
         SolrQuery solrQuery =
-                new SolrQueryBuilder()
+                new SolrQueryBuilder<>()
                         .addFilterFieldByTerm(FIELD1, "value1")
                         .addFilterFieldByRangeMin(FIELD2, 0.0)
                         .addFilterFieldByRangeMax(FIELD2, 0.0)
@@ -77,26 +77,26 @@ public class SolrQueryBuilderTest {
 
     @Test
     void testSetFieldList() {
-        assertThat(new SolrQueryBuilder().setFieldList(FIELD1, FIELD2).build().getFields().split(","))
+        assertThat(new SolrQueryBuilder<>().setFieldList(FIELD1, FIELD2).build().getFields().split(","))
                 .containsExactlyInAnyOrder(FIELD1.name(), FIELD2.name());
     }
 
     @Test
     @DisplayName("Default number of rows is “big enough”, whatever that means")
     void defaultNumberOfRows() {
-        assertThat(new SolrQueryBuilder().build().getRows()).isGreaterThanOrEqualTo(1000000);
+        assertThat(new SolrQueryBuilder<>().build().getRows()).isGreaterThanOrEqualTo(1000000);
     }
 
     @Test
     void testSetRows() {
         int randomRows = ThreadLocalRandom.current().nextInt(1, SOLR_MAX_ROWS + 1);
-        assertThat(new SolrQueryBuilder().setRows(randomRows).build().getRows()).isEqualTo(randomRows);
+        assertThat(new SolrQueryBuilder<>().setRows(randomRows).build().getRows()).isEqualTo(randomRows);
     }
 
     @Test
     void searchValuesAreDeduped() {
         SolrQuery solrQuery =
-                new SolrQueryBuilder()
+                new SolrQueryBuilder<>()
                         .addQueryFieldByTerm(FIELD1, "value1", "value2", "value2", "value3", "value3", "value3")
                         .build();
 

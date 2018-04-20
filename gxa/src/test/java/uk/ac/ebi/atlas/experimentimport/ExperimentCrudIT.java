@@ -60,7 +60,7 @@ public class ExperimentCrudIT {
     private ExperimentCrud subject;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
     }
@@ -126,7 +126,7 @@ public class ExperimentCrudIT {
     }
 
     @Test
-    public void findAllExperimentsFindsPrivateExperiemtns() throws Exception {
+    public void findAllExperimentsFindsPrivateExperiments() throws Exception {
         subject.importExperiment(RNASEQ_BASELINE_ACCESSION, true);
         assertThat(
                 subject.findAllExperiments(),

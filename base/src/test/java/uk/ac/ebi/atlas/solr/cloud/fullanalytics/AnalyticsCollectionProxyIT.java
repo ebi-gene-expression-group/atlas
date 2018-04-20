@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import com.google.common.collect.ImmutableSet;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Before;
@@ -11,18 +10,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
-import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.EmbeddedSolrCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
 
 import java.util.Collection;
 
-import static org.apache.solr.client.solrj.util.ClientUtils.escapeQueryChars;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSGENE;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_TYPE;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
@@ -105,13 +101,13 @@ public class AnalyticsCollectionProxyIT {
 
         assertThat(
                 subject.query(new SolrQueryBuilder<AnalyticsCollectionProxy>().addQueryFieldByTerm(
-                        asAnalyticsSchemaField(GO), "ENSG00000150991"))
+                        asAnalyticsSchemaField(ENSGENE), "ENSG00000150991"))
                         .getResults())
                 .hasSize(1);
 
         assertThat(
                 subject.query(new SolrQueryBuilder<AnalyticsCollectionProxy>().addQueryFieldByTerm(
-                        EXPERIMENT_TYPE, "microarray_1colour_mrna_differential"))
+                        EXPERIMENT_TYPE, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.name()))
                         .getResults())
                 .hasSize(1);
     }

@@ -106,7 +106,7 @@ public class SolrInputDocumentInputStreamIT {
 
         for(SolrInputDocument solrInputDocument: results) {
             String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
-            assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
+            assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier.toLowerCase()));
          }
 
     }
