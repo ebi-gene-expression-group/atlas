@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +11,8 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -20,13 +21,18 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentCrudTest {
@@ -42,6 +48,12 @@ public class ExperimentCrudTest {
 
     @Mock
     private CondensedSdrfParser condensedSdrfParserMock;
+
+    @Mock
+    private IdfParser idfParserMock;
+
+    @Mock
+    private IdfParserOutput idfParserOutputMock;
 
     @Mock
     private CondensedSdrfParserOutput condensedSdrfParserOutputMock;
@@ -93,12 +105,15 @@ public class ExperimentCrudTest {
 
         given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
-        given(condensedSdrfParserOutputMock.getPubmedIds()).willReturn(new ImmutableSet.Builder<String>().build());
-        given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
+
+        given(idfParserMock.parse(anyString()))
+                .willReturn(idfParserOutputMock);
+        given(idfParserOutputMock.getPublications()).willReturn(Collections.emptyList());
+        given(idfParserOutputMock.getTitle()).willReturn("");
 
         ExperimentCrudFactory experimentCrudFactory =
                 new ExperimentCrudFactory(
-                        condensedSdrfParserMock, experimentDesignFileWriterService, configurationTrader);
+                        condensedSdrfParserMock, idfParserMock, experimentDesignFileWriterService, configurationTrader);
 
         subject = experimentCrudFactory.create(experimentDaoMock, experimentChecker, analyticsLoaderFactoryMock);
     }

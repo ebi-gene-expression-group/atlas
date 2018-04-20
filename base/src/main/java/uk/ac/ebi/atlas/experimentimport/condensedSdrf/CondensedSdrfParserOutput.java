@@ -1,35 +1,25 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
-import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.species.Species;
 
 public class CondensedSdrfParserOutput {
 
     private String experimentAccession;
     private ExperimentType experimentType;
-    private String title;
-    private ImmutableSet<String> pubmedIds;
     private ExperimentDesign experimentDesign;
+    private String species;
 
-    CondensedSdrfParserOutput(String experimentAccession, ExperimentType experimentType, String title, ImmutableSet<String> pubmedIds, ExperimentDesign experimentDesign) {
+    CondensedSdrfParserOutput(String experimentAccession, ExperimentType experimentType, ExperimentDesign experimentDesign, String species) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
-        this.title = title;
-        this.pubmedIds = pubmedIds;
         this.experimentDesign = experimentDesign;
+        this.species = species;
     }
 
     public ExperimentDesign getExperimentDesign() {
         return experimentDesign;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public ImmutableSet<String> getPubmedIds() {
-        return pubmedIds;
     }
 
     public String getExperimentAccession() {
@@ -39,4 +29,9 @@ public class CondensedSdrfParserOutput {
     public ExperimentType getExperimentType() {
         return experimentType;
     }
+
+    public String getSpecies() {
+        return species;
+    }
+
 }

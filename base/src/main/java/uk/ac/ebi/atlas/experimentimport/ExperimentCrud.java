@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,9 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -42,12 +43,14 @@ public class ExperimentCrud {
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
+    private final IdfParser idfParser;
     private final ConfigurationTrader configurationTrader;
 
     public ExperimentCrud(ExperimentDao experimentDao,
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
                           CondensedSdrfParser condensedSdrfParser,
+                          IdfParser idfParser,
                           ExperimentDesignFileWriterService experimentDesignFileWriterService,
                           ConfigurationTrader configurationTrader) {
 
@@ -55,6 +58,7 @@ public class ExperimentCrud {
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.condensedSdrfParser = condensedSdrfParser;
+        this.idfParser = idfParser;
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.configurationTrader = configurationTrader;
     }
@@ -66,16 +70,20 @@ public class ExperimentCrud {
         ExperimentConfiguration experimentConfiguration = files.getLeft();
         CondensedSdrfParserOutput condensedSdrfParserOutput = files.getRight();
 
+        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
+
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
 
         ExperimentDTO experimentDTO = ExperimentDTO.create(
                 condensedSdrfParserOutput,
+                idfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
                         .getSpeciesForAssays(
                                 experimentConfiguration.getAssayGroups().stream()
                                         .flatMap(assayGroup -> assayGroup.assaysAnalyzedForThisDataColumn().stream())
-                                        .collect(Collectors.toSet())), isPrivate);
+                                        .collect(Collectors.toSet())),
+                isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);
@@ -101,12 +109,14 @@ public class ExperimentCrud {
         CondensedSdrfParserOutput condensedSdrfParserOutput =
                 condensedSdrfParser.parse(experimentAccession, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
 
+        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
+
         ExperimentDTO experimentDTO = ExperimentDTO.create(
                 condensedSdrfParserOutput,
-                condensedSdrfParserOutput
-                        .getExperimentDesign()
-                        .getSpeciesForAssays(ImmutableSet.of()),
-                isPrivate);
+                idfParserOutput,
+                condensedSdrfParserOutput.getSpecies(),
+                isPrivate
+        );
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);

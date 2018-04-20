@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.Date;
@@ -62,14 +63,15 @@ public class ExperimentDTO {
     }
 
     static ExperimentDTO create(CondensedSdrfParserOutput condensedSdrfParserOutput,
+                                IdfParserOutput idfParserOutput,
                                 String species,
                                 boolean isPrivate) {
         return ExperimentDTO.create(
                 condensedSdrfParserOutput.getExperimentAccession(),
                 condensedSdrfParserOutput.getExperimentType(),
                 species,
-                condensedSdrfParserOutput.getPubmedIds(),
-                condensedSdrfParserOutput.getTitle(),
+                idfParserOutput.getPubmedIds(),
+                idfParserOutput.getTitle(),
                 isPrivate);
     }
 
