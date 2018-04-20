@@ -42259,10 +42259,18 @@ var _LinksToResources2 = _interopRequireDefault(_LinksToResources);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DownloadsRoute = function DownloadsRoute(props) {
+  var downloadLinks = props.data.map(function (download) {
+    return [_react2.default.createElement(
+      'h3',
+      { key: 'title' },
+      download.title
+    ), _react2.default.createElement(_LinksToResources2.default, { key: "links", data: download.files, atlasUrl: props.atlasUrl })];
+  });
+
   return _react2.default.createElement(
     'div',
     { className: "margin-top-large" },
-    _react2.default.createElement(_LinksToResources2.default, { data: props.data, atlasUrl: props.atlasUrl })
+    downloadLinks
   );
 };
 
@@ -42274,9 +42282,12 @@ DownloadsRoute.propTypes = {
   resourcesUrl: _propTypes2.default.string,
   experimentAccession: _propTypes2.default.string.isRequired,
   data: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-    description: _propTypes2.default.string,
-    type: _propTypes2.default.string,
-    url: _propTypes2.default.string
+    title: _propTypes2.default.string,
+    files: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+      description: _propTypes2.default.string,
+      type: _propTypes2.default.string,
+      url: _propTypes2.default.string
+    }))
   }))
 };
 
