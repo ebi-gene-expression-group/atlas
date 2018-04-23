@@ -20,6 +20,6 @@ public class Cell extends DescribesDataColumns {
 
     @Override
     public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
-        return null;
+        return ImmutableSet.of();
     }
 }

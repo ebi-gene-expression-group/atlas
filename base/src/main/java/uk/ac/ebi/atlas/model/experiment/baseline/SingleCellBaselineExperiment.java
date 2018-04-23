@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -37,12 +38,12 @@ public class SingleCellBaselineExperiment extends Experiment<Cell> {
 
     @Override
     protected JsonObject propertiesForAssay(String runOrAssay) {
-        return null;
+        return new JsonObject();
     }
 
     @Override
     public JsonArray groupingsForHeatmap() {
-        return null;
+        return new JsonArray();
     }
 
 }
