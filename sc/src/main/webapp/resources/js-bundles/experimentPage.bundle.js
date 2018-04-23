@@ -13252,7 +13252,7 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       k: Number(search.k) || props.ks[0],
       highlightClusters: search.clusterId ? JSON.parse(search.clusterId) : [],
       perplexities: perplexities,
-      perplexity: Number(search.perplexity) || props.perplexities[0],
+      perplexity: Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)],
       geneId: search.geneId || '',
       height: 600,
       onSelectGeneId: function onSelectGeneId(geneId) {
