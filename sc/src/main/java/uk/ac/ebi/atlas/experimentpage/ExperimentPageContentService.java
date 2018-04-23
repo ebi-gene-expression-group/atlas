@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.download.ExperimentFileType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -62,10 +63,11 @@ public class ExperimentPageContentService {
     public JsonArray getDownloadsAsJson(String experimentAccession, String accessKey) {
         JsonArray result = new JsonArray();
 
-        result.add(getExperimentFileAsJson(ExperimentFileType.SDRF, experimentAccession, accessKey));
-        result.add(getExperimentFileAsJson(ExperimentFileType.CLUSTERING, experimentAccession, accessKey));
-        result.add(getExperimentFileAsJson(ExperimentFileType.EXPERIMENT_DESIGN, experimentAccession, accessKey));
-        result.add(getExperimentFileAsJson(ExperimentFileType.QUANTIFICATION_FILTERED, experimentAccession, accessKey));
+        List<ExperimentFileType> metadataFiles = Arrays.asList(ExperimentFileType.SDRF, ExperimentFileType.IDF, ExperimentFileType.EXPERIMENT_DESIGN);
+        List<ExperimentFileType> resultFiles = Arrays.asList(ExperimentFileType.CLUSTERING, ExperimentFileType.QUANTIFICATION_FILTERED);
+
+        result.add(getDownloadSection("Metadata files", metadataFiles, experimentAccession, accessKey));
+        result.add(getDownloadSection("Result files", resultFiles, experimentAccession, accessKey));
 
         return result;
     }
@@ -92,6 +94,18 @@ public class ExperimentPageContentService {
         result.addProperty("isDownload", true);
 
         return result;
+    }
+
+    private JsonObject getDownloadSection(String sectionName, List<ExperimentFileType> experimentFileTypes, String experimentAccession, String accessKey) {
+        JsonObject section = new JsonObject();
+        section.addProperty("title", sectionName);
+
+        JsonArray files = new JsonArray();
+        experimentFileTypes.forEach(file -> files.add(getExperimentFileAsJson(file, experimentAccession, accessKey)));
+
+        section.add("files", files);
+
+        return section;
     }
 
 }
