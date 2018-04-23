@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS scxa_cell_clusters
   k                    INTEGER NOT NULL,
   cluster_id           INTEGER NOT NULL,
   CONSTRAINT scxa_cell_clusters_experiment_accession_cell_id_k_pk
-  PRIMARY KEY (experiment_accession, cell_id, k)
+  PRIMARY KEY (experiment_accession, k, cell_id)
 );
