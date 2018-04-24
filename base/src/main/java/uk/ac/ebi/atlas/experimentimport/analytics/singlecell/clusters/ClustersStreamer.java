@@ -29,7 +29,7 @@ public class ClustersStreamer implements AutoCloseable, Supplier<Stream<Pair<Int
         cellIds = clustersTsvStreamer.get()
                 .findFirst()
                 .map(line -> Arrays.copyOfRange(line, CELL_IDS_INDEX, line.length))
-                .orElseThrow(() -> new UncheckedIOException(new IOException("Blah!")));
+                .orElse(new String[0]);
     }
 
     @Override
