@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.commons.readers.ArrayExpressIdfStreamerFactory;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
-import uk.ac.ebi.atlas.utils.TestingUtils;
+import uk.ac.ebi.atlas.TestingUtils;
 
 import javax.inject.Inject;
 

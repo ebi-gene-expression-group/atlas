@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.utils;
+package uk.ac.ebi.atlas;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
