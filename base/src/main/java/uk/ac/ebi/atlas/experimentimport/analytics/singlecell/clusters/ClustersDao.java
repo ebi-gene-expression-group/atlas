@@ -12,15 +12,15 @@ import java.util.stream.Stream;
 
 // Responsible for inserting a clusters TSV file contents into the DB
 @Component
-public class SingleCellClustersDao {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellClustersDao.class);
+public class ClustersDao {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClustersDao.class);
 
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 100000;
 
     private final JdbcTemplate jdbcTemplate;
 
-    public SingleCellClustersDao(JdbcTemplate jdbcTemplate) {
+    public ClustersDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

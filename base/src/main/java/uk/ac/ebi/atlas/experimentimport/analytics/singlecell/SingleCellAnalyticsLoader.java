@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersStreamer;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersStreamerFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.SingleCellClustersDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamer;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamerFactory;
@@ -20,7 +20,7 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
     private final TSnePlotStreamerFactory tSnePlotStreamFactory;
 
 
-    private final SingleCellClustersDao clustersDao;
+    private final ClustersDao clustersDao;
     private final ClustersStreamerFactory clustersStreamerFactory;
 
     @Inject
@@ -28,7 +28,7 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
                               SingleCellAnalyticsStreamerFactory analyticsStreamerFactory,
                               TSnePlotDao tSnePlotDao,
                               TSnePlotStreamerFactory tSnePlotStreamFactory,
-                              SingleCellClustersDao clustersDao,
+                              ClustersDao clustersDao,
                               ClustersStreamerFactory clustersStreamerFactory) {
         this.analyticsDao = analyticsDao;
         this.analyticsStreamerFactory = analyticsStreamerFactory;
