@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class TestingUtils {
+public class JdbcUtils {
     private JdbcTemplate jdbcTemplate;
 
-    public TestingUtils(JdbcTemplate jdbcTemplate) {
+    public JdbcUtils(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

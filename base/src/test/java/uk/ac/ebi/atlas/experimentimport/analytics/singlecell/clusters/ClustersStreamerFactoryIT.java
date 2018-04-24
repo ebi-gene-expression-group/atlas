@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import uk.ac.ebi.atlas.TestingUtils;
+import uk.ac.ebi.atlas.JdbcUtils;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ClustersStreamerFactoryIT {
     @Inject
-    private TestingUtils testingUtils;
+    private JdbcUtils jdbcUtils;
 
     @Inject
     private DataFileHubFactory dataFileHubFactory;
@@ -41,6 +41,6 @@ class ClustersStreamerFactoryIT {
     }
 
     private Iterable<String> singleCellExperimentsProvider() {
-        return testingUtils.getSingleCellExperimentAccessions();
+        return jdbcUtils.getSingleCellExperimentAccessions();
     }
 }
