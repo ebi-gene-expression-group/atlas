@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import javax.inject.Inject;
 
@@ -33,18 +34,20 @@ public class ExperimentPageContentServiceIT {
     private ExperimentFileLocationService experimentFileLocationService;
     @Inject
     private DataFileHub dataFileHub;
+    @Inject
+    private EuropePmcClient europePmcClient;
 
     private ExperimentPageContentService subject;
 
     @Before
     public void setUp() {
-        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub);
+        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, europePmcClient);
     }
 
     @Test
     public void getValidExperimentDesignJson() {
         // TODO replace empty experiment design table with mock table
-        JsonObject result = this.subject.getExperimentDesignAsJson(EXPERIMENT_ACCESSION, new JsonObject(), "");
+        JsonObject result = this.subject.getExperimentDesign(EXPERIMENT_ACCESSION, new JsonObject(), "");
 
         assertThat(result.has("table"), is(true));
         assertThat(result.has("downloadUrl"), is(true));
@@ -68,7 +71,7 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidDownloadsJson() {
-        JsonArray result = this.subject.getDownloadsAsJson(EXPERIMENT_ACCESSION, "");
+        JsonArray result = this.subject.getDownloads(EXPERIMENT_ACCESSION, "");
 
         assertThat(result.size(), is(2));
 
@@ -101,7 +104,7 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidTsnePlotDataJson() {
-        JsonObject result = this.subject.getTsnePlotDataAsJson();
+        JsonObject result = this.subject.getTsnePlotData();
 
         assertThat(result.has("suggesterEndpoint"), is(true));
         assertThat(result.get("suggesterEndpoint").getAsString(), is("json/suggestions"));

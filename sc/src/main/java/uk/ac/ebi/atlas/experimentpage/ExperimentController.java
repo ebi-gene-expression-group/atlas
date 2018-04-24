@@ -40,6 +40,8 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
+        model.addAttribute("publications", experimentPageContentService.getPublications(experiment.getPubMedIds()));
+
         model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 
         return "experiment-page";
@@ -59,14 +61,14 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                 customContentTab(
                         "t-sne-plot",
                         "Results",
-                        experimentPageContentService.getTsnePlotDataAsJson()));
+                        experimentPageContentService.getTsnePlotData()));
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
                     customContentTab(
                             "experiment-design",
                             "Experiment Design",
-                            experimentPageContentService.getExperimentDesignAsJson(
+                            experimentPageContentService.getExperimentDesign(
                                     experiment.getAccession(),
                                     new ExperimentDesignTable(experiment).asJson(),
                                     accessKey))
@@ -86,7 +88,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "resources",
                         "Downloads",
                         "data",
-                        experimentPageContentService.getDownloadsAsJson(experiment.getAccession(), accessKey))
+                        experimentPageContentService.getDownloads(experiment.getAccession(), accessKey))
         );
 
         result.add("tabs", availableTabs);
