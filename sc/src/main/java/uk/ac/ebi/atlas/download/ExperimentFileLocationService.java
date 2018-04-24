@@ -30,7 +30,7 @@ public class ExperimentFileLocationService {
             case IDF:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.idf.getPath();
             case CLUSTERING:
-                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).clusters.getPath();
+                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.getPath();
             default:
                 return null;
         }
