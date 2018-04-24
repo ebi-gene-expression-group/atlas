@@ -1,18 +1,14 @@
 package uk.ac.ebi.atlas.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.List;
 
-@Named
+@Component
 public class TestingUtils {
-
     private JdbcTemplate jdbcTemplate;
 
-    @Inject
     public TestingUtils(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
