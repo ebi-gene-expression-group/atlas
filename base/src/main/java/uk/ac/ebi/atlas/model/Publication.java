@@ -14,6 +14,9 @@ public class Publication {
     private String doi;
     private String title;
 
+    @JsonProperty("pubYear")
+    private String publicationYear;
+
     @JsonProperty("authorString")
     private String authors;
 
@@ -51,18 +54,30 @@ public class Publication {
         this.title = title;
     }
 
+    public String getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(String publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
     // Retrieves authors citation-style. If there are more than 5 authors, it appends "et al" after the 5th
     public String getAuthors() {
-        String[] authorsArray = authors.split(",");
+        if(authors != null) {
+            String[] authorsArray = authors.split(",");
 
-        if (authorsArray.length < 5) {
-            return authors;
-        }
-        else {
-            String shownAuthors = String.join(",", Arrays.copyOfRange(authorsArray, 0, 5));
+            if (authorsArray.length < 5) {
+                return authors;
+            }
+            else {
+                String shownAuthors = String.join(",", Arrays.copyOfRange(authorsArray, 0, 5));
 
-            return String.join(" ",shownAuthors, "et al.");
+                return String.join(" ",shownAuthors, "et al.");
+            }
         }
+
+        return authors;
     }
 
     public String getFullAuthorList() {

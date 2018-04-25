@@ -45,24 +45,33 @@
                     </c:otherwise>
                 </c:choose>
 
-                <c:forEach var="publication" items="${publications}">
-                    <span>
-                    <c:choose>
-                        <c:when test="${not empty publication.getPubmedId()}">
-                            <a class="pubmed-id"
-                               href="https://europepmc.org/abstract/MED/${publication.getPubmedId()}"
-                               title="Read publication"
-                               target='_blank'>${publication.getTitle()}</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a class="pubmed-id"
-                               href="https://doi.org/${publication.getDoi()}"
-                               title="Read publication"
-                               target='_blank'>${publication.getTitle()}</a>
-                        </c:otherwise>
-                    </c:choose>
-                    </span>
-                </c:forEach>
+                <ul>
+                    <c:forEach var="publication" items="${publications}">
+                        <li>
+                            <c:if test="${not empty publication.getAuthors()}">
+                                <span>${publication.getAuthors()} (${publication.getPublicationYear()})</span>
+                            </c:if>
+                            <i>
+                                <c:choose>
+                                    <c:when test="${not empty publication.getPubmedId()}">
+                                        <a class="pubmed-id"
+                                           href="https://europepmc.org/abstract/MED/${publication.getPubmedId()}"
+                                           title="Read publication"
+                                           target='_blank'>${publication.getTitle()}</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="pubmed-id"
+                                           href="https://doi.org/${publication.getDoi()}"
+                                           title="Read publication"
+                                           target='_blank'>${publication.getTitle()}</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </i>
+
+                        </li>
+                    </c:forEach>
+                </ul>
+
             </div>
         </c:if>
 

@@ -23,11 +23,13 @@ public class PublicationTest {
         subject.setDoi("10.1126/sciimmunol.aan8664");
         subject.setPubmedId("29352091");
         subject.setTitle("Precursors of human CD4+ cytotoxic T lymphocytes identified by single-cell transcriptome analysis.");
+        subject.setPublicationYear("2018");
 
         assertThat(subject.getDoi(), not(isEmptyString()));
         assertThat(subject.getPubmedId(), not(isEmptyString()));
         assertThat(subject.getTitle(), not(isEmptyString()));
         assertThat(subject.getAuthors(), not(isEmptyString()));
+        assertThat(subject.getPublicationYear(), is(isEmptyString()));
     }
     @Test
     public void getAuthorStringWithOneAuthor() {
