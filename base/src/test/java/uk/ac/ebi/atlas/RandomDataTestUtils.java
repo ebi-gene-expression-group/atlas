@@ -41,7 +41,7 @@ public class RandomDataTestUtils {
         return clustersTsvBuilder.build();
     }
 
-    private static Set<String> randomSingleCellRnaSeqRunIds(int n) {
+    public static Set<String> randomSingleCellRnaSeqRunIds(int n) {
         Set<String> runIds = new HashSet<>(n);
         while (runIds.size() < n) {
             runIds.add("SRR" + randomNumeric(1, 7));
