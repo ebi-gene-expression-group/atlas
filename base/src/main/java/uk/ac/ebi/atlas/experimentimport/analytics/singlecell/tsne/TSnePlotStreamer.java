@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TSnePlotStreamer implements AutoCloseable {
-
     private final Map<Integer, TsvStreamer> tSnePlotTsvs;
     private final Set<Integer> perplexities;
 
