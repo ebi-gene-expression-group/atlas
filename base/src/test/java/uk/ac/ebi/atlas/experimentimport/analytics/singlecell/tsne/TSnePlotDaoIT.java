@@ -7,14 +7,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.RandomDataTestUtils;
 import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao.BATCH_SIZE;
 import static uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamerTest.randomTSnePoints;
@@ -35,8 +34,7 @@ public class TSnePlotDaoIT {
     @Test
     @DisplayName("Load and delete a randomized t-SNE plot for a random experiment accession")
     void testLoadDelete() {
-        // n / 456,975,543,024 chance of clashing for n experiments in the test database, let’s roll!
-        String experimentAccession = "E-" + randomAlphabetic(4).toUpperCase() + "-" + randomNumeric(1, 6);
+        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
         List<TSnePoint> tSnePoints =
                 randomTSnePoints(
                         ThreadLocalRandom.current().nextInt(2, 5) * BATCH_SIZE +
