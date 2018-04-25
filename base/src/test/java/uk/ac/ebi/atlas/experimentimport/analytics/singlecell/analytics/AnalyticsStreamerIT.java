@@ -1,12 +1,14 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
+package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Triple;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.resource.DataFileHub.SingleCellExperimentFiles;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,16 +23,20 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class SingleCellAnalyticsStreamerFactoryIT {
+public class AnalyticsStreamerIT {
 
-    static final String EXPERIMENT_ACCESSION = "TEST-SINGLE-CELL";
+    private static final String EXPERIMENT_ACCESSION = "TEST-SINGLE-CELL";
 
-    static final int MAX_ROWS = 100;
-    static final int MAX_COLS = 500;
-    static final double MAX_EXPRESSION  = 10000000.0;
-    static final double SPARSE_FACTOR = 0.85;
+    private static final int MAX_ROWS = 100;
+    private static final int MAX_COLS = 500;
+    private static final double MAX_EXPRESSION  = 10000000.0;
+    private static final double SPARSE_FACTOR = 0.85;
+    private MockDataFileHub dataFileHub;
 
-    private Triple<Collection<Triple>, String[], String[]> randomMatrixMarketGenerator(int maxRows, int maxCols, double maxExpression, double sparseFactor) {
+    private Triple<Collection<Triple>, String[], String[]> randomMatrixMarketGenerator(int maxRows,
+                                                                                       int maxCols,
+                                                                                       double maxExpression,
+                                                                                       double sparseFactor) {
         String[] geneIds =
                 IntStream.range(0, ThreadLocalRandom.current().nextInt(1, maxRows + 1)).boxed()
                         .map(i -> "ENSG" + leftPad(Integer.toString(i), 10, '0'))
@@ -53,8 +59,10 @@ public class SingleCellAnalyticsStreamerFactoryIT {
         return Triple.of(matrixBuilder.build(), geneIds, cellIds);
     }
 
-    MockDataFileHub dataFileHub = MockDataFileHub.create();
-    SingleCellAnalyticsStreamerFactory subject = new SingleCellAnalyticsStreamerFactory(dataFileHub);
+    @Before
+    public void setUp() {
+        dataFileHub = MockDataFileHub.create();
+    }
 
     @Test
     public void readsAllEntries() {
@@ -67,8 +75,10 @@ public class SingleCellAnalyticsStreamerFactoryIT {
 
         dataFileHub.addMatrixMarketExpressionFiles(
                 EXPERIMENT_ACCESSION, matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
+        SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(EXPERIMENT_ACCESSION);
 
-        try (SingleCellAnalyticsStreamer singleCellAnalyticsStreamer = subject.create(EXPERIMENT_ACCESSION)) {
+        try (AnalyticsStreamer singleCellAnalyticsStreamer =
+                     new AnalyticsStreamer(files.tpmsMatrix, files.geneIdsTsv, files.cellIdsTsv)) {
             singleCellAnalyticsStreamer.get().forEach(
                     sca -> assertThat(
                             matrixEntries,
@@ -90,7 +100,10 @@ public class SingleCellAnalyticsStreamerFactoryIT {
         dataFileHub.addMatrixMarketExpressionFiles(
                 EXPERIMENT_ACCESSION, matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
 
-        try (SingleCellAnalyticsStreamer singleCellAnalyticsStreamer = subject.create(EXPERIMENT_ACCESSION)) {
+        SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(EXPERIMENT_ACCESSION);
+        try (AnalyticsStreamer singleCellAnalyticsStreamer =
+                     new AnalyticsStreamer(files.tpmsMatrix, files.geneIdsTsv, files.cellIdsTsv)) {
+
             assertThat(singleCellAnalyticsStreamer.get().collect(Collectors.toList()), hasSize(0));
         }
     }
