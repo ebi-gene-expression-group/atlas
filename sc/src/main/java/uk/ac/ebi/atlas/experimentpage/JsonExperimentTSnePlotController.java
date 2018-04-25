@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,21 +34,6 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
         this.tSnePlotService = tSnePlotService;
     }
 
-//    @RequestMapping(
-//            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String tSnePlot(
-//            @PathVariable String experimentAccession,
-//            @PathVariable int perplexity,
-//            @RequestParam(defaultValue = "") String accessKey) {
-//        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-//        return GSON.toJson(
-//                ImmutableMap.of(
-//                        "series",
-//                        tSnePlotService.fetchTSnePlot(experiment.getAccession(), perplexity)));
-//    }
-
     @RequestMapping(
             value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/k/{k}",
             method = RequestMethod.GET,
@@ -67,70 +51,28 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
                                 tSnePlotService.fetchTSnePlotWithClusters(experiment.getAccession(), perplexity, k))));
     }
 
-//    @RequestMapping(
-//            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/expression/{geneId}",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String tSnePlotWithExpression(
-//            @PathVariable String experimentAccession,
-//            @PathVariable int perplexity,
-//            @PathVariable String geneId,
-//            @RequestParam(defaultValue = "") String accessKey) {
-//        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-//
-//        Set<TSnePoint> pointsWithExpression =
-//                tSnePlotService.fetchTSnePlotWithExpression(experiment.getAccession(), perplexity, geneId);
-//
-//        OptionalDouble max = pointsWithExpression.stream()
-//                .map(TSnePoint::expressionLevel)
-//                .filter(Optional::isPresent)
-//                .mapToDouble(Optional::get)
-//                .filter(d -> d > 0)
-//                .max();
-//
-//        OptionalDouble min = pointsWithExpression.stream()
-//                .map(TSnePoint::expressionLevel)
-//                .filter(Optional::isPresent)
-//                .mapToDouble(Optional::get)
-//                .filter(d -> d > 0)
-//                .min();
-//
-//        String unit = "TPM"; // Get units from experiment, or from request parameter if more than one is available
-//
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("series", pointsWithExpression);
-//        model.put("unit", unit);
-//        max.ifPresent(n -> model.put("max", n));
-//        min.ifPresent(n -> model.put("min", n));
-//
-//        return GSON.toJson(model);
-//    }
-
     @RequestMapping(
-            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/k/{k}/expression/{geneId}",
+            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/expression/{geneId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String tSnePlotWithExpressionAndClusters(
+    public String tSnePlotWithExpression(
             @PathVariable String experimentAccession,
             @PathVariable int perplexity,
-            @PathVariable int k,
             @PathVariable String geneId,
             @RequestParam(defaultValue = "") String accessKey) {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        Map<Integer, Set<TSnePoint>> pointsWithExpressionAndClusters =
-                tSnePlotService.fetchTSnePlotWithClusters(experiment.getAccession(), perplexity, k, geneId);
+        Set<TSnePoint> pointsWithExpression =
+                tSnePlotService.fetchTSnePlotWithExpression(experiment.getAccession(), perplexity, geneId);
 
-        OptionalDouble max = pointsWithExpressionAndClusters.values().stream()
-                .flatMap(Collection::stream)
+        OptionalDouble max = pointsWithExpression.stream()
                 .map(TSnePoint::expressionLevel)
                 .filter(Optional::isPresent)
                 .mapToDouble(Optional::get)
                 .filter(d -> d > 0)
                 .max();
 
-        OptionalDouble min = pointsWithExpressionAndClusters.values().stream()
-                .flatMap(Collection::stream)
+        OptionalDouble min = pointsWithExpression.stream()
                 .map(TSnePoint::expressionLevel)
                 .filter(Optional::isPresent)
                 .mapToDouble(Optional::get)
@@ -140,7 +82,7 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
         String unit = "TPM"; // Get units from experiment, or from request parameter if more than one is available
 
         Map<String, Object> model = new HashMap<>();
-        model.put("series", modelForHighcharts(pointsWithExpressionAndClusters));
+        model.put("series", pointsWithExpression);
         model.put("unit", unit);
         max.ifPresent(n -> model.put("max", n));
         min.ifPresent(n -> model.put("min", n));
@@ -150,10 +92,54 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
 
     private List<Map<String, Object>> modelForHighcharts(Map<?, Set<TSnePoint>> points) {
         return points.entrySet().stream()
-                        .map(entry -> ImmutableMap.of(
-                                "name", entry.getKey().toString(),
-                                "data", entry.getValue()))
-                        .collect(Collectors.toList());
+                .map(entry -> ImmutableMap.of(
+                        "name", entry.getKey().toString(),
+                        "data", entry.getValue()))
+                .collect(Collectors.toList());
     }
+
+// This is how we were doing things at one point, see comment in TSnePlotServiceDao...
+
+//    @RequestMapping(
+//            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/k/{k}/expression/{geneId}",
+//            method = RequestMethod.GET,
+//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public String tSnePlotWithExpressionAndClusters(
+//            @PathVariable String experimentAccession,
+//            @PathVariable int perplexity,
+//            @PathVariable int k,
+//            @PathVariable String geneId,
+//            @RequestParam(defaultValue = "") String accessKey) {
+//        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+//
+//        Map<Integer, Set<TSnePoint>> pointsWithExpressionAndClusters =
+//                tSnePlotService.fetchTSnePlotWithClusters(experiment.getAccession(), perplexity, k, geneId);
+//
+//        OptionalDouble max = pointsWithExpressionAndClusters.values().stream()
+//                .flatMap(Collection::stream)
+//                .map(TSnePoint::expressionLevel)
+//                .filter(Optional::isPresent)
+//                .mapToDouble(Optional::get)
+//                .filter(d -> d > 0)
+//                .max();
+//
+//        OptionalDouble min = pointsWithExpressionAndClusters.values().stream()
+//                .flatMap(Collection::stream)
+//                .map(TSnePoint::expressionLevel)
+//                .filter(Optional::isPresent)
+//                .mapToDouble(Optional::get)
+//                .filter(d -> d > 0)
+//                .min();
+//
+//        String unit = "TPM"; // Get units from experiment, or from request parameter if more than one is available
+//
+//        Map<String, Object> model = new HashMap<>();
+//        model.put("series", modelForHighcharts(pointsWithExpressionAndClusters));
+//        model.put("unit", unit);
+//        max.ifPresent(n -> model.put("max", n));
+//        min.ifPresent(n -> model.put("min", n));
+//
+//        return GSON.toJson(model);
+//    }
 
 }

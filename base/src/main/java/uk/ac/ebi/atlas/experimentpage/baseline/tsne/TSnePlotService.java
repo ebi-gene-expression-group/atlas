@@ -18,18 +18,11 @@ public class TSnePlotService {
         this.tSnePlotServiceDao = tSnePlotServiceDao;
     }
 
-
-//    public Set<TSnePoint> fetchTSnePlot(String experimentAccession, int perplexity) {
-//        return tSnePlotServiceDao.fetchTSnePlot(experimentAccession, perplexity).stream()
-//                .map(pointDto -> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.name()))
-//                .collect(toSet());
-//    }
-
-//    public Set<TSnePoint> fetchTSnePlot(String experimentAccession, int perplexity, String geneId) {
-//        return tSnePlotServiceDao.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId).stream()
-//                .map(pointDto -> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.expressionLevel(), pointDto.name()))
-//                .collect(toSet());
-//    }
+    public Set<TSnePoint> fetchTSnePlotWithExpression(String experimentAccession, int perplexity, String geneId) {
+        return tSnePlotServiceDao.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId).stream()
+                .map(pointDto -> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.expressionLevel(), pointDto.name()))
+                .collect(toSet());
+    }
 
     public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithClusters(String experimentAccession, int perplexity, int k) {
         List<TSnePoint.Dto> points = tSnePlotServiceDao.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
@@ -44,25 +37,27 @@ public class TSnePlotService {
                                 .collect(toSet())));
     }
 
-    public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithClusters(String experimentAccession,
-                                                                  int perplexity,
-                                                                  int k,
-                                                                  String geneId) {
-        List<TSnePoint.Dto> points =
-                tSnePlotServiceDao.fetchTSnePlotWithExpressionAndClusters(experimentAccession, perplexity, geneId, k);
-
-        return points.stream()
-                .collect(groupingBy(TSnePoint.Dto::clusterK))
-                .entrySet().stream()
-                .collect(toMap(
-                        Map.Entry::getKey,
-                        entry -> entry.getValue().stream()
-                                .map(pointDto-> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.expressionLevel(), pointDto.name()))
-                                .collect(toSet())));
-    }
-
     // fetchTSnePlotWithCluster(String experimentAccession, int perplexity, String factorValue) {
     // // Query DB for points and Solr for factors
     // }
 
+
+// To understand what this is about see comment in TSnePlotServiceDao...
+
+//    public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithClusters(String experimentAccession,
+//                                                                  int perplexity,
+//                                                                  int k,
+//                                                                  String geneId) {
+//        List<TSnePoint.Dto> points =
+//                tSnePlotServiceDao.fetchTSnePlotWithExpressionAndClusters(experimentAccession, perplexity, geneId, k);
+//
+//        return points.stream()
+//                .collect(groupingBy(TSnePoint.Dto::clusterK))
+//                .entrySet().stream()
+//                .collect(toMap(
+//                        Map.Entry::getKey,
+//                        entry -> entry.getValue().stream()
+//                                .map(pointDto-> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.expressionLevel(), pointDto.name()))
+//                                .collect(toSet())));
+//    }
 }
