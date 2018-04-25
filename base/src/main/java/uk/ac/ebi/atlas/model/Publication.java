@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.model;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.Arrays;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Publication {
 
@@ -49,7 +51,21 @@ public class Publication {
         this.title = title;
     }
 
+    // Retrieves authors citation-style. If there are more than 5 authors, it appends "et al" after the 5th
     public String getAuthors() {
+        String[] authorsArray = authors.split(",");
+
+        if (authorsArray.length < 5) {
+            return authors;
+        }
+        else {
+            String shownAuthors = String.join(",", Arrays.copyOfRange(authorsArray, 0, 5));
+
+            return String.join(" ",shownAuthors, "et al.");
+        }
+    }
+
+    public String getFullAuthorList() {
         return authors;
     }
 
