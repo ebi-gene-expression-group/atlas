@@ -36,7 +36,7 @@ class TSnePlotServiceDaoIT {
         assertThat(subject.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId))
                 .isNotEmpty()
                 .doesNotHaveDuplicates()
-                .allMatch(tSnePointDto -> tSnePointDto.expressionLevel() > 0.0)
+                .allMatch(tSnePointDto -> tSnePointDto.expressionLevel() >= 0.0)
                 .extracting("name")
                 // There are potentially more cells in the TPMs file than in the t-SNE plot files
                 .isSubsetOf(fetchCellIds(experimentAccession));
