@@ -13,12 +13,11 @@ import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSeria
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import java.util.Collection;

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import uk.ac.ebi.atlas.JdbcUtils;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 

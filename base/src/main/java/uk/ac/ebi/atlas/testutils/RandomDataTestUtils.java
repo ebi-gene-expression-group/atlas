@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas;
+package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
 

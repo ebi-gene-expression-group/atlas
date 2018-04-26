@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import uk.ac.ebi.atlas.RandomDataTestUtils;
+import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 

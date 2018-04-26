@@ -1,7 +1,8 @@
-package uk.ac.ebi.atlas.resource;
+package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Triple;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.io.File;
 import java.io.IOException;

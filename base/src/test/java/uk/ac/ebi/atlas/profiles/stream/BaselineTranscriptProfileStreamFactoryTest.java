@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import java.util.Collection;

@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.resource.DataFileHub.SingleCellExperimentFiles;
 
 import java.util.Collection;

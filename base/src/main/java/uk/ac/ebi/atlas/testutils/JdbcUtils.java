@@ -1,11 +1,9 @@
-package uk.ac.ebi.atlas;
+package uk.ac.ebi.atlas.testutils;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static java.sql.Types.VARCHAR;
 
 @Component
 public class JdbcUtils {

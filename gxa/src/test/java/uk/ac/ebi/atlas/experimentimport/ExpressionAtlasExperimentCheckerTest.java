@@ -5,11 +5,9 @@ import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.text.MessageFormat;
@@ -17,8 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

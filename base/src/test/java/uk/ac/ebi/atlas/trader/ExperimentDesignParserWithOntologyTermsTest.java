@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import java.util.List;
 

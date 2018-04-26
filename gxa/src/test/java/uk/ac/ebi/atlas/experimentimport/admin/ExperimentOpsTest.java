@@ -18,7 +18,7 @@ import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfile
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 

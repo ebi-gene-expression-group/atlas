@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.RandomDataTestUtils;
+import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 
 import javax.inject.Inject;
