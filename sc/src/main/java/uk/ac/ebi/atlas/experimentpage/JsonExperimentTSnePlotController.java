@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,7 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
                 ImmutableMap.of(
                         "series",
                         modelForHighcharts(
+                                "Cluster ",
                                 tSnePlotService.fetchTSnePlotWithClusters(experiment.getAccession(), perplexity, k))));
     }
 
@@ -55,7 +57,7 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
             value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/expression",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String tSnePlotWithBlahExpression(
+    public String tSnePlotWithExpression(
             @PathVariable String experimentAccession,
             @PathVariable int perplexity,
             @RequestParam(defaultValue = "") String accessKey) {
@@ -93,7 +95,7 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
         String unit = "TPM"; // Get units from experiment, or from request parameter if more than one is available
 
         Map<String, Object> model = new HashMap<>();
-        model.put("series", pointsWithExpression);
+        model.put("series", modelForHighcharts("Gene expression", pointsWithExpression));
         model.put("unit", unit);
         max.ifPresent(n -> model.put("max", n));
         min.ifPresent(n -> model.put("min", n));
@@ -101,12 +103,16 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
         return GSON.toJson(model);
     }
 
-    private List<Map<String, Object>> modelForHighcharts(Map<?, Set<TSnePoint>> points) {
+    private List<Map<String, Object>> modelForHighcharts(String seriesNamePrefix, Map<?, Set<TSnePoint>> points) {
         return points.entrySet().stream()
                 .map(entry -> ImmutableMap.of(
-                        "name", entry.getKey().toString(),
+                        "name", seriesNamePrefix + entry.getKey().toString(),
                         "data", entry.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    private List<Map<String, Object>> modelForHighcharts(String seriesName, Set<TSnePoint> points) {
+        return ImmutableList.of(ImmutableMap.of("name", seriesName, "data", points));
     }
 
 // This is how we were doing things at one point, see comment in TSnePlotServiceDao...
