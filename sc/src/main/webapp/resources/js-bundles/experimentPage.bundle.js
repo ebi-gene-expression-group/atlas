@@ -13402,22 +13402,26 @@ var ExperimentPageView = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ExperimentPageView.__proto__ || Object.getPrototypeOf(ExperimentPageView)).call(this, props));
 
     _this.state = {
-      data: {
+      geneExpressionData: {
         max: null,
         min: null,
         series: [],
         unit: ''
       },
-      errorMessage: null,
-      loadingClusters: false,
+      cellClustersData: {
+        series: []
+      },
+      geneExpressionErrorMessage: null,
+      cellClustersErrorMessage: null,
+      loadingCellClusters: false,
       loadingGeneExpression: false
     };
     return _this;
   }
 
   _createClass(ExperimentPageView, [{
-    key: '_fetchAndSetState',
-    value: function _fetchAndSetState(_ref2) {
+    key: '_fetchAndSetStateCellClusters',
+    value: function _fetchAndSetStateCellClusters(_ref2) {
       var _this2 = this;
 
       var atlasUrl = _ref2.atlasUrl,
@@ -13426,51 +13430,68 @@ var ExperimentPageView = function (_React$Component) {
           perplexity = _ref2.perplexity,
           geneId = _ref2.geneId;
 
-      var atlasEndpoint = 'json/experiments/' + experimentAccession + '/tsneplot/' + perplexity + '/clusters/' + k + '/expression/' + geneId;
-
-      return fetchResponseJson(atlasUrl, atlasEndpoint).then(function (responseJson) {
-        _this2.setState({
-          data: responseJson,
-          errorMessage: null,
-          loadingClusters: false,
-          loadingGeneExpression: false
+      this.setState({
+        loadingCellClusters: true
+      }, function () {
+        fetchResponseJson(atlasUrl, 'json/experiments/' + experimentAccession + '/tsneplot/' + perplexity + '/clusters/k/' + k).then(function (responseJson) {
+          _this2.setState({
+            cellClustersData: responseJson,
+            cellClustersErrorMessage: null,
+            loadingCellClusters: false
+          });
+        }).catch(function (reason) {
+          _this2.setState({
+            cellClustersErrorMessage: reason.name + ': ' + reason.message,
+            loadingCellClusters: false
+          });
         });
-      }).catch(function (reason) {
-        _this2.setState({
-          errorMessage: reason.name + ': ' + reason.message,
-          loadingClusters: false,
-          loadingGeneExpression: false
+      });
+    }
+  }, {
+    key: '_fetchAndSetStateGeneId',
+    value: function _fetchAndSetStateGeneId(_ref3) {
+      var _this3 = this;
+
+      var atlasUrl = _ref3.atlasUrl,
+          experimentAccession = _ref3.experimentAccession,
+          k = _ref3.k,
+          perplexity = _ref3.perplexity,
+          geneId = _ref3.geneId;
+
+      this.setState({
+        loadingGeneExpression: true
+      }, function () {
+        fetchResponseJson(atlasUrl, 'json/experiments/' + experimentAccession + '/tsneplot/' + perplexity + '/expression/' + geneId).then(function (responseJson) {
+          _this3.setState({
+            geneExpressionData: responseJson,
+            geneExpressionErrorMessage: null,
+            loadingGeneExpression: false
+          });
+        }).catch(function (reason) {
+          _this3.setState({
+            geneExpressionErrorMessage: reason.name + ': ' + reason.message,
+            loadingGeneExpression: false
+          });
         });
       });
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.atlasUrl !== this.props.atlasUrl || // First two will never happen but it’s the right thing to do
-      nextProps.experimentAccession !== this.props.experimentAccession || nextProps.perplexity !== this.props.perplexity || nextProps.k !== this.props.k) {
-
-        this.setState({
-          loadingClusters: true,
-          loadingGeneExpression: true
-        });
-        this._fetchAndSetState(nextProps);
+      if (nextProps.perplexity !== this.props.perplexity) {
+        this._fetchAndSetStateCellClusters(nextProps);
+        this._fetchAndSetStateGeneId(nextProps);
+      } else if (nextProps.k !== this.props.k) {
+        this._fetchAndSetStateCellClusters(nextProps);
       } else if (nextProps.geneId !== this.props.geneId) {
-
-        this.setState({
-          loadingGeneExpression: true
-        });
-        this._fetchAndSetState(nextProps);
+        this._fetchAndSetStateGeneId(nextProps);
       }
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.setState({
-        loadingClusters: true,
-        loadingGeneExpression: true
-      });
-      // Having _fetchAndSetState as callback is the right thing, but then we can’t return the promise; see tests
-      return this._fetchAndSetState(this.props);
+      this._fetchAndSetStateCellClusters(this.props);
+      this._fetchAndSetStateGeneId(this.props);
     }
   }, {
     key: 'render',
@@ -13493,10 +13514,13 @@ var ExperimentPageView = function (_React$Component) {
           onChangeK = _props3.onChangeK,
           onSelectGeneId = _props3.onSelectGeneId;
       var _state = this.state,
-          loadingClusters = _state.loadingClusters,
           loadingGeneExpression = _state.loadingGeneExpression,
-          data = _state.data,
-          errorMessage = _state.errorMessage;
+          geneExpressionData = _state.geneExpressionData,
+          geneExpressionErrorMessage = _state.geneExpressionErrorMessage;
+      var _state2 = this.state,
+          loadingCellClusters = _state2.loadingCellClusters,
+          cellClustersData = _state2.cellClustersData,
+          cellClustersErrorMessage = _state2.cellClustersErrorMessage;
 
 
       return _react2.default.createElement(
@@ -13506,7 +13530,7 @@ var ExperimentPageView = function (_React$Component) {
           'div',
           { className: 'small-12 medium-6 columns' },
           _react2.default.createElement(_ClusterTSnePlot2.default, { height: height,
-            plotData: data,
+            plotData: cellClustersData,
             perplexities: perplexities,
             perplexity: perplexity,
             onChangePerplexity: onChangePerplexity,
@@ -13514,16 +13538,16 @@ var ExperimentPageView = function (_React$Component) {
             k: k,
             onChangeK: onChangeK,
             highlightClusters: highlightClusters,
-            loading: loadingClusters,
+            loading: loadingCellClusters,
             resourcesUrl: resourcesUrl,
-            errorMessage: errorMessage
+            errorMessage: cellClustersErrorMessage
           })
         ),
         _react2.default.createElement(
           'div',
           { className: 'small-12 medium-6 columns' },
           _react2.default.createElement(_GeneExpressionTSnePlot2.default, { height: height,
-            plotData: data,
+            plotData: geneExpressionData,
             atlasUrl: atlasUrl,
             suggesterEndpoint: suggesterEndpoint,
             onSelectGeneId: onSelectGeneId,
@@ -13532,7 +13556,7 @@ var ExperimentPageView = function (_React$Component) {
             highlightClusters: [],
             loading: loadingGeneExpression,
             resourcesUrl: resourcesUrl,
-            errorMessage: errorMessage
+            errorMessage: geneExpressionErrorMessage
           })
         )
       );
@@ -13659,21 +13683,30 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
     plotOptions: {
       scatter: {
         tooltip: {
-          headerFormat: '<b>Cluster {series.name}</b><br>',
+          headerFormat: '<b>{series.name}</b><br>',
           pointFormat: '{point.name}'
+        },
+        marker: {
+          symbol: 'circle'
         }
       }
     },
-    colors: ['rgba(178, 95, 188, 0.7)', 'rgba(118, 179, 65, 0.7)', 'rgba(104, 130, 207, 0.7)', 'rgba(206, 155, 68, 0.7)', 'rgba(200, 87, 123, 0.7)', 'rgba(79, 174, 132, 0.7)', 'rgba(201, 92, 63, 0.7)', 'rgba(124, 127, 57, 0.7)'],
+    // Generated with http://tools.medialab.sciences-po.fr/iwanthue/
+    colors: ['rgba(212, 137, 48, 0.7)', 'rgba(71, 193, 152, 0.7)', 'rgba(193, 84, 47, 0.7)', 'rgba(90, 147, 221, 0.7)', 'rgba(194, 73, 97, 0.7)', 'rgba(128, 177, 66, 0.7)', 'rgba(208, 76, 134, 0.7)', 'rgba(188, 176, 59, 0.7)', 'rgba(132, 43, 102, 0.7)', 'rgba(93, 188, 108, 0.7)', 'rgba(82, 45, 128, 0.7)', 'rgba(101, 133, 52, 0.7)', 'rgba(169, 107, 212, 0.7)', 'rgba(185, 140, 70, 0.7)', 'rgba(82, 88, 180, 0.7)', 'rgba(176, 73, 62, 0.7)', 'rgba(101, 127, 233, 0.7)', 'rgba(214, 126, 188, 0.7)', 'rgba(196, 86, 178, 0.7)', 'rgba(173, 131, 211, 0.7)'],
     chart: {
       height: height
     },
     title: {
       text: 'Clusters'
+    },
+    legend: {
+      enabled: false
     }
   };
 
-  var perplexityOptions = perplexities.sort().map(function (perplexity) {
+  var perplexityOptions = perplexities.sort(function (a, b) {
+    return a - b;
+  }).map(function (perplexity) {
     return _react2.default.createElement(
       'option',
       { key: perplexity, value: perplexity },
@@ -13681,7 +13714,9 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
     );
   });
 
-  var kOptions = ks.sort().map(function (k) {
+  var kOptions = ks.sort(function (a, b) {
+    return a - b;
+  }).map(function (k) {
     return _react2.default.createElement(
       'option',
       { key: k, value: k },
@@ -17628,8 +17663,11 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
     plotOptions: {
       scatter: {
         tooltip: {
-          headerFormat: '<b>{point.key} \u2013 Cluster {series.name}</b><br>',
+          headerFormat: '<b>{point.key}</b><br>',
           pointFormat: geneId ? 'Expression level: {point.expressionLevel} ' + plotData.unit : 'No gene selected'
+        },
+        marker: {
+          symbol: 'circle'
         }
       }
     },
@@ -17638,6 +17676,9 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
     },
     title: {
       text: 'Gene expression'
+    },
+    legend: {
+      enabled: false
     }
   };
 
@@ -22950,7 +22991,7 @@ var ReactTablePagination = function (_Component) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.5';
+  var VERSION = '4.17.10';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -23374,6 +23415,14 @@ var ReactTablePagination = function (_Component) {
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
+      // Use `util.types` for Node.js 10+.
+      var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+      if (types) {
+        return types;
+      }
+
+      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
