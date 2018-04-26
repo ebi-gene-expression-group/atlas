@@ -33,7 +33,7 @@ public class TSnePlotService {
                 .collect(toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
-                                .map(pointDto-> TSnePoint.create(pointDto.x(), pointDto.y(), 0.0, pointDto.name()))
+                                .map(pointDto-> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.name()))
                                 .collect(toSet())));
     }
 
