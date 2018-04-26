@@ -48,7 +48,7 @@ public class JsonExperimentTSnePlotControllerWIT {
 
     @Test
     public void validJsonForExpressedGeneId() throws Exception {
-        String experimentAccession = jdbcTestUtils.fetchRandomExperimentAccession();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
         this.mockMvc
@@ -67,7 +67,7 @@ public class JsonExperimentTSnePlotControllerWIT {
 
     @Test
     public void validJsonForInvalidGeneId() throws Exception {
-        String experimentAccession = jdbcTestUtils.fetchRandomExperimentAccession();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
         this.mockMvc
@@ -84,7 +84,7 @@ public class JsonExperimentTSnePlotControllerWIT {
 
     @Test
     public void validJsonForValidK() throws Exception {
-        String experimentAccession = jdbcTestUtils.fetchRandomExperimentAccession();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
         int k = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
 
@@ -100,7 +100,7 @@ public class JsonExperimentTSnePlotControllerWIT {
 
     @Test
     public void validJsonForInvalidK() throws Exception {
-        String experimentAccession = jdbcTestUtils.fetchRandomExperimentAccession();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
         this.mockMvc

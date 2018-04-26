@@ -21,7 +21,7 @@ public class JdbcUtils {
         return jdbcTemplate.queryForList("SELECT accession FROM experiment", String.class);
     }
 
-    public String fetchRandomExperimentAccession() {
+    public String fetchRandomSingleCellExperimentAccession() {
         return jdbcTemplate.queryForObject(
                 "SELECT accession FROM scxa_experiment ORDER BY RANDOM() LIMIT 1",
                 String.class);

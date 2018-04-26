@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
@@ -26,11 +27,12 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentPageContentServiceIT {
-
-    private final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
+    @Inject
+    JdbcUtils jdbcTestUtils;
 
     @Inject
     private ExperimentFileLocationService experimentFileLocationService;
+
     @Inject
     private DataFileHub dataFileHub;
 
@@ -44,7 +46,8 @@ public class ExperimentPageContentServiceIT {
     @Test
     public void getValidExperimentDesignJson() {
         // TODO replace empty experiment design table with mock table
-        JsonObject result = this.subject.getExperimentDesignAsJson(EXPERIMENT_ACCESSION, new JsonObject(), "");
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonObject result = this.subject.getExperimentDesignAsJson(experimentAccession, new JsonObject(), "");
 
         assertThat(result.has("table"), is(true));
         assertThat(result.has("downloadUrl"), is(true));
@@ -52,7 +55,8 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidAnalysisMethodsJson() {
-        JsonArray result = this.subject.getAnalysisMethodsAsJson(EXPERIMENT_ACCESSION);
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonArray result = this.subject.getAnalysisMethodsAsJson(experimentAccession);
 
         // Should have header row and at least one other
         assertThat(result.size(), is(greaterThan(1)));
@@ -68,7 +72,8 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidDownloadsJson() {
-        JsonArray result = this.subject.getDownloadsAsJson(EXPERIMENT_ACCESSION, "");
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonArray result = this.subject.getDownloadsAsJson(experimentAccession, "");
 
         assertThat(result.size(), is(2));
 

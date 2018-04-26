@@ -29,7 +29,7 @@ class TSnePlotServiceDaoIT {
 
     @Test
     void testExpression() {
-        String experimentAccession = jdbcTestUtils.fetchRandomExperimentAccession();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         String geneId = jdbcTestUtils.fetchRandomGeneFromExperiment(experimentAccession);
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
@@ -44,7 +44,7 @@ class TSnePlotServiceDaoIT {
 
     @Test
     void testClusters() {
-        String experimentAccession = jdbcTestUtils.fetchRandomExperimentAccession();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int k = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
