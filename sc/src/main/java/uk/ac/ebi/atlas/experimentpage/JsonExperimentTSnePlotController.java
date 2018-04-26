@@ -52,6 +52,17 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
     }
 
     @RequestMapping(
+            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/expression",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String tSnePlotWithBlahExpression(
+            @PathVariable String experimentAccession,
+            @PathVariable int perplexity,
+            @RequestParam(defaultValue = "") String accessKey) {
+        return tSnePlotWithExpression(experimentAccession, perplexity, "", accessKey);
+    }
+
+    @RequestMapping(
             value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/expression/{geneId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

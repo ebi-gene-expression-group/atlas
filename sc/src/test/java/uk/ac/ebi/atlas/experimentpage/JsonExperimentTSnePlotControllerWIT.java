@@ -18,11 +18,17 @@ import javax.inject.Inject;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import static org.hamcrest.Matchers.array;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isA;
 import static org.hamcrest.Matchers.isOneOf;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -32,22 +38,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class JsonExperimentTSnePlotControllerWIT {
+class JsonExperimentTSnePlotControllerWIT {
     @Inject
-    JdbcUtils jdbcTestUtils;
+    private JdbcUtils jdbcTestUtils;
 
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    public void validJsonForExpressedGeneId() throws Exception {
+    void validJsonForExpressedGeneId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
@@ -66,24 +72,40 @@ public class JsonExperimentTSnePlotControllerWIT {
     }
 
     @Test
-    public void validJsonForInvalidGeneId() throws Exception {
+    void validJsonForInvalidGeneId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
         this.mockMvc
                 .perform(get(
-                        "/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity +
-                        "/expression/FOOBAR"))
+                        "/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity + "/expression/FOOBAR"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min").doesNotExist())
                 .andExpect(jsonPath("$.max").doesNotExist())
                 .andExpect(jsonPath("$.unit", isOneOf("TPM")))
-                .andExpect(jsonPath("$.series", hasSize(greaterThan(0))));
+                .andExpect(jsonPath("$.series", hasSize(greaterThan(0))))
+                .andExpect(jsonPath("$.series..expressionLevel", everyItem(is(0.0))));
     }
 
     @Test
-    public void validJsonForValidK() throws Exception {
+    void noExpressionForEmptyGeneId() throws Exception {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
+
+        this.mockMvc
+                .perform(get("/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity + "/expression/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.min").doesNotExist())
+                .andExpect(jsonPath("$.max").doesNotExist())
+                .andExpect(jsonPath("$.unit", isOneOf("TPM")))
+                .andExpect(jsonPath("$.series", hasSize(greaterThan(0))))
+                .andExpect(jsonPath("$.series..expressionLevel", everyItem(is(0.0))));
+    }
+
+    @Test
+    void validJsonForValidK() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
         int k = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
@@ -99,7 +121,7 @@ public class JsonExperimentTSnePlotControllerWIT {
     }
 
     @Test
-    public void validJsonForInvalidK() throws Exception {
+    void validJsonForInvalidK() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
