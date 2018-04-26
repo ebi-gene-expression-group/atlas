@@ -47,4 +47,11 @@ public class JdbcUtils {
                 Integer.class,
                 experimentAccession);
     }
+
+    public List<Integer> fetchKsFromCellClusters(String experimentAccession) {
+        return jdbcTemplate.queryForList(
+                "SELECT DISTINCT(k) FROM scxa_cell_clusters WHERE experiment_accession=?",
+                Integer.class,
+                experimentAccession);
+    }
 }

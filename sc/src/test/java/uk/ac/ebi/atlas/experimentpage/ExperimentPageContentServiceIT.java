@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,8 +17,11 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
+import static java.util.stream.Collectors.toSet;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.Matchers.not;
@@ -28,7 +32,7 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentPageContentServiceIT {
     @Inject
-    JdbcUtils jdbcTestUtils;
+    private JdbcUtils jdbcTestUtils;
 
     @Inject
     private ExperimentFileLocationService experimentFileLocationService;
@@ -106,13 +110,19 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidTsnePlotDataJson() {
-        JsonObject result = this.subject.getTsnePlotDataAsJson();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonObject result = this.subject.getTsnePlotDataAsJson(experimentAccession);
 
         assertThat(result.has("suggesterEndpoint"), is(true));
         assertThat(result.get("suggesterEndpoint").getAsString(), is("json/suggestions"));
 
         assertThat(result.has("ks"), is(true));
-        assertThat(result.get("ks").getAsJsonArray().size(), is(greaterThanOrEqualTo(1)));
+        assertThat(
+                ImmutableSet.copyOf(result.get("ks").getAsJsonArray()).stream()
+                        .map(JsonElement::getAsInt)
+                        .collect(toSet()),
+                containsInAnyOrder(
+                        jdbcTestUtils.fetchKsFromCellClusters(experimentAccession).toArray(new Integer[0])));
 
         assertThat(result.has("perplexities"), is(true));
         assertThat(result.get("perplexities").getAsJsonArray().size(), is(greaterThanOrEqualTo(1)));
