@@ -51,7 +51,7 @@ class TSnePlotServiceDaoIT {
         assertThat(subject.fetchTSnePlotWithClusters(experimentAccession, perplexity, k))
                 .isNotEmpty()
                 .doesNotHaveDuplicates()
-                .allMatch(tSnePointDto -> tSnePointDto.clusterK() <= k)
+                .allMatch(tSnePointDto -> tSnePointDto.clusterId() <= k)
                 .extracting("name")
                 .isSubsetOf(fetchCellIds(experimentAccession));
     }

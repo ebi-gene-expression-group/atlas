@@ -48,14 +48,14 @@ class TSnePlotServiceTest {
         Map<Integer, Set<TSnePoint>> results = subject.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
 
         for (TSnePoint.Dto tSnePointDto : randomPointDtos) {
-            assertThat(results.get(tSnePointDto.clusterK()))
+            assertThat(results.get(tSnePointDto.clusterId()))
                     .contains(TSnePoint.create(tSnePointDto.x(), tSnePointDto.y(), tSnePointDto.name()));
         }
 
         assertThat(results)
                 .containsOnlyKeys(
                         randomPointDtos.stream()
-                                .collect(groupingBy(TSnePoint.Dto::clusterK))
+                                .collect(groupingBy(TSnePoint.Dto::clusterId))
                                 .keySet()
                                 .toArray(new Integer[0]));
 

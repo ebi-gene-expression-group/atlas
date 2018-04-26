@@ -28,7 +28,7 @@ public class TSnePlotService {
         List<TSnePoint.Dto> points = tSnePlotServiceDao.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
 
         return points.stream()
-                .collect(groupingBy(TSnePoint.Dto::clusterK))
+                .collect(groupingBy(TSnePoint.Dto::clusterId))
                 .entrySet().stream()
                 .collect(toMap(
                         Map.Entry::getKey,
@@ -52,7 +52,7 @@ public class TSnePlotService {
 //                tSnePlotServiceDao.fetchTSnePlotWithExpressionAndClusters(experimentAccession, perplexity, geneId, k);
 //
 //        return points.stream()
-//                .collect(groupingBy(TSnePoint.Dto::clusterK))
+//                .collect(groupingBy(TSnePoint.Dto::clusterId))
 //                .entrySet().stream()
 //                .collect(toMap(
 //                        Map.Entry::getKey,

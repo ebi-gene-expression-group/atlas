@@ -21,7 +21,7 @@ public abstract class TSnePoint {
         public abstract double x();
         public abstract double y();
         public abstract double expressionLevel();
-        public abstract int clusterK();
+        public abstract int clusterId();
         public abstract String name();
 
         public static TSnePoint.Dto create(double x, double y, String name) {
