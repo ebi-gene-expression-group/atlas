@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="columns experiment-list-latest" data-equalizer-watch>
+<div class="experiment-list-latest" data-equalizer-watch>
     <ul class="tabs" data-tabs id="experiments-tabs">
         <li class="tabs-title is-active"><a href="#latest-experiments" aria-selected="true">List of single-cell experiments</a></li>
     </ul>
