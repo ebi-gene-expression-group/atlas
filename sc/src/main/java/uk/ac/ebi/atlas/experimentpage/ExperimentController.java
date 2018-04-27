@@ -16,6 +16,8 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 
+import java.util.List;
+
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
@@ -40,7 +42,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
-        model.addAttribute("publications", experimentPageContentService.getPublications(experiment.getPubMedIds()));
+        if (!experiment.getDois().isEmpty()) {
+            model.addAttribute("publications", experimentPageContentService.getPublications(experiment.getDois()));
+        }
+        else if (!experiment.getPubMedIds().isEmpty()) {
+            model.addAttribute("publications", experimentPageContentService.getPublications(experiment.getPubMedIds()));
+        }
 
         model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 

@@ -24,8 +24,10 @@ public class MicroarrayExperiment extends DifferentialExperiment {
                                 List<Pair<Contrast, Boolean>> contrasts,
                                 String description, Species species,
                                 ExperimentDesign experimentDesign,
-                                Set<String> pubMedIds, List<ArrayDesign> arrayDesigns) {
-        super(type, accession, lastUpdate, contrasts, description, species, pubMedIds, experimentDesign);
+                                Set<String> pubMedIds,
+                                Set<String> dois,
+                                List<ArrayDesign> arrayDesigns) {
+        super(type, accession, lastUpdate, contrasts, description, species, pubMedIds, dois, experimentDesign);
         this.arrayDesigns = arrayDesigns;
     }
 

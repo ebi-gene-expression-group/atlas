@@ -24,6 +24,7 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
                        String disclaimer,
                        Species species,
                        Collection<String> pubMedIds,
+                       Collection<String> dois,
                        ExperimentDesign experimentDesign,
                        List<AssayGroup> assayGroups,
                        List<String> dataProviderURL,
@@ -33,7 +34,7 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
                        ExperimentDisplayDefaults experimentDisplayDefaults) {
 
         super(experimentType, accession, lastUpdate, displayName, description, disclaimer, species,
-              pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
+              pubMedIds, dois, experimentDesign, dataProviderURL, dataProviderDescription,
               alternativeViews, alternativeViewDescriptions, assayGroups, experimentDisplayDefaults);
     }
 

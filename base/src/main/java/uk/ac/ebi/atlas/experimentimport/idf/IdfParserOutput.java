@@ -35,4 +35,8 @@ public class IdfParserOutput {
     public Set<String> getPubmedIds() {
         return publications.stream().map(Publication::getPubmedId).collect(Collectors.toSet());
     }
+
+    public Set<String> getDois() {
+        return publications.stream().map(Publication::getDoi).collect(Collectors.toSet());
+    }
 }

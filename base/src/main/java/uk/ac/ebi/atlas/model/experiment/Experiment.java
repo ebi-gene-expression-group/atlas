@@ -35,6 +35,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     protected ExperimentDesign experimentDesign;
     private Species species;
     private List<String> pubMedIds;
+    private List<String> dois;
     private String accession;
     protected String description;
     private String displayName;
@@ -48,7 +49,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     private final ExperimentDisplayDefaults experimentDisplayDefaults;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      String disclaimer, Species species, Collection<String> pubMedIds,
+                      String disclaimer, Species species, Collection<String> pubMedIds, Collection<String> dois,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
                       List<String> alternativeViewDescriptions, List<DataColumnDescriptor> dataColumnDescriptors,
@@ -63,6 +64,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         this.disclaimer = disclaimer;
         this.species = species;
         this.pubMedIds = ImmutableList.copyOf(Sets.newTreeSet(pubMedIds));
+        this.dois = ImmutableList.copyOf(Sets.newTreeSet(dois));
         this.dataProviderURL = dataProviderURL;
         this.dataProviderDescription = dataProviderDescription;
         this.alternativeViews = alternativeViews;
@@ -127,6 +129,10 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return pubMedIds;
     }
 
+    public List<String> getDois() {
+        return dois;
+    }
+
     public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
@@ -152,6 +158,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         result.put("type", type);
         result.putAll(species.getAttributes());
         result.put("pubMedIds", pubMedIds);
+        result.put("dois", dois);
         result.put("disclaimer", disclaimer);
 
         //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.

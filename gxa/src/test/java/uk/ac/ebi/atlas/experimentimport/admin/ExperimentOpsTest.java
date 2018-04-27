@@ -314,7 +314,15 @@ public class ExperimentOpsTest {
     }
 
     private static ExperimentDTO mockDTO(String accession, ExperimentType experimentType){
-        return new ExperimentDTO(accession, experimentType,
-                "Homo sapiens", new HashSet<>(), "title", new Date(), false, UUID.randomUUID().toString());
+        return new ExperimentDTO(
+                accession,
+                experimentType,
+                "Homo sapiens",
+                new HashSet<>(),
+                new HashSet<>(),
+                "title",
+                new Date(),
+                false,
+                UUID.randomUUID().toString());
     }
 }

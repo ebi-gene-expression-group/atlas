@@ -63,10 +63,16 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     public void mockOutDatabaseAndArrayExpress() {
         MockitoAnnotations.initMocks(this);
 
-        Set<String> pubMedIds = Collections.emptySet();
-        ExperimentDTO experimentDTO = new ExperimentDTO(E_PROT_1, ExperimentType.PROTEOMICS_BASELINE,
-                                                        "Homo sapiens", pubMedIds, "title", new Date(),
-                                                        false, UUID.randomUUID().toString());
+        ExperimentDTO experimentDTO = new ExperimentDTO(
+                E_PROT_1,
+                ExperimentType.PROTEOMICS_BASELINE,
+                "Homo sapiens",
+                Collections.emptySet(),
+                Collections.emptySet(),
+                "title",
+                new Date(),
+                false,
+                UUID.randomUUID().toString());
         when(expressionAtlasExperimentDao.getExperimentAsAdmin(E_PROT_1)).thenReturn(experimentDTO);
 
         when(arrayExpressClient.fetchExperimentName(E_PROT_1)).thenReturn("title");

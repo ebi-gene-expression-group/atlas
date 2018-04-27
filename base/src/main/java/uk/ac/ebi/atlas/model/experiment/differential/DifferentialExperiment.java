@@ -28,9 +28,9 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     public DifferentialExperiment(String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts,
                                   String description, Species species, Collection<String> pubMedIds,
-                                  ExperimentDesign experimentDesign) {
+                                  Collection<String> dois, ExperimentDesign experimentDesign) {
         this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description,
-                species, pubMedIds, experimentDesign);
+                species, pubMedIds, dois, experimentDesign);
 
     }
 
@@ -38,10 +38,11 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
                                      List<Pair<Contrast, Boolean>> contrasts, String description, Species species,
-                                     Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
+                                     Collection<String> pubMedIds, Collection<String> dois,
+                                     ExperimentDesign experimentDesign) {
 
         super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
-                experimentDesign, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
+                dois, experimentDesign, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
                 Collections.emptyList(), contrasts.stream().map(unpack).collect(Collectors.toList()),
                 ExperimentDisplayDefaults.simpleDefaults());
         this.contrastsWithCttvPrimaryAnnotation =

@@ -47,6 +47,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                 .withDisclaimer(factorsConfig.disclaimer())
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withPubMedIds(experimentDTO.getPubmedIds())
+                .withDois(experimentDTO.getDois())
                 .withAssayGroups(configuration.getAssayGroups())
                 .withExperimentDesign(experimentDesign)
                 .withDisplayDefaults(ExperimentDisplayDefaults.create(

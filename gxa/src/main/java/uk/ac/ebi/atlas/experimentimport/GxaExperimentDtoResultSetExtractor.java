@@ -26,7 +26,12 @@ public class GxaExperimentDtoResultSetExtractor extends ExperimentDTOResultSetEx
                 new HashSet<>() :
                 Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));
 
+        String doisString = resultSet.getString("dois");
+        Set<String> dois = StringUtils.isBlank(doisString) ?
+                new HashSet<>() :
+                Sets.newHashSet(Splitter.on(", ").split(doisString));
+
         return new ExperimentDTO(
-                experimentAccession, experimentType, species, pubMedIds, title, lastUpdate, isPrivate, accessKeyUUID);
+                experimentAccession, experimentType, species, pubMedIds, dois, title, lastUpdate, isPrivate, accessKeyUUID);
     }
 }

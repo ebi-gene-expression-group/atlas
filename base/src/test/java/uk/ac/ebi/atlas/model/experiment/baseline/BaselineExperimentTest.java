@@ -29,6 +29,7 @@ public class BaselineExperimentTest {
     private static final String RUN_ACCESSION1 = "run1";
     private static final String RUN_ACCESSION2 = "run2";
     private static final String PUBMEDID = "PUBMEDID";
+    private static final String DOI = "100.100/doi";
 
     static List<AssayGroup> assayGroups = ImmutableList.of(
             new AssayGroup("g1", RUN_ACCESSION1),
@@ -70,17 +71,17 @@ public class BaselineExperimentTest {
                         SpeciesProperties.create(
                                 "ensemblName", "defaulQueryFactorType",
                                 "kingdom", ImmutableList.<ImmutableMap<String, String>>of())),
-                Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
+                Sets.newHashSet(PUBMEDID), Sets.newHashSet(DOI), experimentDesign, assayGroups, Collections.<String>emptyList(),
                 Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>(), experimentDisplayDefaults);
     }
 
     @Test
-    public void testGetExperimentRunAccessions() throws Exception {
+    public void testGetExperimentRunAccessions() {
         assertThat(subject.getAnalysedAssays(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
     }
 
     @Test
-    public void testGetPubMedIds() throws Exception {
+    public void testGetPubMedIds() {
         assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
     }
 

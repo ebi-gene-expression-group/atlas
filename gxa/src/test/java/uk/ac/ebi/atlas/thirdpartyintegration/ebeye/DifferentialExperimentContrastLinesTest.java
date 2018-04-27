@@ -77,8 +77,15 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), ImmutableList.of(Pair.of(contrast1, true)), "description",
-                        new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
+                new DifferentialExperiment(
+                        EXPERIMENT_ACCESSION,
+                        new Date(),
+                        ImmutableList.of(Pair.of(contrast1, true)),
+                        "description",
+                        new Species("species", SpeciesProperties.UNKNOWN),
+                        ImmutableSet.<String>of(),
+                        ImmutableSet.<String>of(),
+                        experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -115,8 +122,15 @@ public class DifferentialExperimentContrastLinesTest {
 
         //Adding the contrasts
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), ImmutableList.of(Pair.of(contrast1, true)), "description",
-                        new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
+                new DifferentialExperiment(
+                        EXPERIMENT_ACCESSION,
+                        new Date(),
+                        ImmutableList.of(Pair.of(contrast1, true)),
+                        "description",
+                        new Species("species", SpeciesProperties.UNKNOWN),
+                        ImmutableSet.<String>of(),
+                        ImmutableSet.<String>of(),
+                        experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -152,8 +166,15 @@ public class DifferentialExperimentContrastLinesTest {
 
         //Adding the contrasts
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), ImmutableList.of(Pair.of(contrast1, true)), "description",
-                        new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
+                new DifferentialExperiment(
+                        EXPERIMENT_ACCESSION,
+                        new Date(),
+                        ImmutableList.of(Pair.of(contrast1, true)),
+                        "description",
+                        new Species("species", SpeciesProperties.UNKNOWN),
+                        ImmutableSet.<String>of(),
+                        ImmutableSet.<String>of(),
+                        experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 

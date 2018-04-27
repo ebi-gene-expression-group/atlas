@@ -28,12 +28,9 @@ public class EuropePmcClient {
         this.mapper = new ObjectMapper();
     }
 
-    public Optional<Publication> getPublicationByDoi(String doi) {
-        return parseResponseWithOneResult(doi);
-    }
-
-    public Optional<Publication> getPublicationByPubmedId(String pubmedId) {
-        return parseResponseWithOneResult(pubmedId);
+    // Identifier should be either DOI or Pubmed ID
+    public Optional<Publication> getPublicationByIdentifier(String identifier) {
+        return parseResponseWithOneResult(identifier);
     }
 
     private Optional<Publication> parseResponseWithOneResult(String query) {

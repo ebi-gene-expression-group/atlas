@@ -91,10 +91,10 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    public List<Publication> getPublications(List<String> pubmedIds) {
+    public List<Publication> getPublications(List<String> identifiers) {
         List<Publication> publications = new ArrayList<>();
-        for(String pubmedId : pubmedIds) {
-            europePmcClient.getPublicationByPubmedId(pubmedId).ifPresent(publications::add);
+        for(String id : identifiers) {
+            europePmcClient.getPublicationByIdentifier(id).ifPresent(publications::add);
         }
 
         return publications;

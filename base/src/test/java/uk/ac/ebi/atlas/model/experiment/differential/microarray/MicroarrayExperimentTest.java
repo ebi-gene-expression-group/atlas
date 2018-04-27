@@ -44,6 +44,7 @@ public class MicroarrayExperimentTest {
             );
 
     static final String PUBMEDID = "PUBMEDID";
+    private static final String DOI = "100.100/doi";
 
     AssayGroup g1 = new AssayGroup("id", "assay 1","assay 2");
     AssayGroup g2 = new AssayGroup("test","assay 1");
@@ -66,7 +67,9 @@ public class MicroarrayExperimentTest {
                 contrasts.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
                 "description", new Species("Homo sapiens", speciesProperties),
                 mock(ExperimentDesign.class),
-                Sets.newHashSet(PUBMEDID), arrayDesigns);
+                Sets.newHashSet(PUBMEDID),
+                Sets.newHashSet(DOI),
+                arrayDesigns);
     }
 
     @Before
@@ -84,6 +87,11 @@ public class MicroarrayExperimentTest {
     @Test
     public void testGetPubMedIds() throws Exception {
         assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
+    }
+
+    @Test
+    public void testGetDois() {
+        assertThat(subject.getDois(), contains(DOI));
     }
 
     @Test

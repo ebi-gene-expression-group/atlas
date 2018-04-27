@@ -32,6 +32,7 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
                 .withPubMedIds(experimentDTO.getPubmedIds())
+                .withDois(experimentDTO.getDois())
                 .withAssayGroups(new ArrayList<>())
                 .withExperimentDesign(experimentDesign)
                 .withDataProviderDescription(new ArrayList<>())
