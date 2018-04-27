@@ -13249,10 +13249,10 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       speciesName: species,
       experimentAccession: experimentAccession,
       ks: ks,
-      k: Number(search.k) || props.ks[0],
+      selectedK: Number(search.k) || props.ks[0],
       highlightClusters: search.clusterId ? JSON.parse(search.clusterId) : [],
       perplexities: perplexities,
-      perplexity: Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)],
+      selectedPerplexity: Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)],
       geneId: search.geneId || '',
       height: 600,
       onSelectGeneId: function onSelectGeneId(geneId) {
@@ -13393,13 +13393,13 @@ var fetchResponseJson = function () {
   };
 }();
 
-var ExperimentPageView = function (_React$Component) {
-  _inherits(ExperimentPageView, _React$Component);
+var TSnePlotView = function (_React$Component) {
+  _inherits(TSnePlotView, _React$Component);
 
-  function ExperimentPageView(props) {
-    _classCallCheck(this, ExperimentPageView);
+  function TSnePlotView(props) {
+    _classCallCheck(this, TSnePlotView);
 
-    var _this = _possibleConstructorReturn(this, (ExperimentPageView.__proto__ || Object.getPrototypeOf(ExperimentPageView)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (TSnePlotView.__proto__ || Object.getPrototypeOf(TSnePlotView)).call(this, props));
 
     _this.state = {
       geneExpressionData: {
@@ -13419,21 +13419,20 @@ var ExperimentPageView = function (_React$Component) {
     return _this;
   }
 
-  _createClass(ExperimentPageView, [{
+  _createClass(TSnePlotView, [{
     key: '_fetchAndSetStateCellClusters',
     value: function _fetchAndSetStateCellClusters(_ref2) {
       var _this2 = this;
 
       var atlasUrl = _ref2.atlasUrl,
           experimentAccession = _ref2.experimentAccession,
-          k = _ref2.k,
-          perplexity = _ref2.perplexity,
-          geneId = _ref2.geneId;
+          selectedK = _ref2.selectedK,
+          selectedPerplexity = _ref2.selectedPerplexity;
 
       this.setState({
         loadingCellClusters: true
       }, function () {
-        fetchResponseJson(atlasUrl, 'json/experiments/' + experimentAccession + '/tsneplot/' + perplexity + '/clusters/k/' + k).then(function (responseJson) {
+        fetchResponseJson(atlasUrl, 'json/experiments/' + experimentAccession + '/tsneplot/' + selectedPerplexity + '/clusters/k/' + selectedK).then(function (responseJson) {
           _this2.setState({
             cellClustersData: responseJson,
             cellClustersErrorMessage: null,
@@ -13454,14 +13453,13 @@ var ExperimentPageView = function (_React$Component) {
 
       var atlasUrl = _ref3.atlasUrl,
           experimentAccession = _ref3.experimentAccession,
-          k = _ref3.k,
-          perplexity = _ref3.perplexity,
+          selectedPerplexity = _ref3.selectedPerplexity,
           geneId = _ref3.geneId;
 
       this.setState({
         loadingGeneExpression: true
       }, function () {
-        fetchResponseJson(atlasUrl, 'json/experiments/' + experimentAccession + '/tsneplot/' + perplexity + '/expression/' + geneId).then(function (responseJson) {
+        fetchResponseJson(atlasUrl, 'json/experiments/' + experimentAccession + '/tsneplot/' + selectedPerplexity + '/expression/' + geneId).then(function (responseJson) {
           _this3.setState({
             geneExpressionData: responseJson,
             geneExpressionErrorMessage: null,
@@ -13478,10 +13476,10 @@ var ExperimentPageView = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.perplexity !== this.props.perplexity) {
+      if (nextProps.selectedPerplexity !== this.props.selectedPerplexity) {
         this._fetchAndSetStateCellClusters(nextProps);
         this._fetchAndSetStateGeneId(nextProps);
-      } else if (nextProps.k !== this.props.k) {
+      } else if (nextProps.selectedK !== this.props.selectedK) {
         this._fetchAndSetStateCellClusters(nextProps);
       } else if (nextProps.geneId !== this.props.geneId) {
         this._fetchAndSetStateGeneId(nextProps);
@@ -13499,20 +13497,21 @@ var ExperimentPageView = function (_React$Component) {
       var _props = this.props,
           height = _props.height,
           atlasUrl = _props.atlasUrl,
-          resourcesUrl = _props.resourcesUrl;
+          resourcesUrl = _props.resourcesUrl,
+          suggesterEndpoint = _props.suggesterEndpoint;
       var _props2 = this.props,
-          suggesterEndpoint = _props2.suggesterEndpoint,
           geneId = _props2.geneId,
           speciesName = _props2.speciesName,
-          highlightClusters = _props2.highlightClusters,
-          ks = _props2.ks,
-          k = _props2.k,
-          perplexities = _props2.perplexities,
-          perplexity = _props2.perplexity;
+          highlightClusters = _props2.highlightClusters;
       var _props3 = this.props,
-          onChangePerplexity = _props3.onChangePerplexity,
-          onChangeK = _props3.onChangeK,
-          onSelectGeneId = _props3.onSelectGeneId;
+          ks = _props3.ks,
+          selectedK = _props3.selectedK,
+          perplexities = _props3.perplexities,
+          selectedPerplexity = _props3.selectedPerplexity;
+      var _props4 = this.props,
+          onChangePerplexity = _props4.onChangePerplexity,
+          onChangeK = _props4.onChangeK,
+          onSelectGeneId = _props4.onSelectGeneId;
       var _state = this.state,
           loadingGeneExpression = _state.loadingGeneExpression,
           geneExpressionData = _state.geneExpressionData,
@@ -13532,10 +13531,10 @@ var ExperimentPageView = function (_React$Component) {
           _react2.default.createElement(_ClusterTSnePlot2.default, { height: height,
             plotData: cellClustersData,
             perplexities: perplexities,
-            perplexity: perplexity,
+            selectedPerplexity: selectedPerplexity,
             onChangePerplexity: onChangePerplexity,
             ks: ks,
-            k: k,
+            selectedK: selectedK,
             onChangeK: onChangeK,
             highlightClusters: highlightClusters,
             loading: loadingCellClusters,
@@ -13570,17 +13569,17 @@ var ExperimentPageView = function (_React$Component) {
     }
   }]);
 
-  return ExperimentPageView;
+  return TSnePlotView;
 }(_react2.default.Component);
 
-ExperimentPageView.propTypes = {
+TSnePlotView.propTypes = {
   atlasUrl: _propTypes2.default.string.isRequired,
   suggesterEndpoint: _propTypes2.default.string.isRequired,
   experimentAccession: _propTypes2.default.string.isRequired,
   ks: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
-  k: _propTypes2.default.number.isRequired,
+  selectedK: _propTypes2.default.number.isRequired,
   perplexities: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
-  perplexity: _propTypes2.default.number.isRequired,
+  selectedPerplexity: _propTypes2.default.number.isRequired,
   highlightClusters: _propTypes2.default.arrayOf(_propTypes2.default.number),
   geneId: _propTypes2.default.string.isRequired,
   speciesName: _propTypes2.default.string.isRequired,
@@ -13591,7 +13590,7 @@ ExperimentPageView.propTypes = {
   onChangePerplexity: _propTypes2.default.func
 };
 
-ExperimentPageView.defaultProps = {
+TSnePlotView.defaultProps = {
   highlightClusters: [],
   geneId: '',
   speciesName: '',
@@ -13601,7 +13600,7 @@ ExperimentPageView.defaultProps = {
   onPerplexityChange: function onPerplexityChange() {}
 };
 
-exports.default = ExperimentPageView;
+exports.default = TSnePlotView;
 
 /***/ }),
 /* 467 */
@@ -13665,10 +13664,10 @@ var _colourizeClusters = function _colourizeClusters(highlightSeries) {
 
 var ClusterTSnePlot = function ClusterTSnePlot(props) {
   var ks = props.ks,
-      k = props.k,
+      selectedK = props.selectedK,
       onChangeK = props.onChangeK,
       perplexities = props.perplexities,
-      perplexity = props.perplexity,
+      selectedPerplexity = props.selectedPerplexity,
       onChangePerplexity = props.onChangePerplexity; // Select
 
   var plotData = props.plotData,
@@ -13737,7 +13736,7 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
       ),
       _react2.default.createElement(
         'select',
-        { value: perplexity, onChange: function onChange(event) {
+        { value: selectedPerplexity, onChange: function onChange(event) {
             onChangePerplexity(Number(event.target.value));
           } },
         perplexityOptions
@@ -13758,7 +13757,7 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
       ),
       _react2.default.createElement(
         'select',
-        { value: k, onChange: function onChange(event) {
+        { value: selectedK, onChange: function onChange(event) {
             onChangeK(Number(event.target.value));
           } },
         kOptions
@@ -13783,11 +13782,11 @@ ClusterTSnePlot.propTypes = {
   highlightClusters: _propTypes2.default.array,
 
   ks: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
-  k: _propTypes2.default.number.isRequired,
+  selectedK: _propTypes2.default.number.isRequired,
   onChangeK: _propTypes2.default.func.isRequired,
 
   perplexities: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
-  perplexity: _propTypes2.default.number.isRequired,
+  selectedPerplexity: _propTypes2.default.number.isRequired,
   onChangePerplexity: _propTypes2.default.func.isRequired,
 
   loading: _propTypes2.default.bool.isRequired,
