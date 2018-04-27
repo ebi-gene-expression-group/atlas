@@ -1,10 +1,14 @@
-#masthead img {margin-left: -82px;width: 65px;}/*to make logo look like an icon -IMPORTANT limit width of image or banner show black bgd at bottom*/
+#masthead img {width: 65px;}/*to make logo look like an icon -IMPORTANT limit width of image or banner show black bgd at bottom*/
 
 #masthead {
     background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url(../images/cell/Spencer_cells.jpg);
     background-repeat: no-repeat, no-repeat;
     background-position:  left, top right;
     filter: hue-rotate(-711deg);
+}
+
+a.clear {
+    border-bottom: 0;
 }
 
 /***Overwriting Foundation***/
@@ -153,7 +157,6 @@ body .has-tip.go-cc {background-color: #ed561b; color:white;}
 
 @-webkit-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}@-moz-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}@-ms-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}
 
-.anim {-webkit-transition: all .3s; /* Safari */ -moz-transition: all .3s; -o-transition: all .3s; -ms-transition: all .3s; transition: all .3s;}
 .extra {background-color: white;height: 0.8rem; } /*if we want to add a border and shadow*/
 
 .image-container {

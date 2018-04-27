@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <form action="search" id="home-search-atlas-form">
-    <h3>Marker genes search</h3>
+    <h3>Genes search</h3>
 
     <!-- No need to enclose in row as the component already uses Foundation classes -->
     <div id="target"></div>
