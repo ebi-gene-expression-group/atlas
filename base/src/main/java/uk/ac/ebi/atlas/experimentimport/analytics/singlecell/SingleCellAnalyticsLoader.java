@@ -63,7 +63,7 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
         loadClusteringData(experimentAccession);
     }
 
-    public void loadExpression(String experimentAccession) {
+    private void loadExpression(String experimentAccession) {
         DataFileHub.SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(experimentAccession);
 
         try (AnalyticsStreamer analyticsStreamer =
@@ -73,7 +73,7 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
         }
     }
 
-    public void loadTSnePlots(String experimentAccession) {
+    private void loadTSnePlots(String experimentAccession) {
         DataFileHub.SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(experimentAccession);
 
         try (TSnePlotStreamer tSnePlotStreamer = new TSnePlotStreamer(files.tSnePlotTsvs)) {
@@ -82,7 +82,7 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
         }
     }
 
-    public void loadClusteringData(String experimentAccession) {
+    private void loadClusteringData(String experimentAccession) {
         DataFileHub.SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(experimentAccession);
 
         try (ClustersStreamer clustersStreamer = new ClustersStreamer(files.clustersTsv)) {
@@ -92,15 +92,15 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
         }
     }
 
-    public void deleteExpression(String experimentAccession) {
+    private void deleteExpression(String experimentAccession) {
         analyticsDao.deleteAnalytics(experimentAccession);
     }
 
-    public void deleteTSnePlots(String experimentAccession) {
+    private void deleteTSnePlots(String experimentAccession) {
         tSnePlotDao.deleteTSnePlot(experimentAccession);
     }
 
-    public void deleteClusteringData(String experimentAccession) {
+    private void deleteClusteringData(String experimentAccession) {
         clustersDao.deleteClusters(experimentAccession);
     }
 
