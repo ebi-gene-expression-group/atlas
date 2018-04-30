@@ -1,0 +1,2 @@
+The classes in this package strictly belong in the test directory, but if we do that they can’t be shared among modules
+and we don’t want to go through the pain of having a TestUtils module just for these.

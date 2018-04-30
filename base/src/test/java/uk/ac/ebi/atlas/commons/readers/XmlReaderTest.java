@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.commons.readers;
 import com.google.common.collect.Lists;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import java.util.List;
 

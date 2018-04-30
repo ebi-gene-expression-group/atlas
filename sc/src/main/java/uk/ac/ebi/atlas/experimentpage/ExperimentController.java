@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
+import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
@@ -37,7 +38,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                      @PathVariable String experimentAccession,
                                      @RequestParam(defaultValue = "") String accessKey) {
 
-        Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment<Cell> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
         model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
@@ -45,7 +46,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return "experiment-page";
     }
 
-    private JsonObject experimentPageContentForExperiment(final Experiment experiment, final String accessKey){
+    private JsonObject experimentPageContentForExperiment(final Experiment<Cell> experiment, final String accessKey){
         JsonObject result = new JsonObject();
 
         result.addProperty("experimentAccession", experiment.getAccession());
@@ -59,7 +60,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                 customContentTab(
                         "t-sne-plot",
                         "Results",
-                        experimentPageContentService.getTsnePlotDataAsJson()));
+                        experimentPageContentService.getTsnePlotDataAsJson(experiment.getAccession())));
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(

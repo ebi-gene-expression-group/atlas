@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.util.Collections;

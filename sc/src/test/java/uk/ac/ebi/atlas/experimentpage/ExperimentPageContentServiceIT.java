@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,11 +13,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
+import static java.util.stream.Collectors.toSet;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.Matchers.not;
@@ -26,11 +31,12 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentPageContentServiceIT {
-
-    private final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
+    @Inject
+    private JdbcUtils jdbcTestUtils;
 
     @Inject
     private ExperimentFileLocationService experimentFileLocationService;
+
     @Inject
     private DataFileHub dataFileHub;
 
@@ -44,7 +50,8 @@ public class ExperimentPageContentServiceIT {
     @Test
     public void getValidExperimentDesignJson() {
         // TODO replace empty experiment design table with mock table
-        JsonObject result = this.subject.getExperimentDesignAsJson(EXPERIMENT_ACCESSION, new JsonObject(), "");
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonObject result = this.subject.getExperimentDesignAsJson(experimentAccession, new JsonObject(), "");
 
         assertThat(result.has("table"), is(true));
         assertThat(result.has("downloadUrl"), is(true));
@@ -52,7 +59,8 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidAnalysisMethodsJson() {
-        JsonArray result = this.subject.getAnalysisMethodsAsJson(EXPERIMENT_ACCESSION);
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonArray result = this.subject.getAnalysisMethodsAsJson(experimentAccession);
 
         // Should have header row and at least one other
         assertThat(result.size(), is(greaterThan(1)));
@@ -68,7 +76,8 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidDownloadsJson() {
-        JsonArray result = this.subject.getDownloadsAsJson(EXPERIMENT_ACCESSION, "");
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonArray result = this.subject.getDownloadsAsJson(experimentAccession, "");
 
         assertThat(result.size(), is(2));
 
@@ -101,13 +110,19 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidTsnePlotDataJson() {
-        JsonObject result = this.subject.getTsnePlotDataAsJson();
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        JsonObject result = this.subject.getTsnePlotDataAsJson(experimentAccession);
 
         assertThat(result.has("suggesterEndpoint"), is(true));
         assertThat(result.get("suggesterEndpoint").getAsString(), is("json/suggestions"));
 
         assertThat(result.has("ks"), is(true));
-        assertThat(result.get("ks").getAsJsonArray().size(), is(greaterThanOrEqualTo(1)));
+        assertThat(
+                ImmutableSet.copyOf(result.get("ks").getAsJsonArray()).stream()
+                        .map(JsonElement::getAsInt)
+                        .collect(toSet()),
+                containsInAnyOrder(
+                        jdbcTestUtils.fetchKsFromCellClusters(experimentAccession).toArray(new Integer[0])));
 
         assertThat(result.has("perplexities"), is(true));
         assertThat(result.get("perplexities").getAsJsonArray().size(), is(greaterThanOrEqualTo(1)));

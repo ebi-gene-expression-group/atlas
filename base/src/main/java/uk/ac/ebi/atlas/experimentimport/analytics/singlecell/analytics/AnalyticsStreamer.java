@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
+package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics;
 
 import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
@@ -7,14 +7,14 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class SingleCellAnalyticsStreamer implements AutoCloseable, Supplier<Stream<SingleCellAnalytics>> {
+public class AnalyticsStreamer implements AutoCloseable, Supplier<Stream<Analytics>> {
     private final MatrixMarketReader matrixMarketReader;
     private final String[] geneIds;
     private final String[] cellIds;
 
-    public SingleCellAnalyticsStreamer(AtlasResource<MatrixMarketReader> tpmsMatrix,
-                                       AtlasResource<TsvStreamer> geneIdsTsv,
-                                       AtlasResource<TsvStreamer> cellIdsTsv) {
+    public AnalyticsStreamer(AtlasResource<MatrixMarketReader> tpmsMatrix,
+                             AtlasResource<TsvStreamer> geneIdsTsv,
+                             AtlasResource<TsvStreamer> cellIdsTsv) {
 
         matrixMarketReader = tpmsMatrix.get();
 
@@ -28,10 +28,10 @@ public class SingleCellAnalyticsStreamer implements AutoCloseable, Supplier<Stre
     }
 
     @Override
-    public Stream<SingleCellAnalytics> get() {
+    public Stream<Analytics> get() {
         return matrixMarketReader.stream()
                 .map(triple ->
-                        SingleCellAnalytics.create(
+                        Analytics.create(
                                 geneIds[triple.getLeft() - 1],
                                 cellIds[triple.getMiddle() - 1],
                                 triple.getRight()));

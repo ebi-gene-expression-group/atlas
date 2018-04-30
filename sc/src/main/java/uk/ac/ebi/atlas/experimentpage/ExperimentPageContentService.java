@@ -27,11 +27,14 @@ public class ExperimentPageContentService {
         this.dataFileHub = dataFileHub;
     }
 
-    public JsonObject getTsnePlotDataAsJson() {
+    public JsonObject getTsnePlotDataAsJson(String experimentAccession) {
         JsonObject result = new JsonObject();
 
         JsonArray availableClusters = new JsonArray();
-        Arrays.stream(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}).forEach(availableClusters::add);
+        dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get().get()
+                .skip(1)
+                .map(line -> Integer.parseInt(line[1]))
+                .forEach(availableClusters::add);
         result.add("ks", availableClusters);
 
         // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174

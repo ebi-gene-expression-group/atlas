@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
+package uk.ac.ebi.atlas.experimentpage.baseline.tsne;
 
 import com.google.auto.value.AutoValue;
 import com.google.gson.JsonDeserializationContext;
@@ -10,11 +10,37 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
-import java.util.Comparator;
 import java.util.Optional;
 
+// A point in the t-SNE plot with some smarts about JSON serialization
 @AutoValue
 public abstract class TSnePoint {
+    // Just a bag of data to ease reading from the DB with JOINs and draw a boundary between the t-SNE service DAO
+    @AutoValue
+    public static abstract class Dto {
+        public abstract double x();
+        public abstract double y();
+        public abstract double expressionLevel();
+        public abstract int clusterId();
+        public abstract String name();
+
+        public static TSnePoint.Dto create(double x, double y, String name) {
+            return new AutoValue_TSnePoint_Dto(x, y, 0, 0, name);
+        }
+
+        public static TSnePoint.Dto create(double x, double y, double expressionLevel, String name) {
+            return new AutoValue_TSnePoint_Dto(x, y, expressionLevel, 0, name);
+        }
+
+        public static TSnePoint.Dto create(double x, double y, int clusterId, String name) {
+            return new AutoValue_TSnePoint_Dto(x, y, 0, clusterId, name);
+        }
+
+        public static TSnePoint.Dto create(double x, double y, double expressionLevel, int clusterId, String name) {
+            return new AutoValue_TSnePoint_Dto(x, y, expressionLevel, clusterId, name);
+        }
+    }
+
     public abstract double x();
     public abstract double y();
     public abstract Optional<Double> expressionLevel();
@@ -26,18 +52,6 @@ public abstract class TSnePoint {
 
     public static TSnePoint create(double x, double y, String name) {
         return new AutoValue_TSnePoint(x, y, Optional.empty(), name);
-    }
-
-    private static final Comparator<TSnePoint> NAME_COMPARATOR = new NameComparator();
-    public static Comparator<TSnePoint> getNameComparator() {
-        return NAME_COMPARATOR;
-    }
-
-    private static class NameComparator implements Comparator<TSnePoint> {
-        @Override
-        public int compare(TSnePoint o1, TSnePoint o2) {
-            return o1.name().compareTo(o2.name());
-        }
     }
 
     public static GsonTypeAdapter getGsonTypeAdapter() {

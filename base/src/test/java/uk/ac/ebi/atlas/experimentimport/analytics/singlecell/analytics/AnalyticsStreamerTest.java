@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
+package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SingleCellAnalyticsStreamerTest {
+public class AnalyticsStreamerTest {
 
     @Mock
     private AtlasResource<MatrixMarketReader> tpmsMatrixResourceMock;
@@ -47,8 +47,8 @@ public class SingleCellAnalyticsStreamerTest {
 
     @Test
     public void resourcesAreClosed() {
-        try (SingleCellAnalyticsStreamer subject =
-                     new SingleCellAnalyticsStreamer(tpmsMatrixResourceMock, geneIdsResourceMock, cellIdsResourceMock)) {
+        try (AnalyticsStreamer subject =
+                     new AnalyticsStreamer(tpmsMatrixResourceMock, geneIdsResourceMock, cellIdsResourceMock)) {
             // Use subject
         }
 

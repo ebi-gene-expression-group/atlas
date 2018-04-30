@@ -3,8 +3,10 @@ package uk.ac.ebi.atlas.trader;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.trader.cache.loader.SingleCellRnaSeqBaselineExperimentFactory;
@@ -31,7 +33,7 @@ public class ScxaExperimentTrader extends ExperimentTrader {
                                 arrayExpressClient, experimentDesignParser, experimentDao, experimentFactory));
     }
 
-    public Experiment getPublicExperiment(String experimentAccession) {
+    public Experiment<Cell> getPublicExperiment(String experimentAccession) {
         try {
             return baselineExperimentsCache.get(experimentAccession);
         } catch (ExecutionException e) {
@@ -39,7 +41,7 @@ public class ScxaExperimentTrader extends ExperimentTrader {
         }
     }
 
-    public Experiment getExperiment(String experimentAccession, String accessKey) {
+    public Experiment<Cell> getExperiment(String experimentAccession, String accessKey) {
         return getPublicExperiment(experimentAccession);
     }
 

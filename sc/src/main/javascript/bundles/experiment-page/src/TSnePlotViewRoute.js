@@ -24,10 +24,10 @@ const TSnePlotViewRoute = (props) => {
                     speciesName={species}
                     experimentAccession={experimentAccession}
                     ks={ks}
-                    k={Number(search.k) || props.ks[0]}
+                    selectedK={Number(search.k) || props.ks[0]}
                     highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
                     perplexities={perplexities}
-                    perplexity={Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)]}
+                    selectedPerplexity={Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)]}
                     geneId={search.geneId || ``}
                     height={600}
                     onSelectGeneId={ (geneId) => { updateUrlSearch({ name: `geneId`, value: geneId }) } }

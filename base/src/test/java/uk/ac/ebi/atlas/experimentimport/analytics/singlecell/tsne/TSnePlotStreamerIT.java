@@ -1,44 +1,58 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 
 import javax.inject.Inject;
 
-import java.util.stream.Collectors;
-
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:applicationContext.xml")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TSnePlotStreamerIT {
-    private final static String E_MTAB_5061_ACCESSION = "E-MTAB-5061";
-
     @Inject
     private DataFileHubFactory dataFileHubFactory;
 
-    private TSnePlotStreamer subject;
+    private DataFileHub dataFileHub;
 
-    @Before
-    public void setUp() {
-        subject =
-                new TSnePlotStreamerFactory(dataFileHubFactory.getScxaDataFileHub()).create(E_MTAB_5061_ACCESSION);
+    @Inject
+    private JdbcUtils jdbcTestUtils;
+
+    @BeforeAll
+    void setUp() {
+        dataFileHub = dataFileHubFactory.getScxaDataFileHub();
     }
 
-    @Test
-    public void create() {
-        assertThat(subject.availablePerplexities()).containsExactlyInAnyOrder(1, 5, 10, 15, 20);
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentsProvider")
+    @DisplayName("Experiments have at least the default perplexities and at least one cell")
+    void testPerplexitiesAndPlots(String experimentAccession) {
+        DataFileHub.SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(experimentAccession);
+        TSnePlotStreamer subject = new TSnePlotStreamer(files.tSnePlotTsvs);
 
-        int blah = subject.stream(1).collect(Collectors.toList()).size();
+        assertThat(subject.availablePerplexities())
+                .contains(1, 5, 10, 15, 20);
 
-        assertThat(subject.stream(5).collect(Collectors.toList())).hasSize(blah);
-        assertThat(subject.stream(10).collect(Collectors.toList())).hasSize(blah);
-        assertThat(subject.stream(15).collect(Collectors.toList())).hasSize(blah);
-        assertThat(subject.stream(20).collect(Collectors.toList())).hasSize(blah);
+        assertThat(subject.stream(1).collect(toList()))
+                .hasSameSizeAs(subject.stream(5).collect(toList()))
+                .hasSameSizeAs(subject.stream(10).collect(toList()))
+                .hasSameSizeAs(subject.stream(15).collect(toList()))
+                .hasSameSizeAs(subject.stream(20).collect(toList()))
+                .isNotEmpty();
     }
 
+    private Iterable<String> singleCellExperimentsProvider() {
+        return jdbcTestUtils.getSingleCellExperimentAccessions();
+    }
 }

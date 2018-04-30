@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
 
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.util.Map;
@@ -9,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TSnePlotStreamer implements AutoCloseable {
-
     private final Map<Integer, TsvStreamer> tSnePlotTsvs;
     private final Set<Integer> perplexities;
 
