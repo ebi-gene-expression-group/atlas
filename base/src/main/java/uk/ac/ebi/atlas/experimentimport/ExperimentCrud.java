@@ -31,7 +31,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Responsible for:
  * - Database:
  *     - gxa: the experiments table, and the deprecated expression values tables)
- *     - scxa: tables scxa_experiments, scxa_analytics; TODO scxa_marker_gene, scxa_tsne_plot_*
+ *     - scxa: tables scxa_experiments, scxa_analytics, scxa_tsne_plot_*; TODO scxa_marker_gene
  * - design files on disk
  */
 
