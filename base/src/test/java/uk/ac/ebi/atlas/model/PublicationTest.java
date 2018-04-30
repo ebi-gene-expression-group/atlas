@@ -29,7 +29,7 @@ public class PublicationTest {
         assertThat(subject.getPubmedId(), not(isEmptyString()));
         assertThat(subject.getTitle(), not(isEmptyString()));
         assertThat(subject.getAuthors(), not(isEmptyString()));
-        assertThat(subject.getPublicationYear(), is(isEmptyString()));
+        assertThat(subject.getPublicationYear(), not(isEmptyString()));
     }
     @Test
     public void getAuthorStringWithOneAuthor() {

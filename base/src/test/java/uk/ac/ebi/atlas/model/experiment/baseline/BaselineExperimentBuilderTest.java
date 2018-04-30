@@ -33,6 +33,7 @@ public class BaselineExperimentBuilderTest {
     private static final String DISPLAY_NAME = "displayName";
 
     private static final String PUBMEDID = "PUBMEDID";
+    private static final String DOI = "00.1/DOI";
     private static final List<String> PROVIDER_URL = Arrays.asList("http://www.provider.com","http://www.provider1.com");
     private static final List<String> PROVIDER_DESCRIPTION = Arrays.asList("Baseline experiment data provider","Another baseline experiment data provider");
 
@@ -42,7 +43,7 @@ public class BaselineExperimentBuilderTest {
     private ExperimentDesign experimentDesignMock;
 
     @Test
-    public void testCreate() throws Exception {
+    public void testCreate() {
 
         BaselineExperiment experiment = subject
                 .forSpecies(new Species(SPECIES_NAME, SPECIES_PROPERTIES))
@@ -51,6 +52,7 @@ public class BaselineExperimentBuilderTest {
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
+                .withDois(Sets.newHashSet(DOI))
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(AssayGroupsFake.get())
                 .withDataProviderURL(PROVIDER_URL)
@@ -64,6 +66,7 @@ public class BaselineExperimentBuilderTest {
         assertEquals(PROVIDER_URL,attributes.get("dataProviderURL"));
         assertEquals(PROVIDER_DESCRIPTION,attributes.get("dataProviderDescription"));
         assertThat((Collection<String>) attributes.get("pubMedIds"), Matchers.contains(PUBMEDID));
+        assertThat((Collection<String>) attributes.get("dois"), Matchers.contains(DOI));
 
     }
 }
