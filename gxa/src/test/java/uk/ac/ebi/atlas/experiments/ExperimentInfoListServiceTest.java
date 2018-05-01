@@ -70,7 +70,7 @@ public class ExperimentInfoListServiceTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Date lastUpdateStub = new GregorianCalendar(39 + 1900, 12, 12).getTime();
 
         List<AssayGroup> assayGroups = ImmutableList.of(new AssayGroup("RUN", ASSAY_1, ASSAY_2));
@@ -84,6 +84,7 @@ public class ExperimentInfoListServiceTest {
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(assayGroups)
                 .withPubMedIds(ImmutableSet.of())
+                .withDois(ImmutableSet.of())
                 .create());
 
         Contrast contrast = mock(Contrast.class);
