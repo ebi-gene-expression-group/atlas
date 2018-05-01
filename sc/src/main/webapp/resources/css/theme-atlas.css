@@ -1,5 +1,5 @@
 /*
-  Colour palette: EMBL-EBI Petrol
+  Colour palette: Expression Atlas
 */
 
 a {
@@ -31,7 +31,5 @@ a.special { background-color: #7cd17c; }
 .button:hover,
 .button:focus,
 .button:active { background: #2f5767; }
-
-div#local-masthead { background-color: rgb(0,124,130); }
 
 /* end */
