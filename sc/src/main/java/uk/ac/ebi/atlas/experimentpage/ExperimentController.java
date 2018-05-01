@@ -16,8 +16,6 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 
-import java.util.List;
-
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
@@ -54,7 +52,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return "experiment-page";
     }
 
-    private JsonObject experimentPageContentForExperiment(final Experiment experiment, final String accessKey){
+    private JsonObject experimentPageContentForExperiment(final Experiment<?> experiment, final String accessKey){
         JsonObject result = new JsonObject();
 
         result.addProperty("experimentAccession", experiment.getAccession());
