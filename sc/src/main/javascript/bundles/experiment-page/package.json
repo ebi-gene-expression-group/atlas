@@ -14,7 +14,11 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
+<<<<<<< HEAD
     "expression-atlas-experiment-page-tsne-plot": "^2.0.0",
+=======
+    "expression-atlas-experiment-page-tsne-plot": "^1.16.0",
+>>>>>>> Changed TsnePlotView route so that it takes a default k value coming from props. Added bundles.
     "prop-types": "^15.6.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
