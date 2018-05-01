@@ -80,7 +80,7 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    public JsonArray getAnalysisMethodsAsJson(String experimentAccession) {
+    public JsonArray getAnalysisMethods(String experimentAccession) {
         JsonArray result;
 
         try (TsvStreamer tsvStreamer =

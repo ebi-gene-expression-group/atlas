@@ -109,7 +109,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                 "static-table",
                                 "Analysis Methods",
                                 "data",
-                                experimentPageContentService.getAnalysisMethodsAsJson(experiment.getAccession())));
+                                experimentPageContentService.getAnalysisMethods(experiment.getAccession())));
             }
 
         return supplementaryInformationTabs;

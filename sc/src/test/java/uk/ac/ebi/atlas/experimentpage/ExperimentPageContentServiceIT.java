@@ -55,7 +55,7 @@ public class ExperimentPageContentServiceIT {
 
     @Test
     public void getValidAnalysisMethodsJson() {
-        JsonArray result = this.subject.getAnalysisMethodsAsJson(EXPERIMENT_ACCESSION);
+        JsonArray result = this.subject.getAnalysisMethods(EXPERIMENT_ACCESSION);
 
         // Should have header row and at least one other
         assertThat(result.size(), is(greaterThan(1)));
