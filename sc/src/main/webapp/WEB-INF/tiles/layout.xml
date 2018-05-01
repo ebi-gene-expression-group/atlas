@@ -10,7 +10,6 @@
         <put-attribute name="local-masthead" value="/WEB-INF/jsp/tiles/local-masthead.jsp"/>
         <put-attribute name="content"/>
         <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
-        <put-attribute name="credits" value="/WEB-INF/jsp/tiles/credits.jsp"/>
         <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
     </definition>
 </tiles-definitions>
