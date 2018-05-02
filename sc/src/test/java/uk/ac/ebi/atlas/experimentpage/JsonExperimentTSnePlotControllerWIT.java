@@ -56,11 +56,12 @@ class JsonExperimentTSnePlotControllerWIT {
     void validJsonForExpressedGeneId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
+        String geneId = jdbcTestUtils.fetchRandomGeneFromExperiment(experimentAccession);
 
         this.mockMvc
                 .perform(get(
                         "/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity +
-                        "/expression/ENSG00000000003"))
+                        "/expression/" + geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min", isA(Number.class)))
@@ -117,7 +118,7 @@ class JsonExperimentTSnePlotControllerWIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.series", hasSize(k)))
-                .andExpect(jsonPath("$.series[" + Integer.toString(ThreadLocalRandom.current().nextInt(1, k + 1)) + "].data").isNotEmpty());
+                .andExpect(jsonPath("$.series[" + Integer.toString(ThreadLocalRandom.current().nextInt(0, k)) + "].data").isNotEmpty());
     }
 
     @Test
