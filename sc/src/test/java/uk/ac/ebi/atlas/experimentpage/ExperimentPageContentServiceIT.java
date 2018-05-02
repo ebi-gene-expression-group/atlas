@@ -40,11 +40,14 @@ public class ExperimentPageContentServiceIT {
     @Inject
     private DataFileHub dataFileHub;
 
+    @Inject
+    private TsnePlotSettingsService tsnePlotSettingsService;
+
     private ExperimentPageContentService subject;
 
     @Before
     public void setUp() {
-        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub);
+        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, tsnePlotSettingsService);
     }
 
     @Test

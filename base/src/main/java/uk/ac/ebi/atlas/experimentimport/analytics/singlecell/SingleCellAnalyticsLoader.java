@@ -4,8 +4,8 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics.AnalyticsStreamer;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersStreamer;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersStreamer;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamer;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -24,6 +24,7 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
     SingleCellAnalyticsLoader(DataFileHub dataFileHub,
                               AnalyticsDao analyticsDao, TSnePlotDao tSnePlotDao, ClustersDao clustersDao) {
         this.dataFileHub = dataFileHub;
+
         this.analyticsDao = analyticsDao;
         this.tSnePlotDao = tSnePlotDao;
         this.clustersDao = clustersDao;
