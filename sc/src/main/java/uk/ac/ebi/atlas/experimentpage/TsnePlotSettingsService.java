@@ -44,7 +44,7 @@ public class TsnePlotSettingsService {
         else {
             Optional<Integer> optimalClusterFromFile = dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get().get()
                     .skip(1)
-                    .filter(line -> line[0].equalsIgnoreCase("false"))
+                    .filter(line -> line[0].equalsIgnoreCase("true"))
                     .map(line -> Integer.parseInt(line[1]))
                     .findFirst();
 
