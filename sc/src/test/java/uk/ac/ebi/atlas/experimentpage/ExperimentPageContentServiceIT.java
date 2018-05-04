@@ -63,8 +63,9 @@ public class ExperimentPageContentServiceIT {
 
         JsonArray headerRow = result.get(0).getAsJsonArray();
 
-        assertThat(headerRow).hasSize(4);
-        assertThat(headerRow).containsExactlyInAnyOrder(new JsonPrimitive("Analysis"), new JsonPrimitive("Software"), new JsonPrimitive("Version"), new JsonPrimitive("Citation"));
+        assertThat(headerRow)
+                .hasSize(4)
+                .containsExactlyInAnyOrder(new JsonPrimitive("Analysis"), new JsonPrimitive("Software"), new JsonPrimitive("Version"), new JsonPrimitive("Citation"));
     }
 
     @Test

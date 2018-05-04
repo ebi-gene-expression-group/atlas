@@ -7,16 +7,16 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitJupiterWebConfig;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
+
+import javax.inject.Inject;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -35,8 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ExperimentControllerWIT {
     private final String URL = "/experiments/{experimentAccession}";
 
-    @Autowired
-    ExperimentTrader scxaExperimentTrader;
+    @Inject
+    private JdbcUtils jdbcTestUtils;
 
     private MockMvc mockMvc;
 
@@ -64,7 +64,7 @@ public class ExperimentControllerWIT {
     }
 
     private Iterable<String> publicExperimentsProvider() {
-        return scxaExperimentTrader.getPublicExperimentAccessions(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
+        return jdbcTestUtils.getPublicSingleCellExperimentAccessions();
     }
 
 }

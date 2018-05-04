@@ -143,4 +143,7 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(REACTOME_PATHWAYS_FILE_PATH_TEMPLATE, accession, comparison), lines);
     }
 
+    public void addClustersFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE, accession), lines);
+    }
 }

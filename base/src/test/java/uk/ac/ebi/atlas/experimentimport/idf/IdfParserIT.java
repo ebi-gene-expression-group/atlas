@@ -58,10 +58,10 @@ public class IdfParserIT {
     }
 
     private Iterable<String> singleCellExperimentsProvider() {
-        return jdbcUtils.getSingleCellExperimentAccessions();
+        return jdbcUtils.getPublicSingleCellExperimentAccessions();
     }
 
     private Iterable<String> expressionAtlasExperimentsProvider() {
-        return jdbcUtils.getExpressionAtlasExperimentAccessions();
+        return jdbcUtils.getAllExpressionAtlasExperimentAccessions();
     }
 }
