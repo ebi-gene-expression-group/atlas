@@ -22,7 +22,7 @@ public class IdfParser {
     private static final String PUBLICATION_TITLE_ID = "Publication Title";
     private static final String PUBLICATION_DOI_ID = "Publication DOI";
     private static final String AE_EXPERIMENT_DISPLAY_NAME_ID = "Comment[AEExperimentDisplayName]";
-    private static final String EXPECTED_CLUSTERS_ID = "Comment[ExpectedClusters]";
+    private static final String EXPECTED_CLUSTERS_ID = "Comment[EAExpectedClusters]";
 
     private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, PUBMED_ID, PUBLICATION_TITLE_ID, PUBLICATION_DOI_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID)
                 .map(String::toUpperCase)
