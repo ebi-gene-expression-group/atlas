@@ -61,14 +61,13 @@
     </div>
 </div>
 
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/experimentsPageModule.js"></script>
+<script defer src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script defer src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js/experimentsPageModule.js"></script>
 
 <script>
-    (function ($) {
-        $(document).ready(function () {
-            experimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}", "${experimentSet}", "${pageContext.request.contextPath}");
-        });
-    })(jQuery);
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById("local-nav-experiments").className += ' active';
+        experimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}", "${experimentSet}", "${pageContext.request.contextPath}");
+    });
 </script>
