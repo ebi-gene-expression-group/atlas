@@ -22,9 +22,10 @@
     <%--</div>--%>
 <%--</div>--%>
 
-<div class="row column margin-bottom-xlarge">
-    <tiles:insertAttribute name="publications-box"/>
-</div>
+<!-- Bring it back when we have some publications of our own :) -->
+<%--<div class="row column margin-bottom-xlarge">--%>
+    <%--<tiles:insertAttribute name="publications-box"/>--%>
+<%--</div>--%>
 
 <div class="row expanded text-center">
     <div class="small-centered small-8 medium-4 columns padding-top-large padding-bottom-large">
