@@ -133,6 +133,22 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return dois;
     }
 
+    public List<String> getDataProviderDescription() {
+        return dataProviderDescription;
+    }
+
+    public List<String> getDataProviderURL() {
+        return dataProviderURL;
+    }
+
+    public List<String> getAlternativeViews() {
+        return alternativeViews;
+    }
+
+    public List<String> getAlternativeViewDescriptions() {
+        return alternativeViewDescriptions;
+    }
+
     public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());

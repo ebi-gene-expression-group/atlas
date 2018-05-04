@@ -23,12 +23,16 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private final ScxaExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
     private final ExperimentPageContentService experimentPageContentService;
+    private final ExperimentAttributesService experimentAttributesService;
     
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentPageContentService experimentPageContentService){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub,
+                                ExperimentPageContentService experimentPageContentService,
+                                ExperimentAttributesService experimentAttributesService){
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
         this.experimentPageContentService = experimentPageContentService;
+        this.experimentAttributesService = experimentAttributesService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -38,14 +42,8 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                      @RequestParam(defaultValue = "") String accessKey) {
 
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        model.addAllAttributes(experiment.getAttributes());
 
-        if (!experiment.getDois().isEmpty()) {
-            model.addAttribute("publications", experimentPageContentService.getPublications(experiment.getDois()));
-        }
-        else if (!experiment.getPubMedIds().isEmpty()) {
-            model.addAttribute("publications", experimentPageContentService.getPublications(experiment.getPubMedIds()));
-        }
+        model.addAllAttributes(experimentAttributesService.getAttributes(experiment));
 
         model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 
