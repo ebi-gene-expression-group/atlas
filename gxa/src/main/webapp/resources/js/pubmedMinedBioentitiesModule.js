@@ -2,7 +2,8 @@
 
 var pubmedMinedBioentitiesModule = (function($) {
     var europepmcUrl =
-      "https://www.ebi.ac.uk/europepmc/webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
+      "https://www.ebi.ac.uk/europepmc/webservices/rest/MED/%pubmedId%/textMinedTerms?semantic_type=GENE_PROTEIN&page=1&pageSize=25&format=json";
+
     var ids = [];
 
     function fetchPubmedMinedBioentities(pubmedId, callback) {
