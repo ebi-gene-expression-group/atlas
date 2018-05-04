@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -27,7 +28,6 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentFileLocationServiceIT {
 
-    private final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
     private final String EXPERIMENT_DESIGN_FILE_NAME_TEMPLATE = "ExpDesign-{0}.tsv";
     private final String SDRF_FILE_NAME_TEMPLATE = "{0}.sdrf.txt";
     private final String CLUSTERS_FILE_NAME_TEMPLATE = "{0}.clusters.tsv";
@@ -42,6 +42,9 @@ public class ExperimentFileLocationServiceIT {
     private final static String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE = "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
 
     @Inject
+    private JdbcUtils jdbcTestUtils;
+
+    @Inject
     private DataFileHub dataFileHub;
 
     private ExperimentFileLocationService subject;
@@ -53,24 +56,28 @@ public class ExperimentFileLocationServiceIT {
 
     @Test
     public void existingExperimentDesignFile() {
-        existingFileOfType(EXPERIMENT_ACCESSION, ExperimentFileType.EXPERIMENT_DESIGN, EXPERIMENT_DESIGN_FILE_NAME_TEMPLATE);
+        existingFileOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+                ExperimentFileType.EXPERIMENT_DESIGN, EXPERIMENT_DESIGN_FILE_NAME_TEMPLATE);
     }
 
     @Test
     public void existingSdrfFile() {
-        existingFileOfType(EXPERIMENT_ACCESSION, ExperimentFileType.SDRF, SDRF_FILE_NAME_TEMPLATE);
+        existingFileOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+                ExperimentFileType.SDRF, SDRF_FILE_NAME_TEMPLATE);
     }
 
     @Test
     public void existingClusteringFile() {
-        existingFileOfType(EXPERIMENT_ACCESSION, ExperimentFileType.CLUSTERING, CLUSTERS_FILE_NAME_TEMPLATE);
+        existingFileOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+                ExperimentFileType.CLUSTERING, CLUSTERS_FILE_NAME_TEMPLATE);
     }
 
     @Test
     public void existingFilteredQuantificationFiles() {
         List<String> fileNameTemplates = Arrays.asList(MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE, MATRIX_MARKET_FILTERED_QUANTIFICATION_ROWS_FILE_NAME_TEMPLATE, MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE);
 
-        existingArchiveFilesOfType(EXPERIMENT_ACCESSION, ExperimentFileType.QUANTIFICATION_FILTERED, fileNameTemplates);
+        existingArchiveFilesOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+                ExperimentFileType.QUANTIFICATION_FILTERED, fileNameTemplates);
     }
 
     @Test
@@ -83,33 +90,41 @@ public class ExperimentFileLocationServiceIT {
 
     @Test
     public void invalidFileType() {
-        Path path = subject.getFilePath(EXPERIMENT_ACCESSION, ExperimentFileType.QUANTIFICATION_FILTERED);
+        Path path = subject.getFilePath(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+                ExperimentFileType.QUANTIFICATION_FILTERED);
 
         assertThat(path, is(nullValue()));
     }
 
     @Test
     public void invalidArchiveFileType() {
-        List<Path> paths = subject.getFilePathsForArchive(EXPERIMENT_ACCESSION, ExperimentFileType.SDRF);
+        List<Path> paths = subject.getFilePathsForArchive(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+                ExperimentFileType.SDRF);
 
         assertThat(paths, is(nullValue()));
     }
 
     @Test
     public void uriForValidNonArchiveFileType() {
-        ExperimentFileType fileType = ExperimentFileType.EXPERIMENT_DESIGN;
-        URI uri = subject.getFileUri(EXPERIMENT_ACCESSION, fileType, "");
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
 
-        String expectedUrl = MessageFormat.format(EXPERIMENT_FILES_URI_TEMPLATE, EXPERIMENT_ACCESSION, fileType.getId(), "");
+        ExperimentFileType fileType = ExperimentFileType.EXPERIMENT_DESIGN;
+        URI uri = subject.getFileUri(experimentAccession, fileType, "");
+
+        String expectedUrl = MessageFormat.format(EXPERIMENT_FILES_URI_TEMPLATE,
+                experimentAccession, fileType.getId(), "");
         assertThat(uri.toString(), is(expectedUrl));
     }
 
     @Test
     public void uriForValidArchiveFileType() {
-        ExperimentFileType fileType = ExperimentFileType.QUANTIFICATION_FILTERED;
-        URI uri = subject.getFileUri(EXPERIMENT_ACCESSION, fileType, "");
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
 
-        String expectedUrl = MessageFormat.format(EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE, EXPERIMENT_ACCESSION, fileType.getId(), "");
+        ExperimentFileType fileType = ExperimentFileType.QUANTIFICATION_FILTERED;
+        URI uri = subject.getFileUri(experimentAccession, fileType, "");
+
+        String expectedUrl = MessageFormat.format(EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE,
+                experimentAccession, fileType.getId(), "");
         assertThat(uri.toString(), is(expectedUrl));
     }
 
