@@ -6,11 +6,11 @@
 </div>
 
 <div class="row column margin-bottom-xlarge">
-    <tiles:insertAttribute name="experiment-list-latest-box"/>
+    <tiles:insertAttribute name="search"/>
 </div>
 
 <div class="row column margin-bottom-xlarge">
-    <tiles:insertAttribute name="search"/>
+    <tiles:insertAttribute name="experiment-list-latest-box"/>
 </div>
 
 <%--<div class="row column">--%>
