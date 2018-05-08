@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -35,10 +36,8 @@ public class ExperimentPageContentService {
 
         result.add("ks", gson.toJsonTree(tsnePlotSettingsService.getAvailableClusters(experimentAccession)));
 
-        Integer expectedClusters = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
-        if(expectedClusters != null) {
-            result.addProperty("selectedK", expectedClusters);
-        }
+        Optional<Integer> expectedClusters = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
+        expectedClusters.ifPresent(value -> result.addProperty("selectedK", value));
 
         JsonArray perplexityArray = new JsonArray();
         tsnePlotSettingsService.getAvailablePerplexities(experimentAccession).forEach(perplexityArray::add);
