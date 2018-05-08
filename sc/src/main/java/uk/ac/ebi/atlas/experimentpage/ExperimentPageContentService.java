@@ -36,8 +36,8 @@ public class ExperimentPageContentService {
 
         result.add("ks", gson.toJsonTree(tsnePlotSettingsService.getAvailableClusters(experimentAccession)));
 
-        Optional<Integer> expectedClusters = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
-        expectedClusters.ifPresent(value -> result.addProperty("selectedK", value));
+        tsnePlotSettingsService.getExpectedClusters(experimentAccession)
+                .ifPresent(value -> result.addProperty("selectedK", value));
 
         JsonArray perplexityArray = new JsonArray();
         tsnePlotSettingsService.getAvailablePerplexities(experimentAccession).forEach(perplexityArray::add);
