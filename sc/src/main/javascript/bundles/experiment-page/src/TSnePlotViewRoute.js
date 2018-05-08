@@ -24,7 +24,7 @@ const TSnePlotViewRoute = (props) => {
                     speciesName={species}
                     experimentAccession={experimentAccession}
                     ks={ks}
-                    selectedK={Number(search.k) || props.ks[0]}
+                    selectedK={Number(search.k) || props.selectedK || props.ks[0]}
                     highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
                     perplexities={perplexities}
                     selectedPerplexity={Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)]}

@@ -36,7 +36,7 @@ public class IdfParserTest {
             {"Comment[AEExperimentDisplayName]", E_MTAB_513_AE_DISPLAY_NAME},
             {"PubMed ID", E_MTAB_513_PUBMED_IDS_ARRAY[0], E_MTAB_513_PUBMED_IDS_ARRAY[1], E_MTAB_513_PUBMED_IDS_ARRAY[2]},
             {"Publication Title", E_MTAB_513_PUBLICATIONS_ARRAY[0], E_MTAB_513_PUBLICATIONS_ARRAY[1], E_MTAB_513_PUBLICATIONS_ARRAY[2]},
-            {"Comment[ExpectedClusters]", E_MTAB_513_EXPECTED_CLUSTERS}
+            {"Comment[EAExpectedClusters]", E_MTAB_513_EXPECTED_CLUSTERS}
     };
 
     private static final String[][] E_MTAB_513_IDF_TXT_MIXED_CASE = {
@@ -44,7 +44,7 @@ public class IdfParserTest {
             {" comment[AEExperimentDisplayName]", E_MTAB_513_AE_DISPLAY_NAME},
             {"PubMed id", E_MTAB_513_PUBMED_IDS_ARRAY[0], E_MTAB_513_PUBMED_IDS_ARRAY[1], E_MTAB_513_PUBMED_IDS_ARRAY[2]},
             {"publication title", E_MTAB_513_PUBLICATIONS_ARRAY[0], E_MTAB_513_PUBLICATIONS_ARRAY[1], E_MTAB_513_PUBLICATIONS_ARRAY[2]},
-            {"comment[expectedclusters]", E_MTAB_513_EXPECTED_CLUSTERS}
+            {"comment[eaexpectedclusters]", E_MTAB_513_EXPECTED_CLUSTERS}
     };
 
     @Mock

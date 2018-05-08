@@ -13,11 +13,19 @@ public class JdbcUtils {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<String> getSingleCellExperimentAccessions() {
+    public List<String> getPublicSingleCellExperimentAccessions() {
         return jdbcTemplate.queryForList("SELECT accession FROM scxa_public_experiment", String.class);
     }
 
-    public List<String> getExpressionAtlasExperimentAccessions() {
+    public List<String> getAllSingleCellExperimentAccessions() {
+        return jdbcTemplate.queryForList("SELECT accession FROM scxa_experiment", String.class);
+    }
+
+    public List<String> getPublicExpressionAtlasExperimentAccessions() {
+        return jdbcTemplate.queryForList("SELECT accession FROM public_experiment", String.class);
+    }
+
+    public List<String> getAllExpressionAtlasExperimentAccessions() {
         return jdbcTemplate.queryForList("SELECT accession FROM experiment", String.class);
     }
 

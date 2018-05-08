@@ -50,6 +50,6 @@ class ClustersStreamerIT {
     }
 
     private Iterable<String> singleCellExperimentsProvider() {
-        return jdbcTestUtils.getSingleCellExperimentAccessions();
+        return jdbcTestUtils.getPublicSingleCellExperimentAccessions();
     }
 }
