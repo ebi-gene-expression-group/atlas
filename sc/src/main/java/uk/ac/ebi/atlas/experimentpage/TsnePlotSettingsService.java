@@ -32,25 +32,21 @@ public class TsnePlotSettingsService {
         return Arrays.asList(1, 5, 10, 15, 20);
     }
 
-    public Integer getExpectedClusters(String experimentAccession) {
-        Integer expectedClusters = null;
+    public Optional<Integer> getExpectedClusters(String experimentAccession) {
+        Optional<Integer> expectedClusters;
 
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
         // Only add preferred cluster property if it exists in the idf file and it is one of the available k values
         if (idfParserOutput.getExpectedClusters() != 0 && getAvailableClusters(experimentAccession).contains(idfParserOutput.getExpectedClusters())) {
-            expectedClusters = idfParserOutput.getExpectedClusters();
+            expectedClusters = Optional.of(idfParserOutput.getExpectedClusters());
         }
         else {
-            Optional<Integer> optimalClusterFromFile = dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get().get()
+            expectedClusters = dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get().get()
                     .skip(1)
                     .filter(line -> line[0].equalsIgnoreCase("true"))
                     .map(line -> Integer.parseInt(line[1]))
                     .findFirst();
-
-            if(optimalClusterFromFile.isPresent()) {
-                expectedClusters = optimalClusterFromFile.get();
-            }
         }
 
         return expectedClusters;
