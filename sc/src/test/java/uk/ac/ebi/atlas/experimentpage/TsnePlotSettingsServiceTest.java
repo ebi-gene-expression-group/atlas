@@ -77,7 +77,7 @@ public class TsnePlotSettingsServiceTest {
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", new ArrayList<>(), Integer.parseInt(IDF_PREFERRED_K)));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).isPresent()).isTrue();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
     }
 
@@ -88,7 +88,7 @@ public class TsnePlotSettingsServiceTest {
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", new ArrayList<>(), Integer.parseInt(IDF_PREFERRED_K)));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).isPresent()).isTrue();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
     }
 
@@ -99,7 +99,7 @@ public class TsnePlotSettingsServiceTest {
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", new ArrayList<>(), Integer.parseInt(IDF_PREFERRED_K)));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).isPresent()).isFalse();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isNotPresent();
     }
 
     @Test
@@ -109,7 +109,7 @@ public class TsnePlotSettingsServiceTest {
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", new ArrayList<>(), Integer.parseInt(IDF_PREFERRED_K)));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).isPresent()).isTrue();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
     }
 
@@ -120,7 +120,7 @@ public class TsnePlotSettingsServiceTest {
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", new ArrayList<>(), 0));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).isPresent()).isTrue();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
     }
 
@@ -131,6 +131,6 @@ public class TsnePlotSettingsServiceTest {
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", new ArrayList<>(), 0));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).isPresent()).isFalse();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isNotPresent();
     }
 }
