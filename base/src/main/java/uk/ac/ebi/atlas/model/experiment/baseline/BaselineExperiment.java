@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BaselineExperiment extends Experiment<AssayGroup> {
 
-    BaselineExperiment(ExperimentType experimentType,
+    public BaselineExperiment(ExperimentType experimentType,
                        String accession,
                        Date lastUpdate,
                        String description,

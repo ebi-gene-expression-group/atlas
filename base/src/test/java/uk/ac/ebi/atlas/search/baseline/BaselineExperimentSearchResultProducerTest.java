@@ -13,8 +13,8 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import java.util.Collection;
@@ -35,7 +35,6 @@ public class BaselineExperimentSearchResultProducerTest {
 
     BaselineExperimentSearchResultProducer subject;
 
-    
     String factorHeader = "type1";
     String factorType = Factor.normalize(factorHeader);
     String secondFactorHeader = "type2";
@@ -59,12 +58,10 @@ public class BaselineExperimentSearchResultProducerTest {
         singleFactorExperimentExperimentDesign.putFactor("run21", factorHeader, "value2");
         singleFactorExperimentExperimentDesign.putFactor("run31", factorHeader, "value3");
 
-        singleFactorExperiment =
-                BaselineExperimentTest.mockExperiment(
+        singleFactorExperiment = MockExperiment.createBaselineExperiment(
+                        "singleFactorExperiment",
                         singleFactorExperimentExperimentDesign,
-                        singleFactorExperimentAssayGroups,
-                        ExperimentDisplayDefaults.simpleDefaults(),
-                        "singleFactorExperiment");
+                        singleFactorExperimentAssayGroups);
         when(experimentTrader.getPublicExperiment("singleFactorExperiment")).thenReturn(singleFactorExperiment);
 
         List<AssayGroup> twoFactorExperimentAllDifferentValuesAssayGroups =
@@ -78,15 +75,15 @@ public class BaselineExperimentSearchResultProducerTest {
         twoFactorExperimentAllDifferentValuesExperimentDesign.putFactor("R21", secondFactorHeader, "V2");
         twoFactorExperimentAllDifferentValuesExperimentDesign.putFactor("R31", secondFactorHeader, "V3");
 
-        twoFactorExperimentWithThreeDifferentValuesForEachFactor =
-                BaselineExperimentTest.mockExperiment(
-                        twoFactorExperimentAllDifferentValuesExperimentDesign,
-                        twoFactorExperimentAllDifferentValuesAssayGroups,
-                        ExperimentDisplayDefaults.create(
-                                ImmutableList.of(new Factor(factorHeader, "value1")),
-                                secondFactorType,
-                                ImmutableList.of(factorType, secondFactorType), false),
-                        "twoFactorExperimentWithThreeDifferentValuesForEachFactor");
+        twoFactorExperimentWithThreeDifferentValuesForEachFactor = MockExperiment.createBaselineExperiment(
+                "twoFactorExperimentWithThreeDifferentValuesForEachFactor",
+                twoFactorExperimentAllDifferentValuesExperimentDesign,
+                twoFactorExperimentAllDifferentValuesAssayGroups,
+                ExperimentDisplayDefaults.create(
+                        ImmutableList.of(new Factor(factorHeader, "value1")),
+                        secondFactorType,
+                        ImmutableList.of(factorType, secondFactorType), false));
+
         when(experimentTrader.getPublicExperiment("twoFactorExperimentWithThreeDifferentValuesForEachFactor"))
                 .thenReturn(twoFactorExperimentWithThreeDifferentValuesForEachFactor);
 
@@ -104,16 +101,16 @@ public class BaselineExperimentSearchResultProducerTest {
         twoFactorExperimentWithOverlappingFactorsExperimentDesign.putFactor("r3", secondFactorHeader, "ba");
         twoFactorExperimentWithOverlappingFactorsExperimentDesign.putFactor("r4", secondFactorHeader, "bb");
 
-        twoFactorExperimentWithOverlappingFactors =
-                BaselineExperimentTest.mockExperiment(
-                        twoFactorExperimentWithOverlappingFactorsExperimentDesign,
-                        twoFactorExperimentWithOverlappingFactorsAssayGroups,
-                        ExperimentDisplayDefaults.create(
-                                ImmutableList.of(new Factor(factorHeader, "value1")),
-                                secondFactorType,
-                                ImmutableList.of(factorType, secondFactorType),
-                                false),
-                        "twoFactorExperimentWithOverlappingFactors");
+        twoFactorExperimentWithOverlappingFactors = MockExperiment.createBaselineExperiment(
+                "twoFactorExperimentWithOverlappingFactors",
+                twoFactorExperimentWithOverlappingFactorsExperimentDesign,
+                twoFactorExperimentWithOverlappingFactorsAssayGroups,
+                ExperimentDisplayDefaults.create(
+                        ImmutableList.of(new Factor(factorHeader, "value1")),
+                        secondFactorType,
+                        ImmutableList.of(factorType, secondFactorType),
+                        false));
+
         when(experimentTrader.getPublicExperiment("twoFactorExperimentWithOverlappingFactors"))
                 .thenReturn(twoFactorExperimentWithOverlappingFactors);
     }

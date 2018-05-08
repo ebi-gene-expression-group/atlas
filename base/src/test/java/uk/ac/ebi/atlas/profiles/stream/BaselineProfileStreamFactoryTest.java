@@ -2,17 +2,13 @@ package uk.ac.ebi.atlas.profiles.stream;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.RandomUtils;
-import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 
 import static org.hamcrest.Matchers.is;
@@ -25,7 +21,7 @@ public class BaselineProfileStreamFactoryTest {
 
     RnaSeqBaselineProfileStreamFactory subject;
 
-    BaselineExperiment baselineExperiment = BaselineExperimentTest.mockExperiment(ImmutableList.of(new AssayGroup("g1", "r1")), "accession");
+    BaselineExperiment baselineExperiment = MockExperiment.createBaselineExperiment(ImmutableList.of(new AssayGroup("g1", "r1")));
 
     @Before
     public void setUp() throws Exception {

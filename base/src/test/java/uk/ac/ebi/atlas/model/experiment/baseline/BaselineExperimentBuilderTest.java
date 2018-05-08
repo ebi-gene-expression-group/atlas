@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AssayGroupsFake;
+import uk.ac.ebi.atlas.testutils.MockAssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
@@ -54,7 +54,7 @@ public class BaselineExperimentBuilderTest {
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withDois(Sets.newHashSet(DOI))
                 .withExperimentDesign(experimentDesignMock)
-                .withAssayGroups(AssayGroupsFake.get())
+                .withAssayGroups(MockAssayGroups.create())
                 .withDataProviderURL(PROVIDER_URL)
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)
                 .create();

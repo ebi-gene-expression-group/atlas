@@ -6,7 +6,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ import static org.junit.Assert.fail;
 
 public class ExternallyAvailableContentServiceTest {
 
-    Experiment experiment = BaselineExperimentTest.mockExperiment();
+    Experiment experiment = MockExperiment.createBaselineExperiment();
 
     Function<HttpServletResponse, Void> streamFunction = new Function<HttpServletResponse, Void>() {
         @Nullable

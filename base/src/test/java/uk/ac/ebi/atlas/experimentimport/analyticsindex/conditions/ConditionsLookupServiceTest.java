@@ -14,13 +14,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOTreeNodesTrader;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroupsFake;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperimentTest;
+import uk.ac.ebi.atlas.testutils.MockAssayGroups;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -82,7 +81,7 @@ public class ConditionsLookupServiceTest {
     }
 
     @Test
-    public void buildDifferentialConditionProperties() throws Exception {
+    public void buildDifferentialConditionProperties() {
         when(efoLookupService.expandOntologyTerms(any()))
                 .thenReturn(ImmutableSetMultimap.of());
 
@@ -96,7 +95,7 @@ public class ConditionsLookupServiceTest {
 
 
     @Test
-    public void buildDifferentialConditionPropertiesIncludingOntologyTerms() throws Exception {
+    public void buildDifferentialConditionPropertiesIncludingOntologyTerms() {
 
         when(efoLookupService.expandOntologyTerms(any())).thenReturn(
                 new ImmutableSetMultimap.Builder<String, String>()
@@ -117,18 +116,23 @@ public class ConditionsLookupServiceTest {
         when(m.getTreeNodes()).thenReturn(ImmutableMap.of());
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
-        AssayGroup assayGroup = AssayGroupsFake.get().iterator().next();
+        AssayGroup assayGroup = MockAssayGroups.create().iterator().next();
         List<AssayGroup> assayGroups = ImmutableList.of(assayGroup);
 
         setup.accept(assayGroup, experimentDesign);
 
 
         assertThat(
-                new ConditionsLookupService(new EFOLookupService(m)).conditionsPerDataColumnDescriptor(BaselineExperimentTest.mockExperiment(
+//                new ConditionsLookupService(new EFOLookupService(m)).conditionsPerDataColumnDescriptor(BaselineExperimentTest.mockExperiment(
+//                        experimentDesign,
+//                        assayGroups,
+//                        ExperimentDisplayDefaults.simpleDefaults(),
+//                        "accession"
+//                )),
+
+                new ConditionsLookupService(new EFOLookupService(m)).conditionsPerDataColumnDescriptor(MockExperiment.createBaselineExperiment(
                         experimentDesign,
-                        assayGroups,
-                        ExperimentDisplayDefaults.simpleDefaults(),
-                        "accession"
+                        assayGroups
                 )),
                 is(ImmutableSetMultimap.builder().putAll(assayGroup.getId(), expectedConditions).build())
         );
