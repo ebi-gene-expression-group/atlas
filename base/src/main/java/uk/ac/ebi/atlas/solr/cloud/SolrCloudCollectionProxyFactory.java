@@ -4,6 +4,7 @@ import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 
 import javax.inject.Named;
 
@@ -23,4 +24,7 @@ public class SolrCloudCollectionProxyFactory {
         return new BioentitiesCollectionProxy(cloudSolrClient);
     }
 
+    public SingleCellAnalyticsCollectionProxy createSingleCellAnalyticsCollectionProxy() {
+        return new SingleCellAnalyticsCollectionProxy(cloudSolrClient);
+    }
 }
