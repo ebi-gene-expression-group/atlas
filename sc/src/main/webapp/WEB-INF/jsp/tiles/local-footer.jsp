@@ -1,24 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <footer id="local-footer" class="local-footer" role="local-footer">
-    <div id="relationships" class="row padding-top-large padding-bottom-large">
-        <div class="small-6 columns text-center">
-            <a href="https://www.humancellatlas.org/" class="clear">
-                <img src="${pageContext.request.contextPath}/resources/images/logos/human_cell_atlas.png"
-                     alt="Human Cell Atlas" style="height: 4em">
-            </a>
-        </div>
-
-        <div class="small-6 columns text-center">
-            <a href="http://www.sanger.ac.uk/" class="clear">
-                <img src="${pageContext.request.contextPath}/resources/images/logos/sanger_institute.png"
-                     alt="Wellcome Trust Sanger Institute" style="height: 4em">
-            </a>
-        </div>
-    </div>
-
-    <%--<hr>--%>
-
     <%--<div class="row padding-bottom-large">--%>
         <%--<div class="small-6 medium-offset-3 medium-3 large-offset-4 large-2 columns">--%>
             <%--<h4>Atlas</h4>--%>
