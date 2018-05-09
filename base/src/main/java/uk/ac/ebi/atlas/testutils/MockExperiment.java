@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.math3.analysis.function.Exp;
 import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -30,8 +31,8 @@ public class MockExperiment {
     private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of());
     private static final String DESCRIPTION = "This is the experiment description";
     private static final String DISPLAY_NAME = "Experiment Display Name";
-    private static final String PUBMEDID = "PUBMEDID";
-    private static final String DOI = "100.100/doi";
+    private static final List<String> PUBMEDID = Arrays.asList("PUBMEDID");
+    private static final List<String> DOI = Arrays.asList("100.100/doi");
 
     private static final List<String> PROVIDER_URL = Arrays.asList("http://www.provider.com","http://www.provider1.com");
     private static final List<String> PROVIDER_DESCRIPTION = Arrays.asList("Baseline experiment data provider","Another baseline experiment data provider");
@@ -64,6 +65,16 @@ public class MockExperiment {
                 mockExperimentDesign(MockAssayGroups.create()),
                 MockAssayGroups.create(),
                 ExperimentDisplayDefaults.simpleDefaults());
+    }
+
+    public static BaselineExperiment createBaselineExperiment(List<String> pubmedIds, List<String> dois) {
+        return createBaselineExperiment(
+                EXPERIMENT_ACCESSION,
+                mockExperimentDesign(MockAssayGroups.create()),
+                MockAssayGroups.create(),
+                ExperimentDisplayDefaults.simpleDefaults(),
+                pubmedIds,
+                dois);
     }
 
     public static BaselineExperiment createBaselineExperiment(List<AssayGroup> assayGroups) {
@@ -102,6 +113,21 @@ public class MockExperiment {
                                                               List<AssayGroup> assayGroups,
                                                               ExperimentDisplayDefaults experimentDisplayDefaults) {
 
+        return createBaselineExperiment(
+                accession,
+                experimentDesign,
+                assayGroups,
+                experimentDisplayDefaults,
+                PUBMEDID, DOI);
+    }
+
+    public static BaselineExperiment createBaselineExperiment(String accession,
+                                                              ExperimentDesign experimentDesign,
+                                                              List<AssayGroup> assayGroups,
+                                                              ExperimentDisplayDefaults experimentDisplayDefaults,
+                                                              List<String> pubmedIds,
+                                                              List<String> dois) {
+
         return new BaselineExperiment(
                 ExperimentType.RNASEQ_MRNA_BASELINE,
                 accession,
@@ -110,8 +136,8 @@ public class MockExperiment {
                 DISPLAY_NAME,
                 "",
                 new Species(SPECIES_NAME, SPECIES_PROPERTIES),
-                Sets.newHashSet(PUBMEDID),
-                Sets.newHashSet(DOI),
+                Sets.newHashSet(pubmedIds),
+                Sets.newHashSet(dois),
                 experimentDesign,
                 assayGroups,
                 PROVIDER_URL,
@@ -119,7 +145,7 @@ public class MockExperiment {
                 Collections.<String>emptyList(),
                 Collections.<String>emptyList(),
                 experimentDisplayDefaults
-                );
+        );
     }
 
     public static MicroarrayExperiment createMicroarrayExperiment() {
