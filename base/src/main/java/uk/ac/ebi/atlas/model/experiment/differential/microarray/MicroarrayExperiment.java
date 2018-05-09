@@ -39,16 +39,6 @@ public class MicroarrayExperiment extends DifferentialExperiment {
         return arrayDesigns.stream().map(a -> a.name()).collect(Collectors.toList());
     }
 
-
-    @Override
-    public HashMap<String, Object> getAttributes() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.putAll(super.getAttributes());
-        result.put("arrayDesignAccessions", getArrayDesignAccessions());
-        result.put("arrayDesignNames", getArrayDesignNames());
-        return result;
-    }
-
     @Override
     public ExperimentInfo buildExperimentInfo() {
         ExperimentInfo experimentInfo = super.buildExperimentInfo();

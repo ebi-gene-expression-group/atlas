@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.markergenes.MarkerGeneDao;
 import uk.ac.ebi.atlas.markergenes.RandomMarkerGeneInputStream;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -28,15 +29,18 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     private final ExperimentTrader experimentTrader;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final MarkerGeneDao markerGeneDao;
+    private final ExperimentAttributesService experimentAttributesService;
 
     public SingleCellOpsExecutionService(ExperimentCrud experimentCrud,
                                          ExperimentTrader experimentTrader,
                                          AnalyticsLoaderFactory analyticsLoaderFactory,
-                                         MarkerGeneDao markerGeneDao) {
+                                         MarkerGeneDao markerGeneDao,
+                                         ExperimentAttributesService experimentAttributesService) {
         this.experimentCrud = experimentCrud;
         this.experimentTrader = experimentTrader;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.markerGeneDao = markerGeneDao;
+        this.experimentAttributesService = experimentAttributesService;
     }
 
     private Stream<ExperimentDTO> allDtos(){
@@ -55,8 +59,12 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
             case LIST:
                 return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
-                return Optional.of(GSON.toJsonTree(experimentTrader.getExperiment(accession,
-                        experimentCrud.findExperiment(accession).getAccessKey()).getAttributes()));
+                return Optional.of(
+                        GSON.toJsonTree(
+                                experimentAttributesService.getAttributes(
+                                        experimentTrader.getExperiment(
+                                                accession,
+                                                experimentCrud.findExperiment(accession).getAccessKey()))));
             default:
                 return Optional.empty();
         }

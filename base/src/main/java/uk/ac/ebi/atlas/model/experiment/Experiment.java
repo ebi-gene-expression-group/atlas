@@ -167,38 +167,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
                         .collect(Collectors.toSet()));
     }
 
-    public HashMap<String, Object> getAttributes(){
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("experimentAccession", accession);
-        result.put("experimentDescription", description);
-        result.put("type", type);
-        result.putAll(species.getAttributes());
-        result.put("pubMedIds", pubMedIds);
-        result.put("dois", dois);
-        result.put("disclaimer", disclaimer);
-
-        //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
-        List<String> keywords = ImmutableList.<String>builder()
-                .add("experiment")
-                .add(accession)
-                .addAll(dataProviderDescription)
-                .addAll(Arrays.asList(type.getDescription().split("_")))
-                .addAll(experimentDesign.getAssayHeaders())
-                .build();
-        result.put("pageKeywords", Joiner.on(',').join(keywords));
-
-        //We want this to show up in Google searches.
-        result.put("pageDescription", description);
-
-        // Extra information to show on experiment page (if they were provided in <expAcc>-factors.xml file)
-        result.put("dataProviderURL", dataProviderURL);
-        result.put("dataProviderDescription", dataProviderDescription);
-        result.put("alternativeViews", alternativeViews);
-        result.put("alternativeViewDescriptions", alternativeViewDescriptions);
-
-        return result;
-    }
-
     public ExperimentInfo buildExperimentInfo(){
         ExperimentInfo experimentInfo = new ExperimentInfo();
         experimentInfo.setExperimentAccession(accession);

@@ -54,16 +54,6 @@ public class DifferentialExperiment extends Experiment<Contrast> {
     }
 
     @Override
-    public HashMap<String, Object> getAttributes() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.putAll(super.getAttributes());
-        result.put("regulationValues", Regulation.values());
-        result.put("contrasts", this.getDataColumnDescriptors());
-
-        return result;
-    }
-
-    @Override
     public ExperimentInfo buildExperimentInfo() {
         ExperimentInfo experimentInfo = super.buildExperimentInfo();
         experimentInfo.setNumberOfContrasts(getDataColumnDescriptors().size());

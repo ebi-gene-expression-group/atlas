@@ -78,13 +78,13 @@ public class MicroarrayExperimentTest {
     }
 
     @Test
-    public void testGetArrayDesignAccessions() throws Exception {
+    public void testGetArrayDesignAccessions() {
         assertThat(subject.getArrayDesignAccessions(), containsInAnyOrder(ARRAY_DESIGN_ACCESSIONS.toArray()));
     }
 
     @Test
-    public void testGetPubMedIds() throws Exception {
-        assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
+    public void testGetPubMedIds() {
+        assertThat(subject.getPubMedIds(), contains(PUBMEDID));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class MicroarrayExperimentTest {
     }
 
     @Test
-    public void microRnaExperimentsHaveNoGenomeBrowsers() throws Exception {
+    public void microRnaExperimentsHaveNoGenomeBrowsers() {
         MicroarrayExperiment miRnaSubject =
                 get("accession", ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL, ImmutableList.of(contrast), arrayDesigns);
 
@@ -102,7 +102,7 @@ public class MicroarrayExperimentTest {
     }
 
     @Test
-    public void buildExperimentInfo() throws Exception {
+    public void buildExperimentInfo() {
         assertThat(
                 subject.buildExperimentInfo().getArrayDesignNames(), containsInAnyOrder(ARRAY_DESIGN_NAMES.toArray()));
         assertThat(

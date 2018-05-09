@@ -83,7 +83,7 @@ public class DifferentialExperimentTest {
 
     @Test
     public void testGetPubMedIds() {
-        assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
+        assertThat((Iterable<String>) subject.getPubMedIds(), contains(PUBMEDID));
     }
 
     @Test
