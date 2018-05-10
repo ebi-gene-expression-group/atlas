@@ -48,7 +48,7 @@
                     <%--<li id="local-nav-download"><a href="#"><i class="icon icon-common padding-right-medium" data-icon="&#xc2;"></i>Download</a></li>--%>
                     <li id="local-nav-help"><a href="#"><i class="icon icon-common padding-right-medium" data-icon="&#x3f;"></i>Help</a></li>
                     <%--<li id="local-nav-about"><a href="../websites/patterns/"><i class="icon icon-common padding-right-medium" data-icon="&#x2139;"></i>About</a></li>--%>
-                    <li id="local-nav-feedback"><a href="" target="_blank" data-icon="X"><i class="icon icon-common padding-right-medium" data-icon="&#x6e;"></i>Feedback</a></li>
+                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/scxa" target="_blank" data-icon="X"><i class="icon icon-common padding-right-medium" data-icon="&#x6e;"></i>Feedback</a></li>
                 </ul>
             </nav>
             <!-- /local-nav -->
