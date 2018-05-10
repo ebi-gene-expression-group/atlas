@@ -44,4 +44,9 @@ public class CellMetadataServiceIT {
     public void inferredCellTypeForNonexistentCellId() {
         assertThat(subject.getInferredCellType("E-GEOD-84465", "FOO")).isNotPresent();
     }
+
+    @Test
+    public void experimentWithoutMetadataFieldsInIdf() {
+        assertThat(subject.getAttributeFromIdfFile("E-ENAD-13", "SRR5101952")).isEmpty();
+    }
 }
