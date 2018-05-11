@@ -37,8 +37,7 @@ public class MockExperiment {
     private static final List<String> PROVIDER_URL = Arrays.asList("http://www.provider.com","http://www.provider1.com");
     private static final List<String> PROVIDER_DESCRIPTION = Arrays.asList("Baseline experiment data provider","Another baseline experiment data provider");
 
-    // TODO: Merge with dev and use RandomDataTestUtils.getRandomExperimentAccession instead
-    private static final String EXPERIMENT_ACCESSION = "F-OOBA-123";
+    private static final String EXPERIMENT_ACCESSION = RandomDataTestUtils.getRandomExperimentAccession();
 
     private static final ImmutableSet<String> ARRAY_DESIGN_ACCESSIONS = ImmutableSet.of("A-AFFY-44", "A-GEOD-20277");
 
