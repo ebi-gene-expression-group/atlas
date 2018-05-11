@@ -38,14 +38,14 @@ public class JsonCellMetadataController {
 
         JsonArray result = new JsonArray();
 
-        inferredCellType.ifPresent(value -> result.add(getMetadataObject("Inferred cell type", value)));
-
         for(Map.Entry<String, String> entry : cellMetadataService.getFactors(experimentAccession, cellId).entrySet()) {
             result.add(
                     getMetadataObject(
                             cellMetadataService.factorFieldNameToDisplayName(entry.getKey()),
                             entry.getValue()));
         }
+
+        inferredCellType.ifPresent(value -> result.add(getMetadataObject("Inferred cell type", value)));
 
         return result.toString();
     }
