@@ -1,19 +1,21 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
-import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 @Component
 public class CellMetadataService {
@@ -29,40 +31,63 @@ public class CellMetadataService {
 
     public Optional<String> getInferredCellType(String experimentAccession, String cellId) {
         return getMetadataFieldValueForCellId(SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE, experimentAccession, cellId);
-
     }
 
-    public Map<String, String> getAttributeFromIdfFile(String experimentAccession, String cellId) {
-        Map<String, String> result = new HashMap<>();
+    public Map<String, String> getFactors(String experimentAccession, String cellId) {
+        Map<String, String> metadata = new HashMap<>();
+
+        SingleCellAnalyticsSchemaField[] fields = getFactorFieldNames(experimentAccession, cellId);
+
+        Map<String, Collection<Object>> results = getCellQueryResultForMultiValueFields(experimentAccession, cellId, fields);
+
+        for(String factorId : results.keySet()) {
+            String factorValue = StringUtils.join(results.get(factorId), ",");
+
+            metadata.put(factorId, factorValue);
+        }
+
+        return metadata;
+    }
+
+    // This is not currently used but leaving in for now in case the logic is still useful
+    public Map<String, String> getIdfFileAttributes(String experimentAccession, String cellId) {
+        Map<String, String> attributes = new HashMap<>();
 
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
         if(!idfParserOutput.getMetadataFieldsOfInterest().isEmpty()) {
-            for(String metadataFieldName : idfParserOutput.getMetadataFieldsOfInterest()) {
-                Optional<String> metadataValue = getCharacteristicValueForCellId(metadataFieldName, experimentAccession, cellId);
 
-                metadataValue.ifPresent(s -> result.put(metadataFieldName, s));
+            SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
+                    .stream()
+                    .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName((attribute))))
+                    .toArray(SingleCellAnalyticsSchemaField[]::new);
+
+            Map<String, Collection<Object>> results = getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields);
+
+            for(String attributeId : results.keySet()) {
+                String factorValue = StringUtils.join(results.get(attributeId), ",");
+
+                attributes.put(attributeId, factorValue);
             }
         }
 
-        return result;
+        return attributes;
     }
 
-    private Optional<String> getCharacteristicValueForCellId(String metadataFieldName, String experimentAccession, String cellId) {
-        return getMetadataFieldValueForCellId(SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(metadataFieldName), experimentAccession, cellId);
+    // Converts Solr field names to human-friendly names (e.g. inferred_cell_type => Inferred cell type)
+    public String factorFieldNameToDisplayName(String factorFieldName) {
+        String displayName = factorFieldName.replace("factor_", "").replace("_", " ");
+
+        return StringUtils.capitalize(displayName);
     }
 
-    private Optional<String> getFactorValueForCellId(String metadataFieldName, String experimentAccession, String cellId) {
-        return getMetadataFieldValueForCellId(SingleCellAnalyticsCollectionProxy.factorAsSchemaField(metadataFieldName), experimentAccession, cellId);
+    // Converts strings from .idf file to Solr schema field names (e.g. FACS marker => facs_marker)
+    private String attributeNameToFieldName(String attributeName) {
+        return attributeName.trim().toLowerCase().replace(" ", "_");
     }
 
-    private List<String> getMetadataFieldValuesForCellId(SchemaField<SingleCellAnalyticsCollectionProxy> metadataFields, String experimentAccession, String cellId) {
-        // TODO
-
-        return Collections.emptyList();
-    }
-
-    private Optional<String> getMetadataFieldValueForCellId(SchemaField<SingleCellAnalyticsCollectionProxy> metadataField, String experimentAccession, String cellId) {
+    // This retrieves the value for one single-value field in the Solr scxa-analytics collection
+    private Optional<String> getMetadataFieldValueForCellId(SingleCellAnalyticsSchemaField metadataField, String experimentAccession, String cellId) {
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
                         .addFilterFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
@@ -70,10 +95,46 @@ public class CellMetadataService {
                         .setFieldList(metadataField);
         QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
 
-        if(!queryResponse.getResults().isEmpty() && queryResponse.getResults().get(0).containsKey(metadataField.name())) {
+        if (!queryResponse.getResults().isEmpty() && queryResponse.getResults().get(0).containsKey(metadataField.name())) {
             return Optional.of((String) queryResponse.getResults().get(0).getFirstValue(metadataField.name()));
         }
 
         return Optional.empty();
     }
+
+    // Retrieves all the available factors stored in the Solr scxa-analytics collection for a particular cell
+    private SingleCellAnalyticsSchemaField[] getFactorFieldNames(String experimentAccession, String cellId) {
+        Map<String, Collection<Object>> queryResult = getCellQueryResultForMultiValueFields(
+                experimentAccession,
+                cellId,
+                new SingleCellAnalyticsSchemaField[] {SingleCellAnalyticsCollectionProxy.FACTORS});
+
+        return queryResult.getOrDefault(SingleCellAnalyticsCollectionProxy.FACTORS.name(), Collections.emptyList())
+                .stream()
+                .filter(factor -> !factor.toString().equalsIgnoreCase("single_cell_identifier"))
+                .map(factor -> SingleCellAnalyticsCollectionProxy.factorAsSchemaField(factor.toString()))
+                .toArray(SingleCellAnalyticsSchemaField[]::new);
+    }
+
+    // This returns Solr query results for a list of multi-value fields of interest
+    private Map<String, Collection<Object>> getCellQueryResultForMultiValueFields(String experimentAccession,
+                                                                                  String cellId,
+                                                                                  SingleCellAnalyticsSchemaField[] fieldsOfInterest) {
+        Map<String, Collection<Object>> queryResult = new HashMap<>();
+
+        SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
+                new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
+                        .addFilterFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
+                        .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, cellId)
+                        .setFieldList(fieldsOfInterest);
+
+        QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
+
+        if(!queryResponse.getResults().isEmpty()) {
+            queryResult = queryResponse.getResults().get(0).getFieldValuesMap();
+        }
+
+        return queryResult;
+    }
+
 }

@@ -47,6 +47,6 @@ public class CellMetadataServiceIT {
 
     @Test
     public void experimentWithoutMetadataFieldsInIdf() {
-        assertThat(subject.getAttributeFromIdfFile("E-ENAD-13", "SRR5101952")).isEmpty();
+        assertThat(subject.getIdfFileAttributes("E-ENAD-13", "SRR5101952")).isEmpty();
     }
 }

@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,14 +36,27 @@ public class JsonCellMetadataController {
 
         Optional<String> inferredCellType = cellMetadataService.getInferredCellType(experimentAccession, cellId);
 
-        JsonObject result = new JsonObject();
+        JsonArray result = new JsonArray();
 
-        inferredCellType.ifPresent(s -> result.addProperty("inferredCellType", s));
+        inferredCellType.ifPresent(value -> result.add(getMetadataObject("Inferred cell type", value)));
 
-        for(Map.Entry<String, String> entry : cellMetadataService.getAttributeFromIdfFile(experimentAccession, cellId).entrySet()) {
-            result.addProperty(entry.getKey(), entry.getValue());
+        for(Map.Entry<String, String> entry : cellMetadataService.getFactors(experimentAccession, cellId).entrySet()) {
+            result.add(
+                    getMetadataObject(
+                            cellMetadataService.factorFieldNameToDisplayName(entry.getKey()),
+                            entry.getValue()));
         }
 
         return result.toString();
     }
+
+    private JsonObject getMetadataObject(String name, String value) {
+        JsonObject result = new JsonObject();
+
+        result.addProperty("displayName", name);
+        result.addProperty("value", value);
+
+        return  result;
+    }
+
 }
