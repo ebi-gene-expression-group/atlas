@@ -7,8 +7,8 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 
 import static org.hamcrest.Matchers.is;

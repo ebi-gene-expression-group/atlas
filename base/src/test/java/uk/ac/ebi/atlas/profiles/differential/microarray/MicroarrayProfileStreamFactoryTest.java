@@ -20,7 +20,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfil
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.SelectProfiles;
 import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import java.util.Collections;

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
@@ -10,7 +11,6 @@ import java.util.Set;
 
 @Named
 public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
-
     private MicroarrayDifferentialAnalyticsDao analyticsDao;
     private MicroarrayDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory;
     private ConfigurationTrader configurationTrader;
@@ -30,6 +30,7 @@ public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
         this.configurationTrader = configurationTrader;
     }
 
+    @Transactional
     @Override
     public void loadAnalytics(String accession) throws IOException {
         Set<String> arrayDesigns =
@@ -42,6 +43,7 @@ public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
         }
     }
 
+    @Transactional
     @Override
     public void deleteAnalytics(String accession) {
         analyticsDao.deleteAnalytics(accession);

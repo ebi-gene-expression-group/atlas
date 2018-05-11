@@ -10,13 +10,14 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPage.bundle.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/experimentPage.bundle.js"></script>
 
-<script type="text/javascript">
-    experimentPage.render({
-        atlasUrl: '${pageContext.request.contextPath}/',
-        resourcesUrl: '${pageContext.request.contextPath}/resources/js-bundles/',
-        content: ${content},
-    }, 'experiment-page');
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        experimentPage.render({
+            atlasUrl: '${pageContext.request.contextPath}/',
+            resourcesUrl: '${pageContext.request.contextPath}/resources/js-bundles/',
+            content: ${content},
+        }, 'experiment-page');
+    });
 </script>

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
+package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Named
-public class SingleCellAnalyticsDao {
+public class AnalyticsDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellAnalyticsDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsDao.class);
 
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 100000;
@@ -23,11 +23,11 @@ public class SingleCellAnalyticsDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
-    public SingleCellAnalyticsDao(JdbcTemplate jdbcTemplate) {
+    public AnalyticsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadAnalytics(final String experimentAccession, Stream<SingleCellAnalytics> singleCellAnalyticsStream) {
+    public void loadAnalytics(final String experimentAccession, Stream<Analytics> singleCellAnalyticsStream) {
         LOGGER.info("loadAnalytics for experiment {} begin", experimentAccession);
 
         final List<Object[]> batch = new ArrayList<>(BATCH_SIZE);

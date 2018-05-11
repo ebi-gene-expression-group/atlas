@@ -113,10 +113,11 @@
                         }
 
                         return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery=" + JSON.stringify(newGeneQuery);
+
                     }
 
                     var experimentUrlForPubMedBioentities = replaceGeneQueryWithBioentities(document.URL, bioentities);
-                    window.open(experimentUrlForPubMedBioentities, '_blank');
+                    window.open(encodeURI(experimentUrlForPubMedBioentities), '_blank');
                 });
 
             });

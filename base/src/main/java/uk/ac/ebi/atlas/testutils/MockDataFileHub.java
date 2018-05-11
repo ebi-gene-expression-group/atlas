@@ -1,7 +1,8 @@
-package uk.ac.ebi.atlas.resource;
+package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Triple;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,4 +143,7 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(REACTOME_PATHWAYS_FILE_PATH_TEMPLATE, accession, comparison), lines);
     }
 
+    public void addClustersFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE, accession), lines);
+    }
 }

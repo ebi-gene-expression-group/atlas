@@ -2,9 +2,7 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -34,7 +32,7 @@ public class SingleCellBaselineExperimentBuilder {
     private Set<String> dois;
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
-    private List<AssayGroup> assayGroups;
+    private List<Cell> cells;
     private ExperimentDisplayDefaults experimentDisplayDefaults;
     private ExperimentType experimentType;
     private List<String> alternativeViews = Collections.emptyList();
@@ -90,8 +88,8 @@ public class SingleCellBaselineExperimentBuilder {
         return this;
     }
 
-    public SingleCellBaselineExperimentBuilder withAssayGroups(List<AssayGroup> assayGroups) {
-        this.assayGroups = assayGroups;
+    public SingleCellBaselineExperimentBuilder withCells(List<Cell> cells) {
+        this.cells = cells;
         return this;
     }
 
@@ -110,29 +108,20 @@ public class SingleCellBaselineExperimentBuilder {
         return this;
     }
 
-//    public SingleCellBaselineExperimentBuilder withAlternativeViews(Pair<List<String>, List<String>> p) {
-//        this.alternativeViews = p.getLeft();
-//        this.alternativeViewDescriptions = p.getRight();
-//        return this;
-//    }
-
-
-
-    public BaselineExperiment create() {
+    public SingleCellBaselineExperiment create() {
         validate();
 
-        return new
-                BaselineExperiment(experimentType, experimentAccession, lastUpdate, description,
-                displayName, disclaimer, species, pubMedIds, dois, experimentDesign, assayGroups, dataProviderURL,
-                dataProviderDescription, alternativeViews, alternativeViewDescriptions , experimentDisplayDefaults);
+        return new SingleCellBaselineExperiment(experimentType, experimentAccession, lastUpdate, displayName,
+                description, disclaimer, species, pubMedIds, dois, experimentDesign, dataProviderURL,
+                dataProviderDescription, alternativeViews, alternativeViewDescriptions, cells, experimentDisplayDefaults);
     }
 
     private void validate() {
         checkNotNull(experimentType);
         checkState(experimentType.isBaseline());
-//        checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
+        checkNotNull(cells, "Please provide a non empty set of Cell objects");
         checkNotNull(species, "Please provide a species name");
-//        checkState(CollectionUtils.isNotEmpty(assayGroups), "Please provide a non empty set of AssayGroup objects");
+        checkState(CollectionUtils.isNotEmpty(cells), "Please provide a non empty set of Cell objects");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
         checkState(pubMedIds != null, "Please provide a pubMedIds object");
 

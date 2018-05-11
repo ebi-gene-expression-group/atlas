@@ -9,8 +9,8 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -31,7 +31,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Responsible for:
  * - Database:
  *     - gxa: the experiments table, and the deprecated expression values tables)
- *     - scxa: tables scxa_experiments, scxa_analytics; TODO scxa_marker_gene, scxa_tsne_plot_*
+ *     - scxa: tables scxa_experiments, scxa_analytics, scxa_tsne_plot_*; TODO scxa_marker_gene
  * - design files on disk
  */
 
@@ -129,6 +129,7 @@ public class ExperimentCrud {
 
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
         experimentDao.addExperiment(experimentDTO, accessKeyUuid);
+
         updateWithNewExperimentDesign(condensedSdrfParserOutput.getExperimentDesign(), experimentDTO);
 
         return accessKeyUuid;

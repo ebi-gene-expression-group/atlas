@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.utils.EuropePmcClient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,29 +22,31 @@ public class ExperimentPageContentService {
 
     private final ExperimentFileLocationService experimentFileLocationService;
     private final DataFileHub dataFileHub;
-
+    private final TsnePlotSettingsService tsnePlotSettingsService;
     private final EuropePmcClient europePmcClient;
 
     private static final Gson gson = new Gson();
 
     public ExperimentPageContentService(ExperimentFileLocationService experimentFileLocationService,
                                         DataFileHub dataFileHub,
+                                        TsnePlotSettingsService tsnePlotSettingsService,
                                         EuropePmcClient europePmcClient) {
         this.experimentFileLocationService = experimentFileLocationService;
         this.dataFileHub = dataFileHub;
+        this.tsnePlotSettingsService = tsnePlotSettingsService;
         this.europePmcClient = europePmcClient;
     }
 
-    public JsonObject getTsnePlotData() {
+    public JsonObject getTsnePlotData(String experimentAccession) {
         JsonObject result = new JsonObject();
 
-        JsonArray availableClusters = new JsonArray();
-        Arrays.stream(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}).forEach(availableClusters::add);
-        result.add("ks", availableClusters);
+        result.add("ks", gson.toJsonTree(tsnePlotSettingsService.getAvailableClusters(experimentAccession)));
 
-        // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174
+        tsnePlotSettingsService.getExpectedClusters(experimentAccession)
+                .ifPresent(value -> result.addProperty("selectedK", value));
+
         JsonArray perplexityArray = new JsonArray();
-        Arrays.stream(new int[] {1, 5, 10, 15, 20}).forEach(perplexityArray::add);
+        tsnePlotSettingsService.getAvailablePerplexities(experimentAccession).forEach(perplexityArray::add);
         result.add("perplexities", perplexityArray);
 
         JsonArray units = new JsonArray();

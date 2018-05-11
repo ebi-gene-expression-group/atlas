@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analytics;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsLoader;
-import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsLoader;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
@@ -13,12 +11,12 @@ import javax.inject.Named;
 public class GxaAnalyticsLoaderFactory implements AnalyticsLoaderFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(GxaAnalyticsLoaderFactory.class);
 
-    private final RnaSeqDifferentialAnalyticsLoader rnaSeqDifferentialAnalyticsLoader;
-    private final MicroarrayDifferentialAnalyticsLoader microarrayDifferentialAnalyticsLoader;
+    private final AnalyticsLoader rnaSeqDifferentialAnalyticsLoader;
+    private final AnalyticsLoader microarrayDifferentialAnalyticsLoader;
 
     @Inject
-    public GxaAnalyticsLoaderFactory(RnaSeqDifferentialAnalyticsLoader rnaSeqDifferentialAnalyticsLoader,
-                                     MicroarrayDifferentialAnalyticsLoader microarrayDifferentialAnalyticsLoader) {
+    public GxaAnalyticsLoaderFactory(AnalyticsLoader rnaSeqDifferentialAnalyticsLoader,
+                                     AnalyticsLoader microarrayDifferentialAnalyticsLoader) {
         this.rnaSeqDifferentialAnalyticsLoader = rnaSeqDifferentialAnalyticsLoader;
         this.microarrayDifferentialAnalyticsLoader = microarrayDifferentialAnalyticsLoader;
     }

@@ -1,266 +1,31 @@
-#masthead img {margin-left: -82px;width: 65px;}/*to make logo look like an icon -IMPORTANT limit width of image or banner show black bgd at bottom*/
-
 #masthead {
-    background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url(../images/cell/Spencer_cells.jpg);
-    background-repeat: no-repeat, no-repeat;
-    background-position:  left, top right;
-    filter: hue-rotate(-711deg);
-}
-
-/***Overwriting Foundation***/
-
-.tabs-title > a {
-    font-size: 0.9rem;
-    color: #3e3e3e;
-}
-.tabs-title > a:hover {
-    background: aliceblue;
-    color: #0a0a0a;
-}
-.tabs-title > a:focus,
-.tabs-title > a[aria-selected='true'] {
-    color: #0a0a0a;
-       background: #e6e6e6;
-}
-
-/*Local style*/
-.tabs-title > a[aria-selected='true'] {
-    background: #e6e6e6;
-    color: #0a0a0a;
-}/*tabs home*/
-
-.button-rd {
-    text-align: center;
-    line-height: 1;
-    -webkit-appearance: none;
-    vertical-align: middle;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    padding: 0.75em 1em;
-    margin:0;
-    font-size: 0.9rem;
-    background-color: #2199e8;
-    color: #fefefe;
-    font-weight: bold;
-}
-
-.button-rd.tiny { font-size: 0.6rem; }
-.button-rd.differential {background-color: #5E8CC0; }
-.button-rd.baseline {background-color: #23afa5; }
-
-a.differential {color: #5E8CC0; }
-a.baseline {color: #23afa5; }
-
-/*!*TABLE*!*/
-/*table {font-size: 94%; border-collapse: collapse;}!*reduce default font-size for tables*!*/
-/*table a, table a:visited {color:#222;}*/
-/*table a:hover  {border-bottom: solid 1px #222;}*/
-/*.pagination .current {background: #2199e8;} !*overwritte foundation default? style for table anvigation*!*/
-
-title {font-size: 1rem;}
-.accordion-title:before {content: "\25B6";}
-.is-active > .accordion-title::before {content: "\25BC";}
-
-body .has-tip {
-    border-bottom-width: 0px;
-    background: none
-}
-
-/* sub menu*/
-#masthead .menu .active  {
-    color: #0a0a0a;
-    background: #fff;
-}
-
-.horizontal.menu > li > a {
-    border-bottom-style: solid;
-    border-bottom-width:3px;
-    border-bottom-color:transparent;
-} /*to make all menu items same height*/
-
-.menu.badge {background: rgba(0, 0, 0, 0.23);padding: 0.6em 0.1em;font-weight: normal; /*avoid bold on badge when activated*/}
-
-
-.local-footer {
-    background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url(../images/cell/Spencer_cells.jpg);
-    background-repeat: no-repeat, no-repeat;
-    background-position:  left, top right;
     background-size: cover;
 }
 
-.local-footer h5 {color:white;}
-.local-footer a {
-    color: white;
-}
-.local-footer a:hover {
-    color: white;
-    border-bottom: solid 1px;
+#publications-list .icon {
+    font-size: 3em;
 }
 
-
-.experiment-list-latest ul {list-style: none; padding: 0;  margin: 0; font-size: 94%;}/*smaller font-size for list elements*/
-/*previous list element style*/
-.experiment-list-latest .list-project-l ul  li {padding: 0.2em 0.5em; border-radius:6px;}
-.experiment-list-latest .list-project-l ul li span {margin-right: 0.5em; margin-bottom: 0;}
-.browse-by-species ul.tabs li a {color:#0a0a0a;} /*tab*/
-.experiment-list-latest .list-project-l a, .tabs a {color:#0a0a0a;} /*remove color from the tab link*/
-.experiment-list-latest .list-project-l a.base-res {color: #1f9e95;} /*add underline for specific link in the list items*/
-.experiment-list-latest .list-project-l a.base-res:hover {border-bottom: 1px solid #1f9e95;} /*add underline for specific link in the list items*/
-.experiment-list-latest .list-project-l ul li:hover { background-color:aliceblue;}
-.experiment-list-latest .list-project-l ul li:hover span {background-color:#2d3e51;}
-.list-project-l { margin-bottom: 1rem;}
-/*/previous list element style*/
-
-/*new list element style using flex*/
-.flex-list a {color:#0a0a0a;}
-.flex-list .flex-container {padding: 0.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap;}/*can't make a wrapping exception for first eleemnts*/
-.flex-table {display: flex;justify-content: space-between;} /*search result page button*/
-.flex-table span {margin-right: 0.1rem;margin-bottom: 0;} /*search result page button*/
-.flex-list ul li:hover {background-color:aliceblue;}
-.flex-list ul li .button-rd {margin-right: 0.5rem;}
-.flex-list ul li:hover .button-rd {background-color:#2d3e51;}
-.flex-list ul li:hover .button {background-color:#2d3e51;}
-.flex-list ul li:hover .button:hover {opacity:0.6;}
-.flex-list ul li .button {margin-bottom:0;}
-.flex-list ul li .button .button.primary { background-color:#23afa5; }
-/*/new list element style using flex*/
-
-.flex-item .button.primary {
-    background-color:#23afa5 ;
+#latest-experiments .media-object-section:first-child {
+    padding-right: 0;
 }
 
-.jumbo-news-container {
-    text-align: center;
-    background-color: #eee;
+a.clear {
+    border: none;
 }
 
-.isvisible {display: block;}
-/*go term etiquette*/
-
-body .has-tip.go-bp {background-color: #058dc7; color:white;}
-body .has-tip.go-mf {background-color: #50b432; color:white;}
-body .has-tip.go-cc {background-color: #ed561b; color:white;}
-
-.show {display:block;}
-
-#back-top {position: fixed; bottom: 0;  right: 19px; z-index: 100;}
-#back-top span.topicon {font-size: 1.5em;color:white;opacity: 0.18; background-color: black;padding: 6px 7px;}
-#back-top:hover span.topicon {opacity: 0.4; }
-
-#back-top span.text {opacity: 0; color: grey; font-size: 0.8em;}
-#back-top:hover span.text {opacity: 1;}
-#back-top:hover {padding-bottom: 14px;}
-
-@-webkit-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}@-moz-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}@-ms-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}
-
-.anim {-webkit-transition: all .3s; /* Safari */ -moz-transition: all .3s; -o-transition: all .3s; -ms-transition: all .3s; transition: all .3s;}
-.extra {background-color: white;height: 0.8rem; } /*if we want to add a border and shadow*/
-
-.image-container {
-    float: left;
-    width: 27%;
-    margin: 0 2em 1em 0;
-    overflow: hidden;}
-
-.image-container-nof {margin: 0 2em 1em 0;}
-
-.cell_type_gradient {background: url(../images/cell/cell-type_01.svg) no-repeat 51% 53%; background-size: 219%; height: 7em;}
-.cell_type_real {background: url(../../images/cell/cell-type_02.svg) no-repeat 51% 53%; background-size: 203%; height: 7em;}
-.cell_type {background: url(../../images/cell/cell-type_02.svg) no-repeat 50% 89%; background-size: 160%; height: 7em;}
-.tissue_type {background: url(../images/tissue/tissue-type_01.svg) no-repeat 21% 26%; background-size: 128%; height: 7em;}
-.tissue_type {background: url(../images/tissue/tissue-type_01.svg) no-repeat 21% 50%; background-size: 128%; height: 7em;}
-
-/*********** TISSUE type ************/
-
-/* flat black tissues*/
-.tissue_type_flate .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 2% 49%; background-size: 1200%;  height: 4.1em;filter: opacity(70%);}
-.tissue_type_flate .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 14% 47%; background-size: 1200%; height: 4.1em;filter:  opacity(70%); }
-.tissue_type_flate .tissue_eye {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4.1em;filter: opacity(70%); }
-.tissue_type_flate .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 27% 49%; background-size: 1200%;  height: 4.1em;filter: opacity(70%);}
-.tissue_type_flate .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 39% 48%; background-size: 1200%;  height: 4.1em;filter:  opacity(70%);}
-.tissue_type_flate .tissue_spleen {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4.1em;}
-/* plain round tissues*/
-.tissue_type_rd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0% 102%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
-.tissue_type_rd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 102%; background-size: 1140%; height: 4.1em;filter:  opacity(70%); }
-.tissue_type_rd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 102%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
-.tissue_type_rd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 102%; background-size: 1140%;  height: 4.1em;filter:  opacity(70%);}
-/* light round tissues*/
-.tissue_type_lrd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0 85%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
-.tissue_type_lrd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 85%; background-size: 1140%; height: 4.1em;filter:  opacity(70%); }
-.tissue_type_lrd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 85%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
-.tissue_type_lrd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 85%; background-size: 1140%;  height: 4.1em;filter:  opacity(70%);}
-
-
-/*********** CEll type ************/
-.flex-cell .cell_bipolar {background: url(../images/cell/cell-type_03.svg) no-repeat 32% 75%; background-size: 700%; height: 7em;}
-.flex-cell .cell_muscle {background: url(../images/cell/cell-type_03.svg) no-repeat 50% 75%; background-size: 700%;}
-.flex-cell .cell_epi {background: url(../images/cell/cell-type_03.svg) no-repeat 66% 75%; background-size: 700%;}
-.flex-cell .cell_fat {background: url(../images/cell/cell-type_03.svg) no-repeat 82% 75%; background-size: 700%;}
-
-.flex-cell {display: flex;justify-content: space-between;}
-.flex-cell div {width: 22%;}
-.flex-anato {display: flex;justify-content: space-between; align-items: center;}
-.flex-anato div {width: 12%;}
-
-.callout.atlas {
-    margin: 0 0 1rem 0;
-    padding: 1rem;
-    border: 1px solid rgba(10, 10, 10, 0.25);
-    border-radius: 0;
-    position: relative;
-    color: #0a0a0a;
-    background-color: white;}
-/* custom light callout*/
-
-span.green:before {
-    font-size: 600%;
-    color: #5cb85c;
-}
-span.red:before {font-size: 600%;
-    color: #d9534f;
-}
-span.blue:before {font-size: 600%;color:#5bc0de;}
-.icon-socialmedia:before {
-    font-family: 'EBI-SocialMedia';
-    font-size: 100%;
-    color: black;
-    content: attr(data-icon);
-    margin: 0 0.3em 0 0;
+ul.clear {
+    list-style: none;
 }
 
-.publication-list .icon-conceptual:before {color: #5688b3;  }
-
-/*.icon-species.green {background-color: #12b176;}*/
-/*.icon-species.red {background-color: #d9534f;}*/
-/*.icon-species.blue {background-color: #539eb3;}*/
-/*.icon-species.green:before,.icon-species.red:before, .icon-species.blue:before {color:white;}*/
-
-
-.icon-species:before {
-    font-family: 'EBI-Species';
-    font-size: 100%;
-    color: black;
-    content: attr(data-icon);
-    margin: 0 0 0 0;
-}
-.icon {
-    text-decoration: none;
-    font-style: normal;
+.button.no-action {
+    cursor: default;
 }
 
-.icon-static:before, .icon-generic:before {
-    font-family: 'EBI-Generic';
-    font-size: 100%;
-    color: #BBB;
-    content: attr(data-icon);
-    margin: 0 0 0 0;
+.button.fixed-width-medium {
+    width: 80px;
 }
 
-.icon-functional:before {
-    font-family: 'EBI-Functional';
-    font-size: 100%;
-    color: white;
-    content: attr(data-icon);
-    margin: 0 0 0 0;
+hr {
+    border-bottom: 1px solid lightgrey;
 }
-/*END EBI Font*/

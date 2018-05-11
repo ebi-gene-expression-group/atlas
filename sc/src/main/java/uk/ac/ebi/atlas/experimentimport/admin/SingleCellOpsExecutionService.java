@@ -134,6 +134,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
                 break;
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
+                break;
             case POPULATE_MARKER_GENES:
                 markerGeneDao.loadMarkerGenes(new RandomMarkerGeneInputStream(accession, 5000));
                 break;

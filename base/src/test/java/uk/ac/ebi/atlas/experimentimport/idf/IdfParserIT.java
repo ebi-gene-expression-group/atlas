@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.commons.readers.ArrayExpressIdfStreamerFactory;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
-import uk.ac.ebi.atlas.utils.TestingUtils;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
@@ -29,7 +29,7 @@ public class IdfParserIT {
     @Inject
     private DataFileHubFactory dataFileHubFactory;
     @Inject
-    private TestingUtils testingUtils;
+    private JdbcUtils jdbcUtils;
 
     @ParameterizedTest
     @MethodSource("singleCellExperimentsProvider")
@@ -58,10 +58,10 @@ public class IdfParserIT {
     }
 
     private Iterable<String> singleCellExperimentsProvider() {
-        return testingUtils.getSingleCellExperimentAccessions();
+        return jdbcUtils.getPublicSingleCellExperimentAccessions();
     }
 
     private Iterable<String> expressionAtlasExperimentsProvider() {
-        return testingUtils.getExpressionAtlasExperimentAccessions();
+        return jdbcUtils.getAllExpressionAtlasExperimentAccessions();
     }
 }

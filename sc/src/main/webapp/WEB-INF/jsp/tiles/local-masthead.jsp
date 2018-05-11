@@ -1,47 +1,58 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<div>
-    <header id="masthead" class="masthead">
+<div data-sticky-container>
+    <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
         <div class="masthead-inner row">
             <!-- local-title -->
-            <div class="small-8 medium-10 columns anim" id="local-title">
-                <h1>
-                    <a href="${pageContext.request.contextPath}/home" title="Back to Single Cell Expression Atlas homepage">
-                        <img src="${pageContext.request.contextPath}/resources/images/logos/sc_atlas_logo.png" alt="Single Cell Expression Atlas logo" >
-                        Single Cell Expression Atlas
-                    </a>
-                </h1>
-                <h4 class="hide-for-small-only">Single-cell gene expression across species</h4>
+            <a href="${pageContext.request.contextPath}/home" title="Back to Single Cell Expression Atlas homepage">
+            <div class="media-object columns small-8" id="local-title">
+                <div class="media-object-section hide-for-small-only">
+                    <img src="${pageContext.request.contextPath}/resources/images/logos/sc_atlas_logo.png" alt="Single Cell Expression Atlas logo" style="height:7em">
+                </div>
+                <div class="media-object-section">
+                    <h1>Single Cell Expression&nbsp;Atlas</h1>
+                    <h4 class="show-for-large">Single cell gene expression across species</h4>
+                </div>
             </div>
+            </a>
+
+            <!-- local-search -->
+            <!--
+            <div class="columns medium-6 text-right">
+                <div class="">
+                    <form id="ebi_search" action="../search">
+                        <fieldset>
+                            <div class="input-group margin-bottom-none margin-top-large">
+                                <input type="text" name="q" id="tipue_search_input" class="input-group-field" pattern=".{3,}" tabindex="1" title="At least 3 characters" placeholder="Search the Style Lab" required>
+                                <div class="input-group-button">
+                                    <input id="search_submit" class="button icon icon-functional" tabindex="2" type="submit" name="submit1" value="1">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <p id="example" class="small">
+                          Examples: <a href="/ebisearch/search.ebi?db=allebi&amp;requestFrom=ebi_index&amp;query=blast">blast</a>, <a href="/ebisearch/search.ebi?db=allebi&amp;query=keratin&amp;requestFrom=ebi_index">keratin</a>, <a href="/ebisearch/search.ebi?db=allebi&amp;query=bfl1&amp;requestFrom=ebi_index">bfl1</a>
+                          <a class="float-right" href="#"><span class="icon icon-generic" data-icon="("></span> advanced search</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            -->
+            <!-- /local-search -->
             <!-- /local-title -->
 
             <!-- local-nav -->
-            <nav id="menu">
-                <!-- Use the menu on click and not on mouse over not create confusion for small screens to much menu open without wanting it -->
-                <ul class="show-for-small-only dropdown menu float-left" data-options="disableHover:true;clickOpen:true" data-dropdown-menu data-description="navigational" data-magellan>
-                    <!-- Alternative menu for small screens -->
-                    <li class="show-for-small-only has-submenu is-down-arrow" role="menuitem" aria-haspopup="true" aria-selected="false" aria-expanded="false" aria-label="Also in this section" ><a href="#">Atlas menu</a>
-                        <ul class="menu submenu is-dropdown-submenu first-sub vertical" data-submenu="" aria-hidden="true" role="menu">
-                            <li class="first active-trail active menu-mlid-3080 menu-overview active active-trail menu-3080 is-submenu-item is-dropdown-submenu-item" role="menuitem"><a href="index_atlas_irene.html" class="active">Home</a></li>
-                            <li class="menu-mlid-3422 menu-research-groups menu-3422 is-submenu-item is-dropdown-submenu-item" role="menuitem"><a href="atlas_browse.html">Browse experiments</a></li>
-                            <li class="has-children menu-mlid-3407 menu-postdocs menu-3407 is-submenu-item is-dropdown-submenu-item" role="menuitem"><a href="atlas_download.html">Download</a></li>
-                            <li class="last has-children menu-mlid-3125 menu-3125 is-submenu-item is-dropdown-submenu-item" role="menuitem"><a href="atlas_help.html">Help</a></li>
-                            <li class="last has-children menu-mlid-3125  is-submenu-item is-dropdown-submenu-item" role="menuitem"><a href="atlas_about.html">About</a></li>
-                        </ul>
-                    </li>
+            <nav>
+                <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
+                    <li id="local-nav-home"><a href="${pageContext.request.contextPath}/home"><i class="icon icon-generic padding-right-medium" data-icon="H"></i>Home</a></li>
+                    <li id="local-nav-experiments"><a href="${pageContext.request.contextPath}/experiments"><i class="icon icon-common padding-right-medium" data-icon="&#x41;"></i>Browse experiments</a></li>
+                    <%--<li id="local-nav-download"><a href="#"><i class="icon icon-common padding-right-medium" data-icon="&#xc2;"></i>Download</a></li>--%>
+                    <li id="local-nav-help"><a href="#"><i class="icon icon-common padding-right-medium" data-icon="&#x3f;"></i>Help</a></li>
+                    <%--<li id="local-nav-about"><a href="../websites/patterns/"><i class="icon icon-common padding-right-medium" data-icon="&#x2139;"></i>About</a></li>--%>
+                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/scxa" target="_blank" data-icon="X"><i class="icon icon-common padding-right-medium" data-icon="&#x6e;"></i>Feedback</a></li>
                 </ul>
-
-                <ul class="hide-for-small-only horizontal menu" data-magellan>
-                    <li><a href="" class="active">Home</a></li>
-                    <li><a href="">Browse experiments</a></li>
-                    <li><a href="">Download</a></li>
-                    <li><a href="">Help</a></li>
-                    <li><a href="">About</a></li>
-                </ul>
-
-                <!-- Adding class hide-for-small-only as the right hand side takes a lot of space for small + remove text for medium-->
             </nav>
             <!-- /local-nav -->
         </div>
     </header>
 </div>
+
