@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
@@ -22,6 +23,8 @@ public class CellMetadataServiceIT {
     private IdfParser idfParser;
     @Inject
     private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
+    @Inject
+    private JdbcUtils jdbcUtils;
 
     private CellMetadataService subject;
 
@@ -32,21 +35,65 @@ public class CellMetadataServiceIT {
 
     @Test
     public void existingInferredCellType() {
-        assertThat(subject.getInferredCellType("E-GEOD-84465", "SRR3934353")).isPresent();
+        // Ideally we would retrieve a random experiment accession, but not all experiments have the inferred cell type characteristic
+        String cellId = jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-14");
+        assertThat(
+                subject.getInferredCellType(
+                        "E-ENAD-14",
+                        cellId))
+                .isPresent();
     }
 
     @Test
     public void inferredCellTypeForNonexistentExperimentId() {
-        assertThat(subject.getInferredCellType("FOO", "SRR3934353")).isNotPresent();
+        assertThat(subject.getInferredCellType("FOO", "FOO")).isNotPresent();
+    }
+
+    @Test
+    public void factorsForValidExperiment() {
+        String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
+        String cellId = jdbcUtils.fetchRandomCellFromExperiment(experimentAccession);
+
+        assertThat(subject.getFactors(experimentAccession, cellId)).isNotEmpty();
+    }
+
+    @Test
+    public void factorsForInvalidExperiment() {
+        assertThat(subject.getFactors("FOO", "FOO")).isEmpty();
     }
 
     @Test
     public void inferredCellTypeForNonexistentCellId() {
-        assertThat(subject.getInferredCellType("E-GEOD-84465", "FOO")).isNotPresent();
+        assertThat(subject.getInferredCellType("E-ENAD-14", "FOO")).isNotPresent();
+    }
+
+    @Test
+    public void experimentWithMetadataFieldsInIdf() {
+        // Ideally we would retrieve a random experiment accession, but not all experiments have curated metadata files in the idf file
+        assertThat(
+                subject.getIdfFileAttributes(
+                        "E-ENAD-14",
+                        jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-14")))
+                .isNotEmpty()
+                .containsOnlyKeys("characteristic_individual");
     }
 
     @Test
     public void experimentWithoutMetadataFieldsInIdf() {
-        assertThat(subject.getIdfFileAttributes("E-ENAD-13", "SRR5101952")).isEmpty();
+        assertThat(
+                subject.getIdfFileAttributes(
+                        "E-ENAD-13",
+                        jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-13")))
+                .isEmpty();
+    }
+
+    @Test
+    public void validFactorFieldToDisplayName() {
+        assertThat(subject.factorFieldNameToDisplayName("factor_biopsy_site")).isEqualToIgnoringCase("Biopsy site");
+    }
+
+    @Test
+    public void emptyFactorFieldToDisplayName() {
+        assertThat(subject.factorFieldNameToDisplayName("")).isEmpty();
     }
 }
