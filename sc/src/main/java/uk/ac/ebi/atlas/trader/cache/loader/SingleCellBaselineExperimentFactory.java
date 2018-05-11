@@ -35,6 +35,7 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
                 .withPubMedIds(experimentDTO.getPubmedIds())
+                .withDois(experimentDTO.getDois())
                 .withCells(experimentDesign.getAllRunOrAssay().stream().map(Cell::new).collect(Collectors.toList()))
                 .withExperimentDesign(experimentDesign)
                 .withDataProviderDescription(new ArrayList<>())

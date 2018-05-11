@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 import javax.inject.Inject;
 import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
@@ -51,10 +52,14 @@ public class BaselineExperimentsCacheLoaderIT {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        Set<String> pubMedIds = Collections.emptySet();
-        ExperimentDTO experimentDTO = new ExperimentDTO(accession, ExperimentType.RNASEQ_MRNA_BASELINE,
-                "Homo sapiens", pubMedIds, "title", new Date(),
-                false, UUID.randomUUID().toString());
+        ExperimentDTO experimentDTO = new ExperimentDTO(
+                accession, ExperimentType.RNASEQ_MRNA_BASELINE,
+                "Homo sapiens",
+                Collections.emptySet(),
+                Collections.emptySet(),
+                "title", new Date(),
+                false,
+                UUID.randomUUID().toString());
         when(expressionAtlasExperimentDao.getExperimentAsAdmin(accession)).thenReturn(experimentDTO);
 
         subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,

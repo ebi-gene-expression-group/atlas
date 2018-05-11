@@ -32,9 +32,14 @@ public class DifferentialExperimentFactory implements ExperimentFactory<Differen
         final ExperimentConfiguration experimentConfiguration =
                 configurationTrader.getExperimentConfiguration(experimentAccession);
 
-        return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(),
-                experimentConfiguration.getContrastAndAnnotationPairs(), experimentDescription,
-                speciesFactory.create(experimentDTO.getSpecies()), experimentDTO.getPubmedIds(), experimentDesign);
-
+        return new DifferentialExperiment(
+                experimentAccession,
+                experimentDTO.getLastUpdate(),
+                experimentConfiguration.getContrastAndAnnotationPairs(),
+                experimentDescription,
+                speciesFactory.create(experimentDTO.getSpecies()),
+                experimentDTO.getPubmedIds(),
+                experimentDTO.getDois(),
+                experimentDesign);
     }
 }

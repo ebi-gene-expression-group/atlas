@@ -44,6 +44,7 @@ public class ScxaExperimentDaoIT {
                         ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
                         "Homo sapiens",
                         Sets.newHashSet("PubMed ID 1", "PubMed ID 2"),
+                        Sets.newHashSet("100.100/doi", "200.200/doi"),
                         "Single-cell RNA-seq analysis of human pancreas from healthy individuals and type 2 diabetes patients",
                         new SimpleDateFormat("yyyy-MM-dd").parse("2017-01-31"),
                         true,

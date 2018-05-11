@@ -10,6 +10,6 @@ public class ExperimentDTOTest {
 
     public static ExperimentDTO mockDTO(String accession, ExperimentType experimentType){
         return new ExperimentDTO(accession, experimentType,
-                "Homo sapiens", new HashSet<>(), "title", new Date(), false, UUID.randomUUID().toString());
+                "Homo sapiens", new HashSet<>(), new HashSet<>(),"title", new Date(), false, UUID.randomUUID().toString());
     }
 }

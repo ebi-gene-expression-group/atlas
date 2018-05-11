@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
@@ -36,7 +37,7 @@ public class BaselineTranscriptProfileStreamFactoryTest {
     private AssayGroup g1 = new AssayGroup("g1", ImmutableSet.of(assay_1));
     private AssayGroup g2 = new AssayGroup("g2", ImmutableSet.of(assay_2, assay_3));
 
-    private BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(ImmutableList.of(g1, g2), "accession");
+    private BaselineExperiment experiment = MockExperiment.createBaselineExperiment(ImmutableList.of(g1, g2));
 
     @Before
     public void setUp() throws Exception {

@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -28,17 +29,20 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     private final AnalyticsIndexerManager analyticsIndexerManager;
     private final ExpressionSerializerService expressionSerializerService;
     private final ExperimentTrader experimentTrader;
+    private final ExperimentAttributesService experimentAttributesService;
 
     public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
                                                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                                         AnalyticsIndexerManager analyticsIndexerManager,
                                                         ExpressionSerializerService expressionSerializerService,
-                                                        ExperimentTrader experimentTrader) {
+                                                        ExperimentTrader experimentTrader,
+                                                        ExperimentAttributesService experimentAttributesService) {
         this.experimentCrud = experimentCrud;
         this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.expressionSerializerService = expressionSerializerService;
         this.experimentTrader = experimentTrader;
+        this.experimentAttributesService = experimentAttributesService;
     }
 
     @Override
@@ -52,7 +56,9 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case LIST:
                 return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
-                return Optional.of(GSON.toJsonTree(getAnyExperimentWithAdminAccess(accession).getAttributes()));
+                return Optional.of(
+                        GSON.toJsonTree(
+                                experimentAttributesService.getAttributes(getAnyExperimentWithAdminAccess(accession))));
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
                 return Optional.of(ExperimentOps.DEFAULT_SUCCESS_RESULT);

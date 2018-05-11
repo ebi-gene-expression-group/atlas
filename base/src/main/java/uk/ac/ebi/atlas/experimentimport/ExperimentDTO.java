@@ -22,6 +22,7 @@ public class ExperimentDTO {
     private final ExperimentType experimentType;
     private final String species;
     private final Set<String> pubmedIds;
+    private final Set<String> dois;
     private final String title;
     private final Date lastUpdate;
     private final boolean isPrivate;
@@ -31,6 +32,7 @@ public class ExperimentDTO {
                          ExperimentType experimentType,
                          String species,
                          Set<String> pubmedIds,
+                         Set<String> dois,
                          String title,
                          Date lastUpdate,
                          boolean isPrivate,
@@ -39,6 +41,7 @@ public class ExperimentDTO {
         this.experimentType = experimentType;
         this.species = species;
         this.pubmedIds = pubmedIds;
+        this.dois = dois;
         this.title = title;
         this.lastUpdate = lastUpdate;
         this.isPrivate = isPrivate;
@@ -49,6 +52,7 @@ public class ExperimentDTO {
                                 ExperimentType experimentType,
                                 String species,
                                 Set<String> pubmedIds,
+                                Set<String> dois,
                                 String title,
                                 boolean isPrivate) {
         return new ExperimentDTO(
@@ -56,6 +60,7 @@ public class ExperimentDTO {
                 experimentType,
                 species,
                 pubmedIds,
+                dois,
                 title,
                 null,
                 isPrivate,
@@ -71,6 +76,7 @@ public class ExperimentDTO {
                 condensedSdrfParserOutput.getExperimentType(),
                 species,
                 idfParserOutput.getPubmedIds(),
+                idfParserOutput.getDois(),
                 idfParserOutput.getTitle(),
                 isPrivate);
     }
@@ -96,6 +102,9 @@ public class ExperimentDTO {
     public Set<String> getPubmedIds() {
         return pubmedIds;
     }
+    public Set<String> getDois() {
+        return dois;
+    }
     public String getTitle() {
         return title;
     }
@@ -107,7 +116,10 @@ public class ExperimentDTO {
         result.add("species", new JsonPrimitive(species));
         JsonArray pubmedIdsArray = new JsonArray();
         pubmedIds.forEach(id -> pubmedIdsArray.add(new JsonPrimitive(id)));
+        JsonArray doisArray = new JsonArray();
+        dois.forEach(doi -> doisArray.add(new JsonPrimitive(doi)));
         result.add("pubmedIds", pubmedIdsArray);
+        result.add("dois", doisArray);
         result.add("title", new JsonPrimitive(title));
         result.add("isPrivate", new JsonPrimitive(isPrivate));
         result.add("accessKey", new JsonPrimitive(accessKey));
@@ -138,6 +150,7 @@ public class ExperimentDTO {
                 .add("ExperimentType", experimentType)
                 .add("species", species)
                 .add("pubmedIds", pubmedIds)
+                .add("dois", dois)
                 .add("title", title)
                 .add("isPrivate", isPrivate)
                 .add("accessKey", accessKey)

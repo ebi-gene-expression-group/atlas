@@ -40,7 +40,7 @@ public class GxaExperimentDaoIT {
 
     public UUID createSecret111(boolean isPrivate) {
         UUID randomUUID = UUID.randomUUID();
-        ExperimentDTO mtab = ExperimentDTO.create(SECRET_111, TYPE_MICROARRAY, "cow", Sets.newHashSet("1"), "diff", isPrivate);
+        ExperimentDTO mtab = ExperimentDTO.create(SECRET_111, TYPE_MICROARRAY, "cow", Sets.newHashSet("1"), Sets.newHashSet("doi"), "diff", isPrivate);
         subject.addExperiment(mtab, randomUUID);
         return randomUUID;
     }
@@ -58,7 +58,7 @@ public class GxaExperimentDaoIT {
     public void testFindExperiments() {
         List<ExperimentDTO> experimentDTOs = subject.getAllExperimentsAsAdmin();
         assertThat(experimentDTOs.size(), greaterThan(50));
-        assertThat(experimentDTOs, hasItem(ExperimentDTO.create(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), "", false)));
+        assertThat(experimentDTOs, hasItem(ExperimentDTO.create(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""),Sets.newHashSet(""), "", false)));
     }
 
     @Test

@@ -1,12 +1,13 @@
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
+import uk.ac.ebi.atlas.model.AssayGroup;
 
 import java.util.List;
 
-public class AssayGroupsFake {
+public class MockAssayGroups {
 
-    public static List<AssayGroup> get() {
+    public static List<AssayGroup> create() {
 
         String RUN_ACCESSION1 = "run1";
         String RUN_ACCESSION2 = "run2";
