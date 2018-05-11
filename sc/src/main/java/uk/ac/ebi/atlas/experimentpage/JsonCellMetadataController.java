@@ -10,17 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-public class JsonCellMetadataController {
+public class JsonCellMetadataController extends JsonExperimentController {
     private final CellMetadataService cellMetadataService;
 
     @Inject
-    public JsonCellMetadataController(CellMetadataService cellMetadataService) {
+    public JsonCellMetadataController(ScxaExperimentTrader experimentTrader, CellMetadataService cellMetadataService) {
+        super(experimentTrader);
         this.cellMetadataService = cellMetadataService;
     }
 
@@ -33,12 +37,13 @@ public class JsonCellMetadataController {
             @PathVariable String experimentAccession,
             @PathVariable String cellId,
             @RequestParam(defaultValue = "") String accessKey) {
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        Optional<String> inferredCellType = cellMetadataService.getInferredCellType(experimentAccession, cellId);
+        Optional<String> inferredCellType = cellMetadataService.getInferredCellType(experiment.getAccession(), cellId);
 
         JsonArray result = new JsonArray();
 
-        for(Map.Entry<String, String> entry : cellMetadataService.getFactors(experimentAccession, cellId).entrySet()) {
+        for(Map.Entry<String, String> entry : cellMetadataService.getFactors(experiment.getAccession(), cellId).entrySet()) {
             result.add(
                     getMetadataObject(
                             cellMetadataService.factorFieldNameToDisplayName(entry.getKey()),
