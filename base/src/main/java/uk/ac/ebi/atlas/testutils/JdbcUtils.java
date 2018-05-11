@@ -44,7 +44,7 @@ public class JdbcUtils {
 
     public String fetchRandomCellFromExperiment(String experimentAccession) {
         return jdbcTemplate.queryForObject(
-                "SELECT cell_id FROM scxa_cell_clusters WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
+                "SELECT cell_id FROM scxa_tsne WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
                 String.class,
                 experimentAccession);
     }
