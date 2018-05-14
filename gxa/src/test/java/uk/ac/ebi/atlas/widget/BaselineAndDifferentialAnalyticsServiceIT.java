@@ -29,12 +29,11 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class BaselineAndDifferentialAnalyticsServiceIT {
-
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 
-    public static final String BASELINE_GENE = "ENSG00000000003";
-    public static final String DIFFERENTIAL_GENE = "ENSSSCG00000000024";
-    public static final String NON_EXISTENT_GENE = "FOOBAR";
+    static final String BASELINE_GENE = "ENSG00000000003";
+    static final String DIFFERENTIAL_GENE = "ENSSSCG00000000024";
+    static final String NON_EXISTENT_GENE = "FOOBAR";
 
     @Inject
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
@@ -49,7 +48,6 @@ public class BaselineAndDifferentialAnalyticsServiceIT {
                 SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN));
         assertThat(result.entrySet(), not(Matchers.empty()));
         assertTrue("This Ensembl gene has a homo sapiens result", result.has("homo sapiens"));
-
     }
 
     @Test
