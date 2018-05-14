@@ -31,8 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AutocompleteControllerWIT {
+    // TODO Get first chars of random genes/symbols/properties from analytics and see that they show up as suggestions
+
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
