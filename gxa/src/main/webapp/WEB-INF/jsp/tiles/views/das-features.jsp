@@ -75,7 +75,7 @@
                 <TYPE id="atlas-provenance" cvId="description" category="description">provenance</TYPE>
                 <METHOD id="provenance" cvId="provenance">provenance</METHOD>
                 <SCORE>0.0</SCORE>
-                <NOTE>Data source: Expression Atlas (12-11-2013).</NOTE>
+                <NOTE>Data source: Expression Atlas (04-04-2018).</NOTE>
                 <NOTE>Expression Atlas is a semantically enriched database of publicly available gene and transcript expression data. The data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns under the conditions of the original experiment.</NOTE>
                 <LINK href="${baseURL}/about.html">About Expression Atlas</LINK>
             </FEATURE>
