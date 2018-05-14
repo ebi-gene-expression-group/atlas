@@ -29,6 +29,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <junit.platform.version>1.2.0</junit.platform.version>
+
         <!--No available BOMs for these projects-->
         <solr.version>7.1.0</solr.version>
         <junit.version>4.12</junit.version>
@@ -205,6 +207,13 @@
                         </property>
                     </systemProperties>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>${junit.platform.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
