@@ -37,6 +37,10 @@
             <plugin>
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
         </plugins>
 
         <resources>

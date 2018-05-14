@@ -37,6 +37,10 @@
             <plugin>
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
         </plugins>
 
         <resources>
@@ -60,37 +64,6 @@
                 <filtering>true</filtering>
             </testResource>
         </testResources>
-
-        <plugins>
-            <!-- Before running ITs, use running Tomcat to mount gxa nd then we can run EITs against
-                 selenium.test.host:selenium.test.portnumber, usually lime:14092, see RestAssuredFixture or URLBuilder;
-                 as noted below, if EITs depend on Spring’s MockMvc this section could be removed. -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <url>http://lime:14092/manager/text</url>
-                    <path>/${project.build.finalName}</path>
-                    <update>true</update>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-
-        </plugins>
     </build>
 
     <dependencies>
