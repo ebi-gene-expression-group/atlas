@@ -108,7 +108,6 @@ public class ExperimentCrudTest {
 
         given(idfParserMock.parse(anyString()))
                 .willReturn(idfParserOutputMock);
-        given(idfParserOutputMock.getPublications()).willReturn(Collections.emptyList());
         given(idfParserOutputMock.getTitle()).willReturn("");
 
         ExperimentCrudFactory experimentCrudFactory =
