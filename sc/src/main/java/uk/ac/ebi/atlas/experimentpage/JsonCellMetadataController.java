@@ -37,18 +37,15 @@ public class JsonCellMetadataController extends JsonExperimentController {
             @RequestParam(defaultValue = "") String accessKey) {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        Optional<String> inferredCellType = cellMetadataService.getInferredCellType(experiment.getAccession(), cellId);
-
         JsonArray result = new JsonArray();
 
-        for(Map.Entry<String, String> entry : cellMetadataService.getFactors(experiment.getAccession(), cellId).entrySet()) {
-            result.add(
-                    getMetadataObject(
-                            cellMetadataService.factorFieldNameToDisplayName(entry.getKey()),
-                            entry.getValue()));
-        }
+        cellMetadataService
+                .getInferredCellType(experiment.getAccession(), cellId)
+                .ifPresent(inferredCellType -> result.add(getMetadataObject("Inferred cell type", inferredCellType)));
 
-        inferredCellType.ifPresent(value -> result.add(getMetadataObject("Inferred cell type", value)));
+        cellMetadataService.getFactors(experiment.getAccession(), cellId).forEach((factorName, factorValue) ->
+                result.add(
+                        getMetadataObject(cellMetadataService.factorFieldNameToDisplayName(factorName), factorValue)));
 
         return result.toString();
     }
