@@ -46,7 +46,7 @@ class AutocompleteControllerWIT {
     @Test
     void verifyHeader() throws Exception {
         this.mockMvc
-                .perform(get("/json/suggestions?query=ASP&species=homo_sapiens"))
+                .perform(get("/json/suggestions").param("query", "ASP").param("species", "homo_sapiens"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
     }
@@ -54,7 +54,7 @@ class AutocompleteControllerWIT {
     @Test
     void unmatchedQueryReturnsEmptyArray() throws Exception {
         this.mockMvc
-                .perform(get("/json/suggestions?query=foobar"))
+                .perform(get("/json/suggestions").param("query", "foobar"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -63,7 +63,7 @@ class AutocompleteControllerWIT {
     @Test
     void suggestionsWithSpeciesAreNotHighlighted() throws Exception {
         this.mockMvc
-                .perform(get("/json/suggestions?query=ASP&species=homo_sapiens"))
+                .perform(get("/json/suggestions").param("query", "ASP").param("species", "homo_sapiens"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(greaterThan(0))))
@@ -74,7 +74,7 @@ class AutocompleteControllerWIT {
     @Test
     void suggestionsWithoutSpeciesAreHighlighted() throws Exception {
         this.mockMvc
-                .perform(get("/json/suggestions?query=ASP"))
+                .perform(get("/json/suggestions").param("query", "ASP"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(greaterThan(0))))
@@ -87,7 +87,7 @@ class AutocompleteControllerWIT {
         int suggestCount = ThreadLocalRandom.current().nextInt(1, 20);
 
         this.mockMvc
-                .perform(get("/json/suggestions?query=ASP&suggestCount=" + Integer.toString(suggestCount)))
+                .perform(get("/json/suggestions").param("query", "ASP").param("suggestCount", Integer.toString(suggestCount)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(allOf(greaterThan(0), lessThanOrEqualTo(suggestCount)))))
