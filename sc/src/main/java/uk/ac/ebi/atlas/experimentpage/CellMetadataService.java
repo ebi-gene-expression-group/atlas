@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
@@ -14,7 +16,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 @Component
@@ -25,28 +30,23 @@ public class CellMetadataService {
 
     public CellMetadataService(IdfParser idfParser, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.idfParser = idfParser;
-
-        this.singleCellAnalyticsCollectionProxy = solrCloudCollectionProxyFactory.createSingleCellAnalyticsCollectionProxy();
+        this.singleCellAnalyticsCollectionProxy =
+                solrCloudCollectionProxyFactory.createSingleCellAnalyticsCollectionProxy();
     }
 
     public Optional<String> getInferredCellType(String experimentAccession, String cellId) {
-        return getMetadataFieldValueForCellId(SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE, experimentAccession, cellId);
+        return getMetadataFieldValueForCellId(
+                SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE,
+                experimentAccession,
+                cellId);
     }
 
     public Map<String, String> getFactors(String experimentAccession, String cellId) {
-        Map<String, String> metadata = new HashMap<>();
-
-        SingleCellAnalyticsSchemaField[] fields = getFactorFieldNames(experimentAccession, cellId);
-
-        Map<String, Collection<Object>> results = getCellQueryResultForMultiValueFields(experimentAccession, cellId, fields);
-
-        for(String factorId : results.keySet()) {
-            String factorValue = StringUtils.join(results.get(factorId), ",");
-
-            metadata.put(factorId, factorValue);
-        }
-
-        return metadata;
+        return getCellQueryResultForMultiValueFields(experimentAccession, cellId, getFactorFieldNames(experimentAccession, cellId))
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 
     // This is not currently used but leaving in for now in case the logic is still useful
@@ -107,7 +107,7 @@ public class CellMetadataService {
         Map<String, Collection<Object>> queryResult = getCellQueryResultForMultiValueFields(
                 experimentAccession,
                 cellId,
-                new SingleCellAnalyticsSchemaField[] {SingleCellAnalyticsCollectionProxy.FACTORS});
+                SingleCellAnalyticsCollectionProxy.FACTORS);
 
         return queryResult.getOrDefault(SingleCellAnalyticsCollectionProxy.FACTORS.name(), Collections.emptyList())
                 .stream()
@@ -117,24 +117,29 @@ public class CellMetadataService {
     }
 
     // This returns Solr query results for a list of multi-value fields of interest
-    private Map<String, Collection<Object>> getCellQueryResultForMultiValueFields(String experimentAccession,
-                                                                                  String cellId,
-                                                                                  SingleCellAnalyticsSchemaField[] fieldsOfInterest) {
-        Map<String, Collection<Object>> queryResult = new HashMap<>();
+    private ImmutableMap<String, Collection<Object>> getCellQueryResultForMultiValueFields(
+            String experimentAccession, String cellId, SingleCellAnalyticsSchemaField... fieldsOfInterest) {
 
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
                         .addFilterFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
                         .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, cellId)
-                        .setFieldList(fieldsOfInterest);
+                        .setFieldList(fieldsOfInterest)
+                        .setRows(1);
 
         QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
 
         if(!queryResponse.getResults().isEmpty()) {
-            queryResult = queryResponse.getResults().get(0).getFieldValuesMap();
+            // The map created by getFieldValuesMap has, for a reason I can’t grasp, quite a few unsupported
+            // operations. Among them entrySet, which is the basis for all streaming methods in maps and forEach D:
+            SolrDocument solrDocument = queryResponse.getResults().get(0);
+            return solrDocument.getFieldNames().stream().collect(toImmutableMap(
+                    Function.identity(),
+                    solrDocument::getFieldValues));
         }
 
-        return queryResult;
+        return ImmutableMap.of();
+
     }
 
 }
