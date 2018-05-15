@@ -20,7 +20,6 @@
 
     <div class="row column button-group">
         <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
-        <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
     </div>
 </form>
 

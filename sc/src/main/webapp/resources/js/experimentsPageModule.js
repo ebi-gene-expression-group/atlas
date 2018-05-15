@@ -133,7 +133,7 @@ var experimentsPageModule = (function ($) {
             "processing": true,
             "ajax": contextPath + "/json/experiments",
             "columns":[
-                { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string", "width": "7%",
+                { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string", "width": "7%", "visible": false,
                     "render": function (data, type, full) {
                         return formatExperimentType(data, contextPath);
                     } },
@@ -161,11 +161,7 @@ var experimentsPageModule = (function ($) {
                     "render": function (data, type, full) {
                         return withLineBreaks(data);
                     } },
-                { "title":"Array Designs", "data":"arrayDesigns", "className":"center", "width":"15%",
-                    "render": function (data, type, full) {
-                        return formatArrayDesign(data, full);
-                    } },
-                { "title":"ArrayExpress", "data":"experimentAccession", "className":"center",
+                { "title":"ArrayExpress", "data":"experimentAccession", "className":"center", "visible": false,
                     "render": function (data, type, full) {
                         return formatExperimentAccession(data);
                     } },
@@ -264,31 +260,31 @@ var experimentsPageModule = (function ($) {
         function filterByKingdom() {
             if (hiddenKingdomSelected === 'plants') {
                 oTable
-                    .columns(9)
+                    .columns(8)
                     .search('plants')
                     .draw();
             }
             else if (hiddenKingdomSelected === 'animals-fungi') {
                 oTable
-                    .columns(9)
+                    .columns(8)
                     .search('animals|fungi', true)
                     .draw();
             }
             else if (hiddenKingdomSelected === 'animals') {
                 oTable
-                    .columns(9)
+                    .columns(8)
                     .search('animals', true)
                     .draw();
             }
             else if (hiddenKingdomSelected === 'fungi') {
                 oTable
-                    .columns(9)
+                    .columns(8)
                     .search('fungi', true)
                     .draw();
                 }
             else {
                 oTable
-                    .columns(9)
+                    .columns(8)
                     .search('')
                     .draw();
             }
