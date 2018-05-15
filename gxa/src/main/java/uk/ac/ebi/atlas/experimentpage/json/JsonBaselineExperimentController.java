@@ -70,12 +70,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     public String baselineRnaSeqExperimentData(@Valid RnaSeqBaselineRequestPreferences preferences,
                                                @PathVariable String experimentAccession,
                                                @RequestParam(defaultValue = "") String accessKey) {
-        BaselineExperiment experiment =
-                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-
         return GSON.toJson(
                 rnaSeqBaselineExperimentPageService.getResultsForExperiment(
-                        experiment,
+                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                         accessKey,
                         preferences));
     }
