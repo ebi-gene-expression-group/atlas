@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import static org.mockito.Mockito.verify;
@@ -29,6 +30,8 @@ public class ExperimentOpsExecutionServiceTest {
     ExpressionSerializerService expressionSerializerService;
     @Mock
     ExperimentTrader experimentTrader;
+    @Mock
+    ExperimentAttributesService experimentAttributesService;
 
     @Mock
     ExperimentDTO experimentDTO;
@@ -41,7 +44,7 @@ public class ExperimentOpsExecutionServiceTest {
     public void setUp(){
         when(experimentCrudMock.findExperiment(accession)).thenReturn(experimentDTO);
         subject = new ExpressionAtlasExperimentOpsExecutionService(experimentCrudMock,baselineCoexpressionProfileLoader,analyticsIndexerManager,
-                expressionSerializerService, experimentTrader );
+                expressionSerializerService, experimentTrader, experimentAttributesService);
     }
 
     @Test

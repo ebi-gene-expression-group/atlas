@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
@@ -67,6 +68,8 @@ public class ExperimentOpsTest {
     private ExperimentTrader experimentTrader;
     @Mock
     private Experiment experimentMock;
+    @Mock
+    private ExperimentAttributesService experimentAttributesService;
 
     private String accession = "E-EXAMPLE-1";
 
@@ -81,11 +84,11 @@ public class ExperimentOpsTest {
         subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
                         experimentCrudMock, baselineCoexpressionProfileLoader, analyticsIndexerManager,
-                        expressionSerializerService,experimentTrader));
+                        expressionSerializerService,experimentTrader, experimentAttributesService));
 
         when(expressionSerializerService.kryoSerializeExpressionData(any())).thenReturn("skipped");
 
-        when(experimentMock.getAttributes()).thenReturn(new HashMap<String, Object>());
+        when(experimentAttributesService.getAttributes(any())).thenReturn(new HashMap<String, Object>());
         when(experimentTrader.getExperiment(anyString(), anyString())).thenReturn(experimentMock);
 
         Mockito.doAnswer(invocationOnMock -> {
@@ -314,7 +317,15 @@ public class ExperimentOpsTest {
     }
 
     private static ExperimentDTO mockDTO(String accession, ExperimentType experimentType){
-        return new ExperimentDTO(accession, experimentType,
-                "Homo sapiens", new HashSet<>(), "title", new Date(), false, UUID.randomUUID().toString());
+        return new ExperimentDTO(
+                accession,
+                experimentType,
+                "Homo sapiens",
+                new HashSet<>(),
+                new HashSet<>(),
+                "title",
+                new Date(),
+                false,
+                UUID.randomUUID().toString());
     }
 }

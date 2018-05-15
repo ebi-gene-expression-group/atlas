@@ -35,6 +35,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     protected ExperimentDesign experimentDesign;
     private Species species;
     private List<String> pubMedIds;
+    private List<String> dois;
     private String accession;
     protected String description;
     private String displayName;
@@ -48,7 +49,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     private final ExperimentDisplayDefaults experimentDisplayDefaults;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      String disclaimer, Species species, Collection<String> pubMedIds,
+                      String disclaimer, Species species, Collection<String> pubMedIds, Collection<String> dois,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
                       List<String> alternativeViewDescriptions, List<DataColumnDescriptor> dataColumnDescriptors,
@@ -63,6 +64,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         this.disclaimer = disclaimer;
         this.species = species;
         this.pubMedIds = ImmutableList.copyOf(Sets.newTreeSet(pubMedIds));
+        this.dois = ImmutableList.copyOf(Sets.newTreeSet(dois));
         this.dataProviderURL = dataProviderURL;
         this.dataProviderDescription = dataProviderDescription;
         this.alternativeViews = alternativeViews;
@@ -127,6 +129,26 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return pubMedIds;
     }
 
+    public List<String> getDois() {
+        return dois;
+    }
+
+    public List<String> getDataProviderDescription() {
+        return dataProviderDescription;
+    }
+
+    public List<String> getDataProviderURL() {
+        return dataProviderURL;
+    }
+
+    public List<String> getAlternativeViews() {
+        return alternativeViews;
+    }
+
+    public List<String> getAlternativeViewDescriptions() {
+        return alternativeViewDescriptions;
+    }
+
     public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
@@ -143,37 +165,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
                         .flatMap(dataColumnDescriptor ->
                                     dataColumnDescriptor.assaysAnalyzedForThisDataColumn().stream())
                         .collect(Collectors.toSet()));
-    }
-
-    public HashMap<String, Object> getAttributes(){
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("experimentAccession", accession);
-        result.put("experimentDescription", description);
-        result.put("type", type);
-        result.putAll(species.getAttributes());
-        result.put("pubMedIds", pubMedIds);
-        result.put("disclaimer", disclaimer);
-
-        //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
-        List<String> keywords = ImmutableList.<String>builder()
-                .add("experiment")
-                .add(accession)
-                .addAll(dataProviderDescription)
-                .addAll(Arrays.asList(type.getDescription().split("_")))
-                .addAll(experimentDesign.getAssayHeaders())
-                .build();
-        result.put("pageKeywords", Joiner.on(',').join(keywords));
-
-        //We want this to show up in Google searches.
-        result.put("pageDescription", description);
-
-        // Extra information to show on experiment page (if they were provided in <expAcc>-factors.xml file)
-        result.put("dataProviderURL", dataProviderURL);
-        result.put("dataProviderDescription", dataProviderDescription);
-        result.put("alternativeViews", alternativeViews);
-        result.put("alternativeViewDescriptions", alternativeViewDescriptions);
-
-        return result;
     }
 
     public ExperimentInfo buildExperimentInfo(){

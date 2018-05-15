@@ -33,12 +33,15 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 public class ExperimentController extends HtmlExceptionHandlingController {
     private final ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
+    private final ExperimentAttributesService experimentAttributesService;
 
     @Inject
     public ExperimentController(ExperimentTrader experimentTrader,
-                                DataFileHub dataFileHub){
+                                DataFileHub dataFileHub,
+                                ExperimentAttributesService experimentAttributesService){
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
+        this.experimentAttributesService = experimentAttributesService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -48,7 +51,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                      @RequestParam(defaultValue = "") String accessKey) {
 
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        model.addAllAttributes(experiment.getAttributes());
+        model.addAllAttributes(experimentAttributesService.getAttributes(experiment));
 
         model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 

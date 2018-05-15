@@ -5,16 +5,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroupsFake;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
-import uk.ac.ebi.atlas.model.experiment.baseline.*;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -32,14 +35,14 @@ public class ExternallyViewableProfilesListTest {
 
         BaselineExperimentProfile firstProfile =
                 new BaselineExperimentProfile(
-                        BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_1"),
+                        MockExperiment.createBaselineExperiment("experiment_1"),
                         new FactorSet());
 
         FactorAcrossExperiments f11 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "11"));
         firstProfile.add(f11, new BaselineExpression(12.34));
 
         BaselineExperimentProfile secondProfile = new BaselineExperimentProfile(
-                BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_2"),
+                MockExperiment.createBaselineExperiment("experiment_2"),
                 new FactorSet());
         FactorAcrossExperiments f21 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "21"));
 

@@ -42,4 +42,8 @@ public class IdfParserOutput {
     public List<String> getMetadataFieldsOfInterest() {
         return metadataFieldsOfInterest;
     }
+    
+    public Set<String> getDois() {
+        return publications.stream().map(Publication::getDoi).collect(Collectors.toSet());
+    }
 }

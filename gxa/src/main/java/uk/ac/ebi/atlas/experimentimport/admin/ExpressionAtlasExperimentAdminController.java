@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfile
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -32,7 +33,8 @@ public class ExpressionAtlasExperimentAdminController extends ExperimentAdminCon
                                                     BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                                     AnalyticsIndexerManager analyticsIndexerManager,
                                                     ExpressionSerializerService expressionSerializerService,
-                                                    ExperimentTrader experimentTrader) {
+                                                    ExperimentTrader experimentTrader,
+                                                    ExperimentAttributesService experimentAttributesService) {
         super(
                 new ExperimentOps(
                         new ExperimentOpLogWriter(dataFileHub),
@@ -41,6 +43,7 @@ public class ExpressionAtlasExperimentAdminController extends ExperimentAdminCon
                                 baselineCoexpressionProfileLoader,
                                 analyticsIndexerManager,
                                 expressionSerializerService,
-                                experimentTrader)));
+                                experimentTrader,
+                                experimentAttributesService)));
     }
 }

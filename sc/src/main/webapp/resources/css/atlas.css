@@ -6,6 +6,10 @@
     font-size: 3em;
 }
 
+#latest-experiments .media-object-section:first-child {
+    padding-right: 0;
+}
+
 a.clear {
     border: none;
 }
@@ -18,23 +22,9 @@ ul.clear {
     cursor: default;
 }
 
-.button-rd {
-    text-align: center;
-    line-height: 1;
-    vertical-align: middle;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    padding: 0.75em 1em;
-    margin:0;
-    font-size: 0.9rem;
-    background-color: #2199e8;
-    color: #fefefe;
-    font-weight: bold;
+.button.fixed-width-medium {
+    width: 80px;
 }
-
-.button-rd.tiny { font-size: 0.6rem; }
-.button-rd.differential {background-color: #5E8CC0; }
-.button-rd.baseline {background-color: #23afa5; }
 
 hr {
     border-bottom: 1px solid lightgrey;

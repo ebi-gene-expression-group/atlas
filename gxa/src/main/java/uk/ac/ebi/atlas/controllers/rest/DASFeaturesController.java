@@ -52,15 +52,13 @@ public class DASFeaturesController extends HtmlExceptionHandlingController {
 
         checkArgument(isNotBlank(geneId) || conditionQuery.isNotEmpty());
 
-        List<DiffAnalytics> diffAnalyticsList;
-        SetMultimap<String, String> factorValuesByType = HashMultimap.create();
-
-        diffAnalyticsList =
+        List<DiffAnalytics> diffAnalyticsList =
                 differentialJsonResultsParser.parseDifferentialResults(
                         differentialAnalyticsSearchService.fetchResults(SemanticQuery.create(geneId), conditionQuery));
 
         String geneName = diffAnalyticsList.isEmpty() ? geneId : diffAnalyticsList.get(0).getBioentityName();
 
+        SetMultimap<String, String> factorValuesByType = HashMultimap.create();
         for (DiffAnalytics dbe : diffAnalyticsList) {
             AssayGroup testAssayGroup = dbe.getContrastTestAssayGroup();
             Experiment experiment = experimentTrader.getPublicExperiment(dbe.getExperimentAccession());

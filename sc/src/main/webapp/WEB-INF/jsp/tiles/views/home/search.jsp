@@ -33,7 +33,10 @@
             atlasUrl: '${pageContext.request.contextPath}/',
             suggesterEndpoint: 'json/suggestions',
             initialValue: '${geneId}',
-            enableSpeciesFilter: true
+            enableSpeciesFilter: true,
+            wrapperClassName: 'row',
+            autocompleteClassName: 'small-12 medium-8 columns',
+            speciesFilterClassName: 'small-12 medium-4 columns'
         }, 'target')
     });
 </script>

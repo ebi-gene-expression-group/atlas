@@ -23,6 +23,7 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -44,8 +45,15 @@ public class BaselineExperimentCacheLoaderTest {
 
     private ExperimentDTO dto =
             new ExperimentDTO(
-                    experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE, "homo_sapiens",
-                    Collections.emptySet(), "mock experiment",new Date(), false, "accessKeyUUID");
+                    experimentAccession,
+                    ExperimentType.RNASEQ_MRNA_BASELINE,
+                    "homo_sapiens",
+                    Collections.emptySet(),
+                    Collections.emptySet(),
+                    "mock experiment",
+                    new Date(),
+                    false,
+                    "accessKeyUUID");
     @Mock
     private ConfigurationTrader configurationTrader ;
     @Mock

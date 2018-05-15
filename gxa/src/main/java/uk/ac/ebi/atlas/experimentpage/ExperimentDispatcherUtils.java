@@ -17,7 +17,7 @@ public class ExperimentDispatcherUtils {
         return requestURL;
     }
 
-    public static String getRequestURL(HttpServletRequest request) {
+    private static String getRequestURL(HttpServletRequest request) {
         String contextPath = request.getContextPath();
         String requestURI = request.getRequestURI();
 

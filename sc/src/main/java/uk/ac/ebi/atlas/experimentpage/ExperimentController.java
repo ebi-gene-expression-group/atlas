@@ -24,12 +24,16 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private final ScxaExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
     private final ExperimentPageContentService experimentPageContentService;
+    private final ExperimentAttributesService experimentAttributesService;
     
     @Inject
-    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub, ExperimentPageContentService experimentPageContentService){
+    public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub,
+                                ExperimentPageContentService experimentPageContentService,
+                                ExperimentAttributesService experimentAttributesService){
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
         this.experimentPageContentService = experimentPageContentService;
+        this.experimentAttributesService = experimentAttributesService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -37,9 +41,9 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     public String showExperimentPage(Model model,
                                      @PathVariable String experimentAccession,
                                      @RequestParam(defaultValue = "") String accessKey) {
-
         Experiment<Cell> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        model.addAllAttributes(experiment.getAttributes());
+
+        model.addAllAttributes(experimentAttributesService.getAttributes(experiment));
 
         model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 
@@ -60,14 +64,14 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                 customContentTab(
                         "t-sne-plot",
                         "Results",
-                        experimentPageContentService.getTsnePlotDataAsJson(experiment.getAccession())));
+                        experimentPageContentService.getTsnePlotData(experiment.getAccession())));
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
                     customContentTab(
                             "experiment-design",
                             "Experiment Design",
-                            experimentPageContentService.getExperimentDesignAsJson(
+                            experimentPageContentService.getExperimentDesign(
                                     experiment.getAccession(),
                                     new ExperimentDesignTable(experiment).asJson(),
                                     accessKey))
@@ -87,7 +91,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "resources",
                         "Downloads",
                         "data",
-                        experimentPageContentService.getDownloadsAsJson(experiment.getAccession(), accessKey))
+                        experimentPageContentService.getDownloads(experiment.getAccession(), accessKey))
         );
 
         result.add("tabs", availableTabs);
@@ -103,7 +107,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                 "static-table",
                                 "Analysis Methods",
                                 "data",
-                                experimentPageContentService.getAnalysisMethodsAsJson(experiment.getAccession())));
+                                experimentPageContentService.getAnalysisMethods(experiment.getAccession())));
             }
 
         return supplementaryInformationTabs;

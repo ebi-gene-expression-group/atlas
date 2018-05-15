@@ -8,9 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import java.util.function.Function;
@@ -27,7 +27,7 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
 
 
     BaselineExperiment baselineExperiment =
-            BaselineExperimentTest.mockExperiment(ImmutableList.of(g1, g2), "accession");
+            MockExperiment.createBaselineExperiment(ImmutableList.of(g1, g2));
 
     @Before
     public void setUp() throws Exception {

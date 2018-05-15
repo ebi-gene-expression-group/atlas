@@ -17,18 +17,8 @@
                     <li>
                         <div class="media-object stack-for-small">
                             <div class="media-object-section middle hide-for-small-only">
-                                <c:choose>
-                                    <c:when test="${experimentInfo.experimentType.baseline}">
-                                        <span data-tooltip class="baseline button-rd" title="Baseline experiment">B</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span data-tooltip class="differential button-rd" title="Differential experiment">D</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <div class="media-object-section middle hide-for-small-only">
                                 <s:eval expression="T(java.text.NumberFormat).getInstance().format(experimentInfo.numberOfAssays)" var="fmtNumberOfAssays" />
-                                <span class="button secondary no-action">${fmtNumberOfAssays}</span>
+                                <span class="button secondary no-action fixed-width-medium">${fmtNumberOfAssays}</span>
                             </div>
                             <div class="media-object-section middle hide-for-small-only ">
                                 <a class="button" href="${pageContext.request.contextPath}/experiments/${experimentInfo.experimentAccession}">Analysis result</a>

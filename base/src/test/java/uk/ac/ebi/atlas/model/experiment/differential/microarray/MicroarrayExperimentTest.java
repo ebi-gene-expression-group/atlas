@@ -44,6 +44,7 @@ public class MicroarrayExperimentTest {
             );
 
     static final String PUBMEDID = "PUBMEDID";
+    private static final String DOI = "100.100/doi";
 
     AssayGroup g1 = new AssayGroup("id", "assay 1","assay 2");
     AssayGroup g2 = new AssayGroup("test","assay 1");
@@ -51,8 +52,7 @@ public class MicroarrayExperimentTest {
 
     MicroarrayExperiment subject;
 
-    public static MicroarrayExperiment get(String accession, ExperimentType type, List<Contrast> contrasts,
-                                           Set<String> arrayDesignAccessions, Set<String> arrayDesignNames, List<ArrayDesign> arrayDesigns) {
+    public static MicroarrayExperiment get(String accession, ExperimentType type, List<Contrast> contrasts, List<ArrayDesign> arrayDesigns) {
 
         ImmutableMap<String, String> genomeBrowser =
                 ImmutableMap.of("type", "genome_browser", "name", "Ensembl",
@@ -66,38 +66,43 @@ public class MicroarrayExperimentTest {
                 contrasts.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
                 "description", new Species("Homo sapiens", speciesProperties),
                 mock(ExperimentDesign.class),
-                Sets.newHashSet(PUBMEDID), arrayDesigns);
+                Sets.newHashSet(PUBMEDID),
+                Sets.newHashSet(DOI),
+                arrayDesigns);
     }
 
     @Before
     public void setUp() throws Exception {
         subject =
-                get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(contrast),
-                        ARRAY_DESIGN_ACCESSIONS, ARRAY_DESIGN_NAMES, arrayDesigns);
+                get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(contrast), arrayDesigns);
     }
 
     @Test
-    public void testGetArrayDesignAccessions() throws Exception {
+    public void testGetArrayDesignAccessions() {
         assertThat(subject.getArrayDesignAccessions(), containsInAnyOrder(ARRAY_DESIGN_ACCESSIONS.toArray()));
     }
 
     @Test
-    public void testGetPubMedIds() throws Exception {
-        assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
+    public void testGetPubMedIds() {
+        assertThat(subject.getPubMedIds(), contains(PUBMEDID));
     }
 
     @Test
-    public void microRnaExperimentsHaveNoGenomeBrowsers() throws Exception {
+    public void testGetDois() {
+        assertThat(subject.getDois(), contains(DOI));
+    }
+
+    @Test
+    public void microRnaExperimentsHaveNoGenomeBrowsers() {
         MicroarrayExperiment miRnaSubject =
-                get("accession", ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL, ImmutableList.of(contrast),
-                        ARRAY_DESIGN_ACCESSIONS, ARRAY_DESIGN_NAMES,arrayDesigns);
+                get("accession", ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL, ImmutableList.of(contrast), arrayDesigns);
 
         assertThat(subject.getGenomeBrowserNames(), hasSize(1));
         assertThat(miRnaSubject.getGenomeBrowserNames(), hasSize(0));
     }
 
     @Test
-    public void buildExperimentInfo() throws Exception {
+    public void buildExperimentInfo() {
         assertThat(
                 subject.buildExperimentInfo().getArrayDesignNames(), containsInAnyOrder(ARRAY_DESIGN_NAMES.toArray()));
         assertThat(

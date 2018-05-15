@@ -7,9 +7,9 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 
 import java.util.Collection;
@@ -24,7 +24,7 @@ public class BaselineRequestContextTest {
 
 
     @Test
-    public void singleFactorExperimentHasSimpleLabels() throws Exception {
+    public void singleFactorExperimentHasSimpleLabels() {
         String defaultQueryFactorType = "defaultQueryFactorType";
 
         Collection<Factor> defaultFactorValues = ImmutableSet.of();
@@ -32,7 +32,7 @@ public class BaselineRequestContextTest {
 
         AssayGroup ag1 = new AssayGroup("g1", "run11");
         AssayGroup ag2 = new AssayGroup("g2", "run21");
-        List<AssayGroup> dataColumnDescriptors = ImmutableList.of(ag1, ag2);
+        List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);
 
@@ -47,8 +47,7 @@ public class BaselineRequestContextTest {
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
         BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
-                BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
-                        ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
+                MockExperiment.createBaselineExperiment(experimentDesign, assayGroups));
 
         assertThat(subject.displayNameForColumn(ag1), (is("name for g1")));
         assertThat(subject.displayNameForColumn(ag2), (is("name for g2")));
@@ -64,7 +63,7 @@ public class BaselineRequestContextTest {
 
         AssayGroup ag1 = new AssayGroup("g1", "run11");
         AssayGroup ag2 = new AssayGroup("g2", "run21");
-        List<AssayGroup> dataColumnDescriptors = ImmutableList.of(ag1, ag2);
+        List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);
 
@@ -81,8 +80,7 @@ public class BaselineRequestContextTest {
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
         BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
-                BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
-                        ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
+                MockExperiment.createBaselineExperiment(experimentDesign, assayGroups));
 
         assertThat(subject.displayNameForColumn(ag1), (is("name for g1")));
         assertThat(subject.displayNameForColumn(ag2), (is("name for g2")));
@@ -98,7 +96,7 @@ public class BaselineRequestContextTest {
 
         AssayGroup ag1 = new AssayGroup("g1", "run11");
         AssayGroup ag2 = new AssayGroup("g2", "run21");
-        List<AssayGroup> dataColumnDescriptors = ImmutableList.of(ag1, ag2);
+        List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);
 
@@ -115,15 +113,19 @@ public class BaselineRequestContextTest {
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
         BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
-                BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
-                        ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
+                MockExperiment.createBaselineExperiment(
+                        experimentDesign,
+                        assayGroups,
+                        ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false)));
 
         assertThat(subject.displayNameForColumn(ag1), (is("name for g1, other type value 1")));
         assertThat(subject.displayNameForColumn(ag2), (is("name for g2, other type value 2")));
 
         subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
-                BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
-                        ExperimentDisplayDefaults.create(defaultFactorValues, Lists.reverse(prescribedOrderOfFilters), false),  "accession"));
+                MockExperiment.createBaselineExperiment(
+                        experimentDesign,
+                        assayGroups,
+                        ExperimentDisplayDefaults.create(defaultFactorValues, Lists.reverse(prescribedOrderOfFilters), false)));
 
         assertThat(subject.displayNameForColumn(ag1), (is("other type value 1, name for g1")));
         assertThat(subject.displayNameForColumn(ag2), (is("other type value 2, name for g2")));
@@ -139,7 +141,7 @@ public class BaselineRequestContextTest {
 
         AssayGroup ag1 = new AssayGroup("g1", "run11");
         AssayGroup ag2 = new AssayGroup("g2", "run21");
-        List<AssayGroup> dataColumnDescriptors = ImmutableList.of(ag1, ag2);
+        List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);
 
@@ -156,15 +158,19 @@ public class BaselineRequestContextTest {
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
         BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
-                BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
-                        ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
+                MockExperiment.createBaselineExperiment(
+                        experimentDesign,
+                        assayGroups,
+                        ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false)));
 
         assertThat(subject.displayNameForColumn(ag1), (is("name for g1")));
         assertThat(subject.displayNameForColumn(ag2), (is("name for g2")));
 
         subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
-                BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
-                        ExperimentDisplayDefaults.create(defaultFactorValues, Lists.reverse(prescribedOrderOfFilters), false),  "accession"));
+                MockExperiment.createBaselineExperiment(
+                        experimentDesign,
+                        assayGroups,
+                        ExperimentDisplayDefaults.create(defaultFactorValues, Lists.reverse(prescribedOrderOfFilters), false)));
 
         assertThat(subject.displayNameForColumn(ag1), (is("name for g1")));
         assertThat(subject.displayNameForColumn(ag2), (is("name for g2")));

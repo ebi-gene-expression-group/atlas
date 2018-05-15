@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.utils.EuropePmcClient;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
@@ -34,21 +35,23 @@ public class ExperimentPageContentServiceIT {
     private DataFileHub dataFileHub;
 
     @Inject
+    private EuropePmcClient europePmcClient;
+
+    @Inject
     private TsnePlotSettingsService tsnePlotSettingsService;
 
     private ExperimentPageContentService subject;
 
     @Before
     public void setUp() {
-        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, tsnePlotSettingsService);
+        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, tsnePlotSettingsService, europePmcClient);
     }
 
     @Test
     public void getValidExperimentDesignJson() {
         // TODO replace empty experiment design table with mock table
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        JsonObject result = this.subject.getExperimentDesignAsJson(experimentAccession, new JsonObject(), "");
-
+        JsonObject result = this.subject.getExperimentDesign(experimentAccession, new JsonObject(), "");
         assertThat(result.has("table")).isTrue();
         assertThat(result.has("downloadUrl")).isTrue();
     }
@@ -56,7 +59,7 @@ public class ExperimentPageContentServiceIT {
     @Test
     public void getValidAnalysisMethodsJson() {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        JsonArray result = this.subject.getAnalysisMethodsAsJson(experimentAccession);
+        JsonArray result = this.subject.getAnalysisMethods(experimentAccession);
 
         // Should have header row and at least one other
         assertThat(result.size()).isGreaterThan(1);
@@ -71,7 +74,7 @@ public class ExperimentPageContentServiceIT {
     @Test
     public void getValidDownloadsJson() {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        JsonArray result = this.subject.getDownloadsAsJson(experimentAccession, "");
+        JsonArray result = this.subject.getDownloads(experimentAccession, "");
 
         assertThat(result).hasSize(2);
 
@@ -105,7 +108,7 @@ public class ExperimentPageContentServiceIT {
     @Test
     public void getValidTsnePlotDataJson() {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        JsonObject result = this.subject.getTsnePlotDataAsJson(experimentAccession);
+        JsonObject result = this.subject.getTsnePlotData(experimentAccession);
 
         assertThat(result.has("suggesterEndpoint")).isTrue();
         assertThat(result.get("suggesterEndpoint").getAsString()).isEqualToIgnoringCase("json/suggestions");

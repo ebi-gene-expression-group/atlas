@@ -29,6 +29,7 @@ public class SingleCellBaselineExperimentBuilder {
     private String displayName;
     private String experimentAccession;
     private Set<String> pubMedIds;
+    private Set<String> dois;
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
     private List<Cell> cells;
@@ -77,6 +78,11 @@ public class SingleCellBaselineExperimentBuilder {
         return this;
     }
 
+    public SingleCellBaselineExperimentBuilder withDois(Set<String> dois) {
+        this.dois = dois;
+        return this;
+    }
+
     public SingleCellBaselineExperimentBuilder withExperimentDesign(ExperimentDesign experimentDesign) {
         this.experimentDesign = experimentDesign;
         return this;
@@ -105,9 +111,8 @@ public class SingleCellBaselineExperimentBuilder {
     public SingleCellBaselineExperiment create() {
         validate();
 
-        return new
-                SingleCellBaselineExperiment(experimentType, experimentAccession, lastUpdate, displayName,
-                description, disclaimer, species, pubMedIds, experimentDesign, dataProviderURL,
+        return new SingleCellBaselineExperiment(experimentType, experimentAccession, lastUpdate, displayName,
+                description, disclaimer, species, pubMedIds, dois, experimentDesign, dataProviderURL,
                 dataProviderDescription, alternativeViews, alternativeViewDescriptions, cells, experimentDisplayDefaults);
     }
 

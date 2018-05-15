@@ -14,6 +14,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.util.Map;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class SolrInputDocumentInputStreamTest {
              );
 
     private BaselineExperimentDataPoint baselineExperimentDataPoint = new BaselineExperimentDataPoint(
-            BaselineExperimentTest.mockExperiment(),
+            MockExperiment.createBaselineExperiment(),
             BaselineAnalytics.create(bioentityIdentifier, "column_name", 13.37, 0.0),
             "condition search");
 
