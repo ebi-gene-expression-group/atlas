@@ -21,7 +21,6 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
     private final SolrBioentitiesSuggesterService suggesterService;
     private final SpeciesFactory speciesFactory;
 
-    @Inject
     public AutoCompleteController(SolrBioentitiesSuggesterService suggesterService, SpeciesFactory speciesFactory) {
         this.suggesterService = suggesterService;
         this.speciesFactory = speciesFactory;
@@ -30,7 +29,6 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
     @RequestMapping(value = "/json/suggestions",
                     method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8")
-    @ResponseStatus(HttpStatus.OK)
     public String fetchTopSuggestions(
             @RequestParam(value = "query") String query,
             @RequestParam(value = "species", required = false, defaultValue = "") String species,
