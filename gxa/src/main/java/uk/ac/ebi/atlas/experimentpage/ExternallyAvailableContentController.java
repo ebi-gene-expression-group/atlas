@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,26 +26,8 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 public class ExternallyAvailableContentController {
-
-    private static final String LIST_RESOURCES_URL = "json/experiments/{experimentAccession}/resources/{contentType}";
-    private static final String STREAM_RESOURCES_URL = "experiments-content/{experimentAccession}/resources/**";
-
-//    public static String listResourcesUrl(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType){
-//        return LIST_RESOURCES_URL
-//                .replace("{experimentAccession}", experimentAccession)
-//                .replace("{contentType}", contentType.name())
-//                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
-//    }
-//
-//    public static String streamResourcesUrl(String experimentAccession, String accessKey, String resourceName){
-//        return STREAM_RESOURCES_URL
-//                .replace("{experimentAccession}", experimentAccession)
-//                .replace("**", resourceName)
-//                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
-//    }
     private final ExpressionAtlasContentService expressionAtlasContentService;
 
-    @Inject
     public ExternallyAvailableContentController(ExpressionAtlasContentService expressionAtlasContentService){
         this.expressionAtlasContentService = expressionAtlasContentService;
     }
@@ -87,19 +70,30 @@ public class ExternallyAvailableContentController {
     }
 
     @ResponseBody
-    @RequestMapping(value = LIST_RESOURCES_URL, method = RequestMethod.GET)
-    public String list(@PathVariable String experimentAccession,@PathVariable String contentType, @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
+    @RequestMapping(value = "json/experiments/{experimentAccession}/resources/{contentType}",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String list(@PathVariable String experimentAccession,
+                       @PathVariable String contentType,
+                       @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
                        HttpServletRequest request) {
-
         return GSON.toJson(
-                contentAsJson(expressionAtlasContentService.list(experimentAccession, accessKey, ExternallyAvailableContent.ContentType.valueOf(contentType)),
-                experimentAccession, accessKey, request
-                ));
+                contentAsJson(
+                        expressionAtlasContentService.list(
+                                experimentAccession,
+                                accessKey,
+                                ExternallyAvailableContent.ContentType.valueOf(contentType)),
+                        experimentAccession,
+                        accessKey,
+                        request));
     }
 
-    @RequestMapping(value = STREAM_RESOURCES_URL, method = RequestMethod.GET)
-    public void get(@PathVariable String experimentAccession, @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
-                    HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "experiments-content/{experimentAccession}/resources/**",
+                    method = RequestMethod.GET)
+    public void get(@PathVariable String experimentAccession,
+                    @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
+                    HttpServletRequest request,
+                    HttpServletResponse response) {
 
         expressionAtlasContentService.stream(experimentAccession, accessKey,
                 URI.create(request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE)
