@@ -82,8 +82,8 @@ public class CellMetadataServiceIT {
     public void experimentWithoutMetadataFieldsInIdf() {
         assertThat(
                 subject.getIdfFileAttributes(
-                        "E-ENAD-13",
-                        jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-13")))
+                        "E-MTAB-5061",
+                        jdbcUtils.fetchRandomCellFromExperiment("E-MTAB-5061")))
                 .isEmpty();
     }
 
