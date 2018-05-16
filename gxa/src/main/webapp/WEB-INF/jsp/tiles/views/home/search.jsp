@@ -4,98 +4,93 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
 
-<div class="row expanded margin-top-large">
-    <div class="small-12 columns">
-        <ul class="tabs" data-tabs id="search-tabs">
-            <li class="tabs-title is-active"><a href="#search-atlas" aria-selected="true">Search</a></li>
-            <li class="tabs-title"><a href="#search-gene-set-enrichment">Gene set enrichment</a></li>
-        </ul>
+<ul class="tabs" data-tabs id="search-tabs">
+    <li class="tabs-title is-active"><a href="#search-atlas" aria-selected="true">Search</a></li>
+    <li class="tabs-title"><a href="#search-gene-set-enrichment">Gene set enrichment</a></li>
+</ul>
 
-        <div class="tabs-content" data-tabs-content="search-tabs">
+<div class="tabs-content" data-tabs-content="search-tabs">
 
-            <div class="tabs-panel is-active " id="search-atlas" style="background-color: #e6e6e6;">
-                <form method="get" action="${pageContext.request.contextPath}/search" id="home-search-atlas-form">
-                    <div class="row expanded">
-                        <div class="small-12 medium-4 large-5 columns">
-                            <div class="row column">
-                                <label>Gene / Gene properties</label>
-                                <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query…" name="geneQuery"/>
-                            </div>
-                            <div class="row column small margin-top-small">
-                                Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
-                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
-                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>,
-                                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0010468", "category":"go"}]'>GO:0010468 (regulation of gene expression)</a>
-                            </div>
-                        </div>
-                        <div class="small-12 medium-4 large-2 columns">
-                            <label>Organism</label>
-                            <form:select id="organism" name="organism" path="organismPath">
-                                <form:options items="${topSixByExperimentCount}"/>
-                                <form:option value="${separator}" disabled="true"/>
-                                <form:option value="" label="Any" selected="true"/>
-                                <form:options items="${organisms}" />
-                            </form:select>
-                        </div>
-                        <div id="sample-properties-section" class="small-12 medium-4 large-5 columns">
-                            <div class="row column">
-                                <label>Biological conditions</label>
-                                <input id="home-search-condition-query-input" type="text" placeholder="Enter condition query…" name="conditionQuery" />
-                            </div>
-                            <div class="row column small margin-top-small">
-                                Examples: <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
-                                <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
-                                <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
-                                <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a>
-                            </div>
-                        </div>
+    <div class="tabs-panel is-active " id="search-atlas" style="background-color: #e6e6e6;">
+        <form method="get" action="${pageContext.request.contextPath}/search" id="home-search-atlas-form">
+            <div class="row expanded">
+                <div class="small-12 medium-4 large-5 columns">
+                    <div class="row column">
+                        <label>Gene / Gene properties</label>
+                        <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query…" name="geneQuery"/>
                     </div>
-
-                    <div class="row expanded margin-top-large">
-                        <div class="small-12 columns">
-                            <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
-
-                            <%--<label for="file-upload" class="button">Upload file</label>--%>
-                            <%--<input type="file" id="file-upload" class="show-for-sr">--%>
-
-                            <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
-                        </div>
+                    <div class="row column small margin-top-small">
+                        Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0010468", "category":"go"}]'>GO:0010468 (regulation of gene expression)</a>
                     </div>
-                </form>
+                </div>
+                <div class="small-12 medium-4 large-2 columns">
+                    <label>Organism</label>
+                    <form:select id="organism" name="organism" path="organismPath">
+                        <form:options items="${topSixByExperimentCount}"/>
+                        <form:option value="${separator}" disabled="true"/>
+                        <form:option value="" label="Any" selected="true"/>
+                        <form:options items="${organisms}" />
+                    </form:select>
+                </div>
+                <div id="sample-properties-section" class="small-12 medium-4 large-5 columns">
+                    <div class="row column">
+                        <label>Biological conditions</label>
+                        <input id="home-search-condition-query-input" type="text" placeholder="Enter condition query…" name="conditionQuery" />
+                    </div>
+                    <div class="row column small margin-top-small">
+                        Examples: <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
+                        <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
+                        <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
+                        <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="tabs-panel" id="search-gene-set-enrichment" style="background-color: #e6e6e6;">
-                <form method="get" action="${pageContext.request.contextPath}/genesetenrichment" id="home-genesetenrichment-atlas-form">
-                    <div class="row expanded">
-                        <div class="small-12 columns">
-                            <label>Provide a set of Ensembl gene identifiers to test enrichment against differentially expressed genes by comparison</label>
-                            <input class="margin-bottom-none" type="text" placeholder="Enter gene IDs…" name="query"/>
-                        </div>
-                    </div>
+            <div class="row expanded margin-top-large">
+                <div class="small-12 columns">
+                    <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
 
-                    <div class="row expanded">
-                        <div class="small-12 columns small margin-top-small">
-                            Example: <a
-                                href="${pageContext.request.contextPath}/genesetenrichment?query=AT1G48030 AT1G53240 AT2G17130 AT2G20420 AT2G44350 AT2G47510 AT3G09810 AT3G15020 AT3G17240 AT3G27380 AT3G55410 AT3G60100 AT4G26910 AT4G35260 AT4G35650 AT4G35830 AT5G03290 AT5G08300 AT5G23250">
-                            AT1G48030 AT1G53240 AT2G17130 AT2G20420 AT2G44350 AT2G47510 AT3G09810 AT3G15020 AT3G17240 AT3G27380 AT3G55410 AT3G60100 AT4G26910 AT4G35260 AT4G35650 AT4G35830 AT5G03290 AT5G08300 AT5G23250</a>
-                        </div>
-                    </div>
+                    <%--<label for="file-upload" class="button">Upload file</label>--%>
+                    <%--<input type="file" id="file-upload" class="show-for-sr">--%>
 
-                    <div class="row expanded">
-                        <div class="small-12 columns margin-top-large">
-                            <input id="genesetenrichment-atlas-search-button" class="button" type="submit" value="Search"/>
-                        </div>
-                    </div>
+                    <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
+                </div>
+            </div>
+        </form>
+    </div>
 
-                    <div class="row expanded">
-                        <div class="small-12 columns">
-                            <a href="https://www.ebi.ac.uk/~rpetry/geteam/gsa/gsa_apispec.pdf">Gene Set Enrichment API documentation</a>
-                        </div>
-                    </div>
-                </form>
+    <div class="tabs-panel" id="search-gene-set-enrichment" style="background-color: #e6e6e6;">
+        <form method="get" action="${pageContext.request.contextPath}/genesetenrichment" id="home-genesetenrichment-atlas-form">
+            <div class="row expanded">
+                <div class="small-12 columns">
+                    <label>Provide a set of Ensembl gene identifiers to test enrichment against differentially expressed genes by comparison</label>
+                    <input class="margin-bottom-none" type="text" placeholder="Enter gene IDs…" name="query"/>
+                </div>
             </div>
 
-        </div>
+            <div class="row expanded">
+                <div class="small-12 columns small margin-top-small">
+                    Example: <a
+                        href="${pageContext.request.contextPath}/genesetenrichment?query=AT1G48030 AT1G53240 AT2G17130 AT2G20420 AT2G44350 AT2G47510 AT3G09810 AT3G15020 AT3G17240 AT3G27380 AT3G55410 AT3G60100 AT4G26910 AT4G35260 AT4G35650 AT4G35830 AT5G03290 AT5G08300 AT5G23250">
+                    AT1G48030 AT1G53240 AT2G17130 AT2G20420 AT2G44350 AT2G47510 AT3G09810 AT3G15020 AT3G17240 AT3G27380 AT3G55410 AT3G60100 AT4G26910 AT4G35260 AT4G35650 AT4G35830 AT5G03290 AT5G08300 AT5G23250</a>
+                </div>
+            </div>
+
+            <div class="row expanded">
+                <div class="small-12 columns margin-top-large">
+                    <input id="genesetenrichment-atlas-search-button" class="button" type="submit" value="Search"/>
+                </div>
+            </div>
+
+            <div class="row expanded">
+                <div class="small-12 columns">
+                    <a href="https://www.ebi.ac.uk/~rpetry/geteam/gsa/gsa_apispec.pdf">Gene Set Enrichment API documentation</a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
