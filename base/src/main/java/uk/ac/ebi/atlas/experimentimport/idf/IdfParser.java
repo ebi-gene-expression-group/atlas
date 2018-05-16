@@ -23,8 +23,10 @@ public class IdfParser {
     private static final String PUBLICATION_DOI_ID = "Publication DOI";
     private static final String AE_EXPERIMENT_DISPLAY_NAME_ID = "Comment[AEExperimentDisplayName]";
     private static final String EXPECTED_CLUSTERS_ID = "Comment[EAExpectedClusters]";
+    private static final String ADDITIONAL_ATTRIBUTES_ID = "Comment[EAAdditionalAttributes]";
 
-    private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, PUBMED_ID, PUBLICATION_TITLE_ID, PUBLICATION_DOI_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID)
+    private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, PUBMED_ID, PUBLICATION_TITLE_ID,
+            PUBLICATION_DOI_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID, ADDITIONAL_ATTRIBUTES_ID)
                 .map(String::toUpperCase)
                 .collect(Collectors.toSet());
 
@@ -66,10 +68,13 @@ public class IdfParser {
                         .orElse(""),
                     0);
 
+            List<String> metadataFieldsOfInterest = getParsedOutputByKey(ADDITIONAL_ATTRIBUTES_ID, Collections.emptyList());
+
             return new IdfParserOutput(
                     title,
                     publications,
-                    expectedClusters
+                    expectedClusters,
+                    metadataFieldsOfInterest
             );
 
         }

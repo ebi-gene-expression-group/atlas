@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.SingleCellExperimentChecker;
 import uk.ac.ebi.atlas.experimentimport.analytics.ScxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.markergenes.MarkerGeneDao;
+import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -24,7 +25,8 @@ public class SingleCellExperimentAdminController extends ExperimentAdminControll
                                                SingleCellExperimentChecker experimentChecker,
                                                ScxaAnalyticsLoaderFactory analyticsLoaderFactory,
                                                ExperimentTrader experimentTrader,
-                                               MarkerGeneDao markerGeneDao) {
+                                               MarkerGeneDao markerGeneDao,
+                                               ExperimentAttributesService experimentAttributesService) {
         super(
                 new ExperimentOps(
                         new ExperimentOpLogWriter(dataFileHub),
@@ -32,6 +34,7 @@ public class SingleCellExperimentAdminController extends ExperimentAdminControll
                                 experimentCrudFactory.create(experimentDao, experimentChecker, analyticsLoaderFactory),
                                 experimentTrader,
                                 analyticsLoaderFactory,
-                                markerGeneDao)));
+                                markerGeneDao,
+                                experimentAttributesService)));
     }
 }

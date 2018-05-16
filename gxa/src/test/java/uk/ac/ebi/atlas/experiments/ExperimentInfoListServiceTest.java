@@ -70,7 +70,7 @@ public class ExperimentInfoListServiceTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Date lastUpdateStub = new GregorianCalendar(39 + 1900, 12, 12).getTime();
 
         List<AssayGroup> assayGroups = ImmutableList.of(new AssayGroup("RUN", ASSAY_1, ASSAY_2));
@@ -84,6 +84,7 @@ public class ExperimentInfoListServiceTest {
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(assayGroups)
                 .withPubMedIds(ImmutableSet.of())
+                .withDois(ImmutableSet.of())
                 .create());
 
         Contrast contrast = mock(Contrast.class);
@@ -91,16 +92,27 @@ public class ExperimentInfoListServiceTest {
 
         List<Pair<Contrast, Boolean>> contrasts = ImmutableList.of(Pair.of(contrast, true));
         differentialExperiment = Mockito.spy(
-                new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
-                lastUpdateStub, contrasts,
-                "description", new Species(SPECIES, SpeciesProperties.UNKNOWN),
-                new HashSet<>(),experimentDesignMock));
+                new DifferentialExperiment(
+                        DIFFERENTIAL_ACCESSION,
+                        lastUpdateStub,
+                        contrasts,
+                        "description",
+                        new Species(SPECIES, SpeciesProperties.UNKNOWN),
+                        new HashSet<>(),
+                        new HashSet<>(),
+                        experimentDesignMock));
 
-        microarrayExperiment = Mockito.spy(new MicroarrayExperiment(ExperimentType
-                .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
-                lastUpdateStub ,contrasts,
-                "description", new Species(SPECIES, SpeciesProperties.UNKNOWN),
-                experimentDesignMock, new HashSet<>(), ImmutableList.of(ArrayDesign.create(ARRAY,"ARRAY_NAME"))));
+        microarrayExperiment = Mockito.spy(new MicroarrayExperiment(
+                ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                MICROARRAY_ACCESSION,
+                lastUpdateStub,
+                contrasts,
+                "description",
+                new Species(SPECIES, SpeciesProperties.UNKNOWN),
+                experimentDesignMock,
+                new HashSet<>(),
+                new HashSet<>(),
+                ImmutableList.of(ArrayDesign.create(ARRAY,"ARRAY_NAME"))));
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment<? extends DescribesDataColumns>>>
                 experimentAccessionsPerType =

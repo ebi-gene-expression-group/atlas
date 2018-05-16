@@ -4,9 +4,8 @@ import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class AnatomogramFactoryTest {
         experimentDesign.putFactor("r3", "other_type", "c");
         experimentDesign.putFactor("r4", "other_type", "d");
 
-        BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(experimentDesign, assayGroups, ExperimentDisplayDefaults.simpleDefaults(), "accession");
+        BaselineExperiment experiment = MockExperiment.createBaselineExperiment(experimentDesign, assayGroups);
 
         assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g2, g3), experiment).isPresent(), is(true));
         assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g3), experiment).isPresent(), is(true));

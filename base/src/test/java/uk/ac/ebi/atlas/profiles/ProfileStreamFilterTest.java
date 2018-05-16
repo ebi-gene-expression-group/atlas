@@ -2,22 +2,14 @@ package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextTest;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroupsFake;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
-import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;

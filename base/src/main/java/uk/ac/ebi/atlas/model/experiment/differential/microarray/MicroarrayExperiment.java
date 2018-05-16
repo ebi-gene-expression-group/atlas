@@ -24,8 +24,10 @@ public class MicroarrayExperiment extends DifferentialExperiment {
                                 List<Pair<Contrast, Boolean>> contrasts,
                                 String description, Species species,
                                 ExperimentDesign experimentDesign,
-                                Set<String> pubMedIds, List<ArrayDesign> arrayDesigns) {
-        super(type, accession, lastUpdate, contrasts, description, species, pubMedIds, experimentDesign);
+                                Set<String> pubMedIds,
+                                Set<String> dois,
+                                List<ArrayDesign> arrayDesigns) {
+        super(type, accession, lastUpdate, contrasts, description, species, pubMedIds, dois, experimentDesign);
         this.arrayDesigns = arrayDesigns;
     }
 
@@ -35,16 +37,6 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
     public List<String> getArrayDesignNames() {
         return arrayDesigns.stream().map(a -> a.name()).collect(Collectors.toList());
-    }
-
-
-    @Override
-    public HashMap<String, Object> getAttributes() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.putAll(super.getAttributes());
-        result.put("arrayDesignAccessions", getArrayDesignAccessions());
-        result.put("arrayDesignNames", getArrayDesignNames());
-        return result;
     }
 
     @Override

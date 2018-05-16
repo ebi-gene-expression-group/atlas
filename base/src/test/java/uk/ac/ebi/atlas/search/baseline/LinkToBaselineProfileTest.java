@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.net.URI;
 
@@ -21,18 +22,18 @@ public class LinkToBaselineProfileTest {
     String factorHeader = "header";
     String queryFactorType = Factor.normalize(factorHeader);
     FactorGroup factorGroup = new FactorSet().add(new Factor(factorHeader, "value"));
-    BaselineExperiment singleFactorExperiment = BaselineExperimentTest.mockExperiment("single_factor_experiment_accession");
+    BaselineExperiment singleFactorExperiment = MockExperiment.createBaselineExperiment("single_factor_experiment_accession");
     BaselineExperimentProfile singleFactorProfile = new BaselineExperimentProfile(singleFactorExperiment, factorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
 
     FactorGroup twoFactorsFactorGroup = new FactorSet().add(new Factor(factorHeader, "value")).add(new Factor("header_2", "value_21"));
     FactorGroup secondTwoFactorsFactorGroup = new FactorSet().add(new Factor(factorHeader, "value")).add(new Factor("header_2", "value_22"));
-    BaselineExperiment twoFactorExperiment = BaselineExperimentTest.mockExperiment("two_factor_experiment_accession");
+    BaselineExperiment twoFactorExperiment = MockExperiment.createBaselineExperiment("two_factor_experiment_accession");
     BaselineExperimentProfile twoFactorProfile = new BaselineExperimentProfile(twoFactorExperiment, twoFactorsFactorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
     BaselineExperimentProfile secondTwoFactorProfile = new BaselineExperimentProfile(twoFactorExperiment, secondTwoFactorsFactorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
 
 
     @Test
-    public void useRelativeUrls() throws Exception {
+    public void useRelativeUrls() {
 
         URI result = new LinkToBaselineProfile(SemanticQuery.create()).apply(singleFactorProfile);
 
@@ -40,7 +41,7 @@ public class LinkToBaselineProfileTest {
     }
 
     @Test
-    public void includeGeneQueryAndExperimentAccession() throws Exception {
+    public void includeGeneQueryAndExperimentAccession() {
 
         URI result = new LinkToBaselineProfile(SemanticQuery.create("ASPM")).apply(singleFactorProfile);
 

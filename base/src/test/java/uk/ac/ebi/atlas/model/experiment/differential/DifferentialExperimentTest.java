@@ -28,6 +28,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialExperimentTest {
     private static final String PUBMEDID = "PUBMEDID";
+    private static final String DOI = "100.100/doi";
 
     private DifferentialExperiment subject;
 
@@ -56,7 +57,7 @@ public class DifferentialExperimentTest {
                 new Date(),
                 contrasts.stream().map(contrast -> Pair.of(contrast, true)).collect(toList()),
                 "description", new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
-                experimentDesign);
+                Sets.newHashSet(DOI), experimentDesign);
     }
 
     @Before
@@ -82,7 +83,12 @@ public class DifferentialExperimentTest {
 
     @Test
     public void testGetPubMedIds() {
-        assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
+        assertThat((Iterable<String>) subject.getPubMedIds(), contains(PUBMEDID));
+    }
+
+    @Test
+    public void testGetDois() {
+        assertThat(subject.getDois(), contains(DOI));
     }
 
     @Test

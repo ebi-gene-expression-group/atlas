@@ -7,13 +7,15 @@
         </div>
     </div>
     <div class="media-object-section middle">
-        <h2>Analysing gene expression for single cells experiments</h2>
+        <h2>
+            Single Cell Expression Atlas: gene expression analysis in single cells across species and biological
+            conditions
+        </h2>
         <p>
-            The cell is a natural unit of biology, whose type and state can vary according to external influences or to
-            internal processes. In multicellular organisms, all cells are derived from a single zygote which, through
-            regulated programmes of proliferation and differentiation, generates all of the diverse cell types that
-            populate the organism. Dysregulation of these programmes in single ‘renegade’ cells can lead to diseases
-            such as cancers, neurological disorders and developmental disorders.
+            Single Cell Expression Atlas supports research in single cell transcriptomics. The Atlas annotates publicly
+            available single cell RNA-Seq experiments with ontology identifiers and re-analyses them using standardised
+            pipelines available through iRAP, our RNA-Seq analysis toolkit. The browser enables visualisation of
+            clusters of cells, their annotations and supports searches for gene expression within and across studies.
         </p>
     </div>
 </div>

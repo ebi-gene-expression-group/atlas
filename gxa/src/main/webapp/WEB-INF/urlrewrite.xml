@@ -17,14 +17,6 @@
         <to type="permanent-redirect">/gxa</to>
     </rule>
     <rule>
-        <from>/das/s4(/)?$</from>
-        <to>/resources/das/s4.xml</to>
-    </rule>
-    <rule>
-        <from>/das/s4/types(/)?$</from>
-        <to>/resources/das/types.xml</to>
-    </rule>
-    <rule>
         <note>For development and testing of condition autocomplete, which is served by arrayexpress</note>
         <from>/arrayexpress/(.*)</from>
         <to type="proxy">http://www.ebi.ac.uk/arrayexpress/$1?%{query-string}</to>

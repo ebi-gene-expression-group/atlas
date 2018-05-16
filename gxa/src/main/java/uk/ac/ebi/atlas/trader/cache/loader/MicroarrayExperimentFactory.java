@@ -49,6 +49,7 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
                 speciesFactory.create(experimentDTO.getSpecies()),
                 experimentDesign,
                 experimentDTO.getPubmedIds(),
+                experimentDTO.getDois(),
                 experimentConfiguration
                         .getArrayDesignAccessions()
                         .stream()

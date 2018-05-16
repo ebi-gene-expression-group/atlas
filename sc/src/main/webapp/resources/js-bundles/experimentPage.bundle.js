@@ -14351,21 +14351,7 @@ var LoadingOverlay = function LoadingOverlay(props) {
         null,
         'Loading, please wait...'
       ),
-      _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 474), props.resourcesUrl).toString() }),
-      _react2.default.createElement(
-        'p',
-        null,
-        _react2.default.createElement(
-          'small',
-          null,
-          'Powered by ',
-          _react2.default.createElement(
-            'a',
-            { href: 'https://loading.io' },
-            'loading.io'
-          )
-        )
-      )
+      _react2.default.createElement('img', { src: (0, _urijs2.default)(__webpack_require__(/*! ./svg/flask-loader.svg */ 474), props.resourcesUrl).toString() })
     )
   );
 };
@@ -17752,23 +17738,19 @@ var PropertyValue = function PropertyValue(_ref) {
       isLast = _ref.isLast,
       text = _ref.text,
       url = _ref.url;
-  return _react2.default.createElement(
+  return hasUrl ? _react2.default.createElement(
     'span',
     null,
-    hasUrl ? _react2.default.createElement(
+    _react2.default.createElement(
       'a',
       { className: "bioEntityCardLink", href: url, target: '_blank' },
       text
-    ) : _react2.default.createElement(
-      'span',
-      null,
-      text
     ),
-    !isLast && _react2.default.createElement(
-      'span',
-      null,
-      ', '
-    )
+    !isLast ? ', ' : ''
+  ) : _react2.default.createElement(
+    'span',
+    null,
+    text + (!isLast ? ', ' : '')
   );
 };
 
@@ -38482,7 +38464,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".rt-td:hover {\n    overflow: visible;\n    white-space: normal;\n    width: auto;\n}\n\n.select-wrap select {\n    height: unset;\n    margin: unset;\n}\n\n.-pageJump input {\n    display: inline-block;\n    height: unset;\n    margin: unset;\n}", ""]);
+exports.push([module.i, ".rt-td:hover {\n    overflow: visible;\n    white-space: normal;\n    width: auto;\n}\n\n/* Fixes for sizing issues in the pagination bar in Firefox and Chrome */\n.select-wrap select {\n    height: unset;\n    margin: unset;\n}\n\n.-pageJump input {\n    display: inline-block;\n    height: unset;\n    margin: unset;\n}", ""]);
 
 // exports
 

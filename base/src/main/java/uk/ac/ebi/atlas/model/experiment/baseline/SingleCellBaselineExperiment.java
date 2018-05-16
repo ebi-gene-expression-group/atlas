@@ -22,6 +22,7 @@ public class SingleCellBaselineExperiment extends Experiment<Cell> {
                                         String disclaimer,
                                         Species species,
                                         Collection<String> pubMedIds,
+                                        Collection<String> dois,
                                         ExperimentDesign experimentDesign,
                                         List<String> dataProviderURL,
                                         List<String> dataProviderDescription,
@@ -31,7 +32,7 @@ public class SingleCellBaselineExperiment extends Experiment<Cell> {
                                         ExperimentDisplayDefaults experimentDisplayDefaults) {
 
         super(type, accession, lastUpdate, displayName, description, disclaimer, species,
-                pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
+                pubMedIds, dois, experimentDesign, dataProviderURL, dataProviderDescription,
                 alternativeViews, alternativeViewDescriptions, cells, experimentDisplayDefaults);
     }
 

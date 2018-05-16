@@ -17,7 +17,7 @@ public class ScxaExperimentDao extends ExperimentDao {
     // Create
     private static final String INSERT_NEW_EXPERIMENT =
             "INSERT INTO scxa_experiment " +
-            "(accession, type, species, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "(accession, type, species, private, access_key, pubmed_ids, dois, title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     // Read
     private static final String SELECT_EXPERIMENT_AS_ADMIN_BY_ACCESSION =
             "SELECT * FROM scxa_experiment WHERE accession=?";
@@ -48,6 +48,7 @@ public class ScxaExperimentDao extends ExperimentDao {
                 experimentDto.isPrivate(),
                 accessKeyUuid.toString(),
                 experimentDto.getPubmedIds().stream().collect(Collectors.joining(", ")),
+                experimentDto.getDois().stream().collect(Collectors.joining(", ")),
                 experimentDto.getTitle());
     }
 
