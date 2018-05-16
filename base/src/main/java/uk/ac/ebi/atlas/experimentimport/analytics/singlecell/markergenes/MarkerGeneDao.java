@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.markergenes;
+package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.markergenes;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
@@ -54,35 +54,6 @@ public class MarkerGeneDao {
         LOGGER.info("{} rows inserted", rowCount);
     }
 
-    public ImmutableList<MarkerGeneProfile> fetchMarkerGenes(String geneId, double cutoff) {
-        // TODO   We might want to do a JOIN with experiment names to get the experiment metadata in one go and
-        // TODO   return something like List<Pair<MarkerGeneProfile, ExperimentStuff>>
-        List<MarkerGeneDto> markerGeneDtos =
-               jdbcTemplate.queryForList(MARKER_GENE_SELECT_STATEMENT, geneId, cutoff)
-                        .stream()
-                        .map(rowMap ->
-                                MarkerGeneDto.create(
-                                        (String) rowMap.get("experiment_accession"),
-                                        (int) rowMap.get("k"),
-                                        (int) rowMap.get("cluster_id"),
-                                        (double) rowMap.get("marker_probability")))
-                        .collect(toList());
-
-
-        ImmutableList.Builder<MarkerGeneProfile> builder = ImmutableList.builder();
-
-        // Trivial to extend to multiple genes if we add geneId to MarkerGeneProfile
-        markerGeneDtos.stream()
-                .collect(groupingBy(MarkerGeneDao.MarkerGeneDto::experimentAccession))
-                .forEach((experimentAccession, mgdsByExperimentAccession) -> mgdsByExperimentAccession.stream()
-                        .collect(groupingBy(MarkerGeneDao.MarkerGeneDto::k))
-                        .values()
-                        .forEach(mgdsByExperimentAccessionAndK ->
-                                builder.add(MarkerGeneProfile.create(mgdsByExperimentAccessionAndK))));
-
-        return builder.build();
-    }
-
     public void deleteAll() {
         int rowCount = jdbcTemplate.update("DELETE FROM scxa_marker_genes");
         LOGGER.info("{} rows deleted", rowCount);
@@ -93,15 +64,4 @@ public class MarkerGeneDao {
         LOGGER.info("{} rows deleted", rowCount);
     }
 
-    @AutoValue
-    static abstract class MarkerGeneDto {
-        static MarkerGeneDto create(String experimentAccession, int k, int clusterId, double p) {
-            return new AutoValue_MarkerGeneDao_MarkerGeneDto(experimentAccession, k, clusterId, p);
-        }
-
-        abstract String experimentAccession();
-        abstract int k();
-        abstract int clusterId();
-        abstract double p();
-    }
 }
