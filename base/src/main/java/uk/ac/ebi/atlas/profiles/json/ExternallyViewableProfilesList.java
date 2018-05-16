@@ -89,6 +89,4 @@ public class ExternallyViewableProfilesList<D extends DescribesDataColumns,
         return result;
     }
 
-
-
 }

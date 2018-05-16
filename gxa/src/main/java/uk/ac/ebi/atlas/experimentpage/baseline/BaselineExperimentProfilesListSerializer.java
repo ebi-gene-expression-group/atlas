@@ -14,10 +14,10 @@ public class BaselineExperimentProfilesListSerializer {
                                        BaselineRequestContext<? extends ExpressionUnit.Absolute> requestContext) {
         return new
                 ExternallyViewableProfilesList<>(
-                profilesList,
-                new LinkToGene<>(),
-                requestContext.getDataColumnsToReturn(),
-                baselineProfile -> requestContext.getExpressionUnit())
+                        profilesList,
+                        new LinkToGene<>(),
+                        requestContext.getDataColumnsToReturn(),
+                        baselineProfile -> requestContext.getExpressionUnit())
                 .asJson();
     }
 }

@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
@@ -37,18 +38,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             BaselineExperiment experiment, String accessKey, BaselineRequestPreferences<U> preferences) {
 
         BaselineRequestContext<U> requestContext = new BaselineRequestContext<>(preferences, experiment);
-        GeneProfilesList<BaselineProfile> baselineProfilesList =
-                baselineExperimentProfilesService.searchTopGeneProfiles(
-                        experiment.getAccession(),
-                        experiment.getDataColumnDescriptors(),
-                        preferences);
-
-        baselineProfilesList.setTotalResultCount(baselineExperimentProfilesService.fetchCount(experiment.getAccession(), preferences));
 
         JsonObject result = new JsonObject();
         result.add("columnHeaders", constructColumnHeaders(requestContext, experiment));
         result.add("columnGroupings", new JsonArray());
 
+        GeneProfilesList<BaselineProfile> baselineProfilesList = fetchProfiles(experiment, preferences);
         result.add(
                 "profiles",
                 BaselineExperimentProfilesListSerializer.serialize(baselineProfilesList, requestContext));
@@ -72,6 +67,20 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         }
 
         return result;
+    }
+
+    private GeneProfilesList<BaselineProfile> fetchProfiles(BaselineExperiment experiment,
+                                                            BaselineRequestPreferences<?> preferences) {
+        GeneProfilesList<BaselineProfile> baselineProfilesList =
+                baselineExperimentProfilesService.searchTopGeneProfiles(
+                        experiment.getAccession(),
+                        experiment.getDataColumnDescriptors(),
+                        preferences);
+
+        baselineProfilesList.setTotalResultCount(
+                baselineExperimentProfilesService.fetchCount(experiment.getAccession(), preferences));
+
+        return baselineProfilesList;
     }
 
     private JsonArray constructColumnHeaders(BaselineRequestContext<?> requestContext, BaselineExperiment experiment) {
@@ -99,27 +108,28 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                                            BaselineExperiment experiment,
                                            BaselineRequestContext<?> requestContext,
                                            BaselineRequestPreferences<?> preferences) {
-        JsonArray result = new JsonArray();
-
         List<String> coexpressedGeneIds =
                 coexpressedGenesService.fetchCoexpressions(experiment.getAccession(), baselineProfile.getId(), 49);
 
-        if (coexpressedGeneIds.size() > 0) {
-            JsonObject o = new JsonObject();
-            o.addProperty("geneName", baselineProfile.getName());
-            o.addProperty("geneId", baselineProfile.getId());
-
-            o.add("jsonProfiles",
-                  BaselineExperimentProfilesListSerializer.serialize(
-                          baselineExperimentProfilesService.fetchProfiles(
-                                  coexpressedGeneIds,
-                                  experiment.getDataColumnDescriptors(),
-                                  preferences,
-                                  experiment.getAccession()),
-                          requestContext));
-            result.add(o);
+        if (coexpressedGeneIds.isEmpty()) {
+            return new JsonArray();
         }
 
+        JsonObject o = new JsonObject();
+        o.addProperty("geneName", baselineProfile.getName());
+        o.addProperty("geneId", baselineProfile.getId());
+
+        o.add("jsonProfiles",
+              BaselineExperimentProfilesListSerializer.serialize(
+                      baselineExperimentProfilesService.fetchProfiles(
+                              coexpressedGeneIds,
+                              experiment.getDataColumnDescriptors(),
+                              preferences,
+                              experiment.getAccession()),
+                      requestContext));
+
+        JsonArray result = new JsonArray();
+        result.add(o);
         return result;
     }
 }
