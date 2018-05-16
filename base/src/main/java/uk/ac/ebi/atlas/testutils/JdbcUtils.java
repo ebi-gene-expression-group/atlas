@@ -35,6 +35,30 @@ public class JdbcUtils {
                 String.class);
     }
 
+    public String fetchRandomExpressionAtlasExperimentAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
+    public String fetchRandomExpressionAtlasBaselineExperimentAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment WHERE type='RNASEQ_MRNA_BASELINE' ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
+    public String fetchRandomExpressionAtlasProteomicsExperimentAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment WHERE type='PROTEOMICS_BASELINE' ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
+    public String fetchRandomExpressionAtlasDifferentialExperimentAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment WHERE type='RNASEQ_MRNA_DIFFERENTIAL' ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
     public String fetchRandomGeneFromExperiment(String experimentAccession) {
          return jdbcTemplate.queryForObject(
                  "SELECT gene_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
