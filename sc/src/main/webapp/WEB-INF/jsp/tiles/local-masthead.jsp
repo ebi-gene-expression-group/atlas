@@ -2,45 +2,27 @@
 
 <div data-sticky-container>
     <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
-        <div class="masthead-inner row">
-            <!-- local-title -->
-            <a href="${pageContext.request.contextPath}/home" title="Back to Single Cell Expression Atlas homepage">
-            <div class="media-object columns small-8" id="local-title">
-                <div class="media-object-section hide-for-small-only">
-                    <img src="${pageContext.request.contextPath}/resources/images/logos/sc_atlas_logo.png" alt="Single Cell Expression Atlas logo" style="height:7em">
+        <div class="masthead-inner row expanded">
+            <div class="small-12 medium-8 columns">
+                <!-- local-title -->
+                <a href="${pageContext.request.contextPath}/home" title="Back to Single Cell Expression Atlas homepage">
+                <div class="media-object columns small-8" id="local-title">
+                    <div class="media-object-section hide-for-small-only">
+                        <img src="${pageContext.request.contextPath}/resources/images/logos/sc_atlas_logo.png" alt="Single Cell Expression Atlas logo" style="height:7em">
+                    </div>
+                    <div class="media-object-section">
+                        <h1>Single Cell Expression&nbsp;Atlas</h1>
+                        <h4 class="show-for-large">Single cell gene expression across species</h4>
+                    </div>
                 </div>
-                <div class="media-object-section">
-                    <h1>Single Cell Expression&nbsp;Atlas</h1>
-                    <h4 class="show-for-large">Single cell gene expression across species</h4>
-                </div>
+                </a>
             </div>
-            </a>
 
-            <!-- local-search -->
-            <!--
-            <div class="columns medium-6 text-right">
-                <div class="">
-                    <form id="ebi_search" action="../search">
-                        <fieldset>
-                            <div class="input-group margin-bottom-none margin-top-large">
-                                <input type="text" name="q" id="tipue_search_input" class="input-group-field" pattern=".{3,}" tabindex="1" title="At least 3 characters" placeholder="Search the Style Lab" required>
-                                <div class="input-group-button">
-                                    <input id="search_submit" class="button icon icon-functional" tabindex="2" type="submit" name="submit1" value="1">
-                                </div>
-                            </div>
-                        </fieldset>
-                        <p id="example" class="small">
-                          Examples: <a href="/ebisearch/search.ebi?db=allebi&amp;requestFrom=ebi_index&amp;query=blast">blast</a>, <a href="/ebisearch/search.ebi?db=allebi&amp;query=keratin&amp;requestFrom=ebi_index">keratin</a>, <a href="/ebisearch/search.ebi?db=allebi&amp;query=bfl1&amp;requestFrom=ebi_index">bfl1</a>
-                          <a class="float-right" href="#"><span class="icon icon-generic" data-icon="("></span> advanced search</a>
-                        </p>
-                    </form>
-                </div>
+            <div class="small-12 medium-4 columns">
+                <h4>Query bulk expression</h4>
+                <a href="/gxa" title="To Expression Atlas" class="button" style="box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5)"><i class="icon icon-common" data-icon="&#xf12c;"></i> Back to Expression Atlas</a>
             </div>
-            -->
-            <!-- /local-search -->
-            <!-- /local-title -->
 
-            <!-- local-nav -->
             <nav>
                 <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
                     <li id="local-nav-home"><a href="${pageContext.request.contextPath}/home"><i class="icon icon-generic padding-right-medium" data-icon="H"></i>Home</a></li>

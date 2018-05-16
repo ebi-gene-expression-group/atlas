@@ -6,11 +6,10 @@
             <img src="${pageContext.request.contextPath}/resources/images/home/hero_cell.png">
         </div>
     </div>
-    <div class="media-object-section middle">
-        <h2>
-            Single Cell Expression Atlas: gene expression analysis in single cells across species and biological
-            conditions
-        </h2>
+    <div class="media-object-section top">
+        <h3>
+            Gene expression analysis in single cells across species and biological conditions
+        </h3>
         <p>
             Single Cell Expression Atlas supports research in single cell transcriptomics. The Atlas annotates publicly
             available single cell RNA-Seq experiments with ontology identifiers and re-analyses them using standardised

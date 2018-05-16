@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
+
 <div class="row expanded margin-top-large">
     <div class="small-12 columns">
         <ul class="tabs" data-tabs id="search-tabs">
@@ -95,3 +98,53 @@
         </div>
     </div>
 </div>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
+
+<!-- JSON Tag Editor -->
+<script defer src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.caret.min.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.min.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
+
+<!-- Condition AUTOCOMPLETE -->
+<script defer language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/arrayexpress-autocomplete/jquery.caret-range-1.0.js"></script>
+<script defer language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/arrayexpress-autocomplete/jquery.array-express.autocomplete-1.1.0.150319.js"></script>
+<script defer language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/conditionAutocompleteModule.js"></script>
+
+<script defer src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var contextPath = '${pageContext.request.contextPath}/';
+        var geneQueryPlaceHolder = 'Enter gene query…';
+
+        geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, geneQueryPlaceHolder, contextPath);
+        geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, geneQueryPlaceHolder, contextPath);
+        conditionAutocompleteModule.init('#home-search-condition-query-input', function(){});
+
+        $('#home-search-atlas-clear-button').on('click' , function () {
+            // Remove all tags
+            var $atlasSearchInput = $('#home-search-gene-query-input'),
+                atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
+            atlasSearchTags.forEach(function (searchTag) {
+                $atlasSearchInput.jsonTagEditor('removeTag', searchTag.value);
+            });
+
+            var $conditionQuery = $('#home-search-condition-query-input'),
+                conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
+            conditionQueryTags.forEach(function (searchTag) {
+                $conditionQuery.jsonTagEditor('removeTag', searchTag.value);
+            });
+        });
+
+        $('#home-search-atlas-form').submit(function(event) {
+            var $atlasSearchInput = $('#home-search-gene-query-input'),
+                atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
+            $atlasSearchInput.val(JSON.stringify(atlasSearchTags));
+
+            var $conditionQuery = $('#home-search-condition-query-input'),
+                conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
+            $conditionQuery.val(JSON.stringify(conditionQueryTags));
+        });
+    });
+</script>

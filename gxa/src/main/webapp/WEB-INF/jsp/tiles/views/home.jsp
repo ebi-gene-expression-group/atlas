@@ -23,13 +23,16 @@
     </div>
 </div>
 
-<div class="text-center jumbo-news-container padding-top-xlarge padding-bottom-xlarge">
-    <tiles:insertAttribute name="news"/>
+<div class="row expanded text-center">
+    <div class="small-centered small-8 medium-4 columns padding-top-large padding-bottom-large">
+        <tiles:insertAttribute name="news"/>
+    </div>
 </div>
 
 <script>
-    /* This is to prevent overlapping between boxes in home page */
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById("local-nav-home").className += ' active';
+        // /* This is to prevent overlapping between boxes in home page */
         Foundation.reInit('equalizer');
     });
 </script>

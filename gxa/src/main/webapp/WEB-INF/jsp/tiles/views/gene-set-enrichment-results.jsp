@@ -31,9 +31,7 @@
 <script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/geneSetEnrichmentModule.js"></script>
 
 <script>
-  (function ($) {
-    $(document).ready(function () {
-      geneSetEnrichmentModule.init("#gene-set-enrichment-results-table", ${data});
+    document.addEventListener("DOMContentLoaded", function(event) {
+        geneSetEnrichmentModule.init("#gene-set-enrichment-results-table", ${data});
     });
-  })(jQuery);
 </script>

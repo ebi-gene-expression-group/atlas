@@ -1,15 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
-<div class="row column margin-bottom-xlarge">
+<div class="row column margin-bottom-xlarge expanded">
     <tiles:insertAttribute name="home-hero"/>
 </div>
 
-<div class="row column margin-bottom-xlarge">
+<div class="row column margin-bottom-xlarge expanded">
     <tiles:insertAttribute name="search"/>
 </div>
 
-<div class="row column margin-bottom-xlarge">
+<div class="row column margin-bottom-xlarge expanded">
     <tiles:insertAttribute name="experiment-list-latest-box"/>
 </div>
 
