@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,27 +20,31 @@ public class GeneSearchServiceDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    private static final String SELECT_CELL_ID_WITH_MARKER_GENE_STATEMENT =
-            "SELECT clusters.experiment_accession, clusters.cell_id, markers.k, markers.cluster_id " +
-            "FROM scxa_cell_clusters AS clusters " +
-            "LEFT JOIN " +
-            "(SELECT * FROM scxa_marker_genes WHERE gene_id=:gene_id AND marker_probability<:probability_threshold) AS markers " +
-            "ON clusters.experiment_accession=markers.experiment_accession AND clusters.k=markers.k AND clusters.cluster_id=markers.cluster_id ";
+    private static final String SELECT_CELL_IDS_FOR_GENE_STATEMENT = 
+            "SELECT experiment_accession, cell_id FROM scxa_analytics WHERE gene_id=:gene_id";
     @Transactional(readOnly = true)
-    public List<GeneSearchResult.Dto> fetchCellIds(String geneId, double probabilityThreshold) {
+    public Map<String, List<String>> fetchCellIds(String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
-                        "gene_id", geneId,
-                        "probability_threshold", probabilityThreshold);
+                        "gene_id", geneId );
+
         return namedParameterJdbcTemplate.query(
-                SELECT_CELL_ID_WITH_MARKER_GENE_STATEMENT,
+                SELECT_CELL_IDS_FOR_GENE_STATEMENT,
                 namedParameters,
-                (rs, rowNum) -> GeneSearchResult.Dto.create(
-                        rs.getString("experiment_accession"),
-                        geneId,
-                        rs.getString("cell_id"),
-                        rs.getInt("k"),
-                        rs.getInt("cluster_id")));
+                (ResultSet resultSet) -> {
+                    Map<String, List<String>> result = new HashMap<>();
+                    while(resultSet.next()) {
+                        String experimentAccession = resultSet.getString("experiment_accession");
+                        String cellId = resultSet.getString("cell_id");
+
+                        List<String> cellIds = result.getOrDefault(experimentAccession, new ArrayList<>());
+                        cellIds.add(cellId);
+                        result.put(experimentAccession, cellIds);
+                    }
+
+                    return result;
+                }
+        );
     }
 
 }
