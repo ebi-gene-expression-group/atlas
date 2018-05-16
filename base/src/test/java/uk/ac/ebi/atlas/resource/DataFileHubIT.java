@@ -1,12 +1,13 @@
 package uk.ac.ebi.atlas.resource;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
@@ -14,16 +15,18 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration("classpath:applicationContext.xml")
-public class DataFileHubIT {
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+class DataFileHubIT {
+    @Inject
+    JdbcUtils jdbcTestUtils;
 
     @Inject
     DataFileHubFactory dataFileHubFactory;
 
     @Test
-    public void testGetExperimentFiles() {
+    void testGetExperimentFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").analysisMethods);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").condensedSdrf);
@@ -31,7 +34,7 @@ public class DataFileHubIT {
     }
 
     @Test
-    public void testGetBaselineFiles() {
+    void testGetBaselineFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
         assertAtlasResourceExists(
                 subject.getRnaSeqBaselineExperimentFiles("E-MTAB-513").dataFile(ExpressionUnit.Absolute.Rna.TPM));
@@ -41,16 +44,17 @@ public class DataFileHubIT {
     }
 
     @Test
-    public void testGetDifferentialExperimentFiles() {
+    void testGetDifferentialExperimentFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
         assertAtlasResourceExists(subject.getRnaSeqDifferentialExperimentFiles("E-GEOD-54705").analytics);
         assertAtlasResourceExists(subject.getRnaSeqDifferentialExperimentFiles("E-GEOD-54705").rawCounts);
     }
 
     @Test
-    public void findsTSnePlotFiles() {
+    void findsTSnePlotFiles() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         DataFileHub subject = dataFileHubFactory.getScxaDataFileHub();
-        assertAtlasResourceExists(subject.getSingleCellExperimentFiles("E-MTAB-5061").tSnePlotTsvs.values());
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs.values());
     }
 
     private void assertAtlasResourceExists(AtlasResource<?> resource) {
