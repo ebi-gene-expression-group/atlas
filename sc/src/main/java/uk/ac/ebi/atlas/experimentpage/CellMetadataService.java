@@ -115,6 +115,9 @@ public class CellMetadataService {
     // This returns Solr query results for a list of multi-value fields of interest
     private ImmutableMap<String, Collection<Object>> getCellQueryResultForMultiValueFields(
             String experimentAccession, String cellId, SingleCellAnalyticsSchemaField... fieldsOfInterest) {
+        if (fieldsOfInterest.length == 0) {
+            return ImmutableMap.of();
+        }
 
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()

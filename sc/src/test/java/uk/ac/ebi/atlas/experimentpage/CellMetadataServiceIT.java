@@ -79,10 +79,18 @@ class CellMetadataServiceIT {
 
     @Test
     void experimentWithoutMetadataFieldsInIdf() {
+        String experimentAccession = "E-GEOD-99058";    // Empty Comment[EAAdditionalAttributes] in IDF file
+
         assertThat(
                 subject.getIdfFileAttributes(
-                        "E-GEOD-99058",
-                        jdbcUtils.fetchRandomCellFromExperiment("E-GEOD-99058")))
+                        experimentAccession,
+                        jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
+                .isEmpty();
+
+        assertThat(
+                subject.getFactors(
+                        experimentAccession,
+                        jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
                 .isEmpty();
     }
 
