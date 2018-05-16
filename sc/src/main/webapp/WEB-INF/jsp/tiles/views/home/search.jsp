@@ -8,7 +8,6 @@
 </ul>
 
 <div class="tabs-content" data-tabs-content="search-tabs">
-
     <div class="tabs-panel is-active " id="search-atlas" style="background-color: #e6e6e6;">
         <form method="get" action="${pageContext.request.contextPath}/search" id="home-search-atlas-form">
             <!-- No need to enclose in row as the component already uses Foundation classes -->

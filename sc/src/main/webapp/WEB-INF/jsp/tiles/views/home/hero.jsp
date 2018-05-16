@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="media-object">
-    <div class="media-object-section middle hide-for-small-only">
+    <div class="media-object-section top hide-for-small-only">
         <div class="thumbnail">
             <img src="${pageContext.request.contextPath}/resources/images/home/hero_cell.png">
         </div>
