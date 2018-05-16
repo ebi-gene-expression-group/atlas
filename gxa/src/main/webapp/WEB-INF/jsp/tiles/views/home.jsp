@@ -1,9 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
-<tiles:insertAttribute name="home-hero"/>
+<div class="row column margin-bottom-large expanded">
+    <tiles:insertAttribute name="home-hero"/>
+</div>
 
-<tiles:insertAttribute name="home-search"/>
+<div class="row column margin-bottom-xlarge expanded">
+    <tiles:insertAttribute name="home-search"/>
+</div>
 
 <div class="row expanded margin-top-large" data-equalizer>
     <div class="small-12 medium-12 large-6 columns">
