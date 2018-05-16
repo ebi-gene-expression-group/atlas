@@ -48,7 +48,7 @@ public class ArrayExpressClientTest {
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
 
         when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION)))
-                .thenReturn(new IdfParserOutput(E_FOOBAR_IDF_TITLE, Collections.emptyList(), 0));
+                .thenReturn(new IdfParserOutput(E_FOOBAR_IDF_TITLE, Collections.emptyList(), 0, Collections.emptyList()));
 
         subject = new ArrayExpressClient(restTemplate, idfParserMock);
     }
@@ -113,7 +113,7 @@ public class ArrayExpressClientTest {
     public void throwIfBothXmlAndIdfHaveNoName() {
         mockServer.expect(requestTo(MessageFormat.format(AE_URL_TEMPLATE, E_FOOBAR_ACCESSION)))
                 .andRespond(withSuccess("<xml><experiment></experiment></xml>", MediaType.APPLICATION_XML));
-        when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION))).thenReturn(new IdfParserOutput("", Collections.emptyList(), 0));
+        when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION))).thenReturn(new IdfParserOutput("", Collections.emptyList(), 0, Collections.emptyList()));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> subject.fetchExperimentName(E_FOOBAR_ACCESSION));

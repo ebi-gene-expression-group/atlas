@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 
 import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
@@ -30,13 +31,15 @@ public class IdfParserTest {
     private static final String[] E_MTAB_513_PUBLICATIONS_ARRAY = {"Publication 1", "Another publication", "Yet another publication"};
     private static final ImmutableSet<String> E_MTAB_513_PUBMED_IDS = ImmutableSet.copyOf(E_MTAB_513_PUBMED_IDS_ARRAY);
     private static final String E_MTAB_513_EXPECTED_CLUSTERS = "5";
+    private static final String[] E_MTAB_513_ADDITIONAL_ATTRIBUTES= {"individual", "genotype", "FACS marker"};
 
     private static final String[][] E_MTAB_513_IDF_TXT = {
             {"Investigation Title", E_MTAB_513_TITLE},
             {"Comment[AEExperimentDisplayName]", E_MTAB_513_AE_DISPLAY_NAME},
             {"PubMed ID", E_MTAB_513_PUBMED_IDS_ARRAY[0], E_MTAB_513_PUBMED_IDS_ARRAY[1], E_MTAB_513_PUBMED_IDS_ARRAY[2]},
             {"Publication Title", E_MTAB_513_PUBLICATIONS_ARRAY[0], E_MTAB_513_PUBLICATIONS_ARRAY[1], E_MTAB_513_PUBLICATIONS_ARRAY[2]},
-            {"Comment[EAExpectedClusters]", E_MTAB_513_EXPECTED_CLUSTERS}
+            {"Comment[EAExpectedClusters]", E_MTAB_513_EXPECTED_CLUSTERS},
+            {"Comment[EAAdditionalAttributes]", E_MTAB_513_ADDITIONAL_ATTRIBUTES[0], E_MTAB_513_ADDITIONAL_ATTRIBUTES[1], E_MTAB_513_ADDITIONAL_ATTRIBUTES[2]}
     };
 
     private static final String[][] E_MTAB_513_IDF_TXT_MIXED_CASE = {
@@ -70,6 +73,7 @@ public class IdfParserTest {
         assertThat(idfParserOutput.getTitle(), is(E_MTAB_513_AE_DISPLAY_NAME));
         assertThat(idfParserOutput.getPubmedIds(), is(E_MTAB_513_PUBMED_IDS));
         assertThat(idfParserOutput.getExpectedClusters(), is(NumberUtils.toInt(E_MTAB_513_EXPECTED_CLUSTERS)));
+        assertThat(idfParserOutput.getMetadataFieldsOfInterest(), containsInAnyOrder(E_MTAB_513_ADDITIONAL_ATTRIBUTES));
     }
 
     @Test
@@ -85,7 +89,7 @@ public class IdfParserTest {
 
     @Test
     public void parseNoPubmedIds() {
-        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[1]));
+        when(idfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[1]));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
@@ -95,7 +99,7 @@ public class IdfParserTest {
 
     @Test
     public void parseNoAeDisplayName() {
-        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[2], E_MTAB_513_IDF_TXT[3]));
+        when(idfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT[0], E_MTAB_513_IDF_TXT[2], E_MTAB_513_IDF_TXT[3]));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
@@ -105,7 +109,7 @@ public class IdfParserTest {
 
     @Test
     public void parseNoAeDisplayNameNoTitle() {
-        when(idfStreamerMock.get()).thenReturn(Stream.<String[]>of(E_MTAB_513_IDF_TXT[2], E_MTAB_513_IDF_TXT[3]));
+        when(idfStreamerMock.get()).thenReturn(Stream.of(E_MTAB_513_IDF_TXT[2], E_MTAB_513_IDF_TXT[3]));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
