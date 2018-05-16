@@ -13,8 +13,6 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class JsonCellMetadataController extends JsonExperimentController {
