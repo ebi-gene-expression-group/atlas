@@ -3,7 +3,7 @@
 <div data-sticky-container>
     <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
         <div class="masthead-inner row expanded">
-            <div class="small-12 medium-8 columns">
+            <div class="medium-12 large-8 columns">
                 <!-- local-title -->
                 <a href="${pageContext.request.contextPath}/home" title="Back to Single Cell Expression Atlas homepage">
                 <div class="media-object columns small-8" id="local-title">
@@ -18,8 +18,8 @@
                 </a>
             </div>
 
-            <div class="small-12 medium-4 columns">
-                <h4>Query bulk expression</h4>
+            <div class="medium-12 large-4 columns">
+                <h4 class="show-for-large">Query bulk expression</h4>
                 <a href="/gxa" title="To Expression Atlas" class="button" style="box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5)"><i class="icon icon-common" data-icon="&#xf12c;"></i> Back to Expression Atlas</a>
             </div>
 
