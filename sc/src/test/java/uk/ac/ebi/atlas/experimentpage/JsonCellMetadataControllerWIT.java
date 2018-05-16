@@ -53,7 +53,7 @@ public class JsonCellMetadataControllerWIT {
                         "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(0))))
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$[0].displayName", isA(String.class)))
                 .andExpect(jsonPath("$[0].value", isA(String.class)));
     }

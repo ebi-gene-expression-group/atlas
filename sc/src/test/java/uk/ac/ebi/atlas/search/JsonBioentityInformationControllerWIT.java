@@ -11,6 +11,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -24,11 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class JsonBioentityInformationControllerWIT {
+    @Inject
+    private JdbcUtils jdbcTestUtils;
 
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -37,7 +42,7 @@ public class JsonBioentityInformationControllerWIT {
 
     @Test
     public void payloadIsValidJson() throws Exception {
-        String geneId = "ENSMUSG00000021789";
+        String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc
                 .perform(get(

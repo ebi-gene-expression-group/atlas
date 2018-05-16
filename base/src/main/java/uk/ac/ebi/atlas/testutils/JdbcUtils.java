@@ -49,6 +49,12 @@ public class JdbcUtils {
                 experimentType.name());
     }
 
+    public String fetchRandomGene() {
+        return jdbcTemplate.queryForObject(
+                "SELECT gene_id FROM scxa_analytics ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
     public String fetchRandomGeneFromExperiment(String experimentAccession) {
          return jdbcTemplate.queryForObject(
                  "SELECT gene_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
