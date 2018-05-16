@@ -34,18 +34,20 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
         Map<String, List<String>> cellIds = geneSearchService.getCellIdsInExperiments(geneId);
 
-        cellIds.forEach((experimentAccession, cells) -> {
-            JsonObject resultEntry = new JsonObject();
+        if(!cellIds.isEmpty()) {
+            cellIds.forEach((experimentAccession, cells) -> {
+                JsonObject resultEntry = new JsonObject();
 
-            JsonElement element = GSON.toJsonTree(geneSearchService.getExperimentInformation(experimentAccession));
-            resultEntry.add("element", element);
+                JsonElement element = GSON.toJsonTree(geneSearchService.getExperimentInformation(experimentAccession));
+                resultEntry.add("element", element);
 
-            JsonArray facets = new JsonArray();
-            cells.forEach(facets::add);
-            resultEntry.add("facets", facets);
+                JsonArray facets = new JsonArray();
+                cells.forEach(facets::add);
+                resultEntry.add("facets", facets);
 
-            result.add(resultEntry);
-        });
+                result.add(resultEntry);
+            });
+        }
 
         return GSON.toJson(result);
     }
