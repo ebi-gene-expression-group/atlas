@@ -91,7 +91,7 @@ config = {
     devServer: {
         port: 9000,
         historyApiFallback: {
-          index: `/scxa/experiments/E-MTAB-4388/index.html`
+          index: `/scxa/experiments/E-MTAB-5061/`
         }
     }
 }
