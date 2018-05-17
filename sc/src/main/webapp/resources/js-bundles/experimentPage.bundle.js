@@ -7644,8 +7644,7 @@ var PlotLoader = function PlotLoader(_ref) {
   ) : _react2.default.createElement(
     'div',
     { style: { position: 'relative' }, className: wrapperClassName },
-    _react2.default.createElement(_ScatterPlot2.default, { wrapperClassName: wrapperClassName,
-      chartClassName: chartClassName,
+    _react2.default.createElement(_ScatterPlot2.default, { chartClassName: chartClassName,
       series: series,
       highchartsConfig: highchartsConfig,
       children: children
@@ -13462,7 +13461,8 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
       )
     )
   ), _react2.default.createElement(_PlotLoader2.default, { key: 'cluster-plot',
-    wrapperClassName: 'row column',
+    wrapperClassName: 'row',
+    chartClassName: 'small-12 columns',
     series: _colourizeClusters(highlightClusters)(plotData.series),
     highchartsConfig: highchartsConfig,
     loading: loading,
@@ -14182,8 +14182,7 @@ var highchartsBaseConfig = {
 };
 
 var ScatterPlot = function ScatterPlot(props) {
-  var wrapperClassName = props.wrapperClassName,
-      chartClassName = props.chartClassName,
+  var chartClassName = props.chartClassName,
       series = props.series,
       highchartsConfig = props.highchartsConfig,
       children = props.children;
@@ -14216,7 +14215,6 @@ var ScatterPlot = function ScatterPlot(props) {
 };
 
 ScatterPlot.propTypes = {
-  wrapperClassName: _propTypes2.default.string,
   chartClassName: _propTypes2.default.string,
   series: _SeriesPropTypes2.default,
   highchartsConfig: _propTypes2.default.object,
@@ -15028,7 +15026,8 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
     plotData: plotData }) : null;
 
   return [_react2.default.createElement(_expressionAtlasAutocomplete2.default, { key: 'expression-autocomplete',
-    wrapperClassName: 'row column',
+    wrapperClassName: 'row',
+    autocompleteClassName: 'smal-12 columns',
     atlasUrl: atlasUrl,
     suggesterEndpoint: suggesterEndpoint,
     enableSpeciesFilter: false,
