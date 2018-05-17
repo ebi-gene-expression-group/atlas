@@ -7,7 +7,7 @@
     "full-build": "rm -rf node_modules/ && npm install && webpack --devtool source-map",
     "dev": "npm install && webpack-dev-server --watch --hot --inline --devtool source-map"
   },
-  "author": "Expression Atlas developers <arrayexpress-atlas@ebi.ac.uk>",
+  "author": "Expression Atlas developers <atlas-developers@ebi.ac.uk>",
   "collaborators": [
     "Elisabet Barrera <barrera@ebi.ac.uk>",
     "Wojciech Bażant <wbazant@ebi.ac.uk>",

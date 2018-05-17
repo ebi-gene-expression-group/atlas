@@ -429,7 +429,7 @@
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
-            <version>${solr.version}</version>
+            <version>7.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
