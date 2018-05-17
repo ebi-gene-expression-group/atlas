@@ -176,15 +176,17 @@ a.baseline {
     color: #5688B3;
 }
 
-.jumbo-news-container {
-    background-color: #EEE;
-}
-
-#local-footer {
+#local-footer-nav-menu {
     background-image: url("../../../resources/images/dots_matrix_background.png");
 }
 
-#local-footer a, #local-footer h1, #local-footer h2, #local-footer h3, #local-footer h4, #local-footer h5, #local-footer h6 {
+#local-footer-nav-menu a,
+#local-footer-nav-menu h1,
+#local-footer-nav-menu h2,
+#local-footer-nav-menu h3,
+#local-footer-nav-menu h4,
+#local-footer-nav-menu h5,
+#local-footer-nav-menu h6 {
     color: white;
 }
 
