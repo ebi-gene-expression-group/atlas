@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<div class="callout publication-list" data-equalizer-watch>
+<div id="publication-list" class="callout" data-equalizer-watch>
     <h4>Publications </h4>
     <div class="row">
         <div class="small-12 columns">
