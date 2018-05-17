@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <footer id="local-footer" class="local-footer" role="local-footer">
-    <div id="relationships" class="row padding-top-large padding-bottom-large">
+    <div id="relationships" class="row padding-top-large padding-bottom-large expanded">
         <div class="small-12 columns text-center">
             <a href="https://wellcome.ac.uk/" class="clear">
                 <img src="${pageContext.request.contextPath}/resources/images/logos/wellcome_trust_logo_black.png"

@@ -32,4 +32,17 @@ a.special { background-color: #7cd17c; }
 .button:focus,
 .button:active { background: #2f5767; }
 
+.tabs-title > a {
+    color: #3e3e3e;
+}
+.tabs-title > a:hover {
+    background: aliceblue;
+    color: #0a0a0a;
+}
+.tabs-title > a:focus,
+.tabs-title > a[aria-selected='true'] {
+    color: #0a0a0a;
+    background: #e6e6e6;
+}
+
 /* end */

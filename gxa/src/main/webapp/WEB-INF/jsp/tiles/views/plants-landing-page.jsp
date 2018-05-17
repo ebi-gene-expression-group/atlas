@@ -179,24 +179,25 @@
     </div>
 </div>
 
-
 <script>
-    //hide/show when there is more than 5 items in the list
-    $(function() {
-        var $ul = $(".species_item ul");
-        $ul.find(".hide_button").hide();//temp - to add in css by default
-        $ul.find("li:gt(4)").hide();//hide extra list item
+    document.addEventListener("DOMContentLoaded", function(event) {
+        //hide/show when there is more than 5 items in the list
+        $(function() {
+            var $ul = $(".species_item ul");
+            $ul.find(".hide_button").hide();//temp - to add in css by default
+            $ul.find("li:gt(4)").hide();//hide extra list item
 
-        var $ulShowMore = $("ul.show_more");
-        $ulShowMore.find(".show_button").click(function() {
-            $(this).parent().parent().find("li:gt(4)").show();
-            $(this).hide();
-            $(this).parent().find(".hide_button").show();
+            var $ulShowMore = $("ul.show_more");
+            $ulShowMore.find(".show_button").click(function() {
+                $(this).parent().parent().find("li:gt(4)").show();
+                $(this).hide();
+                $(this).parent().find(".hide_button").show();
+            });
+            $ulShowMore.find(".hide_button").click(function() {
+                $(this).parent().parent().find("li:gt(4)").hide();
+                $(this).hide();
+                $(this).parent().find(".show_button").show();
+            });
         });
-        $ulShowMore.find(".hide_button").click(function() {
-            $(this).parent().parent().find("li:gt(4)").hide();
-            $(this).hide();
-            $(this).parent().find(".show_button").show();
-        });
-    });
+    })
 </script>

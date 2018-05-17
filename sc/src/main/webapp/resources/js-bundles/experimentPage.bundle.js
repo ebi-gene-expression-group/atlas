@@ -7644,8 +7644,7 @@ var PlotLoader = function PlotLoader(_ref) {
   ) : _react2.default.createElement(
     'div',
     { style: { position: 'relative' }, className: wrapperClassName },
-    _react2.default.createElement(_ScatterPlot2.default, { wrapperClassName: wrapperClassName,
-      chartClassName: chartClassName,
+    _react2.default.createElement(_ScatterPlot2.default, { chartClassName: chartClassName,
       series: series,
       highchartsConfig: highchartsConfig,
       children: children
@@ -12904,9 +12903,12 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
 
   return _react2.default.createElement(
     'div',
-    { className: "margin-top-large" },
+    { className: 'margin-top-large' },
     _react2.default.createElement(_expressionAtlasExperimentPageTsnePlot2.default, { atlasUrl: atlasUrl,
       suggesterEndpoint: suggesterEndpoint,
+      wrapperClassName: 'row expanded',
+      clusterPlotClassName: 'small-12 large-6 columns',
+      expressionPlotClassName: 'small-12 large-6 columns',
       speciesName: species,
       experimentAccession: experimentAccession,
       ks: ks,
@@ -12915,7 +12917,7 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       perplexities: perplexities,
       selectedPerplexity: Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)],
       geneId: search.geneId || '',
-      height: 600,
+      height: 800,
       onSelectGeneId: function onSelectGeneId(geneId) {
         updateUrlSearch({ name: 'geneId', value: geneId });
       },
@@ -13163,18 +13165,22 @@ var TSnePlotView = function (_React$Component) {
           resourcesUrl = _props.resourcesUrl,
           suggesterEndpoint = _props.suggesterEndpoint;
       var _props2 = this.props,
-          geneId = _props2.geneId,
-          speciesName = _props2.speciesName,
-          highlightClusters = _props2.highlightClusters;
+          wrapperClassName = _props2.wrapperClassName,
+          clusterPlotClassName = _props2.clusterPlotClassName,
+          expressionPlotClassName = _props2.expressionPlotClassName;
       var _props3 = this.props,
-          ks = _props3.ks,
-          selectedK = _props3.selectedK,
-          perplexities = _props3.perplexities,
-          selectedPerplexity = _props3.selectedPerplexity;
+          geneId = _props3.geneId,
+          speciesName = _props3.speciesName,
+          highlightClusters = _props3.highlightClusters;
       var _props4 = this.props,
-          onChangePerplexity = _props4.onChangePerplexity,
-          onChangeK = _props4.onChangeK,
-          onSelectGeneId = _props4.onSelectGeneId;
+          ks = _props4.ks,
+          selectedK = _props4.selectedK,
+          perplexities = _props4.perplexities,
+          selectedPerplexity = _props4.selectedPerplexity;
+      var _props5 = this.props,
+          onChangePerplexity = _props5.onChangePerplexity,
+          onChangeK = _props5.onChangeK,
+          onSelectGeneId = _props5.onSelectGeneId;
       var _state = this.state,
           loadingGeneExpression = _state.loadingGeneExpression,
           geneExpressionData = _state.geneExpressionData,
@@ -13191,10 +13197,10 @@ var TSnePlotView = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        { className: wrapperClassName },
         _react2.default.createElement(
           'div',
-          { className: 'small-12 medium-6 columns' },
+          { className: clusterPlotClassName },
           _react2.default.createElement(_ClusterTSnePlot2.default, { height: height,
             plotData: cellClustersData,
             perplexities: perplexities,
@@ -13212,7 +13218,7 @@ var TSnePlotView = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'small-12 medium-6 columns' },
+          { className: expressionPlotClassName },
           _react2.default.createElement(_GeneExpressionTSnePlot2.default, { height: height,
             plotData: geneExpressionData,
             atlasUrl: atlasUrl,
@@ -13242,6 +13248,9 @@ var TSnePlotView = function (_React$Component) {
 
 TSnePlotView.propTypes = {
   atlasUrl: _propTypes2.default.string.isRequired,
+  wrapperClassName: _propTypes2.default.string,
+  clusterPlotClassName: _propTypes2.default.string,
+  expressionPlotClassName: _propTypes2.default.string,
   suggesterEndpoint: _propTypes2.default.string.isRequired,
   experimentAccession: _propTypes2.default.string.isRequired,
   ks: _propTypes2.default.arrayOf(_propTypes2.default.number).isRequired,
@@ -13260,6 +13269,9 @@ TSnePlotView.propTypes = {
 
 TSnePlotView.defaultProps = {
   highlightClusters: [],
+  wrapperClassName: 'row',
+  clusterPlotClassName: 'small-12 medium-6 columns',
+  expressionPlotClassName: 'small-12 medium-6 columns',
   geneId: '',
   speciesName: '',
   height: 600,
@@ -13449,7 +13461,8 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
       )
     )
   ), _react2.default.createElement(_PlotLoader2.default, { key: 'cluster-plot',
-    wrapperClassName: 'row column',
+    wrapperClassName: 'row',
+    chartClassName: 'small-12 columns',
     series: _colourizeClusters(highlightClusters)(plotData.series),
     highchartsConfig: highchartsConfig,
     loading: loading,
@@ -14169,8 +14182,7 @@ var highchartsBaseConfig = {
 };
 
 var ScatterPlot = function ScatterPlot(props) {
-  var wrapperClassName = props.wrapperClassName,
-      chartClassName = props.chartClassName,
+  var chartClassName = props.chartClassName,
       series = props.series,
       highchartsConfig = props.highchartsConfig,
       children = props.children;
@@ -14203,7 +14215,6 @@ var ScatterPlot = function ScatterPlot(props) {
 };
 
 ScatterPlot.propTypes = {
-  wrapperClassName: _propTypes2.default.string,
   chartClassName: _propTypes2.default.string,
   series: _SeriesPropTypes2.default,
   highchartsConfig: _propTypes2.default.object,
@@ -15015,7 +15026,8 @@ var GeneExpressionScatterPlot = function GeneExpressionScatterPlot(props) {
     plotData: plotData }) : null;
 
   return [_react2.default.createElement(_expressionAtlasAutocomplete2.default, { key: 'expression-autocomplete',
-    wrapperClassName: 'row column',
+    wrapperClassName: 'row',
+    autocompleteClassName: 'smal-12 columns',
     atlasUrl: atlasUrl,
     suggesterEndpoint: suggesterEndpoint,
     enableSpeciesFilter: false,
