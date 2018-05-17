@@ -186,6 +186,16 @@ public class ExperimentCrud {
         );
     }
 
+    // Same as updateExperimentDesign but bypasses checks to validate files (e.g. configuration XML)
+    public void updateSingleCellExperimentDesign(String experimentAccession) {
+        CondensedSdrfParserOutput condensedSdrfParserOutput =
+                condensedSdrfParser.parse(experimentAccession, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
+
+        updateWithNewExperimentDesign(
+                condensedSdrfParserOutput.getExperimentDesign(),
+                experimentDao.getExperimentAsAdmin(experimentAccession));
+    }
+
     private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO){
         updateWithNewExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(), newDesign);
 
