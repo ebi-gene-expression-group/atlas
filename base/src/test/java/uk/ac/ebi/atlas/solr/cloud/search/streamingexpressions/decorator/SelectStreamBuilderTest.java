@@ -1,10 +1,12 @@
-package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
+package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator;
 
 import com.google.common.collect.ImmutableMap;
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.DummyTupleStreamBuilder;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator.SelectStreamBuilder;
 
 import java.util.concurrent.ThreadLocalRandom;
 

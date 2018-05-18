@@ -1,8 +1,10 @@
-package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
+package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.DummyTupleStreamBuilder;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator.TopStreamBuilder;
 
 import java.util.concurrent.ThreadLocalRandom;
 

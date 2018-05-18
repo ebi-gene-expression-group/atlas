@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
+package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source;
 
 // The correct way of doing these tests is by creating an EmbeddedSolrServer with a set of documents to have an
 // analytics collection fixture but, alas!, streaming expressions only work in SolrCloud so we use the instance in lime
@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source.FacetStreamBuilder;
 
 import javax.inject.Inject;
 import java.util.List;

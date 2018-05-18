@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
+package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -11,10 +11,10 @@ import org.apache.solr.client.solrj.io.stream.metrics.Bucket;
 import org.apache.solr.client.solrj.io.stream.metrics.CountMetric;
 import org.apache.solr.client.solrj.io.stream.metrics.MeanMetric;
 import org.apache.solr.client.solrj.io.stream.metrics.Metric;
-import org.apache.solr.common.params.SolrParams;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.TupleStreamBuilder;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
