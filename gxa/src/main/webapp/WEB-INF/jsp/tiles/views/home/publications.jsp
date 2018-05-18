@@ -58,6 +58,18 @@
                     </div>
                 </div>
             </a>
+
+            <a href="https://academic.oup.com/nar/article/40/D1/D1077/2903510" target="_blank">
+                <div class="media-object">
+                    <div class="media-object-section middle">
+                        <h3><span class="icon icon-conceptual" data-icon="l"></span></h3>
+                    </div>
+                    <div class="media-object-section middle">
+                        <p>Gene Expression Atlas update — a value-added database of microarray and sequencing-based functional genomics experiments<br/><i>Nucleic Acids Research</i>, 7 November 2011.</p>
+                    </div>
+                </div>
+            </a>
+
         </div>
     </div>
 </div>
