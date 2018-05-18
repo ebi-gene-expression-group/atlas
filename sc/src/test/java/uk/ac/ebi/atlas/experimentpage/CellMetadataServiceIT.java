@@ -86,14 +86,4 @@ public class CellMetadataServiceIT {
                         jdbcUtils.fetchRandomCellFromExperiment("E-MTAB-5061")))
                 .isEmpty();
     }
-
-    @Test
-    public void validFactorFieldToDisplayName() {
-        assertThat(subject.factorFieldNameToDisplayName("factor_biopsy_site")).isEqualToIgnoringCase("Biopsy site");
-    }
-
-    @Test
-    public void emptyFactorFieldToDisplayName() {
-        assertThat(subject.factorFieldNameToDisplayName("")).isEmpty();
-    }
 }

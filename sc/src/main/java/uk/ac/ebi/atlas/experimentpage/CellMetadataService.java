@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
+import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -59,7 +60,7 @@ public class CellMetadataService {
 
             SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
                     .stream()
-                    .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName((attribute))))
+                    .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(SchemaFieldNameUtils.attributeNameToFieldName((attribute))))
                     .toArray(SingleCellAnalyticsSchemaField[]::new);
 
             Map<String, Collection<Object>> results = getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields);
@@ -72,18 +73,6 @@ public class CellMetadataService {
         }
 
         return attributes;
-    }
-
-    // Converts Solr field names to human-friendly names (e.g. inferred_cell_type => Inferred cell type)
-    public String factorFieldNameToDisplayName(String factorFieldName) {
-        String displayName = factorFieldName.replace("factor_", "").replace("_", " ");
-
-        return StringUtils.capitalize(displayName);
-    }
-
-    // Converts strings from .idf file to Solr schema field names (e.g. FACS marker => facs_marker)
-    private String attributeNameToFieldName(String attributeName) {
-        return attributeName.trim().toLowerCase().replace(" ", "_");
     }
 
     // This retrieves the value for one single-value field in the Solr scxa-analytics collection
