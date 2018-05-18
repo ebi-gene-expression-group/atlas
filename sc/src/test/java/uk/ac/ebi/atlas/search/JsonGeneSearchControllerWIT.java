@@ -59,6 +59,9 @@ public class JsonGeneSearchControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$[0].element.experimentAccession", isA(String.class)))
-                .andExpect(jsonPath("$[0].facets", hasSize(greaterThanOrEqualTo(1))));
+                .andExpect(jsonPath("$[0].facets", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$[0].facets[0].group", isA(String.class)))
+                .andExpect(jsonPath("$[0].facets[0].value", isA(String.class)))
+                .andExpect(jsonPath("$[0].facets[0].label", isA(String.class)));
     }
 }
