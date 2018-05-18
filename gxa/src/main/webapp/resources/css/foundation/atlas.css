@@ -175,6 +175,12 @@ a.baseline {
 
 #local-footer-nav-menu {
     background-image: url("../../../resources/images/dots_matrix_background.png");
+    background-size: cover;
+}
+
+#local-footer-nav-menu {
+    background-image: url("../../../resources/images/dots_matrix_background.png");
+    background-size: cover;
 }
 
 #local-footer-nav-menu a,
