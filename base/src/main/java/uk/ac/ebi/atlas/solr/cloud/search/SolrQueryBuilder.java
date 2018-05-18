@@ -1,18 +1,23 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryUtils.createDoubleBoundRangeQuery;
 import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryUtils.createLowerBoundRangeQuery;
 import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryUtils.createOrBooleanQuery;
 import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryUtils.createUpperBoundRangeQuery;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class SolrQueryBuilder<T extends CollectionProxy> {
     // Some magic Solr number, from the logs:
@@ -23,6 +28,11 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> flBuilder = ImmutableSet.builder();
+
+    // For now, the builder will only support a single facet with an unlimited number of subfacets. In the future this could be made for generic
+    private String facetField;
+    private ImmutableSet.Builder<String> subFacetBuilder = ImmutableSet.builder();
+
     private int rows = MAX_ROWS;
 
     public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByTerm(U field, String... values) {
@@ -64,6 +74,20 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         return this;
     }
 
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFacetField(U field) {
+        facetField = field.name();
+        return this;
+    }
+
+    @SafeVarargs
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setSubFacetList(U... fields) {
+        for (SchemaField field : fields) {
+            subFacetBuilder.add(field.name());
+        }
+        return this;
+    }
+
+
     public SolrQueryBuilder<T> setRows(int rows) {
         this.rows = rows;
         return this;
@@ -73,6 +97,7 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         ImmutableSet<String> fqClauses = fqClausesBuilder.build();
         ImmutableSet<String> qClauses = qClausesBuilder.build();
         ImmutableSet<String> fl = flBuilder.build();
+        ImmutableSet<String> subFacets = subFacetBuilder.build();
 
         return new SolrQuery()
                 .addFilterQuery(fqClauses.toArray(new String[0]))
@@ -84,6 +109,42 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
                         fl.isEmpty() ?
                                 "*" :
                                 fl.stream().filter(StringUtils::isNotBlank).collect(joining(",")))
+                .setParam("json.facet", GSON.toJson(buildJsonFacetObject(facetField, subFacets)))
                 .setRows(rows);
+    }
+
+    private JsonObject buildJsonFacetObject(String facetField, ImmutableSet<String> subFacets) {
+        JsonObject result = new JsonObject();
+
+        if(facetField != null && !facetField.isEmpty()) {
+            JsonObject facetObject = makeFacetObject(facetField, false);
+
+            if(!subFacets.isEmpty()) {
+                JsonObject subFacetWrapper = new JsonObject();
+
+                subFacets.forEach(subFacetField ->
+                        subFacetWrapper.add(subFacetField, makeFacetObject(subFacetField, true))
+                );
+                facetObject.add("facet", subFacetWrapper);
+            }
+
+            result.add(facetField, facetObject);
+        }
+
+        return result;
+
+    }
+
+    private JsonObject makeFacetObject(String fieldName, boolean hasLimit) {
+        JsonObject facetObject = new JsonObject();
+
+        facetObject.addProperty("type", "terms");
+        facetObject.addProperty("field", fieldName);
+
+        if(hasLimit) {
+            facetObject.addProperty("limit", -1);
+        }
+
+        return facetObject;
     }
 }
