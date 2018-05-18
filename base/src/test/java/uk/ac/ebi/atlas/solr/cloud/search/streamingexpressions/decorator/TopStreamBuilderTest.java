@@ -16,7 +16,8 @@ public class TopStreamBuilderTest {
     @Test
     public void keepsOnlyNElements() {
         int size = ThreadLocalRandom.current().nextInt(1, 1000);
-        DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock = new DummyTupleStreamBuilder<>(size);
+        DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock =
+                DummyTupleStreamBuilder.create(size);
 
         int topN = ThreadLocalRandom.current().nextInt(1, 1000);
         TopStreamBuilder<AnalyticsCollectionProxy> subject =

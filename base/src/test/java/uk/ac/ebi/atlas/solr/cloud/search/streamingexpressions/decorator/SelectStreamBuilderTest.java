@@ -16,7 +16,8 @@ public class SelectStreamBuilderTest {
     @Test
     public void fieldsAreRenamed() {
         int size = ThreadLocalRandom.current().nextInt(1, 1000);
-        DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock = new DummyTupleStreamBuilder<>(size);
+        DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock =
+                DummyTupleStreamBuilder.create(size);
 
         SelectStreamBuilder<AnalyticsCollectionProxy> subject =
                 new SelectStreamBuilder<>(tupleStreamBuilderMock)
@@ -39,7 +40,8 @@ public class SelectStreamBuilderTest {
     @Test
     public void byDefaultNoFieldsArePreserved() {
         int size = ThreadLocalRandom.current().nextInt(1, 1000);
-        DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock = new DummyTupleStreamBuilder<>(size);
+        DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock =
+                DummyTupleStreamBuilder.create(size);
 
         SelectStreamBuilder<AnalyticsCollectionProxy> subject = new SelectStreamBuilder<>(tupleStreamBuilderMock);
 
