@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,7 +34,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    public String search(@PathVariable String geneId) {
+    public String search(HttpServletRequest request, @PathVariable String geneId) {
         JsonObject resultObject = new JsonObject();
         JsonArray results = new JsonArray();
 
@@ -57,6 +59,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                     facetsJson.add(facetValueObject("Marker genes", "Experiments with marker genes"));
                     experimentAttributes.add("markerGenes", convertMarkerGeneModel(markerGeneFacets.get(experimentAccession)));
                 }
+                experimentAttributes.addProperty("url", createExperimentPageRelativePath(request.getContextPath(), experimentAccession));
 
                 resultEntry.add("element", experimentAttributes);
                 resultEntry.add("facets",  facetsJson);
@@ -137,5 +140,9 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         result.addProperty("clusterId", clusterId);
 
         return result;
+    }
+
+    private String createExperimentPageRelativePath(String contextPath, String experimentAccession) {
+        return String.join("/", contextPath, "experiments", experimentAccession);
     }
 }
