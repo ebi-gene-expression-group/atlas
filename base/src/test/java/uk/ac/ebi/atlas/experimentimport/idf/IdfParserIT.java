@@ -12,12 +12,7 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyString;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -52,9 +47,10 @@ public class IdfParserIT {
     private void parseForDBExperimentAccession(IdfParser idfParser, String experimentAccession) {
         IdfParserOutput result = idfParser.parse(experimentAccession);
 
-        assertThat(result.getExpectedClusters(), is(greaterThanOrEqualTo(0)));
-        assertThat(result.getTitle(), is(not(isEmptyString())));
-        assertThat(result.getPublications(), is(notNullValue()));
+        assertThat(result.getExpectedClusters()).isGreaterThanOrEqualTo(0);
+        assertThat(result.getTitle()).isNotEmpty();
+        assertThat(result.getExperimentDescription()).isNotEmpty();
+        assertThat(result.getPublications()).isNotNull();
     }
 
     private Iterable<String> singleCellExperimentsProvider() {

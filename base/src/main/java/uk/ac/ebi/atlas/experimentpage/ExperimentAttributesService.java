@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.Publication;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
@@ -19,9 +20,11 @@ import java.util.List;
 public class ExperimentAttributesService {
 
     private EuropePmcClient europePmcClient;
+    private IdfParser idfParser;
 
-    public ExperimentAttributesService(EuropePmcClient europePmcClient) {
+    public ExperimentAttributesService(EuropePmcClient europePmcClient, IdfParser idfParser) {
         this.europePmcClient = europePmcClient;
+        this.idfParser = idfParser;
     }
 
     public HashMap<String, Object> getAttributes(Experiment<?> experiment) {
@@ -41,6 +44,7 @@ public class ExperimentAttributesService {
             result.put("publications", getPublications(experiment.getPubMedIds()));
         }
 
+        result.put("longDescription", idfParser.parse(experiment.getAccession()).getExperimentDescription());
         // Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
         List<String> keywords = ImmutableList.<String>builder()
                 .add("experiment")
