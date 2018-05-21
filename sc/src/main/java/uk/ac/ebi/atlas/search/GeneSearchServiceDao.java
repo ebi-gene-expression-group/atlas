@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,4 +49,33 @@ public class GeneSearchServiceDao {
         );
     }
 
+    private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
+            "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes WHERE gene_id=:gene_id";
+    @Transactional(readOnly = true)
+    public Map<String, List<Pair<Integer, Integer>>> fetchKAndClusterIds(String geneId) {
+        Map<String, Object> namedParameters =
+                ImmutableMap.of(
+                        "gene_id", geneId );
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT,
+                namedParameters,
+                (ResultSet resultSet) -> {
+                    Map<String, List<Pair<Integer, Integer>>> result = new HashMap<>();
+
+                    while(resultSet.next()) {
+                        String experimentAccession = resultSet.getString("experiment_accession");
+                        Integer k = resultSet.getInt("k");
+                        Integer clusterId = resultSet.getInt("cluster_id");
+
+                        List<Pair<Integer, Integer>> kAndClusterIds = result.getOrDefault(experimentAccession, new ArrayList<>());
+
+                        kAndClusterIds.add(Pair.of(k, clusterId));
+                        result.put(experimentAccession, kAndClusterIds);
+                    }
+
+                    return result;
+                }
+        );
+    }
 }

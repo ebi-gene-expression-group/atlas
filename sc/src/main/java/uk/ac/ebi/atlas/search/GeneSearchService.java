@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
@@ -77,12 +78,9 @@ public class GeneSearchService {
         ));
     }
 
-    public Map<String, Object> getMarkerGeneProfile(String geneId) {
-        Map<String, Object> result = new HashMap<>();
+    public Map<String, List<Pair<Integer, Integer>>> getMarkerGeneProfile(String geneId) {
+        return geneSearchServiceDao.fetchKAndClusterIds(geneId);
 
-        // TODO Use geneSearchServiceDao to query for pairs of (k, cluster_id) for every experiment accession given a gene ID
-
-        return result;
     }
 
     private List<String> getValuesForFacetField(SimpleOrderedMap map, String facetField) {
