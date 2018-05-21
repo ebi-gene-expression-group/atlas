@@ -33,37 +33,45 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public String search(@PathVariable String geneId) {
-        JsonArray result = new JsonArray();
+        JsonObject resultObject = new JsonObject();
+        JsonArray results = new JsonArray();
 
         Map<String, List<String>> cellIds = geneSearchService.getCellIdsInExperiments(geneId);
-
-        Map<String, List<Pair<Integer, Integer>>> markerGeneFacets = geneSearchService.getMarkerGeneProfile(geneId);
-
-        List<String> allCellIds = cellIds.values().stream().flatMap(List::stream).collect(Collectors.toList());
-        Map<String, Map<String, List<String>>> factorFacets = geneSearchService.getFacets(allCellIds);
-
+        
         if(!cellIds.isEmpty()) {
+            List<String> allCellIds = cellIds
+                    .values()
+                    .stream()
+                    .flatMap(List::stream)
+                    .collect(Collectors.toList());
+
+            Map<String, Map<String, List<String>>> factorFacets = geneSearchService.getFacets(allCellIds);
+            Map<String, List<Pair<Integer, Integer>>> markerGeneFacets = geneSearchService.getMarkerGeneProfile(geneId);
+
             cellIds.forEach((experimentAccession, cells) -> {
                 JsonObject resultEntry = new JsonObject();
 
                 JsonObject experimentAttributes = GSON.toJsonTree(geneSearchService.getExperimentInformation(experimentAccession)).getAsJsonObject();
                 JsonArray facetsJson = convertFacetModel(factorFacets.get(experimentAccession));
                 if(markerGeneFacets.containsKey(experimentAccession)) {
-                    facetsJson.add(facetValueObject("Marker genes", "yes", true));
+                    facetsJson.add(facetValueObject("Marker genes", "Experiment has marker genes", true));
                     experimentAttributes.add("markerGenes", convertMarkerGeneModel(markerGeneFacets.get(experimentAccession)));
-                }
-                else {
-                    facetsJson.add(facetValueObject("Marker genes", "no", true));
                 }
 
                 resultEntry.add("element", experimentAttributes);
                 resultEntry.add("facets",  facetsJson);
 
-                result.add(resultEntry);
+                results.add(resultEntry);
             });
         }
 
-        return GSON.toJson(result);
+        resultObject.add("results", results);
+
+        JsonArray checkboxes = new JsonArray();
+        checkboxes.add("Marker genes");
+        resultObject.add("checkboxFacetGroups", checkboxes);
+
+        return GSON.toJson(resultObject);
     }
 
     /** The following two methods convert this model:
