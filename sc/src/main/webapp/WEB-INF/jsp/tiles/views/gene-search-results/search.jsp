@@ -7,8 +7,8 @@
     <!-- No need to enclose in row as the component already uses Foundation classes -->
     <div id="gene-search-results-autocomplete"></div>
 
-    <div class="row margin-top-large">
-        <div class="small-12 columns">
+    <div class="margin-top-large">
+        <div>
             <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
                 <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
         </div>
