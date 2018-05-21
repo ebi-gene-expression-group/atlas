@@ -52,24 +52,31 @@ public class BioentityIdentifierSearchService {
     }
 
     private List<String> mapBySpecifictyAndSortByAverageExpression(Stream<Tuple> stream, int maxSize) {
-        Comparator<Tuple> avgExpressionAscending =
-                Comparator.comparing(t -> t.getDouble(AVERAGE_EXPRESSION_KEY));
+        // Beware with doing this, as it skips entries with the same expression level but different gene ID!
+        // Comparator<Tuple> avgExpressionAscending = Comparator.comparing(t -> t.getDouble(AVERAGE_EXPRESSION_KEY));
+
+        Comparator<Tuple> avgExpressionDescending = (o1, o2) -> {
+            // Genes with same average expression are sorted alphabetically
+            if (o1.getDouble(AVERAGE_EXPRESSION_KEY).equals(o2.getDouble(AVERAGE_EXPRESSION_KEY))) {
+                return o1.getString(GENE_KEY).compareTo(o2.getString(GENE_KEY));
+            }
+            // Negate result to make it descending, from high to low
+            return -o1.getDouble(AVERAGE_EXPRESSION_KEY).compareTo(o2.getDouble(AVERAGE_EXPRESSION_KEY));
+        };
 
         Multimap<Long, Tuple> mostExpressedGenesOnAverageGroupedBySpecificity =
                 TreeMultimap.create(
                         natural(),
-                        avgExpressionAscending.reversed());
+                        avgExpressionDescending);
 
-        stream.collect(groupingBy(tuple -> tuple.getLong(SPECIFICITY_KEY)))
-                .forEach(mostExpressedGenesOnAverageGroupedBySpecificity::putAll);
+       stream.collect(groupingBy(tuple -> tuple.getLong(SPECIFICITY_KEY)))
+               .forEach(mostExpressedGenesOnAverageGroupedBySpecificity::putAll);
 
         return mostExpressedGenesOnAverageGroupedBySpecificity.values().stream()
                 .map(tuple -> tuple.getString(GENE_KEY))
                 .limit(maxSize)
                 .collect(toList());
     }
-
-
 
     public List<String> searchMostExpressedGenesInBaselineExperiment(String experimentAccession,
                                                                      BaselineRequestPreferences<?> preferences) {
