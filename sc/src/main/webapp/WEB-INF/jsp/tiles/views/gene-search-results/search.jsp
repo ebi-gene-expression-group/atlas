@@ -5,7 +5,7 @@
 
 <form action="search" id="home-search-atlas-form">
     <!-- No need to enclose in row as the component already uses Foundation classes -->
-    <div id="marker-genes-search-results-autocomplete"></div>
+    <div id="gene-search-results-autocomplete"></div>
 
     <div class="row margin-top-large">
         <div class="small-12 columns">
@@ -15,13 +15,15 @@
     </div>
 </form>
 
-<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/atlasAutocomplete.bundle.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/atlasAutocomplete.bundle.js"></script>
 
 <script>
-  atlasAutocomplete.render({
-    atlasUrl: '${pageContext.request.contextPath}/',
-    suggesterEndpoint: 'json/suggestions',
-    initialValue: '${geneId}'
-  }, 'marker-genes-search-results-autocomplete')
+  document.addEventListener("DOMContentLoaded", function(event) {
+        atlasAutocomplete.render({
+            atlasUrl: '${pageContext.request.contextPath}/',
+            suggesterEndpoint: 'json/suggestions',
+            initialValue: '${geneId}'
+      }, 'gene-search-results-autocomplete')
+  });
+
 </script>

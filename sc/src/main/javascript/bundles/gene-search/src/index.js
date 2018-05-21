@@ -16,4 +16,3 @@ const render = (options, mountNodeId) => {
 }
 
 export {render}
-
