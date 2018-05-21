@@ -37,7 +37,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         JsonArray results = new JsonArray();
 
         Map<String, List<String>> cellIds = geneSearchService.getCellIdsInExperiments(geneId);
-        
+
         if(!cellIds.isEmpty()) {
             List<String> allCellIds = cellIds
                     .values()
@@ -54,7 +54,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 JsonObject experimentAttributes = GSON.toJsonTree(geneSearchService.getExperimentInformation(experimentAccession)).getAsJsonObject();
                 JsonArray facetsJson = convertFacetModel(factorFacets.get(experimentAccession));
                 if(markerGeneFacets.containsKey(experimentAccession)) {
-                    facetsJson.add(facetValueObject("Marker genes", "Experiment has marker genes", true));
+                    facetsJson.add(facetValueObject("Marker genes", "Experiments with marker genes"));
                     experimentAttributes.add("markerGenes", convertMarkerGeneModel(markerGeneFacets.get(experimentAccession)));
                 }
 
@@ -103,26 +103,23 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
         model.forEach((facetGroup, facetValuesList) ->
                 facetValuesList.forEach(facetValue ->
-                        result.add(facetValueObject(facetGroup, facetValue, true)))
+                        result.add(facetValueObject(facetGroup, facetValue)))
         );
 
         return result;
     }
 
-    private JsonObject facetValueObject(String group, String value, boolean hasLabel) {
+    private JsonObject facetValueObject(String group, String value) {
         JsonObject result = new JsonObject();
 
         result.addProperty("group", SchemaFieldNameUtils.characteristicFieldNameToDisplayName(group));
         result.addProperty("value", value);
-
-        if(hasLabel) {
-            result.addProperty("label", StringUtils.capitalize(value));
-        }
+        result.addProperty("label", StringUtils.capitalize(value));
 
         return result;
     }
 
-    // Converts of list of (k, clusterId) pairs into json objects
+    // Converts list of (k, clusterId) pairs into json objects
     private JsonArray convertMarkerGeneModel(List<Pair<Integer, Integer>> model) {
         JsonArray result = new JsonArray();
 
