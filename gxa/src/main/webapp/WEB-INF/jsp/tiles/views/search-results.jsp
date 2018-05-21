@@ -67,18 +67,13 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBioentityInformation.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBaselineExpression.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasDifferentialExpression.bundle.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 <script>
-    $(document).ready(function() {
-      if (!window.location.hash) {
-        var initialHash = ${hasBaselineResults} ? '#baseline' : '#differential';
-        var newURL = URI(window.location).hash(initialHash).toString();
-        history.replaceState(null, '', newURL);
-      }
-    });
+    document.addEventListener("DOMContentLoaded", function(event) {
+        if (!window.location.hash) {
+            var initialHash = ${hasBaselineResults} ? '#baseline' : '#differential';
+            var newURL = URI(window.location).hash(initialHash).toString();
+            history.replaceState(null, '', newURL);
+        }
+    })
 </script>

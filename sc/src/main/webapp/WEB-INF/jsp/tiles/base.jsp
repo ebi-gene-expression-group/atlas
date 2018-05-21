@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title><tiles:insertAttribute name="title"/>Single Cell Atlas &lt; EMBL-EBI</title>
+    <title><tiles:insertAttribute name="title"/>Single Cell Expression Atlas &lt; EMBL-EBI</title>
     <meta name="description" content="EMBL-EBI Single Cell Expression Atlas, an open public repository of single cell gene expression data">
     <meta name="keywords" content="expression atlas, single cell expression, gene expression, baseline expression, functional genomics, public repository, repository, bioinformatics, europe, institute">
     <meta name="author" content="EBI Gene Expression Team – https://www.ebi.ac.uk/about/people/irene-papatheodorou">
@@ -22,8 +22,10 @@
     <meta name="ebi:expiry" content="2018-07-01">
 
     <!-- If you link to any other sites frequently, consider optimising performance with a DNS prefetch -->
-    <link rel="dns-prefetch" href="https://embl.de/">
     <link rel="dns-prefetch" href="https://www.ebi.ac.uk/gxa/">
+    <link rel="dns-prefetch" href="https://www.ebi.ac.uk/arrayexpress/">
+    <link rel="dns-prefetch" href="https://www.ebi.ac.uk/">
+    <link rel="dns-prefetch" href="https://embl.de/">
 
     <!-- If you have custom icon, replace these as appropriate. You can generate them at realfavicongenerator.net -->
     <link rel="icon" type="image/x-icon" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/images/logos/EMBL-EBI/favicons/favicon.ico" />
@@ -41,7 +43,6 @@
     <!-- CSS concatenated and minified via ant build script-->
     <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
     <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
-
 
     <!-- If you have a custom header image or colour -->
     <meta name="ebi:masthead-color" content="rgb(0,124,130)" />

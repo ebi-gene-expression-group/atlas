@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server -d"
   },
-  "author": "Expression Atlas developers <arrayexpress-atlas@ebi.ac.uk>",
+  "author": "Expression Atlas developers <atlas-developers@ebi.ac.uk>",
   "collaborators": [
     "Elisabet Barrera <barrera@ebi.ac.uk>",
     "Wojciech Bażant <wbazant@ebi.ac.uk>",
@@ -37,11 +37,11 @@
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
-    "image-webpack-loader": "^3.4.2",
+    "image-webpack-loader": "^4.2.0",
     "linkifyjs": "^2.1.6",
     "style-loader": "^0.21.0",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.2",
     "whatwg-fetch": "^2.0.4"
   }
 }

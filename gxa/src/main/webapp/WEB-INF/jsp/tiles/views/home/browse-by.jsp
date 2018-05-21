@@ -21,46 +21,47 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
 
 <script>
-    var $viewAllLink = $('#viewAllLink');
-    $('#browse-by-tabs').on('change.zf.tabs', function() {
-        switch ($('#browse-by-tabs .tabs-title.is-active').text()) {
-            case 'Animals':
-                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=animals');
-                break;
-            case 'Plants':
-                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=plants');
-                break;
-            case 'Fungi':
-                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=fungi');
-                break;
-            default:
-                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments');
-                break;
-        }
-    });
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var $viewAllLink = $('#viewAllLink');
+        $('#browse-by-tabs').on('change.zf.tabs', function() {
+            switch ($('#browse-by-tabs .tabs-title.is-active').text()) {
+                case 'Animals':
+                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=animals');
+                    break;
+                case 'Plants':
+                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=plants');
+                    break;
+                case 'Fungi':
+                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=fungi');
+                    break;
+                default:
+                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments');
+                    break;
+            }
+        });
 
-    expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
-        speciesInfoList: ${speciesList},
-        container: document.getElementById('by-species')
-    });
-    expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
-        speciesInfoList : ${animalsList},
-        container: document.getElementById('by-animals')
-    });
-    expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
-        speciesInfoList : ${plantsList},
-        container: document.getElementById('by-plants')
-    });
-    expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
-        speciesInfoList : ${fungiList},
-        container: document.getElementById('by-fungi')
+        expressionAtlasBrowseBySpecies.render({
+            atlasUrl: "${pageContext.request.contextPath}/",
+            speciesInfoList: ${speciesList},
+            container: document.getElementById('by-species')
+        });
+        expressionAtlasBrowseBySpecies.render({
+            atlasUrl: "${pageContext.request.contextPath}/",
+            speciesInfoList : ${animalsList},
+            container: document.getElementById('by-animals')
+        });
+        expressionAtlasBrowseBySpecies.render({
+            atlasUrl: "${pageContext.request.contextPath}/",
+            speciesInfoList : ${plantsList},
+            container: document.getElementById('by-plants')
+        });
+        expressionAtlasBrowseBySpecies.render({
+            atlasUrl: "${pageContext.request.contextPath}/",
+            speciesInfoList : ${fungiList},
+            container: document.getElementById('by-fungi')
+        });
     });
 </script>

@@ -1,55 +1,42 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div data-sticky-container>
-    <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
+    <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
         <div class="masthead-inner row expanded">
-            <div class="small-8 columns media-object">
-                <div class="show-for-medium media-object-section middle">
-                    <a href="${pageContext.request.contextPath}/home/" title="Back to Expression Atlas homepage" class="clear">
-                        <img src="${pageContext.request.contextPath}/resources/images/foundation/logos/logo_atlas_transparent.png" alt="Expression Atlas logo">
-                    </a>
-                </div>
-                <div class="media-object-section middle">
-                    <h1><a href="${pageContext.request.contextPath}/home/" title="Back to Expression Atlas homepage" class="clear">Expression Atlas</a></h1>
-                    <h4 class="show-for-large"><a href="${pageContext.request.contextPath}/home/" title="Back to Expression Atlas homepage" class="clear">Gene expression across species and biological conditions</a></h4>
-                </div>
-            </div>
-
-            <div class="hide-for-small-only small-4 columns">
-                <!-- EBI Framework standard search -->
-                <form id="local-search" name="local-search" method="get" action="${pageContext.request.contextPath}/search">
-                    <h4>Search this project</h4>
-                    <fieldset>
-                        <div class="input-group" style="margin-bottom: 0">
-                            <input type="text" name="geneQuery" id="local-searchbox">
-                            <div class="input-group-button">
-                                <input id="submit-searchbox" type="submit" value="1" class="button icon icon-functional">
-                            </div>
+            <!-- local-title -->
+            <div class="medium-12 large-8 columns">
+                <a href="${pageContext.request.contextPath}/home" title="Back to Expression Atlas homepage">
+                    <div class="media-object columns small-8" id="local-title">
+                        <div class="media-object-section hide-for-small-only">
+                            <img src="${pageContext.request.contextPath}/resources/images/logos/logo_atlas.png" alt="Expression Atlas logo" style="height:7em">
                         </div>
-                        <small class="show-for-large">
-                            <!-- Include some example searchterms - keep them short and few. -->
-                            <span>Examples: <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22ASPM%22%7D%5D">ASPM</a>,
-                            <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22apoptosis%22%7D%5D">Apoptosis</a>,
-                            <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22ENSMUSG00000021789%22%7D%5D">ENSMUSG00000021789</a>,
-                            <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22zinc%20finger%22%7D%5D">zinc finger</a></span>
-                        </small>
-
-                    </fieldset>
-                </form>
+                        <div class="media-object-section">
+                            <h1>Expression&nbsp;Atlas</h1>
+                            <h4 class="show-for-large">Gene expression across species and biological conditions</h4>
+                        </div>
+                    </div>
+                </a>
             </div>
+
+            <%--<div class="medium-12 large-4 columns">--%>
+                <%--<h4 class="show-for-large">Query single cell expression</h4>--%>
+                <%--<a href="/scxa" title="To Single Cell Expression Atlas" class="button" style="box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5)">To Single Cell Expression Atlas <i class="icon icon-common" data-icon="&#xf10f;"></i></a>--%>
+            <%--</div>--%>
 
             <nav>
                 <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
-                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a href="${pageContext.request.contextPath}/download.html">Download</a></li>
-                    <li><a href="${pageContext.request.contextPath}/release-notes.html">Release notes</a></li>
-                    <li><a href="${pageContext.request.contextPath}/FAQ.html">FAQ</a></li>
-                    <li><a href="${pageContext.request.contextPath}/help/index.html">Help</a></li>
-                    <li><a href="${pageContext.request.contextPath}/licence.html">Licence</a></li>
-                    <li><a href="${pageContext.request.contextPath}/about.html">About</a></li>
-                    <li><a href="https://www.ebi.ac.uk/support/gxa" target="_blank">Feedback</a></li>
+                    <li id="local-nav-home"><a href="${pageContext.request.contextPath}/home"><i class="icon icon-generic padding-right-medium" data-icon="H"></i>Home</a></li>
+                    <li id="local-nav-experiments"><a href="${pageContext.request.contextPath}/experiments"><i class="icon icon-common padding-right-medium" data-icon="&#x41;"></i>Browse experiments</a></li>
+                    <li id="local-nav-download"><a href="${pageContext.request.contextPath}/download.html"><i class="icon icon-common padding-right-medium" data-icon="&#xc2;"></i>Download</a></li>
+                    <li id="local-nav-release-notes"><a href="${pageContext.request.contextPath}/release-notes.html"><i class="icon icon-common padding-right-medium" data-icon="&#x1ea;"></i>Release notes</a></li>
+                    <li id="local-nav-faq"><a href="${pageContext.request.contextPath}/FAQ.html"><i class="icon icon-common padding-right-medium" data-icon="&#xeb;"></i>FAQ</a></li>
+                    <li id="local-nav-help"><a href="${pageContext.request.contextPath}/help/index.html"><i class="icon icon-common padding-right-medium" data-icon="&#x3f;"></i>Help</a></li>
+                    <li id="local-nav-licence"><a href="${pageContext.request.contextPath}/licence.html"><i class="icon icon-common padding-right-medium" data-icon="&#x27;"></i>Licence</a></li>
+                    <li id="local-nav-about"><a href="${pageContext.request.contextPath}/about.html"><i class="icon icon-common padding-right-medium" data-icon="&#x2139;"></i>About</a></li>
+                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/gxa" target="_blank" data-icon="X"><i class="icon icon-common padding-right-medium" data-icon="&#x6e;"></i>Feedback</a></li>
                 </ul>
             </nav>
+            <!-- /local-nav -->
         </div>
     </header>
 </div>

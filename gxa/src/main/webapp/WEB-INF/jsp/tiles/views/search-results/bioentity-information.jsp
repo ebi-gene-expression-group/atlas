@@ -10,8 +10,9 @@
     </div>
 </div>
 
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBioentityInformation.bundle.js"></script>
 <script>
-    $(function() {
+    document.addEventListener("DOMContentLoaded", function(event) {
         expressionAtlasBioentityInformation.render({
             target: 'bioentityInformationTab',
             payload: ${bioentityProperties}

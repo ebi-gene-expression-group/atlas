@@ -14,18 +14,19 @@ import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
+import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.toMap;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
+import static uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils.attributeNameToFieldName;
 
 @Component
 public class CellMetadataService {
-
     private IdfParser idfParser;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
 
@@ -45,34 +46,29 @@ public class CellMetadataService {
     public Map<String, String> getFactors(String experimentAccession, String cellId) {
         return getCellQueryResultForMultiValueFields(experimentAccession, cellId, getFactorFieldNames(experimentAccession, cellId))
                 .entrySet().stream()
-                .collect(Collectors.toMap(
+                .collect(toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 
     // This is not currently used but leaving in for now in case the logic is still useful
     public Map<String, String> getIdfFileAttributes(String experimentAccession, String cellId) {
-        Map<String, String> attributes = new HashMap<>();
-
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
-        if(!idfParserOutput.getMetadataFieldsOfInterest().isEmpty()) {
-
-            SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
-                    .stream()
-                    .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(SchemaFieldNameUtils.attributeNameToFieldName((attribute))))
-                    .toArray(SingleCellAnalyticsSchemaField[]::new);
-
-            Map<String, Collection<Object>> results = getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields);
-
-            for(String attributeId : results.keySet()) {
-                String factorValue = StringUtils.join(results.get(attributeId), ",");
-
-                attributes.put(attributeId, factorValue);
-            }
+        if (idfParserOutput.getMetadataFieldsOfInterest().isEmpty()) {
+            return emptyMap();
         }
 
-        return attributes;
+        SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
+                .stream()
+                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName((attribute))))
+                .toArray(SingleCellAnalyticsSchemaField[]::new);
+
+        return getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields)
+                .entrySet().stream()
+                .collect(toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 
     // This retrieves the value for one single-value field in the Solr scxa-analytics collection
@@ -84,11 +80,12 @@ public class CellMetadataService {
                         .setFieldList(metadataField);
         QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
 
-        if (!queryResponse.getResults().isEmpty() && queryResponse.getResults().get(0).containsKey(metadataField.name())) {
-            return Optional.of((String) queryResponse.getResults().get(0).getFirstValue(metadataField.name()));
+        if (queryResponse.getResults().isEmpty() ||
+            !queryResponse.getResults().get(0).containsKey(metadataField.name())) {
+            return Optional.empty();
         }
 
-        return Optional.empty();
+        return Optional.of((String) queryResponse.getResults().get(0).getFirstValue(metadataField.name()));
     }
 
     // Retrieves all the available factors stored in the Solr scxa-analytics collection for a particular cell
@@ -108,6 +105,9 @@ public class CellMetadataService {
     // This returns Solr query results for a list of multi-value fields of interest
     private ImmutableMap<String, Collection<Object>> getCellQueryResultForMultiValueFields(
             String experimentAccession, String cellId, SingleCellAnalyticsSchemaField... fieldsOfInterest) {
+        if (fieldsOfInterest.length == 0) {
+            return ImmutableMap.of();
+        }
 
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
@@ -118,17 +118,14 @@ public class CellMetadataService {
 
         QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
 
-        if(!queryResponse.getResults().isEmpty()) {
-            // The map created by getFieldValuesMap has, for a reason I can’t grasp, quite a few unsupported
-            // operations. Among them entrySet, which is the basis for all streaming methods in maps and forEach D:
-            SolrDocument solrDocument = queryResponse.getResults().get(0);
-            return solrDocument.getFieldNames().stream().collect(toImmutableMap(
-                    Function.identity(),
-                    solrDocument::getFieldValues));
+        if (queryResponse.getResults().isEmpty()) {
+            return ImmutableMap.of();
         }
 
-        return ImmutableMap.of();
-
+        // The map created by getFieldValuesMap has, for a reason I can’t grasp, quite a few unsupported operations.
+        // Among them entrySet, which is the basis for all streaming methods in maps and forEach D:
+        SolrDocument solrDocument = queryResponse.getResults().get(0);
+        return solrDocument.getFieldNames().stream()
+                .collect(toImmutableMap(Function.identity(), solrDocument::getFieldValues));
     }
-
 }

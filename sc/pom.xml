@@ -12,14 +12,14 @@
     </parent>
 
     <artifactId>sc</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <packaging>war</packaging>
 
     <name>Single Cell Atlas</name>
-    <url>https://www.ebi.ac.uk/scxa/</url>
+    <url>https://www.ebi.ac.uk/gxa/sc/</url>
 
     <build>
-        <finalName>scxa</finalName>
+        <finalName>gxa_sc</finalName>
 
         <plugins>
             <plugin>

@@ -12,17 +12,20 @@
 
 <div id="gxaDifferentialTab"></div>
 
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasDifferentialExpression.bundle.js"></script>
 <script>
-    <c:if test="${hasDifferentialResults}">
-    $(function() {
-        expressionAtlasDifferentialExpression.render({
-            atlasUrl: "${pageContext.request.contextPath}/",
-            geneQuery: "${geneQuery}",
-            conditionQuery: "${conditionQuery}",
-            species: "${species}"
-        }, "gxaDifferentialTab",);
-    });
-    </c:if>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        <c:if test="${hasDifferentialResults}">
+        $(function() {
+            expressionAtlasDifferentialExpression.render({
+                atlasUrl: "${pageContext.request.contextPath}/",
+                geneQuery: "${geneQuery}",
+                conditionQuery: "${conditionQuery}",
+                species: "${species}"
+            }, "gxaDifferentialTab",);
+        });
+        </c:if>
+    })
 </script>
 
 

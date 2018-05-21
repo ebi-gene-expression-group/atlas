@@ -63,6 +63,7 @@
         <url-pattern>/das/*</url-pattern>
         <url-pattern>/rest/*</url-pattern>
         <url-pattern>/json/*</url-pattern>
+        <url-pattern>/sc/json/*</url-pattern>
     </filter-mapping>
 
     <security-role>

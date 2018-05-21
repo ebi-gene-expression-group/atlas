@@ -13,8 +13,10 @@
 
 <div id="gxaBaselineTab"></div>
 
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBaselineExpression.bundle.js"></script>
 <script>
-    <c:if test="${hasBaselineResults}">
+    document.addEventListener("DOMContentLoaded", function(event) {
+        <c:if test="${hasBaselineResults}">
         var baselineFacetsData = ${jsonFacets};
         // Running within $(document).ready() ensures that the heatmap stretches to the tab container width
         $(function() {
@@ -27,7 +29,8 @@
                 species: "${species}"
             });
         });
-    </c:if>
+        </c:if>
+    })
 </script>
 
 

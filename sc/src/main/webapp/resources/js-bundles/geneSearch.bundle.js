@@ -1,7 +1,7 @@
 var geneSearch =
 webpackJsonp_name_([1],{
 
-/***/ 12:
+/***/ 11:
 /*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
   \*************************************************/
@@ -89,7 +89,7 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 13:
+/***/ 12:
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
   \****************************************************/
@@ -481,7 +481,7 @@ function updateLink (link, options, obj) {
 
 /***/ }),
 
-/***/ 210:
+/***/ 208:
 /*!************************************************!*\
   !*** multi ./bundles/gene-search/src/index.js ***!
   \************************************************/
@@ -489,12 +489,12 @@ function updateLink (link, options, obj) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/gene-search/src/index.js */211);
+module.exports = __webpack_require__(/*! ./bundles/gene-search/src/index.js */209);
 
 
 /***/ }),
 
-/***/ 211:
+/***/ 209:
 /*!******************************************!*\
   !*** ./bundles/gene-search/src/index.js ***!
   \******************************************/
@@ -518,11 +518,11 @@ var _reactDom = __webpack_require__(/*! react-dom */ 6);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactFacetedSearch = __webpack_require__(/*! react-faceted-search */ 212);
+var _reactFacetedSearch = __webpack_require__(/*! react-faceted-search */ 210);
 
 var _reactFacetedSearch2 = _interopRequireDefault(_reactFacetedSearch);
 
-var _ExperimentCard = __webpack_require__(/*! ./ExperimentCard */ 236);
+var _ExperimentCard = __webpack_require__(/*! ./ExperimentCard */ 234);
 
 var _ExperimentCard2 = _interopRequireDefault(_ExperimentCard);
 
@@ -540,7 +540,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 212:
+/***/ 210:
 /*!****************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-faceted-search/lib/index.js ***!
   \****************************************************************************/
@@ -555,7 +555,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _FetchLoader = __webpack_require__(/*! ./FetchLoader.js */ 213);
+var _FetchLoader = __webpack_require__(/*! ./FetchLoader.js */ 211);
 
 var _FetchLoader2 = _interopRequireDefault(_FetchLoader);
 
@@ -565,7 +565,7 @@ exports.default = _FetchLoader2.default;
 
 /***/ }),
 
-/***/ 213:
+/***/ 211:
 /*!**********************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-faceted-search/lib/FetchLoader.js ***!
   \**********************************************************************************/
@@ -592,11 +592,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 7);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 217);
+var _urijs = __webpack_require__(/*! urijs */ 215);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _FilterList = __webpack_require__(/*! ./FilterList */ 218);
+var _FilterList = __webpack_require__(/*! ./FilterList */ 216);
 
 var _FilterList2 = _interopRequireDefault(_FilterList);
 
@@ -788,7 +788,7 @@ exports.default = FetchLoader;
 
 /***/ }),
 
-/***/ 214:
+/***/ 212:
 /*!********************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \********************************************************************************/
@@ -809,10 +809,10 @@ exports.default = FetchLoader;
 var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 68);
 var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 69);
 var warning = __webpack_require__(/*! fbjs/lib/warning */ 70);
-var assign = __webpack_require__(/*! object-assign */ 215);
+var assign = __webpack_require__(/*! object-assign */ 213);
 
 var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 71);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 216);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 214);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -1343,7 +1343,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 215:
+/***/ 213:
 /*!*****************************************************************!*\
   !*** ./bundles/gene-search/node_modules/object-assign/index.js ***!
   \*****************************************************************/
@@ -1446,7 +1446,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 216:
+/***/ 214:
 /*!***********************************************************************!*\
   !*** ./bundles/gene-search/node_modules/prop-types/checkPropTypes.js ***!
   \***********************************************************************/
@@ -1518,7 +1518,7 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 217:
+/***/ 215:
 /*!***********************************************************!*\
   !*** ./bundles/gene-search/node_modules/urijs/src/URI.js ***!
   \***********************************************************/
@@ -3871,7 +3871,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 218:
+/***/ 216:
 /*!*********************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-faceted-search/lib/FilterList.js ***!
   \*********************************************************************************/
@@ -3904,7 +3904,7 @@ var _lodash = __webpack_require__(/*! lodash */ 31);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _FilterSidebar = __webpack_require__(/*! ./FilterSidebar */ 219);
+var _FilterSidebar = __webpack_require__(/*! ./FilterSidebar */ 217);
 
 var _FilterSidebar2 = _interopRequireDefault(_FilterSidebar);
 
@@ -4042,7 +4042,7 @@ exports.default = FilterList;
 
 /***/ }),
 
-/***/ 219:
+/***/ 217:
 /*!************************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-faceted-search/lib/FilterSidebar.js ***!
   \************************************************************************************/
@@ -4073,11 +4073,11 @@ var _FacetGroupPropTypes = __webpack_require__(/*! ./facetgroups/FacetGroupPropT
 
 var _FacetGroupPropTypes2 = _interopRequireDefault(_FacetGroupPropTypes);
 
-var _CheckboxFacetGroup = __webpack_require__(/*! ./facetgroups/CheckboxFacetGroup */ 220);
+var _CheckboxFacetGroup = __webpack_require__(/*! ./facetgroups/CheckboxFacetGroup */ 218);
 
 var _CheckboxFacetGroup2 = _interopRequireDefault(_CheckboxFacetGroup);
 
-var _MultiselectDropdownFacetGroup = __webpack_require__(/*! ./facetgroups/MultiselectDropdownFacetGroup */ 221);
+var _MultiselectDropdownFacetGroup = __webpack_require__(/*! ./facetgroups/MultiselectDropdownFacetGroup */ 219);
 
 var _MultiselectDropdownFacetGroup2 = _interopRequireDefault(_MultiselectDropdownFacetGroup);
 
@@ -4133,7 +4133,7 @@ exports.default = FilterSidebar;
 
 /***/ }),
 
-/***/ 220:
+/***/ 218:
 /*!*****************************************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-faceted-search/lib/facetgroups/CheckboxFacetGroup.js ***!
   \*****************************************************************************************************/
@@ -4257,7 +4257,7 @@ exports.default = CheckboxFacetGroup;
 
 /***/ }),
 
-/***/ 221:
+/***/ 219:
 /*!****************************************************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-faceted-search/lib/facetgroups/MultiselectDropdownFacetGroup.js ***!
   \****************************************************************************************************************/
@@ -4278,7 +4278,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = __webpack_require__(/*! react-select */ 222);
+var _reactSelect = __webpack_require__(/*! react-select */ 220);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
@@ -4286,7 +4286,7 @@ var _FacetGroupPropTypes = __webpack_require__(/*! ./FacetGroupPropTypes */ 32);
 
 var _FacetGroupPropTypes2 = _interopRequireDefault(_FacetGroupPropTypes);
 
-var _MultiselectDropdownFacetGroup = __webpack_require__(/*! ./MultiselectDropdownFacetGroup.css */ 234);
+var _MultiselectDropdownFacetGroup = __webpack_require__(/*! ./MultiselectDropdownFacetGroup.css */ 232);
 
 var _MultiselectDropdownFacetGroup2 = _interopRequireDefault(_MultiselectDropdownFacetGroup);
 
@@ -4371,7 +4371,7 @@ exports.default = MultiselectDropdownFacetGroup;
 
 /***/ }),
 
-/***/ 222:
+/***/ 220:
 /*!*******************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-select/dist/react-select.es.js ***!
   \*******************************************************************************/
@@ -4388,14 +4388,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFilter", function() { return createFilter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeStyles", function() { return mergeStyles; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_emotion__ = __webpack_require__(/*! emotion */ 223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_emotion__ = __webpack_require__(/*! emotion */ 221);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(/*! react */ 0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(/*! react-dom */ 6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_raf__ = __webpack_require__(/*! raf */ 230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_raf__ = __webpack_require__(/*! raf */ 228);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_raf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_raf__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_input_autosize__ = __webpack_require__(/*! react-input-autosize */ 233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_input_autosize__ = __webpack_require__(/*! react-input-autosize */ 231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_input_autosize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(/*! prop-types */ 7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
@@ -8401,7 +8401,7 @@ var index = manageState(Select);
 
 /***/ }),
 
-/***/ 223:
+/***/ 221:
 /*!*******************************************************************!*\
   !*** ./bundles/gene-search/node_modules/emotion/dist/index.es.js ***!
   \*******************************************************************/
@@ -8420,7 +8420,7 @@ var index = manageState(Select);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return css; });
 /* unused harmony export sheet */
 /* unused harmony export caches */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_emotion__ = __webpack_require__(/*! create-emotion */ 224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_emotion__ = __webpack_require__(/*! create-emotion */ 222);
 
 
 var context = typeof global !== 'undefined' ? global : {};
@@ -8444,7 +8444,7 @@ var caches = _createEmotion.caches;
 
 /***/ }),
 
-/***/ 224:
+/***/ 222:
 /*!**************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/create-emotion/dist/index.es.js ***!
   \**************************************************************************/
@@ -8453,12 +8453,12 @@ var caches = _createEmotion.caches;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__emotion_hash__ = __webpack_require__(/*! @emotion/hash */ 225);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__emotion_stylis__ = __webpack_require__(/*! @emotion/stylis */ 226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_stylis_rule_sheet__ = __webpack_require__(/*! stylis-rule-sheet */ 227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__emotion_hash__ = __webpack_require__(/*! @emotion/hash */ 223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__emotion_stylis__ = __webpack_require__(/*! @emotion/stylis */ 224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_stylis_rule_sheet__ = __webpack_require__(/*! stylis-rule-sheet */ 225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_stylis_rule_sheet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_stylis_rule_sheet__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__emotion_memoize__ = __webpack_require__(/*! @emotion/memoize */ 228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__emotion_unitless__ = __webpack_require__(/*! @emotion/unitless */ 229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__emotion_memoize__ = __webpack_require__(/*! @emotion/memoize */ 226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__emotion_unitless__ = __webpack_require__(/*! @emotion/unitless */ 227);
 
 
 
@@ -8975,7 +8975,7 @@ function createEmotion(context, options) {
 
 /***/ }),
 
-/***/ 225:
+/***/ 223:
 /*!*************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/@emotion/hash/dist/index.es.js ***!
   \*************************************************************************/
@@ -9026,7 +9026,7 @@ function murmurhash2_32_gc(str) {
 
 /***/ }),
 
-/***/ 226:
+/***/ 224:
 /*!***************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/@emotion/stylis/dist/index.es.js ***!
   \***************************************************************************/
@@ -9629,7 +9629,7 @@ var V = function ca(W) {
 
 /***/ }),
 
-/***/ 227:
+/***/ 225:
 /*!*********************************************************************!*\
   !*** ./bundles/gene-search/node_modules/stylis-rule-sheet/index.js ***!
   \*********************************************************************/
@@ -9689,7 +9689,7 @@ var V = function ca(W) {
 
 /***/ }),
 
-/***/ 228:
+/***/ 226:
 /*!****************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/@emotion/memoize/dist/index.es.js ***!
   \****************************************************************************/
@@ -9712,7 +9712,7 @@ function memoize(fn) {
 
 /***/ }),
 
-/***/ 229:
+/***/ 227:
 /*!*****************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/@emotion/unitless/dist/index.es.js ***!
   \*****************************************************************************/
@@ -9772,7 +9772,7 @@ var index = {
 
 /***/ }),
 
-/***/ 230:
+/***/ 228:
 /*!*******************************************************!*\
   !*** ./bundles/gene-search/node_modules/raf/index.js ***!
   \*******************************************************/
@@ -9780,7 +9780,7 @@ var index = {
 /*! exports used: default */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(/*! performance-now */ 231)
+/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(/*! performance-now */ 229)
   , root = typeof window === 'undefined' ? global : window
   , vendors = ['moz', 'webkit']
   , suffix = 'AnimationFrame'
@@ -9860,7 +9860,7 @@ module.exports.polyfill = function(object) {
 
 /***/ }),
 
-/***/ 231:
+/***/ 229:
 /*!*********************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/performance-now/lib/performance-now.js ***!
   \*********************************************************************************/
@@ -9905,11 +9905,11 @@ module.exports.polyfill = function(object) {
 
 //# sourceMappingURL=performance-now.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/process/browser.js */ 232)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/process/browser.js */ 230)))
 
 /***/ }),
 
-/***/ 232:
+/***/ 230:
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
   \*****************************************/
@@ -10105,7 +10105,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 233:
+/***/ 231:
 /*!************************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-input-autosize/lib/AutosizeInput.js ***!
   \************************************************************************************/
@@ -10385,7 +10385,7 @@ exports.default = AutosizeInput;
 
 /***/ }),
 
-/***/ 234:
+/***/ 232:
 /*!*****************************************************************************************************************!*\
   !*** ./bundles/gene-search/node_modules/react-faceted-search/lib/facetgroups/MultiselectDropdownFacetGroup.css ***!
   \*****************************************************************************************************************/
@@ -10394,7 +10394,7 @@ exports.default = AutosizeInput;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--0-1!./MultiselectDropdownFacetGroup.css */ 235);
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--0-1!./MultiselectDropdownFacetGroup.css */ 233);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -10408,7 +10408,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ 13)(content, options);
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ 12)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -10441,7 +10441,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 235:
+/***/ 233:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--0-1!./bundles/gene-search/node_modules/react-faceted-search/lib/facetgroups/MultiselectDropdownFacetGroup.css ***!
   \*****************************************************************************************************************************************************/
@@ -10449,7 +10449,7 @@ if(false) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ 12)(false);
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ 11)(false);
 // imports
 
 
@@ -10463,7 +10463,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 236:
+/***/ 234:
 /*!***************************************************!*\
   !*** ./bundles/gene-search/src/ExperimentCard.js ***!
   \***************************************************/
@@ -27928,7 +27928,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 214)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 212)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -29044,5 +29044,5 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ })
 
-},[210]);
+},[208]);
 //# sourceMappingURL=geneSearch.bundle.js.map
