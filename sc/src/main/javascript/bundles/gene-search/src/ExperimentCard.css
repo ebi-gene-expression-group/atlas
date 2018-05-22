@@ -7,3 +7,11 @@
 .experiment-card:hover {
     background-color: #eaeaea;
 }
+
+button.read-more {
+    cursor: pointer;
+    color: #222;
+    border-bottom-width: 1px;
+    border-bottom-style: dotted;
+    border-bottom-color: inherit;
+}
