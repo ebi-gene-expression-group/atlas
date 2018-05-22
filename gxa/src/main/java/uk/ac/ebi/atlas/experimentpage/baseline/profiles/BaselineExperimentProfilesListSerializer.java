@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.profiles;
 
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experimentpage.LinkToGene;

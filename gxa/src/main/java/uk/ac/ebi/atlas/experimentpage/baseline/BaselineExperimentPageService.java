@@ -6,12 +6,13 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesListSerializer;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
@@ -22,15 +23,15 @@ import java.util.List;
 import java.util.Map;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
-    private final BaselineExperimentProfilesService baselineExperimentProfilesService;
+    private final BaselineExperimentProfilesService BaselineExperimentProfilesService;
     private final CoexpressedGenesService coexpressedGenesService;
     private final AnatomogramFactory anatomogramFactory;
 
-    public BaselineExperimentPageService(BaselineExperimentProfilesService baselineExperimentProfilesService,
+    public BaselineExperimentPageService(BaselineExperimentProfilesService BaselineExperimentProfilesService,
                                          CoexpressedGenesService coexpressedGenesService) {
         super();
         this.anatomogramFactory = new AnatomogramFactory();
-        this.baselineExperimentProfilesService = baselineExperimentProfilesService;
+        this.BaselineExperimentProfilesService = BaselineExperimentProfilesService;
         this.coexpressedGenesService = coexpressedGenesService;
     }
 
@@ -72,13 +73,13 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     private GeneProfilesList<BaselineProfile> fetchProfiles(BaselineExperiment experiment,
                                                             BaselineRequestPreferences<?> preferences) {
         GeneProfilesList<BaselineProfile> baselineProfilesList =
-                baselineExperimentProfilesService.searchTopGeneProfiles(
+                BaselineExperimentProfilesService.getTopGeneProfiles(
                         experiment.getAccession(),
                         experiment.getDataColumnDescriptors(),
                         preferences);
 
         baselineProfilesList.setTotalResultCount(
-                baselineExperimentProfilesService.fetchCount(experiment.getAccession(), preferences));
+                BaselineExperimentProfilesService.fetchCount(experiment.getAccession(), preferences));
 
         return baselineProfilesList;
     }
@@ -121,11 +122,11 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         o.add("jsonProfiles",
               BaselineExperimentProfilesListSerializer.serialize(
-                      baselineExperimentProfilesService.fetchProfiles(
-                              coexpressedGeneIds,
+                      BaselineExperimentProfilesService.getGeneProfiles(
+                              experiment.getAccession(),
                               experiment.getDataColumnDescriptors(),
                               preferences,
-                              experiment.getAccession()),
+                              coexpressedGeneIds.toArray(new String[0])),
                       requestContext));
 
         JsonArray result = new JsonArray();

@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.HistogramService;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentProfilesService;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesService;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -24,7 +24,6 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -40,17 +39,16 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     private final HistogramService.RnaSeq rnaSeqHistograms;
     private final HistogramService.Proteomics proteomicsHistograms;
 
-    @Inject
     public JsonBaselineExperimentController(ExperimentTrader experimentTrader,
                                             CoexpressedGenesService coexpressedGenesService,
-                                            BaselineExperimentProfilesService baselineExperimentProfilesService,
+                                            BaselineExperimentProfilesService BaselineExperimentProfilesService,
                                             RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
                                             ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory,
                                             SpeciesInferrer speciesInferrer) {
         super(experimentTrader);
 
         this.baselineExperimentPageService =
-                new BaselineExperimentPageService(baselineExperimentProfilesService, coexpressedGenesService);
+                new BaselineExperimentPageService(BaselineExperimentProfilesService, coexpressedGenesService);
 
         this.rnaSeqHistograms =
                 new HistogramService.RnaSeq(rnaSeqBaselineProfileStreamFactory, experimentTrader);

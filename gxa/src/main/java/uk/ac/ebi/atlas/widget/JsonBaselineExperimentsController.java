@@ -22,7 +22,6 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,7 +38,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final FactorGroupingService factorGroupingService;
 
-    @Inject
     private JsonBaselineExperimentsController(SpeciesInferrer speciesInferrer,
                                               BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                               FactorGroupingService factorGroupingService) {
@@ -82,8 +80,8 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                 anatomogramFactory.get(
                         source,
                         species,
-                        dataColumns.stream().flatMap(
-                                factorAcrossExperiments -> factorAcrossExperiments.getValueOntologyTerms().stream())
+                        dataColumns.stream()
+                                .flatMap(FactorAcrossExperiments::getValueOntologyTerms)
                                 .collect(Collectors.toList()))
                         .orElse(JsonNull.INSTANCE));
 
