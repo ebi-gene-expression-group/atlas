@@ -16,6 +16,7 @@ a.clear {
 
 ul.clear {
     list-style: none;
+    margin-left: unset;
 }
 
 .button.no-action {
