@@ -12,10 +12,12 @@ import org.apache.solr.client.solrj.io.stream.expr.Explanation;
 import org.apache.solr.client.solrj.io.stream.expr.StreamFactory;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.IntStream;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 public class DummyTupleStreamBuilder<T extends CollectionProxy> extends TupleStreamBuilder<T> {
     private final Collection<Tuple> tuples;
@@ -87,10 +89,11 @@ public class DummyTupleStreamBuilder<T extends CollectionProxy> extends TupleStr
     }
 
     public static <T extends CollectionProxy> DummyTupleStreamBuilder<T> create(int size) {
-        List<Tuple> tuples = new ArrayList<>(size + 1);
-        for (int i = 0 ; i < size ; i++) {
-            tuples.add(new Tuple(ImmutableMap.of("field1", i, "field2", i)));
-        }
+        ImmutableList<Tuple> tuples =
+                IntStream.range(0, size)
+                        .boxed()
+                        .map(i -> new Tuple(ImmutableMap.of("field1", i, "field2", i)))
+                        .collect(toImmutableList());
 
         return create(tuples, "field1", true);
     }
