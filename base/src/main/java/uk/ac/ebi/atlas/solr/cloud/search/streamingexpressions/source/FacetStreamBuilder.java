@@ -52,13 +52,18 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
         return this;
     }
 
-    public FacetStreamBuilder<T> withAbsoluteAverageOf(SchemaField<T> field) {
-        metricsBuilder.add(new MeanMetric("abs(" + field.name() + ")"));
+    public FacetStreamBuilder<T> sortByAscending(SchemaField<T> field) {
+        sortsBuilder.add(new FieldComparator(field.name(), ComparatorOrder.ASCENDING));
         return this;
     }
 
-    public FacetStreamBuilder<T> withQueryBuilder(SolrQueryBuilder<T> solrQueryBuilder) {
-        this.solrQuery = solrQueryBuilder.build();
+    public FacetStreamBuilder<T> withCounts() {
+        metricsBuilder.add(new CountMetric("*"));
+        return this;
+    }
+
+    public FacetStreamBuilder<T> withAbsoluteAverageOf(SchemaField<T> field) {
+        metricsBuilder.add(new MeanMetric("abs(" + field.name() + ")"));
         return this;
     }
 

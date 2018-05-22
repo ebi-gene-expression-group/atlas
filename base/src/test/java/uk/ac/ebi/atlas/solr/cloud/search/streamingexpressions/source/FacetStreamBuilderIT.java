@@ -17,7 +17,6 @@ import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
-import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source.FacetStreamBuilder;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -57,13 +56,13 @@ public class FacetStreamBuilderIT {
         try (TupleStreamer broadQueryStreamer =
                      TupleStreamer.of(
                              new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                                     .withQueryBuilder(broadSolrQueryBuilder)
+                                     .withQuery(broadSolrQueryBuilder.build())
                                      .sortByCountsAscending()
                                      .build());
              TupleStreamer narrowQueryStreamer =
                      TupleStreamer.of(
                              new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                                     .withQueryBuilder(narrowSolrQueryBuilder)
+                                     .withQuery(narrowSolrQueryBuilder.build())
                                      .sortByCountsAscending()
                                      .build())) {
 
@@ -85,7 +84,7 @@ public class FacetStreamBuilderIT {
         try (TupleStreamer filteredStreamer1 =
                      TupleStreamer.of(
                              new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                                     .withQueryBuilder(solrQueryBuilder)
+                                     .withQuery(solrQueryBuilder.build())
                                      .sortByCountsAscending()
                                      .build());
              TupleStreamer filteredStreamer2 =
@@ -107,7 +106,7 @@ public class FacetStreamBuilderIT {
         solrQueryBuilder.addFilterFieldByTerm(EXPERIMENT_ACCESSION, E_MTAB_513);
         try (TupleStreamer filteredByExperimentStreamer =
                      TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
-                            .withQueryBuilder(solrQueryBuilder)
+                            .withQuery(solrQueryBuilder.build())
                             .withAbsoluteAverageOf(EXPRESSION_LEVEL)
                             .sortByCountsAscending()
                             .build())) {
