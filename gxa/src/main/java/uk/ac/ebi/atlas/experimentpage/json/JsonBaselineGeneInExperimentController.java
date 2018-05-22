@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.json;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -8,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentProfilesListSerializer;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentProfilesService;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesListSerializer;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -22,22 +21,20 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
 public class JsonBaselineGeneInExperimentController extends JsonExperimentController {
-    private final BaselineExperimentProfilesService baselineExperimentProfilesService;
+    private final BaselineExperimentProfilesService BaselineExperimentProfilesService;
     private final BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory;
 
-    @Inject
     public JsonBaselineGeneInExperimentController(ExperimentTrader experimentTrader,
-                                                  BaselineExperimentProfilesService baselineExperimentProfilesService,
+                                                  BaselineExperimentProfilesService BaselineExperimentProfilesService,
                                                   BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory) {
         super(experimentTrader);
-        this.baselineExperimentProfilesService = baselineExperimentProfilesService;
+        this.BaselineExperimentProfilesService = BaselineExperimentProfilesService;
         this.baselineTranscriptProfileStreamFactory = baselineTranscriptProfileStreamFactory;
     }
 
@@ -58,12 +55,10 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
         BaselineRequestContext<ExpressionUnit.Absolute.Rna> requestContext =
                 new BaselineRequestContext<>(preferences, experiment);
         result.add("columnHeaders", columnHeaders(requestContext));
-        
-        GeneProfilesList<BaselineProfile> geneExpression = baselineExperimentProfilesService.fetchProfiles(
-                ImmutableList.of(geneId),
-                requestContext.getDataColumnsToReturn(),
-                preferences,
-                experimentAccession);
+
+        GeneProfilesList<BaselineProfile> geneExpression =
+                BaselineExperimentProfilesService.getGeneProfiles(
+                        experimentAccession, requestContext.getDataColumnsToReturn(), preferences, geneId);
 
         // We set cutoff to 0.0, which happens to do "do not read for kryo files" for transcript expression
         preferences.setCutoff(0.0);

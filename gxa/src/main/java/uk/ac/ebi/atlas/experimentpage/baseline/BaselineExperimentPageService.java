@@ -6,6 +6,8 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesListSerializer;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -21,15 +23,15 @@ import java.util.List;
 import java.util.Map;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
-    private final BaselineExperimentProfilesService baselineExperimentProfilesService;
+    private final BaselineExperimentProfilesService BaselineExperimentProfilesService;
     private final CoexpressedGenesService coexpressedGenesService;
     private final AnatomogramFactory anatomogramFactory;
 
-    public BaselineExperimentPageService(BaselineExperimentProfilesService baselineExperimentProfilesService,
+    public BaselineExperimentPageService(BaselineExperimentProfilesService BaselineExperimentProfilesService,
                                          CoexpressedGenesService coexpressedGenesService) {
         super();
         this.anatomogramFactory = new AnatomogramFactory();
-        this.baselineExperimentProfilesService = baselineExperimentProfilesService;
+        this.BaselineExperimentProfilesService = BaselineExperimentProfilesService;
         this.coexpressedGenesService = coexpressedGenesService;
     }
 
@@ -37,18 +39,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             BaselineExperiment experiment, String accessKey, BaselineRequestPreferences<U> preferences) {
 
         BaselineRequestContext<U> requestContext = new BaselineRequestContext<>(preferences, experiment);
-        GeneProfilesList<BaselineProfile> baselineProfilesList =
-                baselineExperimentProfilesService.searchTopGeneProfiles(
-                        experiment.getAccession(),
-                        experiment.getDataColumnDescriptors(),
-                        preferences);
-
-        baselineProfilesList.setTotalResultCount(baselineExperimentProfilesService.fetchCount(experiment.getAccession(), preferences));
 
         JsonObject result = new JsonObject();
         result.add("columnHeaders", constructColumnHeaders(requestContext, experiment));
         result.add("columnGroupings", new JsonArray());
 
+        GeneProfilesList<BaselineProfile> baselineProfilesList = fetchProfiles(experiment, preferences);
         result.add(
                 "profiles",
                 BaselineExperimentProfilesListSerializer.serialize(baselineProfilesList, requestContext));
@@ -72,6 +68,20 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         }
 
         return result;
+    }
+
+    private GeneProfilesList<BaselineProfile> fetchProfiles(BaselineExperiment experiment,
+                                                            BaselineRequestPreferences<?> preferences) {
+        GeneProfilesList<BaselineProfile> baselineProfilesList =
+                BaselineExperimentProfilesService.getTopGeneProfiles(
+                        experiment.getAccession(),
+                        experiment.getDataColumnDescriptors(),
+                        preferences);
+
+        baselineProfilesList.setTotalResultCount(
+                BaselineExperimentProfilesService.fetchCount(experiment.getAccession(), preferences));
+
+        return baselineProfilesList;
     }
 
     private JsonArray constructColumnHeaders(BaselineRequestContext<?> requestContext, BaselineExperiment experiment) {
@@ -99,27 +109,28 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                                            BaselineExperiment experiment,
                                            BaselineRequestContext<?> requestContext,
                                            BaselineRequestPreferences<?> preferences) {
-        JsonArray result = new JsonArray();
-
         List<String> coexpressedGeneIds =
                 coexpressedGenesService.fetchCoexpressions(experiment.getAccession(), baselineProfile.getId(), 49);
 
-        if (coexpressedGeneIds.size() > 0) {
-            JsonObject o = new JsonObject();
-            o.addProperty("geneName", baselineProfile.getName());
-            o.addProperty("geneId", baselineProfile.getId());
-
-            o.add("jsonProfiles",
-                  BaselineExperimentProfilesListSerializer.serialize(
-                          baselineExperimentProfilesService.fetchProfiles(
-                                  coexpressedGeneIds,
-                                  experiment.getDataColumnDescriptors(),
-                                  preferences,
-                                  experiment.getAccession()),
-                          requestContext));
-            result.add(o);
+        if (coexpressedGeneIds.isEmpty()) {
+            return new JsonArray();
         }
 
+        JsonObject o = new JsonObject();
+        o.addProperty("geneName", baselineProfile.getName());
+        o.addProperty("geneId", baselineProfile.getId());
+
+        o.add("jsonProfiles",
+              BaselineExperimentProfilesListSerializer.serialize(
+                      BaselineExperimentProfilesService.getGeneProfiles(
+                              experiment.getAccession(),
+                              experiment.getDataColumnDescriptors(),
+                              preferences,
+                              coexpressedGeneIds.toArray(new String[0])),
+                      requestContext));
+
+        JsonArray result = new JsonArray();
+        result.add(o);
         return result;
     }
 }

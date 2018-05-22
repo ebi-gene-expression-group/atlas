@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.profiles;
 
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experimentpage.LinkToGene;
@@ -14,10 +14,10 @@ public class BaselineExperimentProfilesListSerializer {
                                        BaselineRequestContext<? extends ExpressionUnit.Absolute> requestContext) {
         return new
                 ExternallyViewableProfilesList<>(
-                profilesList,
-                new LinkToGene<>(),
-                requestContext.getDataColumnsToReturn(),
-                baselineProfile -> requestContext.getExpressionUnit())
+                        profilesList,
+                        new LinkToGene<>(),
+                        requestContext.getDataColumnsToReturn(),
+                        baselineProfile -> requestContext.getExpressionUnit())
                 .asJson();
     }
 }

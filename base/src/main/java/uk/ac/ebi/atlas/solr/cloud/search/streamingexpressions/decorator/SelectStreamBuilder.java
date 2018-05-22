@@ -1,9 +1,10 @@
-package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
+package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.client.solrj.io.stream.SelectStream;
 import org.apache.solr.client.solrj.io.stream.TupleStream;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.TupleStreamBuilder;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
