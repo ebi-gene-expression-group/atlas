@@ -10478,6 +10478,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -10490,68 +10492,119 @@ __webpack_require__(/*! style-loader!css-loader!./ExperimentCard.css */ 235);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 // Naive multi-line string clamping
 var truncate = function truncate(string) {
-  if (string.length > 300) {
-    return string.substring(0, 300) + '...';
+  if (isDescriptionTooLong(string)) {
+    return string.substring(0, 300) + '... ';
   } else {
     return string;
   }
 };
 
-var ExperimentCard = function ExperimentCard(_ref) {
-  var experimentAccession = _ref.experimentAccession,
-      url = _ref.url,
-      species = _ref.species,
-      experimentDescription = _ref.experimentDescription,
-      type = _ref.type,
-      longDescription = _ref.longDescription;
+var isDescriptionTooLong = function isDescriptionTooLong(description) {
+  return description.length > 300;
+};
 
-  return _react2.default.createElement(
-    'div',
-    { className: "experiment-card" },
-    _react2.default.createElement(
-      'a',
-      { href: url },
-      _react2.default.createElement(
-        'h5',
-        null,
+var ExperimentCard = function (_React$Component) {
+  _inherits(ExperimentCard, _React$Component);
+
+  function ExperimentCard(props) {
+    _classCallCheck(this, ExperimentCard);
+
+    var _this = _possibleConstructorReturn(this, (ExperimentCard.__proto__ || Object.getPrototypeOf(ExperimentCard)).call(this, props));
+
+    _this.state = {
+      expanded: false,
+      descriptionShown: truncate(_this.props.longDescription)
+    };
+
+    _this._setExpanded = _this._setExpanded.bind(_this);
+    return _this;
+  }
+
+  _createClass(ExperimentCard, [{
+    key: '_setExpanded',
+    value: function _setExpanded() {
+      var _this2 = this;
+
+      this.setState(function (previousState) {
+        return {
+          descriptionShown: !previousState.expanded ? _this2.props.longDescription : truncate(_this2.props.longDescription),
+          expanded: !previousState.expanded
+        };
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          experimentAccession = _props.experimentAccession,
+          url = _props.url,
+          species = _props.species,
+          experimentDescription = _props.experimentDescription,
+          longDescription = _props.longDescription,
+          lastUpdated = _props.lastUpdated;
+      var _state = this.state,
+          expanded = _state.expanded,
+          descriptionShown = _state.descriptionShown;
+
+
+      return _react2.default.createElement(
+        'div',
+        { className: "experiment-card" },
         _react2.default.createElement(
+          'span',
+          { className: "label" },
+          lastUpdated,
+          ' | ',
+          _react2.default.createElement(
+            'i',
+            null,
+            species
+          )
+        ),
+        _react2.default.createElement(
+          'h5',
+          null,
+          _react2.default.createElement(
+            'a',
+            { href: url },
+            experimentAccession,
+            ': ',
+            experimentDescription
+          )
+        ),
+        longDescription && _react2.default.createElement(
           'p',
           null,
-          experimentAccession,
-          ': ',
-          experimentDescription
+          _react2.default.createElement(
+            'i',
+            null,
+            'About the experiment: '
+          ),
+          descriptionShown,
+          isDescriptionTooLong(longDescription) && _react2.default.createElement(
+            'button',
+            { className: 'read-more', onClick: this._setExpanded },
+            !expanded ? '(Read more)' : '(Read less)'
+          )
         )
-      ),
-      _react2.default.createElement(
-        'p',
-        null,
-        _react2.default.createElement(
-          'i',
-          null,
-          'Species:'
-        ),
-        ' ',
-        species
-      ),
-      longDescription && _react2.default.createElement(
-        'p',
-        null,
-        _react2.default.createElement(
-          'i',
-          null,
-          'Description:'
-        ),
-        ' ',
-        truncate(longDescription)
-      )
-    )
-  );
-};
+      );
+    }
+  }]);
+
+  return ExperimentCard;
+}(_react2.default.Component);
 
 ExperimentCard.propTypes = {
   experimentAccession: _propTypes2.default.string.isRequired,
+  lastUpdated: _propTypes2.default.string.isRequired,
   url: _propTypes2.default.string.isRequired,
   species: _propTypes2.default.string.isRequired,
   experimentDescription: _propTypes2.default.string.isRequired,
@@ -10632,7 +10685,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, ".experiment-card {\n    border: #777 solid 1px;\n    margin-bottom: 0.5rem;\n    border-radius: 4px;\n    padding: 0.25rem;\n}\n\n/*.experiment-card:hover {*/\n    /*background-color: #eaeaea;*/\n/*}*/\n", ""]);
+exports.push([module.i, ".experiment-card {\n    border: #777 solid 1px;\n    margin-bottom: 0.5rem;\n    padding: 0.25rem;\n}\n\n.experiment-card:hover {\n    background-color: #eaeaea;\n}\n\nbutton.read-more {\n    cursor: pointer;\n    color: #222;\n    border-bottom-width: 1px;\n    border-bottom-style: dotted;\n    border-bottom-color: inherit;\n}", ""]);
 
 // exports
 
