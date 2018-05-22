@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,7 +34,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    public String search(HttpServletRequest request, @PathVariable String geneId) {
+    public String search(@PathVariable String geneId) {
         JsonObject resultObject = new JsonObject();
         JsonArray results = new JsonArray();
 
@@ -57,9 +57,9 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 JsonArray facetsJson = convertFacetModel(factorFacets.get(experimentAccession));
                 if(markerGeneFacets.containsKey(experimentAccession)) {
                     facetsJson.add(facetValueObject("Marker genes", "Experiments with marker genes"));
-                    experimentAttributes.add("markerGenes", convertMarkerGeneModel(markerGeneFacets.get(experimentAccession)));
+                    experimentAttributes.add("markerGenes", convertMarkerGeneModel(experimentAccession, geneId, markerGeneFacets.get(experimentAccession)));
                 }
-                experimentAttributes.addProperty("url", createExperimentPageRelativePath(request.getContextPath(), experimentAccession));
+                experimentAttributes.addProperty("url", createExperimentPageURL(experimentAccession, geneId));
 
                 resultEntry.add("element", experimentAttributes);
                 resultEntry.add("facets",  facetsJson);
@@ -123,26 +123,46 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     }
 
     // Converts list of (k, clusterId) pairs into json objects
-    private JsonArray convertMarkerGeneModel(List<Pair<Integer, Integer>> model) {
+    private JsonArray convertMarkerGeneModel(String experimentAccession, String geneId, List<Pair<Integer, Integer>> model) {
         JsonArray result = new JsonArray();
 
         model.forEach((kClusterIdPair) ->
-                result.add(markerGeneObject(kClusterIdPair.getLeft(), kClusterIdPair.getRight()))
+                result.add(markerGeneObject(
+                        kClusterIdPair.getLeft(),
+                        kClusterIdPair.getRight(),
+                        createResultsPageURL(experimentAccession, geneId, kClusterIdPair.getLeft(), kClusterIdPair.getRight())))
         );
 
         return result;
     }
 
-    private JsonObject markerGeneObject(Integer k, Integer clusterId) {
+    private JsonObject markerGeneObject(Integer k, Integer clusterId, String url) {
         JsonObject result = new JsonObject();
 
         result.addProperty("k", k);
         result.addProperty("clusterId", clusterId);
+        result.addProperty("url", url);
 
         return result;
     }
 
-    private String createExperimentPageRelativePath(String contextPath, String experimentAccession) {
-        return String.join("/", contextPath, "experiments", experimentAccession);
+    private String createExperimentPageURL(String experimentAccession, String geneId) {
+       return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/experiments/{experimentAccession}")
+                .query("geneId={geneId}")
+                .build()
+                .expand(experimentAccession, geneId)
+                .toString();
+    }
+
+    private String createResultsPageURL(String experimentAccession, String geneId, Integer k, Integer clusterId) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/experiments/{experimentAccession}/Results")
+                .query("geneId={geneId}")
+                .query("k={k}")
+                .query("clusterId={clusterId}")
+                .build()
+                .expand(experimentAccession, geneId, k, clusterId)
+                .toString();
     }
 }
