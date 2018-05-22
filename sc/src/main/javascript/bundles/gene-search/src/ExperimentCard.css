@@ -1,10 +1,9 @@
 .experiment-card {
     border: #777 solid 1px;
     margin-bottom: 0.5rem;
-    border-radius: 4px;
     padding: 0.25rem;
 }
 
-/*.experiment-card:hover {*/
-    /*background-color: #eaeaea;*/
-/*}*/
+.experiment-card:hover {
+    background-color: #eaeaea;
+}

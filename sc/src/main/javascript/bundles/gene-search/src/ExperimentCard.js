@@ -13,19 +13,20 @@ const truncate = (string) => {
   }
 }
 
-const ExperimentCard = ({experimentAccession, url, species, experimentDescription, type, longDescription}) => {
+const ExperimentCard = ({experimentAccession, url, species, experimentDescription, type, longDescription, lastUpdated}) => {
   return (
     <div className={"experiment-card"}>
-      <a href={url}>
-        <h5>
-            <p>{experimentAccession}: {experimentDescription}</p>
-        </h5>
-        <p><i>Species:</i> {species}</p>
-        {
-          longDescription &&
-          <p><i>Description:</i> {truncate(longDescription)}</p>
-        }
-      </a>
+      <span className={"label"}>
+          {lastUpdated} | <i>{species}</i>
+        </span>
+      <h5>
+        <a href={url}>{experimentAccession}: {experimentDescription}</a>
+      </h5>
+
+      {
+        longDescription &&
+        <p><i>About the experiment:</i> {truncate(longDescription)}</p>
+      }
 
     </div>
   )
@@ -33,6 +34,7 @@ const ExperimentCard = ({experimentAccession, url, species, experimentDescriptio
 
 ExperimentCard.propTypes = {
   experimentAccession: PropTypes.string.isRequired,
+  lastUpdated: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   species: PropTypes.string.isRequired,
   experimentDescription: PropTypes.string.isRequired,
