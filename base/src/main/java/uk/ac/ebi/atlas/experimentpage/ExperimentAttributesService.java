@@ -32,7 +32,7 @@ public class ExperimentAttributesService {
         HashMap<String, Object> result = new HashMap<>();
         result.put("experimentAccession", experiment.getAccession());
         result.put("experimentDescription", experiment.getDescription());
-        result.put("type", experiment.getType());
+        result.put("type", experiment.getType().getHumanDescription());
         result.putAll(experiment.getSpecies().getAttributes());
         result.put("pubMedIds", experiment.getPubMedIds());
         result.put("dois", experiment.getDois());

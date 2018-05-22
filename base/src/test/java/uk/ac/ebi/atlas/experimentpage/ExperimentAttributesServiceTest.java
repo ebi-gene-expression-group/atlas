@@ -2,10 +2,14 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import org.assertj.core.util.Lists;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.Publication;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -20,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -38,6 +43,8 @@ public class ExperimentAttributesServiceTest {
 
     @Mock
     private EuropePmcClient europePmcClientMock;
+    @Mock
+    private IdfParser idfParser;
 
     @InjectMocks
     private ExperimentAttributesService subject;
@@ -45,6 +52,7 @@ public class ExperimentAttributesServiceTest {
     @Test
     public void getAttributesForBaselineExperimentWithNoPublications() {
         when(europePmcClientMock.getPublicationByIdentifier(anyString())).thenReturn(Optional.empty());
+        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment("FOOBAR");
         HashMap<String, Object> result = subject.getAttributes(experiment);
@@ -54,7 +62,7 @@ public class ExperimentAttributesServiceTest {
                 .doesNotContainKeys(DIFFERENTIAL_EXPERIMENT_ATTRIBUTES)
                 .doesNotContainKeys(MICROARRAY_EXPERIMENT_ATTRIBUTES)
                 .extracting("experimentAccession", "type", "publications")
-                .contains("FOOBAR", ExperimentType.RNASEQ_MRNA_BASELINE, Lists.emptyList());
+                .contains("FOOBAR", ExperimentType.RNASEQ_MRNA_BASELINE.getHumanDescription(), Lists.emptyList());
     }
 
     @Test
@@ -63,6 +71,7 @@ public class ExperimentAttributesServiceTest {
 
         when(europePmcClientMock.getPublicationByIdentifier("100.100/doi")).thenReturn(Optional.of(new Publication("", "100.100/doi", "Publication 1")));
         when(europePmcClientMock.getPublicationByIdentifier("999.100/another-doi")).thenReturn(Optional.of(new Publication("", "999.100/another-doi", "Publication 2")));
+        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(Lists.emptyList(), dois);
 
@@ -77,6 +86,7 @@ public class ExperimentAttributesServiceTest {
 
         when(europePmcClientMock.getPublicationByIdentifier("1123")).thenReturn(Optional.of(new Publication("1123", "100.100/doi", "Publication 1")));
         when(europePmcClientMock.getPublicationByIdentifier("1235")).thenReturn(Optional.of(new Publication("1235", "999.100/another-doi", "Publication 2")));
+        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(pubmedIds, Lists.emptyList());
 
@@ -88,6 +98,7 @@ public class ExperimentAttributesServiceTest {
     @Test
     public void getAttributesForDifferentialExperiment() {
         DifferentialExperiment experiment = MockExperiment.createDifferentialExperiment();
+        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         HashMap<String, Object> result = subject.getAttributes(experiment);
 
@@ -100,6 +111,7 @@ public class ExperimentAttributesServiceTest {
     @Test
     public void getAttributesForMicroarrayExperiment() {
         MicroarrayExperiment experiment = MockExperiment.createMicroarrayExperiment();
+        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         HashMap<String, Object> result = subject.getAttributes(experiment);
 
