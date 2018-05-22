@@ -1,6 +1,7 @@
-package uk.ac.ebi.atlas.solr.cloud.fullanalytics.tuplestreamers;
+package uk.ac.ebi.atlas.experimentpage.differential.topgenes;
 
 import com.google.common.collect.ImmutableMap;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
@@ -9,21 +10,17 @@ import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator.SelectSt
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator.TopStreamBuilder;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.LOG_2_FOLD_CHANGE;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.BioentityIdentifierSearchService.AVERAGE_EXPRESSION_KEY;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.BioentityIdentifierSearchService.GENE_KEY;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.BioentityIdentifierSearchService.SPECIFICITY_KEY;
+import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.AVERAGE_EXPRESSION_KEY;
+import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.GENE_KEY;
+import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.SPECIFICITY_KEY;
 
-@Named
-public class DifferentialTupleStreamerFactory {
+@Component
+public class DifferentialExperimentTopGenesDao {
     private final AnalyticsCollectionProxy analyticsCollectionProxy;
 
-    @Inject
-    public DifferentialTupleStreamerFactory(SolrCloudCollectionProxyFactory collectionProxyFactory) {
+    public DifferentialExperimentTopGenesDao(SolrCloudCollectionProxyFactory collectionProxyFactory) {
         analyticsCollectionProxy = collectionProxyFactory.createAnalyticsCollectionProxy();
     }
 
