@@ -49,17 +49,17 @@ class IntersectStreamBuilderTestIT {
     
     @Test
     void intersectOnSelfReturnsSelf() {
-        assertOverIntersectStreamBuilder(
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderA,
                 tupleStreamBuilderA,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).containsExactly(streamA.toArray(new Tuple[0])));
 
-        assertOverIntersectStreamBuilder(
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderB,
                 tupleStreamBuilderB,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).containsExactly(streamB.toArray(new Tuple[0])));
 
-        assertOverIntersectStreamBuilder(
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderC,
                 tupleStreamBuilderC,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).containsExactly(streamC.toArray(new Tuple[0])));
@@ -67,7 +67,7 @@ class IntersectStreamBuilderTestIT {
 
     @Test
     void intersectWithExactlySameValuesReturnsFirstStream() {
-        assertOverIntersectStreamBuilder(
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderA,
                 tupleStreamBuilderB,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).containsExactly(streamA.toArray(new Tuple[0])));
@@ -75,39 +75,39 @@ class IntersectStreamBuilderTestIT {
 
     @Test
     void intersectOnNonMatchingFieldsIsEmpty() {
-        assertOverIntersectStreamBuilder(
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderA,
                 tupleStreamBuilderC,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).isEmpty());
 
-        assertOverIntersectStreamBuilder(
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderB,
                 tupleStreamBuilderC,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).isEmpty());
     }
 
     @Test
-    void intersetcWithSubset() {
-        assertOverIntersectStreamBuilder(
+    void intersectWithSubset() {
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderA,
                 tupleStreamBuilderD,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).hasSize(2));
-        assertOverIntersectStreamBuilder(
+        assertAboutIntersectStreamBuilder(
                 tupleStreamBuilderC,
                 tupleStreamBuilderD,
                 (tupleStreamer) -> assertThat(tupleStreamer.get()).hasSize(1));
     }
 
     // A way to make assertions with try-with-resources
-    private static <T extends CollectionProxy> void assertOverIntersectStreamBuilder(
+    private static <T extends CollectionProxy> void assertAboutIntersectStreamBuilder(
             TupleStreamBuilder<T> tupleStreamBuilder1,
             TupleStreamBuilder<T> tupleStreamBuilder2,
             Consumer<TupleStreamer> assertionOverTupleStreamer) {
 
         try (TupleStreamer tupleStreamer =
                      TupleStreamer.of(
-                             new IntersectStreamBuilder<>(tupleStreamBuilder1, tupleStreamBuilder2)
-                                     .onField(SORT_FIELD).build())) {
+                             new IntersectStreamBuilder<>(tupleStreamBuilder1, tupleStreamBuilder2, SORT_FIELD)
+                                     .build())) {
             assertionOverTupleStreamer.accept(tupleStreamer);
         }
 

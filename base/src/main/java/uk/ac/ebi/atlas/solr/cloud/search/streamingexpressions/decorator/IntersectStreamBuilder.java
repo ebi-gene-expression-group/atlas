@@ -19,23 +19,23 @@ public class IntersectStreamBuilder<T extends CollectionProxy> extends TupleStre
     private final TupleStreamBuilder<T> tupleStreamBuilderB;
     private final ImmutableSet.Builder<Pair<String, String>> onFieldsBuilder = ImmutableSet.builder();
 
+    // We don’t use SchemaField<T> because field names may have been renamed by a previous select clause
     public IntersectStreamBuilder(TupleStreamBuilder<T> tupleStreamBuilderA,
-                                  TupleStreamBuilder<T> tupleStreamBuilderB) {
+                                  TupleStreamBuilder<T> tupleStreamBuilderB,
+                                  String fieldName) {
         this.tupleStreamBuilderA = tupleStreamBuilderA;
         this.tupleStreamBuilderB = tupleStreamBuilderB;
-    }
-
-    // We don’t use SchemaField<T> as keys because field names may have been renamed by a previous select clause or it
-    // may be a field with a stream evaluator
-    public IntersectStreamBuilder<T> onField(String fieldName) {
         onFieldsBuilder.add(Pair.of(fieldName, fieldName));
-        return this;
     }
 
-    public IntersectStreamBuilder<T> onField(String leftFieldName, String rightFieldName) {
-        onFieldsBuilder.add(Pair.of(leftFieldName, rightFieldName));
-        return this;
-    }
+    // Uncomment if you need to support different field names to match streams
+    // public IntersectStreamBuilder(TupleStreamBuilder<T> tupleStreamBuilderA,
+    //                               TupleStreamBuilder<T> tupleStreamBuilderB,
+    //                               String leftFieldName, String rightFieldName) {
+    //     this.tupleStreamBuilderA = tupleStreamBuilderA;
+    //     this.tupleStreamBuilderB = tupleStreamBuilderB;
+    //     onFieldsBuilder.add(Pair.of(leftFieldName, rightFieldName));
+    // }
 
     @Override
     protected TupleStream getRawTupleStream() {
@@ -47,7 +47,6 @@ public class IntersectStreamBuilder<T extends CollectionProxy> extends TupleStre
 
             return new IntersectStream(tupleStreamBuilderA.build(), tupleStreamBuilderB.build(), streamEqualitor);
         } catch (IOException e) {
-            // The truth is, this constructor can’t throw an IOException, but the class declaration does... lame
             throw new UncheckedIOException(e);
         }
     }
