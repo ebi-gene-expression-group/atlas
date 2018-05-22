@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-class InnerJoinStreamBuilderTestIT {
+class InnerJoinStreamBuilderTest {
     private class DummyCollectionProxy extends CollectionProxy {
         protected DummyCollectionProxy(SolrClient solrClient, String nameOrAlias) {
             super(solrClient, nameOrAlias);
