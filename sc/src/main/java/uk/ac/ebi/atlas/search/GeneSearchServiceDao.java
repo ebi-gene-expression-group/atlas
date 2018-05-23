@@ -50,12 +50,13 @@ public class GeneSearchServiceDao {
     }
 
     private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
-            "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes WHERE gene_id=:gene_id";
+            "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes WHERE gene_id=:gene_id AND marker_probability<=:threshold";
     @Transactional(readOnly = true)
     public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
-                        "gene_id", geneId );
+                        "gene_id", geneId,
+                        "threshold", 0.05);
 
         return namedParameterJdbcTemplate.query(
                 SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT,
