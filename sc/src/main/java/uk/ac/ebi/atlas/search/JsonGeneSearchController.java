@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,7 +55,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 JsonObject resultEntry = new JsonObject();
 
                 JsonObject experimentAttributes = GSON.toJsonTree(geneSearchService.getExperimentInformation(experimentAccession)).getAsJsonObject();
-                JsonArray facetsJson = convertFacetModel(factorFacets.get(experimentAccession));
+                JsonArray facetsJson = convertFacetModel(factorFacets.getOrDefault(experimentAccession, new HashMap<>()));
                 if(markerGeneFacets.containsKey(experimentAccession)) {
                     facetsJson.add(facetValueObject("Marker genes", "Experiments with marker genes"));
                     experimentAttributes.add("markerGenes", convertMarkerGeneModel(experimentAccession, geneId, markerGeneFacets.get(experimentAccession)));

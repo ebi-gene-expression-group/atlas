@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isA;
@@ -62,6 +63,7 @@ public class JsonGeneSearchControllerWIT {
                 .andExpect(jsonPath("$.results[0].facets", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$.results[0].facets[0].group", isA(String.class)))
                 .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
-                .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)));
+                .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
+                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes")));
     }
 }
