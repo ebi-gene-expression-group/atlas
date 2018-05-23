@@ -10,7 +10,7 @@ const render = (options, mountNodeId) => {
       host={options.atlasUrl}
       resource={options.resource}
       ResultElementComponent={ExperimentCard}
-      noResultsMessage={`No experiments were found.`}
+      noResultsMessage={`The gene you searched for is not expressed in any experiments. Try searching for a different gene.`}
     />,
     document.getElementById(mountNodeId)
   )

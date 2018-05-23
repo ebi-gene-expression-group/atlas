@@ -15,7 +15,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "react-faceted-search": "^1.0.0",
+    "react-faceted-search": "^1.1.2",
     "urijs": "^1.19.1"
   },
   "devDependencies": {
