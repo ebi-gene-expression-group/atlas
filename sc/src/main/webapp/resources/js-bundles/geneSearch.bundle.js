@@ -532,7 +532,8 @@ var render = function render(options, mountNodeId) {
   _reactDom2.default.render(_react2.default.createElement(_reactFacetedSearch2.default, {
     host: options.atlasUrl,
     resource: options.resource,
-    ResultElementComponent: _ExperimentCard2.default
+    ResultElementComponent: _ExperimentCard2.default,
+    noResultsMessage: 'The gene you searched for is not expressed in any experiments. Try searching for a different gene.'
   }), document.getElementById(mountNodeId));
 };
 
@@ -713,7 +714,9 @@ var FetchLoader = function (_React$Component) {
   _createClass(FetchLoader, [{
     key: 'render',
     value: function render() {
-      var ResultElementComponent = this.props.ResultElementComponent;
+      var _props = this.props,
+          ResultElementComponent = _props.ResultElementComponent,
+          noResultsMessage = _props.noResultsMessage;
       var _state = this.state,
           data = _state.data,
           loading = _state.loading,
@@ -724,7 +727,11 @@ var FetchLoader = function (_React$Component) {
         'div',
         { id: 'loader' },
         'Loading, please wait...'
-      ) : _react2.default.createElement(_FilterList2.default, _extends({}, data, { ResultElementComponent: ResultElementComponent }));
+      ) : data.results.length > 0 ? _react2.default.createElement(_FilterList2.default, _extends({}, data, { ResultElementComponent: ResultElementComponent })) : _react2.default.createElement(
+        'div',
+        null,
+        noResultsMessage
+      );
     }
   }, {
     key: '_fetchAndSetState',
@@ -781,7 +788,8 @@ var FetchLoader = function (_React$Component) {
 FetchLoader.propTypes = {
   host: _propTypes2.default.string.isRequired,
   resource: _propTypes2.default.string.isRequired,
-  ResultElementComponent: _propTypes2.default.func.isRequired
+  ResultElementComponent: _propTypes2.default.func.isRequired,
+  noResultsMessage: _propTypes2.default.string
 };
 
 exports.default = FetchLoader;
@@ -3987,28 +3995,24 @@ var FilterList = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        { className: 'expanded row' },
         resultsHaveFacets && _react2.default.createElement(
           'div',
-          { className: 'small-12 medium-4 columns' },
+          { className: 'small-12 medium-2 columns' },
           _react2.default.createElement(_FilterSidebar2.default, _extends({ checkboxFacetGroups: checkboxFacetGroups, hideFacetGroupNames: hideFacetGroupNames }, {
             facets: (0, _lodash2.default)(results).flatMap('facets').value(),
             onChange: this._handleChange }))
         ),
         _react2.default.createElement(
           'div',
-          { className: resultsHaveFacets ? 'small-12 medium-8 columns' : 'small-12 columns' },
-          _react2.default.createElement(
-            'ul',
-            null,
-            filteredElements.map(function (element, index) {
-              return _react2.default.createElement(
-                'li',
-                { key: index },
-                _react2.default.createElement(ResultElementComponent, element)
-              );
-            })
-          )
+          { className: resultsHaveFacets ? 'small-12 medium-10 columns' : 'small-12 columns' },
+          filteredElements.map(function (element, index) {
+            return _react2.default.createElement(
+              'div',
+              { key: index },
+              _react2.default.createElement(ResultElementComponent, element)
+            );
+          })
         )
       );
     }
@@ -4509,6 +4513,44 @@ var possibleConstructorReturn = function (self, call) {
 
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
+
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
 
 var toConsumableArray = function (arr) {
   if (Array.isArray(arr)) {
@@ -5620,16 +5662,19 @@ var Control = function Control(props) {
       isDisabled = props.isDisabled,
       isFocused = props.isFocused,
       innerProps = props.innerProps;
+  var innerRef = innerProps.innerRef,
+      rest = objectWithoutProperties(innerProps, ['innerRef']);
 
   return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
     'div',
     _extends({
+      ref: innerRef,
       className: cx( /*#__PURE__*/Object(__WEBPACK_IMPORTED_MODULE_0_emotion__["a" /* css */])(getStyles('control', props)), {
         'control': true,
         'control-is-disabled': isDisabled,
         'control-is-focused': isFocused
       }, className)
-    }, innerProps),
+    }, rest),
     children
   );
 };
@@ -6013,6 +6058,8 @@ var MenuList = function MenuList(props) {
       getStyles = props.getStyles,
       isMulti = props.isMulti,
       innerProps = props.innerProps;
+  var innerRef = innerProps.innerRef,
+      rest = objectWithoutProperties(innerProps, ['innerRef']);
 
   return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
     'div',
@@ -6020,16 +6067,12 @@ var MenuList = function MenuList(props) {
       className: cx( /*#__PURE__*/Object(__WEBPACK_IMPORTED_MODULE_0_emotion__["a" /* css */])(getStyles('menuList', props)), {
         'menu-list': true,
         'menu-list--is-multi': isMulti
-      }, className)
-    }, innerProps),
+      }, className),
+      ref: innerRef
+    }, rest),
     children
   );
 };
-
-// ==============================
-// Menu Notices
-// ==============================
-
 var noticeCSS = function noticeCSS() {
   return {
     color: colors.neutral40,
@@ -6338,18 +6381,20 @@ var Option = function Option(props) {
       isFocused = props.isFocused,
       isSelected = props.isSelected,
       innerProps = props.innerProps;
-
+  var innerRef = innerProps.innerRef,
+      rest = objectWithoutProperties(innerProps, ['innerRef']);
 
   return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
     'div',
     _extends({
+      ref: innerRef,
       className: cx( /*#__PURE__*/Object(__WEBPACK_IMPORTED_MODULE_0_emotion__["a" /* css */])(getStyles('option', props)), {
         'option': true,
         'option--is-disabled': isDisabled,
         'option--is-focused': isFocused,
         'option--is-selected': isSelected
       }, className)
-    }, innerProps),
+    }, rest),
     children
   );
 };
@@ -6413,8 +6458,7 @@ var SingleValue = function SingleValue(props) {
       className: cx( /*#__PURE__*/Object(__WEBPACK_IMPORTED_MODULE_0_emotion__["a" /* css */])(getStyles('singleValue', props)), {
         'single-value': true,
         'single-value--is-disabled': isDisabled
-      }, className),
-      css: getStyles('singleValue', props)
+      }, className)
     }, innerProps),
     children
   );
@@ -6575,6 +6619,8 @@ var Select = function (_Component) {
   createClass(Select, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.startListeningToTouch();
+
       if (this.props.autoFocus) {
         this.focusInput();
       }
@@ -6607,12 +6653,6 @@ var Select = function (_Component) {
         });
         delete this.inputIsHiddenAfterUpdate;
       }
-      // manage touch listeners
-      if (nextProps.menuIsOpen && !this.props.menuIsOpen) {
-        this.startListeningToTouch();
-      } else if (!nextProps.menuIsOpen && this.props.menuIsOpen) {
-        this.stopListeningToTouch();
-      }
     }
   }, {
     key: 'componentDidUpdate',
@@ -6636,6 +6676,11 @@ var Select = function (_Component) {
         scrollIntoView(this.menuRef, this.focusedOptionRef);
       }
       this.scrollToFocusedOptionOnUpdate = false;
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.stopListeningToTouch();
     }
 
     // ==============================
@@ -7378,7 +7423,7 @@ var Select = function (_Component) {
         // for performance, the menu options in state aren't changed when the
         // focused option changes so we calculate additional props based on that
         var isFocused = focusedOption === props.data;
-        props.innerProps.ref = isFocused ? _this5.onFocusedOptionRef : undefined;
+        props.innerProps.innerRef = isFocused ? _this5.onFocusedOptionRef : undefined;
 
         return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           Option,
@@ -7464,7 +7509,7 @@ var Select = function (_Component) {
                 innerProps: {
                   'aria-multiselectable': isMulti,
                   id: this.getElementId('listbox'),
-                  ref: this.onMenuRef,
+                  innerRef: this.onMenuRef,
                   role: 'listbox'
                 },
                 isLoading: isLoading,
@@ -7563,7 +7608,7 @@ var Select = function (_Component) {
           Control,
           _extends({}, commonProps, {
             innerProps: {
-              ref: this.onControlRef,
+              innerRef: this.onControlRef,
               onMouseDown: this.onControlMouseDown,
               onTouchEnd: this.onControlTouchEnd
             },
@@ -7602,6 +7647,8 @@ var _initialiseProps = function _initialiseProps() {
   this.clearFocusValueOnUpdate = false;
   this.hasGroups = false;
   this.instancePrefix = '';
+  this.initialTouchX = 0;
+  this.initialTouchY = 0;
   this.openAfterFocus = false;
   this.scrollToFocusedOptionOnUpdate = false;
   this.state = {
@@ -7659,8 +7706,9 @@ var _initialiseProps = function _initialiseProps() {
       var _selectValue3 = _this7.state.selectValue;
 
       if (_this7.isOptionSelected(newValue, _selectValue3)) {
+        var candidate = _this7.getOptionValue(newValue);
         _this7.setValue(_selectValue3.filter(function (i) {
-          return i !== newValue;
+          return _this7.getOptionValue(i) !== candidate;
         }), 'deselect-option');
       } else {
         _this7.setValue([].concat(toConsumableArray(_selectValue3), [newValue]), 'select-option');
@@ -7678,10 +7726,12 @@ var _initialiseProps = function _initialiseProps() {
     var onChange = _this7.props.onChange;
     var selectValue = _this7.state.selectValue;
 
+    var candidate = _this7.getOptionValue(removedValue);
     onChange(selectValue.filter(function (i) {
-      return i !== removedValue;
+      return _this7.getOptionValue(i) !== candidate;
     }), {
-      action: 'remove-value'
+      action: 'remove-value',
+      removedValue: removedValue
     });
     _this7.focusInput();
   };
@@ -7699,7 +7749,8 @@ var _initialiseProps = function _initialiseProps() {
     var selectValue = _this7.state.selectValue;
 
     onChange(selectValue.slice(0, selectValue.length - 1), {
-      action: 'pop-value'
+      action: 'pop-value',
+      removedValue: selectValue[selectValue.length - 1]
     });
   };
 
@@ -7795,12 +7846,24 @@ var _initialiseProps = function _initialiseProps() {
     });
   };
 
-  this.onTouchStart = function () {
+  this.onTouchStart = function (_ref2) {
+    var _ref2$touches = slicedToArray(_ref2.touches, 1),
+        touch = _ref2$touches[0];
+
+    _this7.initialTouchX = touch.clientX;
+    _this7.initialTouchY = touch.clientY;
     _this7.userIsDragging = false;
   };
 
-  this.onTouchMove = function () {
-    _this7.userIsDragging = true;
+  this.onTouchMove = function (_ref3) {
+    var _ref3$touches = slicedToArray(_ref3.touches, 1),
+        touch = _ref3$touches[0];
+
+    var deltaX = Math.abs(touch.clientX - _this7.initialTouchX);
+    var deltaY = Math.abs(touch.clientY - _this7.initialTouchY);
+    var moveThreshold = 5;
+
+    _this7.userIsDragging = deltaX > moveThreshold || deltaY > moveThreshold;
   };
 
   this.onTouchEnd = function (event) {
@@ -7810,6 +7873,10 @@ var _initialiseProps = function _initialiseProps() {
     if (_this7.controlRef && !_this7.controlRef.contains(event.target) && _this7.menuRef && !_this7.menuRef.contains(event.target)) {
       _this7.blurInput();
     }
+
+    // reset move vars
+    _this7.initialTouchX = 0;
+    _this7.initialTouchY = 0;
   };
 
   this.onControlTouchEnd = function (event) {
@@ -8282,7 +8349,8 @@ var builtins = {
 };
 
 var defaultProps$2 = _extends({
-  allowCreateWhileLoading: false
+  allowCreateWhileLoading: false,
+  createOptionPosition: 'last'
 }, builtins);
 
 var makeCreatableSelect = function makeCreatableSelect(SelectComponent) {
@@ -8339,6 +8407,7 @@ var makeCreatableSelect = function makeCreatableSelect(SelectComponent) {
       key: 'componentWillReceiveProps',
       value: function componentWillReceiveProps(nextProps) {
         var allowCreateWhileLoading = nextProps.allowCreateWhileLoading,
+            createOptionPosition = nextProps.createOptionPosition,
             formatCreateLabel = nextProps.formatCreateLabel,
             getNewOptionData = nextProps.getNewOptionData,
             inputValue = nextProps.inputValue,
@@ -8356,7 +8425,7 @@ var makeCreatableSelect = function makeCreatableSelect(SelectComponent) {
         }
         this.setState({
           newOption: newOption,
-          options: (allowCreateWhileLoading || !isLoading) && newOption ? [].concat(toConsumableArray(options), [newOption]) : options
+          options: (allowCreateWhileLoading || !isLoading) && newOption ? createOptionPosition === 'first' ? [newOption].concat(toConsumableArray(options)) : [].concat(toConsumableArray(options), [newOption]) : options
         });
       }
     }, {
@@ -10501,14 +10570,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // Naive multi-line string clamping
 var truncate = function truncate(string) {
   if (isDescriptionTooLong(string)) {
-    return string.substring(0, 300) + '... ';
+    return string.substring(0, 500) + '... ';
   } else {
     return string;
   }
 };
 
 var isDescriptionTooLong = function isDescriptionTooLong(description) {
-  return description.length > 300;
+  return description.length > 500;
 };
 
 var ExperimentCard = function (_React$Component) {
@@ -10549,12 +10618,27 @@ var ExperimentCard = function (_React$Component) {
           species = _props.species,
           experimentDescription = _props.experimentDescription,
           longDescription = _props.longDescription,
-          lastUpdated = _props.lastUpdated;
+          lastUpdated = _props.lastUpdated,
+          markerGenes = _props.markerGenes;
       var _state = this.state,
           expanded = _state.expanded,
           descriptionShown = _state.descriptionShown;
 
 
+      var markerGeneLinks = markerGenes.map(function (markerGene) {
+        return _react2.default.createElement(
+          'li',
+          null,
+          _react2.default.createElement(
+            'a',
+            { href: markerGene.url },
+            'View marker gene in clusters ',
+            markerGene.clusterIds.sort().join(', '),
+            ' for k = ',
+            markerGene.k
+          )
+        );
+      });
       return _react2.default.createElement(
         'div',
         { className: "experiment-card" },
@@ -10580,9 +10664,18 @@ var ExperimentCard = function (_React$Component) {
             experimentDescription
           )
         ),
+        markerGenes && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'ul',
+            null,
+            markerGeneLinks
+          )
+        ),
         longDescription && _react2.default.createElement(
           'p',
-          null,
+          { style: { marginBottom: 0 } },
           _react2.default.createElement(
             'i',
             null,
@@ -10609,7 +10702,12 @@ ExperimentCard.propTypes = {
   species: _propTypes2.default.string.isRequired,
   experimentDescription: _propTypes2.default.string.isRequired,
   longDescription: _propTypes2.default.string,
-  type: _propTypes2.default.string.isRequired
+  type: _propTypes2.default.string.isRequired,
+  markerGenes: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+    k: _propTypes2.default.number.isRequired,
+    clusterIds: _propTypes2.default.array.isRequired,
+    url: _propTypes2.default.string.isRequired
+  }))
 };
 
 exports.default = ExperimentCard;
@@ -10685,7 +10783,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, ".experiment-card {\n    border: #777 solid 1px;\n    margin-bottom: 0.5rem;\n    padding: 0.25rem;\n}\n\n.experiment-card:hover {\n    background-color: #eaeaea;\n}\n\nbutton.read-more {\n    cursor: pointer;\n    color: #222;\n    border-bottom-width: 1px;\n    border-bottom-style: dotted;\n    border-bottom-color: inherit;\n}", ""]);
+exports.push([module.i, ".experiment-card {\n    /*border: #777 solid 1px; Darker grey border */\n    border: #e6e6e6 solid 1px;\n    margin-bottom: 0.5rem;\n    padding: 1rem;\n}\n\n.experiment-card:hover {\n    background-color: #eaeaea;\n}\n\nbutton.read-more {\n    cursor: pointer;\n    color: #222;\n    border-bottom-width: 1px;\n    border-bottom-style: dotted;\n    border-bottom-color: inherit;\n}", ""]);
 
 // exports
 

@@ -13434,8 +13434,8 @@ var _colourizeClusters = function _colourizeClusters(highlightSeries) {
     return series.map(function (aSeries) {
       // I can’t think of a better way to reconcile series.name being a string and highlightSeries being an array of
       // numbers. For more flexibility we might think of having our series be identified by an arbitrary ID string
-      if (!highlightSeries.length || highlightSeries.map(function (hs) {
-        return String(hs);
+      if (!highlightSeries.length || highlightSeries.length === series.length || highlightSeries.map(function (hs) {
+        return 'Cluster ' + hs;
       }).includes(aSeries.name)) {
         return aSeries;
       } else {
@@ -13502,7 +13502,9 @@ var ClusterTSnePlot = function ClusterTSnePlot(props) {
             text: header + content.join("<br/>")
           });
         }).catch(function (reason) {
-          return 'failure';
+          tooltip.label.attr({
+            text: header
+          });
         });
 
         return header + text;
