@@ -19,7 +19,7 @@
     <h3 id="goto-experiment">
         ${experimentDescription}
     </h3>
-    <h5>${type.humanDescription}</h5>
+    <h5>${type}</h5>
 
     <c:if test="${hasExtraInfo}">
         <a id="extra-info"
