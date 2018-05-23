@@ -52,7 +52,7 @@ public class GeneSearchServiceDao {
     private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
             "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes WHERE gene_id=:gene_id";
     @Transactional(readOnly = true)
-    public Map<String, List<Pair<Integer, Integer>>> fetchKAndClusterIds(String geneId) {
+    public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId );
@@ -61,16 +61,18 @@ public class GeneSearchServiceDao {
                 SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT,
                 namedParameters,
                 (ResultSet resultSet) -> {
-                    Map<String, List<Pair<Integer, Integer>>> result = new HashMap<>();
+                    Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
                     while(resultSet.next()) {
                         String experimentAccession = resultSet.getString("experiment_accession");
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
 
-                        List<Pair<Integer, Integer>> kAndClusterIds = result.getOrDefault(experimentAccession, new ArrayList<>());
+                        Map<Integer, List<Integer>> kAndClusterIds = result.getOrDefault(experimentAccession, new HashMap<>());
+                        List<Integer> clusterIds = kAndClusterIds.getOrDefault(k, new ArrayList<>());
+                        clusterIds.add(clusterId);
 
-                        kAndClusterIds.add(Pair.of(k, clusterId));
+                        kAndClusterIds.put(k, clusterIds);
                         result.put(experimentAccession, kAndClusterIds);
                     }
 

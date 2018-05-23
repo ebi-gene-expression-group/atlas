@@ -48,7 +48,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                     .collect(Collectors.toList());
 
             Map<String, Map<String, List<String>>> factorFacets = geneSearchService.getFacets(allCellIds);
-            Map<String, List<Pair<Integer, Integer>>> markerGeneFacets = geneSearchService.getMarkerGeneProfile(geneId);
+            Map<String, Map<Integer, List<Integer>>> markerGeneFacets = geneSearchService.getMarkerGeneProfile(geneId);
 
             cellIds.forEach((experimentAccession, cells) -> {
                 JsonObject resultEntry = new JsonObject();
@@ -122,25 +122,24 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         return result;
     }
 
-    // Converts list of (k, clusterId) pairs into json objects
-    private JsonArray convertMarkerGeneModel(String experimentAccession, String geneId, List<Pair<Integer, Integer>> model) {
+    // Converts list of map of k and cluster IDs into JSON objects
+    private JsonArray convertMarkerGeneModel(String experimentAccession, String geneId, Map<Integer, List<Integer>> model) {
         JsonArray result = new JsonArray();
 
-        model.forEach((kClusterIdPair) ->
+        model.forEach((k, clusterIds) ->
                 result.add(markerGeneObject(
-                        kClusterIdPair.getLeft(),
-                        kClusterIdPair.getRight(),
-                        createResultsPageURL(experimentAccession, geneId, kClusterIdPair.getLeft(), kClusterIdPair.getRight())))
-        );
+                        k,
+                        clusterIds,
+                        createResultsPageURL(experimentAccession, geneId, k, clusterIds))));
 
         return result;
     }
 
-    private JsonObject markerGeneObject(Integer k, Integer clusterId, String url) {
+    private JsonObject markerGeneObject(Integer k, List<Integer> clusterIds, String url) {
         JsonObject result = new JsonObject();
 
         result.addProperty("k", k);
-        result.addProperty("clusterId", clusterId);
+        result.add("clusterId", GSON.toJsonTree(clusterIds));
         result.addProperty("url", url);
 
         return result;
@@ -155,7 +154,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 .toString();
     }
 
-    private String createResultsPageURL(String experimentAccession, String geneId, Integer k, Integer clusterId) {
+    private String createResultsPageURL(String experimentAccession, String geneId, Integer k, List<Integer> clusterId) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/experiments/{experimentAccession}/Results")
                 .query("geneId={geneId}")
@@ -165,4 +164,5 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 .expand(experimentAccession, geneId, k, clusterId)
                 .toString();
     }
+
 }

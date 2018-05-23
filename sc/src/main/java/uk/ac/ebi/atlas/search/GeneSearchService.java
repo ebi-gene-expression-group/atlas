@@ -78,7 +78,7 @@ public class GeneSearchService {
         ));
     }
 
-    public Map<String, List<Pair<Integer, Integer>>> getMarkerGeneProfile(String geneId) {
+    public Map<String, Map<Integer, List<Integer>>> getMarkerGeneProfile(String geneId) {
         return geneSearchServiceDao.fetchKAndClusterIds(geneId);
 
     }
