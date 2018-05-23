@@ -24,7 +24,9 @@
     document.addEventListener("DOMContentLoaded", function(event) {
         geneSearch.render({
             atlasUrl: '${pageContext.request.contextPath}/',
-            resource: 'json/search/${geneId}'
+            resource: 'json/search/${geneId}',
+            noResultsMessage: 'The gene ${geneId} is not expressed in any experiments. Try searching for a different gene.',
+            resultsMessage: 'The gene ${geneId} is expressed in...'
         }, 'search-results-list')
     });
 

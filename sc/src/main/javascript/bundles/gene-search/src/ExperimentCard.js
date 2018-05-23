@@ -26,7 +26,7 @@ class ExperimentCard extends React.Component {
       descriptionShown: truncate(this.props.longDescription)
     }
 
-    this._setExpanded = this._setExpanded.bind(this);
+    this.setExpanded = this._setExpanded.bind(this);
   }
 
   _setExpanded() {
@@ -40,7 +40,7 @@ class ExperimentCard extends React.Component {
     const {experimentAccession, url, species, experimentDescription, longDescription, lastUpdated, markerGenes} = this.props
     const {expanded, descriptionShown} = this.state
 
-    const markerGeneLinks = markerGenes.map((markerGene) => {
+    const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
       return <li><a href={markerGene.url}>View marker gene in clusters {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
     })
     return (
@@ -68,7 +68,7 @@ class ExperimentCard extends React.Component {
             {descriptionShown}
             {
               isDescriptionTooLong(longDescription) &&
-              <button className={'read-more'}  onClick={this._setExpanded}>
+              <button className={'read-more'}  onClick={this.setExpanded}>
                 {!expanded ? `(Read more)`  : `(Read less)`}
               </button>
             }

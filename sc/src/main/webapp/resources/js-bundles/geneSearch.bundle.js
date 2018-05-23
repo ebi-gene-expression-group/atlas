@@ -533,7 +533,8 @@ var render = function render(options, mountNodeId) {
     host: options.atlasUrl,
     resource: options.resource,
     ResultElementComponent: _ExperimentCard2.default,
-    noResultsMessage: 'The gene you searched for is not expressed in any experiments. Try searching for a different gene.'
+    noResultsMessage: options.noResultsMessage,
+    resultsMessage: options.resultsMessage
   }), document.getElementById(mountNodeId));
 };
 
@@ -716,7 +717,8 @@ var FetchLoader = function (_React$Component) {
     value: function render() {
       var _props = this.props,
           ResultElementComponent = _props.ResultElementComponent,
-          noResultsMessage = _props.noResultsMessage;
+          noResultsMessage = _props.noResultsMessage,
+          resultsMessage = _props.resultsMessage;
       var _state = this.state,
           data = _state.data,
           loading = _state.loading,
@@ -727,7 +729,7 @@ var FetchLoader = function (_React$Component) {
         'div',
         { id: 'loader' },
         'Loading, please wait...'
-      ) : data.results.length > 0 ? _react2.default.createElement(_FilterList2.default, _extends({}, data, { ResultElementComponent: ResultElementComponent })) : _react2.default.createElement(
+      ) : data.results.length > 0 ? _react2.default.createElement(_FilterList2.default, _extends({}, data, { ResultElementComponent: ResultElementComponent, resultsMessage: resultsMessage })) : _react2.default.createElement(
         'div',
         null,
         noResultsMessage
@@ -789,7 +791,8 @@ FetchLoader.propTypes = {
   host: _propTypes2.default.string.isRequired,
   resource: _propTypes2.default.string.isRequired,
   ResultElementComponent: _propTypes2.default.func.isRequired,
-  noResultsMessage: _propTypes2.default.string
+  noResultsMessage: _propTypes2.default.string,
+  resultsMessage: _propTypes2.default.string
 };
 
 exports.default = FetchLoader;
@@ -3960,7 +3963,8 @@ var FilterList = function (_React$Component) {
           results = _props.results,
           checkboxFacetGroups = _props.checkboxFacetGroups,
           hideFacetGroupNames = _props.hideFacetGroupNames,
-          ResultElementComponent = _props.ResultElementComponent;
+          ResultElementComponent = _props.ResultElementComponent,
+          resultsMessage = _props.resultsMessage;
       var selectedFacets = this.state.selectedFacets;
 
 
@@ -4006,6 +4010,11 @@ var FilterList = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: resultsHaveFacets ? 'small-12 medium-10 columns' : 'small-12 columns' },
+          _react2.default.createElement(
+            'h3',
+            null,
+            resultsMessage
+          ),
           filteredElements.map(function (element, index) {
             return _react2.default.createElement(
               'div',
@@ -4034,7 +4043,8 @@ FilterList.propTypes = {
   })).isRequired,
   checkboxFacetGroups: _propTypes2.default.arrayOf(_propTypes2.default.string),
   hideFacetGroupNames: _propTypes2.default.arrayOf(_propTypes2.default.string),
-  ResultElementComponent: _propTypes2.default.func.isRequired // must be a React.Component, sadly there’s no such prop :(
+  ResultElementComponent: _propTypes2.default.func.isRequired, // must be a React.Component, sadly there’s no such prop :(
+  resultsMessage: _propTypes2.default.string
 };
 
 FilterList.defaultProps = {
@@ -10593,7 +10603,7 @@ var ExperimentCard = function (_React$Component) {
       descriptionShown: truncate(_this.props.longDescription)
     };
 
-    _this._setExpanded = _this._setExpanded.bind(_this);
+    _this.setExpanded = _this._setExpanded.bind(_this);
     return _this;
   }
 
@@ -10625,7 +10635,7 @@ var ExperimentCard = function (_React$Component) {
           descriptionShown = _state.descriptionShown;
 
 
-      var markerGeneLinks = markerGenes.map(function (markerGene) {
+      var markerGeneLinks = markerGenes && markerGenes.map(function (markerGene) {
         return _react2.default.createElement(
           'li',
           null,
@@ -10684,7 +10694,7 @@ var ExperimentCard = function (_React$Component) {
           descriptionShown,
           isDescriptionTooLong(longDescription) && _react2.default.createElement(
             'button',
-            { className: 'read-more', onClick: this._setExpanded },
+            { className: 'read-more', onClick: this.setExpanded },
             !expanded ? '(Read more)' : '(Read less)'
           )
         )
