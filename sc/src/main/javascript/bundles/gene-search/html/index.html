@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div id="wrapper" class="row">
+<div id="wrapper" class="row expanded">
     <div id="content" class="small-12 columns">
         <div id="target">
         </div>
@@ -26,8 +26,8 @@
   geneSearch.render({
     atlasUrl: 'http://localhost:8080/scxa/',
     // resource: 'json/search/ENSMMUG00000039038' // non-existent
-    // resource: 'json/search/ENSG00000000003' // with marker genes
-    resource: 'json/search/ENSMUSG00000000339' // without marker genes
+    resource: 'json/search/ENSG00000000003' // with marker genes
+    // resource: 'json/search/ENSMUSG00000000339' // without marker genes
   }, 'target')
 </script>
 

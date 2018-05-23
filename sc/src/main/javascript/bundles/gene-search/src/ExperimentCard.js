@@ -6,7 +6,7 @@ import '!style-loader!css-loader!./ExperimentCard.css'
 // Naive multi-line string clamping
 const truncate = (string) => {
   if (isDescriptionTooLong(string)) {
-    return `${string.substring(0, 300)}... `
+    return `${string.substring(0, 500)}... `
   }
   else {
     return string
@@ -14,7 +14,7 @@ const truncate = (string) => {
 }
 
 const isDescriptionTooLong = (description) => {
-  return description.length > 300
+  return description.length > 500
 }
 
 class ExperimentCard extends React.Component {
@@ -37,9 +37,12 @@ class ExperimentCard extends React.Component {
   }
 
   render() {
-    const {experimentAccession, url, species, experimentDescription, longDescription, lastUpdated} = this.props
+    const {experimentAccession, url, species, experimentDescription, longDescription, lastUpdated, markerGenes} = this.props
     const {expanded, descriptionShown} = this.state
 
+    const markerGeneLinks = markerGenes.map((markerGene) => {
+      return <li><a href={markerGene.url}>View marker gene in clusters {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
+    })
     return (
       <div className={"experiment-card"}>
       <span className={"label"}>
@@ -50,8 +53,17 @@ class ExperimentCard extends React.Component {
         </h5>
 
         {
+          markerGenes &&
+          <div>
+            <ul>
+              {markerGeneLinks}
+            </ul>
+          </div>
+        }
+
+        {
           longDescription &&
-          <p>
+          <p style={{marginBottom: 0}}>
             <i>About the experiment: </i>
             {descriptionShown}
             {
@@ -60,8 +72,6 @@ class ExperimentCard extends React.Component {
                 {!expanded ? `(Read more)`  : `(Read less)`}
               </button>
             }
-
-
           </p>
         }
 
@@ -77,7 +87,12 @@ ExperimentCard.propTypes = {
   species: PropTypes.string.isRequired,
   experimentDescription: PropTypes.string.isRequired,
   longDescription: PropTypes.string,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  markerGenes: PropTypes.arrayOf(PropTypes.shape({
+    k: PropTypes.number.isRequired,
+    clusterIds: PropTypes.array.isRequired,
+    url: PropTypes.string.isRequired
+  }))
 }
 
 export default ExperimentCard

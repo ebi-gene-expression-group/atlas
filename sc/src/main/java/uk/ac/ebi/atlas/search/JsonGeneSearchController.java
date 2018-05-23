@@ -139,7 +139,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         JsonObject result = new JsonObject();
 
         result.addProperty("k", k);
-        result.add("clusterId", GSON.toJsonTree(clusterIds));
+        result.add("clusterIds", GSON.toJsonTree(clusterIds));
         result.addProperty("url", url);
 
         return result;

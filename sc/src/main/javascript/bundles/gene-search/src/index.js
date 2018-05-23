@@ -10,6 +10,7 @@ const render = (options, mountNodeId) => {
       host={options.atlasUrl}
       resource={options.resource}
       ResultElementComponent={ExperimentCard}
+      noResultsMessage={`No experiments were found.`}
     />,
     document.getElementById(mountNodeId)
   )

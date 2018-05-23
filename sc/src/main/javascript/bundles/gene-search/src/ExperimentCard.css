@@ -1,7 +1,8 @@
 .experiment-card {
-    border: #777 solid 1px;
+    /*border: #777 solid 1px; Darker grey border */
+    border: #e6e6e6 solid 1px;
     margin-bottom: 0.5rem;
-    padding: 0.25rem;
+    padding: 1rem;
 }
 
 .experiment-card:hover {
