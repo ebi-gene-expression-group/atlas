@@ -4657,7 +4657,7 @@ var AtlasAutocomplete = function (_React$Component) {
 
     _this.state = {
       selectedItem: _this.props.initialValue,
-      species: _this.props.defaultSpecies,
+      selectedSpecies: _this.props.defaultSpecies,
       currentSuggestions: []
     };
 
@@ -4676,7 +4676,7 @@ var AtlasAutocomplete = function (_React$Component) {
   }, {
     key: '_speciesSelectOnChange',
     value: function _speciesSelectOnChange(event) {
-      this.setState({ species: event.target.value });
+      this.setState({ selectedSpecies: event.target.value });
     }
   }, {
     key: '_updateSuggestions',
@@ -4689,7 +4689,7 @@ var AtlasAutocomplete = function (_React$Component) {
 
       var suggesterUrl = (0, _urijs2.default)(this.props.suggesterEndpoint, this.props.atlasUrl).search({
         query: value,
-        species: this.state.species
+        species: this.state.selectedSpecies ? this.state.selectedSpecies : this.props.allSpecies.join()
       }).toString();
 
       fetch(suggesterUrl).then(function (response) {
@@ -4775,7 +4775,7 @@ var AtlasAutocomplete = function (_React$Component) {
             topSpecies: topSpecies,
             separator: separator,
             onChange: this.speciesSelectOnChange,
-            selectedValue: this.state.species })
+            selectedValue: this.state.selectedSpecies })
         )
       );
     }
@@ -4803,7 +4803,7 @@ AtlasAutocomplete.propTypes = {
 AtlasAutocomplete.defaultProps = {
   allSpecies: [],
   topSpecies: [],
-  separator: [],
+  separator: '',
   enableSpeciesFilter: false,
   initialValue: '',
   onSelect: function onSelect() {},
