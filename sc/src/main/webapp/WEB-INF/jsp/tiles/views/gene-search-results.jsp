@@ -22,8 +22,8 @@
         geneSearch.render({
             atlasUrl: '${pageContext.request.contextPath}/',
             resource: 'json/search/${geneId}',
-            noResultsMessage: 'The gene ${geneId} is not expressed in any experiment. Try searching for a different gene.',
-            resultsMessage: 'The gene ${geneId} is expressed in:'
+            noResultsMessage: '${geneId} is not expressed in any experiment. Try searching for a different gene.',
+            resultsMessage: '${geneId} is expressed in:'
         }, 'search-results-list')
     });
 </script>

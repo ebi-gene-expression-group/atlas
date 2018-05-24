@@ -18,10 +18,10 @@
                         <div class="media-object stack-for-small">
                             <div class="media-object-section middle hide-for-small-only">
                                 <s:eval expression="T(java.text.NumberFormat).getInstance().format(experimentInfo.numberOfAssays)" var="fmtNumberOfAssays" />
-                                <span class="button secondary no-action fixed-width-medium">${fmtNumberOfAssays}</span>
+                                <span class="button secondary no-action fixed-width-medium" data-tooltip title="Number of cells that pass QC">${fmtNumberOfAssays} cells</span>
                             </div>
                             <div class="media-object-section middle hide-for-small-only ">
-                                <a class="button" href="${pageContext.request.contextPath}/experiments/${experimentInfo.experimentAccession}">Analysis result</a>
+                                <a class="button" href="${pageContext.request.contextPath}/experiments/${experimentInfo.experimentAccession}">Results</a>
                             </div>
                             <div class="media-object-section middle">
                                 <small>${experimentInfo.lastUpdate}</small><br/>
