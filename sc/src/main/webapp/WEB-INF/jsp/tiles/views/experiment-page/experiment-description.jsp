@@ -19,8 +19,8 @@
 <div id="experimentDescription" class="row column expanded">
     <div class="media-object stack-for-small">
         <c:if test="${fn:startsWith(experimentAccession, 'E-EHCA-')}">
-        <div class="media-object-section middle">
-            <a href="https://preview.data.humancellatlas.org/">
+        <div class="media-object-section middle paddin-right-medium">
+            <a class="clear padding-right-xlarge" href="https://preview.data.humancellatlas.org/">
                 <img alt="Human Cell Atlas" style="max-width: 275px"
                      src="${pageContext.request.contextPath}/resources/images/logos/human_cell_atlas.png">
             </a>
