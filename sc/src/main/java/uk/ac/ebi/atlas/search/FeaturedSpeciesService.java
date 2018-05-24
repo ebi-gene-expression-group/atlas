@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
-// Gets a list of strings from the DAO and transforms it to a list of Species objects.
+// Gets a list of strings from the DAO and transforms it to a list of canonical species names.
 
 @Component
 public class FeaturedSpeciesService {
