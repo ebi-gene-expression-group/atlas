@@ -1,7 +1,7 @@
 var atlasAutocomplete =
 webpackJsonp_name_([1],{
 
-/***/ 18:
+/***/ 12:
 /*!***************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/index.js ***!
   \***************************************************************/
@@ -3147,7 +3147,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 12)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 13)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 6)))
 
 /***/ }),
 
@@ -3679,20 +3679,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete.js */ 83);
+var _FetchLoader = __webpack_require__(/*! ./FetchLoader.js */ 83);
 
-var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
+var _FetchLoader2 = _interopRequireDefault(_FetchLoader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _AtlasAutocomplete2.default;
+exports.default = _FetchLoader2.default;
 
 /***/ }),
 
 /***/ 83:
-/*!**************************************************************************************************!*\
-  !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
-  \**************************************************************************************************/
+/*!********************************************************************************************!*\
+  !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/FetchLoader.js ***!
+  \********************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3704,27 +3704,25 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 18);
+var _propTypes = __webpack_require__(/*! prop-types */ 12);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 87);
-
-var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
 
 var _urijs = __webpack_require__(/*! urijs */ 35);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 91);
+var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete */ 87);
 
-var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
+var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3734,149 +3732,143 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AtlasAutocomplete = function (_React$Component) {
-  _inherits(AtlasAutocomplete, _React$Component);
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-  function AtlasAutocomplete(props) {
-    _classCallCheck(this, AtlasAutocomplete);
+var _fetch = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(host, resource) {
+    var url, response;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            url = (0, _urijs2.default)(resource, host).segment('species').toString();
+            _context.next = 3;
+            return fetch(url);
 
-    var _this = _possibleConstructorReturn(this, (AtlasAutocomplete.__proto__ || Object.getPrototypeOf(AtlasAutocomplete)).call(this, props));
+          case 3:
+            response = _context.sent;
+
+            if (!response.ok) {
+              _context.next = 8;
+              break;
+            }
+
+            _context.next = 7;
+            return response.json();
+
+          case 7:
+            return _context.abrupt('return', _context.sent);
+
+          case 8:
+            throw new Error(url + ' => ' + response.status);
+
+          case 9:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined);
+  }));
+
+  return function _fetch(_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var FetchLoader = function (_React$Component) {
+  _inherits(FetchLoader, _React$Component);
+
+  function FetchLoader(props) {
+    _classCallCheck(this, FetchLoader);
+
+    var _this = _possibleConstructorReturn(this, (FetchLoader.__proto__ || Object.getPrototypeOf(FetchLoader)).call(this, props));
 
     _this.state = {
-      selectedItem: _this.props.initialValue,
-      species: _this.props.defaultSpecies,
-      currentSuggestions: []
+      data: null,
+      loading: true,
+      error: null
     };
-
-    _this.updateSuggestions = _this._updateSuggestions.bind(_this);
-    _this.speciesSelectOnChange = _this._speciesSelectOnChange.bind(_this);
     return _this;
   }
 
-  _createClass(AtlasAutocomplete, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState({
-        selectedItem: nextProps.initialValue
-      });
-    }
-  }, {
-    key: '_speciesSelectOnChange',
-    value: function _speciesSelectOnChange(event) {
-      this.setState({ species: event.target.value });
-    }
-  }, {
-    key: '_updateSuggestions',
-    value: function _updateSuggestions(event, value) {
-      var _this2 = this;
-
-      this.setState({
-        selectedItem: value
-      });
-
-      var suggesterUrl = (0, _urijs2.default)(this.props.suggesterEndpoint, this.props.atlasUrl).search({
-        query: value,
-        species: this.state.species
-      }).toString();
-
-      fetch(suggesterUrl).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        _this2.setState({
-          currentSuggestions: json
-        });
-      }).catch(function (ex) {
-        console.log('Error parsing JSON: ' + ex);
-      });
-    }
-  }, {
+  _createClass(FetchLoader, [{
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _state = this.state,
+          data = _state.data,
+          loading = _state.loading,
+          error = _state.error;
 
-      var menuStyle = {
-        borderRadius: '3px',
-        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-        fontSize: '90%',
-        overflow: 'auto',
-        maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
-        position: 'absolute',
-        top: 'auto',
-        zIndex: '1'
-      };
 
-      return _react2.default.createElement(
-        'div',
-        { className: this.props.wrapperClassName },
-        _react2.default.createElement(
-          'div',
-          { className: this.props.autocompleteClassName },
-          _react2.default.createElement(
-            'label',
-            null,
-            'Gene ID, gene name or gene feature'
-          ),
-          _react2.default.createElement(_reactAutocomplete2.default, { wrapperStyle: { display: '' },
-            inputProps: { type: 'text', name: 'geneId' },
+      return error ? _react2.default.createElement(_AtlasAutocomplete2.default, _extends({}, data, this.props, { speciesFilterStatusMessage: error.name + ': ' + error.message })) : loading ? _react2.default.createElement(_AtlasAutocomplete2.default, _extends({}, data, this.props, { speciesFilterStatusMessage: 'Fetching species\u2026' })) :
+      // promise fulfilled
+      _react2.default.createElement(_AtlasAutocomplete2.default, _extends({}, data, this.props, { speciesFilterStatusMessage: '' }));
+    }
+  }, {
+    key: '_fetchAndSetState',
+    value: function _fetchAndSetState(host, resource) {
+      var _this2 = this;
 
-            value: this.state.selectedItem,
-            items: this.state.currentSuggestions,
+      this.setState({ loading: true });
 
-            getItemValue: function getItemValue(item) {
-              return item.category;
-            },
-            onSelect: function onSelect(value) {
-              _this3.setState({
-                selectedItem: value, currentSuggestions: [] });
-              _this3.props.onSelect(value);
-            },
-            onChange: this.updateSuggestions,
+      // then and catch methods are run “at the end of the current run of the JavaScript event loop” according to section
+      // ‘Timing’ in https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises, so state.loading will
+      // be true when the promise is handled. Strictly speaking, the right thing to do would be to call _fetch in a
+      // callback passed as the second argument to setState, but if we wanted to also return the promise to test the
+      // component we’d need to declare a variable outside, set it within the callback, and return it... not pretty!
 
-            renderItem: function renderItem(item, isHighlighted) {
-              return _react2.default.createElement(
-                'div',
-                { key: item.value + '_' + item.category, style: { background: isHighlighted ? 'lightgray' : 'white', padding: '2px 10px' } },
-                _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: item.value + ' (' + item.category + ')' } })
-              );
-            },
-
-            menuStyle: menuStyle })
-        ),
-        this.props.enableSpeciesFilter && _react2.default.createElement(
-          'div',
-          { className: this.props.speciesFilterClassName },
-          _react2.default.createElement(_SpeciesSelect2.default, { atlasUrl: this.props.atlasUrl, onChange: this.speciesSelectOnChange, selectedValue: this.state.species })
-        )
-      );
+      return _fetch(host, resource).then(function (responseJson) {
+        return _this2.setState({
+          data: responseJson,
+          loading: false,
+          error: null
+        });
+      }).catch(function (error) {
+        return _this2.setState({
+          data: null,
+          loading: false,
+          error: {
+            description: 'There was a problem communicating with the server. Please try again later.',
+            name: error.name,
+            message: error.message
+          }
+        });
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      return this._fetchAndSetState(this.props.atlasUrl, this.props.suggesterEndpoint);
+    }
+  }, {
+    key: 'componentDidCatch',
+    value: function componentDidCatch(error, info) {
+      this.setState({
+        error: {
+          description: 'There was a problem rendering this component.',
+          name: error.name,
+          message: error.message + ' \u2013 ' + info
+        }
+      });
     }
   }]);
 
-  return AtlasAutocomplete;
+  return FetchLoader;
 }(_react2.default.Component);
 
-AtlasAutocomplete.propTypes = {
+FetchLoader.propTypes = {
   atlasUrl: _propTypes2.default.string.isRequired,
   suggesterEndpoint: _propTypes2.default.string.isRequired,
-  enableSpeciesFilter: _propTypes2.default.bool,
   initialValue: _propTypes2.default.string,
   onSelect: _propTypes2.default.func,
   wrapperClassName: _propTypes2.default.string,
   autocompleteClassName: _propTypes2.default.string,
+  enableSpeciesFilter: _propTypes2.default.bool,
   speciesFilterClassName: _propTypes2.default.string,
   defaultSpecies: _propTypes2.default.string
 };
 
-AtlasAutocomplete.defaultProps = {
-  enableSpeciesFilter: false,
-  initialValue: '',
-  onSelect: function onSelect() {},
-  wrapperClassName: '',
-  autocompleteClassName: '',
-  speciesFilterClassName: '',
-  defaultSpecies: ''
-};
-
-exports.default = AtlasAutocomplete;
+exports.default = FetchLoader;
 
 /***/ }),
 
@@ -4611,6 +4603,221 @@ module.exports = checkPropTypes;
 /***/ }),
 
 /***/ 87:
+/*!**************************************************************************************************!*\
+  !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
+  \**************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ 0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ 12);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 88);
+
+var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
+
+var _urijs = __webpack_require__(/*! urijs */ 35);
+
+var _urijs2 = _interopRequireDefault(_urijs);
+
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 92);
+
+var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AtlasAutocomplete = function (_React$Component) {
+  _inherits(AtlasAutocomplete, _React$Component);
+
+  function AtlasAutocomplete(props) {
+    _classCallCheck(this, AtlasAutocomplete);
+
+    var _this = _possibleConstructorReturn(this, (AtlasAutocomplete.__proto__ || Object.getPrototypeOf(AtlasAutocomplete)).call(this, props));
+
+    _this.state = {
+      selectedItem: _this.props.initialValue,
+      species: _this.props.defaultSpecies,
+      currentSuggestions: []
+    };
+
+    _this.updateSuggestions = _this._updateSuggestions.bind(_this);
+    _this.speciesSelectOnChange = _this._speciesSelectOnChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(AtlasAutocomplete, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        selectedItem: nextProps.initialValue
+      });
+    }
+  }, {
+    key: '_speciesSelectOnChange',
+    value: function _speciesSelectOnChange(event) {
+      this.setState({ species: event.target.value });
+    }
+  }, {
+    key: '_updateSuggestions',
+    value: function _updateSuggestions(event, value) {
+      var _this2 = this;
+
+      this.setState({
+        selectedItem: value
+      });
+
+      var suggesterUrl = (0, _urijs2.default)(this.props.suggesterEndpoint, this.props.atlasUrl).search({
+        query: value,
+        species: this.state.species
+      }).toString();
+
+      fetch(suggesterUrl).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this2.setState({
+          currentSuggestions: json
+        });
+      }).catch(function (ex) {
+        console.log('Error parsing JSON: ' + ex);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      var menuStyle = {
+        borderRadius: '3px',
+        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+        fontSize: '90%',
+        overflow: 'auto',
+        maxHeight: '20rem', // approx. as many lines as 20/2
+        position: 'absolute',
+        top: 'auto',
+        zIndex: '1'
+      };
+
+      var allSpecies = this.props.allSpecies;
+      var _props = this.props,
+          wrapperClassName = _props.wrapperClassName,
+          autocompleteClassName = _props.autocompleteClassName;
+      var _props2 = this.props,
+          enableSpeciesFilter = _props2.enableSpeciesFilter,
+          speciesFilterClassName = _props2.speciesFilterClassName,
+          speciesFilterStatusMessage = _props2.speciesFilterStatusMessage,
+          topSpecies = _props2.topSpecies,
+          separator = _props2.separator;
+
+
+      return _react2.default.createElement(
+        'div',
+        { className: wrapperClassName },
+        _react2.default.createElement(
+          'div',
+          { className: autocompleteClassName },
+          _react2.default.createElement(
+            'label',
+            null,
+            'Gene ID, gene name or gene feature'
+          ),
+          _react2.default.createElement(_reactAutocomplete2.default, { wrapperStyle: { display: '' },
+            inputProps: { type: 'text', name: 'geneId' },
+
+            value: this.state.selectedItem,
+            items: this.state.currentSuggestions,
+
+            getItemValue: function getItemValue(item) {
+              return item.category;
+            },
+            onSelect: function onSelect(value) {
+              _this3.setState({
+                selectedItem: value, currentSuggestions: [] });
+              _this3.props.onSelect(value);
+            },
+            onChange: this.updateSuggestions,
+
+            renderItem: function renderItem(item, isHighlighted) {
+              return _react2.default.createElement(
+                'div',
+                { key: item.value + '_' + item.category, style: { background: isHighlighted ? 'lightgray' : 'white', padding: '2px 10px' } },
+                _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: item.value + ' (' + item.category + ')' } })
+              );
+            },
+
+            menuStyle: menuStyle })
+        ),
+        enableSpeciesFilter && _react2.default.createElement(
+          'div',
+          { className: speciesFilterClassName },
+          _react2.default.createElement(_SpeciesSelect2.default, { statusMessage: speciesFilterStatusMessage,
+            allSpecies: allSpecies,
+            topSpecies: topSpecies,
+            separator: separator,
+            onChange: this.speciesSelectOnChange,
+            selectedValue: this.state.species })
+        )
+      );
+    }
+  }]);
+
+  return AtlasAutocomplete;
+}(_react2.default.Component);
+
+AtlasAutocomplete.propTypes = {
+  atlasUrl: _propTypes2.default.string.isRequired,
+  allSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string),
+  topSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string),
+  separator: _propTypes2.default.string,
+  suggesterEndpoint: _propTypes2.default.string.isRequired,
+  enableSpeciesFilter: _propTypes2.default.bool,
+  initialValue: _propTypes2.default.string,
+  onSelect: _propTypes2.default.func,
+  wrapperClassName: _propTypes2.default.string,
+  autocompleteClassName: _propTypes2.default.string,
+  speciesFilterClassName: _propTypes2.default.string,
+  speciesFilterStatusMessage: _propTypes2.default.string.isRequired,
+  defaultSpecies: _propTypes2.default.string
+};
+
+AtlasAutocomplete.defaultProps = {
+  allSpecies: [],
+  topSpecies: [],
+  separator: [],
+  enableSpeciesFilter: false,
+  initialValue: '',
+  onSelect: function onSelect() {},
+  wrapperClassName: '',
+  autocompleteClassName: '',
+  speciesFilterClassName: '',
+  defaultSpecies: ''
+};
+
+exports.default = AtlasAutocomplete;
+
+/***/ }),
+
+/***/ 88:
 /*!****************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
   \****************************************************************************************/
@@ -4632,12 +4839,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ 0);
-var PropTypes = __webpack_require__(/*! prop-types */ 18);
+var PropTypes = __webpack_require__(/*! prop-types */ 12);
 
 var _require = __webpack_require__(/*! react-dom */ 5),
     findDOMNode = _require.findDOMNode;
 
-var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 88);
+var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 89);
 
 var IMPERATIVE_API = ['blur', 'checkValidity', 'click', 'focus', 'select', 'setCustomValidity', 'setSelectionRange', 'setRangeText'];
 
@@ -5274,7 +5481,7 @@ module.exports = Autocomplete;
 
 /***/ }),
 
-/***/ 88:
+/***/ 89:
 /*!*************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/index.js ***!
   \*************************************************************************/
@@ -5282,12 +5489,12 @@ module.exports = Autocomplete;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 89);
+module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 90);
 
 
 /***/ }),
 
-/***/ 89:
+/***/ 90:
 /*!********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
   \********************************************************************************************/
@@ -5295,7 +5502,7 @@ module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 89);
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var util = __webpack_require__(/*! ./util */ 90);
+var util = __webpack_require__(/*! ./util */ 91);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -5421,7 +5628,7 @@ module.exports = scrollIntoView;
 
 /***/ }),
 
-/***/ 90:
+/***/ 91:
 /*!****************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/util.js ***!
   \****************************************************************************/
@@ -5864,7 +6071,7 @@ mix(utils, domUtils);
 
 /***/ }),
 
-/***/ 91:
+/***/ 92:
 /*!**********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/SpeciesSelect.js ***!
   \**********************************************************************************************/
@@ -5879,61 +6086,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 18);
+var _propTypes = __webpack_require__(/*! prop-types */ 12);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 35);
-
-var _urijs2 = _interopRequireDefault(_urijs);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var fetchResponseJson = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(base, endpoint) {
-    var response, responseJson;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return fetch((0, _urijs2.default)(endpoint, base).toString());
-
-          case 2:
-            response = _context.sent;
-            _context.next = 5;
-            return response.json();
-
-          case 5:
-            responseJson = _context.sent;
-            return _context.abrupt('return', responseJson);
-
-          case 7:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, undefined);
-  }));
-
-  return function fetchResponseJson(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-}();
 
 var _option = function _option(label) {
   return _react2.default.createElement(
@@ -5943,98 +6104,49 @@ var _option = function _option(label) {
   );
 };
 
-var SpeciesSelect = function (_React$Component) {
-  _inherits(SpeciesSelect, _React$Component);
-
-  function SpeciesSelect(props) {
-    _classCallCheck(this, SpeciesSelect);
-
-    var _this = _possibleConstructorReturn(this, (SpeciesSelect.__proto__ || Object.getPrototypeOf(SpeciesSelect)).call(this, props));
-
-    _this.state = {
-      loading: false,
-      errorMessage: null,
-      species: {
-        topSpecies: [],
-        separator: '',
-        allSpecies: []
-      }
-    };
-
-    _this._fetchAndSetState = _this._fetchAndSetState.bind(_this);
-    return _this;
-  }
-
-  _createClass(SpeciesSelect, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'label',
-          null,
-          'Species'
-        ),
-        this.state.loading ? _react2.default.createElement(
-          'select',
-          { disabled: 'true' },
-          _option('Fetching species\u2026')
-        ) : this.state.errorMessage ? _react2.default.createElement(
-          'select',
-          { disabled: 'true' },
-          _option(this.state.errorMessage)
-        ) : _react2.default.createElement(
-          'select',
-          { onChange: this.props.onChange, value: this.props.selectedValue },
-          _react2.default.createElement(
-            'option',
-            { value: '' },
-            'Any'
-          ),
-          this.state.species.topSpecies.map(_option),
-          _react2.default.createElement(
-            'option',
-            { value: '-', disabled: 'true' },
-            this.state.species.separator
-          ),
-          this.state.species.allSpecies.map(_option)
-        )
-      );
-    }
-  }, {
-    key: '_fetchAndSetState',
-    value: function _fetchAndSetState(baseUrl, relUrl) {
-      var _this2 = this;
-
-      this.setState({
-        loading: true
-      });
-      return fetchResponseJson(baseUrl, relUrl).then(function (responseJson) {
-        _this2.setState({
-          species: responseJson,
-          loading: false,
-          errorMessage: null
-        });
-      }).catch(function (reason) {
-        _this2.setState({
-          errorMessage: reason.name + ': ' + reason.message,
-          loading: false
-        });
-      });
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      return this._fetchAndSetState(this.props.atlasUrl, 'json/suggestions/species');
-    }
-  }]);
-
-  return SpeciesSelect;
-}(_react2.default.Component);
+var SpeciesSelect = function SpeciesSelect(_ref) {
+  var statusMessage = _ref.statusMessage,
+      topSpecies = _ref.topSpecies,
+      allSpecies = _ref.allSpecies,
+      separator = _ref.separator,
+      onChange = _ref.onChange,
+      selectedValue = _ref.selectedValue;
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'label',
+      null,
+      'Species'
+    ),
+    statusMessage ? _react2.default.createElement(
+      'select',
+      { disabled: 'true' },
+      _option(statusMessage)
+    ) : _react2.default.createElement(
+      'select',
+      { onChange: onChange, value: selectedValue },
+      _react2.default.createElement(
+        'option',
+        { value: '' },
+        'Any'
+      ),
+      topSpecies.length && topSpecies.map(_option),
+      topSpecies.length && _react2.default.createElement(
+        'option',
+        { value: '-', disabled: 'true' },
+        separator
+      ),
+      allSpecies.map(_option)
+    )
+  );
+};
 
 SpeciesSelect.propTypes = {
-  atlasUrl: _propTypes2.default.string.isRequired,
+  topSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+  allSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+  separator: _propTypes2.default.string.isRequired,
+  statusMessage: _propTypes2.default.string.isRequired,
   onChange: _propTypes2.default.func.isRequired,
   selectedValue: _propTypes2.default.string
 };
