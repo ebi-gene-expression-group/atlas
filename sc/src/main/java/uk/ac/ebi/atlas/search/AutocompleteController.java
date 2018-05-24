@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrBioentitiesSuggesterService;
-import uk.ac.ebi.atlas.species.SpeciesFactory;
 
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
@@ -29,7 +26,6 @@ public class AutocompleteController extends JsonExceptionHandlingController {
     protected static final int FEATURED_SPECIES = 0;
 
     private final SolrBioentitiesSuggesterService suggesterService;
-    private final SpeciesFactory speciesFactory;
     private final FeaturedSpeciesService featuredSpeciesService;
     private final LazyReference<String> speciesSelectJson = new LazyReference<String>() {
         @Override
@@ -39,10 +35,8 @@ public class AutocompleteController extends JsonExceptionHandlingController {
     };
 
     public AutocompleteController(SolrBioentitiesSuggesterService suggesterService,
-                                  SpeciesFactory speciesFactory,
                                   FeaturedSpeciesService featuredSpeciesService) {
         this.suggesterService = suggesterService;
-        this.speciesFactory = speciesFactory;
         this.featuredSpeciesService = featuredSpeciesService;
     }
 
@@ -54,16 +48,7 @@ public class AutocompleteController extends JsonExceptionHandlingController {
             @RequestParam(value = "query") String query,
             @RequestParam(value = "species", required = false, defaultValue = "") String species,
             @RequestParam(value = "suggestCount", required = false, defaultValue = "20") int suggestCount) {
-
-        String[] splitSpecies = species.split(",");
-        return GSON.toJson(
-                Arrays.stream(splitSpecies)
-                    .map(speciesFactory::create)
-                    .flatMap(speciesObject ->
-                            suggesterService.fetchBioentitySuggestions(
-                                    query, speciesObject, suggestCount / splitSpecies.length)
-                                    .stream())
-                    .collect(toImmutableList()));
+        return GSON.toJson(suggesterService.fetchBioentitySuggestions(query, suggestCount, species.split(",")));
 
     }
 
