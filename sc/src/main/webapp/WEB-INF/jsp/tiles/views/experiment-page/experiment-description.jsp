@@ -6,7 +6,7 @@
 <%--@elvariable id="pubMedIds" type="List<String>"--%>
 <%--@elvariable id="publications" type="List<uk.ac.ebi.atlas.model.Publication>"--%>
 <%--@elvariable id="species" type="uk.ac.ebi.atlas.species.Species"--%>
-<%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
+<%--@elvariable id="type" type="String"--%>
 <%--@elvariable id="alternativeViews" type="List<String>"--%>
 <%--@elvariable id="alternativeViewDescriptions" type="List<String>"--%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
@@ -32,7 +32,7 @@
                 ${experimentDescription}
             </h3>
 
-            <h5>${type.humanDescription}</h5>
+            <h5>${type}</h5>
 
             <c:if test="${hasExtraInfo}">
             <a id="extra-info"
