@@ -93,14 +93,4 @@ class CellMetadataServiceIT {
                         jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
                 .isEmpty();
     }
-
-    @Test
-    void validFactorFieldToDisplayName() {
-        assertThat(subject.factorFieldNameToDisplayName("factor_biopsy_site")).isEqualToIgnoringCase("Biopsy site");
-    }
-
-    @Test
-    void emptyFactorFieldToDisplayName() {
-        assertThat(subject.factorFieldNameToDisplayName("")).isEmpty();
-    }
 }

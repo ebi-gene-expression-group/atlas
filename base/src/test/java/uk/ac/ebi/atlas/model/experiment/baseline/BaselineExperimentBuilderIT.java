@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import javax.inject.Inject;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class BaselineExperimentBuilderIT {
     private static final String SPECIES_NAME = "Homo sapiens";
     private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of());
 
-    private static final String EXPERIMENT_ACCESSION = "accession";
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
     private static final String DESCRIPTION = "description";
     private static final String DISPLAY_NAME = "displayName";
 
@@ -57,6 +58,7 @@ public class BaselineExperimentBuilderIT {
                 .withAssayGroups(MockAssayGroups.create())
                 .withDataProviderURL(PROVIDER_URL)
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)
+                .withLastUpdate(new Date())
                 .create();
 
 

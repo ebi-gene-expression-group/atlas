@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 @Named
 public class IdfParser {
     private static final String INVESTIGATION_TITLE_ID = "Investigation Title";
+    private static final String EXPERIMENT_DESCRIPTION_ID = "Experiment Description";
     private static final String PUBMED_ID = "PubMed ID";
     private static final String PUBLICATION_TITLE_ID = "Publication Title";
     private static final String PUBLICATION_DOI_ID = "Publication DOI";
@@ -25,8 +26,9 @@ public class IdfParser {
     private static final String EXPECTED_CLUSTERS_ID = "Comment[EAExpectedClusters]";
     private static final String ADDITIONAL_ATTRIBUTES_ID = "Comment[EAAdditionalAttributes]";
 
-    private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, PUBMED_ID, PUBLICATION_TITLE_ID,
-            PUBLICATION_DOI_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID, ADDITIONAL_ATTRIBUTES_ID)
+    private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, EXPERIMENT_DESCRIPTION_ID, PUBMED_ID,
+            PUBLICATION_TITLE_ID, PUBLICATION_DOI_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID,
+            ADDITIONAL_ATTRIBUTES_ID)
                 .map(String::toUpperCase)
                 .collect(Collectors.toSet());
 
@@ -57,6 +59,11 @@ public class IdfParser {
                     .findFirst()
                     .orElse("");
 
+            String experimentDescription = getParsedOutputByKey(EXPERIMENT_DESCRIPTION_ID, Collections.emptyList())
+                    .stream()
+                    .findFirst()
+                    .orElse("");
+
             List<Publication> publications = createListOfPublications(
                     getParsedOutputByKey(PUBMED_ID, Collections.emptyList()),
                     getParsedOutputByKey(PUBLICATION_TITLE_ID, Collections.emptyList()),
@@ -72,6 +79,7 @@ public class IdfParser {
 
             return new IdfParserOutput(
                     title,
+                    experimentDescription,
                     publications,
                     expectedClusters,
                     metadataFieldsOfInterest

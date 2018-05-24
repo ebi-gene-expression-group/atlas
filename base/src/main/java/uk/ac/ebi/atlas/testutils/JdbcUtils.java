@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.testutils;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.List;
 
@@ -32,6 +33,25 @@ public class JdbcUtils {
     public String fetchRandomSingleCellExperimentAccession() {
         return jdbcTemplate.queryForObject(
                 "SELECT accession FROM scxa_experiment ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
+    public String fetchRandomExpressionAtlasExperimentAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
+    public String fetchRandomExpressionAtlasExperimentAccession(ExperimentType experimentType) {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment WHERE type=? ORDER BY RANDOM() LIMIT 1",
+                String.class,
+                experimentType.name());
+    }
+
+    public String fetchRandomGene() {
+        return jdbcTemplate.queryForObject(
+                "SELECT gene_id FROM scxa_analytics ORDER BY RANDOM() LIMIT 1",
                 String.class);
     }
 

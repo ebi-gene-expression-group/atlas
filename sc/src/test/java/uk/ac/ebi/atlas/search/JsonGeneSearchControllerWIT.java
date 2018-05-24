@@ -1,12 +1,13 @@
 package uk.ac.ebi.atlas.search;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -15,6 +16,7 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isA;
@@ -23,10 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
-public class JsonBioentityInformationControllerWIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class JsonGeneSearchControllerWIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
 
@@ -35,32 +38,32 @@ public class JsonBioentityInformationControllerWIT {
 
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    public void payloadIsValidJson() throws Exception {
-        String geneId = jdbcTestUtils.fetchRandomGene();
-
-        this.mockMvc
-                .perform(get(
-                        "/json/bioentity_information/" + geneId))
+    public void validJsonForInvalidGeneId() throws Exception {
+        this.mockMvc.perform(get("/json/search/FOO"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$[0].type", isA(String.class)))
-                .andExpect(jsonPath("$[0].name", isA(String.class)))
-                .andExpect(jsonPath("$[0].values", hasSize(greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$[0].values[0].text", isA(String.class)))
-                .andExpect(jsonPath("$[0].values[0].url", isA(String.class)))
-                .andExpect(jsonPath("$[0].values[0].relevance", isA(Number.class)));
+                .andExpect(jsonPath("$.results").isEmpty());
     }
 
     @Test
-    public void geneNotFound() throws Exception {
-        this.mockMvc
-                .perform(get("/json/bioentity_information/unknown"))
-                .andExpect(status().isNotFound());
+    public void validJsonForValidGeneId() throws Exception {
+        String geneId = jdbcTestUtils.fetchRandomGene();
+
+        this.mockMvc.perform(get("/json/search/" + geneId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.results", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].element.experimentAccession", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].facets[0].group", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
+                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes")));
     }
 }

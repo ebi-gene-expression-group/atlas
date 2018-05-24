@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class IdfParserOutput {
 
     private String title;
+    private String experimentDescription;
     // Map of Pubmed IDs and publication titles
     private List<Publication> publications;
     // Only expected for single cell
@@ -16,8 +17,10 @@ public class IdfParserOutput {
     // Curated selection of metadata fields (chosen from experiment characteristics)
     private List<String> metadataFieldsOfInterest;
 
-    public IdfParserOutput(String title, List<Publication> publications, int expectedClusters, List<String> metadataFieldsOfInterest) {
+    public IdfParserOutput(String title, String experimentDescription, List<Publication> publications,
+                           int expectedClusters, List<String> metadataFieldsOfInterest) {
         this.title = title;
+        this.experimentDescription = experimentDescription;
         this.publications = publications;
         this.expectedClusters = expectedClusters;
         this.metadataFieldsOfInterest = metadataFieldsOfInterest;
@@ -25,6 +28,10 @@ public class IdfParserOutput {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getExperimentDescription() {
+        return experimentDescription;
     }
 
     public List<Publication> getPublications() {
@@ -42,7 +49,7 @@ public class IdfParserOutput {
     public List<String> getMetadataFieldsOfInterest() {
         return metadataFieldsOfInterest;
     }
-    
+
     public Set<String> getDois() {
         return publications.stream().map(Publication::getDoi).collect(Collectors.toSet());
     }

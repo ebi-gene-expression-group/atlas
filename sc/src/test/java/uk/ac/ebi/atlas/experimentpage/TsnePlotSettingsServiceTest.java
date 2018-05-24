@@ -66,7 +66,7 @@ public class TsnePlotSettingsServiceTest {
     public void expectedClustersOnlyInIdf() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITH_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title",Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
@@ -77,7 +77,7 @@ public class TsnePlotSettingsServiceTest {
     public void expectedClustersInIdfAndClustersTsv() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITH_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
@@ -88,7 +88,7 @@ public class TsnePlotSettingsServiceTest {
     public void invalidExpectedClustersInIdf() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(new IdfParserOutput("Title",  "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isNotPresent();
     }
@@ -98,7 +98,7 @@ public class TsnePlotSettingsServiceTest {
     public void invalidIdfValueValidClustersTsv() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
@@ -109,7 +109,7 @@ public class TsnePlotSettingsServiceTest {
     public void noIdfValueValidClustersTsv() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", Collections.emptyList(), 0, Collections.emptyList()));
+                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), 0, Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
@@ -120,7 +120,7 @@ public class TsnePlotSettingsServiceTest {
     public void noExpectedClusters() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", Collections.emptyList(), 0, Collections.emptyList()));
+                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), 0, Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isNotPresent();
     }

@@ -52,7 +52,7 @@ public class ExperimentControllerWIT {
                     .andExpect(status().isOk())
                     .andExpect(view().name("experiment-page"))
                     .andExpect(model().attribute("experimentAccession", experimentAccession))
-                    .andExpect(model().attribute("type", ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE))
+                    .andExpect(model().attribute("type", ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE.getHumanDescription()))
                     .andExpect(model().attributeExists("content"));
     }
 

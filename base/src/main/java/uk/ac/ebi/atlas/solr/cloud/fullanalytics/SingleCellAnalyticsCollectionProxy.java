@@ -15,6 +15,7 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
 
     public static final SingleCellAnalyticsSchemaField CELL_ID = new SingleCellAnalyticsSchemaField("cell_id");
     public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_INFERRED_CELL_TYPE = new SingleCellAnalyticsSchemaField("characteristic_inferred_cell_type");
+    public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_ORGANISM_PART = new SingleCellAnalyticsSchemaField("characteristic_organism_part");
     public static final SingleCellAnalyticsSchemaField FACTORS = new SingleCellAnalyticsSchemaField("factors");
     public static final SingleCellAnalyticsSchemaField EXPERIMENT_ACCESSION = new SingleCellAnalyticsSchemaField("experiment_accession");
 
