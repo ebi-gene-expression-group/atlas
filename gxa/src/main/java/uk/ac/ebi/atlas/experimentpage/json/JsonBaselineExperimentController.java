@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.HistogramService;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentProfilesService;
+import uk.ac.ebi.atlas.experimentpage.baseline.profiles.BaselineExperimentProfilesService;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -20,10 +20,10 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -34,26 +34,21 @@ import static uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences.VERY_SMALL_NO
 
 @RestController
 public class JsonBaselineExperimentController extends JsonExperimentController {
-    private final BaselineExperimentPageService rnaSeqBaselineExperimentPageService;
-    private final BaselineExperimentPageService proteomicsBaselineExperimentPageService;
+    private final BaselineExperimentPageService baselineExperimentPageService;
     private final SpeciesInferrer speciesInferrer;
     private final HistogramService.RnaSeq rnaSeqHistograms;
     private final HistogramService.Proteomics proteomicsHistograms;
 
-    @Inject
     public JsonBaselineExperimentController(ExperimentTrader experimentTrader,
                                             CoexpressedGenesService coexpressedGenesService,
+                                            BaselineExperimentProfilesService BaselineExperimentProfilesService,
                                             RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
                                             ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory,
-                                            SpeciesInferrer speciesInferrer,
-                                            BaselineExperimentProfilesService baselineExperimentProfilesService) {
+                                            SpeciesInferrer speciesInferrer) {
         super(experimentTrader);
 
-        this.rnaSeqBaselineExperimentPageService =
-                new BaselineExperimentPageService(baselineExperimentProfilesService, coexpressedGenesService);
-
-        this.proteomicsBaselineExperimentPageService =
-                new BaselineExperimentPageService(baselineExperimentProfilesService, coexpressedGenesService);
+        this.baselineExperimentPageService =
+                new BaselineExperimentPageService(BaselineExperimentProfilesService, coexpressedGenesService);
 
         this.rnaSeqHistograms =
                 new HistogramService.RnaSeq(rnaSeqBaselineProfileStreamFactory, experimentTrader);
@@ -64,30 +59,32 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         this.speciesInferrer = speciesInferrer;
     }
 
-    @RequestMapping(value = "/json/experiments/{experimentAccession}",
-                    produces = "application/json;charset=UTF-8",
-                    params = "type=RNASEQ_MRNA_BASELINE")
-    public String baselineRnaSeqExperimentData(@Valid RnaSeqBaselineRequestPreferences preferences,
-                                               @PathVariable String experimentAccession,
-                                               @RequestParam(defaultValue = "") String accessKey) {
+    private String baselineExperimentData(BaselineRequestPreferences<? extends ExpressionUnit.Absolute> preferences,
+                                          String experimentAccession,
+                                          String accessKey) {
         return GSON.toJson(
-                rnaSeqBaselineExperimentPageService.getResultsForExperiment(
+                baselineExperimentPageService.getResultsForExperiment(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                         accessKey,
                         preferences));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
-            produces = "application/json;charset=UTF-8",
-            params = "type=PROTEOMICS_BASELINE")
+                    produces = "application/json;charset=UTF-8",
+                    params = "type=RNASEQ_MRNA_BASELINE")
+    public String baselineRnaSeqExperimentData(@Valid RnaSeqBaselineRequestPreferences preferences,
+                                               @PathVariable String experimentAccession,
+                                               @RequestParam(defaultValue = "") String accessKey) {
+        return baselineExperimentData(preferences, experimentAccession, accessKey);
+    }
+
+    @RequestMapping(value = "/json/experiments/{experimentAccession}",
+                    produces = "application/json;charset=UTF-8",
+                    params = "type=PROTEOMICS_BASELINE")
     public String baselineProteomicsExperimentData(@Valid ProteomicsBaselineRequestPreferences preferences,
                                                    @PathVariable String experimentAccession,
                                                    @RequestParam(defaultValue = "") String accessKey) {
-        return GSON.toJson(
-                proteomicsBaselineExperimentPageService.getResultsForExperiment(
-                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                        accessKey,
-                        preferences));
+        return baselineExperimentData(preferences, experimentAccession, accessKey);
     }
 
     @RequestMapping(value = "/json/baseline_refexperiment", produces = "application/json;charset=UTF-8")

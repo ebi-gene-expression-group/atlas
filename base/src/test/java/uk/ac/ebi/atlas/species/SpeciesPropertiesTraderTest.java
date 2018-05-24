@@ -41,12 +41,12 @@ public class SpeciesPropertiesTraderTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll() {
         assertThat(subject.getAll(), hasSize(greaterThan(50)));
     }
 
     @Test
-    public void get() throws Exception {
+    public void get() {
         assertThat(subject.get("Homo sapiens").referenceName(), is("homo sapiens"));
         assertThat(subject.get("Homo sapiens").ensemblName(), is("Homo_sapiens"));
         assertThat(subject.get("Homo sapiens").kingdom(), is("animals"));
@@ -54,7 +54,7 @@ public class SpeciesPropertiesTraderTest {
     }
 
     @Test
-    public void refresh() throws Exception {
+    public void refresh() throws IOException {
         Files.copy(
                 SpeciesPropertiesTraderTest.class.getResourceAsStream("species-tyrannosaurus-rex.json"),
                 location.resolve("species-properties.json"),
@@ -67,7 +67,7 @@ public class SpeciesPropertiesTraderTest {
     }
 
     @Test
-    public void refreshDescribesChanges() throws Exception {
+    public void refreshDescribesChanges() throws IOException {
         String refreshMessage = subject.refresh();
         assertThat(refreshMessage, is("No changes were made to the reference species"));
 
@@ -85,7 +85,7 @@ public class SpeciesPropertiesTraderTest {
     }
 
     @Test
-    public void failedRefreshKeepsOldProperties() throws Exception {
+    public void failedRefreshKeepsOldProperties() {
         int speciesPropertiesCountBeforeRefresh = subject.getAll().size();
 
         try {
@@ -101,13 +101,13 @@ public class SpeciesPropertiesTraderTest {
     }
 
     @Test
-    public void unknownSpecies() throws Exception {
+    public void unknownSpecies() {
         assertThat(subject.get("foobar"), is(SpeciesProperties.UNKNOWN));
         assertThat(subject.get(null), is(SpeciesProperties.UNKNOWN));
     }
 
     @Test
-    public void speciesNamesAreNormalised() throws Exception {
+    public void speciesNamesAreNormalised() {
         assertThat(subject.get("homo sapiens"), not(is(SpeciesProperties.UNKNOWN)));
         assertThat(subject.get("homo sapiens"), is(subject.get("HoMo_SaPieNs")));
         assertThat(subject.get("homo sapiens"), is(subject.get("Homo sapiens")));
@@ -115,6 +115,15 @@ public class SpeciesPropertiesTraderTest {
         assertThat(subject.get("hordeum vulgare"), not(is(SpeciesProperties.UNKNOWN)));
         assertThat(subject.get("hordeum vulgare"), is(subject.get("Hordeum vulgare subsp. vulgare")));
         assertThat(subject.get("hordeum vulgare"), is(subject.get("Hordeum_vulgare")));
+    }
+
+    @Test
+    public void appliesExceptions() {
+        assertThat(subject.get("canis lupus").referenceName(), is("canis familiaris"));
+        assertThat(subject.get("Canis_lupus").referenceName(), is("canis familiaris"));
+        assertThat(subject.get("canis_lupus_familiaris").referenceName(), is("canis familiaris"));
+        assertThat(subject.get("Canis_lupus familiaris").referenceName(), is("canis familiaris"));
+        assertThat(subject.get("Canis Lupus Familiaris").referenceName(), is("canis familiaris"));
     }
 
     private Path createSpeciesPropertiesFile(InputStream in) throws IOException {

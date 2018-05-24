@@ -1,9 +1,7 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.search;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,15 +11,15 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
-import javax.inject.Inject;
-
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,11 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class JsonCellMetadataControllerWIT {
-    @Inject
-    private JdbcUtils jdbcTestUtils;
-
+class AutocompleteControllerWIT {
     @Autowired
     private WebApplicationContext wac;
 
@@ -44,41 +38,34 @@ class JsonCellMetadataControllerWIT {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-    @RepeatedTest(20)
-    void validJsonForExistingCellId() throws Exception {
-        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        String cellId = jdbcTestUtils.fetchRandomCellFromExperiment(experimentAccession);
-
+    @Test
+    void supportsMultipleSpecies() throws Exception {
         this.mockMvc
-                .perform(get(
-                        "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata"))
+                .perform(get("/json/suggestions").param("species", "Homo sapiens,Mus musculus").param("query", "zinc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(0))));
+                .andExpect(jsonPath("$..value", everyItem(containsStringIgnoringCase("zinc"))))
+                .andExpect(jsonPath("$..category", everyItem(anyOf(startsWith("ENSG"), startsWith("ENSMUSG")))))
+                .andExpect(jsonPath("$..category", hasItem(startsWith("ENSG"))))
+                .andExpect(jsonPath("$..category", hasItem(startsWith("ENSMUSG"))));
     }
 
     @Test
-    void emptyJsonForInvalidCellId() throws Exception {
-        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        String cellId = "FOO";
-
+    void atLeastHumanAndMouseAreSuggested() throws Exception {
         this.mockMvc
-                .perform(get(
-                        "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata"))
+                .perform(get("/json/suggestions/species"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$.allSpecies", hasItems("Homo sapiens", "Mus musculus")));
     }
 
     @Test
-    void validJsonForInvalidExperimentAccession() throws Exception {
-        String experimentAccession = "FOO";
-        String cellId = "BAR";
-
+    void hasAsManyTopSpeciesAsSpecified() throws Exception {
         this.mockMvc
-                .perform(get(
-                        "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata")).andDo(print())
-                .andExpect(status().is4xxClientError());
+                .perform(get("/json/suggestions/species"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.topSpecies", hasSize(AutocompleteController.FEATURED_SPECIES)));
     }
+
 }
-

@@ -1,18 +1,18 @@
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
-import java.util.Objects;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class FactorAcrossExperiments extends DescribesDataColumns implements Comparable<FactorAcrossExperiments> {
 
     private final Set<OntologyTerm> valueOntologyTerms;
 
-    public FactorAcrossExperiments(Factor factor){
+    public FactorAcrossExperiments(Factor factor) {
         this(factor.getValue(), factor.getValueOntologyTerms());
     }
 
@@ -21,10 +21,9 @@ public class FactorAcrossExperiments extends DescribesDataColumns implements Com
         this.valueOntologyTerms = valueOntologyTerms;
     }
 
-    public Set<OntologyTerm> getValueOntologyTerms(){
-        return valueOntologyTerms;
+    public Stream<OntologyTerm> getValueOntologyTerms() {
+        return valueOntologyTerms.stream();
     }
-
 
     @Override
     public Set<String> assaysAnalyzedForThisDataColumn() {
@@ -37,16 +36,16 @@ public class FactorAcrossExperiments extends DescribesDataColumns implements Com
     }
 
     @Override
-    public String toString(){
-        return "FactorAcrossExperiments id "+id;
+    public String toString() {
+        return "FactorAcrossExperiments id " + id;
     }
 
     @Override
     public int compareTo(FactorAcrossExperiments o) {
-        return ComparisonChain.start().compare(this.id, o.id).result();
+        return Comparator.comparing(FactorAcrossExperiments::getId).compare(this, o);
     }
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject o = new JsonObject();
         o.addProperty("assayGroupId", id);
         o.addProperty("factorValue", id);

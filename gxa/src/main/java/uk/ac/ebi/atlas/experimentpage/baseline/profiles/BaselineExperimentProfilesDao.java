@@ -1,24 +1,22 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.profiles;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.BioentityIdentifierSearchService;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.AnalyticsSchemaField;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.ExperimentRequestPreferencesSolrQueryFactory;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -29,37 +27,14 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVELS;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVELS_FPKM;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL_FPKM;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
-@Named
-public class BaselineExperimentProfilesService {
-
+@Component
+public class BaselineExperimentProfilesDao {
     private final AnalyticsCollectionProxy analyticsCollectionProxy;
-    private final BioentityIdentifierSearchService bioentityIdentifierSearchService;
 
-    @Inject
-    public BaselineExperimentProfilesService(SolrCloudCollectionProxyFactory collectionProxyFactory,
-                                             BioentityIdentifierSearchService bioentityIdentifierSearchService) {
-        this.analyticsCollectionProxy = collectionProxyFactory.createAnalyticsCollectionProxy();
-        this.bioentityIdentifierSearchService = bioentityIdentifierSearchService;
-
-    }
-
-    public GeneProfilesList<BaselineProfile> searchTopGeneProfiles(String experimentAccession,
-                                                                   List<AssayGroup> assayGroups,
-                                                                   BaselineRequestPreferences<?> preferences) {
-
-        List<String> topGeneIds = preferences.isSpecific() ?
-                bioentityIdentifierSearchService.searchSpecificGenesInBaselineExperiment(
-                        experimentAccession, preferences) :
-                bioentityIdentifierSearchService.searchMostExpressedGenesInBaselineExperiment(
-                        experimentAccession, preferences);
-
-        return fetchProfiles(topGeneIds, assayGroups, preferences, experimentAccession);
+    public BaselineExperimentProfilesDao(SolrCloudCollectionProxyFactory collectionProxyFactory) {
+        analyticsCollectionProxy = collectionProxyFactory.createAnalyticsCollectionProxy();
     }
 
     public long fetchCount(String experimentAccession, BaselineRequestPreferences<?> preferences) {
@@ -79,20 +54,21 @@ public class BaselineExperimentProfilesService {
                         assayGroups.size() :
                         preferences.getSelectedColumnIds().size());
 
-        Pair<AnalyticsCollectionProxy.AnalyticsSchemaField, AnalyticsCollectionProxy.AnalyticsSchemaField> expressionLevelFieldNames = getExpressionLevelFieldNames(preferences.getUnit());
+        Pair<AnalyticsSchemaField, AnalyticsSchemaField> expressionLevelFieldNames =
+                AnalyticsCollectionProxy.getExpressionLevelFieldNames(preferences.getUnit());
 
         SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
         solrQueryBuilder.addFilterFieldByTerm(EXPERIMENT_ACCESSION, experimentAccession)
-                        .addFilterFieldByRangeMin(expressionLevelFieldNames.getLeft(), preferences.getCutoff())
-                        .addQueryFieldByTerm(BIOENTITY_IDENTIFIER_SEARCH, geneIds)
-                        .addQueryFieldByTerm(ASSAY_GROUP_ID, preferences.getSelectedColumnIds())
-                        .setFieldList(
-                                BIOENTITY_IDENTIFIER,
-                                expressionLevelFieldNames.getLeft(),
-                                expressionLevelFieldNames.getRight(),
-                                ASSAY_GROUP_ID,
-                                asAnalyticsSchemaField(BioentityPropertyName.SYMBOL))
-                        .setRows(maximumNumberOfDocs);
+                .addFilterFieldByRangeMin(expressionLevelFieldNames.getLeft(), preferences.getCutoff())
+                .addQueryFieldByTerm(BIOENTITY_IDENTIFIER_SEARCH, geneIds)
+                .addQueryFieldByTerm(ASSAY_GROUP_ID, preferences.getSelectedColumnIds())
+                .setFieldList(
+                        BIOENTITY_IDENTIFIER,
+                        expressionLevelFieldNames.getLeft(),
+                        expressionLevelFieldNames.getRight(),
+                        ASSAY_GROUP_ID,
+                        asAnalyticsSchemaField(BioentityPropertyName.SYMBOL))
+                .setRows(maximumNumberOfDocs);
 
         QueryResponse queryResponse = analyticsCollectionProxy.query(solrQueryBuilder);
 
@@ -150,13 +126,5 @@ public class BaselineExperimentProfilesService {
 
     private BaselineExpression parseSolrFieldValue(Object value) {
         return new BaselineExpression((double) value);
-    }
-
-    // Expression level field to the left, quartiles field to the right
-    private static Pair<AnalyticsCollectionProxy.AnalyticsSchemaField, AnalyticsCollectionProxy.AnalyticsSchemaField>
-    getExpressionLevelFieldNames(ExpressionUnit.Absolute unit) {
-        return unit == ExpressionUnit.Absolute.Rna.FPKM ?
-                Pair.of(EXPRESSION_LEVEL_FPKM, EXPRESSION_LEVELS_FPKM) :
-                Pair.of(EXPRESSION_LEVEL, EXPRESSION_LEVELS);
     }
 }
