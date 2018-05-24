@@ -603,7 +603,7 @@ function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}
   \********************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
-function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(/*! react */0),o=r(i),a=n(/*! react-table */158),s=r(a),l=n(/*! lodash */164),u=n(/*! pluralize */165),c=r(u);n(/*! style-loader!css-loader!react-table/react-table.css */166),n(/*! style-loader!css-loader!./experiment-table.css */169);var h=function(t,e){var n=(0,l.uniq)(e);return 1===n.length||n.length<5&&n.join(", ").length<30?n.join(", "):(0,c.default)(t.toLowerCase(),n.length,!0)},d=function(t){var e=t.data,n=t.headers;return o.default.createElement(s.default,{columns:n.map(function(t,e){return{Header:t.name,columns:t.values.map(function(t,n){return{aggregate:(0,l.curry)(h,2)(t),Header:t,id:1e3*e+n+1,accessor:function(t){return t.values[e][n]},width:95}})}}),className:"-striped",style:{fontSize:"small"},data:e})};e.default=d},/*!**********************************************************************!*\
+function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(/*! react */0),o=r(i),a=n(/*! react-table */158),s=r(a),l=n(/*! lodash */164),u=n(/*! pluralize */165),c=r(u);n(/*! style-loader!css-loader!react-table/react-table.css */166),n(/*! style-loader!css-loader!./experiment-table.css */169);var h=function(t,e){var n=(0,l.uniq)(e);return 1===n.length||n.length<5&&n.join(", ").length<30?n.join(", "):(0,c.default)(t.toLowerCase(),n.length,!0)},d=function(t){var e=t.data,n=t.headers;return o.default.createElement(s.default,{columns:n.map(function(t,e){return{Header:t.name,columns:t.values.map(function(t,n){return{aggregate:(0,l.curry)(h,2)(t),Header:t,id:1e3*e+n+1,accessor:function(t){return t.values[e][n]}}})}}),className:"-striped",style:{fontSize:"small"},data:e})};e.default=d},/*!**********************************************************************!*\
   !*** ./bundles/experiment-page/node_modules/react-table/es/index.js ***!
   \**********************************************************************/
 /*! exports provided: ReactTableDefaults, default */
@@ -668,7 +668,7 @@ function(t,e,n){var r=n(/*! !../../node_modules/css-loader!./experiment-table.cs
   \******************************************************************************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
-function(t,e,n){e=t.exports=n(/*! ../../node_modules/css-loader/lib/css-base.js */52)(!1),e.push([t.i,".rt-td:hover{overflow:visible;white-space:normal;width:auto}.-pageJump input,.select-wrap select{height:unset;margin:unset}.-pageJump input{display:inline-block}",""])},/*!**********************************************************************!*\
+function(t,e,n){e=t.exports=n(/*! ../../node_modules/css-loader/lib/css-base.js */52)(!1),e.push([t.i,"",""])},/*!**********************************************************************!*\
   !*** ./bundles/experiment-page/src/SupplementaryInformationRoute.js ***!
   \**********************************************************************/
 /*! dynamic exports provided */
