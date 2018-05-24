@@ -19,8 +19,6 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 public class AutocompleteController extends JsonExceptionHandlingController {
     protected static final int FEATURED_SPECIES = 0;
 
-    protected static final int FEATURED_SPECIES = 0;
-
     private final SolrBioentitiesSuggesterService suggesterService;
     private final FeaturedSpeciesService featuredSpeciesService;
 
