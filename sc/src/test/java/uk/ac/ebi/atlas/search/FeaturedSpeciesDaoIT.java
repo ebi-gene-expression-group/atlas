@@ -43,7 +43,7 @@ class FeaturedSpeciesDaoIT {
     }
 
     @Test
-    void sortsSpeciesNamesByNumberOfExperimnts() throws Exception {
+    void sortsSpeciesNamesByNumberOfExperiments() throws Exception {
         EncodedResource resource = new EncodedResource(new ClassPathResource("uk/ac/ebi/atlas/search/scxa_experiment_fixture.sql"));
         LineNumberReader lnr = new LineNumberReader(resource.getReader());
         jdbcTemplate.execute(ScriptUtils.readScript(lnr, "--", ";"));
