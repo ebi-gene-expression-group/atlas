@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isA;
@@ -62,5 +63,20 @@ public class JsonBioentityInformationControllerWIT {
         this.mockMvc
                 .perform(get("/json/bioentity_information/unknown"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void payloadContainsExpressionAtlasLink() throws Exception{
+        String geneId = "ENSMUSG00000021789";
+        this.mockMvc
+                .perform(get("/json/bioentity_information/" + geneId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[-1:].type",contains("expression_atlas")))
+                .andExpect(jsonPath("$[-1:].name", contains("ExpressionAtlas")))
+                .andExpect(jsonPath("$[-1:].values", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$[-1:].values[0].text", contains(geneId)))
+                .andExpect(jsonPath("$[-1:].values[0].url", contains("https://www.ebi.ac.uk/gxa/genes/"+geneId)))
+                .andExpect(jsonPath("$[-1:].values[0].relevance", contains("0")));
     }
 }
