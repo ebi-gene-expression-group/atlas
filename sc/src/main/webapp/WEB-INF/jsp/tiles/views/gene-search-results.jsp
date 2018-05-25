@@ -4,12 +4,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<div class="row expanded">
-    <div class="small-12 columns">
+<div class="row column expanded">
+    <div class="row column expanded">
         <h3>Search results</h3>
     </div>
 
-    <div class="small-12 columns margin-bottom-large">
+    <div class="row column expanded margin-bottom-large">
         <tiles:insertTemplate template="./gene-search-results/search.jsp"/>
     </div>
 
