@@ -1,0 +1,17 @@
+.rt-td:hover {
+    overflow: visible;
+    white-space: normal;
+    width: auto;
+}
+
+/* Fixes for sizing issues in the pagination bar in Firefox and Chrome */
+.select-wrap select {
+    height: unset;
+    margin: unset;
+}
+
+.-pageJump input {
+    display: inline-block;
+    height: unset;
+    margin: unset;
+}
