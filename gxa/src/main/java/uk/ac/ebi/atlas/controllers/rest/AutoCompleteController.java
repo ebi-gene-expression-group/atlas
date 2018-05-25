@@ -19,11 +19,9 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @Scope("request")
 public class AutoCompleteController extends JsonExceptionHandlingController {
     private final SolrBioentitiesSuggesterService suggesterService;
-    private final SpeciesFactory speciesFactory;
 
-    public AutoCompleteController(SolrBioentitiesSuggesterService suggesterService, SpeciesFactory speciesFactory) {
+    public AutoCompleteController(SolrBioentitiesSuggesterService suggesterService) {
         this.suggesterService = suggesterService;
-        this.speciesFactory = speciesFactory;
     }
 
     @RequestMapping(value = "/json/suggestions",
@@ -33,7 +31,6 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
             @RequestParam(value = "query") String query,
             @RequestParam(value = "species", required = false, defaultValue = "") String species,
             @RequestParam(value = "suggestCount", required = false, defaultValue = "15") int suggestCount) {
-        return GSON.toJson(
-                suggesterService.fetchPropertySuggestions(query, speciesFactory.create(species), suggestCount));
+        return GSON.toJson(suggesterService.fetchPropertySuggestions(query, suggestCount, species.split(",")));
     }
 }
