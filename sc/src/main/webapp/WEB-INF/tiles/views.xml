@@ -36,5 +36,8 @@
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/experiment-page.jsp"/>
     </definition>
 
-    
+    <definition name="static" extends="base">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/static-page.jsp"/>
+    </definition>
 </tiles-definitions>
