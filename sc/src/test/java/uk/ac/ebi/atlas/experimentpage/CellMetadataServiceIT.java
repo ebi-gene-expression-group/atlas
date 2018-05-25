@@ -49,14 +49,6 @@ class CellMetadataServiceIT {
     }
 
     @Test
-    void factorsForValidExperiment() {
-        String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
-        String cellId = jdbcUtils.fetchRandomCellFromExperiment(experimentAccession);
-
-        assertThat(subject.getFactors(experimentAccession, cellId)).isNotEmpty();
-    }
-
-    @Test
     void factorsForInvalidExperiment() {
         assertThat(subject.getFactors("FOO", "FOO")).isEmpty();
     }
