@@ -3,20 +3,18 @@ import ReactTable from 'react-table'
 import {uniq, curry} from 'lodash'
 import toPlural from 'pluralize'
 import '!style-loader!css-loader!react-table/react-table.css'
+import '!style-loader!css-loader!./experiment-table.css'
 
 const aggregateText = (name, vals) => {
   const xs = uniq(vals)
   return (
-    xs.length === 1 || (xs.length < 5 && xs.join(', ').length < 30)
-      ? xs.join(', ')
+    xs.length === 1 || (xs.length < 5 && xs.join(`, `).length < 30)
+      ? xs.join(`, `)
       : toPlural(name.toLowerCase() , xs.length, true)
   )
 }
 
-const ExperimentDesignTable = ({
-                                    data,
-                                    headers
-                                  }) => (
+const ExperimentDesignTable = ({data, headers}) =>
   <ReactTable
     columns={
       headers.map((headerGroup,ix)=> (
@@ -32,12 +30,9 @@ const ExperimentDesignTable = ({
         }
       ))
     }
-    className='-striped'
-    style={{
-      fontSize: 'small'
-    }}
+    className={`-striped`}
+    style={{fontSize: `small`}}
     data={data}
   />
-)
 
 export default ExperimentDesignTable
