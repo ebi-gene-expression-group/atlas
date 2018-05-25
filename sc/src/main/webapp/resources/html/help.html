@@ -1,0 +1,225 @@
+<div class="row">
+    <div class="columns small-10 text-justify">
+        <h2>Welcome to Single Cell Expression Atlas help</h2>
+
+        <h3>How to search in Single Cell Expression Atlas</h3>
+        <p>
+            Here you can use the <b>Gene search box</b> to search whether a gene comprises part of a cell type
+            expression profile. You may seach its gene ID via its gene symbol or name (e.g. <i>APOA2</i>); UniProt
+            protein ID (e.g. <i>O14777</i>) or GO molecular function ID/gene function (e.g. <i>regulation of gene
+            expression</i>). Clicking on any of the examples below will show you the result of that search.
+        </p>
+        <p>
+            You can also specify which species (e.g. <i>Mus musculus</i>) you are interested in. Use the <b>Species
+            drop down</b> to specify your organism of interest. Once your selection is made, searching for a gene ID
+            will restrict suggestions to the specified species.
+        </p>
+        <p>
+            <img src="resources/images/help/home_search.png" alt="Single Cell Expression Atlas home page search">
+        </p>
+
+        <h3>Latest Experiments</h3>
+        <p>
+            This is a list of the latest five experiments added to the Single Cell Expression Atlas, their title and
+            upoad date. You can click on the <b>Results</b> link or the experiment title to jump directly to the
+            results page for that dataset. The number on the left corresponds to the number of cells analysed in that
+            experiment (after passing QC checks and has raw data available).
+        </p>
+
+        <p>
+            <img src="resources/images/help/latest_experiments.png" alt="Latest experiments">
+        </p>
+
+        <p>
+            In order to view the full list of experiments in the Single Cell Expression Atlas click on the <b>Browse
+            Experiments</b> tab along the top of the page.
+        </p>
+
+        <h3>Browse Experiments</h3>
+        <p>
+            This page shows you an updated list of all the experiments currently available in the Single Cell
+            Expression Atlas. You can use the highlighted boxes to refine the list by Kingdom; for a keyword in the
+            title; by species or an experiment variable as shown.
+        </p>
+
+        <p>
+            <img src="resources/images/help/experiments_table.png" alt="Browse experiments">
+        </p>
+
+        <h3>Experiment page</h3>
+        <p>
+            Each experiment in Single Cell Expression Atlas has its own <b>experiment page</b>, just click on the title
+            of any experiment to view it. At the top of the results page you will see the title of the experiment, the
+            type of experiment and species information.
+        </p>
+
+        <p>
+            Below the experiment information you will find a list of any associated publication(s).
+        </p>
+
+        <p>
+            <img src="resources/images/help/experiment_results_header.png" alt="Experiment page">
+        </p>
+
+        <p>
+            The Experiment page is comprised of four sections:
+        </p>
+        <ol>
+            <li>Results: this is where you can visualise the t-SNE plot and gene expression for the data</li>
+            <li>Experiment Design: this is where you can find the simplified sample metadata for the experiment</li>
+            <li>Supplementary Information: here you can find the data analysis pipelines and corresponding documentation</li>
+            <li>Downloads: links to the raw data files; analysis results and sample metadata files</li>
+        </ol>
+
+        <h4>Results tab</h4>
+        <p>
+            Here you can view the results of the data analysis. The t-SNE plot displays subpopulations within the data
+            and on the left and gene expression variation at single-cell resolution on the right. Each plot can be
+            saved by clicking on the drop down menu symbol at the top right-hand side of the plot.
+        </p>
+
+        <p>
+            <img src="resources/images/help/experiment_page.png"
+                 alt="Results page">
+        </p>
+
+        <h5>t-SNE plot with clusters</h5>
+        <p>
+            <a href="https://lvdmaaten.github.io/tsne/">t-SNE plots</a> are a useful way of visualising highly complex
+            data in a 2D space. Although the size and distance between clusters are not very informative, manipulating
+            the t-SNE perplexity value allows you to re-display the data in different ways.
+        </p>
+
+        <p>
+            The number of clusters (<i>k</i> value) shows the output of the
+            <a href="https://www.sanger.ac.uk/science/tools/single-cell-consensus-clustering-sc3">Single-cell Consensus
+            Clustering analysis (SC3 algorithm)</a>. The SC3 algorithm groups cell clusters based on similar expression
+            profiles. This also colours the data to allow easier visualisation of different sub-populations within a
+            dataset.
+        </p>
+
+        <p>
+            <img src="resources/images/help/tsne_sc3.png" alt="t-SNE plot">
+        </p>
+
+        <p>
+            You can hover over a single data point (cell) and a tool-tip will pop up. This displays the <b>single cell
+            identifier</b> (a unique reference for that cell) and the <b>cluster ID</b> (which other cells share
+            similar gene expression profiles). Additional information can include <b>cell type</b>: submitted cell type
+            prior to sequencing analysis and/or the <b>inferred cell type</b>: cell type inferred by sequencing
+            analysis based on gene expression profile.
+        </p>
+
+        <p>
+            The default values for perplexity and number of clusters are automatically generated by the analysis
+            pipelines. They aim to provide a general idea of the data as well as the expected number of clusters.
+        </p>
+
+        <p>
+            The range of perplexity and <i>k</i> values are produced by the pipeline. However, there is a different
+            logic for the selected default values. Perplexity value is chosen somewhat randomly, to be in the middle of
+            the range. For the <i>k</i> value, we have a multi-step process: it will preferably be the expected
+            clusters value determined by a member of the curation team. If not, it will be the “optimal” value as
+            chosen by the SC3 algortihm output. If that is also not available, then it will just be the first value in
+            the list.
+        </p>
+
+        <h5>t-SNE plot with gene expression</h5>
+        <p>
+            Use the <b>Gene search box</b> to search whether a gene comprises part of a cells' expression profile.
+        </p>
+
+        <p>
+            Expression levels are displayed as TPM (transcripts per million) and broken down in five different,
+            logarithmic colour ranges:
+        </p>
+        <ol>
+            <li>Grey spot: expression level is below cutoff (0.1 TPM) or undetected</li>
+            <li>Light blue spot: expression level is low (between 0.1 to 10 TPM)</li>
+            <li>Medium blue spot: expression level is medium (between 11 to 1000 TPM)</li>
+            <li>Dark blue spot: expression level is high (more than 1000 TPM)</li>
+        </ol>
+
+        <p>
+            <img src="resources/images/help/tsne_sc3.png" alt="Gene expression plot">
+        </p>
+
+        <h4>Experiment Design tab</h4>
+        <p>
+            This tab displays the <b>Experiment design file</b> – a simplified table of the the sample metadata and
+            experimental variables. <b>Sample characteristics</b> are generally intrinsic metadata required to
+            understand each sample. <b>Experimental variables</b> are usually one or several sample characteristics
+            that describe the experiment groups defined by the study aim. You can browse by row (each row is a single
+            cell). You can also sort each column by clicking on the header row of your attribute of interest. Traverse
+            the data by indicating the number of rows to view at the bottom and by clicking on the <b>Previous</b> and
+            <b>Next</b> buttons.
+        </p>
+
+        <p>
+            You can download the file either via the <b>Download</b> button or along with the other data and results
+            files by selecting the <b>Downloads</b> tab (see below).
+        </p>
+
+        <p>
+            <img src="resources/images/help/experiment_design.png" alt="Experiment Design">
+        </p>
+
+        <h4>Supplementary Information tab</h4>
+        <p>
+            Here you can see the <b>Analysis Methods</b> applied to the raw data to obtain the clustering and gene
+            expression results.
+        </p>
+
+        <p>
+            <img src="resources/images/help/supplementary_information.png" alt="Supplementary Information">
+        </p>
+
+        <h4>Downloads tab</h4>
+        <p>
+            The Downloads tab contains all the files that you can download:
+        </p>
+
+        <ol>
+            <li>
+                <b>Metadata files:</b>
+                <ol type="i">
+                    <li>
+                        SDRF file (Sample to Data Relationship Format) -
+                        <a href="https://www.ebi.ac.uk/arrayexpress/help/creating_an_sdrf.html">Creating an SDRF
+                        </a>
+                    </li>
+                    <li>
+                        IDF file (Investigation Design Format) -
+                        <a href="https://www.ebi.ac.uk/arrayexpress/help/creating_an_idf.html">Creating an IDF</a>
+                    </li>
+                    <li>
+                        Experiment design file containing the sample characteristics and experiment variable summary
+                        table
+                    </li>
+                </ol>
+            </li>
+
+            <li>
+                <b>Results files:</b>
+                <ol type="i">
+                    <li>
+                        Clustering file – output of SC3 analysis for clustering of filtered cells for the different
+                        <i>k</i> values
+                        <a href="https://www.sanger.ac.uk/science/tools/single-cell-consensus-clustering-sc3">(Single-cell
+                        Consensus Clustering – SC3)</a>
+                    </li>
+                    <li>
+                        Filtered quantification file – provides the measured gene expression in TPMs for each filtered
+                        cell alongside gene and cell ID
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById("local-nav-about").className += ' active';
+    });
+</script>
