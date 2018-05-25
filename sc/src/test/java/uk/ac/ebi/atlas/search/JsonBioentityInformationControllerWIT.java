@@ -73,7 +73,7 @@ public class JsonBioentityInformationControllerWIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[-1:].type",contains("expression_atlas")))
-                .andExpect(jsonPath("$[-1:].name", contains("ExpressionAtlas")))
+                .andExpect(jsonPath("$[-1:].name", contains("Expression Atlas")))
                 .andExpect(jsonPath("$[-1:].values", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$[-1:].values[0].text", contains(geneId)))
                 .andExpect(jsonPath("$[-1:].values[0].url", contains("https://www.ebi.ac.uk/gxa/genes/"+geneId)))

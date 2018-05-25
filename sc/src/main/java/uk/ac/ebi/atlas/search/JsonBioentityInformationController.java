@@ -64,16 +64,13 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
         JsonArray values = new JsonArray();
         JsonObject jsonObject = new JsonObject();
 
-        ImmutableMap.of("text", geneId, "url", "https://www.ebi.ac.uk/gxa/genes/"+geneId,"relevance","0").forEach(
-                (key, value) -> {
-                    jsonObject.addProperty(key,value);
-                }
-        );
+        ImmutableMap.of("text", geneId, "url", "https://www.ebi.ac.uk/gxa/genes/" + geneId, "relevance", "0")
+                .forEach(jsonObject::addProperty);
         values.add(jsonObject);
 
         JsonObject o = new JsonObject();
         o.addProperty("type", "expression_atlas");
-        o.addProperty("name", "ExpressionAtlas");
+        o.addProperty("name", "Expression Atlas");
         o.add("values", values);
 
         jsonArray.add(o);
