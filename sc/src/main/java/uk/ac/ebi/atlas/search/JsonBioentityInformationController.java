@@ -59,10 +59,7 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
                         geneName,
                         propertyValues);
 
-
-        // Removed last bracket '[' from the return Json to append the AtlasUrl at the end of this Json
-        String bioentityProperties = model.get("bioentityProperties").toString();
-        bioentityProperties = bioentityProperties.substring(0, bioentityProperties.length() - 1);
+        JsonArray jsonArray = GSON.fromJson(model.get("bioentityProperties").toString(), JsonArray.class);
 
         JsonArray values = new JsonArray();
         JsonObject jsonObject = new JsonObject();
@@ -79,9 +76,8 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
         o.addProperty("name", "ExpressionAtlas");
         o.add("values", values);
 
-        //Added a comma',' and end bracket '[' which was removed earlier to maintain valid Json format
-        String result = bioentityProperties + "," + GSON.toJson(o) + "]";
+        jsonArray.add(o);
 
-        return result;
+        return jsonArray.toString();
     }
 }
