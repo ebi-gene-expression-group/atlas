@@ -78,6 +78,6 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
 
         jsonArray.add(o);
 
-        return jsonArray.toString();
+        return GSON.toJson(jsonArray);
     }
 }
