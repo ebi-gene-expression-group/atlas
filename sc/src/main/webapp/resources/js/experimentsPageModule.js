@@ -145,7 +145,7 @@ var experimentsPageModule = (function ($) {
                     "render": function (data, type, full) {
                         return formatExperimentDescription(data, full);
                     } },
-                { "title":"Cells", "data":"numberOfAssays", "className":"center", "type":"title-numeric", "width":"5%",
+                { "title":"Assays", "data":"numberOfAssays", "className":"center", "type":"title-numeric", "width":"5%",
                     "render": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
