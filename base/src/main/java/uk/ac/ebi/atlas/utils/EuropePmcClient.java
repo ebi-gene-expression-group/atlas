@@ -34,6 +34,8 @@ public class EuropePmcClient {
     }
 
     private Optional<Publication> parseResponseWithOneResult(String query) {
+        // Enclose query in quotes as EuropePmc only searches up to the slash for DOIs not enclosed in quotes
+        query = "\" " + query + "\"";
         ResponseEntity<String> response = restTemplate.getForEntity(MessageFormat.format(URL, query), String.class);
 
         if(response.getStatusCode().is2xxSuccessful()) {
