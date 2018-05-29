@@ -34,6 +34,7 @@ import static uk.ac.ebi.atlas.utils.ArrayExpressClient.AE_URL_TEMPLATE;
 public class ArrayExpressClientTest {
     private static final String E_FOOBAR_ACCESSION = "E-FOOBAR";
     private static final String E_FOOBAR_IDF_TITLE = "Experiment Foo Bar";
+    private static final String E_FOOBAR_IDF_EXPERIMENT_DESCRIPTION = "Experiment Description Foo Bar";
 
     private MockRestServiceServer mockServer;
 
@@ -48,7 +49,7 @@ public class ArrayExpressClientTest {
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
 
         when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION)))
-                .thenReturn(new IdfParserOutput(E_FOOBAR_IDF_TITLE, Collections.emptyList(), 0, Collections.emptyList()));
+                .thenReturn(new IdfParserOutput(E_FOOBAR_IDF_TITLE, E_FOOBAR_IDF_TITLE, Collections.emptyList(), 0, Collections.emptyList()));
 
         subject = new ArrayExpressClient(restTemplate, idfParserMock);
     }
@@ -113,7 +114,7 @@ public class ArrayExpressClientTest {
     public void throwIfBothXmlAndIdfHaveNoName() {
         mockServer.expect(requestTo(MessageFormat.format(AE_URL_TEMPLATE, E_FOOBAR_ACCESSION)))
                 .andRespond(withSuccess("<xml><experiment></experiment></xml>", MediaType.APPLICATION_XML));
-        when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION))).thenReturn(new IdfParserOutput("", Collections.emptyList(), 0, Collections.emptyList()));
+        when(idfParserMock.parse(eq(E_FOOBAR_ACCESSION))).thenReturn(new IdfParserOutput("", "", Collections.emptyList(), 0, Collections.emptyList()));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> subject.fetchExperimentName(E_FOOBAR_ACCESSION));

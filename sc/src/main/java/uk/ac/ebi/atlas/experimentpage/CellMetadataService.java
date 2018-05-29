@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
+import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -22,6 +23,7 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
+import static uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils.attributeNameToFieldName;
 
 @Component
 public class CellMetadataService {
@@ -67,18 +69,6 @@ public class CellMetadataService {
                 .collect(toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
-    }
-
-    // Converts Solr field names to human-friendly names (e.g. inferred_cell_type => Inferred cell type)
-    public String factorFieldNameToDisplayName(String factorFieldName) {
-        String displayName = factorFieldName.replace("factor_", "").replace("_", " ");
-
-        return StringUtils.capitalize(displayName);
-    }
-
-    // Converts strings from .idf file to Solr schema field names (e.g. FACS marker => facs_marker)
-    private String attributeNameToFieldName(String attributeName) {
-        return attributeName.trim().toLowerCase().replace(" ", "_");
     }
 
     // This retrieves the value for one single-value field in the Solr scxa-analytics collection

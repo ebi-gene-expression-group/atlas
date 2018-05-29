@@ -12,22 +12,17 @@
         <form method="get" action="${pageContext.request.contextPath}/search" id="home-search-atlas-form">
             <!-- No need to enclose in row as the component already uses Foundation classes -->
             <div id="search"></div>
-            <div class="small-12 columns small padding-bottom-medium">
-                Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
-                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
-                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>,
-                <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0010468", "category":"go"}]'>GO:0010468 (regulation of gene expression)</a>
-            </div>
+            <%--<div class="small-12 columns small padding-bottom-medium">--%>
+                <%--Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,--%>
+                <%--<a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,--%>
+                <%--<a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>,--%>
+                <%--<a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0010468", "category":"go"}]'>GO:0010468 (regulation of gene expression)</a>--%>
+            <%--</div>--%>
 
 
             <div class="row expanded margin-top-large">
                 <div class="small-12 columns">
-                    <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
-
-                    <%--<label for="file-upload" class="button">Upload file</label>--%>
-                    <%--<input type="file" id="file-upload" class="show-for-sr">--%>
-
-                    <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
+                    <button id="home-search-atlas-search-button" class="button" type="submit" value="Search">Search</button>
                 </div>
             </div>
         </form>

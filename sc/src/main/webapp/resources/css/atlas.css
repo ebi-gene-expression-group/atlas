@@ -16,6 +16,7 @@ a.clear {
 
 ul.clear {
     list-style: none;
+    margin-left: unset;
 }
 
 .button.no-action {
@@ -23,7 +24,7 @@ ul.clear {
 }
 
 .button.fixed-width-medium {
-    width: 80px;
+    width: 100px;
 }
 
 hr {

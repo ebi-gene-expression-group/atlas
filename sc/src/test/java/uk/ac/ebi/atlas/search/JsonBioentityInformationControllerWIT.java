@@ -11,7 +11,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
+import javax.inject.Inject;
+
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isA;
@@ -24,11 +28,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class JsonBioentityInformationControllerWIT {
+    @Inject
+    private JdbcUtils jdbcTestUtils;
 
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -37,7 +43,7 @@ public class JsonBioentityInformationControllerWIT {
 
     @Test
     public void payloadIsValidJson() throws Exception {
-        String geneId = "ENSMUSG00000021789";
+        String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc
                 .perform(get(
@@ -57,5 +63,20 @@ public class JsonBioentityInformationControllerWIT {
         this.mockMvc
                 .perform(get("/json/bioentity_information/unknown"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void payloadContainsExpressionAtlasLink() throws Exception{
+        String geneId = "ENSMUSG00000021789";
+        this.mockMvc
+                .perform(get("/json/bioentity_information/" + geneId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[-1:].type",contains("expression_atlas")))
+                .andExpect(jsonPath("$[-1:].name", contains("Expression Atlas")))
+                .andExpect(jsonPath("$[-1:].values", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$[-1:].values[0].text", contains(geneId)))
+                .andExpect(jsonPath("$[-1:].values[0].url", contains("https://www.ebi.ac.uk/gxa/genes/"+geneId)))
+                .andExpect(jsonPath("$[-1:].values[0].relevance", contains("0")));
     }
 }

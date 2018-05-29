@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.search;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 
 import static uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties.BIOENTITY_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
 public class JsonBioentityInformationController extends JsonExceptionHandlingController {
@@ -55,6 +59,22 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
                         geneName,
                         propertyValues);
 
-        return model.get("bioentityProperties").toString();
+        JsonArray jsonArray = GSON.fromJson(model.get("bioentityProperties").toString(), JsonArray.class);
+
+        JsonArray values = new JsonArray();
+        JsonObject jsonObject = new JsonObject();
+
+        ImmutableMap.of("text", geneId, "url", "https://www.ebi.ac.uk/gxa/genes/" + geneId, "relevance", "0")
+                .forEach(jsonObject::addProperty);
+        values.add(jsonObject);
+
+        JsonObject o = new JsonObject();
+        o.addProperty("type", "expression_atlas");
+        o.addProperty("name", "Expression Atlas");
+        o.add("values", values);
+
+        jsonArray.add(o);
+
+        return GSON.toJson(jsonArray);
     }
 }

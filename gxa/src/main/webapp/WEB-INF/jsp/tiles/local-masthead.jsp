@@ -18,10 +18,10 @@
                 </a>
             </div>
 
-            <%--<div class="medium-12 large-4 columns">--%>
-                <%--<h4 class="show-for-large">Query single cell expression</h4>--%>
-                <%--<a href="/scxa" title="To Single Cell Expression Atlas" class="button" style="box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5)">To Single Cell Expression Atlas <i class="icon icon-common" data-icon="&#xf10f;"></i></a>--%>
-            <%--</div>--%>
+            <div class="medium-12 large-4 columns">
+                <h4 class="show-for-large">Query single cell expression</h4>
+                <a href="/scxa" title="To Single Cell Expression Atlas" class="button" style="box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5)">To Single Cell Expression Atlas <i class="icon icon-common" data-icon="&#xf10f;"></i></a>
+            </div>
 
             <nav>
                 <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">

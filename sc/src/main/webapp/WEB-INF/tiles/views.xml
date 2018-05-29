@@ -26,10 +26,18 @@
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/experiments.jsp"/>
     </definition>
 
+    <definition name="gene-search-results" extends="base">
+        <put-attribute name="title" value="Search results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/gene-search-results.jsp"/>
+    </definition>
+
     <definition name="experiment-page" extends="base">
         <put-attribute name="title" value="Experiment &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/experiment-page.jsp"/>
     </definition>
 
-    
+    <definition name="static" extends="base">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/static-page.jsp"/>
+    </definition>
 </tiles-definitions>

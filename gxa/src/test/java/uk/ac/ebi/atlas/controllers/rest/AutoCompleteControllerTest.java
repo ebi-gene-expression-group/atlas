@@ -30,9 +30,6 @@ public class AutoCompleteControllerTest {
     @Mock
     private SolrBioentitiesSuggesterService suggesterServiceMock;
 
-    @Mock
-    private SpeciesFactory speciesFactoryMock;
-
     private AutoCompleteController subject;
 
     @Before
@@ -42,10 +39,9 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
-        when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of())));
-        when(suggesterServiceMock.fetchPropertySuggestions(QUERY_STRING, speciesFactoryMock.create(HOMO_SAPIENS), 15)).thenReturn(suggestions);
+        when(suggesterServiceMock.fetchPropertySuggestions(QUERY_STRING, 15, "Homo sapiens")).thenReturn(suggestions);
 
-        subject = new AutoCompleteController(suggesterServiceMock, speciesFactoryMock);
+        subject = new AutoCompleteController(suggesterServiceMock);
     }
 
     @Test

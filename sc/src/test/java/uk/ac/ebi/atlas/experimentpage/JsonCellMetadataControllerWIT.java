@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class JsonCellMetadataControllerWIT {
+class JsonCellMetadataControllerWIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
 
@@ -43,8 +44,8 @@ public class JsonCellMetadataControllerWIT {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-    @Test
-    public void validJsonForExistingCellId() throws Exception {
+    @RepeatedTest(20)
+    void validJsonForExistingCellId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         String cellId = jdbcTestUtils.fetchRandomCellFromExperiment(experimentAccession);
 
@@ -53,13 +54,11 @@ public class JsonCellMetadataControllerWIT {
                         "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(0))))
-                .andExpect(jsonPath("$[0].displayName", isA(String.class)))
-                .andExpect(jsonPath("$[0].value", isA(String.class)));
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(0))));
     }
 
     @Test
-    public void emptyJsonForInvalidCellId() throws Exception {
+    void emptyJsonForInvalidCellId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         String cellId = "FOO";
 
@@ -72,7 +71,7 @@ public class JsonCellMetadataControllerWIT {
     }
 
     @Test
-    public void validJsonForInvalidExperimentAccession() throws Exception {
+    void validJsonForInvalidExperimentAccession() throws Exception {
         String experimentAccession = "FOO";
         String cellId = "BAR";
 

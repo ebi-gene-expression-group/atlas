@@ -2,12 +2,12 @@
 
 var experimentsPageModule = (function ($) {
 
-    function replaceZeroAndLinkExpDesign(data, full) {
+    function replaceZeroAndLinkExpDesign(data, type, full) {
         if (data === 0) {
             return '<span title="' + data + '"/>';
         }
         return '<span title="' + data + '">' +
-            '<a href="experiments/' + full.experimentAccession + '/experiment-design" title="View experiment design in Expression Atlas">' + data +
+            '<a href="experiments/' + full.experimentAccession + '/Experiment Design" title="View experiment design in Expression Atlas">' + data +
             '</a></span>';
     }
 

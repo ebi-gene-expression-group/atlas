@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 @Named
 public class BioentitiesSolrClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentitiesSolrClient.class);
-
     private static final int ROWS = 1000;
+
     private SolrClient solrClient;
 
     @Inject
