@@ -17,7 +17,7 @@ public class OpTest {
         testNames(Op.LIST);
     }
 
-    public void testNames(Op ... ops){
+    private void testNames(Op ... ops){
         List<String> l = new ArrayList<>();
         for(Op op: ops){
             l.add(op.name());
@@ -27,7 +27,9 @@ public class OpTest {
 
     @Test
     public void synonymsWork(){
-        assertEquals(Op.opsForParameter("UPDATE_PRIVATE"),Op.opsForParameter("UPDATE"));
+        assertEquals(
+                Op.opsForParameter("DOUBLE_CHECK"),
+                Op.opsForParameter("CACHE_REMOVE,CHECK,CACHE_READ"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -54,9 +56,9 @@ public class OpTest {
     @Test
     public void synonymAsPartOfClauseWorks(){
         List<Op> a = new ArrayList<>();
-        a.addAll(Op.opsForParameter("UPDATE"));
+        a.addAll(Op.opsForParameter("LOG"));
         a.addAll(Op.opsForParameter("LIST"));
-        assertEquals(a,Op.opsForParameter("UPDATE,LIST"));
+        assertEquals(a,Op.opsForParameter("LOG,LIST"));
     }
 
 }

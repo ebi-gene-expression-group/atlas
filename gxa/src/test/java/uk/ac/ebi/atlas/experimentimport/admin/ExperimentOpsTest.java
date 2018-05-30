@@ -223,7 +223,6 @@ public class ExperimentOpsTest {
         verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(experimentCrudMock).findExperiment(accession);
         verify(analyticsIndexerManager).addToAnalyticsIndex(accession);
 
         verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
@@ -259,30 +258,34 @@ public class ExperimentOpsTest {
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws IOException {
+        doThrow(new UncheckedIOException(new IOException("Coexpression load failed")))
+                .when(baselineCoexpressionProfileLoader)
+                .loadBaselineCoexpressionsProfile(anyString());
+
         MockHttpServletResponse responseObject = new MockHttpServletResponse();
-
-        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",responseObject);
-
-
-        String response = responseObject.getContentAsString();
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", responseObject);
 
         verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(experimentCrudMock).findExperiment(accession);
 
         verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
 
-        assertThat(response, containsString("Serializing failed"));
+        String response = responseObject.getContentAsString();
+        assertThat(response, containsString("Coexpression load failed"));
         assertThat(response, containsString("error"));
     }
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws IOException {
+        doThrow(new NullPointerException())
+                .when(baselineCoexpressionProfileLoader)
+                .loadBaselineCoexpressionsProfile(anyString());
+
         MockHttpServletResponse responseObject = new MockHttpServletResponse();
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",responseObject);
-        String response = responseObject.getContentAsString();
 
+        String response = responseObject.getContentAsString();
         assertThat(response, containsString("error"));
     }
 
