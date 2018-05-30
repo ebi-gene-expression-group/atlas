@@ -46,8 +46,7 @@ public class JsonBioentityInformationControllerWIT {
         String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc
-                .perform(get(
-                        "/json/bioentity_information/" + geneId))
+                .perform(get("/json/bioentity_information/" + geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[0].type", isA(String.class)))
@@ -67,16 +66,17 @@ public class JsonBioentityInformationControllerWIT {
 
     @Test
     public void payloadContainsExpressionAtlasLink() throws Exception{
-        String geneId = "ENSMUSG00000021789";
+        String geneId = jdbcTestUtils.fetchRandomGene();
+
         this.mockMvc
                 .perform(get("/json/bioentity_information/" + geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$[-1:].type",contains("expression_atlas")))
+                .andExpect(jsonPath("$[-1:].type", contains("expression_atlas")))
                 .andExpect(jsonPath("$[-1:].name", contains("Expression Atlas")))
                 .andExpect(jsonPath("$[-1:].values", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$[-1:].values[0].text", contains(geneId)))
-                .andExpect(jsonPath("$[-1:].values[0].url", contains("https://www.ebi.ac.uk/gxa/genes/"+geneId)))
-                .andExpect(jsonPath("$[-1:].values[0].relevance", contains("0")));
+                .andExpect(jsonPath("$[-1:].values[0].url", contains("https://www.ebi.ac.uk/gxa/genes/" + geneId)))
+                .andExpect(jsonPath("$[-1:].values[0].relevance", contains(0)));
     }
 }
