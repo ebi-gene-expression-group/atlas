@@ -5,20 +5,18 @@ import URI from 'urijs'
 import styles from './link-to-resource.css'
 
 const LinksToResources = ({data, atlasUrl}) => {
-  const links =  data.map((service, index) => (
+  const links =  data.map((service, index) =>
     <div  key={index} className={styles.resource}>
       <span>
         <Icon type={service.type} />
         {
-          service.isDownload && atlasUrl ? (
-            <a href={URI(service.url, atlasUrl)}>{service.description}</a>
-          ) : (
+          service.isDownload && atlasUrl ?
+            <a href={URI(service.url, atlasUrl)}>{service.description}</a> :
             <a href={service.url}>{service.description}</a>
-          )
         }
       </span>
     </div>
-  ))
+  )
 
   return (
     <div>
