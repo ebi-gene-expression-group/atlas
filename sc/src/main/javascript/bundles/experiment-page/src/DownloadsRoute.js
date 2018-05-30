@@ -2,15 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import LinksToResources from './supplementary-information/LinksToResources'
 
-const DownloadsRoute = (props) => {
-  const downloadLinks = props.data.map((download) => [
-    <h3 key="title">{download.title}</h3>,
-    <LinksToResources key={"links"} data={download.files} atlasUrl={props.atlasUrl}/>
-    ]
+const DownloadsRoute = ({atlasUrl, data}) => {
+  const downloadLinks = data.map((download) =>
+    <div className={`small-12 columns margin-bottom-xlarge`}>
+      <h3 key={`title`}>{download.title}</h3>
+      <LinksToResources key={`links`} data={download.files} atlasUrl={atlasUrl}/>
+    </div>
   )
 
   return (
-    <div className={"margin-top-large"}>
+    <div className={`row expanded margin-top-large`}>
       {downloadLinks}
     </div>
   )
