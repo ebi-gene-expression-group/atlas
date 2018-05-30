@@ -14,14 +14,13 @@ public enum Op {
     CLEAR_LOG("Clear the operation history"),
     UPDATE_PRIVATE("Set experiment as private in the database and delete from analytics index"),
     UPDATE_PUBLIC("Set experiment as public in the database and update the design"),
-    UPDATE_DESIGN_ONLY("Assume the experiment is public. Then update the design. Expect serialize to follow"),
+    UPDATE_DESIGN("Assume the experiment is public, then update the design"),
     IMPORT("Parse and validate the configuration.xml file. Delete the experiment if already present, " +
             "then use the configuration to load the analytics into database. Then update the design," +
             " and add the experiment to database."),
     IMPORT_PUBLIC("Same as import but make experiment searchable and visible without an access key"),
     DELETE("Delete the analytics from database, if public delete from conditions and analytics index, and remove the " +
             "accession from experiment list in the database. Remove any remaining kryo files"),
-    SERIALIZE("Write out the kryo files and make a baseline experiment load much faster"),
     COEXPRESSION_IMPORT("Assume there is no coexpression data in the database. Then load coexpressions"),
     COEXPRESSION_UPDATE("Delete coexpressions from database and then load coexpressions"),
     COEXPRESSION_DELETE("Delete coexpressions from database"),
@@ -31,18 +30,11 @@ public enum Op {
     ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession"),
     CACHE_READ("Read the attributes of the experiment from cache, trying to load it if it is absent"),
     CACHE_REMOVE("Delete from cache if present"),
-    CHECK("Do the same checks that are done on experiment import - required files are present, their headers match configuration.xml, configuration.xml and condensed-sdrf match each other"),
-    POPULATE_MARKER_GENES("Add random data for marker genes to the DB (the experiment doesn’t need to exist)"),
-    DELETE_MARKER_GENES("Delete marker genes data from DB"),
-    DELETE_ALL_MARKER_GENES("Delete all marker genes data from DB (will ignore any experiment accession)");
-
-
+    CHECK("Do the same checks that are done on experiment import - required files are present, their headers match configuration.xml, configuration.xml and condensed-sdrf match each other");
 
     static ImmutableMap<String, ImmutableList<Op>> synonyms = ImmutableMap.of(
-            "UPDATE_DESIGN",ImmutableList.of(UPDATE_DESIGN_ONLY,SERIALIZE),
-            "UPDATE", ImmutableList.of(UPDATE_PRIVATE), // Deprecated June 2016
-            "LOAD_PUBLIC", ImmutableList.of(IMPORT_PUBLIC,COEXPRESSION_UPDATE,SERIALIZE,ANALYTICS_IMPORT),
-            "LOAD", ImmutableList.of(IMPORT,COEXPRESSION_UPDATE,SERIALIZE),
+            "LOAD_PUBLIC", ImmutableList.of(IMPORT_PUBLIC,COEXPRESSION_UPDATE,ANALYTICS_IMPORT),
+            "LOAD", ImmutableList.of(IMPORT,COEXPRESSION_UPDATE),
             "DOUBLE_CHECK", ImmutableList.of(CACHE_REMOVE,CHECK,CACHE_READ)
     );
 

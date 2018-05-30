@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
-import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -27,20 +26,17 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     private final ExperimentCrud experimentCrud;
     private final BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     private final AnalyticsIndexerManager analyticsIndexerManager;
-    private final ExpressionSerializerService expressionSerializerService;
     private final ExperimentTrader experimentTrader;
     private final ExperimentAttributesService experimentAttributesService;
 
     public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
                                                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                                         AnalyticsIndexerManager analyticsIndexerManager,
-                                                        ExpressionSerializerService expressionSerializerService,
                                                         ExperimentTrader experimentTrader,
                                                         ExperimentAttributesService experimentAttributesService) {
         this.experimentCrud = experimentCrud;
         this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
         this.analyticsIndexerManager = analyticsIndexerManager;
-        this.expressionSerializerService = expressionSerializerService;
         this.experimentTrader = experimentTrader;
         this.experimentAttributesService = experimentAttributesService;
     }
@@ -119,7 +115,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case UPDATE_PUBLIC:
                 experimentCrud.makeExperimentPublic(accession);
                 break;
-            case UPDATE_DESIGN_ONLY:
+            case UPDATE_DESIGN:
                 experimentTrader.removeExperimentFromCache(accession);
                 experimentCrud.updateExperimentDesign(accession);
                 break;
@@ -130,11 +126,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 UUID accessKeyUUID = experimentCrud.importExperiment(accession, isPrivate);
                 resultOfTheOp = new JsonPrimitive("Success, access key UUID: " + accessKeyUUID);
                 break;
-            case SERIALIZE:
-                resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(getAnyExperimentWithAdminAccess(accession)));
-                break;
             case DELETE:
-                expressionSerializerService.removeKryoFile(getAnyExperimentWithAdminAccess(accession));
                 experimentTrader.removeExperimentFromCache(accession);
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 experimentCrud.deleteExperiment(accession);
