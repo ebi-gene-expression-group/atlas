@@ -3,13 +3,11 @@ package uk.ac.ebi.atlas.profiles.stream;
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
@@ -86,25 +84,6 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         assertThat(resultTpms.readNext().getExpressionLevel(assayGroup), is(42.0));
 
         assertThat(resultFpkms.readNext().getExpressionLevel(assayGroup), is(1.337));
-    }
-
-    @Ignore
-    public void readFromKryoFile() {
-        //given the right value can only be read off from kryo files
-        ExpressionUnit.Absolute.Rna unit = ExpressionUnit.Absolute.Rna.TPM;
-        new ExpressionSerializerService(dataFileHub).removeKryoFile(baselineExperiment);
-        setExpressionValuesTpmAndFpkm(13.37, 13.37);
-        new ExpressionSerializerService(dataFileHub).kryoSerializeExpressionData(baselineExperiment);
-        setExpressionValuesTpmAndFpkm(0.0, 0.0);
-
-        RnaSeqBaselineRequestPreferences rnaSeqBaselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
-        rnaSeqBaselineRequestPreferences.setUnit(unit);
-        ObjectInputStream<BaselineProfile> result =
-                new RnaSeqBaselineProfileStreamFactory(dataFileHub).create(baselineExperiment,
-                        new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment), Collections.emptySet());
-
-
-        assertThat(result.readNext().getExpressionLevel(assayGroup), is(13.37));
     }
 
     @Test

@@ -3,10 +3,14 @@ package uk.ac.ebi.atlas.profiles.stream;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -18,12 +22,28 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 @Named
-public class RnaSeqProfileStreamFactory extends ProfileStreamKryoLayer<Contrast, DifferentialExpression, DifferentialExperiment, RnaSeqRequestContext, RnaSeqProfile>  {
+public class RnaSeqProfileStreamFactory
+        extends ProfileStreamFactory<Contrast,
+                                     DifferentialExpression,
+                                     DifferentialExperiment,
+                                     RnaSeqRequestContext,
+                                     RnaSeqProfile> {
+
+    private final CreatesProfilesFromTsvFiles<Contrast,
+            DifferentialExpression,
+            DifferentialExperiment,
+            RnaSeqRequestContext,
+            RnaSeqProfile> profileStreamFactory;
+
 
     @Inject
     public RnaSeqProfileStreamFactory(DataFileHub dataFileHub) {
+        profileStreamFactory = new Impl(dataFileHub);
+    }
 
-        super(new Impl(dataFileHub));
+    @Override
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, RnaSeqRequestContext options, Collection<String> keepGeneIds) {
+        return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
     static class Impl extends DifferentialProfileStreamFactory<DifferentialExpression,

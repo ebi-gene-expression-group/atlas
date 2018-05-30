@@ -13,11 +13,9 @@ import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.model.resource.Directory;
-import uk.ac.ebi.atlas.model.resource.KryoFile;
 import uk.ac.ebi.atlas.model.resource.MatrixMarketFile;
 import uk.ac.ebi.atlas.model.resource.TsvFile;
 import uk.ac.ebi.atlas.model.resource.XmlFile;
-import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -126,11 +124,6 @@ public class DataFileHub {
 
     public MicroarrayExperimentFiles getMicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
-    }
-
-    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession,
-                                                      ProfileStreamOptions<?> profileStreamOptions){
-        return new KryoFile(experimentsFilesLocation, experimentAccession, profileStreamOptions);
     }
 
     public SingleCellExperimentFiles getSingleCellExperimentFiles(String experimentAccession) {

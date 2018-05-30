@@ -20,12 +20,27 @@ import java.util.Collection;
 import java.util.Map;
 
 @Named
-public class ProteomicsBaselineProfileStreamFactory extends ProfileStreamKryoLayer<AssayGroup, BaselineExpression,
-        BaselineExperiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>, BaselineProfile> {
+public class ProteomicsBaselineProfileStreamFactory
+        extends ProfileStreamFactory<AssayGroup,
+                                     BaselineExpression,
+                                     BaselineExperiment,
+                                     BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>,
+                                     BaselineProfile> {
+
+    private final CreatesProfilesFromTsvFiles<AssayGroup,
+            BaselineExpression,
+            BaselineExperiment,
+            BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>,
+            BaselineProfile> profileStreamFactory;
 
     @Inject
     public ProteomicsBaselineProfileStreamFactory(DataFileHub dataFileHub) {
-        super(new Impl(dataFileHub));
+        profileStreamFactory = new Impl(dataFileHub);
+    }
+
+    @Override
+    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein> options, Collection<String> keepGeneIds) {
+        return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
     static class Impl

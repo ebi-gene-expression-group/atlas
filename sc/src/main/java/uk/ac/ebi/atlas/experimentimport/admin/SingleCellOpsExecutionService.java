@@ -100,7 +100,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
             case UPDATE_PUBLIC:
                 experimentCrud.makeExperimentPublic(accession);
                 break;
-            case UPDATE_DESIGN_ONLY:
+            case UPDATE_DESIGN:
                 experimentTrader.removeExperimentFromCache(accession);
                 experimentCrud.updateSingleCellExperimentDesign(accession);
                 break;

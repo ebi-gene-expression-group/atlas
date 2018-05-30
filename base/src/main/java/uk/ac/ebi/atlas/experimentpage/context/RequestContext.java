@@ -32,10 +32,6 @@ public abstract class RequestContext
         this.experiment = experiment;
     }
 
-    public String serializationShortString(){
-        return requestPreferences.serializationShortString();
-    }
-
     public String getExperimentAccession() {
         return experiment.getAccession();
     }

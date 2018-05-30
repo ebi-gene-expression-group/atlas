@@ -3,10 +3,16 @@ package uk.ac.ebi.atlas.profiles.stream;
 import com.google.common.base.Preconditions;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
@@ -19,12 +25,26 @@ import java.util.function.Predicate;
 
 @Named
 public class MicroarrayProfileStreamFactory
-        extends ProfileStreamKryoLayer<Contrast, MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile> {
+        extends ProfileStreamFactory<Contrast,
+                                       MicroarrayExpression,
+                                       MicroarrayExperiment,
+                                       MicroarrayRequestContext,
+                                       MicroarrayProfile> {
+
+    private final CreatesProfilesFromTsvFiles<Contrast,
+            MicroarrayExpression,
+            MicroarrayExperiment,
+            MicroarrayRequestContext,
+            MicroarrayProfile> profileStreamFactory;
 
     @Inject
     public MicroarrayProfileStreamFactory(DataFileHub dataFileHub) {
+        profileStreamFactory = new Impl(dataFileHub);
+    }
 
-        super(new Impl(dataFileHub));
+    @Override
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayRequestContext options, Collection<String> keepGeneIds) {
+        return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
     static class Impl extends

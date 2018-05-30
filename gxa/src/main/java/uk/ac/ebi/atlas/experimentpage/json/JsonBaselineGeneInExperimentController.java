@@ -60,7 +60,7 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
                 BaselineExperimentProfilesService.getGeneProfiles(
                         experimentAccession, requestContext.getDataColumnsToReturn(), preferences, geneId);
 
-        // We set cutoff to 0.0, which happens to do "do not read for kryo files" for transcript expression
+        // Do we need to set cutoff to 0? TODO Test the endpoint...
         preferences.setCutoff(0.0);
         GeneProfilesList<BaselineExpressionPerReplicateProfile> transcriptExpression =
                 baselineTranscriptProfileStreamFactory.getAllMatchingProfiles(

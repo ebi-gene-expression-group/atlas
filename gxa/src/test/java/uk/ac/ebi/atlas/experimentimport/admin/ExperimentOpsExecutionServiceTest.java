@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
-import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -27,8 +26,6 @@ public class ExperimentOpsExecutionServiceTest {
     @Mock
     AnalyticsIndexerManager analyticsIndexerManager;
     @Mock
-    ExpressionSerializerService expressionSerializerService;
-    @Mock
     ExperimentTrader experimentTrader;
     @Mock
     ExperimentAttributesService experimentAttributesService;
@@ -43,13 +40,18 @@ public class ExperimentOpsExecutionServiceTest {
     @Before
     public void setUp(){
         when(experimentCrudMock.findExperiment(accession)).thenReturn(experimentDTO);
-        subject = new ExpressionAtlasExperimentOpsExecutionService(experimentCrudMock,baselineCoexpressionProfileLoader,analyticsIndexerManager,
-                expressionSerializerService, experimentTrader, experimentAttributesService);
+        subject =
+                new ExpressionAtlasExperimentOpsExecutionService(
+                        experimentCrudMock,
+                        baselineCoexpressionProfileLoader,
+                        analyticsIndexerManager,
+                        experimentTrader,
+                        experimentAttributesService);
     }
 
     @Test
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception{
-        subject.attemptExecuteStatefulOp(accession, Op.UPDATE_DESIGN_ONLY);
+        subject.attemptExecuteStatefulOp(accession, Op.UPDATE_DESIGN);
         verify(experimentTrader).removeExperimentFromCache(accession);
     }
 

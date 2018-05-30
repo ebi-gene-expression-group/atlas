@@ -399,13 +399,6 @@
             <version>1.9.3</version>
         </dependency>
 
-        <!-- Serialization -->
-        <dependency>
-            <groupId>com.esotericsoftware</groupId>
-            <artifactId>kryo-shaded</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-
         <!-- Nasty bug in HttpClient 4.5.3 (bundled with Solr) -->
         <!-- https://issues.apache.org/jira/browse/HTTPCLIENT-1831 -->
         <dependency>

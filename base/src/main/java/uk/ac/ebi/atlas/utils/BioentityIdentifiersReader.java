@@ -21,7 +21,7 @@ public abstract class BioentityIdentifiersReader {
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
-        LOGGER.info("Reading all bioentity identifiers from analytics TSV/kryo files...");
+        LOGGER.info("Reading all bioentity identifiers from analytics TSV files...");
 
         for (ExperimentType experimentType : experimentTypes) {
             LOGGER.info("Reading all bioentity identifiers for experiments of type {}...", experimentType.getDescription());
