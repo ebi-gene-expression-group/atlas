@@ -20,7 +20,7 @@ public enum Op {
             " and add the experiment to database."),
     IMPORT_PUBLIC("Same as import but make experiment searchable and visible without an access key"),
     DELETE("Delete the analytics from database, if public delete from conditions and analytics index, and remove the " +
-            "accession from experiment list in the database. Remove any remaining kryo files"),
+            "accession from experiment list in the database."),
     COEXPRESSION_IMPORT("Assume there is no coexpression data in the database. Then load coexpressions"),
     COEXPRESSION_UPDATE("Delete coexpressions from database and then load coexpressions"),
     COEXPRESSION_DELETE("Delete coexpressions from database"),
@@ -45,11 +45,8 @@ public enum Op {
                     " update the conditions index with the ontology terms extracted from the design",
             "the analytics", "The experiment results, whose format varies per experiment type. e.g. for baseline " +
                     "experiments they are expression value per gene and assay",
-            "the kryo files", "Expression data files that have been expanded into serialized Java objects, which the " +
-                    "server can retrieve without doing the parsing work",
             "load coexpressions", "Parse the coexpressions.tsv.gz file, then for each gene pick top 100 genes with " +
                     "expression pattern most similar in that experiment. Then save them in database as a blob."
-
     );
 
     private final String description;

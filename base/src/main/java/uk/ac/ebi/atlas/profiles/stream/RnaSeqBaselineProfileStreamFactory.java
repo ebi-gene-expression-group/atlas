@@ -21,15 +21,28 @@ import java.util.Map;
 
 @Named
 public class RnaSeqBaselineProfileStreamFactory
-        extends ProfileStreamKryoLayer<AssayGroup,
+        extends ProfileStreamFactory<AssayGroup,
                                        BaselineExpression,
                                        BaselineExperiment,
                                        BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>,
                                        BaselineProfile> {
 
+    private final CreatesProfilesFromTsvFiles<AssayGroup,
+                                              BaselineExpression,
+                                              BaselineExperiment,
+                                              BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>,
+                                              BaselineProfile> profileStreamFactory;
+
     @Inject
     public RnaSeqBaselineProfileStreamFactory(DataFileHub dataFileHub) {
-        super(new Impl(dataFileHub));
+        profileStreamFactory = new Impl(dataFileHub);
+    }
+
+    @Override
+    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
+                                                     BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options,
+                                                     Collection<String> keepGeneIds) {
+        return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
     static class Impl extends

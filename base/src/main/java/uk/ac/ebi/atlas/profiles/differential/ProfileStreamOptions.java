@@ -4,16 +4,9 @@ import uk.ac.ebi.atlas.model.DescribesDataColumns;
 
 import java.util.List;
 
-public interface ProfileStreamOptions<DataColumnDescriptor extends DescribesDataColumns> {
-
+public interface ProfileStreamOptions<D extends DescribesDataColumns> {
     Integer getHeatmapMatrixSize();
-
     boolean isSpecific();
-
-    List<DataColumnDescriptor> getDataColumnsToReturn();
-
-    List<DataColumnDescriptor> getAllDataColumns();
-
-    String serializationShortString();
-
+    List<D> getDataColumnsToReturn();
+    List<D> getAllDataColumns();
 }

@@ -13,6 +13,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpressionPerBiologicalReplicate;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpressionPerReplicateProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -29,13 +31,30 @@ This could be generified to deal with other data files that are per biological r
  */
 @Named
 public class BaselineTranscriptProfileStreamFactory extends
-        ProfileStreamKryoLayer<
-                AssayGroup, BaselineExpressionPerBiologicalReplicate, BaselineExperiment,
-                BaselineRequestContext<ExpressionUnit.Absolute.Rna>, BaselineExpressionPerReplicateProfile> {
+        ProfileStreamFactory<
+                AssayGroup,
+                BaselineExpressionPerBiologicalReplicate,
+                BaselineExperiment,
+                BaselineRequestContext<ExpressionUnit.Absolute.Rna>,
+                BaselineExpressionPerReplicateProfile> {
+
+    private final CreatesProfilesFromTsvFiles<AssayGroup,
+            BaselineExpressionPerBiologicalReplicate,
+            BaselineExperiment,
+            BaselineRequestContext<ExpressionUnit.Absolute.Rna>,
+            BaselineExpressionPerReplicateProfile> profileStreamFactory;
+
 
     @Inject
     public BaselineTranscriptProfileStreamFactory(DataFileHub dataFileHub) {
-        super(new Impl(dataFileHub));
+        profileStreamFactory = new Impl(dataFileHub);
+    }
+
+    @Override
+    public ObjectInputStream<BaselineExpressionPerReplicateProfile> create(BaselineExperiment experiment,
+                                                                           BaselineRequestContext<ExpressionUnit.Absolute.Rna> options,
+                                                                           Collection<String> keepGeneIds) {
+        return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
     static class Impl extends

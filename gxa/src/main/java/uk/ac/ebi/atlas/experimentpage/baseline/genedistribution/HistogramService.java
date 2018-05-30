@@ -131,15 +131,12 @@ public class HistogramService<O extends ProfileStreamOptions<?>, T extends Exper
             HistogramCacheKey other = (HistogramCacheKey) object;
 
             return Objects.equal(this.accession(), other.accession()) &&
-                   Objects.equal(this.accessKey(), other.accessKey()) &&
-                   Objects.equal(
-                           this.streamOptions().serializationShortString(),
-                           other.streamOptions().serializationShortString());
+                   Objects.equal(this.accessKey(), other.accessKey());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hashCode(accession(), accessKey(), this.streamOptions().serializationShortString());
+            return Objects.hashCode(accession(), accessKey());
         }
     }
 }

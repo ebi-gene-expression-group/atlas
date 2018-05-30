@@ -1,9 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.KryoSerializable;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
@@ -23,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 public abstract class Profile<D extends DescribesDataColumns,
                               E extends Expression,
-                              P extends Profile<D, E, P>> implements KryoSerializable {
+                              P extends Profile<D, E, P>> {
 
     protected Map<String, E> expressionsByCondition = new HashMap<>();
     private String id;
@@ -165,18 +161,4 @@ public abstract class Profile<D extends DescribesDataColumns,
         return new String[]{id, getName()};
     }
 
-
-    @Override
-    public void write(Kryo kryo, Output output) {
-        output.writeString(id);
-        output.writeString(name);
-        kryo.writeObject(output, expressionsByCondition);
-    }
-
-    @Override
-    public void read(Kryo kryo, Input input) {
-        id = input.readString();
-        name = input.readString();
-        expressionsByCondition = kryo.readObject(input, HashMap.class);
-    }
 }
