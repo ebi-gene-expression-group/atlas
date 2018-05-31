@@ -14,7 +14,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "expression-atlas-experiment-page-tsne-plot": "file:../../expression-atlas-experiment-page-tsne-plot-2.3.4.tgz",
+    "expression-atlas-experiment-page-tsne-plot": "^2.3.5",
     "lodash": "^4.17.10",
     "pluralize": "^7.0.0",
     "prop-types": "^15.6.1",

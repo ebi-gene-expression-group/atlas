@@ -7769,7 +7769,7 @@ PlotLoader.propTypes = {
 };
 
 PlotLoader.defaultProps = {
-  wrapperClassName: 'row column',
+  wrapperClassName: '',
   chartClassName: '',
   highchartsConfig: {},
   resourcesUrl: ''
@@ -39706,7 +39706,7 @@ var DownloadsRoute = function DownloadsRoute(_ref) {
   var downloadLinks = data.map(function (download) {
     return _react2.default.createElement(
       'div',
-      { className: 'small-12 columns margin-bottom-medium' },
+      { className: 'small-12 columns margin-bottom-xlarge' },
       _react2.default.createElement(
         'h3',
         { key: 'title' },
