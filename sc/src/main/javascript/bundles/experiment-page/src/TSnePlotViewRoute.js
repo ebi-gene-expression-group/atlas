@@ -22,7 +22,7 @@ const TSnePlotViewRoute = (props) => {
       <TSnePlotView atlasUrl={atlasUrl}
                     suggesterEndpoint={suggesterEndpoint}
                     wrapperClassName={`row expanded`}
-                    clusterPlotClassName  ={`small-12 large-6 columns`}
+                    clusterPlotClassName={`small-12 large-6 columns`}
                     expressionPlotClassName={`small-12 large-6 columns`}
                     speciesName={species}
                     experimentAccession={experimentAccession}
@@ -38,10 +38,13 @@ const TSnePlotViewRoute = (props) => {
                     onChangePerplexity={ (perplexity) => { updateUrlSearch({ name: `perplexity`, value: perplexity }) } }
       />
       {
-        search.geneId && [
-          <h4 key={`title`} className={`margin-top-large`}> Information about gene {search.geneId} </h4>,
-          <BioentityInformation key={`gene-information`} atlasUrl={atlasUrl} geneId={search.geneId} />
-        ]
+        search.geneId &&
+          <div className={`row expanded`}>
+            <div className={`small-12 columns`}>
+              <h4 key={`title`} className={`margin-top-large`}>Information about gene {search.geneId}</h4>
+              <BioentityInformation key={`gene-information`} atlasUrl={atlasUrl} geneId={search.geneId} />
+            </div>
+          </div>
       }
     </div>
 

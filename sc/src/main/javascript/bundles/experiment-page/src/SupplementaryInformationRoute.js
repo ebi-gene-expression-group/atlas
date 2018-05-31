@@ -11,22 +11,22 @@ const sectionTypeComponent = {
 const SectionContent = ({type, props}) => {
   const Section = sectionTypeComponent[type]
 
-  return (
-    Section ? <Section {...props} /> : null
-  )
-
+  return (Section && <Section {...props} />)
 }
+
 const SupplementaryInformationRoute = (props) => {
   const sections = props.sections.map((section) =>
     <div key={section.name}>
-      <h4>{section.name}</h4>
+      <h3>{section.name}</h3>
       <SectionContent type={section.type} props={section.props}/>
     </div>
   )
 
   return (
-    <div className={"margin-top-large"}>
-      {sections}
+    <div className={`row expanded margin-top-large`}>
+      <div className={`small-12 columns`}>
+        {sections}
+      </div>
     </div>
   )
 }

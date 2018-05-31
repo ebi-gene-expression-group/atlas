@@ -4,19 +4,17 @@ import URI from 'urijs'
 
 import ExperimentDesignTable from './experiment-design/ExperimentDesignTable'
 
-const ExperimentDesignRoute = (props) => {
-  return [
-    <div key='url' className='row expanded column margin-top-large'>
-      <a className='button float-right margin-bottom-none' href={URI(props.downloadUrl, props.atlasUrl).toString()}>
-        <span className='icon icon-spacer icon-functional' data-icon='='/>
-        Download
+const ExperimentDesignRoute = ({atlasUrl, downloadUrl, table}) =>
+  <div className={`row expanded margin-top-large`}>
+    <div className={`small-12 columns text-right`}>
+      <a className={`button`} href={URI(downloadUrl, atlasUrl).toString()}>
+        <span className={`icon icon-spacer icon-functional`} data-icon='='/> Download
       </a>
-    </div>,
-    <div key='table' className='row expanded column margin-top-large'>
-      <ExperimentDesignTable data={props.table.data} headers={props.table.headers}/>
     </div>
-  ]
-}
+    <div className={`small-12 columns`}>
+      <ExperimentDesignTable data={table.data} headers={table.headers}/>
+    </div>
+  </div>
 
 ExperimentDesignRoute.propTypes = {
   match: PropTypes.object.isRequired,
