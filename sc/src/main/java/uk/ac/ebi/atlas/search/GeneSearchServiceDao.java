@@ -23,7 +23,9 @@ public class GeneSearchServiceDao {
     }
 
     private static final String SELECT_CELL_IDS_FOR_GENE_STATEMENT = 
-            "SELECT experiment_accession, cell_id FROM scxa_analytics WHERE gene_id=:gene_id";
+            "SELECT experiment_accession, cell_id FROM scxa_analytics AS analytics " +
+                    "JOIN scxa_experiment AS experiments ON analytics.experiment_accession = experiments.accession " +
+                    "WHERE gene_id=:gene_id AND private=FALSE";
     @Transactional(readOnly = true)
     public Map<String, List<String>> fetchCellIds(String geneId) {
         Map<String, Object> namedParameters =
@@ -50,7 +52,9 @@ public class GeneSearchServiceDao {
     }
 
     private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
-            "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes WHERE gene_id=:gene_id AND marker_probability<=:threshold";
+            "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes AS markers " +
+                    "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession " +
+                    "WHERE gene_id=:gene_id AND marker_probability<=:threshold AND private=FALSE";
     @Transactional(readOnly = true)
     public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId) {
         Map<String, Object> namedParameters =
