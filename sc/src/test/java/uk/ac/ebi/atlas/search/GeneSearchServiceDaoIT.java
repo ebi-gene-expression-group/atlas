@@ -11,16 +11,18 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_ORGANISM_PART;
 
 @Transactional
 @WebAppConfiguration
@@ -31,6 +33,8 @@ public class GeneSearchServiceDaoIT {
 
     @Inject
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Inject
+    private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
 
     @Inject
     private JdbcUtils jdbcTestUtils;
@@ -39,7 +43,7 @@ public class GeneSearchServiceDaoIT {
 
     @BeforeEach
     public void setUp() {
-        subject = new GeneSearchServiceDao(namedParameterJdbcTemplate);
+        subject = new GeneSearchServiceDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
     }
 
     @Test
@@ -55,7 +59,7 @@ public class GeneSearchServiceDaoIT {
 
     @Test
     @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
-    public void validGeneIdsReturnKandClusterIds() {
+    public void validGeneIdReturnKAndClusterIds() {
         String geneId = "ENSG00000000009";
 
         Map<String, Map<Integer, List<Integer>>> result = subject.fetchKAndClusterIds(geneId);
@@ -70,5 +74,36 @@ public class GeneSearchServiceDaoIT {
                         entry(3, Collections.singletonList(0)),
                         entry(2, Collections.singletonList(1)));
 
+    }
+
+    @Test
+    @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
+    public void searchForGeneOverProbabilityThresholdReturnsEmpty() {
+        String geneId = "ENSMUSG00000000006";
+
+        Map<String, Map<Integer, List<Integer>>> result = subject.fetchKAndClusterIds(geneId);
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void invalidGeneIdReturnsEmpty() {
+        String geneId = "FOO";
+
+        Map<String, Map<Integer, List<Integer>>> result = subject.fetchKAndClusterIds(geneId);
+
+        assertThat(result).isEmpty();
+    }
+
+
+    @Test
+    public void getFacetsForValidCellIds() {
+        List<String> cellIds = jdbcTestUtils.fetchRandomListOfCells(10);
+
+        LOGGER.info("Retrieving facets for cell IDs " + String.join(", ", cellIds));
+
+        Map<String, Map<String, List<String>>> result = subject.getFacets(cellIds, CHARACTERISTIC_INFERRED_CELL_TYPE, CHARACTERISTIC_ORGANISM_PART);
+
+        assertThat(result).isNotEmpty();
     }
 }
