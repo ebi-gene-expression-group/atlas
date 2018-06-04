@@ -3,23 +3,36 @@ package uk.ac.ebi.atlas.search;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CELL_ID;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_ORGANISM_PART;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 
 @Component
 public class GeneSearchServiceDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
 
-    public GeneSearchServiceDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public GeneSearchServiceDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.singleCellAnalyticsCollectionProxy = solrCloudCollectionProxyFactory.createSingleCellAnalyticsCollectionProxy();
     }
 
     private static final String SELECT_CELL_IDS_FOR_GENE_STATEMENT = 
@@ -68,7 +81,7 @@ public class GeneSearchServiceDao {
                 (ResultSet resultSet) -> {
                     Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
-                    while(resultSet.next()) {
+                    while (resultSet.next()) {
                         String experimentAccession = resultSet.getString("experiment_accession");
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
@@ -84,5 +97,42 @@ public class GeneSearchServiceDao {
                     return result;
                 }
         );
+    }
+
+
+    // Returns inferred cell types and organism parts for each experiment accession
+    public Map<String, Map<String, List<String>>> getFacets(List<String> cellIds, SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField... singleCellAnalyticsSchemaFields) {
+        List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> subFacetFields = Arrays.asList(singleCellAnalyticsSchemaFields);
+
+        SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> queryBuilder =
+                new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
+                        .addQueryFieldByTerm(CELL_ID, cellIds)
+                        .setFacetField(EXPERIMENT_ACCESSION)
+                        .setSubFacetList(subFacetFields.toArray(new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField[0]))
+                        .setRows(0);
+
+        ArrayList<SimpleOrderedMap> resultsByExperiment = (ArrayList<SimpleOrderedMap>) singleCellAnalyticsCollectionProxy.query(queryBuilder).getResponse().findRecursive("facets", EXPERIMENT_ACCESSION.name(), "buckets");
+
+        return resultsByExperiment
+                .stream()
+                .collect(Collectors.toMap(
+                        subFacetValues -> subFacetValues.get("val").toString(),
+                        subFacetValues -> subFacetFields
+                                .stream()
+                                .map(SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField::name)
+                                .collect(Collectors.toMap(
+                                        subFacetField -> subFacetField,
+                                        subFacetField -> getValuesForFacetField(subFacetValues, subFacetField)
+                                ))
+                ));
+    }
+
+    private List<String> getValuesForFacetField(SimpleOrderedMap map, String facetField) {
+        ArrayList<SimpleOrderedMap> results = (ArrayList<SimpleOrderedMap>) map.findRecursive(facetField, "buckets");
+
+        return results
+                .stream()
+                .map(x -> x.get("val").toString())
+                .collect(Collectors.toList());
     }
 }
