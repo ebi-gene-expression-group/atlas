@@ -8,10 +8,13 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
+import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -52,6 +55,13 @@ public class MockExperiment {
                     MockAssayGroups.create().get(0),
                     MockAssayGroups.create().get(1),
                     "contrast"));
+
+    private static final List<Cell> cells = ImmutableList.of(
+            new Cell("cell_id_1"),
+            new Cell("cell_id_2"),
+            new Cell("cell_id_3"),
+            new Cell("cell_id_4"),
+            new Cell("cell_id_5"));
 
     public static BaselineExperiment createBaselineExperiment() {
         return createBaselineExperiment(EXPERIMENT_ACCESSION);
@@ -177,15 +187,46 @@ public class MockExperiment {
 
     public static ExperimentDesign mockExperimentDesign(List<AssayGroup> assayGroups){
         ExperimentDesign experimentDesign = new ExperimentDesign();
-        for(AssayGroup assayGroup: assayGroups){
+        for(AssayGroup assayGroup : assayGroups){
             String value1 = RandomStringUtils.random(5);
             String value2 = RandomStringUtils.random(5);
-            for(String assay: assayGroup.assaysAnalyzedForThisDataColumn()){
+            for(String assay : assayGroup.assaysAnalyzedForThisDataColumn()){
                 experimentDesign.putFactor(assay, "type1", value1);
                 experimentDesign.putFactor(assay, "type2", value2);
             }
         }
         return experimentDesign;
+    }
+
+    public static ExperimentDesign mockSingleCellExperimentDesign(List<Cell> cells) {
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+        for(Cell cell : cells) {
+            for (String cellId : cell.assaysAnalyzedForThisDataColumn()) {
+                experimentDesign.putFactor(cellId, "type 1", cellId);
+            }
+        }
+        return experimentDesign;
+    }
+
+    public static SingleCellBaselineExperiment createSingleCellBaselineExperiment(String experimentAccession) {
+        return new SingleCellBaselineExperiment(
+                ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
+                experimentAccession,
+                new Date(),
+                DISPLAY_NAME,
+                DESCRIPTION,
+                "",
+                new Species(SPECIES_NAME, SPECIES_PROPERTIES),
+                Sets.newHashSet(PUBMEDID),
+                Sets.newHashSet(DOI),
+                mockSingleCellExperimentDesign(cells),
+                PROVIDER_URL,
+                PROVIDER_DESCRIPTION,
+                Collections.<String>emptyList(),
+                Collections.<String>emptyList(),
+                cells,
+                ExperimentDisplayDefaults.simpleDefaults()
+        );
     }
 
 }
