@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class ExperimentAttributesService {
@@ -28,8 +29,8 @@ public class ExperimentAttributesService {
         this.idfParser = idfParser;
     }
 
-    public HashMap<String, Object> getAttributes(Experiment<?> experiment) {
-        HashMap<String, Object> result = new HashMap<>();
+    public Map<String, Object> getAttributes(Experiment<?> experiment) {
+        Map<String, Object> result = new HashMap<>();
         result.put("experimentAccession", experiment.getAccession());
         result.put("experimentDescription", experiment.getDescription());
         result.put("type", experiment.getType().getHumanDescription());
