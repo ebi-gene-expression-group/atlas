@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.search;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
+import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
+import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +27,15 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
     private GeneSearchService geneSearchService;
+    private ScxaExperimentTrader experimentTrader;
+    private ExperimentAttributesService experimentAttributesService;
 
-    public JsonGeneSearchController(GeneSearchService geneSearchService) {
+    public JsonGeneSearchController(GeneSearchService geneSearchService,
+                                    ScxaExperimentTrader experimentTrader,
+                                    ExperimentAttributesService experimentAttributesService) {
         this.geneSearchService = geneSearchService;
+        this.experimentTrader = experimentTrader;
+        this.experimentAttributesService = experimentAttributesService;
     }
 
     @RequestMapping(
@@ -54,13 +62,12 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
             cellIds.forEach((experimentAccession, cells) -> {
                 JsonObject resultEntry = new JsonObject();
 
-                JsonObject experimentAttributes = GSON.toJsonTree(geneSearchService.getExperimentInformation(experimentAccession)).getAsJsonObject();
+                JsonObject experimentAttributes = getExperimentInformation(experimentAccession, geneId);
                 JsonArray facetsJson = convertFacetModel(factorFacets.getOrDefault(experimentAccession, new HashMap<>()));
                 if(markerGeneFacets.containsKey(experimentAccession)) {
                     facetsJson.add(facetValueObject("Marker genes", "Experiments with marker genes"));
                     experimentAttributes.add("markerGenes", convertMarkerGeneModel(experimentAccession, geneId, markerGeneFacets.get(experimentAccession)));
                 }
-                experimentAttributes.addProperty("url", createExperimentPageURL(experimentAccession, geneId));
 
                 resultEntry.add("element", experimentAttributes);
                 resultEntry.add("facets",  facetsJson);
@@ -164,6 +171,15 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 .build()
                 .expand(experimentAccession, geneId, k, clusterId)
                 .toString();
+    }
+
+    private JsonObject getExperimentInformation(String experimentAccession, String geneId) {
+        Experiment<Cell> experiment = experimentTrader.getPublicExperiment(experimentAccession);
+
+        JsonObject experimentAttributes = GSON.toJsonTree(experimentAttributesService.getAttributes(experiment)).getAsJsonObject();
+        experimentAttributes.addProperty("url", createExperimentPageURL(experimentAccession, geneId));
+
+        return experimentAttributes;
     }
 
 }

@@ -7,11 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import java.util.Arrays;
@@ -37,7 +33,7 @@ public class GeneSearchServiceTest {
 
     @Before
     public void setUp() {
-        subject = new GeneSearchService(geneSearchServiceDaoMock, experimentTraderMock, experimentAttributesServiceMock);
+        subject = new GeneSearchService(geneSearchServiceDaoMock);
     }
 
     @Test
@@ -53,27 +49,6 @@ public class GeneSearchServiceTest {
         assertThat(result)
                 .isNotEmpty()
                 .containsOnlyKeys("E-MTAB-0000", "E-MTAB-0001", "E-MTAB-0002");
-    }
-
-    @Test
-    public void retrievesExperimentInformation() {
-        String experimentAccession = "E-MTAB-001";
-        Experiment<Cell> mockExperiment = MockExperiment.createSingleCellBaselineExperiment(experimentAccession);
-
-        when(experimentTraderMock.getPublicExperiment(experimentAccession)).thenReturn(mockExperiment);
-        when(experimentAttributesServiceMock.getAttributes(mockExperiment)).thenReturn(ImmutableMap.of(
-                "experimentAccession", experimentAccession,
-                "type", mockExperiment.getType().getHumanDescription()
-        ));
-
-        Map<String, Object> result = subject.getExperimentInformation(experimentAccession);
-
-        assertThat(result)
-                .isNotEmpty()
-                .containsKeys("experimentAccession", "type")
-                .extracting("experimentAccession", "type")
-                .contains(experimentAccession, ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE.getHumanDescription());
-
     }
 
     @Test
