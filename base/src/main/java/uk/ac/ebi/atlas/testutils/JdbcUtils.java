@@ -64,9 +64,16 @@ public class JdbcUtils {
 
     public String fetchRandomCellFromExperiment(String experimentAccession) {
         return jdbcTemplate.queryForObject(
-                "SELECT cell_id FROM scxa_tsne WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
+                "SELECT cell_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
                 String.class,
                 experimentAccession);
+    }
+
+    public List<String> fetchRandomListOfCells(int numberOfCells) {
+        return jdbcTemplate.queryForList(
+                "SELECT cell_id FROM scxa_analytics ORDER BY RANDOM() LIMIT ?",
+                String.class,
+                numberOfCells);
     }
 
     public int fetchRandomPerplexityFromExperimentTSne(String experimentAccession) {

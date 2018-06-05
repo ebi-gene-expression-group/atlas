@@ -19,7 +19,7 @@ import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +55,7 @@ public class ExperimentAttributesServiceTest {
         when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment("FOOBAR");
-        HashMap<String, Object> result = subject.getAttributes(experiment);
+        Map<String, Object> result = subject.getAttributes(experiment);
 
         assertThat(result)
                 .containsKeys(BASELINE_EXPERIMENT_ATTRIBUTES)
@@ -75,7 +75,7 @@ public class ExperimentAttributesServiceTest {
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(Lists.emptyList(), dois);
 
-        HashMap<String, Object> result = subject.getAttributes(experiment);
+        Map<String, Object> result = subject.getAttributes(experiment);
 
         assertThat(result).extracting("publications").isNotEmpty();
     }
@@ -90,7 +90,7 @@ public class ExperimentAttributesServiceTest {
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(pubmedIds, Lists.emptyList());
 
-        HashMap<String, Object> result = subject.getAttributes(experiment);
+        Map<String, Object> result = subject.getAttributes(experiment);
 
         assertThat(result).extracting("publications").isNotEmpty();
     }
@@ -100,7 +100,7 @@ public class ExperimentAttributesServiceTest {
         DifferentialExperiment experiment = MockExperiment.createDifferentialExperiment();
         when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
-        HashMap<String, Object> result = subject.getAttributes(experiment);
+        Map<String, Object> result = subject.getAttributes(experiment);
 
         assertThat(result)
                 .containsKeys(BASELINE_EXPERIMENT_ATTRIBUTES)
@@ -113,7 +113,7 @@ public class ExperimentAttributesServiceTest {
         MicroarrayExperiment experiment = MockExperiment.createMicroarrayExperiment();
         when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
-        HashMap<String, Object> result = subject.getAttributes(experiment);
+        Map<String, Object> result = subject.getAttributes(experiment);
 
         assertThat(result)
                 .containsKeys(BASELINE_EXPERIMENT_ATTRIBUTES)
