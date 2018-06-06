@@ -2,13 +2,23 @@ package uk.ac.ebi.atlas.testutils;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
+
+import javax.inject.Inject;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.List;
 
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
+
 @Component
 public class JdbcUtils {
     private JdbcTemplate jdbcTemplate;
+
+    @Inject
+    SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
 
     public JdbcUtils(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -55,11 +65,19 @@ public class JdbcUtils {
                 String.class);
     }
 
-    public String fetchRandomGeneFromExperiment(String experimentAccession) {
+    public String fetchRandomGeneFromSingleCellExperiment(String experimentAccession) {
          return jdbcTemplate.queryForObject(
                  "SELECT gene_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
                  String.class,
                  experimentAccession);
+    }
+
+    public String fetchRandomGeneFromExpressionAtlasExperiment() {
+        AnalyticsCollectionProxy analyticsCollectionProxy = solrCloudCollectionProxyFactory.createAnalyticsCollectionProxy();
+        SolrQueryBuilder<AnalyticsCollectionProxy> queryBuilder = new SolrQueryBuilder<>();
+        queryBuilder.setFieldList(BIOENTITY_IDENTIFIER);
+        queryBuilder.setRows(10000);
+        return analyticsCollectionProxy.query(queryBuilder).getResults().get(0).getFieldValue("bioentity_identifier").toString();
     }
 
     public String fetchRandomCellFromExperiment(String experimentAccession) {

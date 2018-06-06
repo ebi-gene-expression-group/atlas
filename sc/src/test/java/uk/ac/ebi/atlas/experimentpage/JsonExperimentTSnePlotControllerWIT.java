@@ -50,7 +50,7 @@ class JsonExperimentTSnePlotControllerWIT {
     void validJsonForExpressedGeneId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
-        String geneId = jdbcTestUtils.fetchRandomGeneFromExperiment(experimentAccession);
+        String geneId = jdbcTestUtils.fetchRandomGeneFromSingleCellExperiment(experimentAccession);
 
         this.mockMvc
                 .perform(get(

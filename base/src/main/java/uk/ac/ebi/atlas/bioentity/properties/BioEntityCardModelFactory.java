@@ -65,6 +65,8 @@ public class BioEntityCardModelFactory {
         result.put("bioentityProperties",
                 GSON.toJson(bioentityProperties(identifier, species, orderedPropertyNames, propertyValuesByType)));
 
+        result.put("gene_id",identifier);
+
         return result;
 
     }
