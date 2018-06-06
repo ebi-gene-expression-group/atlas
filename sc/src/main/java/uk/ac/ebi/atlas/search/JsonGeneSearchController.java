@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
-import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import java.util.HashMap;
@@ -63,14 +62,14 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 JsonObject resultEntry = new JsonObject();
 
                 JsonObject experimentAttributes = getExperimentInformation(experimentAccession, geneId);
-                JsonArray facetsJson = convertFacetModel(factorFacets.getOrDefault(experimentAccession, new HashMap<>()));
+                JsonArray facets = convertFacetModel(factorFacets.getOrDefault(experimentAccession, new HashMap<>()));
                 if(markerGeneFacets.containsKey(experimentAccession)) {
-                    facetsJson.add(facetValueObject("Marker genes", "Experiments with marker genes"));
+                    facets.add(facetValueObject("Marker genes", "Experiments with marker genes"));
                     experimentAttributes.add("markerGenes", convertMarkerGeneModel(experimentAccession, geneId, markerGeneFacets.get(experimentAccession)));
                 }
 
                 resultEntry.add("element", experimentAttributes);
-                resultEntry.add("facets",  facetsJson);
+                resultEntry.add("facets",  facets);
 
                 results.add(resultEntry);
             });
