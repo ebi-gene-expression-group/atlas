@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,9 +78,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
         resultObject.add("results", results);
 
-        JsonArray checkboxes = new JsonArray();
-        checkboxes.add("Marker genes");
-        resultObject.add("checkboxFacetGroups", checkboxes);
+        resultObject.add("checkboxFacetGroups",  GSON.toJsonTree(Arrays.asList("Marker genes", "Species")));
 
         return GSON.toJson(resultObject);
     }
