@@ -1,6 +1,10 @@
 package uk.ac.ebi.atlas.model.experiment;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -8,7 +12,13 @@ import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 /**
  *  ExperimentDesign stores factors and characteristics per _assay_ and other information

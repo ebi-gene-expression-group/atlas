@@ -15,7 +15,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.*;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.DESCRIPTION;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.INTERPRO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PATHWAYID;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PO;
 
 @Named
 public class GeneSetPropertyService {

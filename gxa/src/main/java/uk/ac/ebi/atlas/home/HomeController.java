@@ -9,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesInfo;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesService;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
+import uk.ac.ebi.atlas.species.services.PopularSpeciesInfo;
+import uk.ac.ebi.atlas.species.services.PopularSpeciesService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;

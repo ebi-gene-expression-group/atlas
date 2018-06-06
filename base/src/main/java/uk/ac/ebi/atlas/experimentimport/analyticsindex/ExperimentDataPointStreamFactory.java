@@ -7,19 +7,19 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInpu
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
-import uk.ac.ebi.atlas.model.analyticsindex.MicroarrayExperimentDataPoint;
-import uk.ac.ebi.atlas.model.analyticsindex.MicroarrayExperimentDataPointStream;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.ConditionsLookupService;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPointStream;
 import uk.ac.ebi.atlas.model.analyticsindex.DifferentialExperimentDataPoint;
 import uk.ac.ebi.atlas.model.analyticsindex.DifferentialExperimentDataPointStream;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
+import uk.ac.ebi.atlas.model.analyticsindex.MicroarrayExperimentDataPoint;
+import uk.ac.ebi.atlas.model.analyticsindex.MicroarrayExperimentDataPointStream;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.ConditionsLookupService;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.inject.Inject;
 import javax.inject.Named;

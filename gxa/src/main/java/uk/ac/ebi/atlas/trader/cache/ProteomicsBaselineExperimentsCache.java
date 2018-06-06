@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.trader.cache;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.cache.LoadingCache;
 import org.springframework.beans.factory.annotation.Qualifier;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;

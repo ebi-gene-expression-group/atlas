@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.trader.ContrastTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.Null;
 import java.util.Optional;
 import java.util.function.Function;
 

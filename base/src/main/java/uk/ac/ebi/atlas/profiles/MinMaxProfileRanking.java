@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.profiles;
 
+import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Comparator;

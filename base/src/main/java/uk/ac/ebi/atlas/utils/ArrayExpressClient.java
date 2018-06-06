@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.utils;
 
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
 import org.xml.sax.InputSource;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 
 import javax.inject.Inject;
 import javax.inject.Named;

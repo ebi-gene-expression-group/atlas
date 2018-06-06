@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;

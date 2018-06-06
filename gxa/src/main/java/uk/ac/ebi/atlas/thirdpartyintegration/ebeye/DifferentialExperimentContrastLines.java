@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
+import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
-import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;

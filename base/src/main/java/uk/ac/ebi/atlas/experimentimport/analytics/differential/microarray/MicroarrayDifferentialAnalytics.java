@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
 import com.google.common.base.MoreObjects;
-import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import com.google.common.base.Objects;
+import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 
 public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
 

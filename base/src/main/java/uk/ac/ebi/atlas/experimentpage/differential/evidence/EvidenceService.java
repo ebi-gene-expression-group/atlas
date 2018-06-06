@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -30,7 +29,6 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;

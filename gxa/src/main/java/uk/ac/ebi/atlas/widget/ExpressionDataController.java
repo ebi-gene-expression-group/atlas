@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.collect.ImmutableMap;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.solr.analytics.AnalyticsSearchService;
 
 import javax.inject.Inject;

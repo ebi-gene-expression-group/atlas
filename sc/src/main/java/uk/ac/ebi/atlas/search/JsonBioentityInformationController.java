@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.http.MediaType;

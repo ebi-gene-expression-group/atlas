@@ -22,7 +22,11 @@ import java.util.Set;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.*;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.DESCRIPTION;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.DESIGN_ELEMENT;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PO;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Named

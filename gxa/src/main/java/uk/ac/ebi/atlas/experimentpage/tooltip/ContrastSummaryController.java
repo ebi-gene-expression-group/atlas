@@ -1,18 +1,18 @@
 package uk.ac.ebi.atlas.experimentpage.tooltip;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummary;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.inject.Inject;
 

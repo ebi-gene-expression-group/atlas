@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.trader.cache.loader;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperimentBuilder;

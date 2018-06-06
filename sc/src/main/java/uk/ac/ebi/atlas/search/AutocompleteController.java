@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrBioentitiesSuggesterService;
+
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController

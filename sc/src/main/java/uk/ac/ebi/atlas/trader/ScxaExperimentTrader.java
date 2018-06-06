@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.trader;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
-import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;

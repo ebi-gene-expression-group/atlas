@@ -12,7 +12,7 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
 
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.*;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller

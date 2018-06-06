@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;

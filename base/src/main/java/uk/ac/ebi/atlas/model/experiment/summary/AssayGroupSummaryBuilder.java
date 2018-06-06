@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.model.experiment.summary;
 
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 
 import java.util.HashSet;
 import java.util.Map;

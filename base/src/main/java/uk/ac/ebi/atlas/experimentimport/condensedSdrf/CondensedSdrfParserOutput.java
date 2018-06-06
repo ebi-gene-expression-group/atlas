@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.species.Species;
 
 public class CondensedSdrfParserOutput {
 

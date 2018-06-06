@@ -5,9 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.apache.commons.lang3.StringUtils.strip;
-import static uk.ac.ebi.atlas.utils.StringUtil.quoteIfMoreThanOneWord;
-
 public class StringArrayUtil {
 
     public static String[] filterBySubstring(String[] strings, String substring) {

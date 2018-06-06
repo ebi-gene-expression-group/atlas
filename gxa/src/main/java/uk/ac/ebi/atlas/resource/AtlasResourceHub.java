@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.resource;
 
-import uk.ac.ebi.atlas.model.resource.ResourceType;
 import com.google.gson.JsonArray;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.resource.ExternalImage;
 import uk.ac.ebi.atlas.model.resource.ContrastImage;
+import uk.ac.ebi.atlas.model.resource.ExternalImage;
+import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import javax.inject.Inject;
 import javax.inject.Named;

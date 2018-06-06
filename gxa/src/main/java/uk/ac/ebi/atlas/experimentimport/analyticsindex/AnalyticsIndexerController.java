@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
 import java.io.IOException;

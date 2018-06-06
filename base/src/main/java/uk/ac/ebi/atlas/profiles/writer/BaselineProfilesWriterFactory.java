@@ -5,16 +5,11 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.search.SearchDescription;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Named;
-import java.io.Writer;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static org.apache.commons.lang3.StringUtils.wrap;
 
 @Named
 public class BaselineProfilesWriterFactory<Unit extends ExpressionUnit.Absolute> extends ProfilesWriterFactory<AssayGroup, BaselineExpression,

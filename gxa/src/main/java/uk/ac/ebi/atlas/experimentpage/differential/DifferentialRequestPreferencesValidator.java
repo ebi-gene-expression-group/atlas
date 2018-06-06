@@ -1,11 +1,11 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 public class DifferentialRequestPreferencesValidator implements Validator {
 

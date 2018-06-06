@@ -6,9 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,10 +22,6 @@ import static org.mockito.Mockito.when;
 public class GeneSearchServiceTest {
     @Mock
     private GeneSearchServiceDao geneSearchServiceDaoMock;
-    @Mock
-    private ScxaExperimentTrader experimentTraderMock;
-    @Mock
-    private ExperimentAttributesService experimentAttributesServiceMock;
 
     private GeneSearchService subject;
 

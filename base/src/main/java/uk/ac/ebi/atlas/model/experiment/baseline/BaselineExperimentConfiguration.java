@@ -5,7 +5,10 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BaselineExperimentConfiguration {

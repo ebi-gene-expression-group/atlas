@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

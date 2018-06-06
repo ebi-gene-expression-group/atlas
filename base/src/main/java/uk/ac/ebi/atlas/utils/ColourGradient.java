@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Preconditions;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class ColourGradient {
 

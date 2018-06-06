@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;

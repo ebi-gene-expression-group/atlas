@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.commons.writers;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
-import com.google.common.base.Preconditions;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;

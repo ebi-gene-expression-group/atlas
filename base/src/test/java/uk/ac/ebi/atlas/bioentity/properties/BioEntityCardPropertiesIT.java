@@ -11,16 +11,7 @@ import uk.ac.ebi.atlas.species.SpeciesFactory;
 import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSFAMILY_DESCRIPTION;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSGENE;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSPROTEIN;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSTRANSCRIPT;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.FLYBASE_GENE_ID;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PATHWAYID;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.UNKNOWN;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.WBPSGENE;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.WBPSPROTEIN;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.WBPSTRANSCRIPT;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")

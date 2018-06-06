@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.experimentimport.efo;
 
-import uk.ac.ebi.atlas.utils.StringUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
+import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;

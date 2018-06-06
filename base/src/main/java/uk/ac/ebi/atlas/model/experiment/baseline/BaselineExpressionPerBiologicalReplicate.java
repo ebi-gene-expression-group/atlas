@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import org.apache.commons.math.stat.descriptive.rank.Median;
 import org.apache.commons.math.stat.descriptive.rank.Percentile;
 import uk.ac.ebi.atlas.model.BiologicalReplicate;

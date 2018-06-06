@@ -7,9 +7,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.web.interceptors.AdminInterceptor;
 import uk.ac.ebi.atlas.web.interceptors.TimingInterceptor;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.UnparseableSemanticQueryException;

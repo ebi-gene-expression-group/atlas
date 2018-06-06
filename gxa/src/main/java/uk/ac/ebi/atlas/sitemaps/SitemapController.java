@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.sitemaps;
 
-import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -9,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.solr.analytics.AnalyticsSearchService;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
+import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;

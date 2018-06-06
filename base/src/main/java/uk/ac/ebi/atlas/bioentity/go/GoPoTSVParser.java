@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.bioentity.go;
 
-import uk.ac.ebi.atlas.model.OntologyTerm;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import java.io.IOException;
 import java.util.Collection;

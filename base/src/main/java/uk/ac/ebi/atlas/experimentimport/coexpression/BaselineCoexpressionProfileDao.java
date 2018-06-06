@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.experimentimport.coexpression;
 
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;

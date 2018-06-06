@@ -1,13 +1,17 @@
 package uk.ac.ebi.atlas.model.experiment.summary;
 
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 public class ContrastSummaryBuilder {
 

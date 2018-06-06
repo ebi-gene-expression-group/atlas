@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.utils.StringArrayUtil;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import java.io.IOException;
 import java.io.Reader;

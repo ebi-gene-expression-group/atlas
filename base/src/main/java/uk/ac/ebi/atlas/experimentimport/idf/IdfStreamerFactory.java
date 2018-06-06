@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.idf;
 
-import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.readers.ArrayExpressIdfStreamerFactory;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;

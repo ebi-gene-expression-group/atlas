@@ -3,10 +3,10 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.io.IOException;

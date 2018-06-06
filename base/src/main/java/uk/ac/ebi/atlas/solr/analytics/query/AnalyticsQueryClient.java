@@ -1,12 +1,5 @@
 package uk.ac.ebi.atlas.solr.analytics.query;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.utils.ResourceUtils;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.jayway.jsonpath.JsonPath;
@@ -17,8 +10,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.utils.ResourceUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
-
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.CONDITIONS_SEARCH;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.DEFAULT_FACTOR_TYPE;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;

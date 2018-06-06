@@ -9,7 +9,11 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
-import uk.ac.ebi.atlas.trader.cache.loader.*;
+import uk.ac.ebi.atlas.trader.cache.loader.DifferentialExperimentFactory;
+import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
+import uk.ac.ebi.atlas.trader.cache.loader.MicroarrayExperimentFactory;
+import uk.ac.ebi.atlas.trader.cache.loader.ProteomicsBaselineExperimentFactory;
+import uk.ac.ebi.atlas.trader.cache.loader.RnaSeqBaselineExperimentFactory;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;

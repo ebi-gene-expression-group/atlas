@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.controllers.rest.admin;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.solr.bioentities.admin.BioentitiesIndexer;
 import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.BioentityIndexMonitor;
-import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @Scope("request")

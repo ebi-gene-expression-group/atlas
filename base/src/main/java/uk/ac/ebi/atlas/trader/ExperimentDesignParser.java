@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.trader;
 
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 

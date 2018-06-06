@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.solr.analytics;
 
 import com.google.common.collect.ImmutableList;
-import net.minidev.json.JSONArray;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import com.google.common.collect.ImmutableSet;
 import com.jayway.jsonpath.JsonPath;
+import net.minidev.json.JSONArray;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;

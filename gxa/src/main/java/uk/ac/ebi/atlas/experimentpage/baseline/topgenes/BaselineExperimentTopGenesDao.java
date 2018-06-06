@@ -17,11 +17,11 @@ import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator.TopStrea
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source.FacetStreamBuilder;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.AVERAGE_EXPRESSION_KEY;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.GENE_KEY;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.SPECIFICITY_KEY;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 
 // Produces streams of Solr tuples which contain gene IDs that match the search criteria in the experiment page
 // sidebar. They include average expression over selected assay groups and specificity (counts) if specific is checked.

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.springframework.stereotype.Component;
@@ -10,7 +9,6 @@ import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
-import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 
 import java.util.Collection;
 import java.util.Collections;

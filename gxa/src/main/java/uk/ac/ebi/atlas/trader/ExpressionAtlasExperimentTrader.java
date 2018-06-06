@@ -6,7 +6,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.trader.cache.*;
+import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;

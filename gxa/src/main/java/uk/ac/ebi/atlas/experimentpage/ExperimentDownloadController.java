@@ -1,31 +1,27 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.*;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.alreadyForwardedButNoOtherControllerHandledTheRequest;
 import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.buildForwardURL;
 
