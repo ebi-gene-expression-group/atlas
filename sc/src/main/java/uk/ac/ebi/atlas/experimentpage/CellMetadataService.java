@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.springframework.stereotype.Component;
@@ -59,7 +60,7 @@ public class CellMetadataService {
 
         SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
                 .stream()
-                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName((attribute))))
+                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName((attribute)), attribute))
                 .toArray(SingleCellAnalyticsSchemaField[]::new);
 
         return getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields)
@@ -96,7 +97,7 @@ public class CellMetadataService {
         return queryResult.getOrDefault(SingleCellAnalyticsCollectionProxy.FACTORS.name(), Collections.emptyList())
                 .stream()
                 .filter(factor -> !factor.toString().equalsIgnoreCase("single_cell_identifier"))
-                .map(factor -> SingleCellAnalyticsCollectionProxy.factorAsSchemaField(factor.toString()))
+                .map(factor -> SingleCellAnalyticsCollectionProxy.factorAsSchemaField(factor.toString(), StringUtils.capitalize(factor.toString())))
                 .toArray(SingleCellAnalyticsSchemaField[]::new);
     }
 
