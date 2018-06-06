@@ -115,10 +115,9 @@ public class GeneSearchServiceDao {
                         subFacetValues -> subFacetValues.get("val").toString(),
                         subFacetValues -> subFacetFields
                                 .stream()
-                                .map(SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField::name)
                                 .collect(Collectors.toMap(
-                                        subFacetField -> subFacetField,
-                                        subFacetField -> getValuesForFacetField(subFacetValues, subFacetField)
+                                        SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField::displayName,
+                                        subFacetField -> getValuesForFacetField(subFacetValues, subFacetField.name())
                                 ))
                 ));
     }

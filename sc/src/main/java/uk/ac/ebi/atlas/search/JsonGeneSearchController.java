@@ -87,8 +87,8 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
     /** The following two methods convert this model:
      *      {
-     *          cell_type: ["stem", "enterocyte"],
-     *          organism_part: ["small intestine"]
+     *          "Cell type": ["stem", "enterocyte"],
+     *          "Organism part": ["small intestine"]
      *      }
      * into:
      *      [
@@ -123,7 +123,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     private JsonObject facetValueObject(String group, String value) {
         JsonObject result = new JsonObject();
 
-        result.addProperty("group", SchemaFieldNameUtils.characteristicFieldNameToDisplayName(group));
+        result.addProperty("group", group);
         result.addProperty("value", value);
         result.addProperty("label", StringUtils.capitalize(value));
 

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_ORGANISM_PART;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_SPECIES;
 
 @Component
 public class GeneSearchService {
@@ -24,7 +25,7 @@ public class GeneSearchService {
 
     // Returns inferred cell types and organism parts for each experiment accession
     public Map<String, Map<String, List<String>>> getFacets(List<String> cellIds) {
-        return geneSearchServiceDao.getFacets(cellIds, CHARACTERISTIC_INFERRED_CELL_TYPE, CHARACTERISTIC_ORGANISM_PART);
+        return geneSearchServiceDao.getFacets(cellIds, CHARACTERISTIC_INFERRED_CELL_TYPE, CHARACTERISTIC_ORGANISM_PART, CHARACTERISTIC_SPECIES);
     }
 
     public Map<String, Map<Integer, List<Integer>>> getMarkerGeneProfile(String geneId) {
