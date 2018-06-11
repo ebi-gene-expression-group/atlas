@@ -13,9 +13,9 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
-import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,14 +63,14 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 JsonObject resultEntry = new JsonObject();
 
                 JsonObject experimentAttributes = getExperimentInformation(experimentAccession, geneId);
-                JsonArray facetsJson = convertFacetModel(factorFacets.getOrDefault(experimentAccession, new HashMap<>()));
+                JsonArray facets = convertFacetModel(factorFacets.getOrDefault(experimentAccession, new HashMap<>()));
                 if(markerGeneFacets.containsKey(experimentAccession)) {
-                    facetsJson.add(facetValueObject("Marker genes", "Experiments with marker genes"));
+                    facets.add(facetValueObject("Marker genes", "Experiments with marker genes"));
                     experimentAttributes.add("markerGenes", convertMarkerGeneModel(experimentAccession, geneId, markerGeneFacets.get(experimentAccession)));
                 }
 
                 resultEntry.add("element", experimentAttributes);
-                resultEntry.add("facets",  facetsJson);
+                resultEntry.add("facets",  facets);
 
                 results.add(resultEntry);
             });
@@ -78,17 +78,15 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
         resultObject.add("results", results);
 
-        JsonArray checkboxes = new JsonArray();
-        checkboxes.add("Marker genes");
-        resultObject.add("checkboxFacetGroups", checkboxes);
+        resultObject.add("checkboxFacetGroups",  GSON.toJsonTree(Arrays.asList("Marker genes", "Species")));
 
         return GSON.toJson(resultObject);
     }
 
     /** The following two methods convert this model:
      *      {
-     *          cell_type: ["stem", "enterocyte"],
-     *          organism_part: ["small intestine"]
+     *          "Cell type": ["stem", "enterocyte"],
+     *          "Organism part": ["small intestine"]
      *      }
      * into:
      *      [
@@ -123,7 +121,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     private JsonObject facetValueObject(String group, String value) {
         JsonObject result = new JsonObject();
 
-        result.addProperty("group", SchemaFieldNameUtils.characteristicFieldNameToDisplayName(group));
+        result.addProperty("group", group);
         result.addProperty("value", value);
         result.addProperty("label", StringUtils.capitalize(value));
 

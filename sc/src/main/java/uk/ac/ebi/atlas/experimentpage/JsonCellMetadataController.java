@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
@@ -40,16 +39,15 @@ public class JsonCellMetadataController extends JsonExperimentController {
 
         cellMetadataService
                 .getInferredCellType(experiment.getAccession(), cellId)
-                .ifPresent(inferredCellType -> result.add(getMetadataObject("Inferred cell type", inferredCellType)));
+                .ifPresent(inferredCellType -> result.add(createMetadataJson("Inferred cell type", inferredCellType)));
 
         cellMetadataService.getFactors(experiment.getAccession(), cellId).forEach((factorName, factorValue) ->
-                result.add(
-                        getMetadataObject(SchemaFieldNameUtils.factorFieldNameToDisplayName(factorName), factorValue)));
+                result.add(createMetadataJson(factorName, factorValue)));
 
         return result.toString();
     }
 
-    private JsonObject getMetadataObject(String name, String value) {
+    private JsonObject createMetadataJson(String name, String value) {
         JsonObject result = new JsonObject();
 
         result.addProperty("displayName", name);

@@ -21,7 +21,7 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
-import static uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils.attributeNameToFieldName;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
 
 @Component
 public class CellMetadataService {
@@ -45,7 +45,7 @@ public class CellMetadataService {
         return getCellQueryResultForMultiValueFields(experimentAccession, cellId, getFactorFieldNames(experimentAccession, cellId))
                 .entrySet().stream()
                 .collect(toMap(
-                        Map.Entry::getKey,
+                        entry -> SingleCellAnalyticsCollectionProxy.factorFieldNameToDisplayName(entry.getKey()),
                         entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 
@@ -59,7 +59,7 @@ public class CellMetadataService {
 
         SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
                 .stream()
-                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName((attribute))))
+                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName(attribute)))
                 .toArray(SingleCellAnalyticsSchemaField[]::new);
 
         return getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields)

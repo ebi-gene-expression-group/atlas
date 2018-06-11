@@ -64,6 +64,6 @@ public class JsonGeneSearchControllerWIT {
                 .andExpect(jsonPath("$.results[0].facets[0].group", isA(String.class)))
                 .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
                 .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
-                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes")));
+                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes", "Species")));
     }
 }
