@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +64,7 @@ public class GeneSearchServiceTest {
 
     @Test
     public void returnsFacets() {
-        when(geneSearchServiceDaoMock.getFacets(anyList(), any(SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField.class)))
+        when(geneSearchServiceDaoMock.getFacets(anyList(), any(SingleCellAnalyticsSchemaField.class)))
                 .thenReturn(ImmutableMap.of(
                         "E-MTAB-0000", ImmutableMap.of("inferred_cell_type", Arrays.asList("neuron", "stem cell")),
                         "E-MTAB-0001", ImmutableMap.of(

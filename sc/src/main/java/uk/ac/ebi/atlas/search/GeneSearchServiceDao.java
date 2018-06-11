@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import java.sql.ResultSet;
@@ -97,14 +98,14 @@ public class GeneSearchServiceDao {
 
 
     // Returns inferred cell types and organism parts for each experiment accession
-    public Map<String, Map<String, List<String>>> getFacets(List<String> cellIds, SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField... singleCellAnalyticsSchemaFields) {
-        List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> subFacetFields = Arrays.asList(singleCellAnalyticsSchemaFields);
+    public Map<String, Map<String, List<String>>> getFacets(List<String> cellIds, SingleCellAnalyticsSchemaField... singleCellAnalyticsSchemaFields) {
+        List<SingleCellAnalyticsSchemaField> subFacetFields = Arrays.asList(singleCellAnalyticsSchemaFields);
 
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> queryBuilder =
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
                         .addQueryFieldByTerm(CELL_ID, cellIds)
                         .setFacetField(EXPERIMENT_ACCESSION)
-                        .setSubFacetList(subFacetFields.toArray(new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField[0]))
+                        .setSubFacetList(subFacetFields.toArray(new SingleCellAnalyticsSchemaField[0]))
                         .setRows(0);
 
         ArrayList<SimpleOrderedMap> resultsByExperiment = (ArrayList<SimpleOrderedMap>) singleCellAnalyticsCollectionProxy.query(queryBuilder).getResponse().findRecursive("facets", EXPERIMENT_ACCESSION.name(), "buckets");
@@ -116,7 +117,7 @@ public class GeneSearchServiceDao {
                         subFacetValues -> subFacetFields
                                 .stream()
                                 .collect(Collectors.toMap(
-                                        SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField::displayName,
+                                        SingleCellAnalyticsSchemaField::displayName,
                                         subFacetField -> getValuesForFacetField(subFacetValues, subFacetField.name())
                                 ))
                 ));
