@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
-import static uk.ac.ebi.atlas.solr.utils.SchemaFieldNameUtils.attributeNameToFieldName;
+import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
 
 @Component
 public class CellMetadataService {
@@ -46,7 +45,7 @@ public class CellMetadataService {
         return getCellQueryResultForMultiValueFields(experimentAccession, cellId, getFactorFieldNames(experimentAccession, cellId))
                 .entrySet().stream()
                 .collect(toMap(
-                        Map.Entry::getKey,
+                        entry -> SingleCellAnalyticsCollectionProxy.factorFieldNameToDisplayName(entry.getKey()),
                         entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 
