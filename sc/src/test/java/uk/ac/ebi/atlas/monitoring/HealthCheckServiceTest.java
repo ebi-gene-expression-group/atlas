@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.dao.DataAccessException;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.solr.cloud.admin.SolrCloudAdminProxy;
 
