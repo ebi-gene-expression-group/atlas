@@ -9,7 +9,7 @@ const render = (options, mountNodeId) => {
     <FetchLoader
       host={options.atlasUrl}
       resource={options.resource}
-      ResultElementComponent={ExperimentCard}
+      ResultElementClass={ExperimentCard}
       noResultsMessage={options.noResultsMessage}
       resultsMessage={options.resultsMessage}
     />,
