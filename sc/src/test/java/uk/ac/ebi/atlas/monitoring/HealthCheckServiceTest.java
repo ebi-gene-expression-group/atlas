@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.dao.DataAccessException;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.solr.cloud.admin.SolrCloudAdminProxy;
 
@@ -51,5 +52,18 @@ public class HealthCheckServiceTest {
         when(solrCloudAdminProxyMock.areCollectionsUp(anyList(), any())).thenThrow(RuntimeException.class);
 
         assertThat(subject.isSolrUp()).isFalse();
+    }
+
+    @Test
+    public void experimentsDatabaseIsUp() {
+        when(experimentDaoMock.countExperiments()).thenReturn(9);
+
+        assertThat(subject.isDatabaseUp()).isTrue();
+    }
+    @Test
+    public void noExperimentsInDatabase() {
+        when(experimentDaoMock.countExperiments()).thenReturn(0);
+
+        assertThat(subject.isDatabaseUp()).isFalse();
     }
 }

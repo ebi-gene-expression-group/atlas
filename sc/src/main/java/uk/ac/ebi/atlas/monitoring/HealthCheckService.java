@@ -30,6 +30,11 @@ public class HealthCheckService {
     }
 
     public boolean isDatabaseUp() {
-        return experimentDao.countExperiments() > 0;
+        try {
+            return experimentDao.countExperiments() > 0;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return false;
+        }
     }
 }
