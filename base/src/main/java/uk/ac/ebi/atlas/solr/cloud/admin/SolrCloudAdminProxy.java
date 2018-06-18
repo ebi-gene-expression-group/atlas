@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,28 +25,56 @@ public class SolrCloudAdminProxy {
         cloudSolrClient = new CloudSolrClient.Builder().withZkHost(zkHost).build();
     }
 
-    // TODO should implement a method that checks multiple collections at the same time
-    public boolean isCollectionUp(String collectionName, boolean isAlias) throws IOException, SolrServerException {
+    public boolean areCollectionsUp(List<String> collectionNames, String... aliasedCollectionNames) throws IOException, SolrServerException {
+        List<String> aliases = Arrays.asList(aliasedCollectionNames);
         SolrRequest request = new CollectionAdminRequest.ClusterStatus();
 
-        final NamedList<Object> response = cloudSolrClient.request(request);
+        ArrayList<String> allCollectionNames = new ArrayList<>(collectionNames);
 
-        if(isAlias) {
-            collectionName = getCollectionNameForAlias(response, collectionName);
-        }
+        NamedList<Object> response = cloudSolrClient.request(request);
 
-        LinkedHashMap collectionStatus = (LinkedHashMap) response.findRecursive("cluster", "collections", collectionName);
+        // Get real collection names for each alias
+        aliases.forEach(alias -> {
+            Optional<String> collectionNameForAlias = getCollectionNameForAlias(response, alias);
 
-        Stream<String> collectionShardStates = ((LinkedHashMap) collectionStatus.get("shards")).values().stream().map(x -> ((LinkedHashMap) x).get("state"));
+            collectionNameForAlias.ifPresent(allCollectionNames::add);
+        });
 
-        List<String> statuses = collectionShardStates.filter(x -> !x.equalsIgnoreCase("active")).collect(Collectors.toList());
+        List<String> statuses = allCollectionNames
+                .stream()
+                .map(collection -> getShardStatusesForCollection(response, collection))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
 
         return statuses.isEmpty();
     }
 
-    private String getCollectionNameForAlias(NamedList<Object> queryResponse, String alias) {
-        LinkedHashMap aliases = (LinkedHashMap) queryResponse.findRecursive("cluster", "aliases");
+    // Retrieves the collection name associated with an alias, e.g. the scxa-analytics alias returns scxa-analytics-v2
+    private Optional<String> getCollectionNameForAlias(NamedList<Object> response, String alias) {
+        LinkedHashMap aliases = (LinkedHashMap) response.findRecursive("cluster", "aliases");
 
-        return aliases.get(alias).toString();
+        Object collectionName = aliases.getOrDefault(alias, null);
+
+        if(collectionName != null) {
+            return Optional.of(collectionName.toString());
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    // Returns a list of statuses that are not "active" for each shard for a Solr collection.
+    private List<String> getShardStatusesForCollection(NamedList<Object> response, String collectionName) {
+        LinkedHashMap collectionStatus = (LinkedHashMap) response.findRecursive("cluster", "collections", collectionName);
+
+        Stream<String> collectionShardStates = ((LinkedHashMap) collectionStatus.get("shards"))
+                .values()
+                .stream()
+                .map(x -> ((LinkedHashMap) x).get("state"));
+
+        return collectionShardStates
+                .filter(x -> !x.equalsIgnoreCase("active"))
+                .collect(Collectors.toList());
+
     }
 }
