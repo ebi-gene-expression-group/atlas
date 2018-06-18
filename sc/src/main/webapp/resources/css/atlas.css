@@ -30,3 +30,9 @@ ul.clear {
 hr {
     border-bottom: 1px solid lightgrey;
 }
+
+#search-results-list input {
+    height: unset;
+    box-shadow: none;
+    margin: 0;
+}
