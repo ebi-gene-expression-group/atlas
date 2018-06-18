@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.solr.cloud.admin;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
@@ -34,11 +35,7 @@ public class SolrCloudAdminProxy {
         NamedList<Object> response = cloudSolrClient.request(request);
 
         // Get real collection names for each alias
-        aliases.forEach(alias -> {
-            Optional<String> collectionNameForAlias = getCollectionNameForAlias(response, alias);
-
-            collectionNameForAlias.ifPresent(allCollectionNames::add);
-        });
+        aliases.forEach(alias -> allCollectionNames.add(getCollectionNameForAlias(response, alias)));
 
         List<String> statuses = allCollectionNames
                 .stream()
@@ -50,16 +47,16 @@ public class SolrCloudAdminProxy {
     }
 
     // Retrieves the collection name associated with an alias, e.g. the scxa-analytics alias returns scxa-analytics-v2
-    private Optional<String> getCollectionNameForAlias(NamedList<Object> response, String alias) {
+    private String getCollectionNameForAlias(NamedList<Object> response, String alias) {
         LinkedHashMap aliases = (LinkedHashMap) response.findRecursive("cluster", "aliases");
 
         Object collectionName = aliases.getOrDefault(alias, null);
 
         if(collectionName != null) {
-            return Optional.of(collectionName.toString());
+            return collectionName.toString();
         }
         else {
-            return Optional.empty();
+            throw new RuntimeException("The alias " + alias + " does not match any collections in Solr");
         }
     }
 
@@ -67,14 +64,19 @@ public class SolrCloudAdminProxy {
     private List<String> getShardStatusesForCollection(NamedList<Object> response, String collectionName) {
         LinkedHashMap collectionStatus = (LinkedHashMap) response.findRecursive("cluster", "collections", collectionName);
 
-        Stream<String> collectionShardStates = ((LinkedHashMap) collectionStatus.get("shards"))
-                .values()
-                .stream()
-                .map(x -> ((LinkedHashMap) x).get("state"));
+        if (MapUtils.isEmpty(collectionStatus)) {
+            throw new RuntimeException("The collection " + collectionName + " does not exist in Solr");
+        }
+        else {
+            Stream<String> collectionShardStates = ((LinkedHashMap) collectionStatus.getOrDefault("shards", Stream.empty()))
+                    .values()
+                    .stream()
+                    .map(x -> ((LinkedHashMap) x).get("state"));
 
-        return collectionShardStates
-                .filter(x -> !x.equalsIgnoreCase("active"))
-                .collect(Collectors.toList());
+            return collectionShardStates
+                    .filter(x -> !x.equalsIgnoreCase("active"))
+                    .collect(Collectors.toList());
 
+        }
     }
 }
