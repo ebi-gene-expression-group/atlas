@@ -3554,10 +3554,30 @@ var FacetedSearchContainer = function (_React$Component) {
       return this._filterResults(mergedFacets).length === 0;
     }
   }, {
-    key: '_handleChange',
-    value: function _handleChange(facetGroup, selectedFacetsInGroup) {
+    key: '_disableEnabledFacetsWithNoResults',
+    value: function _disableEnabledFacetsWithNoResults(selectedFacets, facetGroup) {
       var _this2 = this;
 
+      return _lodash2.default.cloneDeep(this.state.facets).map(function (facet) {
+        return _extends({}, facet, {
+          disabled: facet.group !== facetGroup ? facet.disabled ? true : _this2._hasNoResults(selectedFacets, facet) : facet.disabled
+        });
+      });
+    }
+  }, {
+    key: '_enableDisabledFacetsWithResults',
+    value: function _enableDisabledFacetsWithResults(selectedFacets, facetGroup) {
+      var _this3 = this;
+
+      return _lodash2.default.cloneDeep(this.state.facets).map(function (facet) {
+        return _extends({}, facet, {
+          disabled: facet.group !== facetGroup ? facet.disabled ? _this3._hasNoResults(selectedFacets, facet) : false : facet.disabled
+        });
+      });
+    }
+  }, {
+    key: '_handleChange',
+    value: function _handleChange(facetGroup, selectedFacetsInGroup) {
       var _selectedFacets = _lodash2.default.defaultsDeep({}, this.state.selectedFacets);
       _selectedFacets[facetGroup] = selectedFacetsInGroup;
 
@@ -3570,20 +3590,24 @@ var FacetedSearchContainer = function (_React$Component) {
 
       var previousNumberOfSelectedFacetsInGroup = this.state.selectedFacets[facetGroup] ? this.state.selectedFacets[facetGroup].length : 0;
 
-      // if (_selectedFacets[facetGroup].length == previousNumberOfSelectedFacetsInGroup) // Unreachable !
-      var nextFacets = _selectedFacets[facetGroup].length > previousNumberOfSelectedFacetsInGroup ?
-      // Facet added: check enabled facets in other groups and disable them if they produce no results
-      _lodash2.default.cloneDeep(this.state.facets).map(function (facet) {
-        return _extends({}, facet, {
-          disabled: facet.group !== facetGroup ? facet.disabled ? true : _this2._hasNoResults(nextSelectedFacets, facet) : facet.disabled
-        });
-      }) :
-      // Facet removed: check disabled facets in other groups and enable them if they produce results
-      _lodash2.default.cloneDeep(this.state.facets).map(function (facet) {
-        return _extends({}, facet, {
-          disabled: facet.group !== facetGroup ? facet.disabled ? _this2._hasNoResults(nextSelectedFacets, facet) : false : facet.disabled
-        });
-      });
+      var nextFacets = {};
+      if (_selectedFacets[facetGroup].length > previousNumberOfSelectedFacetsInGroup) {
+        if (_selectedFacets[facetGroup].length === 1) {
+          // First facet in group selected: less results, disable enabled facets
+          nextFacets = this._disableEnabledFacetsWithNoResults(nextSelectedFacets, facetGroup);
+        } else {
+          // Add a second or subsequent facet to a group: more results, enable disabled facets
+          nextFacets = this._enableDisabledFacetsWithResults(nextSelectedFacets, facetGroup);
+        }
+      } else {
+        if (_selectedFacets[facetGroup].length === 0) {
+          // No facets in group selected: more results, enable disabled facets
+          nextFacets = this._enableDisabledFacetsWithResults(nextSelectedFacets, facetGroup);
+        } else {
+          // Facet has been deselected but others in group remain: less results, disable enabled facets
+          nextFacets = this._disableEnabledFacetsWithNoResults(nextSelectedFacets, facetGroup);
+        }
+      }
 
       this.setState({
         facets: nextFacets,
