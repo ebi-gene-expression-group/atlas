@@ -9,14 +9,20 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -140,5 +146,13 @@ public class GeneSearchServiceTest {
 
         assertThat(result.get("E-MTAB-0000")).containsKeys("species");
         assertThat(result.get("E-MTAB-0001")).containsKeys("species");
+    }
+
+    @Test
+    public void exceptionsThrownInParallelTasksAreWrapped() {
+        doThrow(new UncheckedIOException(new IOException())).when(geneSearchServiceDaoMock).fetchCellIds(anyString());
+
+        assertThatExceptionOfType(RuntimeException.class).isThrownBy(
+                () -> subject.getCellIdsInExperiments("ENSFOOBAR1")).withCauseInstanceOf(ExecutionException.class);
     }
 }
