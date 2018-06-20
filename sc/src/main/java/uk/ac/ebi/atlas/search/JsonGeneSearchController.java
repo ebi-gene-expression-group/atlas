@@ -47,7 +47,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         JsonObject resultObject = new JsonObject();
         JsonArray results = new JsonArray();
 
-        Map<String, List<String>> cellIds = geneSearchService.getCellIdsInExperiments(geneId);
+        Map<String, List<String>> cellIds = geneSearchService.getCellIdsInExperiments(geneId).get(geneId);
 
         if(!cellIds.isEmpty()) {
             List<String> allCellIds = cellIds
@@ -57,7 +57,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                     .collect(Collectors.toList());
 
             Map<String, Map<String, List<String>>> factorFacets = geneSearchService.getFacets(allCellIds);
-            Map<String, Map<Integer, List<Integer>>> markerGeneFacets = geneSearchService.getMarkerGeneProfile(geneId);
+            Map<String, Map<Integer, List<Integer>>> markerGeneFacets = geneSearchService.getMarkerGeneProfile(geneId).get(geneId);
 
             cellIds.forEach((experimentAccession, cells) -> {
                 JsonObject resultEntry = new JsonObject();
