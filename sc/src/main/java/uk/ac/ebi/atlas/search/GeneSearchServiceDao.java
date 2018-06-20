@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.search;
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollec
 
 @Component
 public class GeneSearchServiceDao {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchServiceDao.class);
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
@@ -47,9 +50,11 @@ public class GeneSearchServiceDao {
                     "WHERE gene_id=:gene_id AND private=FALSE";
     @Transactional(readOnly = true)
     public Map<String, List<String>> fetchCellIds(String geneId) {
+        LOGGER.debug("Fetching cell IDs for {}", geneId);
+
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
-                        "gene_id", geneId );
+                        "gene_id", geneId);
 
         return namedParameterJdbcTemplate.query(
                 SELECT_CELL_IDS_FOR_GENE_STATEMENT,
