@@ -1,7 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
-import '!style-loader!css-loader!./ExperimentCard.css'
+const ReadMoreButton = styled.button`
+  cursor: pointer;
+  color: #222;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  border-bottom-color: inherit;
+`
+
+// border: #777 solid 1px; Darker grey border
+const ExperimentCardDiv = styled.div`
+  border: #e6e6e6 solid 1px;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  
+  &:hover {
+    background-color: #eaeaea;
+  }
+`
 
 // Naive multi-line string clamping
 const truncate = (string) => {
@@ -44,7 +62,7 @@ class ExperimentCard extends React.Component {
       return <li><a href={markerGene.url}>View marker gene in clusters {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
     })
     return (
-      <div className={"experiment-card"}>
+      <ExperimentCardDiv>
       <span className={"label"}>
           {lastUpdated} | <i>{species}</i>
         </span>
@@ -68,14 +86,14 @@ class ExperimentCard extends React.Component {
             {descriptionShown}
             {
               isDescriptionTooLong(longDescription) &&
-              <button className={'read-more'}  onClick={this.setExpanded}>
+              <ReadMoreButton onClick={this.setExpanded}>
                 {!expanded ? `(Read more)`  : `(Read less)`}
-              </button>
+              </ReadMoreButton>
             }
           </p>
         }
 
-      </div>
+      </ExperimentCardDiv>
     )
   }
 }
