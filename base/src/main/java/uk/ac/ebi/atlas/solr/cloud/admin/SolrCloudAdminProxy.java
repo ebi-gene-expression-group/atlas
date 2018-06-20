@@ -49,7 +49,7 @@ public class SolrCloudAdminProxy {
     private String getCollectionNameForAlias(NamedList<Object> response, String alias) {
         LinkedHashMap aliases = (LinkedHashMap) response.findRecursive("cluster", "aliases");
 
-        Object collectionName = aliases.getOrDefault(alias, null);
+        Object collectionName = aliases.get(alias);
 
         if(collectionName != null) {
             return collectionName.toString();

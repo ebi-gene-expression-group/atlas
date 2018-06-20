@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.monitoring;
 
 import org.apache.solr.client.solrj.SolrServerException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.solr.cloud.admin.SolrCloudAdminProxy;
 
@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class HealthCheckServiceTest {
 
     @Mock
@@ -27,7 +27,7 @@ public class HealthCheckServiceTest {
 
     private HealthCheckService subject;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         subject = new HealthCheckService(solrCloudAdminProxyMock, experimentDaoMock);
     }

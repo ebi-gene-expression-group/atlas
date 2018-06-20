@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -33,11 +33,11 @@ public class SolrCloudAdminProxyIT {
 
     @Test
     public void invalidCollectionName() {
-        assertThrows(RuntimeException.class, () -> subject.areCollectionsUp(Collections.singletonList("foo")));
+        assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("foo")));
     }
 
     @Test
     public void invalidAlias() {
-        assertThrows(RuntimeException.class, () -> subject.areCollectionsUp(Collections.singletonList("bioentities"), "foo"));
+        assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("bioentities"), "foo"));
     }
 }
