@@ -24,7 +24,7 @@ public class DBSolrStatusControllerIT {
     private DBSolrStatusController subject;
 
     @Test
-    public void dbAndSolrStatus() throws Exception {
+    public void dbAndSolrStatus() {
         String message = subject.dbAndSolrStatus();
         Map<String, Object> status = GSON.fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
         // Or the unsafer(?) Map status = new Gson().fromJson(message, Map.class);

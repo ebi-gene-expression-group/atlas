@@ -1,10 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -15,8 +16,9 @@ import java.io.UncheckedIOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class TsnePlotSettingsServiceIT {
@@ -31,7 +33,7 @@ public class TsnePlotSettingsServiceIT {
 
     private TsnePlotSettingsService subject;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.subject = new TsnePlotSettingsService(dataFileHub, idfParser);
     }
@@ -46,9 +48,9 @@ public class TsnePlotSettingsServiceIT {
                 .doesNotHaveDuplicates();
     }
 
-    @Test(expected = UncheckedIOException.class)
+    @Test()
     public void getClustersForInvalidAccessionThrowsException() {
-        subject.getAvailableClusters("FOO");
+        assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(() -> subject.getAvailableClusters("FOO"));
     }
 
     @Test
