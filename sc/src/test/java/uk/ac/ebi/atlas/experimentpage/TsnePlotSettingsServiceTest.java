@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
@@ -16,7 +16,7 @@ import java.util.Collections;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TsnePlotSettingsServiceTest {
 
     @Mock
@@ -55,7 +55,7 @@ public class TsnePlotSettingsServiceTest {
             {"FALSE", IDF_PREFERRED_K, "xyz111", "xyz222"},
             {"FALSE", "7", "def888", "def999"}};
 
-    @Before
+    @BeforeEach
     public void setUp() {
         dataFileHubMock = MockDataFileHub.create();
         subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock);

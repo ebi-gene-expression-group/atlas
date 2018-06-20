@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.download;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
@@ -18,12 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class ExperimentFileLocationServiceIT {
@@ -49,7 +46,7 @@ public class ExperimentFileLocationServiceIT {
 
     private ExperimentFileLocationService subject;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.subject = new ExperimentFileLocationService(dataFileHub);
     }
@@ -85,7 +82,7 @@ public class ExperimentFileLocationServiceIT {
         Path path = subject.getFilePath("", ExperimentFileType.EXPERIMENT_DESIGN);
         File file = path.toFile();
 
-        assertThat(file.exists(), is(false));
+        assertThat(file).doesNotExist();
     }
 
     @Test
@@ -93,7 +90,8 @@ public class ExperimentFileLocationServiceIT {
         Path path = subject.getFilePath(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
                 ExperimentFileType.QUANTIFICATION_FILTERED);
 
-        assertThat(path, is(nullValue()));
+        assertThat(path).isNull();
+
     }
 
     @Test
@@ -101,7 +99,7 @@ public class ExperimentFileLocationServiceIT {
         List<Path> paths = subject.getFilePathsForArchive(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
                 ExperimentFileType.SDRF);
 
-        assertThat(paths, is(nullValue()));
+        assertThat(paths).isNull();
     }
 
     @Test
@@ -113,7 +111,8 @@ public class ExperimentFileLocationServiceIT {
 
         String expectedUrl = MessageFormat.format(EXPERIMENT_FILES_URI_TEMPLATE,
                 experimentAccession, fileType.getId(), "");
-        assertThat(uri.toString(), is(expectedUrl));
+
+        assertThat(uri.toString()).isEqualTo(expectedUrl);
     }
 
     @Test
@@ -125,29 +124,29 @@ public class ExperimentFileLocationServiceIT {
 
         String expectedUrl = MessageFormat.format(EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE,
                 experimentAccession, fileType.getId(), "");
-        assertThat(uri.toString(), is(expectedUrl));
+
+        assertThat(uri.toString()).isEqualTo(expectedUrl);
     }
 
     private void existingFileOfType(String experimentAccession, ExperimentFileType fileType, String fileNameTemplate) {
         Path path = subject.getFilePath(experimentAccession, fileType);
         File file = path.toFile();
 
-        assertThat(file.getName(), is(MessageFormat.format(fileNameTemplate, experimentAccession)));
-
-        assertThat(file.exists(), is(true));
-        assertThat(file.isDirectory(), is(false));
+        assertThat(file).hasName(MessageFormat.format(fileNameTemplate, experimentAccession));
+        assertThat(file).exists();
+        assertThat(file).isFile();
     }
 
     private void existingArchiveFilesOfType(String experimentAccession, ExperimentFileType fileType, List<String> fileNameTemplates) {
         List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
 
-        assertThat(paths.size(), is(fileNameTemplates.size()));
+        assertThat(paths).hasSameSizeAs(fileNameTemplates);
 
         for(Path path : paths) {
             File file = path.toFile();
 
-            assertThat(file.exists(), is(true));
-            assertThat(file.isDirectory(), is(false));
+            assertThat(file).exists();
+            assertThat(file).isFile();
         }
 
         List<String> fileNames = paths.stream()
@@ -155,11 +154,12 @@ public class ExperimentFileLocationServiceIT {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
-        assertThat(fileNames,
-                containsInAnyOrder(
+        assertThat(fileNames)
+                .containsAll(
                         fileNameTemplates
                                 .stream()
                                 .map(template -> MessageFormat.format(template, experimentAccession))
-                                .toArray()));
+                                .collect(Collectors.toList())
+                );
     }
 }

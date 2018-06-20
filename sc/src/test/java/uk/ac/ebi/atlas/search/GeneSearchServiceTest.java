@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 import java.util.Arrays;
@@ -19,14 +19,14 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class GeneSearchServiceTest {
     @Mock
     private GeneSearchServiceDao geneSearchServiceDaoMock;
 
     private GeneSearchService subject;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         subject = new GeneSearchService(geneSearchServiceDaoMock);
     }
