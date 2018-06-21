@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao;
 
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,22 @@ public class TSnePlotServiceDao {
                 namedParameters,
                 (rs, rowNum) -> TSnePoint.Dto.create(
                         rs.getDouble("x"), rs.getDouble("y"), rs.getInt("cluster_id"), rs.getString("cell_id")));
+    }
+
+    private static final String SELECT_T_SNE_PLOT_WITHOUT_CLUSTERS_STATEMENT =
+            "SELECT tsne.cell_id, tsne.x, tsne.y " +
+                    "FROM scxa_tsne AS tsne " +
+                    "WHERE tsne.experiment_accession=:experiment_accession AND tsne.perplexity=:perplexity";
+    public List<TSnePoint.Dto> fetchTSnePlotForPerplexity(String experimentAccession, int perplexity) {
+        Map<String, Object> namedParameters =
+                ImmutableMap.of(
+                        "experiment_accession", experimentAccession,
+                        "perplexity", perplexity);
+        return namedParameterJdbcTemplate.query(
+                SELECT_T_SNE_PLOT_WITHOUT_CLUSTERS_STATEMENT,
+                namedParameters,
+                (rs, rowNum) -> TSnePoint.Dto.create(
+                        rs.getDouble("x"), rs.getDouble("y"), rs.getString("cell_id")));
     }
 
 // At one point we decided that getting the data for both the clusters plot and the expression plot was a good idea
