@@ -11,7 +11,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.testutils.SolrUtils;
 
 import javax.inject.Inject;
@@ -44,7 +43,7 @@ public class JsonBioentityInformationControllerWIT {
 
     @Test
     public void payloadIsValidJson() throws Exception {
-        String geneId = solrUtils.fetchRandomExpressionAtlasGene();
+        String geneId = solrUtils.fetchRandomGeneFromAnalytics();
 
         this.mockMvc
                 .perform(get(

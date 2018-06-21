@@ -19,7 +19,7 @@ public class SolrUtils {
 
     private Random geneNumber = new Random();
 
-    public String fetchRandomExpressionAtlasGene() {
+    public String fetchRandomGeneFromAnalytics() {
         AnalyticsCollectionProxy analyticsCollectionProxy = solrCloudCollectionProxyFactory.createAnalyticsCollectionProxy();
         SolrQueryBuilder<AnalyticsCollectionProxy> queryBuilder = new SolrQueryBuilder<>();
         queryBuilder.setFieldList(BIOENTITY_IDENTIFIER);
