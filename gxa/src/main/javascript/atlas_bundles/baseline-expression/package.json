@@ -18,7 +18,7 @@
   "dependencies": {
     "expression-atlas-feedback": "../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz",
     "expression-atlas-heatmap-highcharts": "^4.4.1",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   },

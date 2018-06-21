@@ -3170,7 +3170,7 @@ function getSyncState(component, state) {
   return result;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 17), __webpack_require__(/*! ./../process/browser.js */ 33)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 17), __webpack_require__(/*! ./../process/browser.js */ 32)))
 
 /***/ }),
 

@@ -12,7 +12,14 @@ webpackJsonp_name_([4],{
 "use strict";
 
 
-module.exports = __webpack_require__(/*! sc-atlas-bioentity-information */ 1182);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.render = undefined;
+
+var _scAtlasBioentityInformation = __webpack_require__(/*! sc-atlas-bioentity-information */ 1182);
+
+exports.render = _scAtlasBioentityInformation.render;
 
 /***/ }),
 
