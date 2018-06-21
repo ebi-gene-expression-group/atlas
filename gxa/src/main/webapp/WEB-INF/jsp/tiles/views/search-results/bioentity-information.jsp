@@ -11,7 +11,7 @@
     document.addEventListener("DOMContentLoaded", function(event) {
         expressionAtlasBioentityInformation.render({
             atlasUrl: "${pageContext.request.contextPath}/",
-            geneId: "${gene_id}"
+            geneId: "${identifier}"
         }, 'bioentityInformationTab')
     })
 </script>
