@@ -72,14 +72,6 @@ public class JdbcUtils {
                  experimentAccession);
     }
 
-    public String fetchRandomGeneFromExpressionAtlasExperiment() {
-        AnalyticsCollectionProxy analyticsCollectionProxy = solrCloudCollectionProxyFactory.createAnalyticsCollectionProxy();
-        SolrQueryBuilder<AnalyticsCollectionProxy> queryBuilder = new SolrQueryBuilder<>();
-        queryBuilder.setFieldList(BIOENTITY_IDENTIFIER);
-        queryBuilder.setRows(10000);
-        return analyticsCollectionProxy.query(queryBuilder).getResults().get(0).getFieldValue("bioentity_identifier").toString();
-    }
-
     public String fetchRandomCellFromExperiment(String experimentAccession) {
         return jdbcTemplate.queryForObject(
                 "SELECT cell_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",

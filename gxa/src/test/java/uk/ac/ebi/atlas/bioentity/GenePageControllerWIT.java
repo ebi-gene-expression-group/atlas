@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
+import uk.ac.ebi.atlas.testutils.SolrUtils;
 
 import javax.inject.Inject;
 
@@ -30,7 +31,7 @@ public class GenePageControllerWIT {
     MockMvc mockMvc;
 
     @Inject
-    JdbcUtils jdbcUtils;
+    SolrUtils solrUtils;
 
     @Before
     public void setUp() {
@@ -46,7 +47,7 @@ public class GenePageControllerWIT {
 
     @Test
     public void geneIdFieldIsPresent() throws Exception {
-        String geneId = jdbcUtils.fetchRandomGeneFromExpressionAtlasExperiment();
+        String geneId = solrUtils.fetchRandomExpressionAtlasGene();
 
         this.mockMvc.perform(get("/genes/"+geneId))
                 .andExpect(status().is(200))
