@@ -10,8 +10,10 @@ import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
@@ -49,24 +52,30 @@ public class CellMetadataService {
                         entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 
-    // This is not currently used but leaving in for now in case the logic is still useful
-    public Map<String, String> getIdfFileAttributes(String experimentAccession, String cellId) {
-        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
+    // A metadata category is a Solr field where metadata is stored. Most of the time this will be a factor_* field,
+    // but fields such as characteristic_inferred_cell_type are also considered metadata.
+    public Map<String, String> getValuesForMetadataCategory(String experimentAccession, SingleCellAnalyticsSchemaField metadataCategory, List<String> cellIds) {
+        SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
+                new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
+                        .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
+                        .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, cellIds)
+                        .setFieldList(metadataCategory, SingleCellAnalyticsCollectionProxy.CELL_ID);
 
-        if (idfParserOutput.getMetadataFieldsOfInterest().isEmpty()) {
-            return emptyMap();
-        }
+        QueryResponse response = singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
 
-        SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
+        return response.getResults()
                 .stream()
-                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName(attribute)))
-                .toArray(SingleCellAnalyticsSchemaField[]::new);
-
-        return getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields)
-                .entrySet().stream()
-                .collect(toMap(
-                        Map.Entry::getKey,
-                        entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
+                .collect(groupingBy(solrDocument -> (String) solrDocument.getFieldValue("cell_id")))
+                .entrySet()
+                .stream()
+                .collect(
+                        toMap(
+                                Map.Entry::getKey,
+                                // The factor fields in Solr are all multi-value fields, even though they technically shouldn't be.
+                                // Apparently we don't expect any cell ID to have more than one factor value. This was confirmed
+                                // by curators in this Slack conversation: https://ebi-fg.slack.com/archives/C800ZEPPS/p1529592962001046
+                                entry -> (String) ((ArrayList) entry.getValue().get(0).getFieldValue(metadataCategory.name())).get(0))
+                );
     }
 
     // This retrieves the value for one single-value field in the Solr scxa-analytics collection
@@ -125,5 +134,25 @@ public class CellMetadataService {
         SolrDocument solrDocument = queryResponse.getResults().get(0);
         return solrDocument.getFieldNames().stream()
                 .collect(toImmutableMap(Function.identity(), solrDocument::getFieldValues));
+    }
+
+    // This is not currently used but leaving in for now in case the logic is still useful
+    protected Map<String, String> getIdfFileAttributes(String experimentAccession, String cellId) {
+        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
+
+        if (idfParserOutput.getMetadataFieldsOfInterest().isEmpty()) {
+            return emptyMap();
+        }
+
+        SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
+                .stream()
+                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName(attribute)))
+                .toArray(SingleCellAnalyticsSchemaField[]::new);
+
+        return getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields)
+                .entrySet().stream()
+                .collect(toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 }
