@@ -22,7 +22,7 @@ class CellMetadataServiceIT {
     @Inject
     private IdfParser idfParser;
     @Inject
-    private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
+    private CellMetadataDao cellMetadataDao;
     @Inject
     private JdbcUtils jdbcUtils;
 
@@ -30,7 +30,7 @@ class CellMetadataServiceIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new CellMetadataService(idfParser, solrCloudCollectionProxyFactory);
+        this.subject = new CellMetadataService(idfParser, cellMetadataDao);
     }
 
     @Test
