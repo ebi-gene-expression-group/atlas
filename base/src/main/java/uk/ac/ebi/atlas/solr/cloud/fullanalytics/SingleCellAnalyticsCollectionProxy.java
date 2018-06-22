@@ -42,6 +42,16 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
         return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("factor_%s", factor), factorFieldNameToDisplayName(factor));
     }
 
+    public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataAsSchemaField(String metadata) {
+        // The metadata fields are either characteristics or factors
+        if (metadata.startsWith("characteristic")) {
+            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, characteristicFieldNameToDisplayName(metadata));
+        }
+        else {
+            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, factorFieldNameToDisplayName(metadata));
+        }
+    }
+
     public QueryResponse query(SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder) {
         return query(solrQueryBuilder.build());
     }
