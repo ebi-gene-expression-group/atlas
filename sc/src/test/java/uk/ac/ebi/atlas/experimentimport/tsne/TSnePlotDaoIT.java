@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
+package uk.ac.ebi.atlas.experimentimport.tsne;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,15 +8,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao.BATCH_SIZE;
-import static uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamerTest.randomTSnePoints;
+import static uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotDao.BATCH_SIZE;
+import static uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotStreamerTest.randomTSnePoints;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:applicationContext.xml")

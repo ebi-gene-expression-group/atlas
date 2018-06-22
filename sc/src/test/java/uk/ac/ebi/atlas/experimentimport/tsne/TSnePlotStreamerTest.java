@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
+package uk.ac.ebi.atlas.experimentimport.tsne;
 
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline.tsne;
+package uk.ac.ebi.atlas.experimentpage.tsne;
 
 import com.google.auto.value.AutoValue;
 import com.google.gson.JsonDeserializationContext;

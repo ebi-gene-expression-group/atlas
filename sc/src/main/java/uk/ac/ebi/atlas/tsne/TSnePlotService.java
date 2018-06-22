@@ -1,10 +1,12 @@
-package uk.ac.ebi.atlas.experimentpage.baseline.tsne;
+package uk.ac.ebi.atlas.tsne;
 
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
@@ -36,10 +38,6 @@ public class TSnePlotService {
                                 .map(pointDto-> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.name()))
                                 .collect(toSet())));
     }
-
-    // fetchTSnePlotWithCluster(String experimentAccession, int perplexity, String factorValue) {
-    // // Query DB for points and Solr for factors
-    // }
 
 
 // To understand what this is about see comment in TSnePlotServiceDao...

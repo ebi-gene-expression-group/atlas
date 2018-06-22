@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 
 import java.util.ArrayList;
 import java.util.HashSet;

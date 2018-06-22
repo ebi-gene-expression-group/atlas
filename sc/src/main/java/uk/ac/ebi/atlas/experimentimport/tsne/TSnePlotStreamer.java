@@ -1,7 +1,7 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
+package uk.ac.ebi.atlas.experimentimport.tsne;
 
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.util.Map;

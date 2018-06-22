@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline.tsne;
+package uk.ac.ebi.atlas.tsne;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
 import java.util.Map;

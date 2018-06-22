@@ -1,9 +1,9 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne;
+package uk.ac.ebi.atlas.experimentimport.tsne;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 
 import javax.inject.Inject;
 import javax.inject.Named;

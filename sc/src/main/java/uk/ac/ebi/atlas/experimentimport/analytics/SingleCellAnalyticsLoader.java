@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
+package uk.ac.ebi.atlas.experimentimport.analytics;
 
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
@@ -6,8 +6,8 @@ import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics.Analytics
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics.AnalyticsStreamer;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.clusters.ClustersStreamer;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotDao;
-import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamer;
+import uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotDao;
+import uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotStreamer;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;

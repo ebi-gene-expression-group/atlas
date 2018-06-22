@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline.tsne;
+package uk.ac.ebi.atlas.tsne;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
