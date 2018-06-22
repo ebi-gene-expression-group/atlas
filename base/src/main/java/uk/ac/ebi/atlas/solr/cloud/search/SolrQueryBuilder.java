@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
@@ -25,6 +27,7 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> flBuilder = ImmutableSet.builder();
+    private ImmutableList.Builder<SortClause> sortBuilder = ImmutableList.builder();
 
     // For now, the builder will only support a single facet with an unlimited number of subfacets. In the future this could be made for generic
     private String facetField;
@@ -84,6 +87,10 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         return this;
     }
 
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> sortBy(U field, SolrQuery.ORDER order) {
+        sortBuilder.add(new SortClause(field.name(), order));
+        return this;
+    }
 
     public SolrQueryBuilder<T> setRows(int rows) {
         this.rows = rows;
@@ -95,6 +102,7 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         ImmutableSet<String> qClauses = qClausesBuilder.build();
         ImmutableSet<String> fl = flBuilder.build();
         ImmutableSet<String> subFacets = subFacetBuilder.build();
+        ImmutableList<SortClause> sorts = sortBuilder.build();
 
         return new SolrQuery()
                 .addFilterQuery(fqClauses.toArray(new String[0]))
@@ -107,6 +115,7 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
                                 "*" :
                                 fl.stream().filter(StringUtils::isNotBlank).collect(joining(",")))
                 .setParam("json.facet", GSON.toJson(buildJsonFacetObject(facetField, subFacets)))
+                .setSorts(sorts)
                 .setRows(rows);
     }
 
