@@ -65,6 +65,25 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
     }
 
     @RequestMapping(
+            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/metadata/{metadata}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String tSnePlotWithMetadata(
+            @PathVariable String experimentAccession,
+            @PathVariable int perplexity,
+            @PathVariable String metadata,
+            @RequestParam(defaultValue = "") String accessKey) {
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+
+        return GSON.toJson(
+                ImmutableMap.of(
+                        "series",
+                        modelForHighcharts(
+                                "Metadata ",
+                                tSnePlotService.fetchTSnePlotWithMetadata(experiment.getAccession(), perplexity, metadata))));
+    }
+
+    @RequestMapping(
             value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/expression/{geneId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

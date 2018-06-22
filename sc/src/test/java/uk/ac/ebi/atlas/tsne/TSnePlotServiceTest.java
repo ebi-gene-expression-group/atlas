@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
+import uk.ac.ebi.atlas.metadata.CellMetadataDao;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
 import java.util.Map;
@@ -26,12 +27,14 @@ class TSnePlotServiceTest {
 
     @Mock
     private TSnePlotServiceDao tSnePlotServiceDaoMock;
+    @Mock
+    private CellMetadataDao cellMetadataDaoMock;
 
     private TSnePlotService subject;
 
     @BeforeEach
     void setUp() {
-        subject = new TSnePlotService(tSnePlotServiceDaoMock);
+        subject = new TSnePlotService(tSnePlotServiceDaoMock, cellMetadataDaoMock);
     }
 
     @Test
