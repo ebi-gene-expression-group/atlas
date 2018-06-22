@@ -1,7 +1,3 @@
-<%--@elvariable id="propertyNames" type="java.util.Map"--%>
-<%--@elvariable id="relevantGoPoLinks" type="java.util.List"--%>
-<%--@elvariable id="allGoPoLinks" type="java.util.List"--%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="row expanded">
@@ -14,8 +10,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         expressionAtlasBioentityInformation.render({
-            target: 'bioentityInformationTab',
-            payload: ${bioentityProperties}
-        })
+            atlasUrl: "${pageContext.request.contextPath}/",
+            geneId: "${identifier}"
+        }, 'bioentityInformationTab')
     })
 </script>
