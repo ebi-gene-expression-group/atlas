@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.metadata;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.metadata.CellMetadataService;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 

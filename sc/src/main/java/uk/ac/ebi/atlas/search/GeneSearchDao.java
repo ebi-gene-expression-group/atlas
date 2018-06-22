@@ -22,12 +22,12 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollec
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 
 @Component
-public class GeneSearchServiceDao {
+public class GeneSearchDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
 
-    public GeneSearchServiceDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
+    public GeneSearchDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.singleCellAnalyticsCollectionProxy = solrCloudCollectionProxyFactory.createSingleCellAnalyticsCollectionProxy();
     }

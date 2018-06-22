@@ -29,8 +29,8 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollec
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
-public class GeneSearchServiceDaoIT {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchServiceDaoIT.class);
+public class GeneSearchDaoIT {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchDaoIT.class);
 
     @Inject
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -40,11 +40,11 @@ public class GeneSearchServiceDaoIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
 
-    private GeneSearchServiceDao subject;
+    private GeneSearchDao subject;
 
     @BeforeEach
     public void setUp() {
-        subject = new GeneSearchServiceDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
+        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.metadata;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;

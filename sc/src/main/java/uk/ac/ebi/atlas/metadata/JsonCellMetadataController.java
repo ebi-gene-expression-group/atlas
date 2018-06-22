@@ -1,6 +1,5 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.metadata;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,10 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.metadata.CellMetadataService;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.Map;
+
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
 public class JsonCellMetadataController extends JsonExperimentController {
@@ -33,18 +37,22 @@ public class JsonCellMetadataController extends JsonExperimentController {
             @PathVariable String experimentAccession,
             @PathVariable String cellId,
             @RequestParam(defaultValue = "") String accessKey) {
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        JsonArray result = new JsonArray();
+        Map<String, String> metadataByCellIds = cellMetadataService.getValuesForMetadataCategory("E-EHCA-2", SingleCellAnalyticsCollectionProxy.factorAsSchemaField("sampling_site"), Arrays.asList("21784_6_100", "21784_6_103", "21784_6_125"));
 
-        cellMetadataService
-                .getInferredCellType(experiment.getAccession(), cellId)
-                .ifPresent(inferredCellType -> result.add(createMetadataJson("Inferred cell type", inferredCellType)));
-
-        cellMetadataService.getFactors(experiment.getAccession(), cellId).forEach((factorName, factorValue) ->
-                result.add(createMetadataJson(factorName, factorValue)));
-
-        return result.toString();
+        return GSON.toJson(metadataByCellIds);
+//        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+//
+//        JsonArray result = new JsonArray();
+//
+//        cellMetadataService
+//                .getInferredCellType(experiment.getAccession(), cellId)
+//                .ifPresent(inferredCellType -> result.add(createMetadataJson("Inferred cell type", inferredCellType)));
+//
+//        cellMetadataService.getFactors(experiment.getAccession(), cellId).forEach((factorName, factorValue) ->
+//                result.add(createMetadataJson(factorName, factorValue)));
+//
+//        return result.toString();
     }
 
     private JsonObject createMetadataJson(String name, String value) {

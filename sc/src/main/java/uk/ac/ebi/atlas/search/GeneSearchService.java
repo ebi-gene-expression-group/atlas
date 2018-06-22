@@ -11,24 +11,24 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollec
 
 @Component
 public class GeneSearchService {
-    private GeneSearchServiceDao geneSearchServiceDao;
+    private GeneSearchDao geneSearchDao;
 
 
-    public GeneSearchService(GeneSearchServiceDao geneSearchServiceDao) {
-        this.geneSearchServiceDao = geneSearchServiceDao;
+    public GeneSearchService(GeneSearchDao geneSearchDao) {
+        this.geneSearchDao = geneSearchDao;
 
     }
 
     public Map<String, List<String>> getCellIdsInExperiments(String geneId) {
-        return geneSearchServiceDao.fetchCellIds(geneId);
+        return geneSearchDao.fetchCellIds(geneId);
     }
 
     // Returns inferred cell types and organism parts for each experiment accession
     public Map<String, Map<String, List<String>>> getFacets(List<String> cellIds) {
-        return geneSearchServiceDao.getFacets(cellIds, CHARACTERISTIC_INFERRED_CELL_TYPE, CHARACTERISTIC_ORGANISM_PART, CHARACTERISTIC_SPECIES);
+        return geneSearchDao.getFacets(cellIds, CHARACTERISTIC_INFERRED_CELL_TYPE, CHARACTERISTIC_ORGANISM_PART, CHARACTERISTIC_SPECIES);
     }
 
     public Map<String, Map<Integer, List<Integer>>> getMarkerGeneProfile(String geneId) {
-        return geneSearchServiceDao.fetchKAndClusterIds(geneId);
+        return geneSearchDao.fetchKAndClusterIds(geneId);
     }
 }

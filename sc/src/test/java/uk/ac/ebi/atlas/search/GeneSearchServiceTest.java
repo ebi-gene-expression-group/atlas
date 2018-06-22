@@ -22,18 +22,18 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class GeneSearchServiceTest {
     @Mock
-    private GeneSearchServiceDao geneSearchServiceDaoMock;
+    private GeneSearchDao geneSearchDaoMock;
 
     private GeneSearchService subject;
 
     @BeforeEach
     public void setUp() {
-        subject = new GeneSearchService(geneSearchServiceDaoMock);
+        subject = new GeneSearchService(geneSearchDaoMock);
     }
 
     @Test
     public void returnsCellIdsPerExperiment() {
-        when(geneSearchServiceDaoMock.fetchCellIds(anyString())).thenReturn(ImmutableMap.of(
+        when(geneSearchDaoMock.fetchCellIds(anyString())).thenReturn(ImmutableMap.of(
                 "E-MTAB-0000", Arrays.asList("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
                 "E-MTAB-0001", Arrays.asList("cell_id_6", "cell_id_7", "cell_id_8"),
                 "E-MTAB-0002", Arrays.asList("cell_id_9", "cell_id_10")
@@ -48,7 +48,7 @@ public class GeneSearchServiceTest {
 
     @Test
     public void returnsMarkerGeneProfile() {
-        when(geneSearchServiceDaoMock.fetchKAndClusterIds(anyString())).thenReturn(ImmutableMap.of(
+        when(geneSearchDaoMock.fetchKAndClusterIds(anyString())).thenReturn(ImmutableMap.of(
                 "E-MTAB-0000", ImmutableMap.of(1, Arrays.asList(1, 3)),
                 "E-MTAB-0001", ImmutableMap.of(
                         2, Arrays.asList(1, 5, 8),
@@ -64,7 +64,7 @@ public class GeneSearchServiceTest {
 
     @Test
     public void returnsFacets() {
-        when(geneSearchServiceDaoMock.getFacets(anyList(), any(SingleCellAnalyticsSchemaField.class)))
+        when(geneSearchDaoMock.getFacets(anyList(), any(SingleCellAnalyticsSchemaField.class)))
                 .thenReturn(ImmutableMap.of(
                         "E-MTAB-0000", ImmutableMap.of(
                                 "inferred_cell_type", Arrays.asList("neuron", "stem cell"),

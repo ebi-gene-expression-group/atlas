@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.metadata;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.client.solrj.response.QueryResponse;
