@@ -13,8 +13,12 @@ const TSnePlotViewRoute = (props) => {
     history.push(URI(location.search).setSearch(parameter.name, parameter.value).toString())
   }
 
+  const updateUrlSearchWithMultipleParams = (query) => {
+    history.replace({...history.location, search: query.toString()})
+  }
+
   const {atlasUrl, resourcesUrl} = props
-  const {suggesterEndpoint, species, experimentAccession, ks, perplexities} = props
+  const {suggesterEndpoint, species, experimentAccession, ks, perplexities, metadata} = props
   const search = URI(location.search).search(true)
 
   return (
@@ -27,15 +31,32 @@ const TSnePlotViewRoute = (props) => {
                     speciesName={species}
                     experimentAccession={experimentAccession}
                     ks={ks}
-                    selectedK={Number(search.k) || props.selectedK || props.ks[0]}
+                    metadata={metadata}
+                    selectedColourBy={search.k || search.metadata || props.selectedK || props.ks[0].toString()}
+                    selectedColourByCategory={search.colourBy || 'clusters'} // Is the plot coloured by clusters or metadata
                     highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
                     perplexities={perplexities}
                     selectedPerplexity={Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)]}
                     geneId={search.geneId || ``}
                     height={800}
                     onSelectGeneId={ (geneId) => { updateUrlSearch({ name: `geneId`, value: geneId }) } }
-                    onChangeK={ (k) => { updateUrlSearch({ name: `k`, value: k }) } }
-                    onChangePerplexity={ (perplexity) => { updateUrlSearch({ name: `perplexity`, value: perplexity }) } }
+                    onChangePerplexity={ (perplexity) => { updateUrlSearch({ name: `perplexity`, value: perplexity }) }}
+                    onChangeColourBy={
+                      (colourByCategory, colourByValue) => {
+                        const query = new URLSearchParams(history.location.search)
+                        query.set('colourBy', colourByCategory)
+                        if(colourByCategory === 'clusters') {
+                          query.set('k', colourByValue)
+                          query.delete('metadata')
+                        }
+                        else if(colourByCategory === 'metadata') {
+                          query.set('metadata', colourByValue)
+                          query.delete('k')
+                        }
+
+                        updateUrlSearchWithMultipleParams(query)
+                      }
+                    }
       />
       {
         search.geneId &&
