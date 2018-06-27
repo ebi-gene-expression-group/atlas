@@ -25,9 +25,8 @@ public class CellMetadataService {
     }
 
     public Optional<String> getInferredCellType(String experimentAccession, String cellId) {
-        return cellMetadataDao.getMetadataFieldValueForCellId(
-                SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE,
-                experimentAccession,
+        return cellMetadataDao.getMetadataValueForCellId(
+                experimentAccession, SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE,
                 cellId);
     }
 

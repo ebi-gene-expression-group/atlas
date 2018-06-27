@@ -30,23 +30,6 @@ public class CellMetadataDao {
                 solrCloudCollectionProxyFactory.createSingleCellAnalyticsCollectionProxy();
     }
 
-    // This retrieves the value for one single-value field in the Solr scxa-analytics collection
-    public Optional<String> getMetadataFieldValueForCellId(SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataField, String experimentAccession, String cellId) {
-        SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
-                new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
-                        .addFilterFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
-                        .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, cellId)
-                        .setFieldList(metadataField);
-        QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
-
-        if (queryResponse.getResults().isEmpty() ||
-                !queryResponse.getResults().get(0).containsKey(metadataField.name())) {
-            return Optional.empty();
-        }
-
-        return Optional.of((String) queryResponse.getResults().get(0).getFirstValue(metadataField.name()));
-    }
-
     // Retrieves a list of metadata fields available in Solr for a particular experiment. This includes all factor fields
     // (except single_cell_identifier), as well as the characteristic_inferred_cell_type field.
     public List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> getMetadataFieldNames(String experimentAccession) {
@@ -110,14 +93,30 @@ public class CellMetadataDao {
                 .collect(toImmutableMap(Function.identity(), solrDocument::getFieldValues));
     }
 
-    // A metadata category is a Solr field where metadata is stored. Most of the time this will be a factor_* field,
-    // but fields such as characteristic_inferred_cell_type are also considered metadata.
-    public Map<String, String> getValuesForMetadataCategory(String experimentAccession, SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataCategory, List<String> cellIds) {
+    // Given a Solr field where metadata is stored, this method retrieves the value of that field for a cell ID.
+    public Optional<String> getMetadataValueForCellId(String experimentAccession, SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataField, String cellId) {
+        SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
+                new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
+                        .addFilterFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
+                        .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, cellId)
+                        .setFieldList(metadataField);
+        QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
+
+        if (queryResponse.getResults().isEmpty() ||
+                !queryResponse.getResults().get(0).containsKey(metadataField.name())) {
+            return Optional.empty();
+        }
+
+        return Optional.of((String) queryResponse.getResults().get(0).getFirstValue(metadataField.name()));
+    }
+
+    // Given a Solr field where metadata is stored, this method retrieves the value of that field for list of cell IDs.
+    public Map<String, String> getMetadataValueForCellIds(String experimentAccession, SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataField, List<String> cellIds) {
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
                         .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
                         .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, cellIds)
-                        .setFieldList(metadataCategory, SingleCellAnalyticsCollectionProxy.CELL_ID);
+                        .setFieldList(metadataField, SingleCellAnalyticsCollectionProxy.CELL_ID);
 
         QueryResponse response = singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
 
@@ -132,7 +131,7 @@ public class CellMetadataDao {
                                 // The factor fields in Solr are all multi-value fields, even though they technically shouldn't be.
                                 // Apparently we don't expect any cell ID to have more than one factor value. This was confirmed
                                 // by curators in this Slack conversation: https://ebi-fg.slack.com/archives/C800ZEPPS/p1529592962001046
-                                entry -> (String) ((ArrayList) entry.getValue().get(0).getFieldValue(metadataCategory.name())).get(0))
+                                entry -> (String) ((ArrayList) entry.getValue().get(0).getFieldValue(metadataField.name())).get(0))
                 );
     }
 }

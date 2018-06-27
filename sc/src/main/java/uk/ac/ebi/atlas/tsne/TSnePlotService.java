@@ -57,7 +57,7 @@ public class TSnePlotService {
                 .map(TSnePoint.Dto::name)
                 .collect(Collectors.toList());
 
-        Map<String, String> metadataValuesForCells = cellMetadataDao.getValuesForMetadataCategory(experimentAccession, SingleCellAnalyticsCollectionProxy.metadataAsSchemaField(metadataCategory), cellIds);
+        Map<String, String> metadataValuesForCells = cellMetadataDao.getMetadataValueForCellIds(experimentAccession, SingleCellAnalyticsCollectionProxy.metadataAsSchemaField(metadataCategory), cellIds);
 
         return pointDtos.stream()
                 .map(pointDto -> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.name(), StringUtils.capitalize(metadataValuesForCells.get(pointDto.name()))))
