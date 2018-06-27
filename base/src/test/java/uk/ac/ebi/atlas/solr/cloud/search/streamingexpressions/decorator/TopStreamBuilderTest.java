@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.DummyTupleStreamBuilder;
 
 import java.util.concurrent.ThreadLocalRandom;

@@ -5,8 +5,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.AnalyticsSchemaField;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.AnalyticsSchemaField;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.ExperimentRequestPreferencesSolrQueryFactory;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.TupleStreamBuilder;
@@ -20,8 +20,8 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.AVERAGE_EXPRESSION_KEY;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.GENE_KEY;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.SPECIFICITY_KEY;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 
 // Produces streams of Solr tuples which contain gene IDs that match the search criteria in the experiment page
 // sidebar. They include average expression over selected assay groups and specificity (counts) if specific is checked.
@@ -31,7 +31,7 @@ public class BaselineExperimentTopGenesDao {
     private final AnalyticsCollectionProxy analyticsCollectionProxy;
 
     public BaselineExperimentTopGenesDao(SolrCloudCollectionProxyFactory collectionProxyFactory) {
-        analyticsCollectionProxy = collectionProxyFactory.createAnalyticsCollectionProxy();
+        analyticsCollectionProxy = collectionProxyFactory.create(AnalyticsCollectionProxy.class);
     }
 
     public TupleStreamer aggregateGeneIdsAndSortByAverageExpression(String experimentAccession,

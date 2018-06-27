@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInputDocument> {
     private final ObjectInputStream<? extends ExperimentDataPoint> experimentDataPointInputStream;

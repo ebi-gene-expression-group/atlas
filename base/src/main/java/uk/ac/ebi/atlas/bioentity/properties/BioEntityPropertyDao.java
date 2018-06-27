@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties.BIOENTITY_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ENSGENE;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
 
 @Named
 public class BioEntityPropertyDao {
@@ -29,7 +29,7 @@ public class BioEntityPropertyDao {
     public BioEntityPropertyDao(BioentitiesSolrClient gxaSolrClient,
                                 SolrCloudCollectionProxyFactory collectionProxyFactory) {
         this.solrClient = gxaSolrClient;
-        this.analyticsCollectionProxy = collectionProxyFactory.createAnalyticsCollectionProxy();
+        this.analyticsCollectionProxy = collectionProxyFactory.create(AnalyticsCollectionProxy.class);
     }
 
     public Set<String> fetchPropertyValuesForGeneId(String identifier, BioentityPropertyName propertyName) {

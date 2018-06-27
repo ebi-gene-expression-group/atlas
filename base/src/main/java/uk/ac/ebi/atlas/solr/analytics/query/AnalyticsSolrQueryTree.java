@@ -6,7 +6,7 @@ import com.google.common.collect.Multimap;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -20,9 +20,9 @@ import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
 import static uk.ac.ebi.atlas.solr.analytics.query.AnalyticsSolrQueryTree.Operator.OR;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 public class AnalyticsSolrQueryTree {
     private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";

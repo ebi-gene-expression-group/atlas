@@ -8,19 +8,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
-import uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
 
-import java.util.ArrayList;
-
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.BIOENTITY_IDENTIFIER;
-import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.PROPERTY_NAME;
-import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.PROPERTY_VALUE;
-import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.SPECIES;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.BIOENTITY_IDENTIFIER;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_NAME;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.SPECIES;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -32,7 +30,7 @@ class SearchStreamBuilderIT {
 
     @BeforeEach
     void setUp() {
-        bioentitiesCollectionProxy = collectionProxyFactory.createBioentitiesCollectionProxy();
+        bioentitiesCollectionProxy = collectionProxyFactory.create(BioentitiesCollectionProxy.class);
     }
 
     @Test

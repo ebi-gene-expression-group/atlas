@@ -1,7 +1,8 @@
-package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
+package uk.ac.ebi.atlas.solr.cloud.collections;
 
 import org.junit.jupiter.api.Test;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import java.util.Collection;
@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
+import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
+import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
 
 @Component
 public class CellMetadataService {
@@ -31,7 +31,7 @@ public class CellMetadataService {
     public CellMetadataService(IdfParser idfParser, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.idfParser = idfParser;
         this.singleCellAnalyticsCollectionProxy =
-                solrCloudCollectionProxyFactory.createSingleCellAnalyticsCollectionProxy();
+                solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
     }
 
     public Optional<String> getInferredCellType(String experimentAccession, String cellId) {

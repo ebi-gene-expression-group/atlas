@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator.SelectStreamBuilder;
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator.TopStreamBuilder;
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source.FacetStreamBuilder;
@@ -13,15 +13,15 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.AVERAGE_EXPRESSION_KEY;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.GENE_KEY;
 import static uk.ac.ebi.atlas.experimentpage.differential.topgenes.DifferentialExperimentTopGenesService.SPECIFICITY_KEY;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.LOG_2_FOLD_CHANGE;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.LOG_2_FOLD_CHANGE;
 
 @Component
 public class DifferentialExperimentTopGenesDao {
     private final AnalyticsCollectionProxy analyticsCollectionProxy;
 
     public DifferentialExperimentTopGenesDao(SolrCloudCollectionProxyFactory collectionProxyFactory) {
-        analyticsCollectionProxy = collectionProxyFactory.createAnalyticsCollectionProxy();
+        analyticsCollectionProxy = collectionProxyFactory.create(AnalyticsCollectionProxy.class);
     }
 
     public TupleStreamer createForDifferentialNonSpecific(String experimentAccession,

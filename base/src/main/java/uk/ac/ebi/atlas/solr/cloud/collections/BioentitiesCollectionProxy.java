@@ -1,11 +1,10 @@
-package uk.ac.ebi.atlas.solr.cloud.bioentities;
+package uk.ac.ebi.atlas.solr.cloud.collections;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import static uk.ac.ebi.atlas.utils.StringUtil.escapeDoubleQuotes;
