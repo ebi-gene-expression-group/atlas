@@ -50,7 +50,7 @@ public enum BioentityPropertyName {
     public final String label;
 
     BioentityPropertyName(String name, boolean isKeyword, String label) {
-        this.name = name;
+        this.name = name.toLowerCase();
         this.isKeyword = isKeyword;
         this.label = label;
     }
