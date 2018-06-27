@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.metadata;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
-import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 
 import java.util.Map;
@@ -35,7 +34,7 @@ public class CellMetadataService {
     public Map<String, String> getFactors(String experimentAccession, String cellId) {
         SingleCellAnalyticsSchemaField[] factorFieldNames = cellMetadataDao.getFactorFieldNames(experimentAccession, cellId);
 
-        return cellMetadataDao.getCellQueryResultForMultiValueFields(experimentAccession, cellId, factorFieldNames)
+        return cellMetadataDao.getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), factorFieldNames)
                 .entrySet().stream()
                 .collect(toMap(
                         entry -> SingleCellAnalyticsCollectionProxy.factorFieldNameToDisplayName(entry.getKey()),
@@ -55,7 +54,7 @@ public class CellMetadataService {
                 .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName(attribute)))
                 .toArray(SingleCellAnalyticsSchemaField[]::new);
 
-        return cellMetadataDao.getCellQueryResultForMultiValueFields(experimentAccession, cellId, attributeFields)
+        return cellMetadataDao.getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), attributeFields)
                 .entrySet().stream()
                 .collect(toMap(
                         Map.Entry::getKey,

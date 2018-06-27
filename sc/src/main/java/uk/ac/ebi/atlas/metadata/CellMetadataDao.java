@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static java.util.stream.Collectors.groupingBy;
@@ -46,11 +47,32 @@ public class CellMetadataDao {
         return Optional.of((String) queryResponse.getResults().get(0).getFirstValue(metadataField.name()));
     }
 
+    // Retrieves a list of metadata fields available in Solr for a particular experiment. This includes all factor fields
+    // (except single_cell_identifier), as well as the characteristic_inferred_cell_type field.
+    public List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> getMetadataFieldNames(String experimentAccession) {
+        Map<String, Collection<Object>> queryResult = getQueryResultForMultiValueFields(
+                experimentAccession,
+                Optional.empty(),
+                SingleCellAnalyticsCollectionProxy.FACTORS, SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE);
+
+        List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFields = queryResult.getOrDefault(SingleCellAnalyticsCollectionProxy.FACTORS.name(), Collections.emptyList())
+                .stream()
+                .filter(factor -> !factor.toString().equalsIgnoreCase("single_cell_identifier"))
+                .map(factor -> SingleCellAnalyticsCollectionProxy.factorAsSchemaField(factor.toString()))
+                .collect(Collectors.toList());
+
+        if(queryResult.containsKey(SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE.name())) {
+            metadataFields.add(SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE);
+        }
+
+        return metadataFields;
+    }
+
     // Retrieves all the available factors stored in the Solr scxa-analytics collection for a particular cell
     public SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField[] getFactorFieldNames(String experimentAccession, String cellId) {
-        Map<String, Collection<Object>> queryResult = getCellQueryResultForMultiValueFields(
+        Map<String, Collection<Object>> queryResult = getQueryResultForMultiValueFields(
                 experimentAccession,
-                cellId,
+                Optional.of(cellId),
                 SingleCellAnalyticsCollectionProxy.FACTORS);
 
         return queryResult.getOrDefault(SingleCellAnalyticsCollectionProxy.FACTORS.name(), Collections.emptyList())
@@ -61,8 +83,8 @@ public class CellMetadataDao {
     }
 
     // Returns Solr query results for a list of multi-value fields of interest
-    public ImmutableMap<String, Collection<Object>> getCellQueryResultForMultiValueFields(
-            String experimentAccession, String cellId, SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField... fieldsOfInterest) {
+    public ImmutableMap<String, Collection<Object>> getQueryResultForMultiValueFields(
+            String experimentAccession, Optional<String> cellId, SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField... fieldsOfInterest) {
         if (fieldsOfInterest.length == 0) {
             return ImmutableMap.of();
         }
@@ -70,9 +92,10 @@ public class CellMetadataDao {
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder =
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
                         .addFilterFieldByTerm(SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION, experimentAccession)
-                        .addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, cellId)
                         .setFieldList(fieldsOfInterest)
                         .setRows(1);
+
+        cellId.ifPresent(s -> solrQueryBuilder.addQueryFieldByTerm(SingleCellAnalyticsCollectionProxy.CELL_ID, s));
 
         QueryResponse queryResponse = this.singleCellAnalyticsCollectionProxy.query(solrQueryBuilder);
 
