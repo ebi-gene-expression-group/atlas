@@ -13,8 +13,11 @@ import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
 
+import java.io.UncheckedIOException;
+
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_NAME;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
@@ -85,4 +88,25 @@ class SearchStreamBuilderIT {
         }
     }
 
+    @Test
+    void requiresSortFieldAndToBePresentInFieldList() {
+        SolrQueryBuilder<BioentitiesCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> new SearchStreamBuilder<>(bioentitiesCollectionProxy, solrQueryBuilder).build());
+
+        solrQueryBuilder.sortBy(BIOENTITY_IDENTIFIER, ORDER.asc);
+        assertThatExceptionOfType(UncheckedIOException.class)
+                .isThrownBy(() -> new SearchStreamBuilder<>(bioentitiesCollectionProxy, solrQueryBuilder).build());
+
+        solrQueryBuilder.setFieldList(BIOENTITY_IDENTIFIER);
+        try (TupleStreamer tupleStreamer =
+                     TupleStreamer.of(
+                             new SearchStreamBuilder<>(bioentitiesCollectionProxy, solrQueryBuilder).build())) {
+
+            assertThat(tupleStreamer.get().collect(toList()))
+                    .isNotEmpty();
+
+        }
+
+    }
 }
