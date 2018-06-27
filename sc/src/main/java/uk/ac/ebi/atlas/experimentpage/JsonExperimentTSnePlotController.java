@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
@@ -79,8 +80,8 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
                 ImmutableMap.of(
                         "series",
                         modelForHighcharts(
-                                "Metadata ",
-                                tSnePlotService.fetchTSnePlotWithMetadata(experiment.getAccession(), perplexity, metadata))));
+                                "",
+                                new TreeMap<>(tSnePlotService.fetchTSnePlotWithMetadata(experiment.getAccession(), perplexity, metadata)))));
     }
 
     @RequestMapping(

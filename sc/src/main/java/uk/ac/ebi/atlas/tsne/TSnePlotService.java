@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.tsne;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.metadata.CellMetadataDao;
@@ -59,7 +60,7 @@ public class TSnePlotService {
         Map<String, String> metadataValuesForCells = cellMetadataDao.getValuesForMetadataCategory(experimentAccession, SingleCellAnalyticsCollectionProxy.metadataAsSchemaField(metadataCategory), cellIds);
 
         return pointDtos.stream()
-                .map(pointDto -> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.name(), metadataValuesForCells.get(pointDto.name())))
+                .map(pointDto -> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.name(), StringUtils.capitalize(metadataValuesForCells.get(pointDto.name()))))
                 .collect(groupingBy(TSnePoint::metadata, mapping(Function.identity(), Collectors.toSet())));
     }
 
