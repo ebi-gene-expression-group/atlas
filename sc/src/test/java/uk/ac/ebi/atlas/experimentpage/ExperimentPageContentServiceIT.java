@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
+import uk.ac.ebi.atlas.metadata.CellMetadataDao;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
@@ -40,11 +41,14 @@ public class ExperimentPageContentServiceIT {
     @Inject
     private TsnePlotSettingsService tsnePlotSettingsService;
 
+    @Inject
+    private CellMetadataDao cellMetadataDao;
+
     private ExperimentPageContentService subject;
 
     @BeforeEach
     public void setUp() {
-        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, tsnePlotSettingsService, europePmcClient);
+        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, tsnePlotSettingsService, europePmcClient, cellMetadataDao);
     }
 
     @Test
