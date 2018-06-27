@@ -47,11 +47,10 @@ public class BaselineExperimentTopGenesDao {
                         .withQuery(solrQuery)
                         .sortByAbsoluteAverageDescending(expressionLevelField);
 
-        SelectStreamBuilder<AnalyticsCollectionProxy> selectStreamBuilder =
-                mapMetricFieldNames(facetStreamBuilder, expressionLevelField);
+        SelectStreamBuilder selectStreamBuilder = mapMetricFieldNames(facetStreamBuilder, expressionLevelField);
 
-        TopStreamBuilder<AnalyticsCollectionProxy> topStreamBuilder =
-                new TopStreamBuilder<>(selectStreamBuilder, preferences.getHeatmapMatrixSize(), AVERAGE_EXPRESSION_KEY);
+        TopStreamBuilder topStreamBuilder =
+                new TopStreamBuilder(selectStreamBuilder, preferences.getHeatmapMatrixSize(), AVERAGE_EXPRESSION_KEY);
 
         return TupleStreamer.of(topStreamBuilder.build());
     }
@@ -86,26 +85,25 @@ public class BaselineExperimentTopGenesDao {
 
         // Join previous two streams, creating a stream of the gene IDs expressed in the selected assay group with the
         // average expression and the global specificity
-        InnerJoinStreamBuilder<AnalyticsCollectionProxy> innerJoinStreamBuilder =
-                new InnerJoinStreamBuilder<>(facetStreamBuilder, blahFacetStreamBuilder, BIOENTITY_IDENTIFIER.name());
+        InnerJoinStreamBuilder innerJoinStreamBuilder =
+                new InnerJoinStreamBuilder(facetStreamBuilder, blahFacetStreamBuilder, BIOENTITY_IDENTIFIER.name());
 
-        SelectStreamBuilder<AnalyticsCollectionProxy> selectStreamBuilder =
+        SelectStreamBuilder selectStreamBuilder =
                 mapMetricFieldNames(innerJoinStreamBuilder, expressionLevelField);
 
         // Sort resulting stream by specificity
-        SortStreamBuilder<AnalyticsCollectionProxy> sortStreamBuilder =
-                new SortStreamBuilder<>(selectStreamBuilder, SPECIFICITY_KEY);
+        SortStreamBuilder sortStreamBuilder =
+                new SortStreamBuilder(selectStreamBuilder, SPECIFICITY_KEY);
 
         return TupleStreamer.of(sortStreamBuilder.build());
     }
 
     // Rename fields of the resulting stream. We do this to manipulate the resulting tuples regardless of the units or
     // experiment type (TPM, FPKM, log-2 fold change).
-    private static SelectStreamBuilder<AnalyticsCollectionProxy> mapMetricFieldNames(
-            TupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilder,
-            AnalyticsSchemaField expressionLevelField) {
+    private static SelectStreamBuilder mapMetricFieldNames(TupleStreamBuilder tupleStreamBuilder,
+                                                           AnalyticsSchemaField expressionLevelField) {
 
-        return new SelectStreamBuilder<>(tupleStreamBuilder)
+        return new SelectStreamBuilder(tupleStreamBuilder)
                         .addFieldMapping(
                                 ImmutableMap.of(
                                         BIOENTITY_IDENTIFIER.name(), GENE_KEY,

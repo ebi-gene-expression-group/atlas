@@ -38,15 +38,15 @@ public class DifferentialExperimentTopGenesDao {
                         .sortByCountsAscending()
                         .withAbsoluteAverageOf(LOG_2_FOLD_CHANGE);
 
-        SelectStreamBuilder<AnalyticsCollectionProxy> selectStreamBuilder =
-                new SelectStreamBuilder<>(facetStreamBuilder)
+        SelectStreamBuilder selectStreamBuilder =
+                new SelectStreamBuilder(facetStreamBuilder)
                         .addFieldMapping(
                                 ImmutableMap.of(
                                         BIOENTITY_IDENTIFIER.name(), GENE_KEY,
                                         "avg(abs(" + LOG_2_FOLD_CHANGE.name() + "))", AVERAGE_EXPRESSION_KEY));
 
-        TopStreamBuilder<AnalyticsCollectionProxy> topStreamBuilder =
-                new TopStreamBuilder<>(selectStreamBuilder, preferences.getHeatmapMatrixSize(), AVERAGE_EXPRESSION_KEY);
+        TopStreamBuilder topStreamBuilder =
+                new TopStreamBuilder(selectStreamBuilder, preferences.getHeatmapMatrixSize(), AVERAGE_EXPRESSION_KEY);
 
         return TupleStreamer.of(topStreamBuilder.build());
     }
@@ -65,8 +65,8 @@ public class DifferentialExperimentTopGenesDao {
                         .sortByCountsAscending()
                         .withAbsoluteAverageOf(LOG_2_FOLD_CHANGE);
 
-        SelectStreamBuilder<AnalyticsCollectionProxy> selectStreamBuilder =
-                new SelectStreamBuilder<>(facetStreamBuilder)
+        SelectStreamBuilder selectStreamBuilder =
+                new SelectStreamBuilder(facetStreamBuilder)
                         .addFieldMapping(
                                 ImmutableMap.of(
                                         BIOENTITY_IDENTIFIER.name(), GENE_KEY,

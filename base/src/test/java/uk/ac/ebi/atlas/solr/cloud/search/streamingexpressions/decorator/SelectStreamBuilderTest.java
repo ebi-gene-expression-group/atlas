@@ -19,8 +19,8 @@ public class SelectStreamBuilderTest {
         DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock =
                 DummyTupleStreamBuilder.create(size);
 
-        SelectStreamBuilder<AnalyticsCollectionProxy> subject =
-                new SelectStreamBuilder<>(tupleStreamBuilderMock)
+        SelectStreamBuilder subject =
+                new SelectStreamBuilder(tupleStreamBuilderMock)
                         .addFieldMapping(ImmutableMap.of("field1", "fieldA", "field2", "fieldB"));
 
         assertThat(TupleStreamer.of(subject.build()).get().collect(toList()))
@@ -43,7 +43,7 @@ public class SelectStreamBuilderTest {
         DummyTupleStreamBuilder<AnalyticsCollectionProxy> tupleStreamBuilderMock =
                 DummyTupleStreamBuilder.create(size);
 
-        SelectStreamBuilder<AnalyticsCollectionProxy> subject = new SelectStreamBuilder<>(tupleStreamBuilderMock);
+        SelectStreamBuilder subject = new SelectStreamBuilder(tupleStreamBuilderMock);
 
         assertThat(TupleStreamer.of(subject.build()).get().collect(toList()))
                 .hasSize(size)

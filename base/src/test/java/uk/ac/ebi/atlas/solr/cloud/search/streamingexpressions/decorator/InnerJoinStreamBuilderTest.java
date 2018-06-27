@@ -137,14 +137,14 @@ class InnerJoinStreamBuilderTest {
     }
 
     // A way to make assertions with try-with-resources
-    private static <T extends CollectionProxy> void assertAboutInnerJoinStreamBuilder(
-            TupleStreamBuilder<T> tupleStreamBuilder1,
-            TupleStreamBuilder<T> tupleStreamBuilder2,
+    private static void assertAboutInnerJoinStreamBuilder(
+            TupleStreamBuilder tupleStreamBuilder1,
+            TupleStreamBuilder tupleStreamBuilder2,
             Consumer<TupleStreamer> assertionOverTupleStreamer) {
 
         try (TupleStreamer tupleStreamer =
                      TupleStreamer.of(
-                             new InnerJoinStreamBuilder<>(tupleStreamBuilder1, tupleStreamBuilder2, SORT_FIELD)
+                             new InnerJoinStreamBuilder(tupleStreamBuilder1, tupleStreamBuilder2, SORT_FIELD)
                                      .build())) {
             assertionOverTupleStreamer.accept(tupleStreamer);
         }
