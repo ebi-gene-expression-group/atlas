@@ -40,6 +40,16 @@ public class CellMetadataService {
                         entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 
+    public Map<String, String> getMetadata(String experimentAccession, String cellId) {
+        SingleCellAnalyticsSchemaField[] metadataFieldNames = cellMetadataDao.getMetadataFieldNames(experimentAccession).toArray(new SingleCellAnalyticsSchemaField[0]);
+
+        return cellMetadataDao.getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), metadataFieldNames)
+                .entrySet().stream()
+                .collect(toMap(
+                        entry -> SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName(entry.getKey()),
+                        entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
+    }
+
     // This is not currently used but leaving in for now in case the logic is still useful
     protected Map<String, String> getIdfFileAttributes(String experimentAccession, String cellId) {
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);

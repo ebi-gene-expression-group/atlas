@@ -52,8 +52,14 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
         }
     }
 
-    public QueryResponse query(SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder) {
-        return query(solrQueryBuilder.build());
+    public static String metadataFieldNameToDisplayName(String metadataFieldName) {
+        // The metadata fields are either characteristics or factors
+        if (metadataFieldName.startsWith("characteristic")) {
+            return characteristicFieldNameToDisplayName(metadataFieldName);
+        }
+        else {
+            return factorFieldNameToDisplayName(metadataFieldName);
+        }
     }
 
     // Converts Solr factor field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site)
@@ -73,6 +79,10 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
     // Converts attribute strings from .idf file to Solr schema field names (e.g. FACS marker => facs_marker)
     public static String attributeNameToFieldName(String attributeName) {
         return attributeName.trim().toLowerCase().replace(" ", "_");
+    }
+
+    public QueryResponse query(SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder) {
+        return query(solrQueryBuilder.build());
     }
 
 }

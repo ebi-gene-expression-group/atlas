@@ -38,12 +38,8 @@ public class JsonCellMetadataController extends JsonExperimentController {
 
         JsonArray result = new JsonArray();
 
-        cellMetadataService
-                .getInferredCellType(experiment.getAccession(), cellId)
-                .ifPresent(inferredCellType -> result.add(createMetadataJson("Inferred cell type", inferredCellType)));
-
-        cellMetadataService.getFactors(experiment.getAccession(), cellId).forEach((factorName, factorValue) ->
-                result.add(createMetadataJson(factorName, factorValue)));
+        cellMetadataService.getMetadata(experiment.getAccession(), cellId).forEach((metadataName, metadataValue) ->
+                result.add(createMetadataJson(metadataName, metadataValue)));
 
         return result.toString();
     }
