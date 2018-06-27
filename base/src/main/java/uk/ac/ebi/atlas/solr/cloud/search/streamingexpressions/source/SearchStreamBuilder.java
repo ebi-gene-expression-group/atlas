@@ -23,7 +23,6 @@ public class SearchStreamBuilder<T extends CollectionProxy> extends TupleStreamB
     @Override
     protected TupleStream getRawTupleStream() {
         try {
-            // Will throw ClassCastException if SolrClient isn’t CloudSolrClient, beware in testing
             String zkHost = ((CloudSolrClient) collectionProxy.solrClient).getZkHost();
             String collectionNameOrAlias = collectionProxy.nameOrAlias;
 

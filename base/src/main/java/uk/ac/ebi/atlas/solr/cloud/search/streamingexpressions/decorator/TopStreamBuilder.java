@@ -15,8 +15,6 @@ public class TopStreamBuilder extends TupleStreamBuilder {
     private final int n;
     private final StreamComparator streamComparator;
 
-    // We don’t use SchemaField<T> for the field comparator because  names may have been renamed by a previous select
-    // clause or it may be a field with a stream evaluator
     public TopStreamBuilder(TupleStreamBuilder tupleStreamBuilder, int n, String fieldName) {
         this.tupleStreamBuilder = tupleStreamBuilder;
         this.n = n;

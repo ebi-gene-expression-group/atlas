@@ -22,8 +22,6 @@ public class SelectStreamBuilder extends TupleStreamBuilder {
     //     return this;
     // }
 
-    // We don’t use SchemaField<T> as keys because field names may have been renamed by a previous select clause or it
-    // may be a field with a stream evaluator
     public SelectStreamBuilder addFieldMapping(Map<String, String> fieldNamesMap) {
         fieldMapsBuilder.putAll(fieldNamesMap);
         return this;

@@ -79,7 +79,6 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
         int limit = Integer.MAX_VALUE;  // retrieve all, see https://issues.apache.org/jira/browse/SOLR-11836
 
         try {
-            // Will throw ClassCastException if SolrClient isn’t CloudSolrClient, beware in testing
             String zkHost = ((CloudSolrClient) collectionProxy.solrClient).getZkHost();
             String collectionNameOrAlias = collectionProxy.nameOrAlias;
             return new FacetStream(zkHost, collectionNameOrAlias, solrQuery, buckets, metrics, sorts, limit);
