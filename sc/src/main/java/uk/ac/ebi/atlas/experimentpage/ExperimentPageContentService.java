@@ -58,7 +58,6 @@ public class ExperimentPageContentService {
         cellMetadataDao.getMetadataFieldNames(experimentAccession)
                 .stream()
                 .map(x -> ImmutableMap.of("value", x.name(), "label", x.displayName()))
-                .collect(Collectors.toList())
                 .forEach(x -> metadataArray.add(gson.toJsonTree(x)));
 
         result.add("metadata", metadataArray);
