@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TSnePlotServiceDaoIT {
@@ -43,7 +45,7 @@ class TSnePlotServiceDaoIT {
     }
 
     @Test
-    void testClusters() {
+    void testClustersForK() {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int k = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
@@ -52,6 +54,18 @@ class TSnePlotServiceDaoIT {
                 .isNotEmpty()
                 .doesNotHaveDuplicates()
                 .allMatch(tSnePointDto -> tSnePointDto.clusterId() <= k)
+                .extracting("name")
+                .isSubsetOf(fetchCellIds(experimentAccession));
+    }
+
+    @Test
+    void testClustersForPerplexity() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
+
+        assertThat(subject.fetchTSnePlotForPerplexity(experimentAccession, perplexity))
+                .isNotEmpty()
+                .doesNotHaveDuplicates()
                 .extracting("name")
                 .isSubsetOf(fetchCellIds(experimentAccession));
     }
