@@ -19,7 +19,7 @@ import static uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotDao.BATCH_SIZE;
 import static uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotStreamerTest.randomTSnePoints;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class TSnePlotDaoIT {
     private static final String SELECT_STATEMENT = "SELECT * FROM scxa_tsne WHERE experiment_accession=?";
     @Inject

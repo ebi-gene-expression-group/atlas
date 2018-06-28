@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -18,21 +19,15 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TSnePlotStreamerIT {
     @Inject
-    private DataFileHubFactory dataFileHubFactory;
-
     private DataFileHub dataFileHub;
 
     @Inject
     private JdbcUtils jdbcTestUtils;
-
-    @BeforeAll
-    void setUp() {
-        dataFileHub = dataFileHubFactory.getScxaDataFileHub();
-    }
 
     @ParameterizedTest
     @MethodSource("singleCellExperimentsProvider")
