@@ -56,9 +56,9 @@ public class CellMetadataDaoIT {
         assertThat(subject.getMetadataFieldNames(experimentAccession)).isEmpty();
     }
 
-    @Test
-    public void invalidCellIdHasNoMetadata() {
-        String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
+    @ParameterizedTest
+    @MethodSource("experimentsWithMetadataProvider")
+    public void invalidCellIdHasNoMetadata(String experimentAccession) {
         String cellId = "FOOBAR";
 
         List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
