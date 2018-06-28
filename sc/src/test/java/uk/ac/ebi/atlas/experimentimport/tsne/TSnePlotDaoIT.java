@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
@@ -19,6 +20,7 @@ import static uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotDao.BATCH_SIZE;
 import static uk.ac.ebi.atlas.experimentimport.tsne.TSnePlotStreamerTest.randomTSnePoints;
 
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
 public class TSnePlotDaoIT {
     private static final String SELECT_STATEMENT = "SELECT * FROM scxa_tsne WHERE experiment_accession=?";
