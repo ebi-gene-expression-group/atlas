@@ -20,20 +20,20 @@
 
             <div class="medium-12 large-4 columns">
                 <h4 class="show-for-large">Query single cell expression</h4>
-                <a href="/gxa/sc" title="To Single Cell Expression Atlas" class="button" style="box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5)">To Single Cell Expression Atlas <i class="icon icon-common" data-icon="&#xf10f;"></i></a>
+                <a href="/gxa/sc" title="To Single Cell Expression Atlas" class="button" style="box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5)">To Single Cell Expression Atlas <i class="icon icon-functional" data-icon=">"></i></a>
             </div>
 
             <nav>
                 <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
                     <li id="local-nav-home"><a href="${pageContext.request.contextPath}/home"><i class="icon icon-generic padding-right-medium" data-icon="H"></i>Home</a></li>
-                    <li id="local-nav-experiments"><a href="${pageContext.request.contextPath}/experiments"><i class="icon icon-common padding-right-medium" data-icon="&#x41;"></i>Browse experiments</a></li>
-                    <li id="local-nav-download"><a href="${pageContext.request.contextPath}/download.html"><i class="icon icon-common padding-right-medium" data-icon="&#xc2;"></i>Download</a></li>
-                    <li id="local-nav-release-notes"><a href="${pageContext.request.contextPath}/release-notes.html"><i class="icon icon-common padding-right-medium" data-icon="&#x1ea;"></i>Release notes</a></li>
-                    <li id="local-nav-faq"><a href="${pageContext.request.contextPath}/FAQ.html"><i class="icon icon-common padding-right-medium" data-icon="&#xeb;"></i>FAQ</a></li>
-                    <li id="local-nav-help"><a href="${pageContext.request.contextPath}/help/index.html"><i class="icon icon-common padding-right-medium" data-icon="&#x3f;"></i>Help</a></li>
-                    <li id="local-nav-licence"><a href="${pageContext.request.contextPath}/licence.html"><i class="icon icon-common padding-right-medium" data-icon="&#x27;"></i>Licence</a></li>
-                    <li id="local-nav-about"><a href="${pageContext.request.contextPath}/about.html"><i class="icon icon-common padding-right-medium" data-icon="&#x2139;"></i>About</a></li>
-                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/gxa" target="_blank" data-icon="X"><i class="icon icon-common padding-right-medium" data-icon="&#x6e;"></i>Feedback</a></li>
+                    <li id="local-nav-experiments"><a href="${pageContext.request.contextPath}/experiments"><i class="icon icon-functional padding-right-medium" data-icon="C"></i>Browse experiments</a></li>
+                    <li id="local-nav-download"><a href="${pageContext.request.contextPath}/download.html"><i class="icon icon-functional padding-right-medium" data-icon="="></i>Download</a></li>
+                    <li id="local-nav-release-notes"><a href="${pageContext.request.contextPath}/release-notes.html"><i class="icon icon-generic padding-right-medium" data-icon=";"></i>Release notes</a></li>
+                    <li id="local-nav-faq"><a href="${pageContext.request.contextPath}/FAQ.html"><i class="icon icon-generic padding-right-medium" data-icon="G"></i>FAQ</a></li>
+                    <li id="local-nav-help"><a href="${pageContext.request.contextPath}/help/index.html"><i class="icon icon-generic padding-right-medium" data-icon="?"></i>Help</a></li>
+                    <li id="local-nav-licence"><a href="${pageContext.request.contextPath}/licence.html"><i class="icon icon-generic padding-right-medium" data-icon="'"></i>Licence</a></li>
+                    <li id="local-nav-about"><a href="${pageContext.request.contextPath}/about.html"><i class="icon icon-generic padding-right-medium" data-icon="i"></i>About</a></li>
+                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/gxa" target="_blank" data-icon="X"><i class="icon icon-functional padding-right-medium" data-icon="n"></i>Feedback</a></li>
                 </ul>
             </nav>
             <!-- /local-nav -->
