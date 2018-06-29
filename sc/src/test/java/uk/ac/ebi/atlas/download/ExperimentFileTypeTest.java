@@ -14,8 +14,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:applicationContext.xml")
 public class ExperimentFileTypeTest {
 
     @ParameterizedTest
