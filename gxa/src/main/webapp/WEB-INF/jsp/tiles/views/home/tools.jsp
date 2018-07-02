@@ -56,7 +56,7 @@
     <a href="https://github.com/ebi-gene-expression-group/atlas-heatmap" target="_blank">
         <div class="media-object">
             <div class="media-object-section middle">
-                <h3><span class="icon icon-common" data-icon="&#x1b3;"></span></h3>
+                <h3><span class="icon icon-conceptual" data-icon="g"></span></h3>
             </div>
             <div class="media-object-section middle">
                 <p>
