@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,15 +69,19 @@ public class SolrCloudAdminProxy {
             throw new RuntimeException("The collection " + collectionName + " does not exist in Solr");
         }
         else {
-            Stream<String> collectionShardStates = ((LinkedHashMap) collectionStatus.getOrDefault("shards", Stream.empty()))
-                    .values()
-                    .stream()
-                    .map(x -> ((LinkedHashMap) x).get("state"));
+            LinkedHashMap shards = (LinkedHashMap) ((LinkedHashMap) collectionStatus.get("shards")).values();
 
-            return collectionShardStates
-                    .filter(x -> !x.equalsIgnoreCase("active"))
-                    .collect(Collectors.toList());
+            // For each shard, get the replicas
+            shards.entrySet().forEach( (LinkedHashMap) shard -> {
+                LinkedHashMap replicas = shard.get("replicas").values();
 
+                // TODO: For each replica, get the status
+
+            });
+
+
+            // TODO temporary return
+            return Collections.emptyList();
         }
     }
 }
