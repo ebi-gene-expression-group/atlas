@@ -29,7 +29,7 @@ public class DataFileHubIT {
     @Inject
     private JdbcUtils jdbcUtils;
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetExperimentFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
         String experimentAccession = jdbcUtils.fetchRandomExpressionAtlasExperimentAccession();

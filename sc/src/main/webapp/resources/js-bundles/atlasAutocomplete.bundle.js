@@ -2,6 +2,290 @@ var atlasAutocomplete =
 webpackJsonp_name_([2],{
 
 /***/ 100:
+/*!************************************************************************!*\
+  !*** ./bundles/autocomplete/node_modules/prop-types/checkPropTypes.js ***!
+  \************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (true) {
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 34);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 35);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 36);
+  var loggedTypeFailures = {};
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (true) {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+
+/***/ }),
+
+/***/ 101:
+/*!**************************************************************************************************!*\
+  !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
+  \**************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ 0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ 14);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 102);
+
+var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
+
+var _urijs = __webpack_require__(/*! urijs */ 37);
+
+var _urijs2 = _interopRequireDefault(_urijs);
+
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 106);
+
+var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AtlasAutocomplete = function (_React$Component) {
+  _inherits(AtlasAutocomplete, _React$Component);
+
+  function AtlasAutocomplete(props) {
+    _classCallCheck(this, AtlasAutocomplete);
+
+    var _this = _possibleConstructorReturn(this, (AtlasAutocomplete.__proto__ || Object.getPrototypeOf(AtlasAutocomplete)).call(this, props));
+
+    _this.state = {
+      selectedItem: _this.props.initialValue,
+      selectedSpecies: _this.props.defaultSpecies,
+      currentSuggestions: []
+    };
+
+    _this.updateSuggestions = _this._updateSuggestions.bind(_this);
+    _this.speciesSelectOnChange = _this._speciesSelectOnChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(AtlasAutocomplete, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        selectedItem: nextProps.initialValue
+      });
+    }
+  }, {
+    key: '_speciesSelectOnChange',
+    value: function _speciesSelectOnChange(event) {
+      this.setState({ selectedSpecies: event.target.value });
+    }
+  }, {
+    key: '_updateSuggestions',
+    value: function _updateSuggestions(event, value) {
+      var _this2 = this;
+
+      this.setState({
+        selectedItem: value
+      });
+
+      var suggesterUrl = (0, _urijs2.default)(this.props.suggesterEndpoint, this.props.atlasUrl).search({
+        query: value,
+        species: this.state.selectedSpecies ? this.state.selectedSpecies : this.props.allSpecies.join()
+      }).toString();
+
+      fetch(suggesterUrl).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this2.setState({
+          currentSuggestions: json
+        });
+      }).catch(function (ex) {
+        console.log('Error parsing JSON: ' + ex);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      var menuStyle = {
+        borderRadius: '3px',
+        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+        fontSize: '90%',
+        overflow: 'auto',
+        maxHeight: '20rem', // approx. as many lines as 20/2
+        position: 'absolute',
+        top: 'auto',
+        zIndex: '1'
+      };
+
+      var allSpecies = this.props.allSpecies;
+      var _props = this.props,
+          wrapperClassName = _props.wrapperClassName,
+          autocompleteClassName = _props.autocompleteClassName;
+      var _props2 = this.props,
+          enableSpeciesFilter = _props2.enableSpeciesFilter,
+          speciesFilterClassName = _props2.speciesFilterClassName,
+          speciesFilterStatusMessage = _props2.speciesFilterStatusMessage,
+          topSpecies = _props2.topSpecies,
+          separator = _props2.separator;
+
+
+      return _react2.default.createElement(
+        'div',
+        { className: wrapperClassName },
+        _react2.default.createElement(
+          'div',
+          { className: autocompleteClassName },
+          _react2.default.createElement(
+            'label',
+            null,
+            'Gene ID, gene name or gene feature'
+          ),
+          _react2.default.createElement(_reactAutocomplete2.default, { wrapperStyle: { display: '' },
+            inputProps: { type: 'text', name: 'geneId' },
+
+            value: this.state.selectedItem,
+            items: this.state.currentSuggestions,
+
+            getItemValue: function getItemValue(item) {
+              return item.category;
+            },
+            onSelect: function onSelect(value) {
+              _this3.setState({
+                selectedItem: value, currentSuggestions: [] });
+              _this3.props.onSelect(value);
+            },
+            onChange: this.updateSuggestions,
+
+            renderItem: function renderItem(item, isHighlighted) {
+              return _react2.default.createElement(
+                'div',
+                { key: item.value + '_' + item.category, style: { background: isHighlighted ? 'lightgray' : 'white', padding: '2px 10px' } },
+                _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: item.value + ' (' + item.category + ')' } })
+              );
+            },
+
+            menuStyle: menuStyle })
+        ),
+        enableSpeciesFilter && _react2.default.createElement(
+          'div',
+          { className: speciesFilterClassName },
+          _react2.default.createElement(_SpeciesSelect2.default, { statusMessage: speciesFilterStatusMessage,
+            allSpecies: allSpecies,
+            topSpecies: topSpecies,
+            onChange: this.speciesSelectOnChange,
+            selectedValue: this.state.selectedSpecies })
+        )
+      );
+    }
+  }]);
+
+  return AtlasAutocomplete;
+}(_react2.default.Component);
+
+AtlasAutocomplete.propTypes = {
+  atlasUrl: _propTypes2.default.string.isRequired,
+  allSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string),
+  topSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string),
+  suggesterEndpoint: _propTypes2.default.string.isRequired,
+  enableSpeciesFilter: _propTypes2.default.bool,
+  initialValue: _propTypes2.default.string,
+  onSelect: _propTypes2.default.func,
+  wrapperClassName: _propTypes2.default.string,
+  autocompleteClassName: _propTypes2.default.string,
+  speciesFilterClassName: _propTypes2.default.string,
+  speciesFilterStatusMessage: _propTypes2.default.string.isRequired,
+  defaultSpecies: _propTypes2.default.string
+};
+
+AtlasAutocomplete.defaultProps = {
+  allSpecies: [],
+  topSpecies: [],
+  enableSpeciesFilter: false,
+  initialValue: '',
+  onSelect: function onSelect() {},
+  wrapperClassName: '',
+  autocompleteClassName: '',
+  speciesFilterClassName: '',
+  defaultSpecies: ''
+};
+
+exports.default = AtlasAutocomplete;
+
+/***/ }),
+
+/***/ 102:
 /*!****************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/react-autocomplete/build/lib/Autocomplete.js ***!
   \****************************************************************************************/
@@ -25,10 +309,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(/*! react */ 0);
 var PropTypes = __webpack_require__(/*! prop-types */ 14);
 
-var _require = __webpack_require__(/*! react-dom */ 5),
+var _require = __webpack_require__(/*! react-dom */ 7),
     findDOMNode = _require.findDOMNode;
 
-var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 101);
+var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 103);
 
 var IMPERATIVE_API = ['blur', 'checkValidity', 'click', 'focus', 'select', 'setCustomValidity', 'setSelectionRange', 'setRangeText'];
 
@@ -661,11 +945,11 @@ Autocomplete.keyDownHandlers = {
 
 
 module.exports = Autocomplete;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 3)))
 
 /***/ }),
 
-/***/ 101:
+/***/ 103:
 /*!*************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/index.js ***!
   \*************************************************************************/
@@ -673,12 +957,12 @@ module.exports = Autocomplete;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 102);
+module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 104);
 
 
 /***/ }),
 
-/***/ 102:
+/***/ 104:
 /*!********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
   \********************************************************************************************/
@@ -686,7 +970,7 @@ module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 102);
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var util = __webpack_require__(/*! ./util */ 103);
+var util = __webpack_require__(/*! ./util */ 105);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -812,7 +1096,7 @@ module.exports = scrollIntoView;
 
 /***/ }),
 
-/***/ 103:
+/***/ 105:
 /*!****************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/dom-scroll-into-view/lib/util.js ***!
   \****************************************************************************/
@@ -1255,7 +1539,7 @@ mix(utils, domUtils);
 
 /***/ }),
 
-/***/ 104:
+/***/ 106:
 /*!**********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/SpeciesSelect.js ***!
   \**********************************************************************************************/
@@ -1368,7 +1652,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 96)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 98)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -1378,7 +1662,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 32:
+/***/ 33:
 /*!*********************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/emptyFunction.js ***!
   \*********************************************************************/
@@ -1426,7 +1710,7 @@ module.exports = emptyFunction;
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/invariant.js ***!
   \*****************************************************************/
@@ -1491,7 +1775,7 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /*!***************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/fbjs/lib/warning.js ***!
   \***************************************************************/
@@ -1510,7 +1794,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 32);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 33);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -1565,7 +1849,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 35:
+/***/ 36:
 /*!**********************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \**********************************************************************************/
@@ -1590,7 +1874,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 36:
+/***/ 37:
 /*!************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/URI.js ***!
   \************************************************************/
@@ -1615,10 +1899,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   // https://github.com/umdjs/umd/blob/master/returnExports.js
   if (typeof module === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 37), __webpack_require__(/*! ./IPv6 */ 38), __webpack_require__(/*! ./SecondLevelDomains */ 39));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 38), __webpack_require__(/*! ./IPv6 */ 39), __webpack_require__(/*! ./SecondLevelDomains */ 40));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 37), __webpack_require__(/*! ./IPv6 */ 38), __webpack_require__(/*! ./SecondLevelDomains */ 39)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 38), __webpack_require__(/*! ./IPv6 */ 39), __webpack_require__(/*! ./SecondLevelDomains */ 40)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -3943,7 +4227,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 37:
+/***/ 38:
 /*!*****************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/punycode.js ***!
   \*****************************************************************/
@@ -4484,11 +4768,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 8)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 8)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 3)))
 
 /***/ }),
 
-/***/ 38:
+/***/ 39:
 /*!*************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/IPv6.js ***!
   \*************************************************************/
@@ -4689,7 +4973,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 39:
+/***/ 40:
 /*!***************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/urijs/src/SecondLevelDomains.js ***!
   \***************************************************************************/
@@ -4950,7 +5234,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 80:
+/***/ 82:
 /*!************************************!*\
   !*** multi ./bundles/autocomplete ***!
   \************************************/
@@ -4958,12 +5242,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/autocomplete */81);
+module.exports = __webpack_require__(/*! ./bundles/autocomplete */83);
 
 
 /***/ }),
 
-/***/ 81:
+/***/ 83:
 /*!***************************************!*\
   !*** ./bundles/autocomplete/index.js ***!
   \***************************************/
@@ -4983,11 +5267,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 5);
+var _reactDom = __webpack_require__(/*! react-dom */ 7);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 94);
+var _expressionAtlasAutocomplete = __webpack_require__(/*! expression-atlas-autocomplete */ 96);
 
 var _expressionAtlasAutocomplete2 = _interopRequireDefault(_expressionAtlasAutocomplete);
 
@@ -5001,7 +5285,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 94:
+/***/ 96:
 /*!**************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/index.js ***!
   \**************************************************************************************/
@@ -5016,7 +5300,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _FetchLoader = __webpack_require__(/*! ./FetchLoader.js */ 95);
+var _FetchLoader = __webpack_require__(/*! ./FetchLoader.js */ 97);
 
 var _FetchLoader2 = _interopRequireDefault(_FetchLoader);
 
@@ -5026,7 +5310,7 @@ exports.default = _FetchLoader2.default;
 
 /***/ }),
 
-/***/ 95:
+/***/ 97:
 /*!********************************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/FetchLoader.js ***!
   \********************************************************************************************/
@@ -5053,11 +5337,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 14);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 36);
+var _urijs = __webpack_require__(/*! urijs */ 37);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete */ 99);
+var _AtlasAutocomplete = __webpack_require__(/*! ./AtlasAutocomplete */ 101);
 
 var _AtlasAutocomplete2 = _interopRequireDefault(_AtlasAutocomplete);
 
@@ -5209,7 +5493,7 @@ exports.default = FetchLoader;
 
 /***/ }),
 
-/***/ 96:
+/***/ 98:
 /*!*********************************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \*********************************************************************************/
@@ -5227,13 +5511,13 @@ exports.default = FetchLoader;
 
 
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 32);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 33);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 34);
-var assign = __webpack_require__(/*! object-assign */ 97);
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 33);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 34);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 35);
+var assign = __webpack_require__(/*! object-assign */ 99);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 35);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 98);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 36);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 100);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -5764,7 +6048,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 97:
+/***/ 99:
 /*!******************************************************************!*\
   !*** ./bundles/autocomplete/node_modules/object-assign/index.js ***!
   \******************************************************************/
@@ -5865,291 +6149,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 };
 
 
-/***/ }),
-
-/***/ 98:
-/*!************************************************************************!*\
-  !*** ./bundles/autocomplete/node_modules/prop-types/checkPropTypes.js ***!
-  \************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 33);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 34);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 35);
-  var loggedTypeFailures = {};
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (true) {
-    for (var typeSpecName in typeSpecs) {
-      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
-        }
-      }
-    }
-  }
-}
-
-module.exports = checkPropTypes;
-
-
-/***/ }),
-
-/***/ 99:
-/*!**************************************************************************************************!*\
-  !*** ./bundles/autocomplete/node_modules/expression-atlas-autocomplete/lib/AtlasAutocomplete.js ***!
-  \**************************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 14);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reactAutocomplete = __webpack_require__(/*! react-autocomplete */ 100);
-
-var _reactAutocomplete2 = _interopRequireDefault(_reactAutocomplete);
-
-var _urijs = __webpack_require__(/*! urijs */ 36);
-
-var _urijs2 = _interopRequireDefault(_urijs);
-
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect.js */ 104);
-
-var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AtlasAutocomplete = function (_React$Component) {
-  _inherits(AtlasAutocomplete, _React$Component);
-
-  function AtlasAutocomplete(props) {
-    _classCallCheck(this, AtlasAutocomplete);
-
-    var _this = _possibleConstructorReturn(this, (AtlasAutocomplete.__proto__ || Object.getPrototypeOf(AtlasAutocomplete)).call(this, props));
-
-    _this.state = {
-      selectedItem: _this.props.initialValue,
-      selectedSpecies: _this.props.defaultSpecies,
-      currentSuggestions: []
-    };
-
-    _this.updateSuggestions = _this._updateSuggestions.bind(_this);
-    _this.speciesSelectOnChange = _this._speciesSelectOnChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(AtlasAutocomplete, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState({
-        selectedItem: nextProps.initialValue
-      });
-    }
-  }, {
-    key: '_speciesSelectOnChange',
-    value: function _speciesSelectOnChange(event) {
-      this.setState({ selectedSpecies: event.target.value });
-    }
-  }, {
-    key: '_updateSuggestions',
-    value: function _updateSuggestions(event, value) {
-      var _this2 = this;
-
-      this.setState({
-        selectedItem: value
-      });
-
-      var suggesterUrl = (0, _urijs2.default)(this.props.suggesterEndpoint, this.props.atlasUrl).search({
-        query: value,
-        species: this.state.selectedSpecies ? this.state.selectedSpecies : this.props.allSpecies.join()
-      }).toString();
-
-      fetch(suggesterUrl).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        _this2.setState({
-          currentSuggestions: json
-        });
-      }).catch(function (ex) {
-        console.log('Error parsing JSON: ' + ex);
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this3 = this;
-
-      var menuStyle = {
-        borderRadius: '3px',
-        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-        fontSize: '90%',
-        overflow: 'auto',
-        maxHeight: '20rem', // approx. as many lines as 20/2
-        position: 'absolute',
-        top: 'auto',
-        zIndex: '1'
-      };
-
-      var allSpecies = this.props.allSpecies;
-      var _props = this.props,
-          wrapperClassName = _props.wrapperClassName,
-          autocompleteClassName = _props.autocompleteClassName;
-      var _props2 = this.props,
-          enableSpeciesFilter = _props2.enableSpeciesFilter,
-          speciesFilterClassName = _props2.speciesFilterClassName,
-          speciesFilterStatusMessage = _props2.speciesFilterStatusMessage,
-          topSpecies = _props2.topSpecies,
-          separator = _props2.separator;
-
-
-      return _react2.default.createElement(
-        'div',
-        { className: wrapperClassName },
-        _react2.default.createElement(
-          'div',
-          { className: autocompleteClassName },
-          _react2.default.createElement(
-            'label',
-            null,
-            'Gene ID, gene name or gene feature'
-          ),
-          _react2.default.createElement(_reactAutocomplete2.default, { wrapperStyle: { display: '' },
-            inputProps: { type: 'text', name: 'geneId' },
-
-            value: this.state.selectedItem,
-            items: this.state.currentSuggestions,
-
-            getItemValue: function getItemValue(item) {
-              return item.category;
-            },
-            onSelect: function onSelect(value) {
-              _this3.setState({
-                selectedItem: value, currentSuggestions: [] });
-              _this3.props.onSelect(value);
-            },
-            onChange: this.updateSuggestions,
-
-            renderItem: function renderItem(item, isHighlighted) {
-              return _react2.default.createElement(
-                'div',
-                { key: item.value + '_' + item.category, style: { background: isHighlighted ? 'lightgray' : 'white', padding: '2px 10px' } },
-                _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: item.value + ' (' + item.category + ')' } })
-              );
-            },
-
-            menuStyle: menuStyle })
-        ),
-        enableSpeciesFilter && _react2.default.createElement(
-          'div',
-          { className: speciesFilterClassName },
-          _react2.default.createElement(_SpeciesSelect2.default, { statusMessage: speciesFilterStatusMessage,
-            allSpecies: allSpecies,
-            topSpecies: topSpecies,
-            onChange: this.speciesSelectOnChange,
-            selectedValue: this.state.selectedSpecies })
-        )
-      );
-    }
-  }]);
-
-  return AtlasAutocomplete;
-}(_react2.default.Component);
-
-AtlasAutocomplete.propTypes = {
-  atlasUrl: _propTypes2.default.string.isRequired,
-  allSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string),
-  topSpecies: _propTypes2.default.arrayOf(_propTypes2.default.string),
-  suggesterEndpoint: _propTypes2.default.string.isRequired,
-  enableSpeciesFilter: _propTypes2.default.bool,
-  initialValue: _propTypes2.default.string,
-  onSelect: _propTypes2.default.func,
-  wrapperClassName: _propTypes2.default.string,
-  autocompleteClassName: _propTypes2.default.string,
-  speciesFilterClassName: _propTypes2.default.string,
-  speciesFilterStatusMessage: _propTypes2.default.string.isRequired,
-  defaultSpecies: _propTypes2.default.string
-};
-
-AtlasAutocomplete.defaultProps = {
-  allSpecies: [],
-  topSpecies: [],
-  enableSpeciesFilter: false,
-  initialValue: '',
-  onSelect: function onSelect() {},
-  wrapperClassName: '',
-  autocompleteClassName: '',
-  speciesFilterClassName: '',
-  defaultSpecies: ''
-};
-
-exports.default = AtlasAutocomplete;
-
 /***/ })
 
-},[80]);
+},[82]);
 //# sourceMappingURL=atlasAutocomplete.bundle.js.map
