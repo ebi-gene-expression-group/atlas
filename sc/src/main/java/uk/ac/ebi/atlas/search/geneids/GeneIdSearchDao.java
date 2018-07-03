@@ -20,8 +20,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.SPECIES;
 
-// Gets bioentity_identifier values from the bioentities collection filtered by scxa-gene2experiment
-// Put it another way, search genes in scxa-gene2experiment by properties
+// Search gene IDs in scxa-gene2experiment by gene property name/value and species (bioentities collection)
 @Component
 public class GeneIdSearchDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneIdSearchDao.class);
@@ -69,7 +68,7 @@ public class GeneIdSearchDao {
         SearchStreamBuilder<BioentitiesCollectionProxy> bioentitiesSearchBuilder =
                 new SearchStreamBuilder<>(bioentitiesCollectionProxy, bioentitiesQueryBuilder);
 
-        LOGGER.debug("Searching bioentities collection");
+        LOGGER.debug("Searching bioentities collection: [{}]", bioentitiesQueryBuilder.build().getQuery());
         try (TupleStreamer tupleStreamer = TupleStreamer.of(bioentitiesSearchBuilder.build())) {
             return tupleStreamer.get()
                     .findFirst()
@@ -98,6 +97,8 @@ public class GeneIdSearchDao {
         IntersectStreamBuilder intersectBuilder =
                 new IntersectStreamBuilder(bioentitiesSearchBuilder, g2eSearchBuilder, sortField);
 
+        // There’s no easy way to get a string representation of a streaming expression unless we set up a
+        // StreamFactory, add all functions, equalitors, comparators, collection, etc. :(
         LOGGER.debug("Matching documents in bioentities found, retrieving intersection with gene2experiment");
         try (TupleStreamer tupleStreamer = TupleStreamer.of(intersectBuilder.build())) {
             return tupleStreamer.get()
