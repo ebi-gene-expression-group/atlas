@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static uk.ac.ebi.atlas.solr.BioentityPropertyName.UNKNOWN;
+import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomKnownBioentityPropertyName;
 
 class GeneQueryTest {
     private static final Species HOMO_SAPIENS =
@@ -72,14 +72,4 @@ class GeneQueryTest {
         return random(ThreadLocalRandom.current().nextInt(1, 10), " \t\n\r");
     }
 
-    private BioentityPropertyName getRandomKnownBioentityPropertyName() {
-        BioentityPropertyName propertyName = UNKNOWN;
-        while (propertyName == UNKNOWN) {
-            propertyName =
-                    BioentityPropertyName.values()[
-                            ThreadLocalRandom.current().nextInt(0, BioentityPropertyName.values().length)];
-        }
-
-        return propertyName;
-    }
 }

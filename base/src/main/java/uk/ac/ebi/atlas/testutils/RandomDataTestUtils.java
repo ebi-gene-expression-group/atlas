@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.UNKNOWN;
 
 public class RandomDataTestUtils {
     public static String getRandomExperimentAccession() {
@@ -95,4 +97,16 @@ public class RandomDataTestUtils {
 
         return tSnePointDtos;
     }
+
+    public static BioentityPropertyName getRandomKnownBioentityPropertyName() {
+        BioentityPropertyName propertyName = UNKNOWN;
+        while (propertyName == UNKNOWN) {
+            propertyName =
+                    BioentityPropertyName.values()[
+                            ThreadLocalRandom.current().nextInt(0, BioentityPropertyName.values().length)];
+        }
+
+        return propertyName;
+    }
+
 }
