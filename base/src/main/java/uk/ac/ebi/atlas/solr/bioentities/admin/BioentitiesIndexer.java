@@ -5,7 +5,6 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.BioentityIndexMonitor;
@@ -29,23 +28,16 @@ public class BioentitiesIndexer {
     private final BioentityIndexMonitor bioentityIndexMonitor;
     private final BioentityPropertiesSource bioentityPropertiesSource;
     private final SolrClient solrClient;
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
     @Inject
     public BioentitiesIndexer(BioentityIndexMonitor bioentityIndexMonitor,
                               BioentityPropertiesSource bioentityPropertiesSource,
-                              @Qualifier("solrClientBioentities") SolrClient solrClient) {
-        this(bioentityIndexMonitor,bioentityPropertiesSource, solrClient, Executors.newSingleThreadExecutor());
-    }
-
-    BioentitiesIndexer(BioentityIndexMonitor bioentityIndexMonitor,
-                       BioentityPropertiesSource bioentityPropertiesSource,
-                       SolrClient solrClient,
-                       ExecutorService executorService) {
+                              SolrClient solrClientBioentities) {
         this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesSource = bioentityPropertiesSource;
-        this.solrClient = solrClient;
-        this.executorService = executorService;
+        this.solrClient = solrClientBioentities;
+        this.executorService = Executors.newSingleThreadExecutor();
     }
 
     public void rebuildIndex() {
