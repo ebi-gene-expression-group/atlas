@@ -17,8 +17,8 @@ public class BioentityIndexMonitorTest {
     private BioentityIndexMonitor subject;
 
     @Before
-    public void init(){
-        subject = new BioentityIndexMonitor(indexingProgressMock);
+    public void init() {
+        subject = new BioentityIndexMonitor("foo", indexingProgressMock);
     }
 
     @Test
