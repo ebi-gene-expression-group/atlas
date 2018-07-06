@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.solr.bioentities.admin;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
@@ -29,10 +28,10 @@ public class BioentityPropertiesSource {
     private final Path reactomeDirectory;
     private final SpeciesFactory speciesFactory;
 
-    public BioentityPropertiesSource(@Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectoryLocation, SpeciesFactory speciesFactory){
-        this.annotationsDirectory = Paths.get(bioentityPropertiesDirectoryLocation, "annotations");
-        this.arrayDesignsDirectory = Paths.get(bioentityPropertiesDirectoryLocation, "array_designs");
-        this.reactomeDirectory = Paths.get(bioentityPropertiesDirectoryLocation, "reactome");
+    public BioentityPropertiesSource(String dataFilesLocation, SpeciesFactory speciesFactory) {
+        this.annotationsDirectory = Paths.get(dataFilesLocation, "bioentity_properties", "annotations");
+        this.arrayDesignsDirectory = Paths.get(dataFilesLocation, "bioentity_properties", "array_designs");
+        this.reactomeDirectory = Paths.get(dataFilesLocation, "bioentity_properties", "reactome");
         this.speciesFactory = speciesFactory;
     }
 

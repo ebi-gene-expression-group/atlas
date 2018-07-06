@@ -6,7 +6,6 @@ import com.jayway.jsonpath.JsonPath;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
@@ -46,13 +45,14 @@ public class AnalyticsQueryClient {
     private final Resource bioentityIdentifiersQueryJson;
 
     @Inject
-    public AnalyticsQueryClient(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl,
+    public AnalyticsQueryClient(RestTemplate restTemplate,
+                                @Value("${solr.host}") String solrHost,
                                 @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json") Resource baselineFacetsQueryJson,
                                 @Value("classpath:/solr-queries/differential.facets.query.json") Resource differentialFacetsQueryJson,
                                 @Value("classpath:/solr-queries/experimentType.query.json") Resource experimentTypesQueryJson,
                                 @Value("classpath:/solr-queries/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
         this.restTemplate = restTemplate;
-        this.solrBaseUrl = solrBaseUrl;
+        this.solrBaseUrl = "http://" + solrHost + ":8983/solr/analytics/";
         this.baselineFacetsQueryJson = baselineFacetsQueryJson;
         this.differentialFacetsQueryJson = differentialFacetsQueryJson;
         this.experimentTypesQueryJson = experimentTypesQueryJson;

@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.solr.bioentities.admin.monitor;
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 
 import javax.inject.Inject;
@@ -36,8 +35,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 public class BioentityIndexMonitor {
 
-    @Value("#{configuration['bioentity.properties']}")
-    private String bioentityPropertiesDirectory;
+    private final String bioentityPropertiesDirectory;
 
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
             + ",\n" +
@@ -58,8 +56,9 @@ public class BioentityIndexMonitor {
     private Stopwatch currentFileStopwatch;
 
     @Inject
-    public BioentityIndexMonitor(IndexingProgress indexingProgress){
-        status = Status.INITIALIZED;
+    public BioentityIndexMonitor(String dataFilesLocation, IndexingProgress indexingProgress) {
+        this.bioentityPropertiesDirectory = dataFilesLocation + "/bioentity_properties/";
+        this.status = Status.INITIALIZED;
         this.indexingProgress = indexingProgress;
     }
 

@@ -4,7 +4,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
@@ -20,9 +19,11 @@ public class GoPoTrader {
     private final ImmutableMap<String, OntologyTerm> accessionToTerm;
 
     @Inject
-    public GoPoTrader(@Value("#{configuration['go.terms.file']}") String goPoTSVFilePath)
+    public GoPoTrader(String dataFilesLocation)
     throws IOException {
-        try (CSVReader tsvReader = CsvReaderFactory.createForTsv(goPoTSVFilePath)) {
+        try (CSVReader tsvReader =
+                     CsvReaderFactory.createForTsv(
+                             dataFilesLocation + "/bioentity_properties/go/goIDToTerm.tsv")) {
             accessionToTerm = new GoPoTSVParser(tsvReader).parse();
         }
     }
