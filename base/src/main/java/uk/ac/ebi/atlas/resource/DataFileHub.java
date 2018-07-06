@@ -4,7 +4,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
@@ -87,11 +86,11 @@ public class DataFileHub {
 
 
     @Inject
-    public DataFileHub(@Value("#{configuration['experimentsFilesLocation']}") String experimentsFilesLocation) {
+    public DataFileHub(String dataFilesLocation) {
         Preconditions.checkNotNull(
-                experimentsFilesLocation,
+                dataFilesLocation,
                 "Data files location not found - if this is a development environment try `mvn clean install`");
-        this.experimentsFilesLocation = experimentsFilesLocation;
+        this.experimentsFilesLocation = dataFilesLocation;
     }
 
     public String getGxaExperimentDataLocation() {

@@ -1,25 +1,24 @@
 package uk.ac.ebi.atlas.resource;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.resource.ContrastImage;
 import uk.ac.ebi.atlas.model.resource.ExternalImage;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
 
-import javax.inject.Named;
 import java.util.Optional;
 
-@Named
+@Component
 public class ContrastImageFactory{
+    private final String gseaPathTemplate;
+    private final String rnaSeqPathTemplate;
+    private final String microarrayPathTemplate;
 
-    @Value("#{configuration['experiment.gsea-plot.path.template']}")
-    String gseaPathTemplate;
-
-    @Value("#{configuration['experiment.rnaseq.ma-plot.path.template']}")
-    String rnaSeqPathTemplate;
-
-    @Value("#{configuration['experiment.microarray.ma-plot.path.template']}")
-    String microarrayPathTemplate;
-
+    public ContrastImageFactory(String dataFilesLocation) {
+        // {0}->experiment accession, {1}->array design accession, {2}->contrast name or ontology source
+        gseaPathTemplate = dataFilesLocation + "/gxa/magetab/{0}/{0}.{1}.{2}.gsea_class_non_dir_both.png";
+        rnaSeqPathTemplate = dataFilesLocation + "/gxa/magetab/{0}/{0}-{1}-mvaPlot.png";
+        microarrayPathTemplate = dataFilesLocation + "/gxa/magetab/{0}/{0}_{1}-{2}-mvaPlot.png";
+    }
 
     ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession,
                                    Optional<String> arrayDesign, String contrastId ){
