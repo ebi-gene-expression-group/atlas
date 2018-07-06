@@ -6,7 +6,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.common.util.NamedList;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,8 +20,8 @@ import java.util.stream.Stream;
 public class SolrCloudAdminProxy {
     private final CloudSolrClient cloudSolrClient;
 
-    public SolrCloudAdminProxy(@Qualifier("zkHost") String zkHost) {
-        cloudSolrClient = new CloudSolrClient.Builder().withZkHost(zkHost).build();
+    public SolrCloudAdminProxy(CloudSolrClient cloudSolrClient) {
+        this.cloudSolrClient = cloudSolrClient;
     }
 
     public boolean areCollectionsUp(List<String> collectionNames, String... aliasedCollectionNames) throws IOException, SolrServerException {

@@ -17,6 +17,11 @@ public class SolrConfig {
     }
 
     @Bean
+    public SolrClient solrClientAnalytics(@Value("${solr.host}") String solrHost) {
+        return new HttpSolrClient.Builder("http://" + solrHost + ":8983/solr/analytics").build();
+    }
+
+    @Bean
     public CloudSolrClient cloudSolrClient(@Value("${zk.host}") String zkHost) {
         return new CloudSolrClient.Builder().withZkHost(zkHost + ":2181").build();
     }
