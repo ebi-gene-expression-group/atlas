@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Named
@@ -21,9 +22,8 @@ public class InterProTrader {
     @Inject
     public InterProTrader(String dataFilesLocation)
     throws IOException {
-        try (CSVReader tsvReader =
-                     CsvReaderFactory.createForTsv(
-                             dataFilesLocation + "/bioentity_properties/interpro/interproIDToTypeTerm.tsv")) {
+        String filePath = Paths.get(dataFilesLocation, "bioentity_properties", "go", "interproIDToTypeTerm.tsv").toString();
+        try (CSVReader tsvReader = CsvReaderFactory.createForTsv(filePath)) {
             accessionToTerm = new InterProTSVParser(tsvReader).parse();
         }
     }
