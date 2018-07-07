@@ -12,7 +12,7 @@
 
     <artifactId>atlas-base</artifactId>
     <version>5.0</version>
-    <packaging>jar</packaging>`
+    <packaging>jar</packaging>
 
     <name>Atlas base</name>
     <url>https://www.ebi.ac.uk/gxa/</url>
