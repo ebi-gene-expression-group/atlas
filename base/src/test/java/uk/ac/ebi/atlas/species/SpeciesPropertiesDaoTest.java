@@ -64,9 +64,10 @@ public class SpeciesPropertiesDaoTest {
         subject.fetchAll();
     }
 
-    private String createSpeciesPropertiesFile(InputStream in) throws IOException {
-        Path tempDirPath = Files.createTempDirectory(null);
+    private Path createSpeciesPropertiesFile(InputStream in) throws IOException {
+        Path tempDirPath = Files.createTempDirectory("");
+        tempDirPath.toFile().deleteOnExit();
         Files.copy(in, tempDirPath.resolve("species-properties.json"));
-        return tempDirPath.toString();
+        return tempDirPath.resolve("species-properties.json");
     }
 }

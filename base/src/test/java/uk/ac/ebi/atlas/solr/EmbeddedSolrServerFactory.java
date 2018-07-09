@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.solr;
 import org.apache.commons.io.FileUtils;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
 public class EmbeddedSolrServerFactory {
     private final CoreContainer coreContainer;
 
-    public EmbeddedSolrServerFactory(String dataFilesLocation) throws IOException {
+    public EmbeddedSolrServerFactory(@Value("${data.files.location}") String dataFilesLocation) throws IOException {
         Path solrTempDirectory = Files.createTempDirectory("");
         FileUtils.copyDirectory(Paths.get(dataFilesLocation, "solr").toFile(), solrTempDirectory.toFile());
         coreContainer =  new CoreContainer(solrTempDirectory.toString());

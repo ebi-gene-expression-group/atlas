@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.resource.DataFileHub.SingleCellExperimentFiles;
 
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -75,7 +76,7 @@ public class AnalyticsStreamerIT {
         List<String> cellIds = ImmutableList.copyOf(matrixMarketFiles.getRight());
 
         dataFileHub.addMatrixMarketExpressionFiles(
-                EXPERIMENT_ACCESSION, matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
+                Paths.get(EXPERIMENT_ACCESSION), matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
         SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(EXPERIMENT_ACCESSION);
 
         try (AnalyticsStreamer singleCellAnalyticsStreamer =
@@ -99,7 +100,7 @@ public class AnalyticsStreamerIT {
         Collection<Triple> matrixEntries = matrixMarketFiles.getLeft();
 
         dataFileHub.addMatrixMarketExpressionFiles(
-                EXPERIMENT_ACCESSION, matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
+                Paths.get(EXPERIMENT_ACCESSION), matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
 
         SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(EXPERIMENT_ACCESSION);
         try (AnalyticsStreamer singleCellAnalyticsStreamer =

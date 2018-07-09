@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.resource.JsonFile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.nio.file.Path;
 
 @Named
 public class SpeciesPropertiesDao {
@@ -17,8 +18,11 @@ public class SpeciesPropertiesDao {
     private final AtlasResource<JsonReader> speciesPropertiesJsonFile;
 
     @Inject
-    public SpeciesPropertiesDao(String dataFilesLocation) {
-        speciesPropertiesJsonFile = new JsonFile.ReadOnly(dataFilesLocation + "/species/", "species-properties.json");
+    public SpeciesPropertiesDao(Path speciesPropertiesFilePath) {
+        speciesPropertiesJsonFile =
+                new JsonFile.ReadOnly(
+                        speciesPropertiesFilePath.getParent().toString(),
+                        speciesPropertiesFilePath.getFileName().toString());
     }
 
     public ImmutableList<SpeciesProperties> fetchAll() throws IOException {

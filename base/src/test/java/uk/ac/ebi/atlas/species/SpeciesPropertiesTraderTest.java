@@ -33,7 +33,7 @@ public class SpeciesPropertiesTraderTest {
         location =
                 createSpeciesPropertiesFile(
                         SpeciesPropertiesTraderTest.class.getResourceAsStream("species-properties.json"));
-        SpeciesPropertiesDao speciesPropertiesDao = new SpeciesPropertiesDao(location.toString());
+        SpeciesPropertiesDao speciesPropertiesDao = new SpeciesPropertiesDao(location);
         subject.setSpeciesPropertiesDao(speciesPropertiesDao);
 
         subject.refresh();
@@ -57,7 +57,7 @@ public class SpeciesPropertiesTraderTest {
     public void refresh() throws IOException {
         Files.copy(
                 SpeciesPropertiesTraderTest.class.getResourceAsStream("species-tyrannosaurus-rex.json"),
-                location.resolve("species-properties.json"),
+                location,
                 REPLACE_EXISTING);
         subject.refresh();
 
@@ -73,14 +73,14 @@ public class SpeciesPropertiesTraderTest {
 
         Files.copy(
                 SpeciesPropertiesTraderTest.class.getResourceAsStream("species-tyrannosaurus-rex.json"),
-                location.resolve("species-properties.json"),
+                location,
                 REPLACE_EXISTING);
         refreshMessage = subject.refresh();
 
         Pattern removedSpeciesPattern = Pattern.compile(".*\\[(.+)\\] removed.*");
         Matcher matcher = removedSpeciesPattern.matcher(refreshMessage);
         matcher.find();
-        assertThat(matcher.group(1).split(", ").length, is(speciesPropertiesCountBeforeRefresh));
+            assertThat(matcher.group(1).split(", ").length, is(speciesPropertiesCountBeforeRefresh));
         assertThat(refreshMessage, containsString("[Tyrannosaurus_rex] added"));
     }
 
@@ -91,7 +91,7 @@ public class SpeciesPropertiesTraderTest {
         try {
             Files.copy(
                     toInputStream("invalid JSON contents", StandardCharsets.UTF_8),
-                    location.resolve("species-properties.json"));
+                    location.resolve("species/species-properties.json"));
             subject.refresh();
             // We should never get here
             throw new RuntimeException();
@@ -127,8 +127,9 @@ public class SpeciesPropertiesTraderTest {
     }
 
     private Path createSpeciesPropertiesFile(InputStream in) throws IOException {
-        Path tempDirPath = Files.createTempDirectory(null);
+        Path tempDirPath = Files.createTempDirectory("");
+        tempDirPath.toFile().deleteOnExit();
         Files.copy(in, tempDirPath.resolve("species-properties.json"));
-        return tempDirPath;
+        return tempDirPath.resolve("species-properties.json");
     }
 }

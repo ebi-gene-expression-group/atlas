@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.solr;
 import org.apache.commons.io.FileUtils;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 
@@ -15,7 +16,7 @@ import java.nio.file.Paths;
 public class EmbeddedSolrCollectionProxyFactory {
     private final CoreContainer coreContainer;
 
-    public EmbeddedSolrCollectionProxyFactory(String dataFilesLocation) throws IOException {
+    public EmbeddedSolrCollectionProxyFactory(@Value("${data.files.location}") String dataFilesLocation) throws IOException {
         Path solrTempDirectory = Files.createTempDirectory("");
         FileUtils.copyDirectory(Paths.get(dataFilesLocation, "solr").toFile(), solrTempDirectory.toFile());
         coreContainer = new CoreContainer(solrTempDirectory.toString());
