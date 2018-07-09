@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,7 +70,7 @@ public class MockDataFileHub extends DataFileHub {
             f.createNewFile();
             Files.write(f.toPath(), lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
