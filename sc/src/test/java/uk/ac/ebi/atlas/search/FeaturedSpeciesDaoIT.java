@@ -9,6 +9,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.configuration.JdbcConfig;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 
 import javax.inject.Inject;
 
@@ -16,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = {JdbcConfig.class})
 class FeaturedSpeciesDaoIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
