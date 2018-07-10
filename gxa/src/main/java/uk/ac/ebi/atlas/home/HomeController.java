@@ -74,8 +74,6 @@ public class HomeController {
 
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
 
-
-
         model.addAttribute("speciesList", GSON.toJson(popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)));
         model.addAttribute("animalsList", GSON.toJson(popularSpeciesService.getPopularSpecies("animals", FEATURED_SPECIES)));
         model.addAttribute("plantsList", GSON.toJson(popularSpeciesService.getPopularSpecies("plants", FEATURED_SPECIES)));

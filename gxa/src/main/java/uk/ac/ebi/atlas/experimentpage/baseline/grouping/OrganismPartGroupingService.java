@@ -4,14 +4,12 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -28,9 +26,17 @@ public class OrganismPartGroupingService {
     private final LazyReference<Multimap<String, ColumnGroup>> organsMap;
 
     @Inject
-    public OrganismPartGroupingService(@Value("#{configuration['anatomical.systems.file']}") String anatomicalSystemsPath, @Value("#{configuration['organs.file']}") String organsPath) {
-        this.anatomicalSystemsMap = makeMap.apply(anatomicalSystemsPath);
-        this.organsMap = makeMap.apply(organsPath);
+    public OrganismPartGroupingService(Path anatomicalSystemsFilePath, Path organsFilePath) {
+        Function<Path, LazyReference<Multimap<String, ColumnGroup>>> makeMap =
+                path -> new LazyReference<Multimap<String, ColumnGroup>>() {
+                    @Override
+                    protected Multimap<String, ColumnGroup> create() {
+                        return getColumnGroups(path);
+                    }
+        };
+
+        this.anatomicalSystemsMap = makeMap.apply(anatomicalSystemsFilePath);
+        this.organsMap = makeMap.apply(organsFilePath);
     }
 
     public Map<ColumnGroup, Set<OntologyTerm>> getAnatomicalSystemsGrouping(Collection<OntologyTerm> ontologyTerms) {
@@ -57,15 +63,6 @@ public class OrganismPartGroupingService {
 
         return groupings;
     }
-
-
-    private Function<String, LazyReference<Multimap<String, ColumnGroup>>> makeMap = path -> new LazyReference<Multimap<String, ColumnGroup>>() {
-        @Override
-        protected Multimap<String, ColumnGroup> create() {
-            return getColumnGroups(FileSystems.getDefault().getPath(path));
-        }
-    };
-
 
     private Multimap<String, ColumnGroup> getColumnGroups(Path path) {
 
