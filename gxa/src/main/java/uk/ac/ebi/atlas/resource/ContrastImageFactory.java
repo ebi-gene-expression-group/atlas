@@ -1,12 +1,11 @@
 package uk.ac.ebi.atlas.resource;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.resource.ContrastImage;
 import uk.ac.ebi.atlas.model.resource.ExternalImage;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Optional;
 
 @Component
@@ -15,12 +14,12 @@ public class ContrastImageFactory {
     private final String rnaSeqPathTemplate;
     private final String microarrayPathTemplate;
 
-    public ContrastImageFactory(@Value("${data.files.location}") String dataFilesLocation) {
-        String experimentPath = Paths.get(dataFilesLocation + "magetab", "{0}").toString();
+    public ContrastImageFactory(DataFileHub dataFileHub) {
+        Path experimentPathTemplate = dataFileHub.getExperimentMageTabDirLocation().resolve("{0}");
 
-        gseaPathTemplate = Paths.get(experimentPath, "{0}.{1}.{2}.gsea_class_non_dir_both.png").toString();
-        rnaSeqPathTemplate = Paths.get(experimentPath, "{0}-{1}-mvaPlot.png").toString();
-        microarrayPathTemplate = Paths.get(experimentPath, "{0}_{1}-{2}-mvaPlot.png").toString();
+        gseaPathTemplate = experimentPathTemplate.resolve("{0}.{1}.{2}.gsea_class_non_dir_both.png").toString();
+        rnaSeqPathTemplate = experimentPathTemplate.resolve("{0}-{1}-mvaPlot.png").toString();
+        microarrayPathTemplate = experimentPathTemplate.resolve("{0}_{1}-{2}-mvaPlot.png").toString();
     }
 
     ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession,
