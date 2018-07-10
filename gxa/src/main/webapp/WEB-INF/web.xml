@@ -5,25 +5,50 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <!-- Configure ContextLoaderListener to use AnnotationConfigWebApplicationContext
+         instead of the default XmlWebApplicationContext -->
     <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml</param-value>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
     </context-param>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+    <!-- We don’t need to specify the @Configuration classes if we annotate WebConfig below with @ComponentScan,
+         since that will detect all config classes and use them to build the application context -->
+    <!-- Configuration locations must consist of one or more comma- or space-delimited
+           fully-qualified @Configuration classes. Fully-qualified packages may also be
+           specified for component-scanning -->
+    <!--<context-param>-->
+        <!--<param-name>contextConfigLocation</param-name>-->
+        <!--<param-value>uk.ac.ebi.atlas.configuration.AppConfig,uk.ac.ebi.atlas.configuration.BasePathsConfig,uk.ac.ebi.atlas.configuration.PathsConfig,uk.ac.ebi.atlas.configuration.JdbcConfig,uk.ac.ebi.atlas.configuration.SolrConfig</param-value>-->
+    <!--</context-param>-->
 
+    <!-- Declare a Spring MVC DispatcherServlet as usual -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <!-- Configure DispatcherServlet to use AnnotationConfigWebApplicationContext
+             instead of the default XmlWebApplicationContext -->
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <!-- Again, config locations must consist of one or more comma- or space-delimited
+             and fully-qualified @Configuration classes -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>uk.ac.ebi.atlas.configuration.WebConfig</param-value>
+        </init-param>
+        <!-- Uncomment if you want a slower start-up time but a faster first-page load -->
+        <!--<load-on-startup>1</load-on-startup>-->
     </servlet>
-
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
