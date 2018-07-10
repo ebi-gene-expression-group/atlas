@@ -32,31 +32,31 @@ public class BasePathsConfig {
 
     @Bean
     public Path goPoFilePath() {
-        return Paths.get(bioentityPropertiesDirPath().toString(), "go", "goIDToTerm.tsv");
+        return bioentityPropertiesDirPath().resolve("go").resolve("goIDToTerm.tsv");
     }
 
     @Bean
     public Path interProFilePath() {
-        return Paths.get(bioentityPropertiesDirPath().toString(), "interpro", "interproIDToTypeTerm.tsv");
+        return bioentityPropertiesDirPath().resolve("interpro").resolve("interproIDToTypeTerm.tsv");
     }
 
     @Bean
     public Path annotationsDirPath() {
-        return Paths.get(bioentityPropertiesDirPath().toString(), "annotations");
+        return bioentityPropertiesDirPath().resolve("annotations");
     }
 
     @Bean
     public Path arrayDesignsDirPath() {
-        return Paths.get(bioentityPropertiesDirPath().toString(), "array_designs");
+        return bioentityPropertiesDirPath().resolve("array_designs");
     }
 
     @Bean
     public Path reactomeDirPath() {
-        return Paths.get(bioentityPropertiesDirPath().toString(), "reactome");
+        return bioentityPropertiesDirPath().resolve("reactome");
     }
 
     @Bean
     public Path speciesPropertiesFilePath() {
-        return Paths.get(dataFilesLocation, "species", "species-properties.json");
+        return Paths.get(dataFilesLocation).resolve("species").resolve("species-properties.json");
     }
 }

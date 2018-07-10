@@ -41,11 +41,9 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
     public Collection<ExternallyAvailableContent> get(E experiment) {
         ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
 
-        Path rData =
-                Paths.get(
-                        dataFileHub.getExperimentMageTabDirLocation(),
-                        experiment.getAccession(),
-                        experiment.getAccession() + "-atlasExperimentSummary.Rdata");
+        Path rData = dataFileHub.getExperimentMageTabDirLocation()
+                                .resolve(experiment.getAccession())
+                                .resolve(experiment.getAccession() + "-atlasExperimentSummary.Rdata");
         if (rData.toFile().exists()) {
             b.add(new ExternallyAvailableContent(
                     rDataUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
@@ -54,11 +52,9 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
                             "Summary of the expression results for this experiment ready to view in R")));
         }
 
-        Path heatmap =
-                Paths.get(
-                        dataFileHub.getExperimentMageTabDirLocation(),
-                        experiment.getAccession(),
-                        experiment.getAccession() + "-heatmap.pdf");
+        Path heatmap = dataFileHub.getExperimentMageTabDirLocation()
+                                  .resolve(experiment.getAccession())
+                                  .resolve(experiment.getAccession() + "-heatmap.pdf");
         if (heatmap.toFile().exists()) {
             b.add(new ExternallyAvailableContent(
                     heatmapUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),

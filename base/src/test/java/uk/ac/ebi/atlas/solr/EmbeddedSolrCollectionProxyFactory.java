@@ -18,7 +18,7 @@ public class EmbeddedSolrCollectionProxyFactory {
 
     public EmbeddedSolrCollectionProxyFactory(@Value("${data.files.location}") String dataFilesLocation) throws IOException {
         Path solrTempDirectory = Files.createTempDirectory("");
-        FileUtils.copyDirectory(Paths.get(dataFilesLocation, "solr").toFile(), solrTempDirectory.toFile());
+        FileUtils.copyDirectory(Paths.get(dataFilesLocation).resolve("solr").toFile(), solrTempDirectory.toFile());
         coreContainer = new CoreContainer(solrTempDirectory.toString());
         coreContainer.load();
     }

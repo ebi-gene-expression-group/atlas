@@ -33,7 +33,7 @@ import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PATHWAYID;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PATHWAYNAME;
 
 public class BioentityPropertiesSourceTest {
-    private String bioentityPropertiesDirectoryLocation;
+    private Path bioentityPropertiesDirectoryLocation;
     private SpeciesProperties HUMAN =
             SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of());
 
@@ -41,8 +41,8 @@ public class BioentityPropertiesSourceTest {
 
     @Before
     public void setUp() throws Exception {
-        bioentityPropertiesDirectoryLocation = Files.createTempDirectory("").toString();
-        new File(bioentityPropertiesDirectoryLocation).deleteOnExit();
+        bioentityPropertiesDirectoryLocation = Files.createTempDirectory("");
+        bioentityPropertiesDirectoryLocation.toFile().deleteOnExit();
 
         SpeciesPropertiesDao speciesPropertiesDao = mock(SpeciesPropertiesDao.class);
         when(speciesPropertiesDao.fetchAll()).thenReturn(ImmutableList.of(HUMAN));
@@ -53,14 +53,14 @@ public class BioentityPropertiesSourceTest {
 
         subject =
                 new BioentityPropertiesSource(
-                        Files.createDirectories(Paths.get(bioentityPropertiesDirectoryLocation, "annotations")),
-                        Files.createDirectories(Paths.get(bioentityPropertiesDirectoryLocation, "array_designs")),
-                        Files.createDirectories(Paths.get(bioentityPropertiesDirectoryLocation, "reactome")),
+                        Files.createDirectories(bioentityPropertiesDirectoryLocation.resolve("annotations")),
+                        Files.createDirectories(bioentityPropertiesDirectoryLocation.resolve("array_designs")),
+                        Files.createDirectories(bioentityPropertiesDirectoryLocation.resolve("reactome")),
                         new SpeciesFactory(speciesPropertiesTrader));
     }
 
     private void addTemporaryFile(String where, String fileName, Collection<String[]> lines) throws IOException {
-        Path p = Files.createFile(Paths.get(bioentityPropertiesDirectoryLocation, where, fileName));
+        Path p = Files.createFile(bioentityPropertiesDirectoryLocation.resolve(where).resolve(fileName));
         p.toFile().deleteOnExit();
         Files.write(p, lines.stream().map(l -> Joiner.on("\t").join(l)).collect(toList()), Charset.forName("UTF-8"));
     }

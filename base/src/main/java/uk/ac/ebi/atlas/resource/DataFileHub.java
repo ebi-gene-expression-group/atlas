@@ -31,10 +31,9 @@ import java.util.stream.Collectors;
 
 @Named
 public class DataFileHub {
-
-    protected final String experimentsMageTabDirLocation;
-    protected final String experimentsDesignDirLocation;
-    protected final String experimentsAdminDirLocation;
+    protected final Path experimentsMageTabDirLocation;
+    protected final Path experimentsDesignDirLocation;
+    protected final Path experimentsAdminDirLocation;
 
     protected final static String EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE = "ExpDesign-{0}.tsv";
     final static String OP_LOG_FILE_PATH_TEMPLATE = "{0}-op-log.tsv";
@@ -89,13 +88,13 @@ public class DataFileHub {
 
     @Inject
     public DataFileHub(Path experimentsDirPath) {
-        this.experimentsMageTabDirLocation = experimentsDirPath.resolve("magetab").toString();
-        this.experimentsDesignDirLocation = experimentsDirPath.resolve("expdesign").toString();
-        this.experimentsAdminDirLocation = experimentsDirPath.resolve("admin").toString();
+        this.experimentsMageTabDirLocation = experimentsDirPath.resolve("magetab");
+        this.experimentsDesignDirLocation = experimentsDirPath.resolve("expdesign");
+        this.experimentsAdminDirLocation = experimentsDirPath.resolve("admin");
     }
 
-    public String getGxaExperimentDataLocation() {
-        return experimentsMageTabDirLocation + "/";
+    public Path getExperimentMageTabDirLocation() {
+        return experimentsMageTabDirLocation;
     }
 
     public ExperimentFiles getExperimentFiles(String experimentAccession) {
@@ -395,7 +394,7 @@ public class DataFileHub {
 
         private Set<Integer> discoverAvailablePerplexitiesFromTSnePlotFiles(String experimentAccession) {
             Path tSnePlotFilePathTemplate =
-                    Paths.get(experimentsMageTabDirLocation).resolve(
+                    experimentsMageTabDirLocation.resolve(
                             MessageFormat.format(
                                     SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE, experimentAccession, "(\\d+)"));
 

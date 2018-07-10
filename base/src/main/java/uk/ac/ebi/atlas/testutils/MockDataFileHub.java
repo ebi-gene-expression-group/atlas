@@ -26,10 +26,10 @@ public class MockDataFileHub extends DataFileHub {
 
     private MockDataFileHub() throws IOException {
         super(Files.createTempDirectory(""));
-        Files.createDirectory(Paths.get(experimentsMageTabDirLocation));
-        Files.createDirectory(Paths.get(experimentsDesignDirLocation));
-        Files.createDirectory(Paths.get(experimentsAdminDirLocation));
-        basePath = Paths.get(experimentsMageTabDirLocation).getParent();
+        Files.createDirectory(experimentsMageTabDirLocation);
+        Files.createDirectory(experimentsDesignDirLocation);
+        Files.createDirectory(experimentsAdminDirLocation);
+        basePath = experimentsMageTabDirLocation.getParent();
         basePath.toFile().deleteOnExit();
     }
 
@@ -83,20 +83,17 @@ public class MockDataFileHub extends DataFileHub {
                                                String[] geneIds,
                                                String[] cellIds) {
         addTemporaryMatrixMarket(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE, accession)),
                 geneIds.length, cellIds.length, lines);
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE, accession)),
                 IntStream.range(0, geneIds.length).boxed()
                         .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(geneIds.length).length()), geneIds[i]})
                         .collect(Collectors.toList()));
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE, accession)),
                 IntStream.range(0, cellIds.length).boxed()
                         .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(cellIds.length).length()), cellIds[i]})
@@ -105,96 +102,84 @@ public class MockDataFileHub extends DataFileHub {
 
     public void addTpmsExpressionFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addFpkmsExpressionFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addTranscriptsTpmsExpressionFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addExperimentDesignFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsDesignDirLocation,
+                experimentsDesignDirLocation.resolve(
                         MessageFormat.format(EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addCondensedSdrfFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(CONDENSED_SDRF_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addPercentileRanksFile(String accession, Collection<String[]> lines){
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addRnaSeqAnalyticsFile(String accession, Collection<String[]> lines){
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addProteomicsExpressionFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addFactorsFile(String accession, Collection<String> lines) {
         addTemporaryFile(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(FACTORS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addConfigurationFile(String accession,Collection<String> lines){
         addTemporaryFile(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(CONFIGURATION_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
     public void addReactomePathwaysFile(String accession, String comparison, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(REACTOME_PATHWAYS_FILE_PATH_TEMPLATE, accession, comparison)),
                 lines);
     }
 
     public void addClustersFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
-                Paths.get(
-                        experimentsMageTabDirLocation,
+                experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }

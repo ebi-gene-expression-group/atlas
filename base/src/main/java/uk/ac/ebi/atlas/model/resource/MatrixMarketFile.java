@@ -5,13 +5,12 @@ import uk.ac.ebi.atlas.commons.readers.MatrixMarketReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 
 public class MatrixMarketFile extends AtlasResource<MatrixMarketReader> {
-
-    public MatrixMarketFile(String parentDirectory, String template, String ... args) {
-        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object []) args)));
+    public MatrixMarketFile(Path parentDirectory, String template, String ... args) {
+        super(parentDirectory.resolve(MessageFormat.format(template, (Object []) args)));
     }
 
     public MatrixMarketReader get() {

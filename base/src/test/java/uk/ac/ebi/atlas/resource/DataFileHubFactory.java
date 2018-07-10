@@ -16,11 +16,11 @@ public class DataFileHubFactory {
     }
 
     public DataFileHub getGxaDataFileHub() {
-        return new DataFileHub(Paths.get(experimentsFilesLocation, "gxa"));
+        return new DataFileHub(Paths.get(experimentsFilesLocation).resolve("gxa"));
     }
 
     public DataFileHub getScxaDataFileHub() {
-        return new DataFileHub(Paths.get(experimentsFilesLocation, "scxa"));
+        return new DataFileHub(Paths.get(experimentsFilesLocation).resolve("scxa"));
     }
 
 }

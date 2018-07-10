@@ -13,19 +13,19 @@ import java.io.Reader;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.zip.GZIPInputStream;
 
 public abstract class TsvFile<T> extends AtlasResource<T>{
 
-    public TsvFile(String parentDirectory, String template, String ... args) {
-        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object []) args)));
+    public TsvFile(Path parentDirectory, String template, String ... args) {
+        super(parentDirectory.resolve(MessageFormat.format(template, (Object []) args)));
     }
 
     public static class ReadAsStream extends TsvFile<ObjectInputStream<String[]>> {
 
-        public ReadAsStream(String parentDirectory, String template, String... args) {
+        public ReadAsStream(Path parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
         }
 
@@ -39,7 +39,6 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
         }
 
         private static class TsvStreamReader implements ObjectInputStream<String[]> {
-
             private CSVReader tsvReader;
 
             public TsvStreamReader(Reader reader) {
@@ -63,8 +62,7 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
     }
 
     public static class ReadOnly extends TsvFile<TsvStreamer> {
-
-        public ReadOnly(String parentDirectory, String template, String... args) {
+        public ReadOnly(Path parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
         }
 
@@ -79,8 +77,7 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
     }
 
     public static class Appendable extends TsvFile<TsvWriter> {
-
-        public Appendable(String parentDirectory, String template, String... args) {
+        public Appendable(Path parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
         }
 
@@ -91,8 +88,7 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
     }
 
     public static class Overwrite extends TsvFile<TsvWriter> {
-
-        public Overwrite(String parentDirectory, String template, String... args) {
+        public Overwrite(Path parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
         }
 
@@ -104,7 +100,7 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
     //Use TsvReader too, maybe?
     public static class ReadCompressed extends TsvFile<CSVReader> {
-        public ReadCompressed(String parentDirectory, String template, String... args) {
+        public ReadCompressed(Path parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
         }
 

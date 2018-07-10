@@ -8,18 +8,16 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 
 public abstract class XmlFile<T> extends AtlasResource<T>{
-
-    public XmlFile(String parentDirectory, String template, String ... args) {
-        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object [])args)));
+    public XmlFile(Path parentDirectory, String template, String ... args) {
+        super(parentDirectory.resolve(MessageFormat.format(template, (Object [])args)));
     }
 
     public static class ReadOnly extends XmlFile<XmlReader> {
-
-        public ReadOnly(String parentDirectory, String template, String... args) {
+        public ReadOnly(Path parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
         }
 
@@ -38,7 +36,5 @@ public abstract class XmlFile<T> extends AtlasResource<T>{
                 throw new RuntimeException(e);
             }
         }
-
     }
-
 }
