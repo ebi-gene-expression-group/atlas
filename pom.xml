@@ -619,10 +619,10 @@
         </profile>
 
         <profile>
-            <!--build used for staging and production -->
+            <!--build used for testing, staging and production -->
             <id>production</id>
-            <!-- jdbc.properties is located on the filesystem, see Tomcat’s conf/Catalina/localhost/gxa.xml -->
-            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
+            <!-- jdbc.properties, solr.properties and logback.xml are located on the filesystem;
+                 see Tomcat’s conf/Catalina/localhost/gxa.xml conf/Catalina/localhost/gxa#sc.xml  -->
             <properties>
                 <build.environment>prod</build.environment>
                 <data.files.location>/srv/gxa/data</data.files.location>
