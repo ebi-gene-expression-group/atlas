@@ -116,7 +116,7 @@ public class TsnePlotSettingsServiceTest {
     }
 
     @Test
-    @DisplayName("No value in irf or clusters.tsv")
+    @DisplayName("No value in idf or clusters.tsv")
     public void noExpectedClusters() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
