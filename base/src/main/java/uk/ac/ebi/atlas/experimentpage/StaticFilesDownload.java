@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableList;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +21,6 @@ import java.text.MessageFormat;
 import java.util.Collection;
 
 public abstract class StaticFilesDownload<E extends Experiment> extends ExternallyAvailableContent.Supplier<E> {
-
-    @Override
-    public ExternallyAvailableContent.ContentType contentType() {
-        return ExternallyAvailableContent.ContentType.DATA;
-    }
-
-    @Inject
     private DataFileHub dataFileHub;
 
     //bizarre and I don't remember why I've put experimentAccession twice - Wojtek
@@ -34,31 +28,43 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
     private static final String rDataUrl = urlBase + "-atlasExperimentSummary.Rdata";
     private static final String heatmapUrl = urlBase + "-heatmap.pdf";
 
+    public StaticFilesDownload(DataFileHub dataFileHub) {
+        this.dataFileHub = dataFileHub;
+    }
 
+    @Override
+    public ExternallyAvailableContent.ContentType contentType() {
+        return ExternallyAvailableContent.ContentType.DATA;
+    }
 
     @Override
     public Collection<ExternallyAvailableContent> get(E experiment) {
         ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
 
-        Path rData = Paths.get(dataFileHub.getGxaExperimentDataLocation(), experiment.getAccession(),
-                experiment.getAccession()+ "-atlasExperimentSummary.Rdata");
-
-        if(rData.toFile().exists()){
+        Path rData =
+                Paths.get(
+                        dataFileHub.getExperimentMageTabDirLocation(),
+                        experiment.getAccession(),
+                        experiment.getAccession() + "-atlasExperimentSummary.Rdata");
+        if (rData.toFile().exists()) {
             b.add(new ExternallyAvailableContent(
                     rDataUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
-                    ExternallyAvailableContent.Description.create("icon-Rdata",
-                            "Summary of the expression results for this experiment ready to view in R"
-            )));
+                    ExternallyAvailableContent.Description.create(
+                            "icon-Rdata",
+                            "Summary of the expression results for this experiment ready to view in R")));
         }
 
-        Path heatmap = Paths.get(dataFileHub.getGxaExperimentDataLocation(), experiment.getAccession(),
-                experiment.getAccession()+ "-heatmap.pdf");
-        if(heatmap.toFile().exists()){
+        Path heatmap =
+                Paths.get(
+                        dataFileHub.getExperimentMageTabDirLocation(),
+                        experiment.getAccession(),
+                        experiment.getAccession() + "-heatmap.pdf");
+        if (heatmap.toFile().exists()) {
             b.add(new ExternallyAvailableContent(
                     heatmapUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
-                    ExternallyAvailableContent.Description.create("icon-pdf",
-                            "Heatmap of aggregated expression data"
-                    )));
+                    ExternallyAvailableContent.Description.create(
+                            "icon-pdf",
+                            "Heatmap of aggregated expression data")));
         }
 
         return b.build();
@@ -67,24 +73,36 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
     @Controller
     public static class Forwarder {
         @RequestMapping(value = rDataUrl)
-        public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
+        public String downloadRdataURL(@PathVariable String experimentAccession) {
             String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
             return "forward:" + path;
         }
 
         @RequestMapping(value = heatmapUrl)
-        public String downloadPdf(@PathVariable String experimentAccession) throws IOException {
+        public String downloadPdf(@PathVariable String experimentAccession) {
             String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
             return "forward:" + path;
         }
     }
 
-    @Named
-    public static class Baseline extends StaticFilesDownload<BaselineExperiment> {}
+    @Component
+    public static class Baseline extends StaticFilesDownload<BaselineExperiment> {
+        public Baseline(DataFileHub dataFileHub) {
+            super(dataFileHub);
+        }
+    }
 
-    @Named
-    public static class RnaSeq extends StaticFilesDownload<DifferentialExperiment> {}
+    @Component
+    public static class RnaSeq extends StaticFilesDownload<DifferentialExperiment> {
+        public RnaSeq(DataFileHub dataFileHub) {
+            super(dataFileHub);
+        }
+    }
 
-    @Named
-    public static class Microarray extends StaticFilesDownload<MicroarrayExperiment> {}
+    @Component
+    public static class Microarray extends StaticFilesDownload<MicroarrayExperiment> {
+        public Microarray(DataFileHub dataFileHub) {
+            super(dataFileHub);
+        }
+    }
 }
