@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
+@ContextConfiguration(classes = {WebConfig.class})
 public class AnalysisMethodsPageControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-PROT-1";
