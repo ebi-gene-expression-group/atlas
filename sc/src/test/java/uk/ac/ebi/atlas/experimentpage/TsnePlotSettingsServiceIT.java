@@ -69,11 +69,13 @@ class TsnePlotSettingsServiceIT {
                 .doesNotHaveDuplicates();
     }
 
-    // This is not a very good test, since the JVM may do things in the background we’re not aware of and can end up
-    // having more open files than expected. However, because the clusters TSV file is accessed as a field without a
-    // getter, we can’t mock the following call sequence and verify that TsvStreamer::close has been called:
+    // This is not a good test: the JVM may do things in the background we’re not aware of, or manage sockets or TCP
+    // connections differently depending on the OS or other environment-specific factors, and can end up having more
+    // open files than expected. However, because the clusters TSV file is accessed as a field without a getter, we
+    // can’t mock the following call sequence and verify that TsvStreamer::close has been called:
     // dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get().get()
-    // The +4 magic number accounts for open DB connections
+    // The +1 magic number accounts for open DB connections in the build environment, in my laptop it’s +4.
+    // This is the next best thing I could come up with... sorry! :(
     @ParameterizedTest
     @MethodSource("randomSingleCellExperimentAccessionProvider")
     void filesClosed(String experimentAccession) {
