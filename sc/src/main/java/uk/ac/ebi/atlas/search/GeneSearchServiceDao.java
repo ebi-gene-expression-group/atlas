@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.emptyMap;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_NAME;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
@@ -124,8 +125,9 @@ public class GeneSearchServiceDao {
 
         ArrayList<SimpleOrderedMap> resultsByExperiment = (ArrayList<SimpleOrderedMap>) singleCellAnalyticsCollectionProxy.query(queryBuilder).getResponse().findRecursive("facets", EXPERIMENT_ACCESSION.name(), "buckets");
 
-        return resultsByExperiment
-                .stream()
+        return resultsByExperiment == null ?
+                emptyMap() :
+                resultsByExperiment.stream()
                 .collect(Collectors.toMap(
                         subFacetValues -> subFacetValues.get("val").toString(),
                         subFacetValues -> subFacetFields
