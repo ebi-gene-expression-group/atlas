@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.solr.cloud;
 
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,7 +33,7 @@ class SolrCloudCollectionProxyFactoryTest {
 
     @BeforeEach
     void setUp() {
-        subject = new SolrCloudCollectionProxyFactory("foobar");
+        subject = new SolrCloudCollectionProxyFactory(new CloudSolrClient.Builder().withZkHost("foobar").build());
     }
 
     @ParameterizedTest

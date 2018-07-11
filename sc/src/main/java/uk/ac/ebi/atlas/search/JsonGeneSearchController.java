@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.MediaType;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,8 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
+import uk.ac.ebi.atlas.search.geneids.GeneIdSearchService;
+import uk.ac.ebi.atlas.search.geneids.GeneQuery;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import java.util.Arrays;
@@ -26,6 +29,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @RestController
 public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
+    private GeneIdSearchService geneIdSearchService;
     private GeneSearchService geneSearchService;
     private ScxaExperimentTrader experimentTrader;
     private ExperimentAttributesService experimentAttributesService;
@@ -36,6 +40,15 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         this.geneSearchService = geneSearchService;
         this.experimentTrader = experimentTrader;
         this.experimentAttributesService = experimentAttributesService;
+    }
+
+    @RequestMapping(value = "/json/search",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String search(MultiValueMap<String, String> requestParams) {
+        GeneQuery geneQuery = GeneQuery.create(requestParams.getFirst("species"));
+
+        return "";
     }
 
     @RequestMapping(
