@@ -28,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TsnePlotSettingsServiceIT {
     @Inject
     private JdbcUtils jdbcTestUtils;

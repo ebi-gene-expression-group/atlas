@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy;
@@ -32,7 +33,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.
 
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
+@ContextConfiguration(classes = {WebConfig.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GeneIdSearchDaoIT {
     @Inject
