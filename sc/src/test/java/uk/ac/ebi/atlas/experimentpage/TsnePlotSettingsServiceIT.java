@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ContextConfiguration(classes = {WebConfig.class})
 public class TsnePlotSettingsServiceIT {
     @Inject
