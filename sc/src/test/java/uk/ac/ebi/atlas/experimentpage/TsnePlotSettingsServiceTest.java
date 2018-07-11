@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TsnePlotSettingsServiceTest {
+class TsnePlotSettingsServiceTest {
 
     @Mock
     private IdfParser idfParserMock;
@@ -56,14 +56,14 @@ public class TsnePlotSettingsServiceTest {
             {"FALSE", "7", "def888", "def999"}};
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         dataFileHubMock = MockDataFileHub.create();
         subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock);
     }
 
     @Test
     @DisplayName("Expected clusters value in idf is a valid cluster")
-    public void expectedClustersOnlyInIdf() {
+    void expectedClustersOnlyInIdf() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITH_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
@@ -74,7 +74,7 @@ public class TsnePlotSettingsServiceTest {
 
     @Test
     @DisplayName("Valid expected clusters in idf and clusters.tsv")
-    public void expectedClustersInIdfAndClustersTsv() {
+    void expectedClustersInIdfAndClustersTsv() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITH_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
@@ -85,7 +85,7 @@ public class TsnePlotSettingsServiceTest {
 
     @Test
     @DisplayName("Expected clusters in idf is invalid and no value in clusters.tsv")
-    public void invalidExpectedClustersInIdf() {
+    void invalidExpectedClustersInIdf() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title",  "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
@@ -95,7 +95,7 @@ public class TsnePlotSettingsServiceTest {
 
     @Test
     @DisplayName("Expected clusters in idf is invalid and expected clusters in clusters.tsv")
-    public void invalidIdfValueValidClustersTsv() {
+    void invalidIdfValueValidClustersTsv() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
@@ -106,7 +106,7 @@ public class TsnePlotSettingsServiceTest {
 
     @Test
     @DisplayName("No value in idf, expected clusters in clusters.tsv")
-    public void noIdfValueValidClustersTsv() {
+    void noIdfValueValidClustersTsv() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), 0, Collections.emptyList()));
@@ -117,7 +117,7 @@ public class TsnePlotSettingsServiceTest {
 
     @Test
     @DisplayName("No value in idf or clusters.tsv")
-    public void noExpectedClusters() {
+    void noExpectedClusters() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
                 .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), 0, Collections.emptyList()));
