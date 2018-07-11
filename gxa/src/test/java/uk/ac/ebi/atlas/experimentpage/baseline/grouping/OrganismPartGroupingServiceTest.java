@@ -9,24 +9,23 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class OrganismPartGroupingServiceTest {
-
-    OrganismPartGroupingService subject;
-
-    File tmp;
+    private Path tmpPath;
+    private OrganismPartGroupingService subject;
 
     @Before
     public void setUp() throws Exception {
-
-        tmp = Files.createTempDirectory("").toFile();
-
-        subject = new OrganismPartGroupingService(tmp.getPath() + "/anatomical_systems.txt", tmp.getPath() + "/organs.txt");
-
+        tmpPath = Files.createTempDirectory("");
+        subject =
+                new OrganismPartGroupingService(
+                        tmpPath.resolve("anatomical_systems.txt"),
+                        tmpPath.resolve("organs.txt"));
     }
 
     @Test
@@ -76,18 +75,16 @@ public class OrganismPartGroupingServiceTest {
         ));
     }
 
-
-    void setAnatomicalSystems(String... lines) {
+    private void setAnatomicalSystems(String... lines) {
         setContent("anatomical_systems.txt", lines);
     }
 
-    void setOrgans(String... lines) {
+    private void setOrgans(String... lines) {
         setContent("organs.txt", lines);
     }
 
-
-    void setContent(String fileName, String... lines) {
-        File f = new File(tmp, fileName);
+    private void setContent(String fileName, String... lines) {
+        File f = new File(tmpPath.toString(), fileName);
         f.deleteOnExit();
         try {
             f.createNewFile();

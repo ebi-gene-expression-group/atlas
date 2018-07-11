@@ -9,7 +9,6 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import javax.inject.Inject;
@@ -31,8 +30,8 @@ public class BioentitiesSolrClient {
     private SolrClient solrClient;
 
     @Inject
-    public BioentitiesSolrClient(@Qualifier("solrClientBioentities") SolrClient solrClient){
-        this.solrClient = solrClient;
+    public BioentitiesSolrClient(SolrClient solrClientBioentities) {
+        this.solrClient = solrClientBioentities;
     }
 
     public QueryResponse query(SolrQuery solrQuery) {

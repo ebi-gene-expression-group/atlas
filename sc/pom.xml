@@ -50,15 +50,14 @@
 
         <resources>
             <resource>
-                <directory>src/main/webapp/WEB-INF</directory>
+                <directory>src/main/resources</directory>
                 <includes>
-                    <include>applicationContext.xml</include>
-                    <include>dispatcher-servlet.xml</include>
+                    <include>*</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/main/resources/${build.environment}</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -75,7 +74,7 @@
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
             <artifactId>atlas-base</artifactId>
-            <version>4.0</version>
+            <version>5.0</version>
         </dependency>
     </dependencies>
 

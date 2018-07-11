@@ -4,26 +4,25 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Path;
 import java.util.Optional;
 
-@Named
+@Component
 public class InterProTrader {
     private static final Logger LOGGER = LoggerFactory.getLogger(InterProTrader.class);
-
     private final ImmutableMap<String, OntologyTerm> accessionToTerm;
 
-    @Inject
-    public InterProTrader(@Value("#{configuration['interpro.terms.file']}") String interProTSVFilePath)
-    throws IOException {
-        try (CSVReader tsvReader = CsvReaderFactory.createForTsv(interProTSVFilePath)) {
+    public InterProTrader(Path interProFilePath) {
+        try (CSVReader tsvReader = CsvReaderFactory.createForTsv(interProFilePath.toString())) {
             accessionToTerm = new InterProTSVParser(tsvReader).parse();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 

@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.sql.DataSource;
 import java.util.List;
 
 @Named
@@ -15,8 +14,9 @@ public class ExperimentDescriptionDAO {
     private final ExperimentDescriptionRowMapper experimentDescriptionRowMapper;
 
     @Inject
-    public ExperimentDescriptionDAO(DataSource dataSource, ExperimentDescriptionRowMapper experimentDescriptionRowMapper) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public ExperimentDescriptionDAO(JdbcTemplate jdbcTemplate,
+                                    ExperimentDescriptionRowMapper experimentDescriptionRowMapper) {
+        this.jdbcTemplate = jdbcTemplate;
         this.experimentDescriptionRowMapper = experimentDescriptionRowMapper;
     }
 

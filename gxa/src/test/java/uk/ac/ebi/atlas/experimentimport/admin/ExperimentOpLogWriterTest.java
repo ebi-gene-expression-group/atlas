@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +21,12 @@ public class ExperimentOpLogWriterTest {
     private ExperimentOpLogWriter subject;
 
     @Before
-    public void setUp() {
-        File dir = Files.createTempDir();
-        new File(dir.getAbsolutePath()+"/admin").mkdir();
+    public void setUp() throws Exception {
+        Path dir = Files.createTempDirectory("");
+        dir.toFile().deleteOnExit();
+        Files.createDirectory(dir.resolve("admin"));
 
-        dir.deleteOnExit();
-
-        subject = new ExperimentOpLogWriter(new DataFileHub(dir.getPath()));
+        subject = new ExperimentOpLogWriter(new DataFileHub(dir));
     }
 
     @Test

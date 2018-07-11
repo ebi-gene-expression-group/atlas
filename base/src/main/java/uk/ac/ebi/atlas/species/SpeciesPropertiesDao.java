@@ -4,13 +4,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.model.resource.JsonFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.nio.file.Path;
 
 @Named
 public class SpeciesPropertiesDao {
@@ -18,8 +18,11 @@ public class SpeciesPropertiesDao {
     private final AtlasResource<JsonReader> speciesPropertiesJsonFile;
 
     @Inject
-    public SpeciesPropertiesDao(@Value("#{configuration['speciesPropertiesLocation']}") String speciesPropertiesLocation) {
-        speciesPropertiesJsonFile = new JsonFile.ReadOnly(speciesPropertiesLocation, "species-properties.json");
+    public SpeciesPropertiesDao(Path speciesPropertiesFilePath) {
+        speciesPropertiesJsonFile =
+                new JsonFile.ReadOnly(
+                        speciesPropertiesFilePath.getParent().toString(),
+                        speciesPropertiesFilePath.getFileName().toString());
     }
 
     public ImmutableList<SpeciesProperties> fetchAll() throws IOException {

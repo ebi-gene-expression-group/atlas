@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>atlas-base</artifactId>
-    <version>4.0</version>
+    <version>5.0</version>
     <packaging>jar</packaging>
 
     <name>Atlas base</name>
@@ -63,13 +63,6 @@
     </repositories>
 
     <dependencies>
-        <!-- JSR 303 validator implementation -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>4.3.0.Final</version>
-        </dependency>
-
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>

@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.monitoring;
 
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
+@PropertySource("classpath:configuration.properties")
 public class JsonBuildVersionController extends JsonExceptionHandlingController {
 
     private String buildNumber;
@@ -20,9 +22,9 @@ public class JsonBuildVersionController extends JsonExceptionHandlingController 
     private String buildCommitId;
 
     @Inject
-    public JsonBuildVersionController(@Value("#{configuration['buildNumber']}") String buildNumber,
-                                      @Value("#{configuration['buildBranch']}") String buildBranch,
-                                      @Value("#{configuration['buildCommitId']}") String buildCommitId) {
+    public JsonBuildVersionController(@Value("${buildNumber}") String buildNumber,
+                                      @Value("${buildBranch}") String buildBranch,
+                                      @Value("${buildCommitId}") String buildCommitId) {
         this.buildNumber = buildNumber;
         this.buildBranch = buildBranch;
         this.buildCommitId = buildCommitId;

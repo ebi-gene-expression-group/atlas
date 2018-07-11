@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
@@ -21,17 +22,17 @@ import static uk.ac.ebi.atlas.solr.BioentityPropertyName.DESCRIPTION;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class BioEntityCardModelFactoryIT {
 
     @Inject
-    BioEntityCardModelFactory subject;
+    private BioEntityCardModelFactory subject;
 
     @Inject
-    SpeciesFactory speciesFactory;
+    private SpeciesFactory speciesFactory;
 
     @Inject
-    BioEntityPropertyDao bioentityPropertyDao;
+    private BioEntityPropertyDao bioentityPropertyDao;
 
     @Test
     public void useIdForTitleIfNoNameIsAvailable() {

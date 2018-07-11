@@ -26,9 +26,7 @@ public class RnaSeqQCFiles {
 
         for (Path path : qcDirectory) {
             results.put(path.getFileName().toString(),
-                    new TsvFile.ReadOnly(
-                            path.getParent().toString(), path.getFileName().toString()
-                    ));
+                    new TsvFile.ReadOnly(path.getParent(), path.getFileName().toString()));
         }
         return results.build();
     }
