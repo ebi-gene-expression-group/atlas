@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 import java.io.IOException;
@@ -26,19 +28,20 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GeneSearchServiceTest {
+@MockitoSettings(strictness = Strictness.LENIENT)
+class GeneSearchServiceTest {
     @Mock
     private GeneSearchServiceDao geneSearchServiceDaoMock;
 
     private GeneSearchService subject;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         subject = new GeneSearchService(geneSearchServiceDaoMock);
     }
 
     @Test
-    public void cellIdsPerExperimentForOneGeneId() {
+    void cellIdsPerExperimentForOneGeneId() {
         Map<String, List<String>> ensg00000104957Cells =
                 ImmutableMap.of(
                         "E-MTAB-0000", ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
@@ -55,7 +58,7 @@ public class GeneSearchServiceTest {
     }
 
     @Test
-    public void cellIdsPerExperimentForMultipleGeneIds() {
+    void cellIdsPerExperimentForMultipleGeneIds() {
         Map<String, List<String>> ensfoobar1Cells = ImmutableMap.of(
                 "E-MTAB-0000", ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
                 "E-MTAB-0001", ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
@@ -73,7 +76,7 @@ public class GeneSearchServiceTest {
     }
 
     @Test
-    public void markerGeneProfilesForOneGeneId() {
+    void markerGeneProfilesForOneGeneId() {
         Map<String, Map<Integer, List<Integer>>> ensg00000104957Profiles =
                 ImmutableMap.of(
                         "E-MTAB-0000",
@@ -96,7 +99,7 @@ public class GeneSearchServiceTest {
     }
 
     @Test
-    public void markerGeneProfilesForMultipleGeneIds() {
+    void markerGeneProfilesForMultipleGeneIds() {
         Map<String, Map<Integer, List<Integer>>> ensfoobar1Profiles =
                 ImmutableMap.of(
                         "E-MTAB-0000",
@@ -126,7 +129,7 @@ public class GeneSearchServiceTest {
     }
 
     @Test
-    public void returnsFacets() {
+    void returnsFacets() {
         when(geneSearchServiceDaoMock.getFacets(anyList(), any(SingleCellAnalyticsSchemaField.class)))
                 .thenReturn(ImmutableMap.of(
                         "E-MTAB-0000", ImmutableMap.of(
@@ -149,7 +152,7 @@ public class GeneSearchServiceTest {
     }
 
     @Test
-    public void exceptionsThrownInParallelTasksAreWrapped() {
+    void exceptionsThrownInParallelTasksAreWrapped() {
         doThrow(new UncheckedIOException(new IOException())).when(geneSearchServiceDaoMock).fetchCellIds(anyString());
 
         assertThatExceptionOfType(RuntimeException.class).isThrownBy(
