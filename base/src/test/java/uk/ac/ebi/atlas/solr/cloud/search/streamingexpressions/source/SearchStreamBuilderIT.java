@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy;
@@ -24,7 +25,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.SPECIES;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 class SearchStreamBuilderIT {
     @Inject
     private SolrCloudCollectionProxyFactory collectionProxyFactory;

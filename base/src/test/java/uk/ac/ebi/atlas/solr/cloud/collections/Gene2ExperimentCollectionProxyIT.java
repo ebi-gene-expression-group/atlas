@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
@@ -19,7 +20,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.Gene2ExperimentCollectionPr
 import static uk.ac.ebi.atlas.solr.cloud.collections.Gene2ExperimentCollectionProxy.EXPERIMENT_ACCESSION;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 class Gene2ExperimentCollectionProxyIT {
     private Gene2ExperimentCollectionProxy subject;
 
