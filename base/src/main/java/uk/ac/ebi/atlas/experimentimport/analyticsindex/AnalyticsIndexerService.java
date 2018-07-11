@@ -6,14 +6,12 @@ import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentInputStream;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.ArrayList;
@@ -22,17 +20,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Named
+@Component
 public class AnalyticsIndexerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerService.class);
 
     private final SolrClient solrClient;
     private final ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
 
-    @Inject
-    public AnalyticsIndexerService(@Qualifier("solrClientAnalytics") SolrClient solrClient,
+    public AnalyticsIndexerService(SolrClient solrClientAnalytics,
                                    ExperimentDataPointStreamFactory experimentDataPointStreamFactory) {
-        this.solrClient = solrClient;
+        this.solrClient = solrClientAnalytics;
         this.experimentDataPointStreamFactory = experimentDataPointStreamFactory;
     }
 

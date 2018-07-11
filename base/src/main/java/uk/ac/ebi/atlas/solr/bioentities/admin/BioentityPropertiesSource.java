@@ -1,38 +1,39 @@
 package uk.ac.ebi.atlas.solr.bioentities.admin;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
-import javax.inject.Named;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-@Named
+@Component
 public class BioentityPropertiesSource {
 
     private static final Pattern annotationFileNamePattern = Pattern.compile("\\w+\\.(\\w+gene|mature_mirna)\\.tsv");
     private static final Pattern arrayDesignFileNamePattern = Pattern.compile("\\w+\\.A-\\w+-\\d+\\.tsv");
     private static final Pattern reactomeFileNamePattern = Pattern.compile("\\w+\\.reactome\\.tsv");
 
-    private final Path annotationsDirectory;
-    private final Path arrayDesignsDirectory;
-    private final Path reactomeDirectory;
+    private final Path annotationsDirPath;
+    private final Path arrayDesignsDirPath;
+    private final Path reactomeDirPath;
     private final SpeciesFactory speciesFactory;
 
-    public BioentityPropertiesSource(@Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectoryLocation, SpeciesFactory speciesFactory){
-        this.annotationsDirectory = Paths.get(bioentityPropertiesDirectoryLocation, "annotations");
-        this.arrayDesignsDirectory = Paths.get(bioentityPropertiesDirectoryLocation, "array_designs");
-        this.reactomeDirectory = Paths.get(bioentityPropertiesDirectoryLocation, "reactome");
+    public BioentityPropertiesSource(Path annotationsDirPath,
+                                     Path arrayDesignsDirPath,
+                                     Path reactomeDirPath,
+                                     SpeciesFactory speciesFactory) {
+        this.annotationsDirPath = annotationsDirPath;
+        this.arrayDesignsDirPath = arrayDesignsDirPath;
+        this.reactomeDirPath = reactomeDirPath;
         this.speciesFactory = speciesFactory;
     }
 
@@ -109,14 +110,14 @@ public class BioentityPropertiesSource {
     }
 
     Stream<AnnotationFile> getAnnotationFiles(){
-        return getBioentityPropertyFiles(annotationsDirectory, annotationFileNamePattern, AnnotationFile::new);
+        return getBioentityPropertyFiles(annotationsDirPath, annotationFileNamePattern, AnnotationFile::new);
     }
 
     Stream<ArrayDesignMappingFile> getArrayDesignMappingFiles(){
-        return getBioentityPropertyFiles(arrayDesignsDirectory, arrayDesignFileNamePattern, ArrayDesignMappingFile::new);
+        return getBioentityPropertyFiles(arrayDesignsDirPath, arrayDesignFileNamePattern, ArrayDesignMappingFile::new);
     }
 
     Stream<ReactomePropertyFile> getReactomePropertyFiles(){
-        return getBioentityPropertyFiles(reactomeDirectory, reactomeFileNamePattern, ReactomePropertyFile::new);
+        return getBioentityPropertyFiles(reactomeDirPath, reactomeFileNamePattern, ReactomePropertyFile::new);
     }
 }

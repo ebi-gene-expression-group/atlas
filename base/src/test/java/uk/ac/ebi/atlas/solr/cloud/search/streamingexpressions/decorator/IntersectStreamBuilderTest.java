@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IntersectStreamBuilderTestIT {
+class IntersectStreamBuilderTest {
     private class DummyCollectionProxy extends CollectionProxy {
         protected DummyCollectionProxy(SolrClient solrClient, String nameOrAlias) {
             super(solrClient, nameOrAlias);

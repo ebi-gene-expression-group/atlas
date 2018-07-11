@@ -1,19 +1,17 @@
 package uk.ac.ebi.atlas.solr.cloud;
 
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 
-import javax.inject.Named;
-
-@Named
+@Component
 public class SolrCloudCollectionProxyFactory {
     private final CloudSolrClient cloudSolrClient;
 
-    public SolrCloudCollectionProxyFactory(@Qualifier("zkHost") String zkHost) {
-        cloudSolrClient = new CloudSolrClient.Builder().withZkHost(zkHost).build();
+    public SolrCloudCollectionProxyFactory(CloudSolrClient cloudSolrClient) {
+        this.cloudSolrClient = cloudSolrClient;
     }
 
     public AnalyticsCollectionProxy createAnalyticsCollectionProxy() {

@@ -2,9 +2,9 @@ package uk.ac.ebi.atlas.utils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.omg.SendingContext.RunTime;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.Publication;
 
 import javax.inject.Inject;
@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class EuropePmcClientIT {
 
     @Inject

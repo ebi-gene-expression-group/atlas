@@ -123,7 +123,7 @@ public class MicroarrayProfileStreamFactoryTest {
         MockDataFileHub dataFileHub = MockDataFileHub.create();
 
         dataFileHub.addTemporaryFile(
-                "/magetab/accession/accession_array-design-accession-analytics.tsv", sequenceLines);
+                "magetab/accession/accession_array-design-accession-analytics.tsv", sequenceLines);
         MicroarrayProfileStreamFactory microarrayProfileStreamFactory =
                 new MicroarrayProfileStreamFactory(dataFileHub);
 

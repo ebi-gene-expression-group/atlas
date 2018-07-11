@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 
@@ -19,7 +20,7 @@ import static uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlo
 import static uk.ac.ebi.atlas.experimentimport.analytics.singlecell.tsne.TSnePlotStreamerTest.randomTSnePoints;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class TSnePlotDaoIT {
     private static final String SELECT_STATEMENT = "SELECT * FROM scxa_tsne WHERE experiment_accession=?";
     @Inject

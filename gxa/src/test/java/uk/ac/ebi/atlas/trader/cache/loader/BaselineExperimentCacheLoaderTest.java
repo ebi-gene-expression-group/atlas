@@ -81,7 +81,7 @@ public class BaselineExperimentCacheLoaderTest {
         when(assayGroup.getId()).thenReturn("assay group id 1");
 
         List<AssayGroup> assayGroups = ImmutableList.of(assayGroup);
-        dataFileHub.addTemporaryFile(MessageFormat.format("/magetab/{0}/{0}.tsv", experimentAccession),
+        dataFileHub.addTemporaryFile(MessageFormat.format("magetab/{0}/{0}.tsv", experimentAccession),
                 ImmutableSet.of("assay group id 1"));
 
         subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock, dataFileHub);

@@ -2,12 +2,12 @@ package uk.ac.ebi.atlas.solr.bioentities.admin.monitor;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 
 import javax.inject.Inject;
-import javax.inject.Named;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
@@ -33,12 +33,9 @@ import static com.google.common.base.Preconditions.checkState;
  * - BioentityIndexMonitor would have to be an Observer and implement its own update
  * - Similar responsibility (progress report and progress events) would be executed by separate classes
  */
-@Named
+@Component
+@Scope("prototype")
 public class BioentityIndexMonitor {
-
-    @Value("#{configuration['bioentity.properties']}")
-    private String bioentityPropertiesDirectory;
-
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
             + ",\n" +
             "total time elapsed: {0} minutes,\n" +
@@ -49,17 +46,20 @@ public class BioentityIndexMonitor {
             "files successfully processed:\n" +
             "{5}\n";
 
+    private final String bioentityPropertiesDirectory;
+    private final IndexingProgress indexingProgress;
     public Status status;
 
     private BioentityPropertyFile currentFile;
-    private IndexingProgress indexingProgress;
     private Exception failureReason;
     private Stopwatch totalTimeStopwatch;
     private Stopwatch currentFileStopwatch;
 
     @Inject
-    public BioentityIndexMonitor(IndexingProgress indexingProgress){
-        status = Status.INITIALIZED;
+    public BioentityIndexMonitor(Path bioentityPropertiesDirPath,
+                                 IndexingProgress indexingProgress) {
+        this.bioentityPropertiesDirectory = bioentityPropertiesDirPath.toString();
+        this.status = Status.INITIALIZED;
         this.indexingProgress = indexingProgress;
     }
 
@@ -115,7 +115,7 @@ public class BioentityIndexMonitor {
     }
 
     public String reportProgress(){
-        long totalDiskSpace = FileUtils.sizeOf(Paths.get(bioentityPropertiesDirectory).toFile());
+        long totalDiskSpace = Paths.get(bioentityPropertiesDirectory).toFile().length();
 
         switch(status){
             case PROCESSING:

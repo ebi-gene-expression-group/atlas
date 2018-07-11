@@ -1,16 +1,14 @@
 package uk.ac.ebi.atlas.solr.bioentities.admin.monitor;
 
 import com.google.common.collect.Iterators;
-import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 
-import javax.inject.Named;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@Named
-@Scope("singleton")
+@Component
 public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile>{
 
     // This list may be iterated from a different thread than the index build thread, generating a
@@ -19,9 +17,6 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
 
     private long processedDiskSpace;
     private long totalTimeTaken;
-
-    public IndexingProgress(){
-    }
 
     public void completed(BioentityPropertyFile filePath, long timeTaken){
         processedDiskSpace += filePath.size();
@@ -57,7 +52,6 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
 
             this.filePath = filePath;
             this.seconds = seconds;
-
         }
 
         public long getSize(){

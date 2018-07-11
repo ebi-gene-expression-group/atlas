@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ContrastImageSupplier<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E>{
+public abstract class ContrastImageSupplier<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E> {
 
     @Override
     public ExternallyAvailableContent.ContentType contentType(){

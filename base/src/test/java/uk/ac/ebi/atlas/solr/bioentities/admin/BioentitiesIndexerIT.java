@@ -13,9 +13,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.configuration.TestConfig;
+import uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory;
 import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
 import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.BioentityIndexMonitor;
-import uk.ac.ebi.atlas.solr.bioentities.admin.monitor.IndexingProgress;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -29,20 +30,23 @@ import static org.mockito.Mockito.when;
 
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class BioentitiesIndexerIT {
+    @Inject
+    private EmbeddedSolrServerFactory embeddedSolrServerFactory;
 
     @Inject
-    EmbeddedSolrServer embeddedBioentitiesSolrServer;
+    private BioentityIndexMonitor bioentityIndexMonitor;
 
-    BioentityPropertiesSource bioentityPropertiesSource;
-    BioentityIndexMonitor bioentityIndexMonitor;
-    BioentitiesIndexer subject;
+    private EmbeddedSolrServer embeddedBioentitiesSolrServer;
+    private BioentityPropertiesSource bioentityPropertiesSource;
+
+    private BioentitiesIndexer subject;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        embeddedBioentitiesSolrServer = embeddedSolrServerFactory.createEmbeddedSolrServerInstance("bioentities");
         bioentityPropertiesSource = mock(BioentityPropertiesSource.class);
-        bioentityIndexMonitor = new BioentityIndexMonitor(new IndexingProgress());
         subject = new BioentitiesIndexer(bioentityIndexMonitor, bioentityPropertiesSource, embeddedBioentitiesSolrServer);
     }
 
@@ -51,7 +55,15 @@ public class BioentitiesIndexerIT {
         subject.deleteAll();
     }
 
-    List<BioentityProperty> randomProperties(int size){
+    @Test(timeout = 10*5000)
+    public void test() throws Exception {
+        addAndRetrieveAreOpposites(10000);
+        for(int i = 0 ; i < 10 ; i++){
+            addAndRetrieveAreOpposites(5);
+        }
+    }
+
+    private List<BioentityProperty> randomProperties(int size) {
         List<BioentityProperty> result = new ArrayList<>(size);
         for(int i = 0 ; i< size; i++){
             result.add(new BioentityProperty(
@@ -64,7 +76,7 @@ public class BioentitiesIndexerIT {
         return result;
     }
 
-    public void addAndRetrieveAreOpposites(int size) throws Exception{
+    private void addAndRetrieveAreOpposites(int size) throws Exception {
         List<BioentityProperty> data = randomProperties(size);
 
         BioentityPropertiesSource.AnnotationFile annotationFile = mock(BioentityPropertiesSource.AnnotationFile.class);
@@ -83,13 +95,4 @@ public class BioentitiesIndexerIT {
 
         assertThat(ImmutableSet.copyOf(queryResponse.getBeans(BioentityProperty.class)), is(ImmutableSet.copyOf(data)));
     }
-
-    @Test(timeout = 10*5000)
-    public void test() throws Exception {
-        addAndRetrieveAreOpposites(10000);
-        for(int i = 0 ; i < 10 ; i++){
-            addAndRetrieveAreOpposites(5);
-        }
-    }
-
 }

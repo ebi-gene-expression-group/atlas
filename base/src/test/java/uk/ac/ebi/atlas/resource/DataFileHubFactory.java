@@ -1,29 +1,26 @@
 package uk.ac.ebi.atlas.resource;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.nio.file.Paths;
 
-@Named
+@Component
 public class DataFileHubFactory {
-
     private final String experimentsFilesLocation;
 
     // Another possibility is to have an additional property appended to experimentsFilesLocation and use then
     // @TestPropertySource(properties = { "subproject=scxa" })
-    @Inject
-    public DataFileHubFactory(@Value("#{configuration['experimentsFilesLocation']}") String experimentsFilesLocation) {
-        this.experimentsFilesLocation = experimentsFilesLocation;
+    public DataFileHubFactory(@Value("${data.files.location}") String dataFilesLocation) {
+        this.experimentsFilesLocation = dataFilesLocation;
     }
 
     public DataFileHub getGxaDataFileHub() {
-        return new DataFileHub(Paths.get(experimentsFilesLocation, "gxa").toString());
+        return new DataFileHub(Paths.get(experimentsFilesLocation).resolve("gxa"));
     }
 
     public DataFileHub getScxaDataFileHub() {
-        return new DataFileHub(Paths.get(experimentsFilesLocation, "scxa").toString());
+        return new DataFileHub(Paths.get(experimentsFilesLocation).resolve("scxa"));
     }
 
 }

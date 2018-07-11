@@ -1,25 +1,26 @@
 package uk.ac.ebi.atlas.resource;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.resource.ContrastImage;
 import uk.ac.ebi.atlas.model.resource.ExternalImage;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
 
-import javax.inject.Named;
+import java.nio.file.Path;
 import java.util.Optional;
 
-@Named
-public class ContrastImageFactory{
+@Component
+public class ContrastImageFactory {
+    private final String gseaPathTemplate;
+    private final String rnaSeqPathTemplate;
+    private final String microarrayPathTemplate;
 
-    @Value("#{configuration['experiment.gsea-plot.path.template']}")
-    String gseaPathTemplate;
+    public ContrastImageFactory(DataFileHub dataFileHub) {
+        Path experimentPathTemplate = dataFileHub.getExperimentMageTabDirLocation().resolve("{0}");
 
-    @Value("#{configuration['experiment.rnaseq.ma-plot.path.template']}")
-    String rnaSeqPathTemplate;
-
-    @Value("#{configuration['experiment.microarray.ma-plot.path.template']}")
-    String microarrayPathTemplate;
-
+        gseaPathTemplate = experimentPathTemplate.resolve("{0}.{1}.{2}.gsea_class_non_dir_both.png").toString();
+        rnaSeqPathTemplate = experimentPathTemplate.resolve("{0}-{1}-mvaPlot.png").toString();
+        microarrayPathTemplate = experimentPathTemplate.resolve("{0}_{1}-{2}-mvaPlot.png").toString();
+    }
 
     ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession,
                                    Optional<String> arrayDesign, String contrastId ){
@@ -35,11 +36,11 @@ public class ContrastImageFactory{
                 pathTemplate = gseaPathTemplate.replace("{2}", "reactome");
                 break;
             case PLOT_MA:
-                pathTemplate = arrayDesign.isPresent()? microarrayPathTemplate : rnaSeqPathTemplate;
+                pathTemplate = arrayDesign.isPresent() ? microarrayPathTemplate : rnaSeqPathTemplate;
                 break;
         }
 
-        if(arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)){
+        if (arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)){
             return new ContrastImage(
                     resourceType, pathTemplate, "external-resources/{0}/{1}/{2}/" + resourceType.fileName(),
                     experimentAccession, arrayDesign.get(), contrastId);
