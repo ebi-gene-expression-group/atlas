@@ -1,8 +1,9 @@
-package uk.ac.ebi.atlas.solr.bioentities.query;
+package uk.ac.ebi.atlas.search.suggester;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
@@ -13,24 +14,27 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.joining;
 
 @Component
-public class SolrBioentitiesSuggesterService {
+public class SuggesterDao {
     private final SpeciesFactory speciesFactory;
     private final BioentitiesSolrClient solrClient;
 
-    public SolrBioentitiesSuggesterService(SpeciesFactory speciesFactory,
-                                           BioentitiesSolrClient solrClient) {
+    public SuggesterDao(SpeciesFactory speciesFactory,
+                        BioentitiesSolrClient solrClient) {
         this.speciesFactory = speciesFactory;
         this.solrClient = solrClient;
     }
 
+    @Deprecated
     public List<SemanticQueryTerm> fetchPropertySuggestions(String query, int numberOfSuggestions, String... species) {
         return fetchSuggestions("propertySuggester", query, numberOfSuggestions, species);
     }
 
+    @Deprecated
     public List<SemanticQueryTerm> fetchBioentitySuggestions(String query, int numberOfSuggestions, String... species) {
         return fetchSuggestions("bioentitySuggester", query, numberOfSuggestions, species);
     }
 
+    @Deprecated
     private List<SemanticQueryTerm> fetchSuggestions(String suggesterDictionary, String query, int numberOfSuggestions, String... species) {
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setRequestHandler("/suggest")
