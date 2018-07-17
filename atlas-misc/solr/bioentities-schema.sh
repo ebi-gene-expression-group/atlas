@@ -144,3 +144,21 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://$HOST/solr/$CORE/schema
 
+printf "\n\nDelete field property_name_id_weight"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "delete-field":
+  {
+    "name":"property_name_id_weight"
+  }
+}' http://$HOST/solr/$CORE/schema
+
+printf "\n\nCreate field property_name_id_weight (pdouble)"
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field":
+  {
+    "name":"property_name_id_weight",
+    "type":"pdouble",
+    "docValues": true
+  }
+}' http://$HOST/solr/$CORE/schema
+
