@@ -69,7 +69,11 @@ class SuggesterDaoIT {
     void atLeastThreeCharactersRequired() {
         assertThat(subject.fetchBioentityProperties("as", 10, false))
                 .isEmpty();
+        assertThat(subject.fetchBioentityProperties("as", 10, false, speciesUtils.getHuman()))
+                .isEmpty();
         assertThat(subject.fetchBioentityProperties("asp", 10, false))
+                .isNotEmpty();
+        assertThat(subject.fetchBioentityProperties("asp", 10, false, speciesUtils.getHuman()))
                 .isNotEmpty();
     }
 }

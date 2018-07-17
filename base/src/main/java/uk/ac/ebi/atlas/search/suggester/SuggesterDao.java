@@ -70,6 +70,11 @@ public class SuggesterDao {
                                                 String query,
                                                 int limit,
                                                 Species... species) {
+        // Solr suggesters return suggestions if cfq is set, even when the query doesn’t reach the minimum length
+        if (query.length() < 3) {
+            return Stream.empty();
+        }
+
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setRequestHandler("/suggest")
                 .setParam("suggest.dictionary", suggesterDictionary)
