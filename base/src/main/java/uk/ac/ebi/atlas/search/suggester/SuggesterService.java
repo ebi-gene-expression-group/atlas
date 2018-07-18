@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @Component
@@ -21,8 +22,7 @@ public class SuggesterService {
         this.speciesFactory = speciesFactory;
     }
 
-    public Stream<ImmutableMap<String, String>> fetchGroupedIdSuggestions(String query,
-                                                                          String...  species) {
+    public Stream<Map<String, String>> fetchGroupedIdSuggestions(String query, String...  species) {
         Species[] _species = Arrays.stream(species).map(speciesFactory::create).toArray(Species[]::new);
 
         return suggesterDao.fetchBioentityProperties(query, DEFAULT_MAX_NUMBER_OF_SUGGESTIONS, false, _species)
