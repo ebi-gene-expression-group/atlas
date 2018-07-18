@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import uk.ac.ebi.atlas.commons.readers.ArrayExpressIdfStreamerFactory;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
@@ -21,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class IdfParserIT {
 
     @Inject
-    private ArrayExpressIdfStreamerFactory arrayExpressIdfStreamerFactory;
-    @Inject
     private DataFileHubFactory dataFileHubFactory;
     @Inject
     private JdbcUtils jdbcUtils;
@@ -30,8 +27,7 @@ public class IdfParserIT {
     @ParameterizedTest
     @MethodSource("singleCellExperimentsProvider")
     public void testParserForSingleCell(String experimentAccession) {
-        IdfStreamerFactory idfStreamerFactory = new IdfStreamerFactory(arrayExpressIdfStreamerFactory, dataFileHubFactory.getScxaDataFileHub());
-        IdfParser idfParser = new IdfParser(idfStreamerFactory);
+        IdfParser idfParser = new IdfParser(dataFileHubFactory.getScxaDataFileHub());
 
         parseForDBExperimentAccession(idfParser, experimentAccession);
     }
@@ -39,8 +35,7 @@ public class IdfParserIT {
     @ParameterizedTest
     @MethodSource("expressionAtlasExperimentsProvider")
     public void testParserForExpressionAtlas(String experimentAccession) {
-        IdfStreamerFactory idfStreamerFactory = new IdfStreamerFactory(arrayExpressIdfStreamerFactory, dataFileHubFactory.getGxaDataFileHub());
-        IdfParser idfParser = new IdfParser(idfStreamerFactory);
+        IdfParser idfParser = new IdfParser(dataFileHubFactory.getScxaDataFileHub());
 
         parseForDBExperimentAccession(idfParser, experimentAccession);
     }

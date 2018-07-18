@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.idf;
 import org.apache.commons.lang.math.NumberUtils;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.Publication;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -32,17 +33,17 @@ public class IdfParser {
                 .map(String::toUpperCase)
                 .collect(Collectors.toSet());
 
-    private IdfStreamerFactory idfReaderFactory;
+    private DataFileHub dataFileHub;
 
     private Map<String, List<String>> parsedIdf;
 
     @Inject
-    public IdfParser(IdfStreamerFactory idfReaderFactory) {
-        this.idfReaderFactory = idfReaderFactory;
+    public IdfParser(DataFileHub dataFileHub) {
+        this.dataFileHub = dataFileHub;
     }
 
     public IdfParserOutput parse(String experimentAccession) {
-        try (TsvStreamer idfStreamer = idfReaderFactory.create(experimentAccession)) {
+        try (TsvStreamer idfStreamer = dataFileHub.getExperimentFiles(experimentAccession).idf.get()) {
 
             parsedIdf = idfStreamer.get()
                             .filter(line -> line.length > 1)
@@ -54,10 +55,19 @@ public class IdfParser {
                                             .filter(item -> !item.isEmpty())
                                             .collect(Collectors.toList())));
 
-            String title = getParsedOutputByKey(AE_EXPERIMENT_DISPLAY_NAME_ID, getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList()))
-                    .stream()
-                    .findFirst()
-                    .orElse("");
+            String title;
+            if(experimentAccession.startsWith("E-MTAB") || experimentAccession.startsWith("E-TABM")) { // Experiments that are regularly updated in ArrayExpress
+                 title = getParsedOutputByKey(AE_EXPERIMENT_DISPLAY_NAME_ID, getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList()))
+                        .stream()
+                        .findFirst()
+                        .orElse("");
+            }
+            else {
+                title = getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList())
+                        .stream()
+                        .findFirst()
+                        .orElse("");
+            }
 
             String experimentDescription = getParsedOutputByKey(EXPERIMENT_DESCRIPTION_ID, Collections.emptyList())
                     .stream()
