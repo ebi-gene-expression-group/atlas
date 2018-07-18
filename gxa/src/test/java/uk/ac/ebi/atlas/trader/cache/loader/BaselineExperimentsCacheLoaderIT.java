@@ -14,15 +14,12 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;

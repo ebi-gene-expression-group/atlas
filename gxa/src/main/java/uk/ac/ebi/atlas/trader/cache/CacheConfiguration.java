@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.trader.cache.loader.MicroarrayExperimentFactory;
 import uk.ac.ebi.atlas.trader.cache.loader.ProteomicsBaselineExperimentFactory;
 import uk.ac.ebi.atlas.trader.cache.loader.RnaSeqBaselineExperimentFactory;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 

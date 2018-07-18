@@ -29,7 +29,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
 
 
     @Override
-    public BaselineExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
+    public BaselineExperiment create(ExperimentDTO experimentDTO,
                                      ExperimentDesign experimentDesign) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
@@ -43,7 +43,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                 .forSpecies(speciesFactory.create(experimentDTO.getSpecies()))
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
-                .withDescription(experimentDescription)
+                .withDescription(experimentDTO.getTitle())
                 .withDisclaimer(factorsConfig.disclaimer())
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withPubMedIds(experimentDTO.getPubmedIds())

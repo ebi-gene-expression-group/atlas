@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.trader.cache.loader.SingleCellRnaSeqBaselineExperimentFactory;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,15 +20,13 @@ public class ScxaExperimentTrader extends ExperimentTrader {
 
     @Inject
     public ScxaExperimentTrader(ScxaExperimentDao experimentDao,
-                                SingleCellRnaSeqBaselineExperimentFactory
-                                              experimentFactory,
-                                ArrayExpressClient arrayExpressClient,
+                                SingleCellRnaSeqBaselineExperimentFactory experimentFactory,
                                 ExperimentDesignParser experimentDesignParser) {
         super(experimentDao);
         baselineExperimentsCache =
                 CacheBuilder.newBuilder().build(
                         new ExperimentsCacheLoader<>(
-                                arrayExpressClient, experimentDesignParser, experimentDao, experimentFactory));
+                                experimentDesignParser, experimentDao, experimentFactory));
     }
 
     public Experiment<Cell> getPublicExperiment(String experimentAccession) {
