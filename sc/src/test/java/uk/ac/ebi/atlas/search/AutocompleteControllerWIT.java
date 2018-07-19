@@ -46,9 +46,7 @@ class AutocompleteControllerWIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$..value", everyItem(containsStringIgnoringCase("zinc"))))
-                .andExpect(jsonPath("$..category", everyItem(anyOf(startsWith("ENSG"), startsWith("ENSMUSG")))))
-                .andExpect(jsonPath("$..category", hasItem(startsWith("ENSG"))))
-                .andExpect(jsonPath("$..category", hasItem(startsWith("ENSMUSG"))));
+                .andExpect(jsonPath("$..category", everyItem(anyOf(startsWith("ENSG"), startsWith("ENSMUSG")))));
     }
 
     @Test
