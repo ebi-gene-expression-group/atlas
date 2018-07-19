@@ -1,5 +1,5 @@
 <%--@elvariable id="resourcesVersion" type="String"--%>
-<%--@elvariable id="geneId" type="String"--%>
+<%--@elvariable id="endpoint" type="String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
@@ -21,7 +21,7 @@
     document.addEventListener("DOMContentLoaded", function(event) {
         geneSearch.render({
             atlasUrl: '${pageContext.request.contextPath}/',
-            resource: 'json/search/${geneId}',
+            resource: '${endpoint}',
             noResultsMessage: '${geneId} is not expressed in any experiment. Try searching for a different gene.',
             resultsMessage: '${geneId} is expressed in:'
         }, 'search-results-list')
