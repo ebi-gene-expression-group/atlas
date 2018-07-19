@@ -36,7 +36,7 @@ public class BioEntityPropertyDaoIT {
         assertThat(properties.get(BioentityPropertyName.SYNONYM), containsInAnyOrder("DC-HIL", "Dchil", "Osteoactivin"));
         assertThat(properties.get(BioentityPropertyName.ORTHOLOG).size(), is(greaterThan(20)));
         assertThat(properties.get(BioentityPropertyName.GO).size(), is(greaterThan(20)));
-        assertThat(properties.get(BioentityPropertyName.INTERPRO), containsInAnyOrder("IPR000601", "IPR022409"));
+        assertThat(properties.get(BioentityPropertyName.INTERPRO), containsInAnyOrder("IPR000601", "IPR022409", "IPR013783"));
         assertThat(properties.get(BioentityPropertyName.ENSFAMILY_DESCRIPTION), containsInAnyOrder("PRECURSOR"));
         assertThat(properties.get(BioentityPropertyName.ENSGENE), containsInAnyOrder("ENSMUSG00000029816"));
         assertThat(properties.get(BioentityPropertyName.ENTREZGENE), containsInAnyOrder("93695"));
