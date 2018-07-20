@@ -25,6 +25,7 @@ public class GeneSearchService {
 
     }
 
+    // Map<Gene ID, Map<Experiment accession, List<Cell IDs>>>
     public Map<String, Map<String, List<String>>> getCellIdsInExperiments(String... geneIds) {
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
@@ -38,6 +39,7 @@ public class GeneSearchService {
                 CHARACTERISTIC_INFERRED_CELL_TYPE, CHARACTERISTIC_ORGANISM_PART, CHARACTERISTIC_SPECIES);
     }
 
+    // Map<Gene ID, Map<Experiment accession, Map<K, Cluster ID>>>
     public Map<String, Map<String, Map<Integer, List<Integer>>>> getMarkerGeneProfile(String... geneIds) {
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
