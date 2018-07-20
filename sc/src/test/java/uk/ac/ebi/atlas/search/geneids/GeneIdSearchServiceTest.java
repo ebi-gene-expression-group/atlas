@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Optional;
 
@@ -20,15 +21,17 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.search.geneids.GeneIdSearchService.ID_PROPERTY_NAMES;
-import static uk.ac.ebi.atlas.search.geneids.GeneIdSearchService.SPECIES_OVERRIDE_PROPERTY_NAMES;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.SPECIES_OVERRIDE_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomKnownBioentityPropertyName;
-import static uk.ac.ebi.atlas.testutils.SpeciesUtils.getHumanSpecies;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class GeneIdSearchServiceTest {
-    private final static Species HUMAN = getHumanSpecies();
+    private final static Species HUMAN =
+            new Species(
+                    "Homo sapiens",
+                    SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of()));
 
     @Mock
     private GeneIdSearchDao geneIdSearchDao;
