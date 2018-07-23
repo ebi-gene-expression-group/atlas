@@ -28,22 +28,22 @@ public class IdfParserIT {
     @MethodSource("singleCellExperimentsProvider")
     public void testParserForSingleCell(String experimentAccession) {
         IdfParser idfParser = new IdfParser(dataFileHubFactory.getScxaDataFileHub());
+        IdfParserOutput result = idfParser.parse(experimentAccession);
 
-        parseForDBExperimentAccession(idfParser, experimentAccession);
+        assertThat(result.getExpectedClusters()).isGreaterThanOrEqualTo(0);
+        assertThat(result.getTitle()).isNotEmpty();
+        assertThat(result.getExperimentDescription()).isNotEmpty();
+        assertThat(result.getPublications()).isNotNull();
     }
 
     @ParameterizedTest
     @MethodSource("expressionAtlasExperimentsProvider")
     public void testParserForExpressionAtlas(String experimentAccession) {
-        IdfParser idfParser = new IdfParser(dataFileHubFactory.getScxaDataFileHub());
+        IdfParser idfParser = new IdfParser(dataFileHubFactory.getGxaDataFileHub());
 
-        parseForDBExperimentAccession(idfParser, experimentAccession);
-    }
-
-    private void parseForDBExperimentAccession(IdfParser idfParser, String experimentAccession) {
         IdfParserOutput result = idfParser.parse(experimentAccession);
 
-        assertThat(result.getExpectedClusters()).isGreaterThanOrEqualTo(0);
+        assertThat(result.getExpectedClusters()).isEqualTo(0);
         assertThat(result.getTitle()).isNotEmpty();
         assertThat(result.getExperimentDescription()).isNotEmpty();
         assertThat(result.getPublications()).isNotNull();
