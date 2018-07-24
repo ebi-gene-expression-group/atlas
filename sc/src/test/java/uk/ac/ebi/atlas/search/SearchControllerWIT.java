@@ -130,4 +130,25 @@ class SearchControllerWIT {
         this.mockMvc.perform(get("/search"))
                 .andExpect(view().name("gene-search-results"));
     }
+
+    @Test
+    void getSearchPutsSpeciesInTheModel() throws Exception {
+        String randomString = randomAlphanumeric(10);
+
+        this.mockMvc.perform(get("/search").param("species", randomString))
+                .andExpect(model().attribute("species", is(randomString)));
+
+    }
+
+    @Test
+    void getSearchPutsSearchTermInTheModel() throws Exception {
+        String randomString = randomAlphanumeric(10);
+
+        this.mockMvc.perform(
+                get("/search")
+                        .param("q", randomString)
+                        .param("species", randomAlphanumeric(10)))
+                .andExpect(model().attribute("geneQueryTerm", is(randomString)))
+                .andExpect(model().attribute("geneQueryCategory", is("q")));
+    }
 }
