@@ -91,7 +91,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
             return GSON.toJson(
                     ImmutableMap.of(
                             "results", ImmutableList.of(),
-                                "reason", "Gene unknown"));
+                            "reason", "Gene unknown"));
         }
 
         if (geneIds.get().isEmpty()) {
@@ -137,7 +137,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                                         ImmutableMap.of(
                                                 "group", "Marker genes",
                                                 "value", "experiments with marker genes",
-                                                "label", "experiments with marker genes"));
+                                                "label", "Experiments with marker genes"));
                                 experimentAttributes.put(
                                         "markerGenes",
                                         convertMarkerGeneModel(
