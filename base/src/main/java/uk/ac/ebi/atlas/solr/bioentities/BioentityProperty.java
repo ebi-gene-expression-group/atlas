@@ -35,7 +35,7 @@ public class BioentityProperty {
     private int propertyWeight;
 
     @Field("property_name_id_weight")
-    private int propertyNameIdWeight;
+    private double propertyNameIdWeight;
 
     @Field("property_name")
     private String name;
@@ -88,11 +88,11 @@ public class BioentityProperty {
         this.propertyWeight = propertyWeight;
     }
 
-    public int getPropertyNameIdWeight() {
+    public double getPropertyNameIdWeight() {
         return propertyNameIdWeight;
     }
 
-    public void setPropertyNameIdWeight(int propertyNameIdWeight) {
+    public void setPropertyNameIdWeight(double propertyNameIdWeight) {
         this.propertyNameIdWeight = propertyNameIdWeight;
     }
 
