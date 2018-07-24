@@ -36,3 +36,10 @@ hr {
     box-shadow: none;
     margin: 0;
 }
+
+/* Override EBI VF styles for components that use React-Select */
+#search-form input {
+    height: unset;
+    box-shadow: none;
+    margin: 0;
+}
