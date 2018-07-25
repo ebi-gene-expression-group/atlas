@@ -36,7 +36,7 @@ public class CellMetadataService {
         return cellMetadataDao.getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), factorFieldNames)
                 .entrySet().stream()
                 .collect(toMap(
-                        entry -> SingleCellAnalyticsCollectionProxy.factorFieldNameToDisplayName(entry.getKey()),
+                        entry -> SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName(entry.getKey()),
                         entry -> entry.getValue().stream().map(Object::toString).collect(Collectors.joining(","))));
     }
 

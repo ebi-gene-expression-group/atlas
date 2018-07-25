@@ -34,44 +34,54 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
         super(solrClient, "scxa-analytics");
     }
 
+    // Converts names of characteristics into SolrSchemaFields (e.g. cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type"))
     public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField characteristicAsSchemaField(String characteristic) {
-        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("characteristic_%s", characteristic), characteristicFieldNameToDisplayName(characteristic));
+        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("characteristic_%s", characteristic), metadataFieldNameToDisplayName(characteristic, "characteristic_"));
     }
 
+    // Converts names of factors into SolrSchemaFields (e.g. biopsy_site => new SingleCellAnalyticsSchemaField("factor_biopsy_site", "Biopsy site"))
     public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField factorAsSchemaField(String factor) {
-        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("factor_%s", factor), factorFieldNameToDisplayName(factor));
+        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("factor_%s", factor), metadataFieldNameToDisplayName(factor, "characteristic_"));
     }
 
+    // Converts strings representing metadata field names to SolrSchemaFields (e.g. characteristic_cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type"))
     public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataAsSchemaField(String metadata) {
         // The metadata fields are either characteristics or factors
         if (metadata.startsWith("characteristic")) {
-            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, characteristicFieldNameToDisplayName(metadata));
+            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, metadataFieldNameToDisplayName(metadata, "characteristic_"));
         }
         else {
-            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, factorFieldNameToDisplayName(metadata));
+            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, metadataFieldNameToDisplayName(metadata, "factor_"));
         }
     }
 
+    // Converts metadata Solr field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site, characteristic_cell_type => Cell type)
     public static String metadataFieldNameToDisplayName(String metadataFieldName) {
         // The metadata fields are either characteristics or factors
         if (metadataFieldName.startsWith("characteristic")) {
-            return characteristicFieldNameToDisplayName(metadataFieldName);
+            return metadataFieldNameToDisplayName(metadataFieldName, "characteristic_");
         }
         else {
-            return factorFieldNameToDisplayName(metadataFieldName);
+            return metadataFieldNameToDisplayName(metadataFieldName, "factor_");
         }
     }
 
-    // Converts Solr factor field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site)
-    public static String factorFieldNameToDisplayName(String factorFieldName) {
-        String displayName = factorFieldName.replace("factor_", "").replace("_", " ");
+//    // Converts Solr factor field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site)
+//    public static String factorFieldNameToDisplayName(String factorFieldName) {
+//        String displayName = factorFieldName.replace("factor_", "").replace("_", " ");
+//
+//        return StringUtils.capitalize(displayName);
+//    }
+//
+//    // Converts Solr characteristic names to human-friendly names (e.g. characteristic_inferred_cell_type => Inferred cell type)
+//    public static String characteristicFieldNameToDisplayName(String characteristicFieldName) {
+//        String displayName = characteristicFieldName.replace("characteristic_", "").replace("_", " ");
+//
+//        return StringUtils.capitalize(displayName);
+//    }
 
-        return StringUtils.capitalize(displayName);
-    }
-
-    // Converts Solr characteristic names to human-friendly names (e.g. characteristic_inferred_cell_type => Inferred cell type)
-    public static String characteristicFieldNameToDisplayName(String characteristicFieldName) {
-        String displayName = characteristicFieldName.replace("characteristic_", "").replace("_", " ");
+    private static String metadataFieldNameToDisplayName(String fieldName, String prefix) {
+        String displayName = fieldName.replace(prefix, "").replace("_", " ");
 
         return StringUtils.capitalize(displayName);
     }
