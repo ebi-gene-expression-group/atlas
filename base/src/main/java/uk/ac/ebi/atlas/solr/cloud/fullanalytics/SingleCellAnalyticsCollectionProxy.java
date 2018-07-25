@@ -66,20 +66,6 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
         }
     }
 
-//    // Converts Solr factor field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site)
-//    public static String factorFieldNameToDisplayName(String factorFieldName) {
-//        String displayName = factorFieldName.replace("factor_", "").replace("_", " ");
-//
-//        return StringUtils.capitalize(displayName);
-//    }
-//
-//    // Converts Solr characteristic names to human-friendly names (e.g. characteristic_inferred_cell_type => Inferred cell type)
-//    public static String characteristicFieldNameToDisplayName(String characteristicFieldName) {
-//        String displayName = characteristicFieldName.replace("characteristic_", "").replace("_", " ");
-//
-//        return StringUtils.capitalize(displayName);
-//    }
-
     private static String metadataFieldNameToDisplayName(String fieldName, String prefix) {
         String displayName = fieldName.replace(prefix, "").replace("_", " ");
 

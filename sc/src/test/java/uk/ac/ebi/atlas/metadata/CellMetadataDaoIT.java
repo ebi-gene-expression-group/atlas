@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -63,11 +63,9 @@ public class CellMetadataDaoIT {
 
         List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
 
-        assertThat(metadataFieldNames).isNotEmpty();
-
-        metadataFieldNames.forEach(field -> {
-            assertThat(subject.getMetadataValueForCellId(experimentAccession, field, cellId)).isNotPresent();
-        });
+        assertThat(metadataFieldNames)
+                .isNotEmpty()
+                .allSatisfy(field -> assertThat(subject.getMetadataValueForCellId(experimentAccession, field, cellId)).isNotPresent());
     }
 
     @ParameterizedTest
@@ -78,13 +76,13 @@ public class CellMetadataDaoIT {
         LOGGER.info("Retrieving metadata field names for experiment " + experimentAccession);
         List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
 
-        assertThat(metadataFieldNames).isNotEmpty();
+        assertThat(metadataFieldNames)
+                .isNotEmpty()
+                .allSatisfy(field -> {
+                    LOGGER.info("Retrieving values for " + field.displayName() + " metadata for cell ID " + cellId + " from experiment " + experimentAccession);
 
-        metadataFieldNames.forEach(field -> {
-            LOGGER.info("Retrieving values for " + field.displayName() + " metadata for cell ID " + cellId + " from experiment " + experimentAccession);
-
-            assertThat(subject.getMetadataValueForCellId(experimentAccession, field, cellId)).isPresent();
-        });
+                    assertThat(subject.getMetadataValueForCellId(experimentAccession, field, cellId)).isPresent();
+                });
     }
 
     @ParameterizedTest
@@ -112,16 +110,15 @@ public class CellMetadataDaoIT {
         LOGGER.info("Retrieving metadata field names for experiment " + experimentAccession);
         List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
 
-        assertThat(metadataFieldNames).isNotEmpty();
+        assertThat(metadataFieldNames)
+                .isNotEmpty()
+                .allSatisfy(field -> {
+                    LOGGER.info("Retrieving values for " + field.displayName() + " metadata for " + cellIds.size() + " random cell IDs from experiment " + experimentAccession);
 
-        metadataFieldNames.forEach(field -> {
-            LOGGER.info("Retrieving values for " + field.displayName() + " metadata for " + cellIds.size() + " random cell IDs from experiment " + experimentAccession);
-
-            assertThat(subject.getMetadataValueForCellIds(experimentAccession, field, cellIds))
-                    .isNotEmpty()
-                    .containsKeys(cellIds.toArray(new String[0]));
-        });
-
+                    assertThat(subject.getMetadataValueForCellIds(experimentAccession, field, cellIds))
+                            .isNotEmpty()
+                            .containsKeys(cellIds.toArray(new String[0]));
+                });
     }
 
     @Test
@@ -131,19 +128,17 @@ public class CellMetadataDaoIT {
         assertThat(subject.getQueryResultForMultiValueFields(experimentAccession, Optional.empty())).isEmpty();
     }
 
-    private Iterable<String> experimentsWithMetadataProvider() {
+    private Stream<String> experimentsWithMetadataProvider() {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"))
-                .collect(Collectors.toSet());
+                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"));
     }
 
-    private Iterable<String> experimentsWithFactorsProvider() {
+    private Stream<String> experimentsWithFactorsProvider() {
         // E-GEOD-99058 and E-ENAD-13 do not have any factors
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13") )
-                .collect(Collectors.toSet());
+                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"));
     }
 }
