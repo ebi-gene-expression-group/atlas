@@ -130,7 +130,9 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                             List<String> cellIds = exp2cells.getValue();
 
                             Map<String, Object> experimentAttributes = getExperimentInformation(experimentAccession, geneId);
-                            List<Map<String, String>> facets = unfoldFacets(geneSearchService.getFacets(cellIds).get(experimentAccession));
+                            List<Map<String, String>> facets =
+                                    unfoldFacets(geneSearchService.getFacets(cellIds)
+                                            .getOrDefault(experimentAccession, ImmutableMap.of()));
 
                             if (markerGeneFacets.containsKey(geneId) && markerGeneFacets.get(geneId).containsKey(experimentAccession)) {
                                 facets.add(
