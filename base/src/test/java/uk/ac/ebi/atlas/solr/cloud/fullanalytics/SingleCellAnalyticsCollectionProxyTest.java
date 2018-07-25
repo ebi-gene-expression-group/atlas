@@ -58,7 +58,7 @@ class SingleCellAnalyticsCollectionProxyTest {
         assertThat(SingleCellAnalyticsCollectionProxy.metadataAsSchemaField("factor_biopsy_site"))
                 .isInstanceOf(SingleCellAnalyticsSchemaField.class)
                 .extracting("fieldName", "displayName")
-                .contains("factor_biopsy_site", "Biospy site");
+                .contains("factor_biopsy_site", "Biopsy site");
     }
 
     @Test
