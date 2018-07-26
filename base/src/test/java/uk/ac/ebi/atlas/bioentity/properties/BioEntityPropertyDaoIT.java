@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import javax.inject.Inject;
@@ -18,7 +19,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class BioEntityPropertyDaoIT {
 
     @Inject
@@ -35,7 +36,7 @@ public class BioEntityPropertyDaoIT {
         assertThat(properties.get(BioentityPropertyName.SYNONYM), containsInAnyOrder("DC-HIL", "Dchil", "Osteoactivin"));
         assertThat(properties.get(BioentityPropertyName.ORTHOLOG).size(), is(greaterThan(20)));
         assertThat(properties.get(BioentityPropertyName.GO).size(), is(greaterThan(20)));
-        assertThat(properties.get(BioentityPropertyName.INTERPRO), containsInAnyOrder("IPR000601", "IPR022409"));
+        assertThat(properties.get(BioentityPropertyName.INTERPRO), containsInAnyOrder("IPR000601", "IPR022409", "IPR013783"));
         assertThat(properties.get(BioentityPropertyName.ENSFAMILY_DESCRIPTION), containsInAnyOrder("PRECURSOR"));
         assertThat(properties.get(BioentityPropertyName.ENSGENE), containsInAnyOrder("ENSMUSG00000029816"));
         assertThat(properties.get(BioentityPropertyName.ENTREZGENE), containsInAnyOrder("93695"));

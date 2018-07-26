@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.nio.file.Paths;
+
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -17,8 +19,8 @@ public class BioentityIndexMonitorTest {
     private BioentityIndexMonitor subject;
 
     @Before
-    public void init(){
-        subject = new BioentityIndexMonitor(indexingProgressMock);
+    public void init() {
+        subject = new BioentityIndexMonitor(Paths.get("foo"), indexingProgressMock);
     }
 
     @Test

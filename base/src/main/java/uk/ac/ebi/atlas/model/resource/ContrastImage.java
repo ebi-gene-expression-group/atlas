@@ -14,15 +14,24 @@ public class ContrastImage extends ExternalImage {
             ResourceType.PLOT_GSEA_REACTOME,
             ResourceType.PLOT_MA);
 
-    public ContrastImage(ResourceType type, String fileSystemTemplate, String externalLinkTemplate, String
-            experimentAccession, String contrast){
-        super(type,Paths.get(MessageFormat.format(fileSystemTemplate, experimentAccession,contrast)),
-                MessageFormat.format(externalLinkTemplate, experimentAccession, contrast));
+    public ContrastImage(ResourceType type,
+                         String fileSystemTemplate,
+                         String externalLinkTemplate,
+                         String experimentAccession,
+                         String contrast){
+        super(type,
+              Paths.get(MessageFormat.format(fileSystemTemplate, experimentAccession, contrast)),
+              MessageFormat.format(externalLinkTemplate, experimentAccession, contrast));
     }
 
-    public ContrastImage(ResourceType type, String fileSystemTemplate,String externalLinkTemplate, String
-            experimentAccession, String arrayDesign,  String contrast){
-        super(type, Paths.get(MessageFormat.format(fileSystemTemplate,experimentAccession,arrayDesign,contrast)),
-                MessageFormat.format(externalLinkTemplate, experimentAccession,arrayDesign, contrast));
+    public ContrastImage(ResourceType type,
+                         String fileSystemTemplate,
+                         String externalLinkTemplate,
+                         String experimentAccession,
+                         String arrayDesign,
+                         String contrast){
+        super(type,
+              Paths.get(MessageFormat.format(fileSystemTemplate,experimentAccession,arrayDesign,contrast)),
+              MessageFormat.format(externalLinkTemplate, experimentAccession,arrayDesign, contrast));
     }
 }

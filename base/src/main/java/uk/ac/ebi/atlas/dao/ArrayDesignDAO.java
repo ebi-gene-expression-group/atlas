@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.model.ArrayDesign;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ public class ArrayDesignDAO {
 
     private final LazyReference<List<ArrayDesign>> arrayDesigns = new LazyReference<List<ArrayDesign>>() {
         @Override
-        protected List<ArrayDesign> create() throws Exception {
+        protected List<ArrayDesign> create() {
             return jdbcTemplate.queryForList("SELECT * FROM ARRAYDESIGN").stream().map(
                     e -> ArrayDesign.create((String) e.get("ACCESSION"), (String)e.get("NAME") )
             ).collect(Collectors.toList());
@@ -27,8 +26,8 @@ public class ArrayDesignDAO {
     };
 
     @Inject
-    public ArrayDesignDAO(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
+    public ArrayDesignDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<String> getDesignElements(String geneIdentifier) {

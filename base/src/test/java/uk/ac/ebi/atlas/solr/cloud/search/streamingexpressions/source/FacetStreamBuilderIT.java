@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
 import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
@@ -32,7 +33,7 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.
 import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class FacetStreamBuilderIT {
     public static final String E_MTAB_513 = "E-MTAB-513";
 

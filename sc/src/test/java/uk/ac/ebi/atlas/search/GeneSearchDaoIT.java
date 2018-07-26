@@ -11,6 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
@@ -28,8 +29,8 @@ import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollec
 @Transactional
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
-public class GeneSearchDaoIT {
+@ContextConfiguration(classes = {WebConfig.class})
+class GeneSearchDaoIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchDaoIT.class);
 
     @Inject

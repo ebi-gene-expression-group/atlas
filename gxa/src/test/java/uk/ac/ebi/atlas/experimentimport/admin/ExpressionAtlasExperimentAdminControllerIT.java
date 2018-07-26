@@ -25,7 +25,7 @@
 //
 //@WebAppConfiguration
 //@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
+//@ContextConfiguration(classes = {WebConfig.class})
 //public class ExpressionAtlasExperimentAdminControllerIT {
 //
 //    @Inject

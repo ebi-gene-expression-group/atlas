@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -14,20 +15,20 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class ArrayDesignDAOIT {
 
     @Inject
     private ArrayDesignDAO subject;
 
     @Test
-    public void testGetDesignElements() throws Exception {
+    public void testGetDesignElements() {
         List<String> designElements = subject.getDesignElements("ENSG00000109929");
         assertThat(designElements, hasItem("211423_s_at"));
     }
 
     @Test
-    public void testGetAllArrayDesignMapNames() throws Exception {
+    public void testGetAllArrayDesignMapNames() {
         Map<String,String> arrayDesigns = subject.getArrayDesignMapNames();
         assertThat(arrayDesigns.size(), is(74));
     }

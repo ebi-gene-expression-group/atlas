@@ -6,14 +6,15 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.common.util.NamedList;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,8 +22,8 @@ import java.util.stream.Stream;
 public class SolrCloudAdminProxy {
     private final CloudSolrClient cloudSolrClient;
 
-    public SolrCloudAdminProxy(@Qualifier("zkHost") String zkHost) {
-        cloudSolrClient = new CloudSolrClient.Builder().withZkHost(zkHost).build();
+    public SolrCloudAdminProxy(CloudSolrClient cloudSolrClient) {
+        this.cloudSolrClient = cloudSolrClient;
     }
 
     public boolean areCollectionsUp(List<String> collectionNames, String... aliasedCollectionNames) throws IOException, SolrServerException {
@@ -36,11 +37,11 @@ public class SolrCloudAdminProxy {
         // Get real collection names for each alias
         aliases.forEach(alias -> allCollectionNames.add(getCollectionNameForAlias(response, alias)));
 
-        List<String> statuses = allCollectionNames
+        Set<String> statuses = allCollectionNames
                 .stream()
-                .map(collection -> getShardStatusesForCollection(response, collection))
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .map(collection -> getInactiveShardStatusesForCollection(response, collection))
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
 
         return statuses.isEmpty();
     }
@@ -59,23 +60,41 @@ public class SolrCloudAdminProxy {
         }
     }
 
-    // Returns a list of statuses that are not "active" for each shard for a Solr collection.
-    private List<String> getShardStatusesForCollection(NamedList<Object> response, String collectionName) {
+    // Returns a set of statuses that are not "active" for each node in a shard for a given Solr collection.
+    private Set<String> getInactiveShardStatusesForCollection(NamedList<Object> response, String collectionName) {
         LinkedHashMap collectionStatus = (LinkedHashMap) response.findRecursive("cluster", "collections", collectionName);
 
         if (MapUtils.isEmpty(collectionStatus)) {
             throw new RuntimeException("The collection " + collectionName + " does not exist in Solr");
         }
         else {
-            Stream<String> collectionShardStates = ((LinkedHashMap) collectionStatus.getOrDefault("shards", Stream.empty()))
-                    .values()
-                    .stream()
-                    .map(x -> ((LinkedHashMap) x).get("state"));
+            collectionStatus.get("shards");
+            LinkedHashMap shards = (LinkedHashMap) collectionStatus.get("shards");
 
-            return collectionShardStates
-                    .filter(x -> !x.equalsIgnoreCase("active"))
+            Stream<LinkedHashMap> shardStream = shards.values()
+                    .stream();
+
+            List<LinkedHashMap> replicas = shardStream
+                    .map(x -> x.get("replicas"))
+                    .map(LinkedHashMap.class::cast)
                     .collect(Collectors.toList());
 
+            Set<String> inactiveStatuses = new HashSet<>();
+
+            replicas.forEach(replica -> {
+                Stream<LinkedHashMap> replicaNodesStream = replica
+                        .values()
+                        .stream();
+
+                replicaNodesStream.forEach(node -> {
+                    String nodeStatus = node.get("state").toString();
+                    if(!nodeStatus.equalsIgnoreCase("active")) {
+                        inactiveStatuses.add(nodeStatus);
+                    }
+                });
+            });
+
+            return inactiveStatuses;
         }
     }
 }

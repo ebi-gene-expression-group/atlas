@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 
 import javax.inject.Inject;
 
@@ -17,7 +18,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
+@ContextConfiguration(classes = {WebConfig.class})
 public class GeneSetPageControllerIT {
 
     @Inject

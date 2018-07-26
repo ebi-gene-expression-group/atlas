@@ -1,13 +1,12 @@
 package uk.ac.ebi.atlas.resource;
 
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
@@ -19,8 +18,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@WebAppConfiguration
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class DataFileHubIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataFileHubIT.class);
 
@@ -29,7 +27,7 @@ public class DataFileHubIT {
     @Inject
     private JdbcUtils jdbcUtils;
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetExperimentFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
         String experimentAccession = jdbcUtils.fetchRandomExpressionAtlasExperimentAccession();

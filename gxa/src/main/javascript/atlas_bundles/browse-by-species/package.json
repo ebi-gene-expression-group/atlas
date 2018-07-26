@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "ajv": "^6.5.0",
+    "ajv": "^6.5.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-ebi-species": "^1.2.5",

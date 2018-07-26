@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -21,10 +22,12 @@ public class TsnePlotSettingsService {
     }
 
     public List<Integer> getAvailableClusters(String experimentAccession) {
-        return dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get().get()
-                .skip(1)
-                .map(line -> Integer.parseInt(line[1]))
-                .collect(Collectors.toList());
+        try (TsvStreamer clustersTsvStreamer = dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
+            return clustersTsvStreamer.get()
+                    .skip(1)
+                    .map(line -> Integer.parseInt(line[1]))
+                    .collect(Collectors.toList());
+        }
     }
 
     // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174
@@ -40,13 +43,13 @@ public class TsnePlotSettingsService {
             return Optional.of(idfParserOutput.getExpectedClusters());
         }
         else {
-            return dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get().get()
-                    .skip(1)
-                    .filter(line -> line[0].equalsIgnoreCase("true"))
-                    .map(line -> Integer.parseInt(line[1]))
-                    .findFirst();
+            try (TsvStreamer clustersTsvStreamer = dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
+                return clustersTsvStreamer.get()
+                        .skip(1)
+                        .filter(line -> line[0].equalsIgnoreCase("true"))
+                        .map(line -> Integer.parseInt(line[1]))
+                        .findFirst();
+            }
         }
     }
-
-
 }

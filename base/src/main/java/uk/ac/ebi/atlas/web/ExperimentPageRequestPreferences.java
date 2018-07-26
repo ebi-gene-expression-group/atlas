@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
-import org.hibernate.validator.constraints.Range;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
@@ -12,12 +11,7 @@ public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit>
     public static final double VERY_SMALL_NON_ZERO_VALUE = Double.MIN_VALUE;
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
-    private static final int HEATMAP_SIZE_MIN = 1;
-    private static final int HEATMAP_SIZE_MAX = 1000;
-
-    @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
     private int heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
-
     private SemanticQuery geneQuery = getDefaultGeneQuery();
     private double cutoff = getDefaultCutoff();
     private Set<String> selectedColumnIds = ImmutableSet.of();

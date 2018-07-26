@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 
 import java.text.MessageFormat;
 
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "/dispatcher-servlet.xml"})
+@ContextConfiguration(classes = {WebConfig.class})
 public class TracksControllerWIT {
     static final MessageFormat URL_TEMPLATE =
             new MessageFormat("/experiments-content/{0}/tracks/{0}.{1}.genes.expressions.bedGraph");

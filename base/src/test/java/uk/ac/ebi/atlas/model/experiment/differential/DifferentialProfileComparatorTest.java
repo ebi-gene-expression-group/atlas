@@ -60,7 +60,7 @@ public class DifferentialProfileComparatorTest {
     }
 
     @Test
-    public void testGetExpressionLevelFoldChangeOn() throws Exception {
+    public void testGetExpressionLevelFoldChangeOn() {
         //when
         when(profileMock1.getMaxExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.04);
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts)).thenReturn(0.025);
@@ -84,7 +84,7 @@ public class DifferentialProfileComparatorTest {
     }
 
     @Test
-    public void testGetExpressionLevelFoldChangeOnWhenAllContrastsAreSelected() throws Exception {
+    public void testGetExpressionLevelFoldChangeOnWhenAllContrastsAreSelected() {
         subject = new DifferentialProfileComparator<>(true, selectedContrasts, allContrasts, Regulation.UP);
 
         //when

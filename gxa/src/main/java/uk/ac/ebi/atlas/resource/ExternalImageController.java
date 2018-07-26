@@ -13,9 +13,7 @@ import java.util.function.Function;
 
 @Controller
 public class ExternalImageController {
-
     private ContrastImageFactory contrastImageFactory;
-
     private ExtraInfoFactory extraInfoFactory;
 
     @Inject
