@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
+package uk.ac.ebi.atlas.experimentimport.analytics;
 
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;

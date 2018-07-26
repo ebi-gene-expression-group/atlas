@@ -25,22 +25,22 @@ class SingleCellAnalyticsCollectionProxyTest {
 
     @Test
     void validFactorFieldToDisplayName() {
-        assertThat(SingleCellAnalyticsCollectionProxy.factorFieldNameToDisplayName("factor_biopsy_site")).isEqualToIgnoringCase("Biopsy site");
+        assertThat(SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("factor_biopsy_site")).isEqualToIgnoringCase("Biopsy site");
     }
 
     @Test
     void emptyFactorFieldToDisplayName() {
-        assertThat(SingleCellAnalyticsCollectionProxy.factorFieldNameToDisplayName("")).isEmpty();
+        assertThat(SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("")).isEmpty();
     }
 
     @Test
     void validCharacteristicFieldToDisplayName() {
-        assertThat(SingleCellAnalyticsCollectionProxy.characteristicFieldNameToDisplayName("characteristic_inferred_cell_type")).isEqualToIgnoringCase("Inferred cell type");
+        assertThat(SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("characteristic_inferred_cell_type")).isEqualToIgnoringCase("Inferred cell type");
     }
 
     @Test
     void emptyCharacteristicFieldToDisplayName() {
-        assertThat(SingleCellAnalyticsCollectionProxy.characteristicFieldNameToDisplayName("")).isEmpty();
+        assertThat(SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("")).isEmpty();
     }
 
     @Test
@@ -51,5 +51,21 @@ class SingleCellAnalyticsCollectionProxyTest {
     @Test
     void emptyAttributeNameToDisplayName() {
         assertThat(SingleCellAnalyticsCollectionProxy.attributeNameToFieldName("")).isEmpty();
+    }
+
+    @Test
+    void validFactorNameToSchemaField() {
+        assertThat(SingleCellAnalyticsCollectionProxy.metadataAsSchemaField("factor_biopsy_site"))
+                .isInstanceOf(SingleCellAnalyticsSchemaField.class)
+                .extracting("fieldName", "displayName")
+                .contains("factor_biopsy_site", "Biopsy site");
+    }
+
+    @Test
+    void validCharacteristicNameToSchemaField() {
+        assertThat(SingleCellAnalyticsCollectionProxy.metadataAsSchemaField("characteristic_cell_type"))
+                .isInstanceOf(SingleCellAnalyticsSchemaField.class)
+                .extracting("fieldName", "displayName")
+                .contains("characteristic_cell_type", "Cell type");
     }
 }

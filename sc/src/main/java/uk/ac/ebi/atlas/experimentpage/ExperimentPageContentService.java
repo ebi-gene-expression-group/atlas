@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -7,8 +8,10 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.download.ExperimentFileType;
+import uk.ac.ebi.atlas.metadata.CellMetadataDao;
 import uk.ac.ebi.atlas.model.Publication;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import java.util.ArrayList;
@@ -23,17 +26,20 @@ public class ExperimentPageContentService {
     private final DataFileHub dataFileHub;
     private final TsnePlotSettingsService tsnePlotSettingsService;
     private final EuropePmcClient europePmcClient;
+    private final CellMetadataDao cellMetadataDao;
 
     private static final Gson gson = new Gson();
 
     public ExperimentPageContentService(ExperimentFileLocationService experimentFileLocationService,
                                         DataFileHub dataFileHub,
                                         TsnePlotSettingsService tsnePlotSettingsService,
-                                        EuropePmcClient europePmcClient) {
+                                        EuropePmcClient europePmcClient,
+                                        CellMetadataDao cellMetadataDao) {
         this.experimentFileLocationService = experimentFileLocationService;
         this.dataFileHub = dataFileHub;
         this.tsnePlotSettingsService = tsnePlotSettingsService;
         this.europePmcClient = europePmcClient;
+        this.cellMetadataDao = cellMetadataDao;
     }
 
     public JsonObject getTsnePlotData(String experimentAccession) {
@@ -47,6 +53,14 @@ public class ExperimentPageContentService {
         JsonArray perplexityArray = new JsonArray();
         tsnePlotSettingsService.getAvailablePerplexities(experimentAccession).forEach(perplexityArray::add);
         result.add("perplexities", perplexityArray);
+
+        JsonArray metadataArray = new JsonArray();
+        cellMetadataDao.getMetadataFieldNames(experimentAccession)
+                .stream()
+                .map(x -> ImmutableMap.of("value", x.name(), "label", x.displayName()))
+                .forEach(x -> metadataArray.add(gson.toJsonTree(x)));
+
+        result.add("metadata", metadataArray);
 
         JsonArray units = new JsonArray();
         units.add("TPM");

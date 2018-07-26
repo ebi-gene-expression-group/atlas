@@ -1,22 +1,32 @@
-package uk.ac.ebi.atlas.experimentpage.baseline.tsne;
+package uk.ac.ebi.atlas.tsne;
 
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
+import uk.ac.ebi.atlas.metadata.CellMetadataDao;
+import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,12 +35,14 @@ class TSnePlotServiceTest {
 
     @Mock
     private TSnePlotServiceDao tSnePlotServiceDaoMock;
+    @Mock
+    private CellMetadataDao cellMetadataDaoMock;
 
     private TSnePlotService subject;
 
     @BeforeEach
     void setUp() {
-        subject = new TSnePlotService(tSnePlotServiceDaoMock);
+        subject = new TSnePlotService(tSnePlotServiceDaoMock, cellMetadataDaoMock);
     }
 
     @Test
@@ -68,6 +80,42 @@ class TSnePlotServiceTest {
                 .allMatch(expressionLevel -> expressionLevel == Optional.empty());
 
 
+    }
+
+    @Test
+    @DisplayName("Points retrieved by the DAO class are correctly grouped according to metadata values")
+    void testFetchPlotWithMetadata() {
+        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        int[] perplexities = new int[] {1, 5, 10, 15, 20};
+        int perplexity = perplexities[ThreadLocalRandom.current().nextInt(0, perplexities.length)];
+        String metadataCategory = "characteristic_inferred_cell_type";
+        List<String> metadataValues = Arrays.asList("neuron", "stem cell", "B cell");
+
+        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.randomTSnePointDtos(NUMBER_OF_CELLS);
+        when(tSnePlotServiceDaoMock.fetchTSnePlotForPerplexity(experimentAccession, perplexity))
+                .thenReturn(ImmutableList.copyOf(randomPointDtos));
+
+        // Extract list of cell IDs from t-SNE points
+        List<String> cellIds = randomPointDtos
+                .stream()
+                .map(TSnePoint.Dto::name)
+                .collect(Collectors.toList());
+
+        assertThat(cellIds).doesNotHaveDuplicates();
+
+        // Assign random metadata value to each cell ID
+        Map<String, String> cellMetadata = cellIds
+                .stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        value -> metadataValues.get(ThreadLocalRandom.current().nextInt(0, metadataValues.size()))));
+
+        when(cellMetadataDaoMock.getMetadataValueForCellIds(eq(experimentAccession), any(SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField.class), eq(cellIds)))
+                .thenReturn(cellMetadata);
+
+        Map<String, Set<TSnePoint>> results = subject.fetchTSnePlotWithMetadata(experimentAccession, perplexity, metadataCategory);
+
+        assertThat(results).containsOnlyKeys(metadataValues.stream().map(StringUtils::capitalize).toArray(String[]::new));
     }
 
     @Test

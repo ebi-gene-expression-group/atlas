@@ -1,10 +1,12 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.metadata;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,6 +19,8 @@ import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -45,9 +49,9 @@ class JsonCellMetadataControllerWIT {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-    @RepeatedTest(20)
-    void validJsonForExistingCellId() throws Exception {
-        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+    @ParameterizedTest
+    @MethodSource("experimentsWithMetadataProvider")
+    void validJsonForExistingCellId(String experimentAccession) throws Exception {
         String cellId = jdbcTestUtils.fetchRandomCellFromExperiment(experimentAccession);
 
         this.mockMvc
@@ -80,6 +84,14 @@ class JsonCellMetadataControllerWIT {
                 .perform(get(
                         "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata")).andDo(print())
                 .andExpect(status().is4xxClientError());
+    }
+
+    private Iterable<String> experimentsWithMetadataProvider() {
+        // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
+        return jdbcTestUtils.getPublicSingleCellExperimentAccessions()
+                .stream()
+                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"))
+                .collect(Collectors.toSet());
     }
 }
 

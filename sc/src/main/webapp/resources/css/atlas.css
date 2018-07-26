@@ -31,8 +31,17 @@ hr {
     border-bottom: 1px solid lightgrey;
 }
 
-#search-results-list input {
+#search-results-list, #experiment-page input {
     height: unset;
     box-shadow: none;
     margin: 0;
 }
+
+/* Fix for Highcharts tooltip being cut off */
+#experiment-page .highcharts-container {
+    overflow: visible !important;
+}
+#experiment-page svg {
+    overflow: visible !important;
+}
+
