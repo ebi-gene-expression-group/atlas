@@ -1,7 +1,1473 @@
 var geneSearchForm =
 webpackJsonp_name_([2],{
 
-/***/ 100:
+/***/ 10:
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ 104:
+/*!**************************************************************************************!*\
+  !*** ./bundles/gene-search-form/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \**************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ 105:
+/*!*********************************************************************!*\
+  !*** ./bundles/gene-search-form/node_modules/urijs/src/punycode.js ***!
+  \*********************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.0 by @mathias */
+;(function(root) {
+
+	/** Detect free variables */
+	var freeExports = typeof exports == 'object' && exports &&
+		!exports.nodeType && exports;
+	var freeModule = typeof module == 'object' && module &&
+		!module.nodeType && module;
+	var freeGlobal = typeof global == 'object' && global;
+	if (
+		freeGlobal.global === freeGlobal ||
+		freeGlobal.window === freeGlobal ||
+		freeGlobal.self === freeGlobal
+	) {
+		root = freeGlobal;
+	}
+
+	/**
+	 * The `punycode` object.
+	 * @name punycode
+	 * @type Object
+	 */
+	var punycode,
+
+	/** Highest positive signed 32-bit float value */
+	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
+
+	/** Bootstring parameters */
+	base = 36,
+	tMin = 1,
+	tMax = 26,
+	skew = 38,
+	damp = 700,
+	initialBias = 72,
+	initialN = 128, // 0x80
+	delimiter = '-', // '\x2D'
+
+	/** Regular expressions */
+	regexPunycode = /^xn--/,
+	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
+	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
+
+	/** Error messages */
+	errors = {
+		'overflow': 'Overflow: input needs wider integers to process',
+		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+		'invalid-input': 'Invalid input'
+	},
+
+	/** Convenience shortcuts */
+	baseMinusTMin = base - tMin,
+	floor = Math.floor,
+	stringFromCharCode = String.fromCharCode,
+
+	/** Temporary variable */
+	key;
+
+	/*--------------------------------------------------------------------------*/
+
+	/**
+	 * A generic error utility function.
+	 * @private
+	 * @param {String} type The error type.
+	 * @returns {Error} Throws a `RangeError` with the applicable error message.
+	 */
+	function error(type) {
+		throw new RangeError(errors[type]);
+	}
+
+	/**
+	 * A generic `Array#map` utility function.
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} callback The function that gets called for every array
+	 * item.
+	 * @returns {Array} A new array of values returned by the callback function.
+	 */
+	function map(array, fn) {
+		var length = array.length;
+		var result = [];
+		while (length--) {
+			result[length] = fn(array[length]);
+		}
+		return result;
+	}
+
+	/**
+	 * A simple `Array#map`-like wrapper to work with domain name strings or email
+	 * addresses.
+	 * @private
+	 * @param {String} domain The domain name or email address.
+	 * @param {Function} callback The function that gets called for every
+	 * character.
+	 * @returns {Array} A new string of characters returned by the callback
+	 * function.
+	 */
+	function mapDomain(string, fn) {
+		var parts = string.split('@');
+		var result = '';
+		if (parts.length > 1) {
+			// In email addresses, only the domain name should be punycoded. Leave
+			// the local part (i.e. everything up to `@`) intact.
+			result = parts[0] + '@';
+			string = parts[1];
+		}
+		// Avoid `split(regex)` for IE8 compatibility. See #17.
+		string = string.replace(regexSeparators, '\x2E');
+		var labels = string.split('.');
+		var encoded = map(labels, fn).join('.');
+		return result + encoded;
+	}
+
+	/**
+	 * Creates an array containing the numeric code points of each Unicode
+	 * character in the string. While JavaScript uses UCS-2 internally,
+	 * this function will convert a pair of surrogate halves (each of which
+	 * UCS-2 exposes as separate characters) into a single code point,
+	 * matching UTF-16.
+	 * @see `punycode.ucs2.encode`
+	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+	 * @memberOf punycode.ucs2
+	 * @name decode
+	 * @param {String} string The Unicode input string (UCS-2).
+	 * @returns {Array} The new array of code points.
+	 */
+	function ucs2decode(string) {
+		var output = [],
+		    counter = 0,
+		    length = string.length,
+		    value,
+		    extra;
+		while (counter < length) {
+			value = string.charCodeAt(counter++);
+			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+				// high surrogate, and there is a next character
+				extra = string.charCodeAt(counter++);
+				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
+					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+				} else {
+					// unmatched surrogate; only append this code unit, in case the next
+					// code unit is the high surrogate of a surrogate pair
+					output.push(value);
+					counter--;
+				}
+			} else {
+				output.push(value);
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * Creates a string based on an array of numeric code points.
+	 * @see `punycode.ucs2.decode`
+	 * @memberOf punycode.ucs2
+	 * @name encode
+	 * @param {Array} codePoints The array of numeric code points.
+	 * @returns {String} The new Unicode string (UCS-2).
+	 */
+	function ucs2encode(array) {
+		return map(array, function(value) {
+			var output = '';
+			if (value > 0xFFFF) {
+				value -= 0x10000;
+				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+				value = 0xDC00 | value & 0x3FF;
+			}
+			output += stringFromCharCode(value);
+			return output;
+		}).join('');
+	}
+
+	/**
+	 * Converts a basic code point into a digit/integer.
+	 * @see `digitToBasic()`
+	 * @private
+	 * @param {Number} codePoint The basic numeric code point value.
+	 * @returns {Number} The numeric value of a basic code point (for use in
+	 * representing integers) in the range `0` to `base - 1`, or `base` if
+	 * the code point does not represent a value.
+	 */
+	function basicToDigit(codePoint) {
+		if (codePoint - 48 < 10) {
+			return codePoint - 22;
+		}
+		if (codePoint - 65 < 26) {
+			return codePoint - 65;
+		}
+		if (codePoint - 97 < 26) {
+			return codePoint - 97;
+		}
+		return base;
+	}
+
+	/**
+	 * Converts a digit/integer into a basic code point.
+	 * @see `basicToDigit()`
+	 * @private
+	 * @param {Number} digit The numeric value of a basic code point.
+	 * @returns {Number} The basic code point whose value (when used for
+	 * representing integers) is `digit`, which needs to be in the range
+	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+	 * used; else, the lowercase form is used. The behavior is undefined
+	 * if `flag` is non-zero and `digit` has no uppercase form.
+	 */
+	function digitToBasic(digit, flag) {
+		//  0..25 map to ASCII a..z or A..Z
+		// 26..35 map to ASCII 0..9
+		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+	}
+
+	/**
+	 * Bias adaptation function as per section 3.4 of RFC 3492.
+	 * https://tools.ietf.org/html/rfc3492#section-3.4
+	 * @private
+	 */
+	function adapt(delta, numPoints, firstTime) {
+		var k = 0;
+		delta = firstTime ? floor(delta / damp) : delta >> 1;
+		delta += floor(delta / numPoints);
+		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
+			delta = floor(delta / baseMinusTMin);
+		}
+		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+	}
+
+	/**
+	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+	 * symbols.
+	 * @memberOf punycode
+	 * @param {String} input The Punycode string of ASCII-only symbols.
+	 * @returns {String} The resulting string of Unicode symbols.
+	 */
+	function decode(input) {
+		// Don't use UCS-2
+		var output = [],
+		    inputLength = input.length,
+		    out,
+		    i = 0,
+		    n = initialN,
+		    bias = initialBias,
+		    basic,
+		    j,
+		    index,
+		    oldi,
+		    w,
+		    k,
+		    digit,
+		    t,
+		    /** Cached calculation results */
+		    baseMinusT;
+
+		// Handle the basic code points: let `basic` be the number of input code
+		// points before the last delimiter, or `0` if there is none, then copy
+		// the first basic code points to the output.
+
+		basic = input.lastIndexOf(delimiter);
+		if (basic < 0) {
+			basic = 0;
+		}
+
+		for (j = 0; j < basic; ++j) {
+			// if it's not a basic code point
+			if (input.charCodeAt(j) >= 0x80) {
+				error('not-basic');
+			}
+			output.push(input.charCodeAt(j));
+		}
+
+		// Main decoding loop: start just after the last delimiter if any basic code
+		// points were copied; start at the beginning otherwise.
+
+		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
+
+			// `index` is the index of the next character to be consumed.
+			// Decode a generalized variable-length integer into `delta`,
+			// which gets added to `i`. The overflow checking is easier
+			// if we increase `i` as we go, then subtract off its starting
+			// value at the end to obtain `delta`.
+			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
+
+				if (index >= inputLength) {
+					error('invalid-input');
+				}
+
+				digit = basicToDigit(input.charCodeAt(index++));
+
+				if (digit >= base || digit > floor((maxInt - i) / w)) {
+					error('overflow');
+				}
+
+				i += digit * w;
+				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+
+				if (digit < t) {
+					break;
+				}
+
+				baseMinusT = base - t;
+				if (w > floor(maxInt / baseMinusT)) {
+					error('overflow');
+				}
+
+				w *= baseMinusT;
+
+			}
+
+			out = output.length + 1;
+			bias = adapt(i - oldi, out, oldi == 0);
+
+			// `i` was supposed to wrap around from `out` to `0`,
+			// incrementing `n` each time, so we'll fix that now:
+			if (floor(i / out) > maxInt - n) {
+				error('overflow');
+			}
+
+			n += floor(i / out);
+			i %= out;
+
+			// Insert `n` at position `i` of the output
+			output.splice(i++, 0, n);
+
+		}
+
+		return ucs2encode(output);
+	}
+
+	/**
+	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
+	 * Punycode string of ASCII-only symbols.
+	 * @memberOf punycode
+	 * @param {String} input The string of Unicode symbols.
+	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
+	 */
+	function encode(input) {
+		var n,
+		    delta,
+		    handledCPCount,
+		    basicLength,
+		    bias,
+		    j,
+		    m,
+		    q,
+		    k,
+		    t,
+		    currentValue,
+		    output = [],
+		    /** `inputLength` will hold the number of code points in `input`. */
+		    inputLength,
+		    /** Cached calculation results */
+		    handledCPCountPlusOne,
+		    baseMinusT,
+		    qMinusT;
+
+		// Convert the input in UCS-2 to Unicode
+		input = ucs2decode(input);
+
+		// Cache the length
+		inputLength = input.length;
+
+		// Initialize the state
+		n = initialN;
+		delta = 0;
+		bias = initialBias;
+
+		// Handle the basic code points
+		for (j = 0; j < inputLength; ++j) {
+			currentValue = input[j];
+			if (currentValue < 0x80) {
+				output.push(stringFromCharCode(currentValue));
+			}
+		}
+
+		handledCPCount = basicLength = output.length;
+
+		// `handledCPCount` is the number of code points that have been handled;
+		// `basicLength` is the number of basic code points.
+
+		// Finish the basic string - if it is not empty - with a delimiter
+		if (basicLength) {
+			output.push(delimiter);
+		}
+
+		// Main encoding loop:
+		while (handledCPCount < inputLength) {
+
+			// All non-basic code points < n have been handled already. Find the next
+			// larger one:
+			for (m = maxInt, j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+				if (currentValue >= n && currentValue < m) {
+					m = currentValue;
+				}
+			}
+
+			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+			// but guard against overflow
+			handledCPCountPlusOne = handledCPCount + 1;
+			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+				error('overflow');
+			}
+
+			delta += (m - n) * handledCPCountPlusOne;
+			n = m;
+
+			for (j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+
+				if (currentValue < n && ++delta > maxInt) {
+					error('overflow');
+				}
+
+				if (currentValue == n) {
+					// Represent delta as a generalized variable-length integer
+					for (q = delta, k = base; /* no condition */; k += base) {
+						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+						if (q < t) {
+							break;
+						}
+						qMinusT = q - t;
+						baseMinusT = base - t;
+						output.push(
+							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+						);
+						q = floor(qMinusT / baseMinusT);
+					}
+
+					output.push(stringFromCharCode(digitToBasic(q, 0)));
+					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+					delta = 0;
+					++handledCPCount;
+				}
+			}
+
+			++delta;
+			++n;
+
+		}
+		return output.join('');
+	}
+
+	/**
+	 * Converts a Punycode string representing a domain name or an email address
+	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+	 * it doesn't matter if you call it on a string that has already been
+	 * converted to Unicode.
+	 * @memberOf punycode
+	 * @param {String} input The Punycoded domain name or email address to
+	 * convert to Unicode.
+	 * @returns {String} The Unicode representation of the given Punycode
+	 * string.
+	 */
+	function toUnicode(input) {
+		return mapDomain(input, function(string) {
+			return regexPunycode.test(string)
+				? decode(string.slice(4).toLowerCase())
+				: string;
+		});
+	}
+
+	/**
+	 * Converts a Unicode string representing a domain name or an email address to
+	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
+	 * i.e. it doesn't matter if you call it with a domain that's already in
+	 * ASCII.
+	 * @memberOf punycode
+	 * @param {String} input The domain name or email address to convert, as a
+	 * Unicode string.
+	 * @returns {String} The Punycode representation of the given domain name or
+	 * email address.
+	 */
+	function toASCII(input) {
+		return mapDomain(input, function(string) {
+			return regexNonASCII.test(string)
+				? 'xn--' + encode(string)
+				: string;
+		});
+	}
+
+	/*--------------------------------------------------------------------------*/
+
+	/** Define the public API */
+	punycode = {
+		/**
+		 * A string representing the current Punycode.js version number.
+		 * @memberOf punycode
+		 * @type String
+		 */
+		'version': '1.3.2',
+		/**
+		 * An object of methods to convert from JavaScript's internal character
+		 * representation (UCS-2) to Unicode code points, and back.
+		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+		 * @memberOf punycode
+		 * @type Object
+		 */
+		'ucs2': {
+			'decode': ucs2decode,
+			'encode': ucs2encode
+		},
+		'decode': decode,
+		'encode': encode,
+		'toASCII': toASCII,
+		'toUnicode': toUnicode
+	};
+
+	/** Expose `punycode` */
+	// Some AMD build optimizers, like r.js, check for specific condition patterns
+	// like the following:
+	if (
+		true
+	) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
+			return punycode;
+		}).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else if (freeExports && freeModule) {
+		if (module.exports == freeExports) {
+			// in Node.js, io.js, or RingoJS v0.8.0+
+			freeModule.exports = punycode;
+		} else {
+			// in Narwhal or RingoJS v0.7.0-
+			for (key in punycode) {
+				punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
+			}
+		}
+	} else {
+		// in Rhino or a web browser
+		root.punycode = punycode;
+	}
+
+}(this));
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 9)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 3)))
+
+/***/ }),
+
+/***/ 106:
+/*!*****************************************************************!*\
+  !*** ./bundles/gene-search-form/node_modules/urijs/src/IPv6.js ***!
+  \*****************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * URI.js - Mutating URLs
+ * IPv6 Support
+ *
+ * Version: 1.19.1
+ *
+ * Author: Rodney Rehm
+ * Web: http://medialize.github.io/URI.js/
+ *
+ * Licensed under
+ *   MIT License http://www.opensource.org/licenses/mit-license
+ *
+ */
+
+(function (root, factory) {
+  'use strict';
+  // https://github.com/umdjs/umd/blob/master/returnExports.js
+  if (typeof module === 'object' && module.exports) {
+    // Node
+    module.exports = factory();
+  } else if (true) {
+    // AMD. Register as an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    // Browser globals (root is window)
+    root.IPv6 = factory(root);
+  }
+}(this, function (root) {
+  'use strict';
+
+  /*
+  var _in = "fe80:0000:0000:0000:0204:61ff:fe9d:f156";
+  var _out = IPv6.best(_in);
+  var _expected = "fe80::204:61ff:fe9d:f156";
+
+  console.log(_in, _out, _expected, _out === _expected);
+  */
+
+  // save current IPv6 variable, if any
+  var _IPv6 = root && root.IPv6;
+
+  function bestPresentation(address) {
+    // based on:
+    // Javascript to test an IPv6 address for proper format, and to
+    // present the "best text representation" according to IETF Draft RFC at
+    // http://tools.ietf.org/html/draft-ietf-6man-text-addr-representation-04
+    // 8 Feb 2010 Rich Brown, Dartware, LLC
+    // Please feel free to use this code as long as you provide a link to
+    // http://www.intermapper.com
+    // http://intermapper.com/support/tools/IPV6-Validator.aspx
+    // http://download.dartware.com/thirdparty/ipv6validator.js
+
+    var _address = address.toLowerCase();
+    var segments = _address.split(':');
+    var length = segments.length;
+    var total = 8;
+
+    // trim colons (:: or ::a:b:c… or …a:b:c::)
+    if (segments[0] === '' && segments[1] === '' && segments[2] === '') {
+      // must have been ::
+      // remove first two items
+      segments.shift();
+      segments.shift();
+    } else if (segments[0] === '' && segments[1] === '') {
+      // must have been ::xxxx
+      // remove the first item
+      segments.shift();
+    } else if (segments[length - 1] === '' && segments[length - 2] === '') {
+      // must have been xxxx::
+      segments.pop();
+    }
+
+    length = segments.length;
+
+    // adjust total segments for IPv4 trailer
+    if (segments[length - 1].indexOf('.') !== -1) {
+      // found a "." which means IPv4
+      total = 7;
+    }
+
+    // fill empty segments them with "0000"
+    var pos;
+    for (pos = 0; pos < length; pos++) {
+      if (segments[pos] === '') {
+        break;
+      }
+    }
+
+    if (pos < total) {
+      segments.splice(pos, 1, '0000');
+      while (segments.length < total) {
+        segments.splice(pos, 0, '0000');
+      }
+    }
+
+    // strip leading zeros
+    var _segments;
+    for (var i = 0; i < total; i++) {
+      _segments = segments[i].split('');
+      for (var j = 0; j < 3 ; j++) {
+        if (_segments[0] === '0' && _segments.length > 1) {
+          _segments.splice(0,1);
+        } else {
+          break;
+        }
+      }
+
+      segments[i] = _segments.join('');
+    }
+
+    // find longest sequence of zeroes and coalesce them into one segment
+    var best = -1;
+    var _best = 0;
+    var _current = 0;
+    var current = -1;
+    var inzeroes = false;
+    // i; already declared
+
+    for (i = 0; i < total; i++) {
+      if (inzeroes) {
+        if (segments[i] === '0') {
+          _current += 1;
+        } else {
+          inzeroes = false;
+          if (_current > _best) {
+            best = current;
+            _best = _current;
+          }
+        }
+      } else {
+        if (segments[i] === '0') {
+          inzeroes = true;
+          current = i;
+          _current = 1;
+        }
+      }
+    }
+
+    if (_current > _best) {
+      best = current;
+      _best = _current;
+    }
+
+    if (_best > 1) {
+      segments.splice(best, _best, '');
+    }
+
+    length = segments.length;
+
+    // assemble remaining segments
+    var result = '';
+    if (segments[0] === '')  {
+      result = ':';
+    }
+
+    for (i = 0; i < length; i++) {
+      result += segments[i];
+      if (i === length - 1) {
+        break;
+      }
+
+      result += ':';
+    }
+
+    if (segments[length - 1] === '') {
+      result += ':';
+    }
+
+    return result;
+  }
+
+  function noConflict() {
+    /*jshint validthis: true */
+    if (root.IPv6 === this) {
+      root.IPv6 = _IPv6;
+    }
+
+    return this;
+  }
+
+  return {
+    best: bestPresentation,
+    noConflict: noConflict
+  };
+}));
+
+
+/***/ }),
+
+/***/ 107:
+/*!*******************************************************************************!*\
+  !*** ./bundles/gene-search-form/node_modules/urijs/src/SecondLevelDomains.js ***!
+  \*******************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * URI.js - Mutating URLs
+ * Second Level Domain (SLD) Support
+ *
+ * Version: 1.19.1
+ *
+ * Author: Rodney Rehm
+ * Web: http://medialize.github.io/URI.js/
+ *
+ * Licensed under
+ *   MIT License http://www.opensource.org/licenses/mit-license
+ *
+ */
+
+(function (root, factory) {
+  'use strict';
+  // https://github.com/umdjs/umd/blob/master/returnExports.js
+  if (typeof module === 'object' && module.exports) {
+    // Node
+    module.exports = factory();
+  } else if (true) {
+    // AMD. Register as an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    // Browser globals (root is window)
+    root.SecondLevelDomains = factory(root);
+  }
+}(this, function (root) {
+  'use strict';
+
+  // save current SecondLevelDomains variable, if any
+  var _SecondLevelDomains = root && root.SecondLevelDomains;
+
+  var SLD = {
+    // list of known Second Level Domains
+    // converted list of SLDs from https://github.com/gavingmiller/second-level-domains
+    // ----
+    // publicsuffix.org is more current and actually used by a couple of browsers internally.
+    // downside is it also contains domains like "dyndns.org" - which is fine for the security
+    // issues browser have to deal with (SOP for cookies, etc) - but is way overboard for URI.js
+    // ----
+    list: {
+      'ac':' com gov mil net org ',
+      'ae':' ac co gov mil name net org pro sch ',
+      'af':' com edu gov net org ',
+      'al':' com edu gov mil net org ',
+      'ao':' co ed gv it og pb ',
+      'ar':' com edu gob gov int mil net org tur ',
+      'at':' ac co gv or ',
+      'au':' asn com csiro edu gov id net org ',
+      'ba':' co com edu gov mil net org rs unbi unmo unsa untz unze ',
+      'bb':' biz co com edu gov info net org store tv ',
+      'bh':' biz cc com edu gov info net org ',
+      'bn':' com edu gov net org ',
+      'bo':' com edu gob gov int mil net org tv ',
+      'br':' adm adv agr am arq art ato b bio blog bmd cim cng cnt com coop ecn edu eng esp etc eti far flog fm fnd fot fst g12 ggf gov imb ind inf jor jus lel mat med mil mus net nom not ntr odo org ppg pro psc psi qsl rec slg srv tmp trd tur tv vet vlog wiki zlg ',
+      'bs':' com edu gov net org ',
+      'bz':' du et om ov rg ',
+      'ca':' ab bc mb nb nf nl ns nt nu on pe qc sk yk ',
+      'ck':' biz co edu gen gov info net org ',
+      'cn':' ac ah bj com cq edu fj gd gov gs gx gz ha hb he hi hl hn jl js jx ln mil net nm nx org qh sc sd sh sn sx tj tw xj xz yn zj ',
+      'co':' com edu gov mil net nom org ',
+      'cr':' ac c co ed fi go or sa ',
+      'cy':' ac biz com ekloges gov ltd name net org parliament press pro tm ',
+      'do':' art com edu gob gov mil net org sld web ',
+      'dz':' art asso com edu gov net org pol ',
+      'ec':' com edu fin gov info med mil net org pro ',
+      'eg':' com edu eun gov mil name net org sci ',
+      'er':' com edu gov ind mil net org rochest w ',
+      'es':' com edu gob nom org ',
+      'et':' biz com edu gov info name net org ',
+      'fj':' ac biz com info mil name net org pro ',
+      'fk':' ac co gov net nom org ',
+      'fr':' asso com f gouv nom prd presse tm ',
+      'gg':' co net org ',
+      'gh':' com edu gov mil org ',
+      'gn':' ac com gov net org ',
+      'gr':' com edu gov mil net org ',
+      'gt':' com edu gob ind mil net org ',
+      'gu':' com edu gov net org ',
+      'hk':' com edu gov idv net org ',
+      'hu':' 2000 agrar bolt casino city co erotica erotika film forum games hotel info ingatlan jogasz konyvelo lakas media news org priv reklam sex shop sport suli szex tm tozsde utazas video ',
+      'id':' ac co go mil net or sch web ',
+      'il':' ac co gov idf k12 muni net org ',
+      'in':' ac co edu ernet firm gen gov i ind mil net nic org res ',
+      'iq':' com edu gov i mil net org ',
+      'ir':' ac co dnssec gov i id net org sch ',
+      'it':' edu gov ',
+      'je':' co net org ',
+      'jo':' com edu gov mil name net org sch ',
+      'jp':' ac ad co ed go gr lg ne or ',
+      'ke':' ac co go info me mobi ne or sc ',
+      'kh':' com edu gov mil net org per ',
+      'ki':' biz com de edu gov info mob net org tel ',
+      'km':' asso com coop edu gouv k medecin mil nom notaires pharmaciens presse tm veterinaire ',
+      'kn':' edu gov net org ',
+      'kr':' ac busan chungbuk chungnam co daegu daejeon es gangwon go gwangju gyeongbuk gyeonggi gyeongnam hs incheon jeju jeonbuk jeonnam k kg mil ms ne or pe re sc seoul ulsan ',
+      'kw':' com edu gov net org ',
+      'ky':' com edu gov net org ',
+      'kz':' com edu gov mil net org ',
+      'lb':' com edu gov net org ',
+      'lk':' assn com edu gov grp hotel int ltd net ngo org sch soc web ',
+      'lr':' com edu gov net org ',
+      'lv':' asn com conf edu gov id mil net org ',
+      'ly':' com edu gov id med net org plc sch ',
+      'ma':' ac co gov m net org press ',
+      'mc':' asso tm ',
+      'me':' ac co edu gov its net org priv ',
+      'mg':' com edu gov mil nom org prd tm ',
+      'mk':' com edu gov inf name net org pro ',
+      'ml':' com edu gov net org presse ',
+      'mn':' edu gov org ',
+      'mo':' com edu gov net org ',
+      'mt':' com edu gov net org ',
+      'mv':' aero biz com coop edu gov info int mil museum name net org pro ',
+      'mw':' ac co com coop edu gov int museum net org ',
+      'mx':' com edu gob net org ',
+      'my':' com edu gov mil name net org sch ',
+      'nf':' arts com firm info net other per rec store web ',
+      'ng':' biz com edu gov mil mobi name net org sch ',
+      'ni':' ac co com edu gob mil net nom org ',
+      'np':' com edu gov mil net org ',
+      'nr':' biz com edu gov info net org ',
+      'om':' ac biz co com edu gov med mil museum net org pro sch ',
+      'pe':' com edu gob mil net nom org sld ',
+      'ph':' com edu gov i mil net ngo org ',
+      'pk':' biz com edu fam gob gok gon gop gos gov net org web ',
+      'pl':' art bialystok biz com edu gda gdansk gorzow gov info katowice krakow lodz lublin mil net ngo olsztyn org poznan pwr radom slupsk szczecin torun warszawa waw wroc wroclaw zgora ',
+      'pr':' ac biz com edu est gov info isla name net org pro prof ',
+      'ps':' com edu gov net org plo sec ',
+      'pw':' belau co ed go ne or ',
+      'ro':' arts com firm info nom nt org rec store tm www ',
+      'rs':' ac co edu gov in org ',
+      'sb':' com edu gov net org ',
+      'sc':' com edu gov net org ',
+      'sh':' co com edu gov net nom org ',
+      'sl':' com edu gov net org ',
+      'st':' co com consulado edu embaixada gov mil net org principe saotome store ',
+      'sv':' com edu gob org red ',
+      'sz':' ac co org ',
+      'tr':' av bbs bel biz com dr edu gen gov info k12 name net org pol tel tsk tv web ',
+      'tt':' aero biz cat co com coop edu gov info int jobs mil mobi museum name net org pro tel travel ',
+      'tw':' club com ebiz edu game gov idv mil net org ',
+      'mu':' ac co com gov net or org ',
+      'mz':' ac co edu gov org ',
+      'na':' co com ',
+      'nz':' ac co cri geek gen govt health iwi maori mil net org parliament school ',
+      'pa':' abo ac com edu gob ing med net nom org sld ',
+      'pt':' com edu gov int net nome org publ ',
+      'py':' com edu gov mil net org ',
+      'qa':' com edu gov mil net org ',
+      're':' asso com nom ',
+      'ru':' ac adygeya altai amur arkhangelsk astrakhan bashkiria belgorod bir bryansk buryatia cbg chel chelyabinsk chita chukotka chuvashia com dagestan e-burg edu gov grozny int irkutsk ivanovo izhevsk jar joshkar-ola kalmykia kaluga kamchatka karelia kazan kchr kemerovo khabarovsk khakassia khv kirov koenig komi kostroma kranoyarsk kuban kurgan kursk lipetsk magadan mari mari-el marine mil mordovia mosreg msk murmansk nalchik net nnov nov novosibirsk nsk omsk orenburg org oryol penza perm pp pskov ptz rnd ryazan sakhalin samara saratov simbirsk smolensk spb stavropol stv surgut tambov tatarstan tom tomsk tsaritsyn tsk tula tuva tver tyumen udm udmurtia ulan-ude vladikavkaz vladimir vladivostok volgograd vologda voronezh vrn vyatka yakutia yamal yekaterinburg yuzhno-sakhalinsk ',
+      'rw':' ac co com edu gouv gov int mil net ',
+      'sa':' com edu gov med net org pub sch ',
+      'sd':' com edu gov info med net org tv ',
+      'se':' a ac b bd c d e f g h i k l m n o org p parti pp press r s t tm u w x y z ',
+      'sg':' com edu gov idn net org per ',
+      'sn':' art com edu gouv org perso univ ',
+      'sy':' com edu gov mil net news org ',
+      'th':' ac co go in mi net or ',
+      'tj':' ac biz co com edu go gov info int mil name net nic org test web ',
+      'tn':' agrinet com defense edunet ens fin gov ind info intl mincom nat net org perso rnrt rns rnu tourism ',
+      'tz':' ac co go ne or ',
+      'ua':' biz cherkassy chernigov chernovtsy ck cn co com crimea cv dn dnepropetrovsk donetsk dp edu gov if in ivano-frankivsk kh kharkov kherson khmelnitskiy kiev kirovograd km kr ks kv lg lugansk lutsk lviv me mk net nikolaev od odessa org pl poltava pp rovno rv sebastopol sumy te ternopil uzhgorod vinnica vn zaporizhzhe zhitomir zp zt ',
+      'ug':' ac co go ne or org sc ',
+      'uk':' ac bl british-library co cym gov govt icnet jet lea ltd me mil mod national-library-scotland nel net nhs nic nls org orgn parliament plc police sch scot soc ',
+      'us':' dni fed isa kids nsn ',
+      'uy':' com edu gub mil net org ',
+      've':' co com edu gob info mil net org web ',
+      'vi':' co com k12 net org ',
+      'vn':' ac biz com edu gov health info int name net org pro ',
+      'ye':' co com gov ltd me net org plc ',
+      'yu':' ac co edu gov org ',
+      'za':' ac agric alt bourse city co cybernet db edu gov grondar iaccess imt inca landesign law mil net ngo nis nom olivetti org pix school tm web ',
+      'zm':' ac co com edu gov net org sch ',
+      // https://en.wikipedia.org/wiki/CentralNic#Second-level_domains
+      'com': 'ar br cn de eu gb gr hu jpn kr no qc ru sa se uk us uy za ',
+      'net': 'gb jp se uk ',
+      'org': 'ae',
+      'de': 'com '
+    },
+    // gorhill 2013-10-25: Using indexOf() instead Regexp(). Significant boost
+    // in both performance and memory footprint. No initialization required.
+    // http://jsperf.com/uri-js-sld-regex-vs-binary-search/4
+    // Following methods use lastIndexOf() rather than array.split() in order
+    // to avoid any memory allocations.
+    has: function(domain) {
+      var tldOffset = domain.lastIndexOf('.');
+      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
+        return false;
+      }
+      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
+      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
+        return false;
+      }
+      var sldList = SLD.list[domain.slice(tldOffset+1)];
+      if (!sldList) {
+        return false;
+      }
+      return sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') >= 0;
+    },
+    is: function(domain) {
+      var tldOffset = domain.lastIndexOf('.');
+      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
+        return false;
+      }
+      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
+      if (sldOffset >= 0) {
+        return false;
+      }
+      var sldList = SLD.list[domain.slice(tldOffset+1)];
+      if (!sldList) {
+        return false;
+      }
+      return sldList.indexOf(' ' + domain.slice(0, tldOffset) + ' ') >= 0;
+    },
+    get: function(domain) {
+      var tldOffset = domain.lastIndexOf('.');
+      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
+        return null;
+      }
+      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
+      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
+        return null;
+      }
+      var sldList = SLD.list[domain.slice(tldOffset+1)];
+      if (!sldList) {
+        return null;
+      }
+      if (sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') < 0) {
+        return null;
+      }
+      return domain.slice(sldOffset+1);
+    },
+    noConflict: function(){
+      if (root.SecondLevelDomains === this) {
+        root.SecondLevelDomains = _SecondLevelDomains;
+      }
+      return this;
+    }
+  };
+
+  return SLD;
+}));
+
+
+/***/ }),
+
+/***/ 108:
+/*!*****************************************************************************************!*\
+  !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/containers.js ***!
+  \*****************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.IndicatorsContainer = exports.indicatorsContainerCSS = exports.ValueContainer = exports.valueContainerCSS = exports.SelectContainer = exports.containerCSS = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(/*! react */ 0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _emotion = __webpack_require__(/*! emotion */ 4);
+
+var _theme = __webpack_require__(/*! ../theme */ 6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// ==============================
+// Root Container
+// ==============================
+
+var containerCSS = exports.containerCSS = function containerCSS(_ref) {
+  var isDisabled = _ref.isDisabled,
+      isRtl = _ref.isRtl;
+  return {
+    direction: isRtl ? 'rtl' : null,
+    pointerEvents: isDisabled ? 'none' : null, // cancel mouse events when disabled
+    position: 'relative'
+  };
+};
+var SelectContainer = exports.SelectContainer = function SelectContainer(props) {
+  var children = props.children,
+      className = props.className,
+      cx = props.cx,
+      getStyles = props.getStyles,
+      innerProps = props.innerProps,
+      isDisabled = props.isDisabled,
+      isRtl = props.isRtl;
+
+  return _react2.default.createElement(
+    'div',
+    _extends({
+      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('container', props)), {
+        '--is-disabled': isDisabled,
+        '--is-rtl': isRtl
+      }, className)
+    }, innerProps),
+    children
+  );
+};
+
+// ==============================
+// Value Container
+// ==============================
+
+var valueContainerCSS = exports.valueContainerCSS = function valueContainerCSS() {
+  return {
+    alignItems: 'center',
+    display: 'flex',
+    flex: 1,
+    flexWrap: 'wrap',
+    padding: _theme.spacing.baseUnit / 2 + 'px ' + _theme.spacing.baseUnit * 2 + 'px',
+    WebkitOverflowScrolling: 'touch',
+    position: 'relative'
+  };
+};
+
+var ValueContainer = exports.ValueContainer = function (_Component) {
+  _inherits(ValueContainer, _Component);
+
+  function ValueContainer() {
+    _classCallCheck(this, ValueContainer);
+
+    return _possibleConstructorReturn(this, (ValueContainer.__proto__ || Object.getPrototypeOf(ValueContainer)).apply(this, arguments));
+  }
+
+  _createClass(ValueContainer, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          cx = _props.cx,
+          isMulti = _props.isMulti,
+          getStyles = _props.getStyles,
+          hasValue = _props.hasValue;
+
+
+      return _react2.default.createElement(
+        'div',
+        {
+          className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('valueContainer', this.props)), {
+            'value-container': true,
+            'value-container--is-multi': isMulti,
+            'value-container--has-value': hasValue
+          }, className)
+        },
+        children
+      );
+    }
+  }]);
+
+  return ValueContainer;
+}(_react.Component);
+
+// ==============================
+// Indicator Container
+// ==============================
+
+var indicatorsContainerCSS = exports.indicatorsContainerCSS = function indicatorsContainerCSS() {
+  return {
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    display: 'flex',
+    flexShrink: 0
+  };
+};
+var IndicatorsContainer = exports.IndicatorsContainer = function IndicatorsContainer(props) {
+  var children = props.children,
+      className = props.className,
+      cx = props.cx,
+      getStyles = props.getStyles;
+
+
+  return _react2.default.createElement(
+    'div',
+    {
+      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('indicatorsContainer', props)), {
+        'indicators': true
+      }, className)
+    },
+    children
+  );
+};
+
+/***/ }),
+
+/***/ 109:
+/*!**************************************************************************************!*\
+  !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/Control.js ***!
+  \**************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.css = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(/*! react */ 0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _emotion = __webpack_require__(/*! emotion */ 4);
+
+var _theme = __webpack_require__(/*! ../theme */ 6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var css = exports.css = function css(_ref) {
+  var isDisabled = _ref.isDisabled,
+      isFocused = _ref.isFocused;
+  return {
+    alignItems: 'center',
+    backgroundColor: isDisabled ? _theme.colors.neutral5 : isFocused ? _theme.colors.neutral0 : _theme.colors.neutral2,
+    borderColor: isDisabled ? _theme.colors.neutral10 : isFocused ? _theme.colors.primary : _theme.colors.neutral20,
+    borderRadius: _theme.borderRadius,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    boxShadow: isFocused ? '0 0 0 1px ' + _theme.colors.primary : null,
+    cursor: 'default',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    minHeight: _theme.spacing.controlHeight,
+    outline: '0 !important',
+    position: 'relative',
+    transition: 'all 100ms',
+
+    '&:hover': {
+      borderColor: isFocused ? _theme.colors.primary : _theme.colors.neutral30
+    }
+  };
+};
+
+var Control = function Control(props) {
+  var children = props.children,
+      cx = props.cx,
+      getStyles = props.getStyles,
+      className = props.className,
+      isDisabled = props.isDisabled,
+      isFocused = props.isFocused,
+      innerRef = props.innerRef,
+      innerProps = props.innerProps;
+
+  return _react2.default.createElement(
+    'div',
+    _extends({
+      ref: innerRef,
+      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('control', props)), {
+        'control': true,
+        'control--is-disabled': isDisabled,
+        'control--is-focused': isFocused
+      }, className)
+    }, innerProps),
+    children
+  );
+};
+
+exports.default = Control;
+
+/***/ }),
+
+/***/ 110:
 /*!************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/Group.js ***!
   \************************************************************************************/
@@ -94,7 +1560,7 @@ exports.default = Group;
 
 /***/ }),
 
-/***/ 101:
+/***/ 111:
 /*!************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/Input.js ***!
   \************************************************************************************/
@@ -118,7 +1584,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactInputAutosize = __webpack_require__(/*! react-input-autosize */ 316);
+var _reactInputAutosize = __webpack_require__(/*! react-input-autosize */ 350);
 
 var _reactInputAutosize2 = _interopRequireDefault(_reactInputAutosize);
 
@@ -177,7 +1643,7 @@ exports.default = Input;
 
 /***/ }),
 
-/***/ 102:
+/***/ 112:
 /*!***********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/Menu.js ***!
   \***********************************************************************************/
@@ -207,11 +1673,11 @@ var _emotion = __webpack_require__(/*! emotion */ 4);
 
 var _reactDom = __webpack_require__(/*! react-dom */ 2);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 12);
+var _propTypes = __webpack_require__(/*! prop-types */ 13);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _utils = __webpack_require__(/*! ../utils */ 26);
+var _utils = __webpack_require__(/*! ../utils */ 27);
 
 var _theme = __webpack_require__(/*! ../theme */ 6);
 
@@ -673,7 +2139,7 @@ MenuPortal.childContextTypes = {
 
 /***/ }),
 
-/***/ 103:
+/***/ 113:
 /*!*****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/MultiValue.js ***!
   \*****************************************************************************************/
@@ -701,7 +2167,7 @@ var _emotion = __webpack_require__(/*! emotion */ 4);
 
 var _theme = __webpack_require__(/*! ../theme */ 6);
 
-var _indicators = __webpack_require__(/*! ./indicators */ 41);
+var _indicators = __webpack_require__(/*! ./indicators */ 43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -875,7 +2341,7 @@ exports.default = MultiValue;
 
 /***/ }),
 
-/***/ 104:
+/***/ 114:
 /*!*************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/Option.js ***!
   \*************************************************************************************/
@@ -955,7 +2421,7 @@ exports.default = Option;
 
 /***/ }),
 
-/***/ 105:
+/***/ 115:
 /*!******************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/Placeholder.js ***!
   \******************************************************************************************/
@@ -1016,7 +2482,7 @@ exports.default = Placeholder;
 
 /***/ }),
 
-/***/ 106:
+/***/ 116:
 /*!******************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/SingleValue.js ***!
   \******************************************************************************************/
@@ -1084,7 +2550,7 @@ exports.default = SingleValue;
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /*!*******************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/prop-types/index.js ***!
   \*******************************************************************/
@@ -1114,7 +2580,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 285)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 319)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -1124,203 +2590,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 24:
-/*!*****************************************!*\
-  !*** ./node_modules/process/browser.js ***!
-  \*****************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-
-/***/ 26:
+/***/ 27:
 /*!*************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/utils.js ***!
   \*************************************************************************/
@@ -1352,7 +2622,7 @@ exports.toKey = toKey;
 exports.isTouchCapable = isTouchCapable;
 exports.isMobileDevice = isMobileDevice;
 
-var _raf = __webpack_require__(/*! raf */ 311);
+var _raf = __webpack_require__(/*! raf */ 345);
 
 var _raf2 = _interopRequireDefault(_raf);
 
@@ -1597,7 +2867,7 @@ function isMobileDevice() {
 
 /***/ }),
 
-/***/ 281:
+/***/ 315:
 /*!****************************************!*\
   !*** multi ./bundles/gene-search-form ***!
   \****************************************/
@@ -1605,12 +2875,12 @@ function isMobileDevice() {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/gene-search-form */282);
+module.exports = __webpack_require__(/*! ./bundles/gene-search-form */316);
 
 
 /***/ }),
 
-/***/ 282:
+/***/ 316:
 /*!*******************************************!*\
   !*** ./bundles/gene-search-form/index.js ***!
   \*******************************************/
@@ -1634,7 +2904,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 2);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _scxaGeneSearchForm = __webpack_require__(/*! scxa-gene-search-form */ 283);
+var _scxaGeneSearchForm = __webpack_require__(/*! scxa-gene-search-form */ 317);
 
 var _scxaGeneSearchForm2 = _interopRequireDefault(_scxaGeneSearchForm);
 
@@ -1648,7 +2918,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 283:
+/***/ 317:
 /*!**********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/scxa-gene-search-form/lib/index.js ***!
   \**********************************************************************************/
@@ -1663,7 +2933,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _FetchLoader = __webpack_require__(/*! ./FetchLoader.js */ 284);
+var _FetchLoader = __webpack_require__(/*! ./FetchLoader.js */ 318);
 
 var _FetchLoader2 = _interopRequireDefault(_FetchLoader);
 
@@ -1673,7 +2943,7 @@ exports.default = _FetchLoader2.default;
 
 /***/ }),
 
-/***/ 284:
+/***/ 318:
 /*!****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/scxa-gene-search-form/lib/FetchLoader.js ***!
   \****************************************************************************************/
@@ -1696,15 +2966,15 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 12);
+var _propTypes = __webpack_require__(/*! prop-types */ 13);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 38);
+var _urijs = __webpack_require__(/*! urijs */ 40);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _GeneSearchForm = __webpack_require__(/*! ./GeneSearchForm */ 288);
+var _GeneSearchForm = __webpack_require__(/*! ./GeneSearchForm */ 322);
 
 var _GeneSearchForm2 = _interopRequireDefault(_GeneSearchForm);
 
@@ -1871,7 +3141,7 @@ exports.default = FetchLoader;
 
 /***/ }),
 
-/***/ 285:
+/***/ 319:
 /*!*************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \*************************************************************************************/
@@ -1889,10 +3159,10 @@ exports.default = FetchLoader;
 
 
 
-var assign = __webpack_require__(/*! object-assign */ 286);
+var assign = __webpack_require__(/*! object-assign */ 320);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 94);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 287);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 104);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 321);
 
 var printWarning = function() {};
 
@@ -2439,7 +3709,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 286:
+/***/ 320:
 /*!**********************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/object-assign/index.js ***!
   \**********************************************************************/
@@ -2542,7 +3812,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 287:
+/***/ 321:
 /*!****************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/prop-types/checkPropTypes.js ***!
   \****************************************************************************/
@@ -2563,7 +3833,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var printWarning = function() {};
 
 if (true) {
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 94);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 104);
   var loggedTypeFailures = {};
 
   printWarning = function(text) {
@@ -2646,7 +3916,7 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 288:
+/***/ 322:
 /*!*******************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/scxa-gene-search-form/lib/GeneSearchForm.js ***!
   \*******************************************************************************************/
@@ -2667,19 +3937,19 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 12);
+var _propTypes = __webpack_require__(/*! prop-types */ 13);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 38);
+var _urijs = __webpack_require__(/*! urijs */ 40);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _Autocomplete = __webpack_require__(/*! ./Autocomplete */ 289);
+var _Autocomplete = __webpack_require__(/*! ./Autocomplete */ 323);
 
 var _Autocomplete2 = _interopRequireDefault(_Autocomplete);
 
-var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect */ 319);
+var _SpeciesSelect = __webpack_require__(/*! ./SpeciesSelect */ 353);
 
 var _SpeciesSelect2 = _interopRequireDefault(_SpeciesSelect);
 
@@ -2832,7 +4102,7 @@ exports.default = GeneSearchForm;
 
 /***/ }),
 
-/***/ 289:
+/***/ 323:
 /*!*****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/scxa-gene-search-form/lib/Autocomplete.js ***!
   \*****************************************************************************************/
@@ -2853,15 +4123,15 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 12);
+var _propTypes = __webpack_require__(/*! prop-types */ 13);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 38);
+var _urijs = __webpack_require__(/*! urijs */ 40);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _AsyncCreatable = __webpack_require__(/*! react-select/lib/AsyncCreatable */ 290);
+var _AsyncCreatable = __webpack_require__(/*! react-select/lib/AsyncCreatable */ 324);
 
 var _AsyncCreatable2 = _interopRequireDefault(_AsyncCreatable);
 
@@ -3015,7 +4285,7 @@ exports.default = Autocomplete;
 
 /***/ }),
 
-/***/ 290:
+/***/ 324:
 /*!**********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/AsyncCreatable.js ***!
   \**********************************************************************************/
@@ -3030,15 +4300,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Async = __webpack_require__(/*! ./Async */ 291);
+var _Async = __webpack_require__(/*! ./Async */ 325);
 
-var _Creatable = __webpack_require__(/*! ./Creatable */ 318);
+var _Creatable = __webpack_require__(/*! ./Creatable */ 352);
 
-var _stateManager = __webpack_require__(/*! ./stateManager */ 42);
+var _stateManager = __webpack_require__(/*! ./stateManager */ 44);
 
 var _stateManager2 = _interopRequireDefault(_stateManager);
 
-var _Select = __webpack_require__(/*! ./Select */ 39);
+var _Select = __webpack_require__(/*! ./Select */ 41);
 
 var _Select2 = _interopRequireDefault(_Select);
 
@@ -3048,7 +4318,7 @@ exports.default = (0, _Async.makeAsyncSelect)((0, _stateManager2.default)((0, _C
 
 /***/ }),
 
-/***/ 291:
+/***/ 325:
 /*!*************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/Async.js ***!
   \*************************************************************************/
@@ -3072,13 +4342,13 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Select = __webpack_require__(/*! ./Select */ 39);
+var _Select = __webpack_require__(/*! ./Select */ 41);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _utils = __webpack_require__(/*! ./utils */ 26);
+var _utils = __webpack_require__(/*! ./utils */ 27);
 
-var _stateManager = __webpack_require__(/*! ./stateManager */ 42);
+var _stateManager = __webpack_require__(/*! ./stateManager */ 44);
 
 var _stateManager2 = _interopRequireDefault(_stateManager);
 
@@ -3272,7 +4542,7 @@ exports.default = makeAsyncSelect((0, _stateManager2.default)(_Select2.default))
 
 /***/ }),
 
-/***/ 292:
+/***/ 326:
 /*!***********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/memoize-one/dist/memoize-one.esm.js ***!
   \***********************************************************************************/
@@ -3322,7 +4592,7 @@ function index (resultFn) {
 
 /***/ }),
 
-/***/ 293:
+/***/ 327:
 /*!***********************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/react-fast-compare.js ***!
   \***********************************************************************************************/
@@ -3431,7 +4701,7 @@ function exportedEqual(a, b) {
 
 /***/ }),
 
-/***/ 294:
+/***/ 328:
 /*!***************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/filters.js ***!
   \***************************************************************************/
@@ -3449,7 +4719,7 @@ exports.createFilter = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _diacritics = __webpack_require__(/*! ./diacritics */ 295);
+var _diacritics = __webpack_require__(/*! ./diacritics */ 329);
 
 var trimString = function trimString(str) {
   return str.replace(/^\s+|\s+$/g, '');
@@ -3489,7 +4759,7 @@ var createFilter = exports.createFilter = function createFilter(config) {
 
 /***/ }),
 
-/***/ 295:
+/***/ 329:
 /*!******************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/diacritics.js ***!
   \******************************************************************************/
@@ -3514,7 +4784,7 @@ var stripDiacritics = exports.stripDiacritics = function stripDiacritics(str) {
 
 /***/ }),
 
-/***/ 296:
+/***/ 330:
 /*!**********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/index.js ***!
   \**********************************************************************************/
@@ -3529,7 +4799,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _A11yText = __webpack_require__(/*! ./A11yText */ 297);
+var _A11yText = __webpack_require__(/*! ./A11yText */ 331);
 
 Object.defineProperty(exports, 'A11yText', {
   enumerable: true,
@@ -3538,7 +4808,7 @@ Object.defineProperty(exports, 'A11yText', {
   }
 });
 
-var _DummyInput = __webpack_require__(/*! ./DummyInput */ 304);
+var _DummyInput = __webpack_require__(/*! ./DummyInput */ 338);
 
 Object.defineProperty(exports, 'DummyInput', {
   enumerable: true,
@@ -3547,7 +4817,7 @@ Object.defineProperty(exports, 'DummyInput', {
   }
 });
 
-var _NodeResolver = __webpack_require__(/*! ./NodeResolver */ 40);
+var _NodeResolver = __webpack_require__(/*! ./NodeResolver */ 42);
 
 Object.defineProperty(exports, 'NodeResolver', {
   enumerable: true,
@@ -3556,7 +4826,7 @@ Object.defineProperty(exports, 'NodeResolver', {
   }
 });
 
-var _ScrollBlock = __webpack_require__(/*! ./ScrollBlock */ 305);
+var _ScrollBlock = __webpack_require__(/*! ./ScrollBlock */ 339);
 
 Object.defineProperty(exports, 'ScrollBlock', {
   enumerable: true,
@@ -3565,7 +4835,7 @@ Object.defineProperty(exports, 'ScrollBlock', {
   }
 });
 
-var _ScrollCaptor = __webpack_require__(/*! ./ScrollCaptor */ 309);
+var _ScrollCaptor = __webpack_require__(/*! ./ScrollCaptor */ 343);
 
 Object.defineProperty(exports, 'ScrollCaptor', {
   enumerable: true,
@@ -3578,7 +4848,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 297:
+/***/ 331:
 /*!*************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/A11yText.js ***!
   \*************************************************************************************/
@@ -3626,7 +4896,7 @@ exports.default = A11yText;
 
 /***/ }),
 
-/***/ 298:
+/***/ 332:
 /*!********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/create-emotion/dist/index.esm.js ***!
   \********************************************************************************/
@@ -3635,11 +4905,11 @@ exports.default = A11yText;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__emotion_memoize__ = __webpack_require__(/*! @emotion/memoize */ 299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__emotion_unitless__ = __webpack_require__(/*! @emotion/unitless */ 300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__emotion_hash__ = __webpack_require__(/*! @emotion/hash */ 301);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__emotion_stylis__ = __webpack_require__(/*! @emotion/stylis */ 302);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_stylis_rule_sheet__ = __webpack_require__(/*! stylis-rule-sheet */ 303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__emotion_memoize__ = __webpack_require__(/*! @emotion/memoize */ 333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__emotion_unitless__ = __webpack_require__(/*! @emotion/unitless */ 334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__emotion_hash__ = __webpack_require__(/*! @emotion/hash */ 335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__emotion_stylis__ = __webpack_require__(/*! @emotion/stylis */ 336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_stylis_rule_sheet__ = __webpack_require__(/*! stylis-rule-sheet */ 337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_stylis_rule_sheet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_stylis_rule_sheet__);
 
 
@@ -4165,7 +5435,7 @@ function createEmotion(context, options) {
 
 /***/ }),
 
-/***/ 299:
+/***/ 333:
 /*!************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/@emotion/memoize/dist/memoize.esm.js ***!
   \************************************************************************************/
@@ -4188,7 +5458,7 @@ function memoize(fn) {
 
 /***/ }),
 
-/***/ 300:
+/***/ 334:
 /*!**************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/@emotion/unitless/dist/unitless.esm.js ***!
   \**************************************************************************************/
@@ -4248,7 +5518,7 @@ var index = {
 
 /***/ }),
 
-/***/ 301:
+/***/ 335:
 /*!******************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/@emotion/hash/dist/hash.esm.js ***!
   \******************************************************************************/
@@ -4299,7 +5569,7 @@ function murmurhash2_32_gc(str) {
 
 /***/ }),
 
-/***/ 302:
+/***/ 336:
 /*!**********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/@emotion/stylis/dist/stylis.esm.js ***!
   \**********************************************************************************/
@@ -4942,7 +6212,7 @@ var W = function da(X) {
 
 /***/ }),
 
-/***/ 303:
+/***/ 337:
 /*!**************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/stylis-rule-sheet/index.js ***!
   \**************************************************************************/
@@ -5002,7 +6272,7 @@ var W = function da(X) {
 
 /***/ }),
 
-/***/ 304:
+/***/ 338:
 /*!***************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/DummyInput.js ***!
   \***************************************************************************************/
@@ -5093,7 +6363,7 @@ exports.default = DummyInput;
 
 /***/ }),
 
-/***/ 305:
+/***/ 339:
 /*!****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/ScrollBlock.js ***!
   \****************************************************************************************/
@@ -5116,11 +6386,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _NodeResolver = __webpack_require__(/*! ./NodeResolver */ 40);
+var _NodeResolver = __webpack_require__(/*! ./NodeResolver */ 42);
 
 var _NodeResolver2 = _interopRequireDefault(_NodeResolver);
 
-var _index = __webpack_require__(/*! ./ScrollLock/index */ 306);
+var _index = __webpack_require__(/*! ./ScrollLock/index */ 340);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -5215,7 +6485,7 @@ exports.default = ScrollBlock;
 
 /***/ }),
 
-/***/ 306:
+/***/ 340:
 /*!*********************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/ScrollLock/index.js ***!
   \*********************************************************************************************/
@@ -5234,9 +6504,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _react = __webpack_require__(/*! react */ 0);
 
-var _constants = __webpack_require__(/*! ./constants */ 307);
+var _constants = __webpack_require__(/*! ./constants */ 341);
 
-var _utils = __webpack_require__(/*! ./utils */ 308);
+var _utils = __webpack_require__(/*! ./utils */ 342);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5377,7 +6647,7 @@ exports.default = ScrollLock;
 
 /***/ }),
 
-/***/ 307:
+/***/ 341:
 /*!*************************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/ScrollLock/constants.js ***!
   \*************************************************************************************************/
@@ -5402,7 +6672,7 @@ var LOCK_STYLES = exports.LOCK_STYLES = {
 
 /***/ }),
 
-/***/ 308:
+/***/ 342:
 /*!*********************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/ScrollLock/utils.js ***!
   \*********************************************************************************************/
@@ -5448,7 +6718,7 @@ function isTouchDevice() {
 
 /***/ }),
 
-/***/ 309:
+/***/ 343:
 /*!*****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/ScrollCaptor.js ***!
   \*****************************************************************************************/
@@ -5469,7 +6739,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _NodeResolver = __webpack_require__(/*! ./NodeResolver */ 40);
+var _NodeResolver = __webpack_require__(/*! ./NodeResolver */ 42);
 
 var _NodeResolver2 = _interopRequireDefault(_NodeResolver);
 
@@ -5648,7 +6918,7 @@ exports.default = ScrollCaptorSwitch;
 
 /***/ }),
 
-/***/ 310:
+/***/ 344:
 /*!***************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/accessibility/index.js ***!
   \***************************************************************************************/
@@ -5712,7 +6982,7 @@ var resultsAriaMessage = exports.resultsAriaMessage = function resultsAriaMessag
 
 /***/ }),
 
-/***/ 311:
+/***/ 345:
 /*!************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/raf/index.js ***!
   \************************************************************/
@@ -5720,7 +6990,7 @@ var resultsAriaMessage = exports.resultsAriaMessage = function resultsAriaMessag
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(/*! performance-now */ 312)
+/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(/*! performance-now */ 346)
   , root = typeof window === 'undefined' ? global : window
   , vendors = ['moz', 'webkit']
   , suffix = 'AnimationFrame'
@@ -5800,7 +7070,7 @@ module.exports.polyfill = function(object) {
 
 /***/ }),
 
-/***/ 312:
+/***/ 346:
 /*!**************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/performance-now/lib/performance-now.js ***!
   \**************************************************************************************/
@@ -5845,11 +7115,11 @@ module.exports.polyfill = function(object) {
 
 //# sourceMappingURL=performance-now.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/process/browser.js */ 24)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/process/browser.js */ 10)))
 
 /***/ }),
 
-/***/ 313:
+/***/ 347:
 /*!****************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/builtins.js ***!
   \****************************************************************************/
@@ -5881,7 +7151,7 @@ var isOptionDisabled = exports.isOptionDisabled = function isOptionDisabled(opti
 
 /***/ }),
 
-/***/ 314:
+/***/ 348:
 /*!************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/index.js ***!
   \************************************************************************************/
@@ -5901,39 +7171,39 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 __webpack_require__(/*! react */ 0);
 
-var _containers = __webpack_require__(/*! ./containers */ 98);
+var _containers = __webpack_require__(/*! ./containers */ 108);
 
-var _indicators = __webpack_require__(/*! ./indicators */ 41);
+var _indicators = __webpack_require__(/*! ./indicators */ 43);
 
-var _Control = __webpack_require__(/*! ./Control */ 99);
+var _Control = __webpack_require__(/*! ./Control */ 109);
 
 var _Control2 = _interopRequireDefault(_Control);
 
-var _Group = __webpack_require__(/*! ./Group */ 100);
+var _Group = __webpack_require__(/*! ./Group */ 110);
 
 var _Group2 = _interopRequireDefault(_Group);
 
-var _Input = __webpack_require__(/*! ./Input */ 101);
+var _Input = __webpack_require__(/*! ./Input */ 111);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Menu = __webpack_require__(/*! ./Menu */ 102);
+var _Menu = __webpack_require__(/*! ./Menu */ 112);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _MultiValue = __webpack_require__(/*! ./MultiValue */ 103);
+var _MultiValue = __webpack_require__(/*! ./MultiValue */ 113);
 
 var _MultiValue2 = _interopRequireDefault(_MultiValue);
 
-var _Option = __webpack_require__(/*! ./Option */ 104);
+var _Option = __webpack_require__(/*! ./Option */ 114);
 
 var _Option2 = _interopRequireDefault(_Option);
 
-var _Placeholder = __webpack_require__(/*! ./Placeholder */ 105);
+var _Placeholder = __webpack_require__(/*! ./Placeholder */ 115);
 
 var _Placeholder2 = _interopRequireDefault(_Placeholder);
 
-var _SingleValue = __webpack_require__(/*! ./SingleValue */ 106);
+var _SingleValue = __webpack_require__(/*! ./SingleValue */ 116);
 
 var _SingleValue2 = _interopRequireDefault(_SingleValue);
 
@@ -5973,7 +7243,7 @@ var defaultComponents = exports.defaultComponents = function defaultComponents(p
 
 /***/ }),
 
-/***/ 315:
+/***/ 349:
 /*!*************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/types.js ***!
   \*************************************************************************/
@@ -5986,7 +7256,7 @@ var defaultComponents = exports.defaultComponents = function defaultComponents(p
 
 /***/ }),
 
-/***/ 316:
+/***/ 350:
 /*!*****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-input-autosize/lib/AutosizeInput.js ***!
   \*****************************************************************************************/
@@ -6009,7 +7279,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 12);
+var _propTypes = __webpack_require__(/*! prop-types */ 13);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -6266,7 +7536,7 @@ exports.default = AutosizeInput;
 
 /***/ }),
 
-/***/ 317:
+/***/ 351:
 /*!**************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/styles.js ***!
   \**************************************************************************/
@@ -6286,25 +7556,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.mergeStyles = mergeStyles;
 
-var _containers = __webpack_require__(/*! ./components/containers */ 98);
+var _containers = __webpack_require__(/*! ./components/containers */ 108);
 
-var _Control = __webpack_require__(/*! ./components/Control */ 99);
+var _Control = __webpack_require__(/*! ./components/Control */ 109);
 
-var _Group = __webpack_require__(/*! ./components/Group */ 100);
+var _Group = __webpack_require__(/*! ./components/Group */ 110);
 
-var _indicators = __webpack_require__(/*! ./components/indicators */ 41);
+var _indicators = __webpack_require__(/*! ./components/indicators */ 43);
 
-var _Input = __webpack_require__(/*! ./components/Input */ 101);
+var _Input = __webpack_require__(/*! ./components/Input */ 111);
 
-var _Placeholder = __webpack_require__(/*! ./components/Placeholder */ 105);
+var _Placeholder = __webpack_require__(/*! ./components/Placeholder */ 115);
 
-var _Option = __webpack_require__(/*! ./components/Option */ 104);
+var _Option = __webpack_require__(/*! ./components/Option */ 114);
 
-var _Menu = __webpack_require__(/*! ./components/Menu */ 102);
+var _Menu = __webpack_require__(/*! ./components/Menu */ 112);
 
-var _SingleValue = __webpack_require__(/*! ./components/SingleValue */ 106);
+var _SingleValue = __webpack_require__(/*! ./components/SingleValue */ 116);
 
-var _MultiValue = __webpack_require__(/*! ./components/MultiValue */ 103);
+var _MultiValue = __webpack_require__(/*! ./components/MultiValue */ 113);
 
 var defaultStyles = exports.defaultStyles = {
   clearIndicator: _indicators.clearIndicatorCSS,
@@ -6356,7 +7626,7 @@ function mergeStyles(source) {
 
 /***/ }),
 
-/***/ 318:
+/***/ 352:
 /*!*****************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/Creatable.js ***!
   \*****************************************************************************/
@@ -6380,13 +7650,13 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Select = __webpack_require__(/*! ./Select */ 39);
+var _Select = __webpack_require__(/*! ./Select */ 41);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _utils = __webpack_require__(/*! ./utils */ 26);
+var _utils = __webpack_require__(/*! ./utils */ 27);
 
-var _stateManager = __webpack_require__(/*! ./stateManager */ 42);
+var _stateManager = __webpack_require__(/*! ./stateManager */ 44);
 
 var _stateManager2 = _interopRequireDefault(_stateManager);
 
@@ -6546,7 +7816,7 @@ exports.default = (0, _stateManager2.default)(makeCreatableSelect(_Select2.defau
 
 /***/ }),
 
-/***/ 319:
+/***/ 353:
 /*!******************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/scxa-gene-search-form/lib/SpeciesSelect.js ***!
   \******************************************************************************************/
@@ -6565,7 +7835,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 12);
+var _propTypes = __webpack_require__(/*! prop-types */ 13);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -6635,7 +7905,51 @@ exports.default = SpeciesSelect;
 
 /***/ }),
 
-/***/ 38:
+/***/ 4:
+/*!*************************************************************************!*\
+  !*** ./bundles/gene-search-form/node_modules/emotion/dist/index.esm.js ***!
+  \*************************************************************************/
+/*! exports provided: flush, hydrate, cx, merge, getRegisteredStyles, injectGlobal, keyframes, css, sheet, caches */
+/*! all exports used */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "flush", function() { return flush; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrate", function() { return hydrate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cx", function() { return cx; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "merge", function() { return merge; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRegisteredStyles", function() { return getRegisteredStyles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "injectGlobal", function() { return injectGlobal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "keyframes", function() { return keyframes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "css", function() { return css; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sheet", function() { return sheet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "caches", function() { return caches; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_emotion__ = __webpack_require__(/*! create-emotion */ 332);
+
+
+var context = typeof global !== 'undefined' ? global : {};
+
+var _createEmotion = Object(__WEBPACK_IMPORTED_MODULE_0_create_emotion__["a" /* default */])(context),
+    flush = _createEmotion.flush,
+    hydrate = _createEmotion.hydrate,
+    cx = _createEmotion.cx,
+    merge = _createEmotion.merge,
+    getRegisteredStyles = _createEmotion.getRegisteredStyles,
+    injectGlobal = _createEmotion.injectGlobal,
+    keyframes = _createEmotion.keyframes,
+    css = _createEmotion.css,
+    sheet = _createEmotion.sheet,
+    caches = _createEmotion.caches;
+
+
+//# sourceMappingURL=index.esm.js.map
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 3)))
+
+/***/ }),
+
+/***/ 40:
 /*!****************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/urijs/src/URI.js ***!
   \****************************************************************/
@@ -6660,10 +7974,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   // https://github.com/umdjs/umd/blob/master/returnExports.js
   if (typeof module === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 95), __webpack_require__(/*! ./IPv6 */ 96), __webpack_require__(/*! ./SecondLevelDomains */ 97));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 105), __webpack_require__(/*! ./IPv6 */ 106), __webpack_require__(/*! ./SecondLevelDomains */ 107));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 95), __webpack_require__(/*! ./IPv6 */ 96), __webpack_require__(/*! ./SecondLevelDomains */ 97)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 105), __webpack_require__(/*! ./IPv6 */ 106), __webpack_require__(/*! ./SecondLevelDomains */ 107)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -8988,7 +10302,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 39:
+/***/ 41:
 /*!**************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/Select.js ***!
   \**************************************************************************/
@@ -9014,27 +10328,27 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _memoizeOne = __webpack_require__(/*! memoize-one */ 292);
+var _memoizeOne = __webpack_require__(/*! memoize-one */ 326);
 
 var _memoizeOne2 = _interopRequireDefault(_memoizeOne);
 
-var _reactFastCompare = __webpack_require__(/*! ./internal/react-fast-compare */ 293);
+var _reactFastCompare = __webpack_require__(/*! ./internal/react-fast-compare */ 327);
 
 var _reactFastCompare2 = _interopRequireDefault(_reactFastCompare);
 
-var _filters = __webpack_require__(/*! ./filters */ 294);
+var _filters = __webpack_require__(/*! ./filters */ 328);
 
-var _index = __webpack_require__(/*! ./internal/index */ 296);
+var _index = __webpack_require__(/*! ./internal/index */ 330);
 
-var _index2 = __webpack_require__(/*! ./accessibility/index */ 310);
+var _index2 = __webpack_require__(/*! ./accessibility/index */ 344);
 
-var _utils = __webpack_require__(/*! ./utils */ 26);
+var _utils = __webpack_require__(/*! ./utils */ 27);
 
-var _builtins = __webpack_require__(/*! ./builtins */ 313);
+var _builtins = __webpack_require__(/*! ./builtins */ 347);
 
-var _index3 = __webpack_require__(/*! ./components/index */ 314);
+var _index3 = __webpack_require__(/*! ./components/index */ 348);
 
-var _styles = __webpack_require__(/*! ./styles */ 317);
+var _styles = __webpack_require__(/*! ./styles */ 351);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10754,51 +12068,7 @@ exports.default = Select;
 
 /***/ }),
 
-/***/ 4:
-/*!*************************************************************************!*\
-  !*** ./bundles/gene-search-form/node_modules/emotion/dist/index.esm.js ***!
-  \*************************************************************************/
-/*! exports provided: flush, hydrate, cx, merge, getRegisteredStyles, injectGlobal, keyframes, css, sheet, caches */
-/*! all exports used */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "flush", function() { return flush; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrate", function() { return hydrate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cx", function() { return cx; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "merge", function() { return merge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRegisteredStyles", function() { return getRegisteredStyles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "injectGlobal", function() { return injectGlobal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "keyframes", function() { return keyframes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "css", function() { return css; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sheet", function() { return sheet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "caches", function() { return caches; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_emotion__ = __webpack_require__(/*! create-emotion */ 298);
-
-
-var context = typeof global !== 'undefined' ? global : {};
-
-var _createEmotion = Object(__WEBPACK_IMPORTED_MODULE_0_create_emotion__["a" /* default */])(context),
-    flush = _createEmotion.flush,
-    hydrate = _createEmotion.hydrate,
-    cx = _createEmotion.cx,
-    merge = _createEmotion.merge,
-    getRegisteredStyles = _createEmotion.getRegisteredStyles,
-    injectGlobal = _createEmotion.injectGlobal,
-    keyframes = _createEmotion.keyframes,
-    css = _createEmotion.css,
-    sheet = _createEmotion.sheet,
-    caches = _createEmotion.caches;
-
-
-//# sourceMappingURL=index.esm.js.map
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 3)))
-
-/***/ }),
-
-/***/ 40:
+/***/ 42:
 /*!*****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/internal/NodeResolver.js ***!
   \*****************************************************************************************/
@@ -10858,7 +12128,7 @@ exports.default = NodeResolver;
 
 /***/ }),
 
-/***/ 41:
+/***/ 43:
 /*!*****************************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/indicators.js ***!
   \*****************************************************************************************/
@@ -10884,7 +12154,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _theme = __webpack_require__(/*! ../theme */ 6);
 
-__webpack_require__(/*! ../types */ 315);
+__webpack_require__(/*! ../types */ 349);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11090,7 +12360,7 @@ LoadingIndicator.defaultProps = { size: 4 };
 
 /***/ }),
 
-/***/ 42:
+/***/ 44:
 /*!********************************************************************************!*\
   !*** ./bundles/gene-search-form/node_modules/react-select/lib/stateManager.js ***!
   \********************************************************************************/
@@ -11293,1277 +12563,7 @@ var spacing = exports.spacing = {
   menuGutter: baseUnit * 2
 };
 
-/***/ }),
-
-/***/ 94:
-/*!**************************************************************************************!*\
-  !*** ./bundles/gene-search-form/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
-  \**************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-
-/***/ 95:
-/*!*********************************************************************!*\
-  !*** ./bundles/gene-search-form/node_modules/urijs/src/punycode.js ***!
-  \*********************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.0 by @mathias */
-;(function(root) {
-
-	/** Detect free variables */
-	var freeExports = typeof exports == 'object' && exports &&
-		!exports.nodeType && exports;
-	var freeModule = typeof module == 'object' && module &&
-		!module.nodeType && module;
-	var freeGlobal = typeof global == 'object' && global;
-	if (
-		freeGlobal.global === freeGlobal ||
-		freeGlobal.window === freeGlobal ||
-		freeGlobal.self === freeGlobal
-	) {
-		root = freeGlobal;
-	}
-
-	/**
-	 * The `punycode` object.
-	 * @name punycode
-	 * @type Object
-	 */
-	var punycode,
-
-	/** Highest positive signed 32-bit float value */
-	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
-
-	/** Bootstring parameters */
-	base = 36,
-	tMin = 1,
-	tMax = 26,
-	skew = 38,
-	damp = 700,
-	initialBias = 72,
-	initialN = 128, // 0x80
-	delimiter = '-', // '\x2D'
-
-	/** Regular expressions */
-	regexPunycode = /^xn--/,
-	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
-	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
-
-	/** Error messages */
-	errors = {
-		'overflow': 'Overflow: input needs wider integers to process',
-		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
-		'invalid-input': 'Invalid input'
-	},
-
-	/** Convenience shortcuts */
-	baseMinusTMin = base - tMin,
-	floor = Math.floor,
-	stringFromCharCode = String.fromCharCode,
-
-	/** Temporary variable */
-	key;
-
-	/*--------------------------------------------------------------------------*/
-
-	/**
-	 * A generic error utility function.
-	 * @private
-	 * @param {String} type The error type.
-	 * @returns {Error} Throws a `RangeError` with the applicable error message.
-	 */
-	function error(type) {
-		throw new RangeError(errors[type]);
-	}
-
-	/**
-	 * A generic `Array#map` utility function.
-	 * @private
-	 * @param {Array} array The array to iterate over.
-	 * @param {Function} callback The function that gets called for every array
-	 * item.
-	 * @returns {Array} A new array of values returned by the callback function.
-	 */
-	function map(array, fn) {
-		var length = array.length;
-		var result = [];
-		while (length--) {
-			result[length] = fn(array[length]);
-		}
-		return result;
-	}
-
-	/**
-	 * A simple `Array#map`-like wrapper to work with domain name strings or email
-	 * addresses.
-	 * @private
-	 * @param {String} domain The domain name or email address.
-	 * @param {Function} callback The function that gets called for every
-	 * character.
-	 * @returns {Array} A new string of characters returned by the callback
-	 * function.
-	 */
-	function mapDomain(string, fn) {
-		var parts = string.split('@');
-		var result = '';
-		if (parts.length > 1) {
-			// In email addresses, only the domain name should be punycoded. Leave
-			// the local part (i.e. everything up to `@`) intact.
-			result = parts[0] + '@';
-			string = parts[1];
-		}
-		// Avoid `split(regex)` for IE8 compatibility. See #17.
-		string = string.replace(regexSeparators, '\x2E');
-		var labels = string.split('.');
-		var encoded = map(labels, fn).join('.');
-		return result + encoded;
-	}
-
-	/**
-	 * Creates an array containing the numeric code points of each Unicode
-	 * character in the string. While JavaScript uses UCS-2 internally,
-	 * this function will convert a pair of surrogate halves (each of which
-	 * UCS-2 exposes as separate characters) into a single code point,
-	 * matching UTF-16.
-	 * @see `punycode.ucs2.encode`
-	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
-	 * @memberOf punycode.ucs2
-	 * @name decode
-	 * @param {String} string The Unicode input string (UCS-2).
-	 * @returns {Array} The new array of code points.
-	 */
-	function ucs2decode(string) {
-		var output = [],
-		    counter = 0,
-		    length = string.length,
-		    value,
-		    extra;
-		while (counter < length) {
-			value = string.charCodeAt(counter++);
-			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
-				// high surrogate, and there is a next character
-				extra = string.charCodeAt(counter++);
-				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
-					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
-				} else {
-					// unmatched surrogate; only append this code unit, in case the next
-					// code unit is the high surrogate of a surrogate pair
-					output.push(value);
-					counter--;
-				}
-			} else {
-				output.push(value);
-			}
-		}
-		return output;
-	}
-
-	/**
-	 * Creates a string based on an array of numeric code points.
-	 * @see `punycode.ucs2.decode`
-	 * @memberOf punycode.ucs2
-	 * @name encode
-	 * @param {Array} codePoints The array of numeric code points.
-	 * @returns {String} The new Unicode string (UCS-2).
-	 */
-	function ucs2encode(array) {
-		return map(array, function(value) {
-			var output = '';
-			if (value > 0xFFFF) {
-				value -= 0x10000;
-				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-				value = 0xDC00 | value & 0x3FF;
-			}
-			output += stringFromCharCode(value);
-			return output;
-		}).join('');
-	}
-
-	/**
-	 * Converts a basic code point into a digit/integer.
-	 * @see `digitToBasic()`
-	 * @private
-	 * @param {Number} codePoint The basic numeric code point value.
-	 * @returns {Number} The numeric value of a basic code point (for use in
-	 * representing integers) in the range `0` to `base - 1`, or `base` if
-	 * the code point does not represent a value.
-	 */
-	function basicToDigit(codePoint) {
-		if (codePoint - 48 < 10) {
-			return codePoint - 22;
-		}
-		if (codePoint - 65 < 26) {
-			return codePoint - 65;
-		}
-		if (codePoint - 97 < 26) {
-			return codePoint - 97;
-		}
-		return base;
-	}
-
-	/**
-	 * Converts a digit/integer into a basic code point.
-	 * @see `basicToDigit()`
-	 * @private
-	 * @param {Number} digit The numeric value of a basic code point.
-	 * @returns {Number} The basic code point whose value (when used for
-	 * representing integers) is `digit`, which needs to be in the range
-	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
-	 * used; else, the lowercase form is used. The behavior is undefined
-	 * if `flag` is non-zero and `digit` has no uppercase form.
-	 */
-	function digitToBasic(digit, flag) {
-		//  0..25 map to ASCII a..z or A..Z
-		// 26..35 map to ASCII 0..9
-		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
-	}
-
-	/**
-	 * Bias adaptation function as per section 3.4 of RFC 3492.
-	 * https://tools.ietf.org/html/rfc3492#section-3.4
-	 * @private
-	 */
-	function adapt(delta, numPoints, firstTime) {
-		var k = 0;
-		delta = firstTime ? floor(delta / damp) : delta >> 1;
-		delta += floor(delta / numPoints);
-		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
-			delta = floor(delta / baseMinusTMin);
-		}
-		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
-	}
-
-	/**
-	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
-	 * symbols.
-	 * @memberOf punycode
-	 * @param {String} input The Punycode string of ASCII-only symbols.
-	 * @returns {String} The resulting string of Unicode symbols.
-	 */
-	function decode(input) {
-		// Don't use UCS-2
-		var output = [],
-		    inputLength = input.length,
-		    out,
-		    i = 0,
-		    n = initialN,
-		    bias = initialBias,
-		    basic,
-		    j,
-		    index,
-		    oldi,
-		    w,
-		    k,
-		    digit,
-		    t,
-		    /** Cached calculation results */
-		    baseMinusT;
-
-		// Handle the basic code points: let `basic` be the number of input code
-		// points before the last delimiter, or `0` if there is none, then copy
-		// the first basic code points to the output.
-
-		basic = input.lastIndexOf(delimiter);
-		if (basic < 0) {
-			basic = 0;
-		}
-
-		for (j = 0; j < basic; ++j) {
-			// if it's not a basic code point
-			if (input.charCodeAt(j) >= 0x80) {
-				error('not-basic');
-			}
-			output.push(input.charCodeAt(j));
-		}
-
-		// Main decoding loop: start just after the last delimiter if any basic code
-		// points were copied; start at the beginning otherwise.
-
-		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
-
-			// `index` is the index of the next character to be consumed.
-			// Decode a generalized variable-length integer into `delta`,
-			// which gets added to `i`. The overflow checking is easier
-			// if we increase `i` as we go, then subtract off its starting
-			// value at the end to obtain `delta`.
-			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
-
-				if (index >= inputLength) {
-					error('invalid-input');
-				}
-
-				digit = basicToDigit(input.charCodeAt(index++));
-
-				if (digit >= base || digit > floor((maxInt - i) / w)) {
-					error('overflow');
-				}
-
-				i += digit * w;
-				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-
-				if (digit < t) {
-					break;
-				}
-
-				baseMinusT = base - t;
-				if (w > floor(maxInt / baseMinusT)) {
-					error('overflow');
-				}
-
-				w *= baseMinusT;
-
-			}
-
-			out = output.length + 1;
-			bias = adapt(i - oldi, out, oldi == 0);
-
-			// `i` was supposed to wrap around from `out` to `0`,
-			// incrementing `n` each time, so we'll fix that now:
-			if (floor(i / out) > maxInt - n) {
-				error('overflow');
-			}
-
-			n += floor(i / out);
-			i %= out;
-
-			// Insert `n` at position `i` of the output
-			output.splice(i++, 0, n);
-
-		}
-
-		return ucs2encode(output);
-	}
-
-	/**
-	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
-	 * Punycode string of ASCII-only symbols.
-	 * @memberOf punycode
-	 * @param {String} input The string of Unicode symbols.
-	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
-	 */
-	function encode(input) {
-		var n,
-		    delta,
-		    handledCPCount,
-		    basicLength,
-		    bias,
-		    j,
-		    m,
-		    q,
-		    k,
-		    t,
-		    currentValue,
-		    output = [],
-		    /** `inputLength` will hold the number of code points in `input`. */
-		    inputLength,
-		    /** Cached calculation results */
-		    handledCPCountPlusOne,
-		    baseMinusT,
-		    qMinusT;
-
-		// Convert the input in UCS-2 to Unicode
-		input = ucs2decode(input);
-
-		// Cache the length
-		inputLength = input.length;
-
-		// Initialize the state
-		n = initialN;
-		delta = 0;
-		bias = initialBias;
-
-		// Handle the basic code points
-		for (j = 0; j < inputLength; ++j) {
-			currentValue = input[j];
-			if (currentValue < 0x80) {
-				output.push(stringFromCharCode(currentValue));
-			}
-		}
-
-		handledCPCount = basicLength = output.length;
-
-		// `handledCPCount` is the number of code points that have been handled;
-		// `basicLength` is the number of basic code points.
-
-		// Finish the basic string - if it is not empty - with a delimiter
-		if (basicLength) {
-			output.push(delimiter);
-		}
-
-		// Main encoding loop:
-		while (handledCPCount < inputLength) {
-
-			// All non-basic code points < n have been handled already. Find the next
-			// larger one:
-			for (m = maxInt, j = 0; j < inputLength; ++j) {
-				currentValue = input[j];
-				if (currentValue >= n && currentValue < m) {
-					m = currentValue;
-				}
-			}
-
-			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
-			// but guard against overflow
-			handledCPCountPlusOne = handledCPCount + 1;
-			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
-				error('overflow');
-			}
-
-			delta += (m - n) * handledCPCountPlusOne;
-			n = m;
-
-			for (j = 0; j < inputLength; ++j) {
-				currentValue = input[j];
-
-				if (currentValue < n && ++delta > maxInt) {
-					error('overflow');
-				}
-
-				if (currentValue == n) {
-					// Represent delta as a generalized variable-length integer
-					for (q = delta, k = base; /* no condition */; k += base) {
-						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-						if (q < t) {
-							break;
-						}
-						qMinusT = q - t;
-						baseMinusT = base - t;
-						output.push(
-							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
-						);
-						q = floor(qMinusT / baseMinusT);
-					}
-
-					output.push(stringFromCharCode(digitToBasic(q, 0)));
-					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
-					delta = 0;
-					++handledCPCount;
-				}
-			}
-
-			++delta;
-			++n;
-
-		}
-		return output.join('');
-	}
-
-	/**
-	 * Converts a Punycode string representing a domain name or an email address
-	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
-	 * it doesn't matter if you call it on a string that has already been
-	 * converted to Unicode.
-	 * @memberOf punycode
-	 * @param {String} input The Punycoded domain name or email address to
-	 * convert to Unicode.
-	 * @returns {String} The Unicode representation of the given Punycode
-	 * string.
-	 */
-	function toUnicode(input) {
-		return mapDomain(input, function(string) {
-			return regexPunycode.test(string)
-				? decode(string.slice(4).toLowerCase())
-				: string;
-		});
-	}
-
-	/**
-	 * Converts a Unicode string representing a domain name or an email address to
-	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
-	 * i.e. it doesn't matter if you call it with a domain that's already in
-	 * ASCII.
-	 * @memberOf punycode
-	 * @param {String} input The domain name or email address to convert, as a
-	 * Unicode string.
-	 * @returns {String} The Punycode representation of the given domain name or
-	 * email address.
-	 */
-	function toASCII(input) {
-		return mapDomain(input, function(string) {
-			return regexNonASCII.test(string)
-				? 'xn--' + encode(string)
-				: string;
-		});
-	}
-
-	/*--------------------------------------------------------------------------*/
-
-	/** Define the public API */
-	punycode = {
-		/**
-		 * A string representing the current Punycode.js version number.
-		 * @memberOf punycode
-		 * @type String
-		 */
-		'version': '1.3.2',
-		/**
-		 * An object of methods to convert from JavaScript's internal character
-		 * representation (UCS-2) to Unicode code points, and back.
-		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
-		 * @memberOf punycode
-		 * @type Object
-		 */
-		'ucs2': {
-			'decode': ucs2decode,
-			'encode': ucs2encode
-		},
-		'decode': decode,
-		'encode': encode,
-		'toASCII': toASCII,
-		'toUnicode': toUnicode
-	};
-
-	/** Expose `punycode` */
-	// Some AMD build optimizers, like r.js, check for specific condition patterns
-	// like the following:
-	if (
-		true
-	) {
-		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-			return punycode;
-		}).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else if (freeExports && freeModule) {
-		if (module.exports == freeExports) {
-			// in Node.js, io.js, or RingoJS v0.8.0+
-			freeModule.exports = punycode;
-		} else {
-			// in Narwhal or RingoJS v0.7.0-
-			for (key in punycode) {
-				punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
-			}
-		}
-	} else {
-		// in Rhino or a web browser
-		root.punycode = punycode;
-	}
-
-}(this));
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 9)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 3)))
-
-/***/ }),
-
-/***/ 96:
-/*!*****************************************************************!*\
-  !*** ./bundles/gene-search-form/node_modules/urijs/src/IPv6.js ***!
-  \*****************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * URI.js - Mutating URLs
- * IPv6 Support
- *
- * Version: 1.19.1
- *
- * Author: Rodney Rehm
- * Web: http://medialize.github.io/URI.js/
- *
- * Licensed under
- *   MIT License http://www.opensource.org/licenses/mit-license
- *
- */
-
-(function (root, factory) {
-  'use strict';
-  // https://github.com/umdjs/umd/blob/master/returnExports.js
-  if (typeof module === 'object' && module.exports) {
-    // Node
-    module.exports = factory();
-  } else if (true) {
-    // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else {
-    // Browser globals (root is window)
-    root.IPv6 = factory(root);
-  }
-}(this, function (root) {
-  'use strict';
-
-  /*
-  var _in = "fe80:0000:0000:0000:0204:61ff:fe9d:f156";
-  var _out = IPv6.best(_in);
-  var _expected = "fe80::204:61ff:fe9d:f156";
-
-  console.log(_in, _out, _expected, _out === _expected);
-  */
-
-  // save current IPv6 variable, if any
-  var _IPv6 = root && root.IPv6;
-
-  function bestPresentation(address) {
-    // based on:
-    // Javascript to test an IPv6 address for proper format, and to
-    // present the "best text representation" according to IETF Draft RFC at
-    // http://tools.ietf.org/html/draft-ietf-6man-text-addr-representation-04
-    // 8 Feb 2010 Rich Brown, Dartware, LLC
-    // Please feel free to use this code as long as you provide a link to
-    // http://www.intermapper.com
-    // http://intermapper.com/support/tools/IPV6-Validator.aspx
-    // http://download.dartware.com/thirdparty/ipv6validator.js
-
-    var _address = address.toLowerCase();
-    var segments = _address.split(':');
-    var length = segments.length;
-    var total = 8;
-
-    // trim colons (:: or ::a:b:c… or …a:b:c::)
-    if (segments[0] === '' && segments[1] === '' && segments[2] === '') {
-      // must have been ::
-      // remove first two items
-      segments.shift();
-      segments.shift();
-    } else if (segments[0] === '' && segments[1] === '') {
-      // must have been ::xxxx
-      // remove the first item
-      segments.shift();
-    } else if (segments[length - 1] === '' && segments[length - 2] === '') {
-      // must have been xxxx::
-      segments.pop();
-    }
-
-    length = segments.length;
-
-    // adjust total segments for IPv4 trailer
-    if (segments[length - 1].indexOf('.') !== -1) {
-      // found a "." which means IPv4
-      total = 7;
-    }
-
-    // fill empty segments them with "0000"
-    var pos;
-    for (pos = 0; pos < length; pos++) {
-      if (segments[pos] === '') {
-        break;
-      }
-    }
-
-    if (pos < total) {
-      segments.splice(pos, 1, '0000');
-      while (segments.length < total) {
-        segments.splice(pos, 0, '0000');
-      }
-    }
-
-    // strip leading zeros
-    var _segments;
-    for (var i = 0; i < total; i++) {
-      _segments = segments[i].split('');
-      for (var j = 0; j < 3 ; j++) {
-        if (_segments[0] === '0' && _segments.length > 1) {
-          _segments.splice(0,1);
-        } else {
-          break;
-        }
-      }
-
-      segments[i] = _segments.join('');
-    }
-
-    // find longest sequence of zeroes and coalesce them into one segment
-    var best = -1;
-    var _best = 0;
-    var _current = 0;
-    var current = -1;
-    var inzeroes = false;
-    // i; already declared
-
-    for (i = 0; i < total; i++) {
-      if (inzeroes) {
-        if (segments[i] === '0') {
-          _current += 1;
-        } else {
-          inzeroes = false;
-          if (_current > _best) {
-            best = current;
-            _best = _current;
-          }
-        }
-      } else {
-        if (segments[i] === '0') {
-          inzeroes = true;
-          current = i;
-          _current = 1;
-        }
-      }
-    }
-
-    if (_current > _best) {
-      best = current;
-      _best = _current;
-    }
-
-    if (_best > 1) {
-      segments.splice(best, _best, '');
-    }
-
-    length = segments.length;
-
-    // assemble remaining segments
-    var result = '';
-    if (segments[0] === '')  {
-      result = ':';
-    }
-
-    for (i = 0; i < length; i++) {
-      result += segments[i];
-      if (i === length - 1) {
-        break;
-      }
-
-      result += ':';
-    }
-
-    if (segments[length - 1] === '') {
-      result += ':';
-    }
-
-    return result;
-  }
-
-  function noConflict() {
-    /*jshint validthis: true */
-    if (root.IPv6 === this) {
-      root.IPv6 = _IPv6;
-    }
-
-    return this;
-  }
-
-  return {
-    best: bestPresentation,
-    noConflict: noConflict
-  };
-}));
-
-
-/***/ }),
-
-/***/ 97:
-/*!*******************************************************************************!*\
-  !*** ./bundles/gene-search-form/node_modules/urijs/src/SecondLevelDomains.js ***!
-  \*******************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * URI.js - Mutating URLs
- * Second Level Domain (SLD) Support
- *
- * Version: 1.19.1
- *
- * Author: Rodney Rehm
- * Web: http://medialize.github.io/URI.js/
- *
- * Licensed under
- *   MIT License http://www.opensource.org/licenses/mit-license
- *
- */
-
-(function (root, factory) {
-  'use strict';
-  // https://github.com/umdjs/umd/blob/master/returnExports.js
-  if (typeof module === 'object' && module.exports) {
-    // Node
-    module.exports = factory();
-  } else if (true) {
-    // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else {
-    // Browser globals (root is window)
-    root.SecondLevelDomains = factory(root);
-  }
-}(this, function (root) {
-  'use strict';
-
-  // save current SecondLevelDomains variable, if any
-  var _SecondLevelDomains = root && root.SecondLevelDomains;
-
-  var SLD = {
-    // list of known Second Level Domains
-    // converted list of SLDs from https://github.com/gavingmiller/second-level-domains
-    // ----
-    // publicsuffix.org is more current and actually used by a couple of browsers internally.
-    // downside is it also contains domains like "dyndns.org" - which is fine for the security
-    // issues browser have to deal with (SOP for cookies, etc) - but is way overboard for URI.js
-    // ----
-    list: {
-      'ac':' com gov mil net org ',
-      'ae':' ac co gov mil name net org pro sch ',
-      'af':' com edu gov net org ',
-      'al':' com edu gov mil net org ',
-      'ao':' co ed gv it og pb ',
-      'ar':' com edu gob gov int mil net org tur ',
-      'at':' ac co gv or ',
-      'au':' asn com csiro edu gov id net org ',
-      'ba':' co com edu gov mil net org rs unbi unmo unsa untz unze ',
-      'bb':' biz co com edu gov info net org store tv ',
-      'bh':' biz cc com edu gov info net org ',
-      'bn':' com edu gov net org ',
-      'bo':' com edu gob gov int mil net org tv ',
-      'br':' adm adv agr am arq art ato b bio blog bmd cim cng cnt com coop ecn edu eng esp etc eti far flog fm fnd fot fst g12 ggf gov imb ind inf jor jus lel mat med mil mus net nom not ntr odo org ppg pro psc psi qsl rec slg srv tmp trd tur tv vet vlog wiki zlg ',
-      'bs':' com edu gov net org ',
-      'bz':' du et om ov rg ',
-      'ca':' ab bc mb nb nf nl ns nt nu on pe qc sk yk ',
-      'ck':' biz co edu gen gov info net org ',
-      'cn':' ac ah bj com cq edu fj gd gov gs gx gz ha hb he hi hl hn jl js jx ln mil net nm nx org qh sc sd sh sn sx tj tw xj xz yn zj ',
-      'co':' com edu gov mil net nom org ',
-      'cr':' ac c co ed fi go or sa ',
-      'cy':' ac biz com ekloges gov ltd name net org parliament press pro tm ',
-      'do':' art com edu gob gov mil net org sld web ',
-      'dz':' art asso com edu gov net org pol ',
-      'ec':' com edu fin gov info med mil net org pro ',
-      'eg':' com edu eun gov mil name net org sci ',
-      'er':' com edu gov ind mil net org rochest w ',
-      'es':' com edu gob nom org ',
-      'et':' biz com edu gov info name net org ',
-      'fj':' ac biz com info mil name net org pro ',
-      'fk':' ac co gov net nom org ',
-      'fr':' asso com f gouv nom prd presse tm ',
-      'gg':' co net org ',
-      'gh':' com edu gov mil org ',
-      'gn':' ac com gov net org ',
-      'gr':' com edu gov mil net org ',
-      'gt':' com edu gob ind mil net org ',
-      'gu':' com edu gov net org ',
-      'hk':' com edu gov idv net org ',
-      'hu':' 2000 agrar bolt casino city co erotica erotika film forum games hotel info ingatlan jogasz konyvelo lakas media news org priv reklam sex shop sport suli szex tm tozsde utazas video ',
-      'id':' ac co go mil net or sch web ',
-      'il':' ac co gov idf k12 muni net org ',
-      'in':' ac co edu ernet firm gen gov i ind mil net nic org res ',
-      'iq':' com edu gov i mil net org ',
-      'ir':' ac co dnssec gov i id net org sch ',
-      'it':' edu gov ',
-      'je':' co net org ',
-      'jo':' com edu gov mil name net org sch ',
-      'jp':' ac ad co ed go gr lg ne or ',
-      'ke':' ac co go info me mobi ne or sc ',
-      'kh':' com edu gov mil net org per ',
-      'ki':' biz com de edu gov info mob net org tel ',
-      'km':' asso com coop edu gouv k medecin mil nom notaires pharmaciens presse tm veterinaire ',
-      'kn':' edu gov net org ',
-      'kr':' ac busan chungbuk chungnam co daegu daejeon es gangwon go gwangju gyeongbuk gyeonggi gyeongnam hs incheon jeju jeonbuk jeonnam k kg mil ms ne or pe re sc seoul ulsan ',
-      'kw':' com edu gov net org ',
-      'ky':' com edu gov net org ',
-      'kz':' com edu gov mil net org ',
-      'lb':' com edu gov net org ',
-      'lk':' assn com edu gov grp hotel int ltd net ngo org sch soc web ',
-      'lr':' com edu gov net org ',
-      'lv':' asn com conf edu gov id mil net org ',
-      'ly':' com edu gov id med net org plc sch ',
-      'ma':' ac co gov m net org press ',
-      'mc':' asso tm ',
-      'me':' ac co edu gov its net org priv ',
-      'mg':' com edu gov mil nom org prd tm ',
-      'mk':' com edu gov inf name net org pro ',
-      'ml':' com edu gov net org presse ',
-      'mn':' edu gov org ',
-      'mo':' com edu gov net org ',
-      'mt':' com edu gov net org ',
-      'mv':' aero biz com coop edu gov info int mil museum name net org pro ',
-      'mw':' ac co com coop edu gov int museum net org ',
-      'mx':' com edu gob net org ',
-      'my':' com edu gov mil name net org sch ',
-      'nf':' arts com firm info net other per rec store web ',
-      'ng':' biz com edu gov mil mobi name net org sch ',
-      'ni':' ac co com edu gob mil net nom org ',
-      'np':' com edu gov mil net org ',
-      'nr':' biz com edu gov info net org ',
-      'om':' ac biz co com edu gov med mil museum net org pro sch ',
-      'pe':' com edu gob mil net nom org sld ',
-      'ph':' com edu gov i mil net ngo org ',
-      'pk':' biz com edu fam gob gok gon gop gos gov net org web ',
-      'pl':' art bialystok biz com edu gda gdansk gorzow gov info katowice krakow lodz lublin mil net ngo olsztyn org poznan pwr radom slupsk szczecin torun warszawa waw wroc wroclaw zgora ',
-      'pr':' ac biz com edu est gov info isla name net org pro prof ',
-      'ps':' com edu gov net org plo sec ',
-      'pw':' belau co ed go ne or ',
-      'ro':' arts com firm info nom nt org rec store tm www ',
-      'rs':' ac co edu gov in org ',
-      'sb':' com edu gov net org ',
-      'sc':' com edu gov net org ',
-      'sh':' co com edu gov net nom org ',
-      'sl':' com edu gov net org ',
-      'st':' co com consulado edu embaixada gov mil net org principe saotome store ',
-      'sv':' com edu gob org red ',
-      'sz':' ac co org ',
-      'tr':' av bbs bel biz com dr edu gen gov info k12 name net org pol tel tsk tv web ',
-      'tt':' aero biz cat co com coop edu gov info int jobs mil mobi museum name net org pro tel travel ',
-      'tw':' club com ebiz edu game gov idv mil net org ',
-      'mu':' ac co com gov net or org ',
-      'mz':' ac co edu gov org ',
-      'na':' co com ',
-      'nz':' ac co cri geek gen govt health iwi maori mil net org parliament school ',
-      'pa':' abo ac com edu gob ing med net nom org sld ',
-      'pt':' com edu gov int net nome org publ ',
-      'py':' com edu gov mil net org ',
-      'qa':' com edu gov mil net org ',
-      're':' asso com nom ',
-      'ru':' ac adygeya altai amur arkhangelsk astrakhan bashkiria belgorod bir bryansk buryatia cbg chel chelyabinsk chita chukotka chuvashia com dagestan e-burg edu gov grozny int irkutsk ivanovo izhevsk jar joshkar-ola kalmykia kaluga kamchatka karelia kazan kchr kemerovo khabarovsk khakassia khv kirov koenig komi kostroma kranoyarsk kuban kurgan kursk lipetsk magadan mari mari-el marine mil mordovia mosreg msk murmansk nalchik net nnov nov novosibirsk nsk omsk orenburg org oryol penza perm pp pskov ptz rnd ryazan sakhalin samara saratov simbirsk smolensk spb stavropol stv surgut tambov tatarstan tom tomsk tsaritsyn tsk tula tuva tver tyumen udm udmurtia ulan-ude vladikavkaz vladimir vladivostok volgograd vologda voronezh vrn vyatka yakutia yamal yekaterinburg yuzhno-sakhalinsk ',
-      'rw':' ac co com edu gouv gov int mil net ',
-      'sa':' com edu gov med net org pub sch ',
-      'sd':' com edu gov info med net org tv ',
-      'se':' a ac b bd c d e f g h i k l m n o org p parti pp press r s t tm u w x y z ',
-      'sg':' com edu gov idn net org per ',
-      'sn':' art com edu gouv org perso univ ',
-      'sy':' com edu gov mil net news org ',
-      'th':' ac co go in mi net or ',
-      'tj':' ac biz co com edu go gov info int mil name net nic org test web ',
-      'tn':' agrinet com defense edunet ens fin gov ind info intl mincom nat net org perso rnrt rns rnu tourism ',
-      'tz':' ac co go ne or ',
-      'ua':' biz cherkassy chernigov chernovtsy ck cn co com crimea cv dn dnepropetrovsk donetsk dp edu gov if in ivano-frankivsk kh kharkov kherson khmelnitskiy kiev kirovograd km kr ks kv lg lugansk lutsk lviv me mk net nikolaev od odessa org pl poltava pp rovno rv sebastopol sumy te ternopil uzhgorod vinnica vn zaporizhzhe zhitomir zp zt ',
-      'ug':' ac co go ne or org sc ',
-      'uk':' ac bl british-library co cym gov govt icnet jet lea ltd me mil mod national-library-scotland nel net nhs nic nls org orgn parliament plc police sch scot soc ',
-      'us':' dni fed isa kids nsn ',
-      'uy':' com edu gub mil net org ',
-      've':' co com edu gob info mil net org web ',
-      'vi':' co com k12 net org ',
-      'vn':' ac biz com edu gov health info int name net org pro ',
-      'ye':' co com gov ltd me net org plc ',
-      'yu':' ac co edu gov org ',
-      'za':' ac agric alt bourse city co cybernet db edu gov grondar iaccess imt inca landesign law mil net ngo nis nom olivetti org pix school tm web ',
-      'zm':' ac co com edu gov net org sch ',
-      // https://en.wikipedia.org/wiki/CentralNic#Second-level_domains
-      'com': 'ar br cn de eu gb gr hu jpn kr no qc ru sa se uk us uy za ',
-      'net': 'gb jp se uk ',
-      'org': 'ae',
-      'de': 'com '
-    },
-    // gorhill 2013-10-25: Using indexOf() instead Regexp(). Significant boost
-    // in both performance and memory footprint. No initialization required.
-    // http://jsperf.com/uri-js-sld-regex-vs-binary-search/4
-    // Following methods use lastIndexOf() rather than array.split() in order
-    // to avoid any memory allocations.
-    has: function(domain) {
-      var tldOffset = domain.lastIndexOf('.');
-      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
-        return false;
-      }
-      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
-      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
-        return false;
-      }
-      var sldList = SLD.list[domain.slice(tldOffset+1)];
-      if (!sldList) {
-        return false;
-      }
-      return sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') >= 0;
-    },
-    is: function(domain) {
-      var tldOffset = domain.lastIndexOf('.');
-      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
-        return false;
-      }
-      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
-      if (sldOffset >= 0) {
-        return false;
-      }
-      var sldList = SLD.list[domain.slice(tldOffset+1)];
-      if (!sldList) {
-        return false;
-      }
-      return sldList.indexOf(' ' + domain.slice(0, tldOffset) + ' ') >= 0;
-    },
-    get: function(domain) {
-      var tldOffset = domain.lastIndexOf('.');
-      if (tldOffset <= 0 || tldOffset >= (domain.length-1)) {
-        return null;
-      }
-      var sldOffset = domain.lastIndexOf('.', tldOffset-1);
-      if (sldOffset <= 0 || sldOffset >= (tldOffset-1)) {
-        return null;
-      }
-      var sldList = SLD.list[domain.slice(tldOffset+1)];
-      if (!sldList) {
-        return null;
-      }
-      if (sldList.indexOf(' ' + domain.slice(sldOffset+1, tldOffset) + ' ') < 0) {
-        return null;
-      }
-      return domain.slice(sldOffset+1);
-    },
-    noConflict: function(){
-      if (root.SecondLevelDomains === this) {
-        root.SecondLevelDomains = _SecondLevelDomains;
-      }
-      return this;
-    }
-  };
-
-  return SLD;
-}));
-
-
-/***/ }),
-
-/***/ 98:
-/*!*****************************************************************************************!*\
-  !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/containers.js ***!
-  \*****************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.IndicatorsContainer = exports.indicatorsContainerCSS = exports.ValueContainer = exports.valueContainerCSS = exports.SelectContainer = exports.containerCSS = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _emotion = __webpack_require__(/*! emotion */ 4);
-
-var _theme = __webpack_require__(/*! ../theme */ 6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// ==============================
-// Root Container
-// ==============================
-
-var containerCSS = exports.containerCSS = function containerCSS(_ref) {
-  var isDisabled = _ref.isDisabled,
-      isRtl = _ref.isRtl;
-  return {
-    direction: isRtl ? 'rtl' : null,
-    pointerEvents: isDisabled ? 'none' : null, // cancel mouse events when disabled
-    position: 'relative'
-  };
-};
-var SelectContainer = exports.SelectContainer = function SelectContainer(props) {
-  var children = props.children,
-      className = props.className,
-      cx = props.cx,
-      getStyles = props.getStyles,
-      innerProps = props.innerProps,
-      isDisabled = props.isDisabled,
-      isRtl = props.isRtl;
-
-  return _react2.default.createElement(
-    'div',
-    _extends({
-      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('container', props)), {
-        '--is-disabled': isDisabled,
-        '--is-rtl': isRtl
-      }, className)
-    }, innerProps),
-    children
-  );
-};
-
-// ==============================
-// Value Container
-// ==============================
-
-var valueContainerCSS = exports.valueContainerCSS = function valueContainerCSS() {
-  return {
-    alignItems: 'center',
-    display: 'flex',
-    flex: 1,
-    flexWrap: 'wrap',
-    padding: _theme.spacing.baseUnit / 2 + 'px ' + _theme.spacing.baseUnit * 2 + 'px',
-    WebkitOverflowScrolling: 'touch',
-    position: 'relative'
-  };
-};
-
-var ValueContainer = exports.ValueContainer = function (_Component) {
-  _inherits(ValueContainer, _Component);
-
-  function ValueContainer() {
-    _classCallCheck(this, ValueContainer);
-
-    return _possibleConstructorReturn(this, (ValueContainer.__proto__ || Object.getPrototypeOf(ValueContainer)).apply(this, arguments));
-  }
-
-  _createClass(ValueContainer, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          cx = _props.cx,
-          isMulti = _props.isMulti,
-          getStyles = _props.getStyles,
-          hasValue = _props.hasValue;
-
-
-      return _react2.default.createElement(
-        'div',
-        {
-          className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('valueContainer', this.props)), {
-            'value-container': true,
-            'value-container--is-multi': isMulti,
-            'value-container--has-value': hasValue
-          }, className)
-        },
-        children
-      );
-    }
-  }]);
-
-  return ValueContainer;
-}(_react.Component);
-
-// ==============================
-// Indicator Container
-// ==============================
-
-var indicatorsContainerCSS = exports.indicatorsContainerCSS = function indicatorsContainerCSS() {
-  return {
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    display: 'flex',
-    flexShrink: 0
-  };
-};
-var IndicatorsContainer = exports.IndicatorsContainer = function IndicatorsContainer(props) {
-  var children = props.children,
-      className = props.className,
-      cx = props.cx,
-      getStyles = props.getStyles;
-
-
-  return _react2.default.createElement(
-    'div',
-    {
-      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('indicatorsContainer', props)), {
-        'indicators': true
-      }, className)
-    },
-    children
-  );
-};
-
-/***/ }),
-
-/***/ 99:
-/*!**************************************************************************************!*\
-  !*** ./bundles/gene-search-form/node_modules/react-select/lib/components/Control.js ***!
-  \**************************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.css = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _emotion = __webpack_require__(/*! emotion */ 4);
-
-var _theme = __webpack_require__(/*! ../theme */ 6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var css = exports.css = function css(_ref) {
-  var isDisabled = _ref.isDisabled,
-      isFocused = _ref.isFocused;
-  return {
-    alignItems: 'center',
-    backgroundColor: isDisabled ? _theme.colors.neutral5 : isFocused ? _theme.colors.neutral0 : _theme.colors.neutral2,
-    borderColor: isDisabled ? _theme.colors.neutral10 : isFocused ? _theme.colors.primary : _theme.colors.neutral20,
-    borderRadius: _theme.borderRadius,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    boxShadow: isFocused ? '0 0 0 1px ' + _theme.colors.primary : null,
-    cursor: 'default',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    minHeight: _theme.spacing.controlHeight,
-    outline: '0 !important',
-    position: 'relative',
-    transition: 'all 100ms',
-
-    '&:hover': {
-      borderColor: isFocused ? _theme.colors.primary : _theme.colors.neutral30
-    }
-  };
-};
-
-var Control = function Control(props) {
-  var children = props.children,
-      cx = props.cx,
-      getStyles = props.getStyles,
-      className = props.className,
-      isDisabled = props.isDisabled,
-      isFocused = props.isFocused,
-      innerRef = props.innerRef,
-      innerProps = props.innerProps;
-
-  return _react2.default.createElement(
-    'div',
-    _extends({
-      ref: innerRef,
-      className: cx( /*#__PURE__*/(0, _emotion.css)(getStyles('control', props)), {
-        'control': true,
-        'control--is-disabled': isDisabled,
-        'control--is-focused': isFocused
-      }, className)
-    }, innerProps),
-    children
-  );
-};
-
-exports.default = Control;
-
 /***/ })
 
-},[281]);
+},[315]);
 //# sourceMappingURL=geneSearchForm.bundle.js.map
