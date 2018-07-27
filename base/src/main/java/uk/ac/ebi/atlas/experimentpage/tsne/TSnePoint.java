@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline.tsne;
+package uk.ac.ebi.atlas.experimentpage.tsne;
 
 import com.google.auto.value.AutoValue;
 import com.google.gson.JsonDeserializationContext;
@@ -45,15 +45,19 @@ public abstract class TSnePoint {
     public abstract double y();
     public abstract Optional<Double> expressionLevel();
     public abstract String name();
+    public abstract String metadata();
 
     public static TSnePoint create(double x, double y, double expressionLevel, String name) {
-        return new AutoValue_TSnePoint(x, y, Optional.of(expressionLevel), name);
+        return new AutoValue_TSnePoint(x, y, Optional.of(expressionLevel), name, "");
     }
 
     public static TSnePoint create(double x, double y, String name) {
-        return new AutoValue_TSnePoint(x, y, Optional.empty(), name);
+        return new AutoValue_TSnePoint(x, y, Optional.empty(), name, "");
     }
 
+    public static TSnePoint create(double x, double y, String name, String metadata) {
+        return new AutoValue_TSnePoint(x, y, Optional.empty(),name, metadata);
+    }
     public static GsonTypeAdapter getGsonTypeAdapter() {
         return GSON_TYPE_ADAPTER;
     }
@@ -81,6 +85,13 @@ public abstract class TSnePoint {
                         jsonObject.get("x").getAsDouble(),
                         jsonObject.get("y").getAsDouble(),
                         jsonObject.get("expressionLevel").getAsDouble(),
+                        jsonObject.get("name").getAsString());
+            }
+            if (jsonObject.has("metadata")) {
+                return create(
+                        jsonObject.get("x").getAsDouble(),
+                        jsonObject.get("y").getAsDouble(),
+                        jsonObject.get("metadata").getAsString(),
                         jsonObject.get("name").getAsString());
             } else {
                 return create(

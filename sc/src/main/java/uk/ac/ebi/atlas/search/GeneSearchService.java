@@ -18,23 +18,23 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollecti
 
 @Component
 public class GeneSearchService {
-    private GeneSearchServiceDao geneSearchServiceDao;
+    private GeneSearchDao geneSearchDao;
 
-    public GeneSearchService(GeneSearchServiceDao geneSearchServiceDao) {
-        this.geneSearchServiceDao = geneSearchServiceDao;
+    public GeneSearchService(GeneSearchDao geneSearchDao) {
+        this.geneSearchDao = geneSearchDao;
 
     }
-
+    
     // Map<Gene ID, Map<Experiment accession, List<Cell IDs>>>
     public Map<String, Map<String, List<String>>> getCellIdsInExperiments(String... geneIds) {
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
-                geneId -> geneSearchServiceDao.fetchCellIds(geneId));
+                geneId -> geneSearchDao.fetchCellIds(geneId));
     }
 
     // Returns inferred cell types and organism parts for each experiment accession
     public Map<String, Map<String, List<String>>> getFacets(List<String> cellIds) {
-        return geneSearchServiceDao.getFacets(
+        return geneSearchDao.getFacets(
                 cellIds,
                 CHARACTERISTIC_INFERRED_CELL_TYPE, CHARACTERISTIC_ORGANISM_PART, CHARACTERISTIC_SPECIES);
     }
@@ -43,7 +43,7 @@ public class GeneSearchService {
     public Map<String, Map<String, Map<Integer, List<Integer>>>> getMarkerGeneProfile(String... geneIds) {
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
-                geneId -> geneSearchServiceDao.fetchKAndClusterIds(geneId));
+                geneId -> geneSearchDao.fetchKAndClusterIds(geneId));
     }
 
     private <T> Map<String, T> fetchInParallel(Set<String> geneIds, Function<String, T> geneIdInfoProvider) {

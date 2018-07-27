@@ -34,28 +34,40 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
         super(solrClient, "scxa-analytics");
     }
 
+    // Converts names of characteristics into SolrSchemaFields (e.g. cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type"))
     public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField characteristicAsSchemaField(String characteristic) {
-        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("characteristic_%s", characteristic), characteristicFieldNameToDisplayName(characteristic));
+        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("characteristic_%s", characteristic), metadataFieldNameToDisplayName(characteristic, "characteristic_"));
     }
 
+    // Converts names of factors into SolrSchemaFields (e.g. biopsy_site => new SingleCellAnalyticsSchemaField("factor_biopsy_site", "Biopsy site"))
     public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField factorAsSchemaField(String factor) {
-        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("factor_%s", factor), factorFieldNameToDisplayName(factor));
+        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("factor_%s", factor), metadataFieldNameToDisplayName(factor, "characteristic_"));
     }
 
-    public QueryResponse query(SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder) {
-        return query(solrQueryBuilder.build());
+    // Converts strings representing metadata field names to SolrSchemaFields (e.g. characteristic_cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type"))
+    public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataAsSchemaField(String metadata) {
+        // The metadata fields are either characteristics or factors
+        if (metadata.startsWith("characteristic")) {
+            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, metadataFieldNameToDisplayName(metadata, "characteristic_"));
+        }
+        else {
+            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, metadataFieldNameToDisplayName(metadata, "factor_"));
+        }
     }
 
-    // Converts Solr factor field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site)
-    public static String factorFieldNameToDisplayName(String factorFieldName) {
-        String displayName = factorFieldName.replace("factor_", "").replace("_", " ");
-
-        return StringUtils.capitalize(displayName);
+    // Converts metadata Solr field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site, characteristic_cell_type => Cell type)
+    public static String metadataFieldNameToDisplayName(String metadataFieldName) {
+        // The metadata fields are either characteristics or factors
+        if (metadataFieldName.startsWith("characteristic")) {
+            return metadataFieldNameToDisplayName(metadataFieldName, "characteristic_");
+        }
+        else {
+            return metadataFieldNameToDisplayName(metadataFieldName, "factor_");
+        }
     }
 
-    // Converts Solr characteristic names to human-friendly names (e.g. characteristic_inferred_cell_type => Inferred cell type)
-    public static String characteristicFieldNameToDisplayName(String characteristicFieldName) {
-        String displayName = characteristicFieldName.replace("characteristic_", "").replace("_", " ");
+    private static String metadataFieldNameToDisplayName(String fieldName, String prefix) {
+        String displayName = fieldName.replace(prefix, "").replace("_", " ");
 
         return StringUtils.capitalize(displayName);
     }
@@ -63,6 +75,10 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
     // Converts attribute strings from .idf file to Solr schema field names (e.g. FACS marker => facs_marker)
     public static String attributeNameToFieldName(String attributeName) {
         return attributeName.trim().toLowerCase().replace(" ", "_");
+    }
+
+    public QueryResponse query(SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder) {
+        return query(solrQueryBuilder.build());
     }
 
 }

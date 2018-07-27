@@ -1,28 +1,35 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.metadata;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.metadata.CellMetadataService;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ContextConfiguration(classes = {WebConfig.class})
 class CellMetadataServiceIT {
     @Inject
     private IdfParser idfParser;
     @Inject
-    private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
+    private CellMetadataDao cellMetadataDao;
     @Inject
     private JdbcUtils jdbcUtils;
 
@@ -30,7 +37,7 @@ class CellMetadataServiceIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new CellMetadataService(idfParser, solrCloudCollectionProxyFactory);
+        this.subject = new CellMetadataService(idfParser, cellMetadataDao);
     }
 
     @Test
@@ -45,8 +52,21 @@ class CellMetadataServiceIT {
     }
 
     @Test
-    void inferredCellTypeForNonexistentExperimentId() {
+    void inferredCellTypeForInvalidExperimentId() {
         assertThat(subject.getInferredCellType("FOO", "FOO")).isNotPresent();
+    }
+
+    @Test
+    void inferredCellTypeForInvalidCellId() {
+        assertThat(subject.getInferredCellType("E-ENAD-14", "FOO")).isNotPresent();
+    }
+
+    @ParameterizedTest
+    @MethodSource("experimentsWithFactorsProvider")
+    void factorsForValidExperimentAccession(String experimentAccession) {
+        String cellId = jdbcUtils.fetchRandomCellFromExperiment(experimentAccession);
+
+        assertThat(subject.getFactors(experimentAccession, cellId)).isNotEmpty();
     }
 
     @Test
@@ -54,9 +74,17 @@ class CellMetadataServiceIT {
         assertThat(subject.getFactors("FOO", "FOO")).isEmpty();
     }
 
+    @ParameterizedTest
+    @MethodSource("experimentsWithMetadataProvider")
+    void metadataForValidExperimentAccession(String experimentAccession) {
+        String cellId = jdbcUtils.fetchRandomCellFromExperiment(experimentAccession);
+
+        assertThat(subject.getMetadata(experimentAccession, cellId)).isNotEmpty();
+    }
+
     @Test
-    void inferredCellTypeForNonexistentCellId() {
-        assertThat(subject.getInferredCellType("E-ENAD-14", "FOO")).isNotPresent();
+    void metadataForInvalidExperiment() {
+        assertThat(subject.getMetadata("FOO", "FOO")).isEmpty();
     }
 
     @Test
@@ -85,5 +113,21 @@ class CellMetadataServiceIT {
                         experimentAccession,
                         jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
                 .isEmpty();
+    }
+
+    private Iterable<String> experimentsWithMetadataProvider() {
+        // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
+        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+                .stream()
+                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"))
+                .collect(Collectors.toSet());
+    }
+
+    private Iterable<String> experimentsWithFactorsProvider() {
+        // E-GEOD-99058 and E-ENAD-13 do not have any factors
+        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+                .stream()
+                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13") )
+                .collect(Collectors.toSet());
     }
 }

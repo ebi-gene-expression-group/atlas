@@ -31,24 +31,24 @@ import static org.mockito.Mockito.when;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class GeneSearchServiceTest {
     @Mock
-    private GeneSearchServiceDao geneSearchServiceDaoMock;
+    private GeneSearchDao geneSearchDaoMock;
 
     private GeneSearchService subject;
 
     @BeforeEach
-    void setUp() {
-        subject = new GeneSearchService(geneSearchServiceDaoMock);
+    public void setUp() {
+        subject = new GeneSearchService(geneSearchDaoMock);
     }
 
     @Test
-    void cellIdsPerExperimentForOneGeneId() {
+    public void returnsCellIdsPerExperiment() {
         Map<String, List<String>> ensg00000104957Cells =
-                ImmutableMap.of(
-                        "E-MTAB-0000", ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
-                        "E-MTAB-0001", ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
-                        "E-MTAB-0002", ImmutableList.of("cell_id_9", "cell_id_10"));
+                    ImmutableMap.of(
+                            "E-MTAB-0000", ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
+                            "E-MTAB-0001", ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
+                            "E-MTAB-0002", ImmutableList.of("cell_id_9", "cell_id_10"));
 
-        when(geneSearchServiceDaoMock.fetchCellIds("ENSG00000104957")).thenReturn(ensg00000104957Cells);
+        when(geneSearchDaoMock.fetchCellIds("ENSG00000104957")).thenReturn(ensg00000104957Cells);
 
         Map<String, Map<String, List<String>>> result = subject.getCellIdsInExperiments("ENSG00000104957");
 
@@ -68,8 +68,8 @@ class GeneSearchServiceTest {
                 "E-MTAB-0003", ImmutableList.of("cell_id_11", "cell_id_12", "cell_id_13"),
                 "E-MTAB-0004", ImmutableList.of("cell_id_14", "cell_id_15"));
 
-        when(geneSearchServiceDaoMock.fetchCellIds("ENSFOOBAR1")).thenReturn(ensfoobar1Cells);
-        when(geneSearchServiceDaoMock.fetchCellIds("ENSFOOBAR2")).thenReturn(ensfoobar2Cells);
+        when(geneSearchDaoMock.fetchCellIds("ENSFOOBAR1")).thenReturn(ensfoobar1Cells);
+        when(geneSearchDaoMock.fetchCellIds("ENSFOOBAR2")).thenReturn(ensfoobar2Cells);
 
         assertThat(subject.getCellIdsInExperiments("ENSFOOBAR1", "ENSFOOBAR2"))
                 .containsAllEntriesOf(ImmutableMap.of("ENSFOOBAR1", ensfoobar1Cells, "ENSFOOBAR2", ensfoobar2Cells));
@@ -87,7 +87,7 @@ class GeneSearchServiceTest {
                                 10, ImmutableList.of(1, 5, 8),
                                 12, ImmutableList.of(12)));
 
-        when(geneSearchServiceDaoMock.fetchKAndClusterIds("ENSG00000104952")).thenReturn(ensg00000104957Profiles);
+        when(geneSearchDaoMock.fetchKAndClusterIds("ENSG00000104952")).thenReturn(ensg00000104957Profiles);
 
         Map<String, Map<String, Map<Integer, List<Integer>>>> result =
                 subject.getMarkerGeneProfile("ENSG00000104952");
@@ -121,8 +121,8 @@ class GeneSearchServiceTest {
                                 4, ImmutableList.of(1, 2, 3)));
 
 
-        when(geneSearchServiceDaoMock.fetchKAndClusterIds("ENSFOOBAR1")).thenReturn(ensfoobar1Profiles);
-        when(geneSearchServiceDaoMock.fetchKAndClusterIds("ENSFOOBAR2")).thenReturn(ensfoobar2Profiles);
+        when(geneSearchDaoMock.fetchKAndClusterIds("ENSFOOBAR1")).thenReturn(ensfoobar1Profiles);
+        when(geneSearchDaoMock.fetchKAndClusterIds("ENSFOOBAR2")).thenReturn(ensfoobar2Profiles);
 
         assertThat(subject.getMarkerGeneProfile("ENSFOOBAR1", "ENSFOOBAR2"))
                 .containsAllEntriesOf(ImmutableMap.of("ENSFOOBAR1", ensfoobar1Profiles, "ENSFOOBAR2", ensfoobar2Profiles));
@@ -130,7 +130,7 @@ class GeneSearchServiceTest {
 
     @Test
     void returnsFacets() {
-        when(geneSearchServiceDaoMock.getFacets(anyList(), any(SingleCellAnalyticsSchemaField.class)))
+        when(geneSearchDaoMock.getFacets(anyList(), any(SingleCellAnalyticsSchemaField.class)))
                 .thenReturn(ImmutableMap.of(
                         "E-MTAB-0000", ImmutableMap.of(
                                 "inferred_cell_type", Arrays.asList("neuron", "stem cell"),
@@ -153,7 +153,7 @@ class GeneSearchServiceTest {
 
     @Test
     void exceptionsThrownInParallelTasksAreWrapped() {
-        doThrow(new UncheckedIOException(new IOException())).when(geneSearchServiceDaoMock).fetchCellIds(anyString());
+        doThrow(new UncheckedIOException(new IOException())).when(geneSearchDaoMock).fetchCellIds(anyString());
 
         assertThatExceptionOfType(RuntimeException.class).isThrownBy(
                 () -> subject.getCellIdsInExperiments("ENSFOOBAR1")).withCauseInstanceOf(ExecutionException.class);

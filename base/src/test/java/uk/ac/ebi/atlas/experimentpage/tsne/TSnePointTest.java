@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.tsne;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 
 import java.util.Optional;
 

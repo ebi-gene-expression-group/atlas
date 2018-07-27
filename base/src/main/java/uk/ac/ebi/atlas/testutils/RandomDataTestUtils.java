@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -69,6 +70,17 @@ public class RandomDataTestUtils {
             clusterIds.add(Integer.toString(ThreadLocalRandom.current().nextInt(1, k + 1)));
         }
         return clusterIds.toArray(new String[0]);
+    }
+
+    public static Set<TSnePoint.Dto> randomTSnePointDtos(int n) {
+        Random random = ThreadLocalRandom.current();
+
+        Set<String> runIds = randomSingleCellRnaSeqRunIds(n);
+
+        return runIds
+                .stream()
+                .map(id -> TSnePoint.Dto.create(random.nextDouble(), random.nextDouble(), id))
+                .collect(Collectors.toSet());
     }
 
     public static Set<TSnePoint.Dto> randomTSnePointDtosWithExpression(int n) {

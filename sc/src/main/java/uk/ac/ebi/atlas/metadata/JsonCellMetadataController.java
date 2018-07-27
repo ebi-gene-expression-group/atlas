@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.metadata;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -33,16 +33,13 @@ public class JsonCellMetadataController extends JsonExperimentController {
             @PathVariable String experimentAccession,
             @PathVariable String cellId,
             @RequestParam(defaultValue = "") String accessKey) {
+
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         JsonArray result = new JsonArray();
 
-        cellMetadataService
-                .getInferredCellType(experiment.getAccession(), cellId)
-                .ifPresent(inferredCellType -> result.add(createMetadataJson("Inferred cell type", inferredCellType)));
-
-        cellMetadataService.getFactors(experiment.getAccession(), cellId).forEach((factorName, factorValue) ->
-                result.add(createMetadataJson(factorName, factorValue)));
+        cellMetadataService.getMetadata(experiment.getAccession(), cellId).forEach((metadataName, metadataValue) ->
+                result.add(createMetadataJson(metadataName, metadataValue)));
 
         return result.toString();
     }

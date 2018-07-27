@@ -37,7 +37,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollecti
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {WebConfig.class})
 @TestInstance(Lifecycle.PER_CLASS)
-class GeneSearchServiceDaoIT {
+class GeneSearchDaoIT {
     @Inject
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -47,11 +47,11 @@ class GeneSearchServiceDaoIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
 
-    private GeneSearchServiceDao subject;
+    private GeneSearchDao subject;
 
     @BeforeEach
-    void setUp() {
-        subject = new GeneSearchServiceDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
+    public void setUp() {
+        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
     }
 
     @ParameterizedTest
@@ -76,7 +76,6 @@ class GeneSearchServiceDaoIT {
                 .containsOnly(
                         entry(3, singletonList(0)),
                         entry(2, singletonList(1)));
-
     }
 
     @ParameterizedTest

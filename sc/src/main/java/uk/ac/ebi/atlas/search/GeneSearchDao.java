@@ -31,15 +31,15 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollecti
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 
 @Component
-public class GeneSearchServiceDao {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchServiceDao.class);
+public class GeneSearchDao {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchDao.class);
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
 
     private BioentitiesCollectionProxy bioentitiesCollectionProxy;
 
-    public GeneSearchServiceDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
+    public GeneSearchDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.singleCellAnalyticsCollectionProxy = solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
         this.bioentitiesCollectionProxy = solrCloudCollectionProxyFactory.create(BioentitiesCollectionProxy.class);
