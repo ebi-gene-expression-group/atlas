@@ -20,7 +20,7 @@ public abstract class TupleStreamBuilder<T extends CollectionProxy> {
 
         StreamContext streamContext = new StreamContext();
         streamContext.setSolrClientCache(new SolrClientCache());
-        tupleStream.setStreamContext(new StreamContext());
+        tupleStream.setStreamContext(streamContext);
 
         return tupleStream;
     }

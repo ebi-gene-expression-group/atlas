@@ -7,11 +7,11 @@
         </encoder>
     </appender>
 
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="uk.ac.ebi.atlas" level="DEBUG" additivity="false">
+    <logger name="uk.ac.ebi.atlas" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 

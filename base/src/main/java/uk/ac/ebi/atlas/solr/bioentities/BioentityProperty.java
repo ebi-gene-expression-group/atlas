@@ -1,12 +1,17 @@
 package uk.ac.ebi.atlas.solr.bioentities;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.beans.Field;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
 
 public class BioentityProperty {
 
@@ -29,6 +34,9 @@ public class BioentityProperty {
     @Field("property_weight")
     private int propertyWeight;
 
+    @Field("property_name_id_weight")
+    private double propertyNameIdWeight;
+
     @Field("property_name")
     private String name;
 
@@ -45,6 +53,7 @@ public class BioentityProperty {
         this.value = value;
 
         this.propertyWeight = PROPERTY_TO_WEIGHTS.getOrDefault(name, DEFAULT_WEIGHT);
+        this.propertyNameIdWeight = BioentityPropertyName.getByName(name).idWeight;
     }
 
     public String getSpecies() {
@@ -79,6 +88,15 @@ public class BioentityProperty {
         this.propertyWeight = propertyWeight;
     }
 
+    public double getPropertyNameIdWeight() {
+        return propertyNameIdWeight;
+    }
+
+    public void setPropertyNameIdWeight(double propertyNameIdWeight) {
+        this.propertyNameIdWeight = propertyNameIdWeight;
+    }
+
+
     public String getBioentityIdentifier() {
         return bioentityIdentifier;
     }
@@ -111,6 +129,7 @@ public class BioentityProperty {
                 ", species='" + species + '\'' +
                 ", value='" + value + '\'' +
                 ", propertyWeight=" + propertyWeight +
+                ", propertyNameIdWeight=" + propertyNameIdWeight +
                 ", name='" + name + '\'' +
                 '}';
     }

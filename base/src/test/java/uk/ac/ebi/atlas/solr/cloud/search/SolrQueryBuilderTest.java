@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.solr.cloud.search;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
@@ -15,16 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.SOLR_MAX_ROWS;
 
 // Correctness of query syntax tested in SolrQueryUtilsTest
-public class SolrQueryBuilderTest {
-
-    public static class DummySchemaField extends SchemaField<CollectionProxy> {
+class SolrQueryBuilderTest {
+    private static class DummySchemaField extends SchemaField<CollectionProxy> {
         private DummySchemaField(String fieldName) {
             super(fieldName);
         }
     }
 
-    public static final DummySchemaField FIELD1 = new DummySchemaField("field1");
-    public static final DummySchemaField FIELD2 = new DummySchemaField("field2");
+    private static final DummySchemaField FIELD1 = new DummySchemaField("field1");
+    private static final DummySchemaField FIELD2 = new DummySchemaField("field2");
 
     @Test
     void byDefaultQueryAllAndRetrieveAllFields() {
@@ -106,4 +107,15 @@ public class SolrQueryBuilderTest {
                 .containsOnlyOnce("value3");
     }
 
+    @Test
+    void sortsOrderIsPreserved() {
+        SolrQuery solrQuery =
+                new SolrQueryBuilder<>()
+                    .sortBy(FIELD1, ORDER.asc)
+                    .sortBy(FIELD2, ORDER.desc)
+                    .build();
+
+        assertThat(solrQuery.getSorts())
+            .containsExactly(new SortClause(FIELD1.name(), ORDER.asc), new SortClause(FIELD2.name(), ORDER.desc));
+    }
 }

@@ -13,17 +13,22 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.everyItem;
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.in;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -47,6 +52,22 @@ class AutocompleteControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$..value", everyItem(containsStringIgnoringCase("zinc"))))
                 .andExpect(jsonPath("$..category", everyItem(anyOf(startsWith("ENSG"), startsWith("ENSMUSG")))));
+    }
+
+    @Test
+    void geneIdSuggestions() throws Exception {
+        this.mockMvc
+                .perform(get("/json/suggestions/gene_ids").param("species", "Homo sapiens").param("query", "asp"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[*].label", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(
+                        jsonPath(
+                                "$[*].label",
+                                everyItem(in(ID_PROPERTY_NAMES.stream().map(p -> p.label).collect(toList())))))
+                .andExpect(jsonPath("$[*].options", everyItem(hasSize(greaterThanOrEqualTo(1)))))
+                .andExpect(jsonPath("$[*].options.label", everyItem(not(empty()))))
+                .andExpect(jsonPath("$[*].options.value", everyItem(not(empty()))));
     }
 
     @Test

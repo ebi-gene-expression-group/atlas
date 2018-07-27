@@ -31,7 +31,8 @@ hr {
     border-bottom: 1px solid lightgrey;
 }
 
-#search-results-list, #experiment-page input {
+/* Override EBI VF styles for components that use React-Select */
+#search-results-list input, #experiment-page input, #search-form input {
     height: unset;
     box-shadow: none;
     margin: 0;
@@ -45,3 +46,4 @@ hr {
     overflow: visible !important;
 }
 
+>>>>>>> dev

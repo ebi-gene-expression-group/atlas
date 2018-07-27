@@ -106,7 +106,7 @@ class IntersectStreamBuilderTest {
 
         try (TupleStreamer tupleStreamer =
                      TupleStreamer.of(
-                             new IntersectStreamBuilder<>(tupleStreamBuilder1, tupleStreamBuilder2, SORT_FIELD)
+                             new IntersectStreamBuilder(tupleStreamBuilder1, tupleStreamBuilder2, SORT_FIELD)
                                      .build())) {
             assertionOverTupleStreamer.accept(tupleStreamer);
         }

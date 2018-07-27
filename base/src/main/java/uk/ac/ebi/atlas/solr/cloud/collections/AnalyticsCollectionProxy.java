@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
+package uk.ac.ebi.atlas.solr.cloud.collections;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.solr.client.solrj.SolrClient;

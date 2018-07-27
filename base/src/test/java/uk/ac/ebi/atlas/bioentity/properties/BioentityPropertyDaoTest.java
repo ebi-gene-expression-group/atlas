@@ -12,7 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 
 import java.util.HashMap;
 
@@ -68,7 +68,7 @@ public class BioentityPropertyDaoTest {
         when(bioentitiesCollectionMock.getMap(not(eq(ID_IN_BIOENTITIES)), anyList()))
                 .thenReturn(hashMapOf());
 
-        when(collectionProxyFactoryMock.createAnalyticsCollectionProxy())
+        when(collectionProxyFactoryMock.create(AnalyticsCollectionProxy.class))
                 .thenReturn(analyticsCollectionProxyMock);
 
         SolrDocumentList oneResultSolrDocumentList = new SolrDocumentList();

@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPointStream;
 import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentInputStream;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.common.SolrInputDocument;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GO;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.GOTERM;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.ORTHOLOG;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.asAnalyticsSchemaField;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.asAnalyticsSchemaField;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrInputDocumentInputStreamTest {

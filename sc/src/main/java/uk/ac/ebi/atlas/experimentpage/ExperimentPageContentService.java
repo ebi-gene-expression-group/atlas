@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.download.ExperimentFileType;
 import uk.ac.ebi.atlas.metadata.CellMetadataDao;
 import uk.ac.ebi.atlas.model.Publication;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import java.util.ArrayList;

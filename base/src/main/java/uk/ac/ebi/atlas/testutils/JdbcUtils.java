@@ -2,23 +2,14 @@ package uk.ac.ebi.atlas.testutils;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
-import javax.inject.Inject;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.List;
 
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
-
 @Component
 public class JdbcUtils {
     private JdbcTemplate jdbcTemplate;
-
-    @Inject
-    SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
 
     public JdbcUtils(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

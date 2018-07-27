@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
 
 @Named
 // Can be singleton because HttpSolrClient is thread safe, do not to add any other non thread safe state!

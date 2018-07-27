@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class JsonGeneSearchControllerWIT {
+class JsonGeneSearchControllerWIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
 
@@ -40,23 +41,33 @@ public class JsonGeneSearchControllerWIT {
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    public void validJsonForInvalidGeneId() throws Exception {
-        this.mockMvc.perform(get("/json/search/FOO"))
+    void unknownGene() throws Exception {
+        this.mockMvc.perform(get("/json/search").param("q", "FOO"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.results").isEmpty());
+                .andExpect(jsonPath("$.results").isEmpty())
+                .andExpect(jsonPath("$.reason").value(startsWith("Gene unknown")));
     }
 
     @Test
-    public void validJsonForValidGeneId() throws Exception {
+    void unexpressedGene() throws Exception {
+        this.mockMvc.perform(get("/json/search").param("symbol", "foxo"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.results").isEmpty())
+                .andExpect(jsonPath("$.reason").value(startsWith("No expression found")));
+    }
+
+    @Test
+    void validJsonForValidGeneId() throws Exception {
         String geneId = jdbcTestUtils.fetchRandomGene();
 
-        this.mockMvc.perform(get("/json/search/" + geneId))
+        this.mockMvc.perform(get("/json/search").param("ensgene", geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.results", hasSize(greaterThanOrEqualTo(1))))

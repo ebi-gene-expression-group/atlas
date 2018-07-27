@@ -1,0 +1,16 @@
+{
+  "name": "gene-search-form",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Expression Atlas developers <arrayexpress-atlas@ebi.ac.uk>",
+  "collaborators": [
+    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "scxa-gene-search-form": "^0.3.0"
+  }
+}

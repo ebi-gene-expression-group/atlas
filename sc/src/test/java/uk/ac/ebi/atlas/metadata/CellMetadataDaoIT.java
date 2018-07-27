@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
@@ -26,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:dispatcher-servlet.xml"})
+@ContextConfiguration(classes = {WebConfig.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CellMetadataDaoIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(CellMetadataDaoIT.class);

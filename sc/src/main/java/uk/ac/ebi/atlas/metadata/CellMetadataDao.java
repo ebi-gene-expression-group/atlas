@@ -5,7 +5,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class CellMetadataDao {
 
     public CellMetadataDao(SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.singleCellAnalyticsCollectionProxy =
-                solrCloudCollectionProxyFactory.createSingleCellAnalyticsCollectionProxy();
+                solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
     }
 
     // Retrieves a list of metadata fields available in Solr for a particular experiment. This includes all factor fields

@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.metadata.CellMetadataDao;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 
 import java.util.List;
 import java.util.Map;
