@@ -5,6 +5,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 public class TsnePlotSettingsService {
     private final DataFileHub dataFileHub;
     private final IdfParser idfParser;
+    private final TSnePlotServiceDao tSnePlotServiceDao;
 
-    public TsnePlotSettingsService(DataFileHub dataFileHub, IdfParser idfParser) {
+    public TsnePlotSettingsService(DataFileHub dataFileHub, IdfParser idfParser, TSnePlotServiceDao tSnePlotServiceDao) {
         this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
+        this.tSnePlotServiceDao = tSnePlotServiceDao;
     }
 
     public List<Integer> getAvailableClusters(String experimentAccession) {
@@ -30,9 +33,8 @@ public class TsnePlotSettingsService {
         }
     }
 
-    // TODO Get available perplexities from scxa_tsne https://www.pivotaltracker.com/story/show/154898174
     public List<Integer> getAvailablePerplexities(String experimentAccession) {
-        return Arrays.asList(1, 5, 10, 15, 20);
+        return tSnePlotServiceDao.fetchPerplexities(experimentAccession);
     }
 
     public Optional<Integer> getExpectedClusters(String experimentAccession) {

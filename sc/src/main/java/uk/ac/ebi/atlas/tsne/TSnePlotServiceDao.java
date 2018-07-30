@@ -75,6 +75,17 @@ public class TSnePlotServiceDao {
                         rs.getDouble("x"), rs.getDouble("y"), rs.getString("cell_id")));
     }
 
+    private static final String SELECT_DISTINCT_PERPLEXITIES_STATEMENT =
+            "SELECT DISTINCT perplexity FROM scxa_tsne WHERE experiment_accession=:experiment_accession";
+    public List<Integer> fetchPerplexities(String experimentAccession) {
+        Map<String, Object> namedParameters = ImmutableMap.of("experiment_accession", experimentAccession);
+
+        return namedParameterJdbcTemplate.queryForList(
+                SELECT_DISTINCT_PERPLEXITIES_STATEMENT,
+                namedParameters,
+                Integer.class
+        );
+    }
 // At one point we decided that getting the data for both the clusters plot and the expression plot was a good idea
 // because we could get all the data with a single request. However, every time you changed the gene we ended up
 // executing this statement which contains two JOINs, incurring in an unnecessary performance penalty. I leave this

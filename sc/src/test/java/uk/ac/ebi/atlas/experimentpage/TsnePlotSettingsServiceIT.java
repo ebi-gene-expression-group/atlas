@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
+import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
 
 import javax.inject.Inject;
 import java.io.UncheckedIOException;
@@ -39,11 +40,14 @@ public class TsnePlotSettingsServiceIT {
     @Inject
     private IdfParser idfParser;
 
+    @Inject
+    private TSnePlotServiceDao tSnePlotServiceDao;
+
     private TsnePlotSettingsService subject;
 
     @BeforeEach
     void setUp() {
-        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser);
+        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotServiceDao);
     }
 
 
