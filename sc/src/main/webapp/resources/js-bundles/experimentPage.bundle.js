@@ -13364,6 +13364,11 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
 
   var search = (0, _urijs2.default)(location.search).search(true);
 
+  // Sort perplexities in ascending order
+  var perplexitiesOrdered = perplexities.sort(function (a, b) {
+    return a - b;
+  });
+
   return _react2.default.createElement(
     'div',
     { className: 'margin-top-large' },
@@ -13379,8 +13384,8 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       selectedColourBy: search.k || search.metadata || props.selectedK || props.ks[0].toString(),
       selectedColourByCategory: search.colourBy || 'clusters' // Is the plot coloured by clusters or metadata
       , highlightClusters: search.clusterId ? JSON.parse(search.clusterId) : [],
-      perplexities: perplexities,
-      selectedPerplexity: Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)],
+      perplexities: perplexitiesOrdered,
+      selectedPerplexity: Number(search.perplexity) || perplexitiesOrdered[Math.round((perplexitiesOrdered.length - 1) / 2)],
       geneId: search.geneId || '',
       height: 800,
       onSelectGeneId: function onSelectGeneId(geneId) {

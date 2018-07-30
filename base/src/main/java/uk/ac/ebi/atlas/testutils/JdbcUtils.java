@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.List;
-import java.util.Random;
 
 @Component
 public class JdbcUtils {
