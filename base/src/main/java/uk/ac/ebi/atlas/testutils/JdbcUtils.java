@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class JdbcUtils {
@@ -57,10 +58,10 @@ public class JdbcUtils {
     }
 
     public String fetchRandomGeneFromSingleCellExperiment(String experimentAccession) {
-         return jdbcTemplate.queryForObject(
-                 "SELECT gene_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
-                 String.class,
-                 experimentAccession);
+        return jdbcTemplate.queryForObject(
+                "SELECT gene_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
+                String.class,
+                experimentAccession);
     }
 
     public String fetchRandomCellFromExperiment(String experimentAccession) {
