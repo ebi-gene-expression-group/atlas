@@ -10,7 +10,7 @@ const TSnePlotViewRoute = (props) => {
   const {location, history} = props
 
   const updateUrlWithParams = (query) => {
-    history.replace({...history.location, search: query.toString()})
+    history.push({...history.location, search: query.toString()})
   }
 
   const resetHighlightClusters = (query) => {
@@ -19,8 +19,8 @@ const TSnePlotViewRoute = (props) => {
     }
   }
 
-  const {atlasUrl, resourcesUrl} = props
-  const {suggesterEndpoint, species, experimentAccession, ks, perplexities, metadata} = props
+  const {atlasUrl, suggesterEndpoint} = props
+  const {species, experimentAccession, ks, perplexities, metadata} = props
   const search = URI(location.search).search(true)
 
   return (
@@ -52,7 +52,7 @@ const TSnePlotViewRoute = (props) => {
                     onChangePerplexity={
                       (perplexity) => {
                         const query = new URLSearchParams(history.location.search)
-                        query.set('geneId', geneId)
+                        query.set('perplexity', perplexity)
                         updateUrlWithParams(query)
                       }
                     }
