@@ -13346,7 +13346,7 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
 
 
   var updateUrlWithParams = function updateUrlWithParams(query) {
-    history.replace(_extends({}, history.location, { search: query.toString() }));
+    history.push(_extends({}, history.location, { search: query.toString() }));
   };
 
   var resetHighlightClusters = function resetHighlightClusters(query) {
@@ -13356,9 +13356,8 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
   };
 
   var atlasUrl = props.atlasUrl,
-      resourcesUrl = props.resourcesUrl;
-  var suggesterEndpoint = props.suggesterEndpoint,
-      species = props.species,
+      suggesterEndpoint = props.suggesterEndpoint;
+  var species = props.species,
       experimentAccession = props.experimentAccession,
       ks = props.ks,
       perplexities = props.perplexities,
@@ -13393,7 +13392,7 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       },
       onChangePerplexity: function onChangePerplexity(perplexity) {
         var query = new URLSearchParams(history.location.search);
-        query.set('geneId', geneId);
+        query.set('perplexity', perplexity);
         updateUrlWithParams(query);
       },
       onChangeColourBy: function onChangeColourBy(colourByCategory, colourByValue) {
