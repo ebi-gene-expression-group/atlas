@@ -81,7 +81,8 @@ public class EvidenceService<
                                     Comparator.comparing(p -> - Math.abs(p.getExpressionLevel(contrast))),
                                     GeneProfilesList::new))) {
 
-                // If experiment is microarray, retrieve prbe ID
+                // If experiment is microarray, retrieve probe ID
+                // TODO: Or could check experiment.getType().isMicroarray() instead?
                 Optional<String> probeId = profile instanceof MicroarrayProfile ? Optional.of(((MicroarrayProfile) profile).getDesignElementName()) : Optional.empty();
 
                 Expr expression = profile.getExpression(contrast);
@@ -93,6 +94,7 @@ public class EvidenceService<
                             expression,
                             rankPerContrastPerGene.get(profile.getId()).get(contrast),
                             profile.getId(),
+                            probeId,
                             contrast,
                             yield);
                 }
@@ -114,8 +116,9 @@ public class EvidenceService<
                                   Expr expression,
                                   Integer foldChangeRank,
                                   String ensemblGeneId,
+                                  Optional<String> probeId,
                                   Contrast contrast,
-                          Consumer<JsonObject> yield) {
+                                  Consumer<JsonObject> yield) {
         for (OntologyTerm diseaseUri : linkToDisease.diseaseInfo().valueOntologyTerms()) {
             yield.accept(pieceOfEvidence(
                     experiment,
@@ -127,6 +130,7 @@ public class EvidenceService<
                     expression,
                     foldChangeRank,
                     ensemblGeneId,
+                    probeId,
                     contrast,
                     linkToDisease.isCttvPrimary(),
                     linkToDisease.organismPart())
@@ -143,6 +147,7 @@ public class EvidenceService<
                                        Expr expression,
                                        Integer foldChangeRank,
                                        String ensemblGeneId,
+                                       Optional<String> probeId,
                                        Contrast contrast,
                                        boolean isCttvPrimary,
                                        SampleCharacteristic organismPart) {
@@ -153,7 +158,7 @@ public class EvidenceService<
                                 ensemblGeneId,
                                 experiment.getAccession(),
                                 contrast.getDisplayName(),
-                                contrast.getArrayDesignAccession() // TODO replace with probe ID
+                                probeId
                         ),
                         target(ensemblGeneId,
                                 isCttvPrimary,
@@ -327,12 +332,13 @@ public class EvidenceService<
         return result;
     }
 
-    private JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName, String probeId) {
+    private JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName, Optional<String> probeId) {
         JsonObject result = new JsonObject();
         result.addProperty("geneID", geneUri(ensemblGeneId));
         result.addProperty("study_id", experimentAccessionUri(experimentAccession));
         result.addProperty("comparison_name", comparisonName);
-        result.addProperty("probe_id", probeId);
+
+        probeId.ifPresent(x -> result.addProperty("probe_id", x));
         return result;
     }
 
