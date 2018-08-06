@@ -21,7 +21,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
 public class SearchController extends HtmlExceptionHandlingController {
-    private static final List<String> BLAH =
+    private static final List<String> VALID_REQUEST_PARAMS =
             ImmutableList.<String>builder()
                     .add("q")
                     .addAll(ID_PROPERTY_NAMES.stream().map(BioentityPropertyName::name).collect(toList()))
@@ -65,7 +65,7 @@ public class SearchController extends HtmlExceptionHandlingController {
         }
 
         for (String requestParam : requestParams.keySet()) {
-            for (String idPropertyName : BLAH) {
+            for (String idPropertyName : VALID_REQUEST_PARAMS) {
                 if (requestParam.equalsIgnoreCase(idPropertyName)) {
                     model.addAttribute("geneQueryTerm", requestParams.getFirst(requestParam));
                     model.addAttribute("geneQueryCategory", requestParam);
