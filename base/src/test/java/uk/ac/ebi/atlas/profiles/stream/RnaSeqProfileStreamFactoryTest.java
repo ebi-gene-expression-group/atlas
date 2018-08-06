@@ -18,23 +18,26 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.testutils.MockExperiment.createDifferentialExperiment;
 
 public class RnaSeqProfileStreamFactoryTest {
 
-    MockDataFileHub dataFileHub;
+    private MockDataFileHub dataFileHub;
 
-    RnaSeqProfileStreamFactory subject;
+    private RnaSeqProfileStreamFactory subject;
 
-    AssayGroup g1 = new AssayGroup("g1", "assay_1");
-    AssayGroup g2 = new AssayGroup("g2", "assay_2");
-    AssayGroup g3 = new AssayGroup("g3", "assay_3");
+    private static final AssayGroup g1 = new AssayGroup("g1", "assay_1");
+    private static final AssayGroup g2 = new AssayGroup("g2", "assay_2");
+    private static final AssayGroup g3 = new AssayGroup("g3", "assay_3");
 
-    Contrast g1_g2 = new Contrast("g1_g2", null, g1, g2, "contrast 1");
-    Contrast g1_g3 = new Contrast("g1_g3", null, g1, g3, "contrast 2");
+    private static final Contrast g1_g2 = new Contrast("g1_g2", null, g1, g2, "contrast 1");
+    private static final Contrast g1_g3 = new Contrast("g1_g3", null, g1, g3, "contrast 2");
 
-    DifferentialExperiment experiment = DifferentialExperimentTest.mockExperiment("accession", ImmutableList.of(g1_g2, g1_g3));
+    private static final DifferentialExperiment experiment =
+            createDifferentialExperiment("accession", ImmutableList.of(g1_g2, g1_g3));
 
-    String[] header = new String[]{"Gene ID", "Gene Name", "g1_g2.p-value", "g1_g2.log2foldchange", "g1_g3.p-value", "g1_g3.log2foldchange"};
+    private static final String[] header =
+            new String[]{"Gene ID", "Gene Name", "g1_g2.p-value", "g1_g2.log2foldchange", "g1_g3.p-value", "g1_g3.log2foldchange"};
 
     @Before
     public void setUp() throws Exception {
@@ -42,35 +45,36 @@ public class RnaSeqProfileStreamFactoryTest {
         subject = new RnaSeqProfileStreamFactory(dataFileHub);
     }
 
-    void testCaseNoExpressionFilter(List<String[]> dataLines, Collection<String> getGeneIds, List<RnaSeqProfile> expected) {
+    private void testCaseNoExpressionFilter(List<String[]> dataLines, Collection<String> getGeneIds, List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(0.0);
         differentialRequestPreferences.setCutoff(1.0);
         testCase(dataLines, getGeneIds, expected, differentialRequestPreferences);
     }
 
-    void testCaseNoCutoff(List<String[]> dataLines, Regulation regulation, List<RnaSeqProfile> expected) {
+    private void testCaseNoCutoff(List<String[]> dataLines, Regulation regulation, List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(0.0);
         differentialRequestPreferences.setCutoff(1.0);
         differentialRequestPreferences.setRegulation(regulation);
         testCase(dataLines, Collections.emptySet(), expected, differentialRequestPreferences);
     }
-    void testCaseFoldChangeCutoff(List<String[]> dataLines, Double foldChangeCutoff, List<RnaSeqProfile> expected) {
+
+    private void testCaseFoldChangeCutoff(List<String[]> dataLines, Double foldChangeCutoff, List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(foldChangeCutoff);
         differentialRequestPreferences.setCutoff(1.0);
         testCase(dataLines, Collections.emptySet(), expected, differentialRequestPreferences);
     }
 
-    void testCasePValueCutoff(List<String[]> dataLines, Double pValueCutoff, List<RnaSeqProfile> expected) {
+    private void testCasePValueCutoff(List<String[]> dataLines, Double pValueCutoff, List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(0.0);
         differentialRequestPreferences.setCutoff(pValueCutoff);
         testCase(dataLines, Collections.emptySet(), expected, differentialRequestPreferences);
     }
 
-    void testCase(List<String[]> dataLines, Collection<String> getGeneIds, List<RnaSeqProfile> expected, DifferentialRequestPreferences differentialRequestPreferences) {
+    private void testCase(List<String[]> dataLines, Collection<String> getGeneIds, List<RnaSeqProfile> expected, DifferentialRequestPreferences differentialRequestPreferences) {
         dataFileHub.addRnaSeqAnalyticsFile(experiment.getAccession(), dataLines);
         assertThat(
                 ImmutableList.copyOf(
@@ -80,7 +84,7 @@ public class RnaSeqProfileStreamFactoryTest {
         );
     }
 
-    RnaSeqProfile profile(String id, String name,
+    private RnaSeqProfile profile(String id, String name,
                           DifferentialExpression expressionForG1_G2,
                           DifferentialExpression expressionForG1_G3) {
         RnaSeqProfile profile = new RnaSeqProfile(id, name);
