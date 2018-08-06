@@ -38,4 +38,7 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression,
         return new MicroarrayProfile(getId(), getName(), designElementName);
     }
 
+    public String getDesignElementName() {
+        return designElementName;
+    }
 }

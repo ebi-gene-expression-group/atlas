@@ -12,8 +12,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
-import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -21,10 +19,14 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 
 public class MockExperiment {
 
@@ -32,8 +34,8 @@ public class MockExperiment {
     private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of());
     private static final String DESCRIPTION = "This is the experiment description";
     private static final String DISPLAY_NAME = "Experiment Display Name";
-    private static final List<String> PUBMEDID = Arrays.asList("PUBMEDID");
-    private static final List<String> DOI = Arrays.asList("100.100/doi");
+    private static final List<String> PUBMEDID = singletonList("PUBMEDID");
+    private static final List<String> DOI = singletonList("100.100/doi");
 
     private static final List<String> PROVIDER_URL = Arrays.asList("http://www.provider.com","http://www.provider1.com");
     private static final List<String> PROVIDER_DESCRIPTION = Arrays.asList("Baseline experiment data provider","Another baseline experiment data provider");
@@ -54,13 +56,6 @@ public class MockExperiment {
                     MockAssayGroups.create().get(0),
                     MockAssayGroups.create().get(1),
                     "contrast"));
-
-    private static final List<Cell> cells = ImmutableList.of(
-            new Cell("cell_id_1"),
-            new Cell("cell_id_2"),
-            new Cell("cell_id_3"),
-            new Cell("cell_id_4"),
-            new Cell("cell_id_5"));
 
     public static BaselineExperiment createBaselineExperiment() {
         return createBaselineExperiment(EXPERIMENT_ACCESSION);
@@ -149,8 +144,8 @@ public class MockExperiment {
                 assayGroups,
                 PROVIDER_URL,
                 PROVIDER_DESCRIPTION,
-                Collections.<String>emptyList(),
-                Collections.<String>emptyList(),
+                emptyList(),
+                emptyList(),
                 experimentDisplayDefaults
         );
     }
@@ -183,6 +178,27 @@ public class MockExperiment {
                 mockExperimentDesign(MockAssayGroups.create()));
     }
 
+    public static DifferentialExperiment createDifferentialExperiment(String accession, List<Contrast> contrasts) {
+        return createDifferentialExperiment(
+                accession,
+                contrasts,
+                mockExperimentDesign(
+                        contrasts.stream()
+                                .flatMap(contrast ->
+                                        Stream.of(contrast.getTestAssayGroup(), contrast.getReferenceAssayGroup()))
+                                .collect(toList())));
+    }
+
+    public static DifferentialExperiment createDifferentialExperiment(String accession,
+                                                                      List<Contrast> contrasts,
+                                                                      ExperimentDesign experimentDesign) {
+        return new DifferentialExperiment(
+                accession,
+                new Date(),
+                contrasts.stream().map(contrast -> Pair.of(contrast, true)).collect(toList()),
+                "description", new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
+                Sets.newHashSet(DOI), experimentDesign);
+    }
 
     public static ExperimentDesign mockExperimentDesign(List<AssayGroup> assayGroups){
         ExperimentDesign experimentDesign = new ExperimentDesign();
@@ -196,36 +212,4 @@ public class MockExperiment {
         }
         return experimentDesign;
     }
-
-    public static ExperimentDesign mockSingleCellExperimentDesign(List<Cell> cells) {
-        ExperimentDesign experimentDesign = new ExperimentDesign();
-        for(Cell cell : cells) {
-            for (String cellId : cell.assaysAnalyzedForThisDataColumn()) {
-                experimentDesign.putFactor(cellId, "type 1", cellId);
-            }
-        }
-        return experimentDesign;
-    }
-
-    public static SingleCellBaselineExperiment createSingleCellBaselineExperiment(String experimentAccession) {
-        return new SingleCellBaselineExperiment(
-                ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
-                experimentAccession,
-                new Date(),
-                DISPLAY_NAME,
-                DESCRIPTION,
-                "",
-                new Species(SPECIES_NAME, SPECIES_PROPERTIES),
-                Sets.newHashSet(PUBMEDID),
-                Sets.newHashSet(DOI),
-                mockSingleCellExperimentDesign(cells),
-                PROVIDER_URL,
-                PROVIDER_DESCRIPTION,
-                Collections.<String>emptyList(),
-                Collections.<String>emptyList(),
-                cells,
-                ExperimentDisplayDefaults.simpleDefaults()
-        );
-    }
-
 }
