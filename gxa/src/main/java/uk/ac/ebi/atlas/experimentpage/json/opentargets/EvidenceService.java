@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.differential.evidence;
+package uk.ac.ebi.atlas.experimentpage.json.opentargets;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableMap;
