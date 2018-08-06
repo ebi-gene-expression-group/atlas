@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.differential.evidence;
+package uk.ac.ebi.atlas.experimentpage.json.opentargets;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableMap;
@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
@@ -80,6 +81,10 @@ public class EvidenceService<
                                     Comparator.comparing(p -> - Math.abs(p.getExpressionLevel(contrast))),
                                     GeneProfilesList::new))) {
 
+                // If experiment is microarray, retrieve probe ID
+                // TODO: Or could check experiment.getType().isMicroarray() instead?
+                Optional<String> probeId = profile instanceof MicroarrayProfile ? Optional.of(((MicroarrayProfile) profile).getDesignElementName()) : Optional.empty();
+
                 Expr expression = profile.getExpression(contrast);
                 if (expression != null) {
                     piecesOfEvidence(
@@ -89,6 +94,7 @@ public class EvidenceService<
                             expression,
                             rankPerContrastPerGene.get(profile.getId()).get(contrast),
                             profile.getId(),
+                            probeId,
                             contrast,
                             yield);
                 }
@@ -104,11 +110,15 @@ public class EvidenceService<
                 || cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign());
     }
 
-    private void piecesOfEvidence(E experiment, String methodDescription,
-                               DiseaseAssociation linkToDisease,
-                               Expr expression, Integer foldChangeRank,
-                               String ensemblGeneId, Contrast contrast,
-                          Consumer<JsonObject> yield) {
+    private void piecesOfEvidence(E experiment,
+                                  String methodDescription,
+                                  DiseaseAssociation linkToDisease,
+                                  Expr expression,
+                                  Integer foldChangeRank,
+                                  String ensemblGeneId,
+                                  Optional<String> probeId,
+                                  Contrast contrast,
+                                  Consumer<JsonObject> yield) {
         for (OntologyTerm diseaseUri : linkToDisease.diseaseInfo().valueOntologyTerms()) {
             yield.accept(pieceOfEvidence(
                     experiment,
@@ -120,6 +130,7 @@ public class EvidenceService<
                     expression,
                     foldChangeRank,
                     ensemblGeneId,
+                    probeId,
                     contrast,
                     linkToDisease.isCttvPrimary(),
                     linkToDisease.organismPart())
@@ -127,22 +138,27 @@ public class EvidenceService<
         }
     }
 
-    private JsonObject pieceOfEvidence(E experiment, String methodDescription,
-                               OntologyTerm diseaseUri,
-                               SampleCharacteristic biosampleInfo,
-                               Pair<String, String> testAndReferenceLabels,
-                               DiseaseAssociation.CONFIDENCE confidence,
-                               Expr expression, Integer foldChangeRank,
-                               String ensemblGeneId, Contrast contrast,
-                               boolean isCttvPrimary,
-                               SampleCharacteristic organismPart) {
+    private JsonObject pieceOfEvidence(E experiment,
+                                       String methodDescription,
+                                       OntologyTerm diseaseUri,
+                                       SampleCharacteristic biosampleInfo,
+                                       Pair<String, String> testAndReferenceLabels,
+                                       DiseaseAssociation.CONFIDENCE confidence,
+                                       Expr expression,
+                                       Integer foldChangeRank,
+                                       String ensemblGeneId,
+                                       Optional<String> probeId,
+                                       Contrast contrast,
+                                       boolean isCttvPrimary,
+                                       SampleCharacteristic organismPart) {
 
         return withLiteratureReferences(
                 associationRecord(
                         uniqueAssociationFields(
                                 ensemblGeneId,
                                 experiment.getAccession(),
-                                contrast.getDisplayName()
+                                contrast.getDisplayName(),
+                                probeId
                         ),
                         target(ensemblGeneId,
                                 isCttvPrimary,
@@ -316,11 +332,13 @@ public class EvidenceService<
         return result;
     }
 
-    private JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName) {
+    private JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName, Optional<String> probeId) {
         JsonObject result = new JsonObject();
         result.addProperty("geneID", geneUri(ensemblGeneId));
         result.addProperty("study_id", experimentAccessionUri(experimentAccession));
         result.addProperty("comparison_name", comparisonName);
+
+        probeId.ifPresent(x -> result.addProperty("probe_id", x));
         return result;
     }
 

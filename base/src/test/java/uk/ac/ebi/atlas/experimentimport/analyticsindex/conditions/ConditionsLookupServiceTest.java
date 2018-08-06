@@ -17,7 +17,6 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperimentTest;
 import uk.ac.ebi.atlas.testutils.MockAssayGroups;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 
@@ -32,6 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.testutils.MockExperiment.createDifferentialExperiment;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConditionsLookupServiceTest {
@@ -149,7 +149,7 @@ public class ConditionsLookupServiceTest {
         setup.accept(contrast, experimentDesign);
 
         assertThat(
-                new ConditionsLookupService(new EFOLookupService(m)).conditionsPerDataColumnDescriptor(DifferentialExperimentTest.mockExperiment(
+                new ConditionsLookupService(new EFOLookupService(m)).conditionsPerDataColumnDescriptor(createDifferentialExperiment(
                         "accession",
                         contrasts,
                         experimentDesign
