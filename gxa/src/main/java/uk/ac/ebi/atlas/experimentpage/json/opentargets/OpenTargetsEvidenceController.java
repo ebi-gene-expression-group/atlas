@@ -37,7 +37,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 // Returns an empty response for experiments that are not about diseases or that we have no evidence for.
 @Controller
 @Scope("request")
-public class JsonDifferentialExperimentController extends JsonExperimentController {
+public class OpenTargetsEvidenceController extends JsonExperimentController {
 
     @InitBinder("preferences")
     void initBinder(WebDataBinder binder) {
@@ -53,11 +53,11 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
 
 
     @Inject
-    public JsonDifferentialExperimentController(ExperimentTrader experimentTrader,
-                                                RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory,
-                                                MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
-                                                DataFileHub dataFileHub,
-                                                Environment props) {
+    public OpenTargetsEvidenceController(ExperimentTrader experimentTrader,
+                                         RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory,
+                                         MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
+                                         DataFileHub dataFileHub,
+                                         Environment props) {
         super(experimentTrader);
         String resourcesVersion = props.getProperty("projectVersion");
 
