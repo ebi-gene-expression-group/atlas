@@ -4,6 +4,8 @@ import org.apache.solr.client.solrj.io.stream.StreamContext;
 import org.apache.solr.client.solrj.io.stream.TupleStream;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 
+import static uk.ac.ebi.atlas.configuration.SolrConfig.SOLR_CLIENT_CACHE;
+
 public abstract class TupleStreamBuilder<T extends CollectionProxy> {
     protected abstract TupleStream getRawTupleStream();
 
@@ -18,6 +20,7 @@ public abstract class TupleStreamBuilder<T extends CollectionProxy> {
         // if SolrJ will do so at some point or there are other uses, so we do the safe thing.
 
         StreamContext streamContext = new StreamContext();
+        streamContext.setSolrClientCache(SOLR_CLIENT_CACHE);
         tupleStream.setStreamContext(streamContext);
 
         return tupleStream;

@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,14 +32,15 @@ class TupleStreamBuilderTest {
         doNothing().when(tupleStreamMock).setStreamContext(any());
     }
 
-    // Creating a cache each time (and not closing it) leaks a connection in ZooKeeper. Because the services that use
-    // the collection proxies are singletons we hold a very cheap reference to the Solr client and ZK host and it
-    // shouldn’t be an issue.
+    // Creating a cache each time (and not closing it) leaks a connection in ZooKeeper, so not reusing it is a bug
     @Test
-    void solrClientCacheIsNotSetInStreamContext() {
+    void solrClientCacheIsReusedInStreamContext() {
+        new DummyTupleStreamBuilder().build();
         new DummyTupleStreamBuilder().build();
         ArgumentCaptor<StreamContext> argument = ArgumentCaptor.forClass(StreamContext.class);
-        verify(tupleStreamMock).setStreamContext(argument.capture());
-        assertThat(argument.getValue().getSolrClientCache()).isNull();
+        verify(tupleStreamMock, times(2)).setStreamContext(argument.capture());
+
+        assertThat(argument.getAllValues().get(0).getSolrClientCache())
+                .isSameAs(argument.getAllValues().get(1).getSolrClientCache());
     }
 }
