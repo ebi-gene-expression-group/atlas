@@ -13345,18 +13345,19 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       history = props.history;
 
 
-  var updateUrlSearch = function updateUrlSearch(parameter) {
-    history.push((0, _urijs2.default)(location.search).setSearch(parameter.name, parameter.value).toString());
+  var updateUrlWithParams = function updateUrlWithParams(query) {
+    history.push(_extends({}, history.location, { search: query.toString() }));
   };
 
-  var updateUrlSearchWithMultipleParams = function updateUrlSearchWithMultipleParams(query) {
-    history.replace(_extends({}, history.location, { search: query.toString() }));
+  var resetHighlightClusters = function resetHighlightClusters(query) {
+    if (query.has('clusterId')) {
+      query.delete('clusterId');
+    }
   };
 
   var atlasUrl = props.atlasUrl,
-      resourcesUrl = props.resourcesUrl;
-  var suggesterEndpoint = props.suggesterEndpoint,
-      species = props.species,
+      suggesterEndpoint = props.suggesterEndpoint;
+  var species = props.species,
       experimentAccession = props.experimentAccession,
       ks = props.ks,
       perplexities = props.perplexities,
@@ -13384,10 +13385,15 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
       geneId: search.geneId || '',
       height: 800,
       onSelectGeneId: function onSelectGeneId(geneId) {
-        updateUrlSearch({ name: 'geneId', value: geneId });
+        var query = new URLSearchParams(history.location.search);
+        query.set('geneId', geneId);
+        resetHighlightClusters(query);
+        updateUrlWithParams(query);
       },
       onChangePerplexity: function onChangePerplexity(perplexity) {
-        updateUrlSearch({ name: 'perplexity', value: perplexity });
+        var query = new URLSearchParams(history.location.search);
+        query.set('perplexity', perplexity);
+        updateUrlWithParams(query);
       },
       onChangeColourBy: function onChangeColourBy(colourByCategory, colourByValue) {
         var query = new URLSearchParams(history.location.search);
@@ -13399,8 +13405,8 @@ var TSnePlotViewRoute = function TSnePlotViewRoute(props) {
           query.set('metadata', colourByValue);
           query.delete('k');
         }
-
-        updateUrlSearchWithMultipleParams(query);
+        resetHighlightClusters(query);
+        updateUrlWithParams(query);
       }
     }),
     search.geneId && _react2.default.createElement(
