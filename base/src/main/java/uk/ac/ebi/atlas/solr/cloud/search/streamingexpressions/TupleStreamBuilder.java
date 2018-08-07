@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions;
 
-import org.apache.solr.client.solrj.io.SolrClientCache;
 import org.apache.solr.client.solrj.io.stream.StreamContext;
 import org.apache.solr.client.solrj.io.stream.TupleStream;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
@@ -19,7 +18,6 @@ public abstract class TupleStreamBuilder<T extends CollectionProxy> {
         // if SolrJ will do so at some point or there are other uses, so we do the safe thing.
 
         StreamContext streamContext = new StreamContext();
-        streamContext.setSolrClientCache(new SolrClientCache());
         tupleStream.setStreamContext(streamContext);
 
         return tupleStream;
