@@ -9,16 +9,18 @@ const TSnePlotViewRoute = (props) => {
 
   const {location, history} = props
 
-  const updateUrlSearch = (parameter) => {
-    history.push(URI(location.search).setSearch(parameter.name, parameter.value).toString())
+  const updateUrlWithParams = (query) => {
+    history.push({...history.location, search: query.toString()})
   }
 
-  const updateUrlSearchWithMultipleParams = (query) => {
-    history.replace({...history.location, search: query.toString()})
+  const resetHighlightClusters = (query) => {
+    if(query.has('clusterId')) {
+      query.delete('clusterId')
+    }
   }
 
-  const {atlasUrl, resourcesUrl} = props
-  const {suggesterEndpoint, species, experimentAccession, ks, perplexities, metadata} = props
+  const {atlasUrl, suggesterEndpoint} = props
+  const {species, experimentAccession, ks, perplexities, metadata} = props
   const search = URI(location.search).search(true)
 
   return (
@@ -39,8 +41,21 @@ const TSnePlotViewRoute = (props) => {
                     selectedPerplexity={Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)]}
                     geneId={search.geneId || ``}
                     height={800}
-                    onSelectGeneId={ (geneId) => { updateUrlSearch({ name: `geneId`, value: geneId }) } }
-                    onChangePerplexity={ (perplexity) => { updateUrlSearch({ name: `perplexity`, value: perplexity }) }}
+                    onSelectGeneId={
+                      (geneId) => {
+                        const query = new URLSearchParams(history.location.search)
+                        query.set('geneId', geneId)
+                        resetHighlightClusters(query)
+                        updateUrlWithParams(query)
+                      }
+                    }
+                    onChangePerplexity={
+                      (perplexity) => {
+                        const query = new URLSearchParams(history.location.search)
+                        query.set('perplexity', perplexity)
+                        updateUrlWithParams(query)
+                      }
+                    }
                     onChangeColourBy={
                       (colourByCategory, colourByValue) => {
                         const query = new URLSearchParams(history.location.search)
@@ -53,8 +68,8 @@ const TSnePlotViewRoute = (props) => {
                           query.set('metadata', colourByValue)
                           query.delete('k')
                         }
-
-                        updateUrlSearchWithMultipleParams(query)
+                        resetHighlightClusters(query)
+                        updateUrlWithParams(query)
                       }
                     }
       />
