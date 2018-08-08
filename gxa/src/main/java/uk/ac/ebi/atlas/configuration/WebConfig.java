@@ -44,7 +44,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
 
         registry.addResourceHandler("/expdata/**")
-                .addResourceLocations("file:" + dataFileHub.getExperimentMageTabDirLocation());
+                .addResourceLocations("file:" + dataFileHub.getExperimentMageTabDirLocation() + "/");
     }
 
     @Override
