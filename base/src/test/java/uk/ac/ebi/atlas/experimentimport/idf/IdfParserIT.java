@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import uk.ac.ebi.atlas.commons.readers.ArrayExpressIdfStreamerFactory;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
@@ -21,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class IdfParserIT {
 
     @Inject
-    private ArrayExpressIdfStreamerFactory arrayExpressIdfStreamerFactory;
-    @Inject
     private DataFileHubFactory dataFileHubFactory;
     @Inject
     private JdbcUtils jdbcUtils;
@@ -30,25 +27,23 @@ public class IdfParserIT {
     @ParameterizedTest
     @MethodSource("singleCellExperimentsProvider")
     public void testParserForSingleCell(String experimentAccession) {
-        IdfStreamerFactory idfStreamerFactory = new IdfStreamerFactory(arrayExpressIdfStreamerFactory, dataFileHubFactory.getScxaDataFileHub());
-        IdfParser idfParser = new IdfParser(idfStreamerFactory);
+        IdfParser idfParser = new IdfParser(dataFileHubFactory.getScxaDataFileHub());
+        IdfParserOutput result = idfParser.parse(experimentAccession);
 
-        parseForDBExperimentAccession(idfParser, experimentAccession);
+        assertThat(result.getExpectedClusters()).isGreaterThanOrEqualTo(0);
+        assertThat(result.getTitle()).isNotEmpty();
+        assertThat(result.getExperimentDescription()).isNotEmpty();
+        assertThat(result.getPublications()).isNotNull();
     }
 
     @ParameterizedTest
     @MethodSource("expressionAtlasExperimentsProvider")
     public void testParserForExpressionAtlas(String experimentAccession) {
-        IdfStreamerFactory idfStreamerFactory = new IdfStreamerFactory(arrayExpressIdfStreamerFactory, dataFileHubFactory.getGxaDataFileHub());
-        IdfParser idfParser = new IdfParser(idfStreamerFactory);
+        IdfParser idfParser = new IdfParser(dataFileHubFactory.getGxaDataFileHub());
 
-        parseForDBExperimentAccession(idfParser, experimentAccession);
-    }
-
-    private void parseForDBExperimentAccession(IdfParser idfParser, String experimentAccession) {
         IdfParserOutput result = idfParser.parse(experimentAccession);
 
-        assertThat(result.getExpectedClusters()).isGreaterThanOrEqualTo(0);
+        assertThat(result.getExpectedClusters()).isEqualTo(0);
         assertThat(result.getTitle()).isNotEmpty();
         assertThat(result.getExperimentDescription()).isNotEmpty();
         assertThat(result.getPublications()).isNotNull();

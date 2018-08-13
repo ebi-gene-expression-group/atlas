@@ -63,24 +63,4 @@ public class TSnePlotService {
                 .map(pointDto -> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.name(), StringUtils.capitalize(metadataValuesForCells.get(pointDto.name()))))
                 .collect(groupingBy(TSnePoint::metadata, mapping(Function.identity(), Collectors.toSet())));
     }
-
-
-// To understand what this is about see comment in TSnePlotServiceDao...
-
-//    public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithClusters(String experimentAccession,
-//                                                                  int perplexity,
-//                                                                  int k,
-//                                                                  String geneId) {
-//        List<TSnePoint.Dto> points =
-//                tSnePlotServiceDao.fetchTSnePlotWithExpressionAndClusters(experimentAccession, perplexity, geneId, k);
-//
-//        return points.stream()
-//                .collect(groupingBy(TSnePoint.Dto::clusterId))
-//                .entrySet().stream()
-//                .collect(toMap(
-//                        Map.Entry::getKey,
-//                        entry -> entry.getValue().stream()
-//                                .map(pointDto-> TSnePoint.create(pointDto.x(), pointDto.y(), pointDto.expressionLevel(), pointDto.name()))
-//                                .collect(toSet())));
-//    }
 }

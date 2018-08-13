@@ -71,7 +71,7 @@ public class BaselineExperimentCacheLoaderTest {
     private BaselineExperimentFactory subject;
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
         dataFileHub = MockDataFileHub.create();
     }
 
@@ -84,7 +84,7 @@ public class BaselineExperimentCacheLoaderTest {
         dataFileHub.addTemporaryFile(MessageFormat.format("magetab/{0}/{0}.tsv", experimentAccession),
                 ImmutableSet.of("assay group id 1"));
 
-        subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock, dataFileHub);
+        subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
         when(baselineConfiguration.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");
@@ -108,21 +108,21 @@ public class BaselineExperimentCacheLoaderTest {
     }
 
     @Test(expected=IllegalStateException.class)
-    public void assayGroupsShouldBeNonEmpty() throws Exception{
+    public void assayGroupsShouldBeNonEmpty() {
         when(configuration.getAssayGroups()).thenReturn(ImmutableList.of());
-        subject.create(dto, "description from array express", experimentDesign);
+        subject.create(dto, experimentDesign);
     }
 
     @Test
-    public void useAllCollaborators() throws Exception {
-        subject.create(dto, "description from array express", experimentDesign);
+    public void useAllCollaborators() {
+        subject.create(dto, experimentDesign);
         verifyCollaborators();
         noMoreInteractionsWithCollaborators();
     }
 
     @Test
-    public void noAlternativeViewsForTypicalExperiment() throws Exception {
-        BaselineExperiment e = subject.create(dto, "description from array express", experimentDesign);
+    public void noAlternativeViewsForTypicalExperiment() {
+        BaselineExperiment e = subject.create(dto, experimentDesign);
 
         assertThat(e.alternativeViews(), hasSize(0));
         verifyCollaborators();
@@ -130,7 +130,7 @@ public class BaselineExperimentCacheLoaderTest {
     }
 
     @Test
-    public void alternativeViews() throws Exception {
+    public void alternativeViews() {
         String alternativeViewAccession = "E-MOCK-2";
         when(baselineConfiguration.getAlternativeViews()).thenReturn(ImmutableList.of(alternativeViewAccession));
         BaselineExperimentConfiguration alternativeViewBaselineConfiguration =
@@ -140,7 +140,7 @@ public class BaselineExperimentCacheLoaderTest {
         String s = "default query factor of other experiment";
         when(alternativeViewBaselineConfiguration.getDefaultQueryFactorType()).thenReturn(s);
 
-        BaselineExperiment e = subject.create(dto, "description from array express", experimentDesign);
+        BaselineExperiment e = subject.create(dto, experimentDesign);
 
         assertThat(e.alternativeViews(), hasSize(1));
         assertThat(e.alternativeViews().get(0).getLeft(), is(alternativeViewAccession));

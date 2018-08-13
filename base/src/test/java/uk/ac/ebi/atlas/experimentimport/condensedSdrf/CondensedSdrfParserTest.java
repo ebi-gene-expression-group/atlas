@@ -108,7 +108,7 @@ public class CondensedSdrfParserTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
         dataFileHub = MockDataFileHub.create();
     }
 

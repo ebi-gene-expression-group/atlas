@@ -16,12 +16,10 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
@@ -42,9 +40,6 @@ public class DifferentialExperimentsCacheLoaderIT {
     @Mock
     private GxaExperimentDao expressionAtlasExperimentDao;
 
-    @Mock
-    private ArrayExpressClient arrayExpressClient;
-
     @Inject
     private ExperimentDesignParser experimentDesignParser;
 
@@ -58,12 +53,13 @@ public class DifferentialExperimentsCacheLoaderIT {
                 false, UUID.randomUUID().toString());
         when(expressionAtlasExperimentDao.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).thenReturn(experimentDTO);
 
-        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,
-                differentialExperimentFactory );
+        subject =
+                new ExperimentsCacheLoader<>(
+                        experimentDesignParser, expressionAtlasExperimentDao, differentialExperimentFactory);
     }
 
     @Test
-    public void shouldHaveExactlyOneSpecies() throws Exception {
+    public void shouldHaveExactlyOneSpecies() {
 
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
@@ -73,7 +69,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldContainOneContrast() throws Exception {
+    public void shouldContainOneContrast() {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
@@ -83,7 +79,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldContainGivenContrast() throws Exception {
+    public void shouldContainGivenContrast() {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
@@ -102,12 +98,8 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldHaveDisplayNameEqualsToAccession() throws Exception {
-        when(arrayExpressClient.fetchExperimentName(EXPERIMENT_ACCESSION)).thenThrow(new RuntimeException("Woosh!"));
-        //given
+    public void shouldHaveDisplayNameEqualsToAccession() {
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
-
-        //then
         assertThat(experiment.getDisplayName(), is(EXPERIMENT_ACCESSION));
         assertThat(experiment.getDescription(), startsWith(""));
     }

@@ -10,7 +10,6 @@ import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -132,6 +131,13 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(
                 experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(CONDENSED_SDRF_FILE_PATH_TEMPLATE, accession)),
+                lines);
+    }
+
+    public void addIdfFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(
+                experimentsMageTabDirLocation.resolve(
+                        MessageFormat.format(IDF_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 

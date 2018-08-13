@@ -4,16 +4,21 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.testutils.MockAssayGroups;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
+import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import javax.inject.Inject;
 import java.util.Arrays;
@@ -39,13 +44,19 @@ public class BaselineExperimentBuilderIT {
     private static final List<String> PROVIDER_URL = Arrays.asList("http://www.provider.com","http://www.provider1.com");
     private static final List<String> PROVIDER_DESCRIPTION = Arrays.asList("Baseline experiment data provider","Another baseline experiment data provider");
 
-    private BaselineExperimentBuilder subject = new BaselineExperimentBuilder();
-
     @Inject
+    private EuropePmcClient europePmcClient;
+    @Inject
+    private DataFileHubFactory dataFileHubFactory;
+
+    private BaselineExperimentBuilder subject = new BaselineExperimentBuilder();
     private ExperimentAttributesService experimentAttributesService;
 
     @Test
-    public void testCreate() {
+    public void testCreateSingleCell() {
+        IdfParser idfParser = new IdfParser(dataFileHubFactory.getScxaDataFileHub());
+
+        experimentAttributesService = new ExperimentAttributesService(europePmcClient, idfParser);
 
         BaselineExperiment experiment = subject
                 .forSpecies(new Species(SPECIES_NAME, SPECIES_PROPERTIES))
@@ -61,7 +72,6 @@ public class BaselineExperimentBuilderIT {
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)
                 .withLastUpdate(new Date())
                 .create();
-
 
         Map<String, ?> attributes = experimentAttributesService.getAttributes(experiment);
 

@@ -20,7 +20,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 
@@ -52,9 +51,6 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     @Mock
     private GxaExperimentDao expressionAtlasExperimentDao;
 
-    @Mock
-    private ArrayExpressClient arrayExpressClient;
-
     @Inject
     private ExperimentDesignParser experimentDesignParser;
 
@@ -76,15 +72,13 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
                 UUID.randomUUID().toString());
         when(expressionAtlasExperimentDao.getExperimentAsAdmin(E_PROT_1)).thenReturn(experimentDTO);
 
-        when(arrayExpressClient.fetchExperimentName(E_PROT_1)).thenReturn("title");
-
-        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,
-                proteomicsBaselineExperimentFactory );
-
+        subject =
+                new ExperimentsCacheLoader<>(
+                        experimentDesignParser, expressionAtlasExperimentDao, proteomicsBaselineExperimentFactory);
     }
 
     @Test
-    public void correctSpeciesReadFromDatabase() throws Exception {
+    public void correctSpeciesReadFromDatabase() {
         //given
         BaselineExperiment experiment = subject.load(E_PROT_1);
         //then
@@ -94,7 +88,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() throws Exception {
+    public void experimentShouldOnlyContainRunsFromDataFile() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         assertThat(experiment.getAnalysedAssays(), containsInAnyOrder(
@@ -111,7 +105,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() throws Exception {
+    public void experimentShouldContainAssayGroups() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         Set<String> allAssayGroupIds = new HashSet<>();
@@ -125,7 +119,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentalFactors() throws Exception {
+    public void experimentalFactors() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         //System.out.println("\"" + Joiner.on("\", \"").join(allFactors));
@@ -139,7 +133,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentDesign() throws Exception {
+    public void experimentDesign() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();

@@ -22,7 +22,7 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
     }
 
     @Override
-    public SingleCellBaselineExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
+    public SingleCellBaselineExperiment create(ExperimentDTO experimentDTO,
                                      ExperimentDesign experimentDesign) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
@@ -32,7 +32,7 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
                 .forSpecies(speciesFactory.create(experimentDTO.getSpecies()))
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
-                .withDescription(experimentDescription)
+                .withDescription(experimentDTO.getTitle())
                 .withPubMedIds(experimentDTO.getPubmedIds())
                 .withDois(experimentDTO.getDois())
                 .withCells(experimentDesign.getAllRunOrAssay().stream().map(Cell::new).collect(Collectors.toList()))

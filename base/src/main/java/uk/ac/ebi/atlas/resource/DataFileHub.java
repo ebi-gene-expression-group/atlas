@@ -40,7 +40,7 @@ public class DataFileHub {
     protected final static String CONFIGURATION_FILE_PATH_TEMPLATE = "{0}/{0}-configuration.xml";
     final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "{0}/{0}-analysis-methods.tsv";
     protected final static String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.condensed-sdrf.tsv";
-    final static String IDF_FILE_PATH_TEMPLATE = "{0}/{0}.idf.txt";
+    protected final static String IDF_FILE_PATH_TEMPLATE = "{0}/{0}.idf.txt";
 
     protected final static String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "{0}/{0}.tsv";
     protected final static String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "{0}/{0}-fpkms.tsv";
