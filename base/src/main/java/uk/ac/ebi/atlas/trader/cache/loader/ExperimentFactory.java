@@ -5,6 +5,6 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 
 public interface ExperimentFactory<E extends Experiment> {
-    E create(ExperimentDTO experimentDTO, String experimentDescription,
+    E create(ExperimentDTO experimentDTO,
        ExperimentDesign experimentDesign);
 }

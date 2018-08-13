@@ -32,7 +32,6 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
 
     @Override
     public MicroarrayExperiment create(ExperimentDTO experimentDTO,
-                                       String experimentDescription,
                                        ExperimentDesign experimentDesign){
 
         String experimentAccession = experimentDTO.getExperimentAccession();
@@ -45,7 +44,7 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
                 experimentAccession,
                 experimentDTO.getLastUpdate(),
                 experimentConfiguration.getContrastAndAnnotationPairs(),
-                experimentDescription,
+                experimentDTO.getTitle(),
                 speciesFactory.create(experimentDTO.getSpecies()),
                 experimentDesign,
                 experimentDTO.getPubmedIds(),

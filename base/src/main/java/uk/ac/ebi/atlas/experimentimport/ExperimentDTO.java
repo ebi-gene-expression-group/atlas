@@ -13,10 +13,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
-/*
-Note the title is what's found in the IDF file. For display, we only use it as fallback, preferring Array Express titles.
-See ArrayExpressClient.java .
- */
+// The title is retrieved from the IDF file, see IdfParser
 public class ExperimentDTO {
     private final String experimentAccession;
     private final ExperimentType experimentType;

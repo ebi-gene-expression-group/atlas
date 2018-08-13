@@ -24,7 +24,6 @@ public class DifferentialExperimentFactory implements ExperimentFactory<Differen
 
     @Override
     public DifferentialExperiment create(ExperimentDTO experimentDTO,
-                                         String experimentDescription,
                                          ExperimentDesign experimentDesign) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
@@ -36,7 +35,7 @@ public class DifferentialExperimentFactory implements ExperimentFactory<Differen
                 experimentAccession,
                 experimentDTO.getLastUpdate(),
                 experimentConfiguration.getContrastAndAnnotationPairs(),
-                experimentDescription,
+                experimentDTO.getTitle(),
                 speciesFactory.create(experimentDTO.getSpecies()),
                 experimentDTO.getPubmedIds(),
                 experimentDTO.getDois(),

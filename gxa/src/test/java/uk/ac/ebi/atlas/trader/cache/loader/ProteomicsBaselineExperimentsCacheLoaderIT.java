@@ -20,7 +20,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 
