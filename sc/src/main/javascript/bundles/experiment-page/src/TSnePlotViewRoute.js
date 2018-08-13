@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import URI from 'urijs'
 
 import TSnePlotView from 'expression-atlas-experiment-page-tsne-plot'
 import BioentityInformation from 'sc-atlas-bioentity-information'
 
 const TSnePlotViewRoute = (props) => {
 
-  const {location, history} = props
+  const {history} = props
+  const query = new URLSearchParams(history.location.search)
 
   const updateUrlWithParams = (query) => {
     history.push({...history.location, search: query.toString()})
@@ -21,7 +21,6 @@ const TSnePlotViewRoute = (props) => {
 
   const {atlasUrl, suggesterEndpoint} = props
   const {species, experimentAccession, ks, perplexities, metadata} = props
-  const search = URI(location.search).search(true)
 
   return (
     <div className={`margin-top-large`}>
@@ -34,16 +33,15 @@ const TSnePlotViewRoute = (props) => {
                     experimentAccession={experimentAccession}
                     ks={ks}
                     metadata={metadata}
-                    selectedColourBy={search.k || search.metadata || props.selectedK || props.ks[0].toString()}
-                    selectedColourByCategory={search.colourBy || 'clusters'} // Is the plot coloured by clusters or metadata
-                    highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
+                    selectedColourBy={query.get(`k`) || query.get(`metadata`) || props.ks[0].toString()}
+                    selectedColourByCategory={query.get(`colourBy`) || `clusters`} // Is the plot coloured by clusters or metadata
+                    highlightClusters={query.has(`clusterId`) ? JSON.parse(query.get(`clusterId`)) : []}
                     perplexities={perplexities}
-                    selectedPerplexity={Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)]}
-                    geneId={search.geneId || ``}
+                    selectedPerplexity={Number(query.get(`perplexity`))|| props.perplexities[Math.round((perplexities.length - 1) / 2)]}
+                    geneId={query.get(`geneId`) || ``}
                     height={800}
                     onSelectGeneId={
                       (geneId) => {
-                        const query = new URLSearchParams(history.location.search)
                         query.set('geneId', geneId)
                         resetHighlightClusters(query)
                         updateUrlWithParams(query)
@@ -51,14 +49,12 @@ const TSnePlotViewRoute = (props) => {
                     }
                     onChangePerplexity={
                       (perplexity) => {
-                        const query = new URLSearchParams(history.location.search)
                         query.set('perplexity', perplexity)
                         updateUrlWithParams(query)
                       }
                     }
                     onChangeColourBy={
                       (colourByCategory, colourByValue) => {
-                        const query = new URLSearchParams(history.location.search)
                         query.set('colourBy', colourByCategory)
                         if(colourByCategory === 'clusters') {
                           query.set('k', colourByValue)
@@ -74,11 +70,11 @@ const TSnePlotViewRoute = (props) => {
                     }
       />
       {
-        search.geneId &&
+        query.has(`geneId`) &&
           <div className={`row expanded`}>
             <div className={`small-12 columns`}>
-              <h4 key={`title`} className={`margin-top-large`}>Information about gene {search.geneId}</h4>
-              <BioentityInformation key={`gene-information`} atlasUrl={atlasUrl} geneId={search.geneId} />
+              <h4 key={`title`} className={`margin-top-large`}>Information about gene {query.get(`geneId`)}</h4>
+              <BioentityInformation key={`gene-information`} atlasUrl={atlasUrl} geneId={query.get(`geneId`)} />
             </div>
           </div>
       }
