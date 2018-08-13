@@ -83,6 +83,8 @@
 <tiles:insertAttribute name="global-footer"/>
 
 <!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
 <!-- Don’t defer or async, these two need to be loaded before other bundles, which are effectively deferred -->
 <script src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/fetch-polyfill.min.js"></script>
@@ -100,10 +102,6 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
 <!-- end CSS-->
-
-<!-- All JavaScript at the bottom, except for jQuery -->
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 
 <!-- Google Analytics details -->
 <script>
