@@ -27,7 +27,7 @@ public class BaselineAnalyticsSearchDao {
 
     // We don’t need to worry about the type, analyticsQueryClient.baselineFacets filters only baseline experiments
     private static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets..experimentAccession.buckets[*]";
-    static final String FACET_TREE_PATH = "$.facets.experimentType.buckets.species.buckets[*]";
+    static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[*].species.buckets[*]";
 
     private final AnalyticsQueryClient analyticsQueryClient;
 
