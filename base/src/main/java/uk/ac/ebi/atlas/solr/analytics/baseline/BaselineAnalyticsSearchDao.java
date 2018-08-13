@@ -3,18 +3,29 @@ package uk.ac.ebi.atlas.solr.analytics.baseline;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
+import org.apache.commons.math.util.MathUtils;
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.DoubleUnaryOperator;
 
 @Component
 public class BaselineAnalyticsSearchDao {
-    // analyticsQueryClient.baselineFacets searches for baseline experiments
+    static final int MIN_PRECISION = 7;
+    static final DoubleUnaryOperator BASELINE_EXPRESSION_ROUNDER =
+            value ->
+                    value >= 1 ?
+                            MathUtils.round(value, 0) :
+                    value >= 0.1 ?
+                            MathUtils.round(value, 1) :
+                    // value < 0.1
+                            MathUtils.round(value, MIN_PRECISION);
+
+    // We don’t need to worry about the type, analyticsQueryClient.baselineFacets filters only baseline experiments
     private static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets..experimentAccession.buckets[*]";
     static final String FACET_TREE_PATH = "$.facets.experimentType.buckets.species.buckets[*]";
 
@@ -82,9 +93,7 @@ public class BaselineAnalyticsSearchDao {
                 double sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
                 long numberOfGenesExpressedInAssayGroup = ((Number) assayGroup.get("count")).longValue();
 
-                double expression =
-                        BaselineExpressionLevelRounder.round(
-                                sumExpressionLevel / numberOfGenesExpressedInAssayGroup);
+                double expression = BASELINE_EXPRESSION_ROUNDER.applyAsDouble(sumExpressionLevel / numberOfGenesExpressedInAssayGroup);
 
                 if (!result.containsKey(experimentAccession)) {
                     result.put(experimentAccession, new HashMap<>());

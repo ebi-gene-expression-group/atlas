@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.solr.analytics.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -11,16 +14,25 @@ import org.mockito.quality.Strictness;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.analytics.query.AnalyticsQueryClient;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.solr.analytics.baseline.BaselineAnalyticsSearchDao.BASELINE_EXPRESSION_ROUNDER;
+import static uk.ac.ebi.atlas.solr.analytics.baseline.BaselineAnalyticsSearchDao.MIN_PRECISION;
 
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class BaselineAnalyticsSearchDaoTest {
-    public static String JSON_PAYLOAD_SAMPLE_FROM_LUNG_SEARCH_IN_CCLE = "{" +
+    private static final ThreadLocalRandom RNG = ThreadLocalRandom.current();
+    private static final double MAX_AGGREGATE_EXPRESSION = 100000;
+    private static final long MAX_EXPRESSED_GENES = 30000;
+
+    private static final String JSON_PAYLOAD_SAMPLE_FROM_LUNG_SEARCH_IN_CCLE = "{" +
             "  \"response\": {" +
             "    \"numFound\": 8172687," +
             "    \"start\": 0," +
@@ -28,7 +40,7 @@ class BaselineAnalyticsSearchDaoTest {
             "    \"docs\": []" +
             "  }," +
             "  \"facets\": {" +
-            "    \"count\": 8172687," +
+            "    \"count\": %d," +
             "    \"experimentType\": {" +
             "      \"buckets\": [" +
             "        {" +
@@ -54,18 +66,18 @@ class BaselineAnalyticsSearchDaoTest {
             "                              \"buckets\": [" +
             "                                {" +
             "                                  \"val\": \"g571\"," +
-            "                                  \"count\": 26691," +
-            "                                  \"sumExpressionLevel\": 998046.7000000002" +
+            "                                  \"count\": %d," + //26691," +
+            "                                  \"sumExpressionLevel\": %f" + //998046.7000000002" +
             "                                }," +
             "                                {" +
             "                                  \"val\": \"g520\"," +
-            "                                  \"count\": 25722," +
-            "                                  \"sumExpressionLevel\": 998387.899999999" +
+            "                                  \"count\": %d," + //25722," +
+            "                                  \"sumExpressionLevel\": %f" + //998387.899999999" +
             "                                }," +
             "                                {" +
             "                                  \"val\": \"g519\"," +
-            "                                  \"count\": 25645," +
-            "                                  \"sumExpressionLevel\": 998144.1999999979" +
+            "                                  \"count\": %d," + //25645," +
+            "                                  \"sumExpressionLevel\": %f" + //998144.1999999979" +
             "                                }" +
             "                              ]" +
             "                            }" +
@@ -97,29 +109,89 @@ class BaselineAnalyticsSearchDaoTest {
         subject = new BaselineAnalyticsSearchDao(analyticsQueryClientMock);
     }
 
-    // TODO Randomize tests
+    @RepeatedTest(100)
+    void roundVeryTinyExpressionLevel() {
+        double expressionLevel = RNG.nextDouble(Double.MIN_VALUE, 5 * Math.pow(10, -MIN_PRECISION - 1));
+        assertThat(BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel))
+                .isEqualTo(BASELINE_EXPRESSION_ROUNDER.applyAsDouble(0.0))
+               .isEqualTo(0.0);
+    }
+
+    @RepeatedTest(100)
+    void roundTinyExpressionLevel() {
+        double expressionLevel = RNG.nextDouble(5 * Math.pow(10, -MIN_PRECISION - 1), 0.1);
+        double roundedExpressionLevel = BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel);
+
+        double epsilon = expressionLevel >= roundedExpressionLevel ?
+                expressionLevel - roundedExpressionLevel :
+                roundedExpressionLevel - expressionLevel;
+
+        assertThat(epsilon)
+                .isLessThan(Math.pow(10, -MIN_PRECISION) / 2);
+    }
+
+    @RepeatedTest(100)
+    void roundSmallExpressionLevel() {
+        double expressionLevel = RNG.nextDouble(0.1, 1.0);
+        double roundedExpressionLevel = BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel);
+
+        double epsilon = expressionLevel >= roundedExpressionLevel ?
+                expressionLevel - roundedExpressionLevel :
+                roundedExpressionLevel - expressionLevel;
+
+        assertThat(epsilon)
+                .isLessThan(0.1 / 2);
+    }
+
+    @RepeatedTest(100)
+    void roundBigExpressionLevel() {
+        double expressionLevel = RNG.nextDouble(1.0, Double.MAX_VALUE);
+        assertThat(BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel))
+                .isEqualTo(expressionLevel);
+    }
+
     @Test
-    void sumOfExpressionIsAveragedByGenesExpressedInAssayGroup() {
+    void sumOfExpressionLevelsIsAveragedByGenesExpressedInAssayGroup() {
+        List<Pair<Long, Double>> aggregatedExpression =
+            ImmutableList.of(
+                    Pair.of(RNG.nextLong(1, MAX_EXPRESSED_GENES), RNG.nextDouble(0.1, MAX_AGGREGATE_EXPRESSION)),
+                    Pair.of(RNG.nextLong(1, MAX_EXPRESSED_GENES), RNG.nextDouble(0.1, MAX_AGGREGATE_EXPRESSION)),
+                    Pair.of(RNG.nextLong(1, MAX_EXPRESSED_GENES), RNG.nextDouble(0.1, MAX_AGGREGATE_EXPRESSION)));
+
+        String randomizedPayload =
+                String.format(
+                        JSON_PAYLOAD_SAMPLE_FROM_LUNG_SEARCH_IN_CCLE,
+                        aggregatedExpression.stream().mapToLong(Pair::getLeft).sum(),
+                        aggregatedExpression.get(0).getLeft(), aggregatedExpression.get(0).getRight(),
+                        aggregatedExpression.get(1).getLeft(), aggregatedExpression.get(1).getRight(),
+                        aggregatedExpression.get(2).getLeft(), aggregatedExpression.get(2).getRight());
+
         when(analyticsQueryClientBuilderMock.baselineFacets()).thenReturn(analyticsQueryClientBuilderMock);
         when(analyticsQueryClientBuilderMock.queryIdentifierSearch(any())).thenReturn(analyticsQueryClientBuilderMock);
         when(analyticsQueryClientBuilderMock.queryConditionsSearch(any())).thenReturn(analyticsQueryClientBuilderMock);
         when(analyticsQueryClientBuilderMock.ofSpecies(anyString())).thenReturn(analyticsQueryClientBuilderMock);
         when(analyticsQueryClientBuilderMock.withFactorType(anyString())).thenReturn(analyticsQueryClientBuilderMock);
-        when(analyticsQueryClientBuilderMock.fetch()).thenReturn(JSON_PAYLOAD_SAMPLE_FROM_LUNG_SEARCH_IN_CCLE);
+        when(analyticsQueryClientBuilderMock.fetch()).thenReturn(randomizedPayload);
 
         when(analyticsQueryClientMock.queryBuilder()).thenReturn(analyticsQueryClientBuilderMock);
 
         assertThat(
                 subject.fetchExpressionLevels(
-                        SemanticQuery.create(), SemanticQuery.create("lung"), "homo sapiens", "CELL_LINE"))
+                        SemanticQuery.create(), SemanticQuery.create("lung"), "homo sapiens", "CELL_LINE")
+                        .get("E-MTAB-2770"))
                 .containsAllEntriesOf(
-                        ImmutableMap.of(
-                                "E-MTAB-2770",
                                 ImmutableMap.of(
-                                        "g571", new Long(Math.round(998046.7000000002 / 26691)).doubleValue(),
-                                        "g520", new Long(Math.round(998387.899999999 / 25722)).doubleValue(),
-                                        "g519", new Long(Math.round(998144.1999999979 / 25645)).doubleValue())
-                        )
-                );
+                                        "g571",
+                                        BASELINE_EXPRESSION_ROUNDER.applyAsDouble(
+                                                aggregatedExpression.get(0).getRight() /
+                                                aggregatedExpression.get(0).getLeft()),
+                                        "g520",
+                                        BASELINE_EXPRESSION_ROUNDER.applyAsDouble(
+                                                aggregatedExpression.get(1).getRight() /
+                                                aggregatedExpression.get(1).getLeft()),
+                                        "g519",
+                                        BASELINE_EXPRESSION_ROUNDER.applyAsDouble(
+                                                aggregatedExpression.get(2).getRight() /
+                                                aggregatedExpression.get(2).getLeft())));
     }
 }
