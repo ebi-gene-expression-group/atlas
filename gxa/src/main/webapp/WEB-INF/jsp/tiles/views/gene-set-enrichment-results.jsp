@@ -23,12 +23,13 @@
 </div>
 
 
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/lib/datatables.buttons.foundation.min.js"></script>
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/geneSetEnrichmentModule.js"></script>
+<script defer src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script defer src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
+<script defer src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+<script defer src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js/lib/datatables.buttons.foundation.min.js"></script>
+
+<script defer src="${pageContext.request.contextPath}/resources/js/geneSetEnrichmentModule.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
