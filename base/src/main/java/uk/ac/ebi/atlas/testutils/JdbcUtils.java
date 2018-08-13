@@ -57,10 +57,10 @@ public class JdbcUtils {
     }
 
     public String fetchRandomGeneFromSingleCellExperiment(String experimentAccession) {
-         return jdbcTemplate.queryForObject(
-                 "SELECT gene_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
-                 String.class,
-                 experimentAccession);
+        return jdbcTemplate.queryForObject(
+                "SELECT gene_id FROM scxa_analytics WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
+                String.class,
+                experimentAccession);
     }
 
     public String fetchRandomCellFromExperiment(String experimentAccession) {

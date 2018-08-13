@@ -74,4 +74,16 @@ public class TSnePlotServiceDao {
                 (rs, rowNum) -> TSnePoint.Dto.create(
                         rs.getDouble("x"), rs.getDouble("y"), rs.getString("cell_id")));
     }
+
+    private static final String SELECT_DISTINCT_PERPLEXITIES_STATEMENT =
+            "SELECT DISTINCT perplexity FROM scxa_tsne WHERE experiment_accession=:experiment_accession";
+    public List<Integer> fetchPerplexities(String experimentAccession) {
+        Map<String, Object> namedParameters = ImmutableMap.of("experiment_accession", experimentAccession);
+
+        return namedParameterJdbcTemplate.queryForList(
+                SELECT_DISTINCT_PERPLEXITIES_STATEMENT,
+                namedParameters,
+                Integer.class
+        );
+    }
 }

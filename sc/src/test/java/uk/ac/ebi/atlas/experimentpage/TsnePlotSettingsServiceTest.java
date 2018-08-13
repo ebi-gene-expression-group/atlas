@@ -9,9 +9,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
+import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -21,6 +23,9 @@ class TsnePlotSettingsServiceTest {
 
     @Mock
     private IdfParser idfParserMock;
+
+    @Mock
+    private TSnePlotServiceDao tSnePlotServiceDaoMock;
 
     private static MockDataFileHub dataFileHubMock;
 
@@ -58,7 +63,7 @@ class TsnePlotSettingsServiceTest {
     @BeforeEach
     void setUp() {
         dataFileHubMock = MockDataFileHub.create();
-        subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock);
+        subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock, tSnePlotServiceDaoMock);
     }
 
     @Test
@@ -123,5 +128,24 @@ class TsnePlotSettingsServiceTest {
                 .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), 0, Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isNotPresent();
+    }
+
+    @Test
+    @DisplayName("Valid perplexities in database")
+    void validPerplexities() {
+        List<Integer> PERPLEXITIES = Arrays.asList(1, 5, 25, 20, 10, 5);
+        when(tSnePlotServiceDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(PERPLEXITIES);
+
+        assertThat(subject.getAvailablePerplexities(EXPERIMENT_ACCESSION))
+                .hasSameSizeAs(PERPLEXITIES)
+                .containsExactlyElementsOf(PERPLEXITIES);
+    }
+
+    @Test
+    @DisplayName("No perplexities in database")
+    void noPerplexities() {
+        when(tSnePlotServiceDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(Collections.emptyList());
+
+        assertThat(subject.getAvailablePerplexities(EXPERIMENT_ACCESSION)).isEmpty();
     }
 }

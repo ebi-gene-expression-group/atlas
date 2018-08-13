@@ -23,6 +23,9 @@ const TSnePlotViewRoute = (props) => {
   const {species, experimentAccession, ks, perplexities, metadata} = props
   const search = URI(location.search).search(true)
 
+  // Sort perplexities in ascending order
+  const perplexitiesOrdered = perplexities.sort((a, b) => a - b)
+
   return (
     <div className={`margin-top-large`}>
       <TSnePlotView atlasUrl={atlasUrl}
@@ -37,8 +40,8 @@ const TSnePlotViewRoute = (props) => {
                     selectedColourBy={search.k || search.metadata || props.selectedK || props.ks[0].toString()}
                     selectedColourByCategory={search.colourBy || 'clusters'} // Is the plot coloured by clusters or metadata
                     highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
-                    perplexities={perplexities}
-                    selectedPerplexity={Number(search.perplexity) || props.perplexities[Math.round((perplexities.length - 1) / 2)]}
+                    perplexities={perplexitiesOrdered}
+                    selectedPerplexity={Number(search.perplexity) || perplexitiesOrdered[Math.round((perplexitiesOrdered.length - 1) / 2)]}
                     geneId={search.geneId || ``}
                     height={800}
                     onSelectGeneId={
