@@ -1,183 +1,218 @@
 package uk.ac.ebi.atlas.search;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
+import uk.ac.ebi.atlas.search.geneids.GeneIdSearchService;
+import uk.ac.ebi.atlas.search.geneids.GeneQuery;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.stream.Stream;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static java.util.stream.Collectors.toList;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
 public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
-    private GeneSearchService geneSearchService;
-    private ScxaExperimentTrader experimentTrader;
-    private ExperimentAttributesService experimentAttributesService;
+    private final GeneIdSearchService geneIdSearchService;
+    private final SpeciesFactory speciesFactory;
+    private final GeneSearchService geneSearchService;
+    private final ScxaExperimentTrader experimentTrader;
+    private final ExperimentAttributesService experimentAttributesService;
 
-    public JsonGeneSearchController(GeneSearchService geneSearchService,
+    public JsonGeneSearchController(GeneIdSearchService geneIdSearchService,
+                                    SpeciesFactory speciesFactory,
+                                    GeneSearchService geneSearchService,
                                     ScxaExperimentTrader experimentTrader,
                                     ExperimentAttributesService experimentAttributesService) {
+        this.geneIdSearchService = geneIdSearchService;
+        this.speciesFactory = speciesFactory;
         this.geneSearchService = geneSearchService;
         this.experimentTrader = experimentTrader;
         this.experimentAttributesService = experimentAttributesService;
     }
 
-    @RequestMapping(
-            value = "/json/search/{geneId}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
-    )
-    public String search(@PathVariable String geneId) {
-        JsonObject resultObject = new JsonObject();
-        JsonArray results = new JsonArray();
+    @RequestMapping(value = "/json/search",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String search(@RequestParam MultiValueMap<String, String> requestParams) {
+        Optional<Species> species = Optional.ofNullable(requestParams.getFirst("species")).map(speciesFactory::create);
 
-        Map<String, List<String>> cellIds = geneSearchService.getCellIdsInExperiments(geneId);
+        Stream<String> validQueryFields =
+                Stream.concat(Stream.of("q"), ID_PROPERTY_NAMES.stream().map(BioentityPropertyName::name));
 
-        if(!cellIds.isEmpty()) {
-            List<String> allCellIds = cellIds
-                    .values()
-                    .stream()
-                    .flatMap(List::stream)
-                    .collect(Collectors.toList());
+        // We support currently only one query term; in the unlikely case that somebody fabricates a URL with more than
+        // one we’ll build the query with the first match. Remember that in order to support multiple terms we’ll
+        // likely need to change GeneQuery and use internally a SemanticQuery
+        String category =
+                requestParams.keySet().stream()
+                        .filter(actualField -> validQueryFields.anyMatch(validField -> validField.equalsIgnoreCase(actualField)))
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException("Error parsing query"));
 
-            Map<String, Map<String, List<String>>> factorFacets = geneSearchService.getFacets(allCellIds);
-            Map<String, Map<Integer, List<Integer>>> markerGeneFacets = geneSearchService.getMarkerGeneProfile(geneId);
+        String queryTerm = requestParams.getFirst(category);
 
-            cellIds.forEach((experimentAccession, cells) -> {
-                JsonObject resultEntry = new JsonObject();
+        GeneQuery geneQuery;
+        if (category.equals("q")) {
+            geneQuery =
+                    species.map(_species -> GeneQuery.create(queryTerm, _species))
+                           .orElseGet(() -> GeneQuery.create(queryTerm));
+        } else {
+            geneQuery =
+                    species.map(_species -> GeneQuery.create(queryTerm, BioentityPropertyName.getByName(category), _species))
+                           .orElseGet(() -> GeneQuery.create(queryTerm, BioentityPropertyName.getByName(category)));
 
-                JsonObject experimentAttributes = getExperimentInformation(experimentAccession, geneId);
-                JsonArray facets = convertFacetModel(factorFacets.getOrDefault(experimentAccession, new HashMap<>()));
-                if(markerGeneFacets.containsKey(experimentAccession)) {
-                    facets.add(facetValueObject("Marker genes", "Experiments with marker genes"));
-                    experimentAttributes.add("markerGenes", convertMarkerGeneModel(experimentAccession, geneId, markerGeneFacets.get(experimentAccession)));
-                }
+        }
+        Optional<ImmutableSet<String>> geneIds = geneIdSearchService.search(geneQuery);
 
-                resultEntry.add("element", experimentAttributes);
-                resultEntry.add("facets",  facets);
-
-                results.add(resultEntry);
-            });
+        if (!geneIds.isPresent()) {
+            return GSON.toJson(
+                    ImmutableMap.of(
+                            "results", ImmutableList.of(),
+                            "reason", "Gene unknown"));
         }
 
-        resultObject.add("results", results);
+        if (geneIds.get().isEmpty()) {
+            return GSON.toJson(
+                    ImmutableMap.of(
+                            "results", ImmutableList.of(),
+                            "reason", "No expression found"));
+        }
 
-        resultObject.add("checkboxFacetGroups",  GSON.toJsonTree(Arrays.asList("Marker genes", "Species")));
+        // We found expressed gene IDs, let’s get to it now...
 
-        return GSON.toJson(resultObject);
+        Map<String, Map<String, List<String>>> geneIds2ExperimentAndCellIds =
+                geneSearchService.getCellIdsInExperiments(geneIds.get().toArray(new String[0]));
+
+        List<Map.Entry<String, Map<String, List<String>>>> expressedGeneIdEntries =
+                geneIds2ExperimentAndCellIds.entrySet().stream()
+                        .filter(entry -> !entry.getValue().isEmpty())
+                        .collect(toList());
+
+        Map<String, Map<String, Map<Integer, List<Integer>>>> markerGeneFacets =
+                geneSearchService.getMarkerGeneProfile(
+                        expressedGeneIdEntries.stream()
+                                .map(Map.Entry::getKey)
+                                .toArray(String[]::new));
+
+        // geneSearchServiceDao guarantees that values in the inner maps can’t be empty. The map itself may be empty
+        // but if there’s an entry the list will have at least on element
+        ImmutableList<ImmutableMap<String, Object>> results =
+                expressedGeneIdEntries.stream()
+                        // TODO Measure in production if parallelising the stream below results in any speedup (the more experiments we have the better)
+                        .flatMap(entry -> entry.getValue().entrySet().stream().map(exp2cells -> {
+
+                            // Inside this map-within-a-flatMap we unfold expressedGeneIdEntries to triplets of...
+                            String geneId = entry.getKey();
+                            String experimentAccession = exp2cells.getKey();
+                            List<String> cellIds = exp2cells.getValue();
+
+                            Map<String, Object> experimentAttributes = getExperimentInformation(experimentAccession, geneId);
+                            List<Map<String, String>> facets =
+                                    unfoldFacets(geneSearchService.getFacets(cellIds)
+                                            .getOrDefault(experimentAccession, ImmutableMap.of()));
+
+                            if (markerGeneFacets.containsKey(geneId) && markerGeneFacets.get(geneId).containsKey(experimentAccession)) {
+                                facets.add(
+                                        ImmutableMap.of(
+                                                "group", "Marker genes",
+                                                "value", "experiments with marker genes",
+                                                "label", "Experiments with marker genes"));
+                                experimentAttributes.put(
+                                        "markerGenes",
+                                        convertMarkerGeneModel(
+                                                experimentAccession,
+                                                geneId,
+                                                markerGeneFacets.get(geneId).get(experimentAccession)));
+                            }
+
+                            return ImmutableMap.of("element", experimentAttributes, "facets", facets);
+
+                        })).collect(toImmutableList());
+
+        return GSON.toJson(
+                ImmutableMap.of(
+                        "results", results,
+                        "checkboxFacetGroups", ImmutableList.of("Marker genes", "Species")));
     }
 
-    /** The following two methods convert this model:
-     *      {
-     *          "Cell type": ["stem", "enterocyte"],
-     *          "Organism part": ["small intestine"]
-     *      }
-     * into:
-     *      [
-     *          {
-     *              group: "Cell type",
-     *              value: "stem",
-     *              label: "Stem"
-     *          },
-     *          {
-     *              group: "Cell type",
-     *              value: "enterocyte",
-     *              label: "Enterocyte
-     *          },
-     *          {
-     *              group: "Organism part",
-     *              value: "small intestine",
-     *              label: "Small intestine"
-     *          }
-     *      ]
-     */
-    private JsonArray convertFacetModel(Map<String, List<String>> model) {
-        JsonArray result = new JsonArray();
-
-        model.forEach((facetGroup, facetValuesList) ->
-                facetValuesList.forEach(facetValue ->
-                        result.add(facetValueObject(facetGroup, facetValue)))
-        );
-
-        return result;
+    private <K, V> List<SimpleEntry<K, V>> unfoldListMultimap(Map<K, List<V>> multimap) {
+        return multimap.entrySet().stream()
+                .flatMap(entry -> entry.getValue().stream().map(value -> new SimpleEntry<>(entry.getKey(), value)))
+                .collect(toList());
     }
 
-    private JsonObject facetValueObject(String group, String value) {
-        JsonObject result = new JsonObject();
-
-        result.addProperty("group", group);
-        result.addProperty("value", value);
-        result.addProperty("label", StringUtils.capitalize(value));
-
-        return result;
+    private List<Map<String, String>> unfoldFacets(Map<String, List<String>> model) {
+        return unfoldListMultimap(model).stream()
+                .map(entry ->
+                        ImmutableMap.of(
+                                "group", entry.getKey(),
+                                "value", entry.getValue(),
+                                "label", StringUtils.capitalize(entry.getValue())))
+                .collect(toList());
     }
 
-    // Converts list of map of k and cluster IDs into JSON objects
-    private JsonArray convertMarkerGeneModel(String experimentAccession, String geneId, Map<Integer, List<Integer>> model) {
-        JsonArray result = new JsonArray();
+    private Map<String, Object> getExperimentInformation(String experimentAccession, String geneId) {
+        Experiment<Cell> experiment = experimentTrader.getPublicExperiment(experimentAccession);
+        Map<String, Object> experimentAttributes = experimentAttributesService.getAttributes(experiment);
+        experimentAttributes.put("url", createExperimentPageURL(experimentAccession, geneId));
 
-        model.forEach((k, clusterIds) ->
-                result.add(markerGeneObject(
-                        k,
-                        clusterIds,
-                        createResultsPageURL(experimentAccession, geneId, k, clusterIds))));
-
-        return result;
+        return experimentAttributes;
     }
 
-    private JsonObject markerGeneObject(Integer k, List<Integer> clusterIds, String url) {
-        JsonObject result = new JsonObject();
-
-        result.addProperty("k", k);
-        result.add("clusterIds", GSON.toJsonTree(clusterIds));
-        result.addProperty("url", url);
-
-        return result;
+    private List<Map<String, Object>> convertMarkerGeneModel(String experimentAccession,
+                                                             String geneId,
+                                                             Map<Integer, List<Integer>> model) {
+        return model.entrySet().stream()
+                .map(entry ->
+                        ImmutableMap.of(
+                                "k", entry.getKey(),
+                                "clusterIds", entry.getValue(),
+                                "url", createResultsPageURL(
+                                        experimentAccession, geneId, entry.getKey(), entry.getValue())))
+                .collect(toList());
     }
 
-    private String createExperimentPageURL(String experimentAccession, String geneId) {
+    private static String createExperimentPageURL(String experimentAccession, String geneId) {
        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/experiments/{experimentAccession}")
-                .query("geneId={geneId}")
-                .build()
-                .expand(experimentAccession, geneId)
-                .toString();
+               .path("/experiments/{experimentAccession}")
+               .query("geneId={geneId}")
+               .buildAndExpand(experimentAccession, geneId)
+               .toUriString();
     }
 
-    private String createResultsPageURL(String experimentAccession, String geneId, Integer k, List<Integer> clusterId) {
+    private static String createResultsPageURL(String experimentAccession,
+                                               String geneId,
+                                               Integer k,
+                                               List<Integer> clusterId) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/experiments/{experimentAccession}/Results")
                 .query("geneId={geneId}")
                 .query("k={k}")
                 .query("clusterId={clusterId}")
-                .build()
-                .expand(experimentAccession, geneId, k, clusterId)
-                .toString();
+                .buildAndExpand(experimentAccession, geneId, k, clusterId)
+                .toUriString();
     }
-
-    private JsonObject getExperimentInformation(String experimentAccession, String geneId) {
-        Experiment<Cell> experiment = experimentTrader.getPublicExperiment(experimentAccession);
-
-        JsonObject experimentAttributes = GSON.toJsonTree(experimentAttributesService.getAttributes(experiment)).getAsJsonObject();
-        experimentAttributes.addProperty("url", createExperimentPageURL(experimentAccession, geneId));
-
-        return experimentAttributes;
-    }
-
 }

@@ -429,6 +429,7 @@
   <field name="bioentity_type" type="lowercase"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="property_name" type="lowercase"/>
+  <field name="property_name_id_weight" type="pdouble" docValues="true"/>
   <field name="property_value" type="text_en_tight"/>
   <field name="property_weight" type="pint"/>
   <field name="species" type="lowercase"/>

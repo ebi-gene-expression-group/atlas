@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePlotService;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
+import uk.ac.ebi.atlas.tsne.TSnePlotService;
 import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
@@ -62,6 +63,25 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
             @PathVariable int perplexity,
             @RequestParam(defaultValue = "") String accessKey) {
         return tSnePlotWithExpression(experimentAccession, perplexity, "", accessKey);
+    }
+
+    @RequestMapping(
+            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/metadata/{metadata}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String tSnePlotWithMetadata(
+            @PathVariable String experimentAccession,
+            @PathVariable int perplexity,
+            @PathVariable String metadata,
+            @RequestParam(defaultValue = "") String accessKey) {
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+
+        return GSON.toJson(
+                ImmutableMap.of(
+                        "series",
+                        modelForHighcharts(
+                                "",
+                                new TreeMap<>(tSnePlotService.fetchTSnePlotWithMetadata(experiment.getAccession(), perplexity, metadata)))));
     }
 
     @RequestMapping(

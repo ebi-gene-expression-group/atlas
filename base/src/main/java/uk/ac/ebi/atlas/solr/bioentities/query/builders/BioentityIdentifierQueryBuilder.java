@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.species.Species;
 
-import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
 
 /**
  * This is a builder, keep always in mind that builders are potentially stateful.

@@ -3,18 +3,17 @@ package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.decorator;
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.client.solrj.io.stream.SelectStream;
 import org.apache.solr.client.solrj.io.stream.TupleStream;
-import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.TupleStreamBuilder;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Map;
 
-public class SelectStreamBuilder<T extends CollectionProxy> extends TupleStreamBuilder<T> {
-    private final TupleStreamBuilder<T> tupleStreamBuilder;
+public class SelectStreamBuilder extends TupleStreamBuilder {
+    private final TupleStreamBuilder tupleStreamBuilder;
     private final ImmutableMap.Builder<String, String> fieldMapsBuilder = ImmutableMap.builder();
 
-    public SelectStreamBuilder(TupleStreamBuilder<T> tupleStreamBuilder) {
+    public SelectStreamBuilder(TupleStreamBuilder tupleStreamBuilder) {
         this.tupleStreamBuilder = tupleStreamBuilder;
     }
 
@@ -23,9 +22,7 @@ public class SelectStreamBuilder<T extends CollectionProxy> extends TupleStreamB
     //     return this;
     // }
 
-    // We don’t use SchemaField<T> as keys because field names may have been renamed by a previous select clause or it
-    // may be a field with a stream evaluator
-    public SelectStreamBuilder<T> addFieldMapping(Map<String, String> fieldNamesMap) {
+    public SelectStreamBuilder addFieldMapping(Map<String, String> fieldNamesMap) {
         fieldMapsBuilder.putAll(fieldNamesMap);
         return this;
     }

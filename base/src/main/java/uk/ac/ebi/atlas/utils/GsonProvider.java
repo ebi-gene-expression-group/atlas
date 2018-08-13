@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 public class GsonProvider {

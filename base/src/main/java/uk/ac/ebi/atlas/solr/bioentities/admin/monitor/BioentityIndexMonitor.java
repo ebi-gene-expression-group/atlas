@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.solr.bioentities.admin.monitor;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
-import org.springframework.context.annotation.Scope;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 
@@ -34,7 +34,6 @@ import static com.google.common.base.Preconditions.checkState;
  * - Similar responsibility (progress report and progress events) would be executed by separate classes
  */
 @Component
-@Scope("prototype")
 public class BioentityIndexMonitor {
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
             + ",\n" +
@@ -115,7 +114,7 @@ public class BioentityIndexMonitor {
     }
 
     public String reportProgress(){
-        long totalDiskSpace = Paths.get(bioentityPropertiesDirectory).toFile().length();
+        long totalDiskSpace = FileUtils.sizeOf(Paths.get(bioentityPropertiesDirectory).toFile());
 
         switch(status){
             case PROCESSING:
