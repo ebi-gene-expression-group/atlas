@@ -15,11 +15,9 @@ import java.util.Map;
 
 @Named
 public class BaselineAnalyticsSearchDao {
-
-    //TODO no need for a filter there
-    public static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets[?(@.val=='RNASEQ_MRNA_BASELINE' ||" +
-            " @.val=='PROTEOMICS_BASELINE')]..experimentAccession.buckets[*]";
-    static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[?(@.val=='RNASEQ_MRNA_BASELINE' || @.val=='PROTEOMICS_BASELINE')].species.buckets[*]";
+    // analyticsQueryClient.baselineFacets searches for baseline experiments
+    private static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets..experimentAccession.buckets[*]";
+    static final String FACET_TREE_PATH = "$.facets.experimentType.buckets.species.buckets[*]";
 
     private final AnalyticsQueryClient analyticsQueryClient;
 
