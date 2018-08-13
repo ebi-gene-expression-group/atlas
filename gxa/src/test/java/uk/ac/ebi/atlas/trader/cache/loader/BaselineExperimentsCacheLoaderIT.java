@@ -39,9 +39,6 @@ public class BaselineExperimentsCacheLoaderIT {
     @Mock
     private GxaExperimentDao expressionAtlasExperimentDao;
 
-    @Mock
-    private ArrayExpressClient arrayExpressClient;
-
     @Inject
     private ExperimentDesignParser experimentDesignParser;
 
@@ -60,16 +57,15 @@ public class BaselineExperimentsCacheLoaderIT {
                 UUID.randomUUID().toString());
         when(expressionAtlasExperimentDao.getExperimentAsAdmin(accession)).thenReturn(experimentDTO);
 
-        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,
-                rnaSeqBaselineExperimentFactory );
+        subject =
+                new ExperimentsCacheLoader<>(
+                        experimentDesignParser, expressionAtlasExperimentDao, rnaSeqBaselineExperimentFactory);
     }
 
 
     @Test
     public void correctSpeciesReadFromDatabase() {
-        //given
         BaselineExperiment experiment = subject.load(accession);
-        //then
         String species = experiment.getSpecies().getName();
         assertThat(species).isEqualTo("Homo sapiens");
     }
@@ -84,13 +80,11 @@ public class BaselineExperimentsCacheLoaderIT {
                         "ERR030872", "ERR030873", "ERR030874", "ERR030875", "ERR030876", "ERR030877", "ERR030878",
                         "ERR030879", "ERR030880", "ERR030881", "ERR030882", "ERR030883", "ERR030884", "ERR030885",
                         "ERR030886", "ERR030887");
-
     }
 
     @Test
     public void experimentShouldContainAssayGroups() {
         BaselineExperiment experiment = subject.load(accession);
-
         assertThat(experiment.getDataColumnDescriptors()).hasSize(16);
     }
 

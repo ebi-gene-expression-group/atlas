@@ -48,12 +48,12 @@ public class MicroarrayExperimentFactoryTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
-    ArrayDesignDAO arrayDesignDAO;
+    private ArrayDesignDAO arrayDesignDAO;
 
     private MicroarrayExperimentFactory subject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         subject = new MicroarrayExperimentFactory(configurationTraderMock, speciesFactory, arrayDesignDAO);
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
@@ -69,9 +69,8 @@ public class MicroarrayExperimentFactoryTest {
     }
 
     @Test
-    public void testLoad() throws Exception {
-        MicroarrayExperiment microarrayExperiment =
-                subject.create(experimentDTOMock, "description", experimentDesignMock);
+    public void testLoad() {
+        MicroarrayExperiment microarrayExperiment = subject.create(experimentDTOMock, experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGN_ID));
         assertThat(microarrayExperiment.getSpecies(), is(SPECIES));

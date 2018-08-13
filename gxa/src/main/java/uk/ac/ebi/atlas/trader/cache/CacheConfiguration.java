@@ -19,32 +19,28 @@ import javax.inject.Inject;
 
 @Configuration
 public class CacheConfiguration {
+    private final ExperimentDesignParser experimentDesignParser;
+    private final GxaExperimentDao experimentDao;
 
-    @Inject
-    private ArrayExpressClient arrayExpressClient;
-
-    @Inject
-    private ExperimentDesignParser experimentDesignParser;
-
-    @Inject
-    private GxaExperimentDao experimentDao;
+    public CacheConfiguration(ExperimentDesignParser experimentDesignParser, GxaExperimentDao experimentDao) {
+        this.experimentDesignParser = experimentDesignParser;
+        this.experimentDao = experimentDao;
+    }
 
     @Bean(name="rnaSeqBaselineExperimentsLoadingCache")
     @Inject
     public LoadingCache<String, BaselineExperiment> baselineExperimentsCache(RnaSeqBaselineExperimentFactory experimentFactory){
 
-        return CacheBuilder.newBuilder().build(new ExperimentsCacheLoader<>(arrayExpressClient,
-                experimentDesignParser, experimentDao, experimentFactory));
-
+        return CacheBuilder.newBuilder()
+                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
     }
 
     @Bean(name="proteomicsBaselineExperimentsLoadingCache")
     @Inject
     public LoadingCache<String, BaselineExperiment> proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentFactory experimentFactory){
 
-        return CacheBuilder.newBuilder().build(new ExperimentsCacheLoader<>(arrayExpressClient,
-                experimentDesignParser, experimentDao, experimentFactory));
-
+        return CacheBuilder.newBuilder()
+                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
     }
 
 
@@ -52,18 +48,16 @@ public class CacheConfiguration {
     @Inject
     public LoadingCache<String, DifferentialExperiment> differentialExperimentsCache(DifferentialExperimentFactory experimentFactory){
 
-        return CacheBuilder.newBuilder().build(new ExperimentsCacheLoader<>(arrayExpressClient,
-                experimentDesignParser, experimentDao, experimentFactory));
-
+        return CacheBuilder.newBuilder()
+                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
     }
 
     @Bean(name="microarrayExperimentsLoadingCache")
     @Inject
     public LoadingCache<String, MicroarrayExperiment> microarrayExperimentsCache(MicroarrayExperimentFactory experimentFactory){
 
-        return CacheBuilder.newBuilder().build(new ExperimentsCacheLoader<>(arrayExpressClient,
-                experimentDesignParser, experimentDao, experimentFactory));
-
+        return CacheBuilder.newBuilder()
+                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
     }
 
 }
