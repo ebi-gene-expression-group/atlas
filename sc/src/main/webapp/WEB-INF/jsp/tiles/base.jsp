@@ -84,6 +84,7 @@
 <!-- Don’t defer or async, these two need to be loaded before other bundles, which are effectively deferred -->
 <script src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/fetch-polyfill.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/url-search-params-polyfill.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
 
 <!-- JavaScript -->

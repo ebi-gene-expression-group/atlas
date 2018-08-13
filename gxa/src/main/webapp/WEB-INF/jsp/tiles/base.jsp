@@ -57,6 +57,7 @@
     <!-- Use this CSS file for any custom styling -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
     <!-- end CSS-->
+
 </head>
 
 <body>
@@ -88,7 +89,6 @@
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
 
 <!-- JavaScript -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/script.js"></script>
 
 <!-- The Foundation theme JavaScript -->

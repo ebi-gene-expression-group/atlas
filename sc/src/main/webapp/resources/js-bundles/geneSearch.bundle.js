@@ -646,10 +646,10 @@ module.exports = exports['default'];
 /***/ }),
 
 /***/ 103:
-/*!*************************************************************************************************!*\
-  !*** ./bundles/gene-search/node_modules/styled-components/dist/styled-components.browser.es.js ***!
-  \*************************************************************************************************/
-/*! exports provided: css, keyframes, injectGlobal, isStyledComponent, consolidateStreamedStyles, ThemeProvider, withTheme, ServerStyleSheet, StyleSheetManager, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS, default */
+/*!**************************************************************************************************!*\
+  !*** ./bundles/gene-search/node_modules/styled-components/dist/styled-components.browser.esm.js ***!
+  \**************************************************************************************************/
+/*! exports provided: default, css, keyframes, injectGlobal, isStyledComponent, consolidateStreamedStyles, ThemeProvider, withTheme, ServerStyleSheet, StyleSheetManager, __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS */
 /*! all exports used */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -661,12 +661,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isStyledComponent", function() { return isStyledComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "consolidateStreamedStyles", function() { return consolidateStreamedStyles; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThemeProvider", function() { return ThemeProvider; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "withTheme", function() { return wrapWithTheme; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "withTheme", function() { return withTheme; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ServerStyleSheet", function() { return ServerStyleSheet; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StyleSheetManager", function() { return StyleSheetManager; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS", function() { return __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_is_plain_object__ = __webpack_require__(/*! is-plain-object */ 307);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_is_plain_object___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_is_plain_object__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fbjs_lib_hyphenateStyleName__ = __webpack_require__(/*! fbjs/lib/hyphenateStyleName */ 307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fbjs_lib_hyphenateStyleName___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fbjs_lib_hyphenateStyleName__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stylis__ = __webpack_require__(/*! stylis */ 309);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stylis___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_stylis__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_stylis_rule_sheet__ = __webpack_require__(/*! stylis-rule-sheet */ 93);
@@ -687,69 +687,100 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- */
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
 
-var _uppercasePattern = /([A-Z])/g;
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
 
-/**
- * Hyphenates a camelcased string, for example:
- *
- *   > hyphenate('backgroundColor')
- *   < "background-color"
- *
- * For CSS style names, use `hyphenateStyleName` instead which works properly
- * with all vendor prefixes, including `ms`.
- *
- * @param {string} string
- * @return {string}
- */
-function hyphenate$2(string) {
-  return string.replace(_uppercasePattern, '-$1').toLowerCase();
-}
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
 
-var hyphenate_1 = hyphenate$2;
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
 
-var hyphenate = hyphenate_1;
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
 
-var msPattern = /^ms-/;
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
 
-/**
- * Hyphenates a camelcased CSS property name, for example:
- *
- *   > hyphenateStyleName('backgroundColor')
- *   < "background-color"
- *   > hyphenateStyleName('MozTransition')
- *   < "-moz-transition"
- *   > hyphenateStyleName('msTransition')
- *   < "-ms-transition"
- *
- * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
- * is converted to `-ms-`.
- *
- * @param {string} string
- * @return {string}
- */
-function hyphenateStyleName(string) {
-  return hyphenate(string).replace(msPattern, '-ms-');
-}
+  return target;
+};
 
-var hyphenateStyleName_1 = hyphenateStyleName;
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
 
 // 
+var isPlainObject = (function (x) {
+  return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object' && x.constructor === Object;
+});
+
+// 
+
 var objToCss = function objToCss(obj, prevKey) {
   var css = Object.keys(obj).filter(function (key) {
     var chunk = obj[key];
     return chunk !== undefined && chunk !== null && chunk !== false && chunk !== '';
   }).map(function (key) {
-    if (__WEBPACK_IMPORTED_MODULE_0_is_plain_object___default()(obj[key])) return objToCss(obj[key], key);
-    return hyphenateStyleName_1(key) + ': ' + obj[key] + ';';
+    if (isPlainObject(obj[key])) return objToCss(obj[key], key);
+    return __WEBPACK_IMPORTED_MODULE_0_fbjs_lib_hyphenateStyleName___default()(key) + ': ' + obj[key] + ';';
   }).join(' ');
   return prevKey ? prevKey + ' {\n  ' + css + '\n}' : css;
 };
@@ -760,30 +791,42 @@ var flatten = function flatten(chunks, executionContext) {
     if (chunk === undefined || chunk === null || chunk === false || chunk === '') {
       return ruleSet;
     }
+
     /* Flatten ruleSet */
     if (Array.isArray(chunk)) {
-      return [].concat(ruleSet, flatten(chunk, executionContext));
+      ruleSet.push.apply(ruleSet, flatten(chunk, executionContext));
+      return ruleSet;
     }
 
     /* Handle other components */
     if (chunk.hasOwnProperty('styledComponentId')) {
       // $FlowFixMe not sure how to make this pass
-      return [].concat(ruleSet, ['.' + chunk.styledComponentId]);
+      ruleSet.push('.' + chunk.styledComponentId);
+      return ruleSet;
     }
 
     /* Either execute or defer the function */
     if (typeof chunk === 'function') {
-      return executionContext ? ruleSet.concat.apply(ruleSet, flatten([chunk(executionContext)], executionContext)) : ruleSet.concat(chunk);
+      if (executionContext) {
+        ruleSet.push.apply(ruleSet, flatten([chunk(executionContext)], executionContext));
+      } else ruleSet.push(chunk);
+
+      return ruleSet;
     }
 
     /* Handle objects */
-    return ruleSet.concat(
+    ruleSet.push(
     // $FlowFixMe have to add %checks somehow to isPlainObject
-    __WEBPACK_IMPORTED_MODULE_0_is_plain_object___default()(chunk) ? objToCss(chunk) : chunk.toString());
+    isPlainObject(chunk) ? objToCss(chunk) : chunk.toString());
+
+    return ruleSet;
   }, []);
 };
 
 // 
+
+var COMMENT_REGEX = /^\s*\/\/.*$/gm;
+
 // NOTE: This stylis instance is only used to split rules from SSR'd style tags
 var stylisSplitter = new __WEBPACK_IMPORTED_MODULE_1_stylis___default.a({
   global: false,
@@ -825,7 +868,7 @@ stylis.use([parseRulesPlugin, returnRulesPlugin]);
 stylisSplitter.use([parseRulesPlugin, returnRulesPlugin]);
 
 var stringifyRules = function stringifyRules(rules, selector, prefix) {
-  var flatCSS = rules.join('').replace(/^\s*\/\/.*$/gm, ''); // replace JS comments
+  var flatCSS = rules.join('').replace(COMMENT_REGEX, ''); // replace JS comments
 
   var cssStr = selector && prefix ? prefix + ' ' + selector + ' { ' + flatCSS + ' }' : flatCSS;
 
@@ -887,130 +930,34 @@ var generateAlphabeticName = function generateAlphabeticName(code) {
 // 
 
 var interleave = (function (strings, interpolations) {
-  return interpolations.reduce(function (array, interp, i) {
-    return array.concat(interp, strings[i + 1]);
-  }, [strings[0]]);
+  var result = [strings[0]];
+
+  for (var i = 0, len = interpolations.length; i < len; i += 1) {
+    result.push(interpolations[i], strings[i + 1]);
+  }
+
+  return result;
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-
-
-
-
-
-
-
-
-
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-
-
-
-
-
-
-
-
-var objectWithoutProperties = function (obj, keys) {
-  var target = {};
-
-  for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;
-    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-    target[i] = obj[i];
-  }
-
-  return target;
-};
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
+// 
+var EMPTY_ARRAY = Object.freeze([]);
+var EMPTY_OBJECT = Object.freeze({});
 
 // 
+
 var css = (function (styles) {
   for (var _len = arguments.length, interpolations = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     interpolations[_key - 1] = arguments[_key];
   }
 
-  if (!Array.isArray(styles) && (typeof styles === 'undefined' ? 'undefined' : _typeof(styles)) === 'object') {
-    return flatten(interleave([], [styles].concat(interpolations)));
+  if (typeof styles === 'function' || isPlainObject(styles)) {
+    // $FlowFixMe
+    return flatten(interleave(EMPTY_ARRAY, [styles].concat(interpolations)));
   }
+
+  // $FlowFixMe
   return flatten(interleave(styles, interpolations));
 });
-
-var stream = {}
 
 // 
 
@@ -1021,7 +968,75 @@ var CONTEXT_KEY = '__styled-components-stylesheet__';
 
 var IS_BROWSER = typeof window !== 'undefined' && 'HTMLElement' in window;
 
-var DISABLE_SPEEDY = typeof false === 'boolean' && false || "development" !== 'production';
+var DISABLE_SPEEDY = "development" !== 'production';
+
+// 
+
+
+/**
+ * Parse errors.md and turn it into a simple hash of code: message
+ */
+var ERRORS =  true ? {
+  "1": "Cannot create styled-component for component: %s.\n\n",
+  "2": "Can't collect styles once you've consumed a `ServerStyleSheet`'s styles! `ServerStyleSheet` is a one off instance for each server-side render cycle.\n\n* Are you trying to reuse it across renders?\n* Are you accidentally calling collectStyles twice?\n\n",
+  "3": "Streaming SSR is only supported in a Node.js environment; Please do not try to call this method in the browser.\n\n",
+  "4": "The `StyleSheetManager` expects a valid target or sheet prop!\n\n* Does this error occur on the client and is your target falsy?\n* Does this error occur on the server and is the sheet falsy?\n\n",
+  "5": "The clone method cannot be used on the client!\n\n* Are you running in a client-like environment on the server?\n* Are you trying to run SSR on the client?\n\n",
+  "6": "Trying to insert a new style tag, but the given Node is unmounted!\n\n* Are you using a custom target that isn't mounted?\n* Does your document not have a valid head element?\n* Have you accidentally removed a style tag manually?\n\n",
+  "7": "ThemeProvider: Please return an object from your \"theme\" prop function, e.g.\n\n```js\ntheme={() => ({})}\n```\n\n",
+  "8": "ThemeProvider: Please make your \"theme\" prop an object.\n\n",
+  "9": "Missing document `<head>`\n\n",
+  "10": "Cannot find sheet for given tag\n"
+} : {};
+
+/**
+ * super basic version of sprintf
+ */
+function format() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  var a = args[0];
+  var b = [];
+  var c = void 0;
+
+  for (c = 1; c < args.length; c += 1) {
+    b.push(args[c]);
+  }
+
+  b.forEach(function (d) {
+    a = a.replace(/%[a-z]/, d);
+  });
+
+  return a;
+}
+
+/**
+ * Create an error file out of errors.md for development and a simple web link to the full errors
+ * in production mode.
+ */
+
+var StyledComponentsError = function (_Error) {
+  inherits(StyledComponentsError, _Error);
+
+  function StyledComponentsError(code) {
+    classCallCheck(this, StyledComponentsError);
+
+    for (var _len2 = arguments.length, interpolations = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      interpolations[_key2 - 1] = arguments[_key2];
+    }
+
+    if (false) {
+      var _this = possibleConstructorReturn(this, _Error.call(this, 'An error occurred. See https://github.com/styled-components/styled-components/blob/master/src/utils/errors.md#' + code + ' for more information. ' + (interpolations ? 'Additional arguments: ' + interpolations.join(', ') : '')));
+    } else {
+      var _this = possibleConstructorReturn(this, _Error.call(this, format.apply(undefined, [ERRORS[code]].concat(interpolations))));
+    }
+    return possibleConstructorReturn(_this);
+  }
+
+  return StyledComponentsError;
+}(Error);
 
 // 
 var SC_COMPONENT_ID = /^[^\S\n]*?\/\* sc-component-id:\s*(\S+)\s+\*\//gm;
@@ -1113,6 +1128,7 @@ var cloneNames = function cloneNames(names) {
 };
 
 // 
+
 /* These are helpers that deal with the insertRule (aka speedy) API
  * They are used in the StyleTags and specifically the speedy tag
  */
@@ -1131,7 +1147,7 @@ var sheetForTag = function sheetForTag(tag) {
   }
 
   /* we should always be able to find a tag */
-  throw new Error();
+  throw new StyledComponentsError(10);
 };
 
 /* insert a rule safely and return whether it was actually injected */
@@ -1161,16 +1177,6 @@ var deleteRules = function deleteRules(sheet, removalIndex, size) {
 };
 
 // 
-/* eslint-disable flowtype/object-type-delimiter */
-/* eslint-disable react/prop-types */
-
-/* this error is used for makeStyleTag */
-var parentNodeUnmountedErr =  true ? '\nTrying to insert a new style tag, but the given Node is unmounted!\n- Are you using a custom target that isn\'t mounted?\n- Does your document not have a valid head element?\n- Have you accidentally removed a style tag manually?\n'.trim() : '';
-
-/* this error is used for tags */
-var throwCloneTagErr = function throwCloneTagErr() {
-  throw new Error( true ? '\nThe clone method cannot be used on the client!\n- Are you running in a client-like environment on the server?\n- Are you trying to run SSR on the client?\n'.trim() : '');
-};
 
 /* this marker separates component styles and is important for rehydration */
 var makeTextMarker = function makeTextMarker(id) {
@@ -1205,7 +1211,7 @@ var makeStyleTag = function makeStyleTag(target, tagEl, insertBefore) {
     target.appendChild(el);
   } else {
     if (!tagEl || !target || !tagEl.parentNode) {
-      throw new Error(parentNodeUnmountedErr);
+      throw new StyledComponentsError(6);
     }
 
     /* Insert new style tag after the previous one */
@@ -1353,8 +1359,14 @@ var makeSpeedyTag = function makeSpeedyTag(el, getImportRuleTag) {
     css: css,
     toHTML: wrapAsHtmlTag(css, names),
     toElement: wrapAsElement(css, names),
-    clone: throwCloneTagErr
+    clone: function clone() {
+      throw new StyledComponentsError(5);
+    }
   };
+};
+
+var makeTextNode = function makeTextNode(id) {
+  return document.createTextNode(makeTextMarker(id));
 };
 
 var makeBrowserTag = function makeBrowserTag(el, getImportRuleTag) {
@@ -1362,9 +1374,6 @@ var makeBrowserTag = function makeBrowserTag(el, getImportRuleTag) {
   var markers = Object.create(null);
 
   var extractImport = getImportRuleTag !== undefined;
-  var makeTextNode = function makeTextNode(id) {
-    return document.createTextNode(makeTextMarker(id));
-  };
 
   /* indicates whther getImportRuleTag was called */
   var usedImportRuleTag = false;
@@ -1434,16 +1443,19 @@ var makeBrowserTag = function makeBrowserTag(el, getImportRuleTag) {
   };
 
   return {
-    styleTag: el,
+    clone: function clone() {
+      throw new StyledComponentsError(5);
+    },
+
+    css: css,
     getIds: getIdsFromMarkersFactory(markers),
     hasNameForId: hasNameForId(names),
     insertMarker: insertMarker,
     insertRules: insertRules,
     removeRules: removeRules,
-    css: css,
-    toHTML: wrapAsHtmlTag(css, names),
+    styleTag: el,
     toElement: wrapAsElement(css, names),
-    clone: throwCloneTagErr
+    toHTML: wrapAsHtmlTag(css, names)
   };
 };
 
@@ -1498,16 +1510,16 @@ var makeServerTagInternal = function makeServerTagInternal(namesArg, markersArg)
   };
 
   var tag = {
-    styleTag: null,
+    clone: clone,
+    css: css,
     getIds: getIdsFromMarkersFactory(markers),
     hasNameForId: hasNameForId(names),
     insertMarker: insertMarker,
     insertRules: insertRules,
     removeRules: removeRules,
-    css: css,
-    toHTML: wrapAsHtmlTag(css, names),
+    styleTag: null,
     toElement: wrapAsElement(css, names),
-    clone: clone
+    toHTML: wrapAsHtmlTag(css, names)
   };
 
   return tag;
@@ -1520,6 +1532,7 @@ var makeServerTag = function makeServerTag() {
 var makeTag = function makeTag(target, tagEl, forceServer, insertBefore, getImportRuleTag) {
   if (IS_BROWSER && !forceServer) {
     var el = makeStyleTag(target, tagEl, insertBefore);
+
     if (DISABLE_SPEEDY) {
       return makeBrowserTag(el, getImportRuleTag);
     } else {
@@ -1531,11 +1544,11 @@ var makeTag = function makeTag(target, tagEl, forceServer, insertBefore, getImpo
 };
 
 /* wraps a given tag so that rehydration is performed once when necessary */
-var makeRehydrationTag = function makeRehydrationTag(tag, els, extracted, names, immediateRehydration) {
+var makeRehydrationTag = function makeRehydrationTag(tag, els, extracted, immediateRehydration) {
   /* rehydration function that adds all rules to the new tag */
   var rehydrate = once(function () {
     /* add all extracted components to the new tag */
-    for (var i = 0; i < extracted.length; i += 1) {
+    for (var i = 0, len = extracted.length; i < len; i += 1) {
       var _extracted$i = extracted[i],
           componentId = _extracted$i.componentId,
           cssFromDOM = _extracted$i.cssFromDOM;
@@ -1545,7 +1558,7 @@ var makeRehydrationTag = function makeRehydrationTag(tag, els, extracted, names,
     }
 
     /* remove old HTMLStyleElements, since they have been rehydrated */
-    for (var _i = 0; _i < els.length; _i += 1) {
+    for (var _i = 0, _len = els.length; _i < _len; _i += 1) {
       var el = els[_i];
       if (el.parentNode) {
         el.parentNode.removeChild(el);
@@ -1569,6 +1582,8 @@ var makeRehydrationTag = function makeRehydrationTag(tag, els, extracted, names,
 };
 
 // 
+
+var SPLIT_REGEX = /\s+/;
 
 /* determine the maximum number of components before tags are sharded */
 var MAX_SIZE = void 0;
@@ -1636,7 +1651,6 @@ var StyleSheet = function () {
     }
 
     var els = [];
-    var names = [];
     var extracted = [];
     var isStreamed = false;
 
@@ -1654,20 +1668,20 @@ var StyleSheet = function () {
       var el = nodes[i];
 
       /* check if style tag is a streamed tag */
-      isStreamed = !!el.getAttribute(SC_STREAM_ATTR) || isStreamed;
+      if (!isStreamed) isStreamed = !!el.getAttribute(SC_STREAM_ATTR);
 
       /* retrieve all component names */
-      var elNames = (el.getAttribute(SC_ATTR) || '').trim().split(/\s+/);
+      var elNames = (el.getAttribute(SC_ATTR) || '').trim().split(SPLIT_REGEX);
       var elNamesSize = elNames.length;
       for (var j = 0; j < elNamesSize; j += 1) {
         var name = elNames[j];
         /* add rehydrated name to sheet to avoid readding styles */
         this.rehydratedNames[name] = true;
-        names.push(name);
       }
 
       /* extract all components and their CSS */
-      extracted = extracted.concat(extractComps(el.textContent));
+      extracted.push.apply(extracted, extractComps(el.textContent));
+
       /* store original HTMLStyleElement */
       els.push(el);
     }
@@ -1680,7 +1694,7 @@ var StyleSheet = function () {
 
     /* create a tag to be used for rehydration */
     var tag = this.makeTag(null);
-    var rehydrationTag = makeRehydrationTag(tag, els, extracted, names, isStreamed);
+    var rehydrationTag = makeRehydrationTag(tag, els, extracted, isStreamed);
 
     /* reset capacity and adjust MAX_SIZE by the initial size of the rehydration */
     this.capacity = Math.max(1, MAX_SIZE - extractedSize);
@@ -1819,16 +1833,19 @@ var StyleSheet = function () {
       clones[i].inject(id, cssRules, name);
     }
 
-    /* add deferred rules for component */
-    var injectRules = cssRules;
-    var deferredRules = this.deferred[id];
-    if (deferredRules !== undefined) {
-      injectRules = deferredRules.concat(injectRules);
-      delete this.deferred[id];
-    }
-
     var tag = this.getTagForId(id);
-    tag.insertRules(id, injectRules, name);
+
+    /* add deferred rules for component */
+    if (this.deferred[id] !== undefined) {
+      // Combine passed cssRules with previously deferred CSS rules
+      // NOTE: We cannot mutate the deferred array itself as all clones
+      // do the same (see clones[i].inject)
+      var rules = this.deferred[id].concat(cssRules);
+      tag.insertRules(id, rules, name);
+      this.deferred[id] = undefined;
+    } else {
+      tag.insertRules(id, cssRules, name);
+    }
   };
 
   /* removes all rules for a given id, which doesn't remove its marker but resets it */
@@ -1849,7 +1866,7 @@ var StyleSheet = function () {
     /* ignore possible rehydrated names */
     this.ignoreRehydratedNames[id] = true;
     /* delete possible deferred rules */
-    delete this.deferred[id];
+    this.deferred[id] = undefined;
   };
 
   StyleSheet.prototype.toHTML = function toHTML() {
@@ -1887,10 +1904,6 @@ var StyleSheet = function () {
 
 var _StyleSheetManager$ch;
 
-// 
-/* this error is used for makeStyleTag */
-var targetPropErr =  true ? '\nThe StyleSheetManager expects a valid target or sheet prop!\n- Does this error occur on the client and is your target falsy?\n- Does this error occur on the server and is the sheet falsy?\n'.trim() : '';
-
 var StyleSheetManager = function (_Component) {
   inherits(StyleSheetManager, _Component);
 
@@ -1911,7 +1924,7 @@ var StyleSheetManager = function (_Component) {
     } else if (this.props.target) {
       this.sheetInstance = new StyleSheet(this.props.target);
     } else {
-      throw new Error(targetPropErr);
+      throw new StyledComponentsError(4);
     }
   };
 
@@ -1927,7 +1940,6 @@ var StyleSheetManager = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_3_react__["Component"]);
 
 StyleSheetManager.childContextTypes = (_StyleSheetManager$ch = {}, _StyleSheetManager$ch[CONTEXT_KEY] = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(StyleSheet), __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(ServerStyleSheet)]).isRequired, _StyleSheetManager$ch);
-
  true ? StyleSheetManager.propTypes = {
   sheet: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(StyleSheet), __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(ServerStyleSheet)]),
   target: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.shape({
@@ -1936,11 +1948,6 @@ StyleSheetManager.childContextTypes = (_StyleSheetManager$ch = {}, _StyleSheetMa
 } : void 0;
 
 // 
-/* eslint-disable no-underscore-dangle */
-/* this error is used for makeStyleTag */
-var sheetClosedErr =  true ? '\nCan\'t collect styles once you\'ve consumed a ServerStyleSheet\'s styles!\nServerStyleSheet is a one off instance for each server-side render cycle.\n- Are you trying to reuse it across renders?\n- Are you accidentally calling collectStyles twice?\n'.trim() : '';
-
-var streamBrowserErr =  true ? 'Streaming SSR is only supported in a Node.js environment; Please do not try to call this method in the browser.' : '';
 
 var ServerStyleSheet = function () {
   function ServerStyleSheet() {
@@ -1963,7 +1970,7 @@ var ServerStyleSheet = function () {
 
   ServerStyleSheet.prototype.collectStyles = function collectStyles(children) {
     if (this.closed) {
-      throw new Error(sheetClosedErr);
+      throw new StyledComponentsError(2);
     }
 
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
@@ -1987,7 +1994,7 @@ var ServerStyleSheet = function () {
     var _this = this;
 
     {
-      throw new Error(streamBrowserErr);
+      throw new StyledComponentsError(3);
     }
 
     /* the tag index keeps track of which tags have already been emitted */
@@ -2100,6 +2107,7 @@ function isTag(target) /* : %checks */{
 }
 
 // 
+
 function generateDisplayName(target) {
   return isTag(target) ? 'styled.' + target : 'Styled(' + getComponentName(target) + ')';
 }
@@ -2118,11 +2126,11 @@ function generateDisplayName(target) {
  *    and no false positives from partials
  * */
 /*
-children dangerouslySetInnerHTML key ref autoFocus defaultValue valueLink defaultChecked checkedLink innerHTML suppressContentEditableWarning onFocusIn onFocusOut className onCopy onCut onPaste onCompositionEnd onCompositionStart onCompositionUpdate onKeyDown onKeyPress onKeyUp onFocus onBlur onChange onInput onInvalid onSubmit onReset onClick onContextMenu onDoubleClick onDrag onDragEnd onDragEnter onDragExit onDragLeave onDragOver onDragStart onDrop onMouseDown onMouseEnter onMouseLeave onMouseMove onMouseOut onMouseOver onMouseUp onSelect onTouchCancel onTouchEnd onTouchMove onTouchStart onScroll onWheel onAbort onCanPlay onCanPlayThrough onDurationChange onEmptied onEncrypted onEnded onError onLoadedData onLoadedMetadata onLoadStart onPause onPlay onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend onTimeUpdate onVolumeChange onWaiting onLoad onAnimationStart onAnimationEnd onAnimationIteration onTransitionEnd onCopyCapture onCutCapture onPasteCapture onCompositionEndCapture onCompositionStartCapture onCompositionUpdateCapture onKeyDownCapture onKeyPressCapture onKeyUpCapture onFocusCapture onBlurCapture onChangeCapture onInputCapture onSubmitCapture onResetCapture onClickCapture onContextMenuCapture onDoubleClickCapture onDragCapture onDragEndCapture onDragEnterCapture onDragExitCapture onDragLeaveCapture onDragOverCapture onDragStartCapture onDropCapture onMouseDownCapture onMouseEnterCapture onMouseLeaveCapture onMouseMoveCapture onMouseOutCapture onMouseOverCapture onMouseUpCapture onSelectCapture onTouchCancelCapture onTouchEndCapture onTouchMoveCapture onTouchStartCapture onScrollCapture onWheelCapture onAbortCapture onCanPlayCapture onCanPlayThroughCapture onDurationChangeCapture onEmptiedCapture onEncryptedCapture onEndedCapture onErrorCapture onLoadedDataCapture onLoadedMetadataCapture onLoadStartCapture onPauseCapture onPlayCapture onPlayingCapture onProgressCapture onRateChangeCapture onSeekedCapture onSeekingCapture onStalledCapture onSuspendCapture onTimeUpdateCapture onVolumeChangeCapture onWaitingCapture onLoadCapture onAnimationStartCapture onAnimationEndCapture onAnimationIterationCapture onTransitionEndCapture accept acceptCharset accessKey action allowFullScreen allowTransparency alt as async autoComplete autoPlay capture cellPadding cellSpacing charSet challenge checked cite classID className cols colSpan content contentEditable contextMenu controlsList controls coords crossOrigin data dateTime default defer dir disabled download draggable encType form formAction formEncType formMethod formNoValidate formTarget frameBorder headers height hidden high href hrefLang htmlFor httpEquiv icon id inputMode integrity is keyParams keyType kind label lang list loop low manifest marginHeight marginWidth max maxLength media mediaGroup method min minLength multiple muted name nonce noValidate open optimum pattern placeholder playsInline poster preload profile radioGroup readOnly referrerPolicy rel required reversed role rows rowSpan sandbox scope scoped scrolling seamless selected shape size sizes span spellCheck src srcDoc srcLang srcSet start step style summary tabIndex target title type useMap value width wmode wrap about datatype inlist prefix property resource typeof vocab autoCapitalize autoCorrect autoSave color itemProp itemScope itemType itemID itemRef results security unselectable accentHeight accumulate additive alignmentBaseline allowReorder alphabetic amplitude arabicForm ascent attributeName attributeType autoReverse azimuth baseFrequency baseProfile baselineShift bbox begin bias by calcMode capHeight clip clipPath clipRule clipPathUnits colorInterpolation colorInterpolationFilters colorProfile colorRendering contentScriptType contentStyleType cursor cx cy d decelerate descent diffuseConstant direction display divisor dominantBaseline dur dx dy edgeMode elevation enableBackground end exponent externalResourcesRequired fill fillOpacity fillRule filter filterRes filterUnits floodColor floodOpacity focusable fontFamily fontSize fontSizeAdjust fontStretch fontStyle fontVariant fontWeight format from fx fy g1 g2 glyphName glyphOrientationHorizontal glyphOrientationVertical glyphRef gradientTransform gradientUnits hanging horizAdvX horizOriginX ideographic imageRendering in in2 intercept k k1 k2 k3 k4 kernelMatrix kernelUnitLength kerning keyPoints keySplines keyTimes lengthAdjust letterSpacing lightingColor limitingConeAngle local markerEnd markerMid markerStart markerHeight markerUnits markerWidth mask maskContentUnits maskUnits mathematical mode numOctaves offset opacity operator order orient orientation origin overflow overlinePosition overlineThickness paintOrder panose1 pathLength patternContentUnits patternTransform patternUnits pointerEvents points pointsAtX pointsAtY pointsAtZ preserveAlpha preserveAspectRatio primitiveUnits r radius refX refY renderingIntent repeatCount repeatDur requiredExtensions requiredFeatures restart result rotate rx ry scale seed shapeRendering slope spacing specularConstant specularExponent speed spreadMethod startOffset stdDeviation stemh stemv stitchTiles stopColor stopOpacity strikethroughPosition strikethroughThickness string stroke strokeDasharray strokeDashoffset strokeLinecap strokeLinejoin strokeMiterlimit strokeOpacity strokeWidth surfaceScale systemLanguage tableValues targetX targetY textAnchor textDecoration textRendering textLength to transform u1 u2 underlinePosition underlineThickness unicode unicodeBidi unicodeRange unitsPerEm vAlphabetic vHanging vIdeographic vMathematical values vectorEffect version vertAdvY vertOriginX vertOriginY viewBox viewTarget visibility widths wordSpacing writingMode x xHeight x1 x2 xChannelSelector xlinkActuate xlinkArcrole xlinkHref xlinkRole xlinkShow xlinkTitle xlinkType xmlBase xmlns xmlnsXlink xmlLang xmlSpace y y1 y2 yChannelSelector z zoomAndPan onPointerDown onPointerMove onPointerUp onPointerCancel onGotPointerCapture onLostPointerCapture onPointerEnter onPointerLeave onPointerOver onPointerOut
+children dangerouslySetInnerHTML key ref autoFocus defaultValue valueLink defaultChecked checkedLink innerHTML suppressContentEditableWarning onFocusIn onFocusOut className onCopy onCut onPaste onCompositionEnd onCompositionStart onCompositionUpdate onKeyDown onKeyPress onKeyUp onFocus onBlur onChange onInput onInvalid onSubmit onReset onClick onContextMenu onDoubleClick onDrag onDragEnd onDragEnter onDragExit onDragLeave onDragOver onDragStart onDrop onMouseDown onMouseEnter onMouseLeave onMouseMove onMouseOut onMouseOver onMouseUp onSelect onTouchCancel onTouchEnd onTouchMove onTouchStart onScroll onWheel onAbort onCanPlay onCanPlayThrough onDurationChange onEmptied onEncrypted onEnded onError onLoadedData onLoadedMetadata onLoadStart onPause onPlay onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend onTimeUpdate onVolumeChange onWaiting onLoad onAnimationStart onAnimationEnd onAnimationIteration onTransitionEnd onCopyCapture onCutCapture onPasteCapture onCompositionEndCapture onCompositionStartCapture onCompositionUpdateCapture onKeyDownCapture onKeyPressCapture onKeyUpCapture onFocusCapture onBlurCapture onChangeCapture onInputCapture onSubmitCapture onResetCapture onClickCapture onContextMenuCapture onDoubleClickCapture onDragCapture onDragEndCapture onDragEnterCapture onDragExitCapture onDragLeaveCapture onDragOverCapture onDragStartCapture onDropCapture onMouseDownCapture onMouseEnterCapture onMouseLeaveCapture onMouseMoveCapture onMouseOutCapture onMouseOverCapture onMouseUpCapture onSelectCapture onTouchCancelCapture onTouchEndCapture onTouchMoveCapture onTouchStartCapture onScrollCapture onWheelCapture onAbortCapture onCanPlayCapture onCanPlayThroughCapture onDurationChangeCapture onEmptiedCapture onEncryptedCapture onEndedCapture onErrorCapture onLoadedDataCapture onLoadedMetadataCapture onLoadStartCapture onPauseCapture onPlayCapture onPlayingCapture onProgressCapture onRateChangeCapture onSeekedCapture onSeekingCapture onStalledCapture onSuspendCapture onTimeUpdateCapture onVolumeChangeCapture onWaitingCapture onLoadCapture onAnimationStartCapture onAnimationEndCapture onAnimationIterationCapture onTransitionEndCapture accept acceptCharset accessKey action allowFullScreen allowTransparency alt as async autoComplete autoPlay capture cellPadding cellSpacing charSet challenge checked cite classID className cols colSpan content contentEditable contextMenu controlsList controls coords crossOrigin data dateTime default defer dir disabled download draggable encType form formAction formEncType formMethod formNoValidate formTarget frameBorder headers height hidden high href hrefLang htmlFor httpEquiv icon id inputMode integrity is keyParams keyType kind label lang list loop low manifest marginHeight marginWidth max maxLength media mediaGroup method min minLength multiple muted name nonce noValidate open optimum pattern placeholder playsInline poster preload profile radioGroup readOnly referrerPolicy rel required reversed role rows rowSpan sandbox scope scoped scrolling seamless selected shape size sizes span spellCheck src srcDoc srcLang srcSet start step style summary tabIndex target title type useMap value width wmode wrap about datatype inlist prefix property resource typeof vocab autoCapitalize autoCorrect autoSave color itemProp itemScope itemType itemID itemRef results security unselectable accentHeight accumulate additive alignmentBaseline allowReorder alphabetic amplitude arabicForm ascent attributeName attributeType autoReverse azimuth baseFrequency baseProfile baselineShift bbox begin bias by calcMode capHeight clip clipPath clipRule clipPathUnits colorInterpolation colorInterpolationFilters colorProfile colorRendering contentScriptType contentStyleType cursor cx cy d decelerate descent diffuseConstant direction display divisor dominantBaseline dur dx dy edgeMode elevation enableBackground end exponent externalResourcesRequired fill fillOpacity fillRule filter filterRes filterUnits floodColor floodOpacity focusable fontFamily fontSize fontSizeAdjust fontStretch fontStyle fontVariant fontWeight format from fx fy g1 g2 glyphName glyphOrientationHorizontal glyphOrientationVertical glyphRef gradientTransform gradientUnits hanging horizAdvX horizOriginX ideographic imageRendering in in2 intercept k k1 k2 k3 k4 kernelMatrix kernelUnitLength kerning keyPoints keySplines keyTimes lengthAdjust letterSpacing lightingColor limitingConeAngle local markerEnd markerMid markerStart markerHeight markerUnits markerWidth mask maskContentUnits maskUnits mathematical mode numOctaves offset opacity operator order orient orientation origin overflow overlinePosition overlineThickness paintOrder panose1 pathLength patternContentUnits patternTransform patternUnits pointerEvents points pointsAtX pointsAtY pointsAtZ preserveAlpha preserveAspectRatio primitiveUnits r radius refX refY renderingIntent repeatCount repeatDur requiredExtensions requiredFeatures restart result rotate rx ry scale seed shapeRendering slope spacing specularConstant specularExponent speed spreadMethod startOffset stdDeviation stemh stemv stitchTiles stopColor stopOpacity strikethroughPosition strikethroughThickness string stroke strokeDasharray strokeDashoffset strokeLinecap strokeLinejoin strokeMiterlimit strokeOpacity strokeWidth surfaceScale systemLanguage tableValues targetX targetY textAnchor textDecoration textRendering textLength to transform u1 u2 underlinePosition underlineThickness unicode unicodeBidi unicodeRange unitsPerEm vAlphabetic vHanging vIdeographic vMathematical values vectorEffect version vertAdvY vertOriginX vertOriginY viewBox viewTarget visibility widths wordSpacing writingMode x xHeight x1 x2 xChannelSelector xlinkActuate xlinkArcrole xlinkHref xlinkRole xlinkShow xlinkTitle xlinkType xmlBase xmlns xmlnsXlink xmlLang xmlSpace y y1 y2 yChannelSelector z zoomAndPan onPointerDown onPointerMove onPointerUp onPointerCancel onGotPointerCapture onLostPointerCapture onPointerEnter onPointerLeave onPointerOver onPointerOut class for autofocus
 */
 /* eslint-enable max-len */
 
-var ATTRIBUTE_REGEX = /^((?:s(?:uppressContentEditableWarn|croll|pac)|(?:shape|image|text)Render|(?:letter|word)Spac|vHang|hang)ing|(?:on(?:AnimationIteration|C(?:o(?:mposition(?:Update|Start|End)|ntextMenu|py)|anPlayThrough|anPlay|hange|lick|ut)|(?:Animation|Touch|Load|Drag)Start|(?:(?:Duration|Volume|Rate)Chang|(?:MouseLea|(?:Touch|Mouse)Mo|DragLea)v|Paus)e|Loaded(?:Metad|D)ata|(?:(?:T(?:ransition|ouch)|Animation)E|Suspe)nd|DoubleClick|(?:TouchCanc|Whe)el|Lo(?:stPointer|ad)|TimeUpdate|(?:Mouse(?:Ent|Ov)e|Drag(?:Ent|Ov)e|Erro)r|GotPointer|MouseDown|(?:E(?:n(?:crypt|d)|mpti)|S(?:tall|eek))ed|KeyPress|(?:MouseOu|DragExi|S(?:elec|ubmi)|Rese|Inpu)t|P(?:rogress|laying)|DragEnd|Key(?:Down|Up)|(?:MouseU|Dro)p|(?:Wait|Seek)ing|Scroll|Focus|Paste|Abort|Drag|Play|Blur)Captur|alignmentBaselin|(?:limitingConeAng|xlink(?:(?:Arcr|R)o|Tit)|s(?:urfaceSca|ty|ca)|unselectab|baseProfi|fontSty|(?:focus|dragg)ab|multip|profi|tit)l|d(?:ominantBaselin|efaultValu)|onPointerLeav|a(?:uto(?:Capitaliz|Revers|Sav)|dditiv)|(?:(?:formNoValid|xlinkActu|noValid|accumul|rot)a|autoComple|decelera)t|(?:(?:attribute|item)T|datat)yp|onPointerMov|(?:attribute|glyph)Nam|playsInlin|(?:writing|input|edge)Mod|(?:formE|e)ncTyp|(?:amplitu|mo)d|(?:xlinkTy|itemSco|keyTy|slo)p|(?:xmlSpa|non)c|fillRul|(?:dateTi|na)m|r(?:esourc|ol)|xmlBas|wmod)e|(?:glyphOrientationHorizont|loc)al|(?:externalResourcesRequir|select|revers|mut)ed|c(?:o(?:lorInterpolationFilter|ord)s|o(?:lor(?:Interpolation)?|nt(?:rols|ent))|(?:ontentS(?:cript|tyle)Typ|o(?:ntentEditab|lorProfi)l|l(?:assNam|ipRul)|a(?:lcMod|ptur)|it)e|olorRendering|l(?:ipPathUnits|assID)|(?:ontrolsLis|apHeigh)t|h(?:eckedLink|a(?:llenge|rSet)|ildren|ecked)|ell(?:Spac|Padd)ing|o(?:ntextMenu|ls)|(?:rossOrigi|olSpa)n|lip(?:Path)?|ursor|[xy])|glyphOrientationVertical|d(?:angerouslySetInnerHTML|efaultChecked|ownload|isabled|isplay|[xy])|(?:s(?:trikethroughThickn|eaml)es|(?:und|ov)erlineThicknes|r(?:equiredExtension|adiu)|(?:requiredFeatur|tableValu|stitchTil|numOctav|filterR)e|key(?:(?:Splin|Tim)e|Param)|autoFocu|header|bia)s|(?:(?:st(?:rikethroughPosi|dDevia)|(?:und|ov)erlinePosi|(?:textDecor|elev)a|orienta)tio|(?:strokeLinejo|orig)i|on(?:PointerDow|FocusI)|formActio|zoomAndPa|directio|(?:vers|act)io|rowSpa|begi|ico)n|o(?:n(?:AnimationIteration|C(?:o(?:mposition(?:Update|Start|End)|ntextMenu|py)|anPlayThrough|anPlay|hange|lick|ut)|(?:(?:Duration|Volume|Rate)Chang|(?:MouseLea|(?:Touch|Mouse)Mo|DragLea)v|Paus)e|Loaded(?:Metad|D)ata|(?:Animation|Touch|Load|Drag)Start|(?:(?:T(?:ransition|ouch)|Animation)E|Suspe)nd|DoubleClick|(?:TouchCanc|Whe)el|(?:Mouse(?:Ent|Ov)e|Drag(?:Ent|Ov)e|Erro)r|TimeUpdate|(?:E(?:n(?:crypt|d)|mpti)|S(?:tall|eek))ed|MouseDown|P(?:rogress|laying)|(?:MouseOu|DragExi|S(?:elec|ubmi)|Rese|Inpu)t|KeyPress|DragEnd|Key(?:Down|Up)|(?:Wait|Seek)ing|(?:MouseU|Dro)p|Scroll|Paste|Focus|Abort|Drag|Play|Load|Blur)|rient)|p(?:reserveA(?:spectRatio|lpha)|ointsAt[X-Z]|anose1)|(?:patternContent|ma(?:sk(?:Content)?|rker)|primitive|gradient|pattern|filter)Units|(?:(?:allowTranspar|baseFrequ)enc|re(?:ferrerPolic|adOnl)|(?:(?:st(?:roke|op)O|floodO|fillO|o)pac|integr|secur)it|visibilit|fontFamil|accessKe|propert|summar)y|(?:gradientT|patternT|t)ransform|(?:[xy]ChannelSelect|lightingCol|textAnch|floodCol|stopCol|operat|htmlF)or|(?:strokeMiterlimi|(?:specularConsta|repeatCou|fontVaria)n|(?:(?:specularE|e)xpon|renderingInt|asc)en|d(?:iffuseConsta|esce)n|(?:fontSizeAdju|lengthAdju|manife)s|baselineShif|onPointerOu|vectorEffec|(?:(?:mar(?:ker|gin)|x)H|accentH|fontW)eigh|markerStar|a(?:utoCorrec|bou)|onFocusOu|intercep|restar|forma|inlis|heigh|lis)t|(?:(?:st(?:rokeDasho|artO)|o)ffs|acceptChars|formTarg|viewTarg|srcS)et|k(?:ernel(?:UnitLength|Matrix)|[1-4])|(?:(?:enableBackgrou|markerE)n|s(?:p(?:readMetho|ee)|ee)|formMetho|(?:markerM|onInval)i|preloa|metho|kin)d|strokeDasharray|(?:onPointerCanc|lab)el|(?:allowFullScre|hidd)en|systemLanguage|(?:(?:o(?:nPointer(?:Ent|Ov)|rd)|allowReord|placehold|frameBord|paintOrd|post)e|repeatDu|d(?:efe|u))r|v(?:Mathematical|ert(?:Origin[XY]|AdvY)|alues|ocab)|(?:pointerEve|keyPoi)nts|(?:strokeLineca|onPointerU|itemPro|useMa|wra|loo)p|h(?:oriz(?:Origin|Adv)X|ttpEquiv)|(?:vI|i)deographic|unicodeRange|mathematical|vAlphabetic|u(?:nicodeBidi|[12])|(?:fontStretc|hig)h|(?:(?:mar(?:ker|gin)W|strokeW)id|azimu)th|(?:xmlnsXl|valueL)ink|mediaGroup|spellCheck|(?:text|m(?:in|ax))Length|(?:unitsPerE|optimu|fro)m|r(?:adioGroup|e(?:sults|f[XY]|l)|ows|[xy])|a(?:rabicForm|l(?:phabetic|t)|sync)|pathLength|innerHTML|xlinkShow|(?:xlinkHr|glyphR)ef|(?:tabInde|(?:sand|b)bo|viewBo)x|(?:(?:href|xml|src)La|kerni)ng|autoPlay|o(?:verflow|pen)|f(?:o(?:ntSize|rm)|il(?:ter|l))|r(?:e(?:quired|sult|f))?|divisor|p(?:attern|oints)|unicode|d(?:efault|ata|ir)?|i(?:temRef|n2|s)|t(?:arget[XY]|o)|srcDoc|s(?:coped|te(?:m[hv]|p)|pan)|(?:width|size)s|prefix|typeof|itemID|s(?:t(?:roke|art)|hape|cope|rc)|t(?:arget|ype)|(?:stri|la)ng|a(?:ccept|s)|m(?:edia|a(?:sk|x)|in)|x(?:mlns)?|width|value|size|href|k(?:ey)?|end|low|by|i[dn]|y[12]|g[12]|x[12]|f[xy]|[yz])$/;
+var ATTRIBUTE_REGEX = /^((?:s(?:uppressContentEditableWarn|croll|pac)|(?:shape|image|text)Render|(?:letter|word)Spac|vHang|hang)ing|(?:on(?:AnimationIteration|C(?:o(?:mposition(?:Update|Start|End)|ntextMenu|py)|anPlayThrough|anPlay|hange|lick|ut)|(?:Animation|Touch|Load|Drag)Start|(?:(?:Duration|Volume|Rate)Chang|(?:MouseLea|(?:Touch|Mouse)Mo|DragLea)v|Paus)e|Loaded(?:Metad|D)ata|(?:(?:T(?:ransition|ouch)|Animation)E|Suspe)nd|DoubleClick|(?:TouchCanc|Whe)el|Lo(?:stPointer|ad)|TimeUpdate|(?:Mouse(?:Ent|Ov)e|Drag(?:Ent|Ov)e|Erro)r|GotPointer|MouseDown|(?:E(?:n(?:crypt|d)|mpti)|S(?:tall|eek))ed|KeyPress|(?:MouseOu|DragExi|S(?:elec|ubmi)|Rese|Inpu)t|P(?:rogress|laying)|DragEnd|Key(?:Down|Up)|(?:MouseU|Dro)p|(?:Wait|Seek)ing|Scroll|Focus|Paste|Abort|Drag|Play|Blur)Captur|alignmentBaselin|(?:limitingConeAng|xlink(?:(?:Arcr|R)o|Tit)|s(?:urfaceSca|ty|ca)|unselectab|baseProfi|fontSty|(?:focus|dragg)ab|multip|profi|tit)l|d(?:ominantBaselin|efaultValu)|onPointerLeav|a(?:uto(?:Capitaliz|Revers|Sav)|dditiv)|(?:(?:formNoValid|xlinkActu|noValid|accumul|rot)a|autoComple|decelera)t|(?:(?:attribute|item)T|datat)yp|onPointerMov|(?:attribute|glyph)Nam|playsInlin|(?:writing|input|edge)Mod|(?:formE|e)ncTyp|(?:amplitu|mo)d|(?:xlinkTy|itemSco|keyTy|slo)p|(?:xmlSpa|non)c|fillRul|(?:dateTi|na)m|r(?:esourc|ol)|xmlBas|wmod)e|(?:glyphOrientationHorizont|loc)al|(?:externalResourcesRequir|select|revers|mut)ed|c(?:o(?:lorInterpolationFilter|ord)s|o(?:lor(?:Interpolation)?|nt(?:rols|ent))|(?:ontentS(?:cript|tyle)Typ|o(?:ntentEditab|lorProfi)l|l(?:assNam|ipRul)|a(?:lcMod|ptur)|it)e|olorRendering|l(?:ipPathUnits|assID)|(?:ontrolsLis|apHeigh)t|h(?:eckedLink|a(?:llenge|rSet)|ildren|ecked)|ell(?:Spac|Padd)ing|o(?:ntextMenu|ls)|(?:rossOrigi|olSpa)n|l(?:ip(?:Path)?|ass)|ursor|[xy])|glyphOrientationVertical|d(?:angerouslySetInnerHTML|efaultChecked|ownload|isabled|isplay|[xy])|(?:s(?:trikethroughThickn|eaml)es|(?:und|ov)erlineThicknes|r(?:equiredExtension|adiu)|(?:requiredFeatur|tableValu|stitchTil|numOctav|filterR)e|key(?:(?:Splin|Tim)e|Param)|auto[Ff]ocu|header|bia)s|(?:(?:st(?:rikethroughPosi|dDevia)|(?:und|ov)erlinePosi|(?:textDecor|elev)a|orienta)tio|(?:strokeLinejo|orig)i|on(?:PointerDow|FocusI)|formActio|zoomAndPa|directio|(?:vers|act)io|rowSpa|begi|ico)n|o(?:n(?:AnimationIteration|C(?:o(?:mposition(?:Update|Start|End)|ntextMenu|py)|anPlayThrough|anPlay|hange|lick|ut)|(?:(?:Duration|Volume|Rate)Chang|(?:MouseLea|(?:Touch|Mouse)Mo|DragLea)v|Paus)e|Loaded(?:Metad|D)ata|(?:Animation|Touch|Load|Drag)Start|(?:(?:T(?:ransition|ouch)|Animation)E|Suspe)nd|DoubleClick|(?:TouchCanc|Whe)el|(?:Mouse(?:Ent|Ov)e|Drag(?:Ent|Ov)e|Erro)r|TimeUpdate|(?:E(?:n(?:crypt|d)|mpti)|S(?:tall|eek))ed|MouseDown|P(?:rogress|laying)|(?:MouseOu|DragExi|S(?:elec|ubmi)|Rese|Inpu)t|KeyPress|DragEnd|Key(?:Down|Up)|(?:Wait|Seek)ing|(?:MouseU|Dro)p|Scroll|Paste|Focus|Abort|Drag|Play|Load|Blur)|rient)|p(?:reserveA(?:spectRatio|lpha)|ointsAt[X-Z]|anose1)|(?:patternContent|ma(?:sk(?:Content)?|rker)|primitive|gradient|pattern|filter)Units|(?:(?:allowTranspar|baseFrequ)enc|re(?:ferrerPolic|adOnl)|(?:(?:st(?:roke|op)O|floodO|fillO|o)pac|integr|secur)it|visibilit|fontFamil|accessKe|propert|summar)y|(?:gradientT|patternT|t)ransform|(?:[xy]ChannelSelect|lightingCol|textAnch|floodCol|stopCol|operat|htmlF)or|(?:strokeMiterlimi|(?:specularConsta|repeatCou|fontVaria)n|(?:(?:specularE|e)xpon|renderingInt|asc)en|d(?:iffuseConsta|esce)n|(?:fontSizeAdju|lengthAdju|manife)s|baselineShif|onPointerOu|vectorEffec|(?:(?:mar(?:ker|gin)|x)H|accentH|fontW)eigh|markerStar|a(?:utoCorrec|bou)|onFocusOu|intercep|restar|forma|inlis|heigh|lis)t|(?:(?:st(?:rokeDasho|artO)|o)ffs|acceptChars|formTarg|viewTarg|srcS)et|k(?:ernel(?:UnitLength|Matrix)|[1-4])|(?:(?:enableBackgrou|markerE)n|s(?:p(?:readMetho|ee)|ee)|formMetho|(?:markerM|onInval)i|preloa|metho|kin)d|strokeDasharray|(?:onPointerCanc|lab)el|(?:allowFullScre|hidd)en|systemLanguage|(?:(?:o(?:nPointer(?:Ent|Ov)|rd)|allowReord|placehold|frameBord|paintOrd|post)e|repeatDu|d(?:efe|u))r|v(?:Mathematical|ert(?:Origin[XY]|AdvY)|alues|ocab)|(?:pointerEve|keyPoi)nts|(?:strokeLineca|onPointerU|itemPro|useMa|wra|loo)p|h(?:oriz(?:Origin|Adv)X|ttpEquiv)|(?:vI|i)deographic|unicodeRange|mathematical|vAlphabetic|u(?:nicodeBidi|[12])|(?:fontStretc|hig)h|(?:(?:mar(?:ker|gin)W|strokeW)id|azimu)th|(?:xmlnsXl|valueL)ink|mediaGroup|spellCheck|(?:text|m(?:in|ax))Length|(?:unitsPerE|optimu|fro)m|r(?:adioGroup|e(?:sults|f[XY]|l)|ows|[xy])|a(?:rabicForm|l(?:phabetic|t)|sync)|pathLength|innerHTML|xlinkShow|(?:xlinkHr|glyphR)ef|(?:tabInde|(?:sand|b)bo|viewBo)x|(?:(?:href|xml|src)La|kerni)ng|autoPlay|o(?:verflow|pen)|f(?:o(?:ntSize|rm?)|il(?:ter|l))|r(?:e(?:quired|sult|f))?|divisor|p(?:attern|oints)|unicode|d(?:efault|ata|ir)?|i(?:temRef|n2|s)|t(?:arget[XY]|o)|srcDoc|s(?:coped|te(?:m[hv]|p)|pan)|(?:width|size)s|prefix|typeof|itemID|s(?:t(?:roke|art)|hape|cope|rc)|t(?:arget|ype)|(?:stri|la)ng|a(?:ccept|s)|m(?:edia|a(?:sk|x)|in)|x(?:mlns)?|width|value|size|href|k(?:ey)?|end|low|by|i[dn]|y[12]|g[12]|x[12]|f[xy]|[yz])$/;
 
 /* From DOMProperty */
 var ATTRIBUTE_NAME_START_CHAR = ':A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD';
@@ -2191,10 +2199,8 @@ var createBroadcast = function createBroadcast(initialState) {
   return { publish: publish, subscribe: subscribe, unsubscribe: unsubscribe };
 };
 
-var _ThemeProvider$childC;
-var _ThemeProvider$contex;
+var _contextShape, _ThemeProvider$contex;
 
-// 
 // NOTE: DO NOT CHANGE, changing this is a semver major change!
 var CHANNEL = '__styled-components__';
 var CHANNEL_NEXT = CHANNEL + 'next__';
@@ -2204,6 +2210,8 @@ var CONTEXT_CHANNEL_SHAPE = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.s
   subscribe: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
   unsubscribe: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func
 });
+
+var contextShape = (_contextShape = {}, _contextShape[CHANNEL] = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func, _contextShape[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _contextShape);
 
 var warnChannelDeprecated = void 0;
 if (true) {
@@ -2293,16 +2301,21 @@ var ThemeProvider = function (_Component) {
 
   ThemeProvider.prototype.getTheme = function getTheme(passedTheme) {
     var theme = passedTheme || this.props.theme;
+
     if (isFunction(theme)) {
       var mergedTheme = theme(this.outerTheme);
+
       if ("development" !== 'production' && (mergedTheme === null || Array.isArray(mergedTheme) || (typeof mergedTheme === 'undefined' ? 'undefined' : _typeof(mergedTheme)) !== 'object')) {
-        throw new Error( true ? '[ThemeProvider] Please return an object from your theme function, i.e. theme={() => ({})}!' : '');
+        throw new StyledComponentsError(7);
       }
+
       return mergedTheme;
     }
+
     if (theme === null || Array.isArray(theme) || (typeof theme === 'undefined' ? 'undefined' : _typeof(theme)) !== 'object') {
-      throw new Error( true ? '[ThemeProvider] Please make your theme prop an object' : '');
+      throw new StyledComponentsError(8);
     }
+
     return _extends({}, this.outerTheme, theme);
   };
 
@@ -2314,217 +2327,218 @@ var ThemeProvider = function (_Component) {
     if (!this.props.children) {
       return null;
     }
+
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.Children.only(this.props.children);
   };
 
   return ThemeProvider;
 }(__WEBPACK_IMPORTED_MODULE_3_react__["Component"]);
 
-ThemeProvider.childContextTypes = (_ThemeProvider$childC = {}, _ThemeProvider$childC[CHANNEL] = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func, _ThemeProvider$childC[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _ThemeProvider$childC);
+ThemeProvider.childContextTypes = contextShape;
 ThemeProvider.contextTypes = (_ThemeProvider$contex = {}, _ThemeProvider$contex[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _ThemeProvider$contex);
 
-// 
+var _babelHelpers$extends;
 
 // HACK for generating all static styles without needing to allocate
 // an empty execution context every single time...
 var STATIC_EXECUTION_CONTEXT = {};
 
-var _StyledComponent = (function (ComponentStyle, constructWithOptions) {
-  var identifiers = {};
+var modifiedContextShape = _extends({}, contextShape, (_babelHelpers$extends = {}, _babelHelpers$extends[CONTEXT_KEY] = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(StyleSheet), __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(ServerStyleSheet)]), _babelHelpers$extends));
 
-  /* We depend on components having unique IDs */
-  var generateId = function generateId(_displayName, parentComponentId) {
-    var displayName = typeof _displayName !== 'string' ? 'sc' : escape(_displayName);
+var identifiers = {};
 
-    /**
-     * This ensures uniqueness if two components happen to share
-     * the same displayName.
-     */
-    var nr = (identifiers[displayName] || 0) + 1;
-    identifiers[displayName] = nr;
+/* We depend on components having unique IDs */
+var generateId = function generateId(ComponentStyle, _displayName, parentComponentId) {
+  var displayName = typeof _displayName !== 'string' ? 'sc' : escape(_displayName);
 
-    var componentId = displayName + '-' + ComponentStyle.generateName(displayName + nr);
+  /**
+   * This ensures uniqueness if two components happen to share
+   * the same displayName.
+   */
+  var nr = (identifiers[displayName] || 0) + 1;
+  identifiers[displayName] = nr;
 
-    return parentComponentId !== undefined ? parentComponentId + '-' + componentId : componentId;
-  };
+  var componentId = displayName + '-' + ComponentStyle.generateName(displayName + nr);
 
-  // $FlowFixMe
+  return parentComponentId !== undefined ? parentComponentId + '-' + componentId : componentId;
+};
 
-  var BaseStyledComponent = function (_Component) {
-    inherits(BaseStyledComponent, _Component);
+// $FlowFixMe
 
-    function BaseStyledComponent() {
-      var _temp, _this, _ret;
+var BaseStyledComponent = function (_Component) {
+  inherits(BaseStyledComponent, _Component);
 
-      classCallCheck(this, BaseStyledComponent);
+  function BaseStyledComponent() {
+    var _temp, _this, _ret;
 
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    classCallCheck(this, BaseStyledComponent);
 
-      return _ret = (_temp = (_this = possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.attrs = {}, _this.state = {
-        theme: null,
-        generatedClassName: ''
-      }, _this.unsubscribeId = -1, _temp), possibleConstructorReturn(_this, _ret);
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    BaseStyledComponent.prototype.unsubscribeFromContext = function unsubscribeFromContext() {
-      if (this.unsubscribeId !== -1) {
-        this.context[CHANNEL_NEXT].unsubscribe(this.unsubscribeId);
-      }
-    };
+    return _ret = (_temp = (_this = possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.attrs = {}, _this.state = {
+      theme: null,
+      generatedClassName: ''
+    }, _this.unsubscribeId = -1, _temp), possibleConstructorReturn(_this, _ret);
+  }
 
-    BaseStyledComponent.prototype.buildExecutionContext = function buildExecutionContext(theme, props) {
-      var attrs = this.constructor.attrs;
+  BaseStyledComponent.prototype.unsubscribeFromContext = function unsubscribeFromContext() {
+    if (this.unsubscribeId !== -1) {
+      this.context[CHANNEL_NEXT].unsubscribe(this.unsubscribeId);
+    }
+  };
 
-      var context = _extends({}, props, { theme: theme });
-      if (attrs === undefined) {
-        return context;
-      }
+  BaseStyledComponent.prototype.buildExecutionContext = function buildExecutionContext(theme, props) {
+    var attrs = this.constructor.attrs;
 
-      this.attrs = Object.keys(attrs).reduce(function (acc, key) {
-        var attr = attrs[key];
-        // eslint-disable-next-line no-param-reassign
-        acc[key] = typeof attr === 'function' && !hasInInheritanceChain(attr, __WEBPACK_IMPORTED_MODULE_3_react__["Component"]) ? attr(context) : attr;
-        return acc;
-      }, {});
+    var context = _extends({}, props, { theme: theme });
+    if (attrs === undefined) {
+      return context;
+    }
 
-      return _extends({}, context, this.attrs);
-    };
+    this.attrs = Object.keys(attrs).reduce(function (acc, key) {
+      var attr = attrs[key];
 
-    BaseStyledComponent.prototype.generateAndInjectStyles = function generateAndInjectStyles(theme, props) {
-      var _constructor = this.constructor,
-          attrs = _constructor.attrs,
-          componentStyle = _constructor.componentStyle,
-          warnTooManyClasses = _constructor.warnTooManyClasses;
+      // eslint-disable-next-line no-param-reassign
+      acc[key] = typeof attr === 'function' && !hasInInheritanceChain(attr, __WEBPACK_IMPORTED_MODULE_3_react__["Component"]) ? attr(context) : attr;
+      return acc;
+    }, {});
 
-      var styleSheet = this.context[CONTEXT_KEY] || StyleSheet.master;
+    return _extends({}, context, this.attrs);
+  };
 
-      // staticaly styled-components don't need to build an execution context object,
-      // and shouldn't be increasing the number of class names
-      if (componentStyle.isStatic && attrs === undefined) {
-        return componentStyle.generateAndInjectStyles(STATIC_EXECUTION_CONTEXT, styleSheet);
-      } else {
-        var executionContext = this.buildExecutionContext(theme, props);
-        var className = componentStyle.generateAndInjectStyles(executionContext, styleSheet);
+  BaseStyledComponent.prototype.generateAndInjectStyles = function generateAndInjectStyles(theme, props) {
+    var _constructor = this.constructor,
+        attrs = _constructor.attrs,
+        componentStyle = _constructor.componentStyle,
+        warnTooManyClasses = _constructor.warnTooManyClasses;
 
-        if ("development" !== 'production' && warnTooManyClasses !== undefined) {
-          warnTooManyClasses(className);
-        }
+    var styleSheet = this.context[CONTEXT_KEY] || StyleSheet.master;
 
-        return className;
-      }
-    };
+    // statically styled-components don't need to build an execution context object,
+    // and shouldn't be increasing the number of class names
+    if (componentStyle.isStatic && attrs === undefined) {
+      return componentStyle.generateAndInjectStyles(STATIC_EXECUTION_CONTEXT, styleSheet);
+    } else {
+      var executionContext = this.buildExecutionContext(theme, props);
+      var className = componentStyle.generateAndInjectStyles(executionContext, styleSheet);
 
-    BaseStyledComponent.prototype.componentWillMount = function componentWillMount() {
-      var _this2 = this;
-
-      var componentStyle = this.constructor.componentStyle;
-
-      var styledContext = this.context[CHANNEL_NEXT];
-
-      // If this is a staticaly-styled component, we don't need to the theme
-      // to generate or build styles.
-      if (componentStyle.isStatic) {
-        var generatedClassName = this.generateAndInjectStyles(STATIC_EXECUTION_CONTEXT, this.props);
-        this.setState({ generatedClassName: generatedClassName });
-        // If there is a theme in the context, subscribe to the event emitter. This
-        // is necessary due to pure components blocking context updates, this circumvents
-        // that by updating when an event is emitted
-      } else if (styledContext !== undefined) {
-        var subscribe = styledContext.subscribe;
-
-        this.unsubscribeId = subscribe(function (nextTheme) {
-          // This will be called once immediately
-          var theme = determineTheme(_this2.props, nextTheme, _this2.constructor.defaultProps);
-          var generatedClassName = _this2.generateAndInjectStyles(theme, _this2.props);
-
-          _this2.setState({ theme: theme, generatedClassName: generatedClassName });
-        });
-      } else {
-        // eslint-disable-next-line react/prop-types
-        var theme = this.props.theme || {};
-        var _generatedClassName = this.generateAndInjectStyles(theme, this.props);
-        this.setState({ theme: theme, generatedClassName: _generatedClassName });
-      }
-    };
-
-    BaseStyledComponent.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      var _this3 = this;
-
-      // If this is a statically-styled component, we don't need to listen to
-      // props changes to update styles
-      var componentStyle = this.constructor.componentStyle;
-
-      if (componentStyle.isStatic) {
-        return;
+      if ("development" !== 'production' && warnTooManyClasses !== undefined) {
+        warnTooManyClasses(className);
       }
 
-      this.setState(function (prevState) {
-        var theme = determineTheme(nextProps, prevState.theme, _this3.constructor.defaultProps);
-        var generatedClassName = _this3.generateAndInjectStyles(theme, nextProps);
+      return className;
+    }
+  };
 
-        return { theme: theme, generatedClassName: generatedClassName };
+  BaseStyledComponent.prototype.componentWillMount = function componentWillMount() {
+    var _this2 = this;
+
+    var componentStyle = this.constructor.componentStyle;
+
+    var styledContext = this.context[CHANNEL_NEXT];
+
+    // If this is a statically-styled component, we don't need to the theme
+    // to generate or build styles.
+    if (componentStyle.isStatic) {
+      var generatedClassName = this.generateAndInjectStyles(STATIC_EXECUTION_CONTEXT, this.props);
+      this.setState({ generatedClassName: generatedClassName });
+      // If there is a theme in the context, subscribe to the event emitter. This
+      // is necessary due to pure components blocking context updates, this circumvents
+      // that by updating when an event is emitted
+    } else if (styledContext !== undefined) {
+      var subscribe = styledContext.subscribe;
+
+      this.unsubscribeId = subscribe(function (nextTheme) {
+        // This will be called once immediately
+        var theme = determineTheme(_this2.props, nextTheme, _this2.constructor.defaultProps);
+
+        var generatedClassName = _this2.generateAndInjectStyles(theme, _this2.props);
+
+        _this2.setState({ theme: theme, generatedClassName: generatedClassName });
       });
-    };
-
-    BaseStyledComponent.prototype.componentWillUnmount = function componentWillUnmount() {
-      this.unsubscribeFromContext();
-    };
-
-    BaseStyledComponent.prototype.render = function render() {
-      var _this4 = this;
-
+    } else {
       // eslint-disable-next-line react/prop-types
-      var innerRef = this.props.innerRef;
-      var generatedClassName = this.state.generatedClassName;
-      var _constructor2 = this.constructor,
-          styledComponentId = _constructor2.styledComponentId,
-          target = _constructor2.target;
+      var theme = this.props.theme || EMPTY_OBJECT;
+      var _generatedClassName = this.generateAndInjectStyles(theme, this.props);
+      this.setState({ theme: theme, generatedClassName: _generatedClassName });
+    }
+  };
+
+  BaseStyledComponent.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    var _this3 = this;
+
+    // If this is a statically-styled component, we don't need to listen to
+    // props changes to update styles
+    var componentStyle = this.constructor.componentStyle;
+
+    if (componentStyle.isStatic) {
+      return;
+    }
+
+    this.setState(function (prevState) {
+      var theme = determineTheme(nextProps, prevState.theme, _this3.constructor.defaultProps);
+      var generatedClassName = _this3.generateAndInjectStyles(theme, nextProps);
+
+      return { theme: theme, generatedClassName: generatedClassName };
+    });
+  };
+
+  BaseStyledComponent.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.unsubscribeFromContext();
+  };
+
+  BaseStyledComponent.prototype.render = function render() {
+    // eslint-disable-next-line react/prop-types
+    var innerRef = this.props.innerRef;
+    var generatedClassName = this.state.generatedClassName;
+    var _constructor2 = this.constructor,
+        styledComponentId = _constructor2.styledComponentId,
+        target = _constructor2.target;
 
 
-      var isTargetTag = isTag(target);
+    var isTargetTag = isTag(target);
 
-      var className = [
-      // eslint-disable-next-line react/prop-types
-      this.props.className, styledComponentId, this.attrs.className, generatedClassName].filter(Boolean).join(' ');
+    var className = [
+    // eslint-disable-next-line react/prop-types
+    this.props.className, styledComponentId, this.attrs.className, generatedClassName].filter(Boolean).join(' ');
 
-      var baseProps = _extends({}, this.attrs, {
-        className: className
-      });
+    var baseProps = _extends({}, this.attrs, {
+      className: className
+    });
 
-      if (isStyledComponent(target)) {
-        baseProps.innerRef = innerRef;
-      } else {
-        baseProps.ref = innerRef;
+    if (isStyledComponent(target)) {
+      baseProps.innerRef = innerRef;
+    } else {
+      baseProps.ref = innerRef;
+    }
+
+    var propsForElement = baseProps;
+    var key = void 0;
+
+    for (key in this.props) {
+      // Don't pass through non HTML tags through to HTML elements
+      // always omit innerRef
+      if (key !== 'innerRef' && key !== 'className' && (!isTargetTag || validAttr(key))) {
+        propsForElement[key] = key === 'style' && key in this.attrs ? _extends({}, this.attrs[key], this.props[key]) : this.props[key];
       }
+    }
 
-      var propsForElement = Object.keys(this.props).reduce(function (acc, propName) {
-        // Don't pass through non HTML tags through to HTML elements
-        // always omit innerRef
-        if (propName !== 'innerRef' && propName !== 'className' && (!isTargetTag || validAttr(propName))) {
-          // eslint-disable-next-line no-param-reassign
-          acc[propName] = _this4.props[propName];
-        }
+    return Object(__WEBPACK_IMPORTED_MODULE_3_react__["createElement"])(target, propsForElement);
+  };
 
-        return acc;
-      }, baseProps);
+  return BaseStyledComponent;
+}(__WEBPACK_IMPORTED_MODULE_3_react__["Component"]);
 
-      return Object(__WEBPACK_IMPORTED_MODULE_3_react__["createElement"])(target, propsForElement);
-    };
-
-    return BaseStyledComponent;
-  }(__WEBPACK_IMPORTED_MODULE_3_react__["Component"]);
-
+var _StyledComponent = (function (ComponentStyle, constructWithOptions) {
   var createStyledComponent = function createStyledComponent(target, options, rules) {
-    var _StyledComponent$cont;
-
     var _options$isClass = options.isClass,
         isClass = _options$isClass === undefined ? !isTag(target) : _options$isClass,
         _options$displayName = options.displayName,
         displayName = _options$displayName === undefined ? generateDisplayName(target) : _options$displayName,
         _options$componentId = options.componentId,
-        componentId = _options$componentId === undefined ? generateId(options.displayName, options.parentComponentId) : _options$componentId,
+        componentId = _options$componentId === undefined ? generateId(ComponentStyle, options.displayName, options.parentComponentId) : _options$componentId,
         _options$ParentCompon = options.ParentComponent,
         ParentComponent = _options$ParentCompon === undefined ? BaseStyledComponent : _options$ParentCompon,
         extendingRules = options.rules,
@@ -2582,10 +2596,10 @@ var _StyledComponent = (function (ComponentStyle, constructWithOptions) {
 
     StyledComponent.attrs = attrs;
     StyledComponent.componentStyle = componentStyle;
+    StyledComponent.contextTypes = modifiedContextShape;
     StyledComponent.displayName = displayName;
     StyledComponent.styledComponentId = styledComponentId;
     StyledComponent.target = target;
-    StyledComponent.contextTypes = (_StyledComponent$cont = {}, _StyledComponent$cont[CHANNEL] = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func, _StyledComponent$cont[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _StyledComponent$cont[CONTEXT_KEY] = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(StyleSheet), __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.instanceOf(ServerStyleSheet)]), _StyledComponent$cont);
 
 
     if (true) {
@@ -2650,10 +2664,11 @@ function murmurhash(str) {
 }
 
 // 
+
 var areStylesCacheable = IS_BROWSER;
 
 var isStaticRules = function isStaticRules(rules, attrs) {
-  for (var i = 0; i < rules.length; i += 1) {
+  for (var i = 0, len = rules.length; i < len; i += 1) {
     var rule = rules[i];
 
     // recursive case
@@ -2669,8 +2684,7 @@ var isStaticRules = function isStaticRules(rules, attrs) {
   if (attrs !== undefined) {
     // eslint-disable-next-line guard-for-in, no-restricted-syntax
     for (var key in attrs) {
-      var value = attrs[key];
-      if (typeof value === 'function') {
+      if (typeof attrs[key] === 'function') {
         return false;
       }
     }
@@ -2726,8 +2740,7 @@ var _ComponentStyle = (function (nameGenerator, flatten, stringifyRules) {
       var name = generateRuleHash(this.componentId + flatCSS.join(''));
 
       if (!styleSheet.hasNameForId(componentId, name)) {
-        var css = stringifyRules(flatCSS, '.' + name);
-        styleSheet.inject(this.componentId, css, name);
+        styleSheet.inject(this.componentId, stringifyRules(flatCSS, '.' + name), name);
       }
 
       this.lastClassName = name;
@@ -2753,6 +2766,7 @@ var domElements = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 
 'circle', 'clipPath', 'defs', 'ellipse', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
 
 // 
+
 var _styled = (function (styledComponent, constructWithOptions) {
   var styled = function styled(tag) {
     return constructWithOptions(styledComponent, tag);
@@ -2767,6 +2781,7 @@ var _styled = (function (styledComponent, constructWithOptions) {
 });
 
 // 
+
 var replaceWhitespace = function replaceWhitespace(str) {
   return str.replace(/\s|\\n/g, '');
 };
@@ -2787,6 +2802,7 @@ var _keyframes = (function (nameGenerator, stringifyRules, css) {
 });
 
 // 
+
 var _injectGlobal = (function (stringifyRules, css) {
   var injectGlobal = function injectGlobal() {
     var styleSheet = StyleSheet.master;
@@ -2803,12 +2819,13 @@ var _injectGlobal = (function (stringifyRules, css) {
 });
 
 // 
+
 var _constructWithOptions = (function (css) {
   var constructWithOptions = function constructWithOptions(componentConstructor, tag) {
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : EMPTY_OBJECT;
 
     if (!Object(__WEBPACK_IMPORTED_MODULE_6_react_is__["isValidElementType"])(tag)) {
-      throw new Error( true ? 'Cannot create styled-component for component: ' + String(tag) : '');
+      throw new StyledComponentsError(1, String(tag));
     }
 
     /* This is callable directly as a template function */
@@ -2823,7 +2840,7 @@ var _constructWithOptions = (function (css) {
     };
     templateFunction.attrs = function (attrs) {
       return constructWithOptions(componentConstructor, tag, _extends({}, options, {
-        attrs: _extends({}, options.attrs || {}, attrs)
+        attrs: _extends({}, options.attrs || EMPTY_OBJECT, attrs)
       }));
     };
 
@@ -2834,10 +2851,8 @@ var _constructWithOptions = (function (css) {
 });
 
 // 
-var wrapWithTheme = function wrapWithTheme(Component$$1) {
-  var _WithTheme$contextTyp;
 
-  var componentName = Component$$1.displayName || Component$$1.name || 'Component';
+var withTheme = (function (Component$$1) {
   var isStatelessFunctionalComponent = typeof Component$$1 === 'function' &&
   // $FlowFixMe TODO: flow for prototype
   !(Component$$1.prototype && 'isReactComponent' in Component$$1.prototype);
@@ -2857,7 +2872,7 @@ var wrapWithTheme = function wrapWithTheme(Component$$1) {
         args[_key] = arguments[_key];
       }
 
-      return _ret = (_temp = (_this = possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {}, _this.unsubscribeId = -1, _temp), possibleConstructorReturn(_this, _ret);
+      return _ret = (_temp = (_this = possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = EMPTY_OBJECT, _this.unsubscribeId = -1, _temp), possibleConstructorReturn(_this, _ret);
     }
 
     // NOTE: This is so that isStyledComponent passes for the innerRef unwrapping
@@ -2917,13 +2932,13 @@ var wrapWithTheme = function wrapWithTheme(Component$$1) {
     return WithTheme;
   }(__WEBPACK_IMPORTED_MODULE_3_react___default.a.Component);
 
-  WithTheme.displayName = 'WithTheme(' + componentName + ')';
+  WithTheme.contextTypes = contextShape;
+  WithTheme.displayName = 'WithTheme(' + getComponentName(Component$$1) + ')';
   WithTheme.styledComponentId = 'withTheme';
-  WithTheme.contextTypes = (_WithTheme$contextTyp = {}, _WithTheme$contextTyp[CHANNEL] = __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func, _WithTheme$contextTyp[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _WithTheme$contextTyp);
 
 
   return __WEBPACK_IMPORTED_MODULE_5_hoist_non_react_statics___default()(WithTheme, Component$$1);
-};
+});
 
 // 
 
@@ -2934,10 +2949,6 @@ var __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS = {
 
 // 
 
-/* Import singletons */
-/* Import singleton constructors */
-/* Import components */
-/* Import Higher Order Components */
 /* Warning if you've imported this file on React Native */
 if ("development" !== 'production' && typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
   // eslint-disable-next-line no-console
@@ -2966,9 +2977,9 @@ var keyframes = _keyframes(generateAlphabeticName, stringifyRules, css);
 var injectGlobal = _injectGlobal(stringifyRules, css);
 var styled = _styled(StyledComponent, constructWithOptions);
 
-
 /* harmony default export */ __webpack_exports__["default"] = (styled);
-//# sourceMappingURL=styled-components.browser.es.js.map
+
+//# sourceMappingURL=styled-components.browser.esm.js.map
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(/*! ./../../../../../node_modules/process/browser.js */ 10), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/harmony-module.js */ 34)(module)))
 
@@ -15640,77 +15651,92 @@ function getNextChildMapping(nextProps, prevChildMapping, onExited) {
 /***/ }),
 
 /***/ 307:
-/*!*******************************************************************!*\
-  !*** ./bundles/gene-search/node_modules/is-plain-object/index.js ***!
-  \*******************************************************************/
+/*!*************************************************************************!*\
+  !*** ./bundles/gene-search/node_modules/fbjs/lib/hyphenateStyleName.js ***!
+  \*************************************************************************/
 /*! dynamic exports provided */
 /*! exports used: default */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/*!
- * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * Copyright (c) 2014-2017, Jon Schlinkert.
- * Released under the MIT License.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
  */
 
 
 
-var isObject = __webpack_require__(/*! isobject */ 308);
+var hyphenate = __webpack_require__(/*! ./hyphenate */ 308);
 
-function isObjectObject(o) {
-  return isObject(o) === true
-    && Object.prototype.toString.call(o) === '[object Object]';
+var msPattern = /^ms-/;
+
+/**
+ * Hyphenates a camelcased CSS property name, for example:
+ *
+ *   > hyphenateStyleName('backgroundColor')
+ *   < "background-color"
+ *   > hyphenateStyleName('MozTransition')
+ *   < "-moz-transition"
+ *   > hyphenateStyleName('msTransition')
+ *   < "-ms-transition"
+ *
+ * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
+ * is converted to `-ms-`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function hyphenateStyleName(string) {
+  return hyphenate(string).replace(msPattern, '-ms-');
 }
 
-module.exports = function isPlainObject(o) {
-  var ctor,prot;
-
-  if (isObjectObject(o) === false) return false;
-
-  // If has modified constructor
-  ctor = o.constructor;
-  if (typeof ctor !== 'function') return false;
-
-  // If has modified prototype
-  prot = ctor.prototype;
-  if (isObjectObject(prot) === false) return false;
-
-  // If constructor does not have an Object-specific method
-  if (prot.hasOwnProperty('isPrototypeOf') === false) {
-    return false;
-  }
-
-  // Most likely a plain Object
-  return true;
-};
-
+module.exports = hyphenateStyleName;
 
 /***/ }),
 
 /***/ 308:
-/*!*****************************************************************************************!*\
-  !*** ./bundles/gene-search/node_modules/is-plain-object/node_modules/isobject/index.js ***!
-  \*****************************************************************************************/
+/*!****************************************************************!*\
+  !*** ./bundles/gene-search/node_modules/fbjs/lib/hyphenate.js ***!
+  \****************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/*!
- * isobject <https://github.com/jonschlinkert/isobject>
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * Copyright (c) 2014-2017, Jon Schlinkert.
- * Released under the MIT License.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
  */
 
+var _uppercasePattern = /([A-Z])/g;
 
+/**
+ * Hyphenates a camelcased string, for example:
+ *
+ *   > hyphenate('backgroundColor')
+ *   < "background-color"
+ *
+ * For CSS style names, use `hyphenateStyleName` instead which works properly
+ * with all vendor prefixes, including `ms`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function hyphenate(string) {
+  return string.replace(_uppercasePattern, '-$1').toLowerCase();
+}
 
-module.exports = function isObject(val) {
-  return val != null && typeof val === 'object' && Array.isArray(val) === false;
-};
-
+module.exports = hyphenate;
 
 /***/ }),
 
@@ -17476,7 +17502,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.4.1
+/** @license React v16.4.2
  * react-is.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.

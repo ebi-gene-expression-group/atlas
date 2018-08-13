@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage.json.opentargets;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.experimentpage.differential.evidence.EvidenceService;
 
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
@@ -23,7 +22,8 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
@@ -31,26 +31,25 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class EvidenceServiceIT {
+    @Inject
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    ExpressionAtlasExperimentTrader experimentTrader;
+    private MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
 
     @Inject
-    MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
+    private DataFileHub dataFileHub;
 
-    @Inject
-    DataFileHub dataFileHub;
-
-    EvidenceService<MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile>
+    private EvidenceService<MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile>
             subject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         subject = new EvidenceService<>(microarrayProfileStreamFactory, dataFileHub, "test");
     }
 
     @Test
-    public void organismPartIsIncludedIfAvailable() throws Exception {
+    public void organismPartIsIncludedIfAvailable() {
         ImmutableList.Builder<JsonObject> listBuilder = ImmutableList.builder();
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment("E-GEOD-12685");
         subject.evidenceForExperiment(experiment, contrast -> {
@@ -65,7 +64,7 @@ public class EvidenceServiceIT {
         for (JsonObject jsonObject : listBuilder.build()) {
             assertThat(
                     jsonObject.get("evidence").getAsJsonObject().get("organism_part").getAsString(),
-                    not(isEmptyString()));
+                    is(not(emptyString())));
         }
     }
 }
