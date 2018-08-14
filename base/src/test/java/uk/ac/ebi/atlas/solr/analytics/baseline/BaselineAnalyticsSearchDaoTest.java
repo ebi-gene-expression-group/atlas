@@ -122,11 +122,7 @@ class BaselineAnalyticsSearchDaoTest {
         double expressionLevel = RNG.nextDouble(5 * Math.pow(10, -MIN_PRECISION - 1), 0.1);
         double roundedExpressionLevel = BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel);
 
-        double epsilon = expressionLevel >= roundedExpressionLevel ?
-                expressionLevel - roundedExpressionLevel :
-                roundedExpressionLevel - expressionLevel;
-
-        assertThat(epsilon)
+        assertThat(Math.abs(expressionLevel - roundedExpressionLevel))
                 .isLessThan(Math.pow(10, -MIN_PRECISION) / 2);
     }
 
@@ -135,11 +131,7 @@ class BaselineAnalyticsSearchDaoTest {
         double expressionLevel = RNG.nextDouble(0.1, 1.0);
         double roundedExpressionLevel = BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel);
 
-        double epsilon = expressionLevel >= roundedExpressionLevel ?
-                expressionLevel - roundedExpressionLevel :
-                roundedExpressionLevel - expressionLevel;
-
-        assertThat(epsilon)
+        assertThat(Math.abs(expressionLevel - roundedExpressionLevel))
                 .isLessThan(0.1 / 2);
     }
 
