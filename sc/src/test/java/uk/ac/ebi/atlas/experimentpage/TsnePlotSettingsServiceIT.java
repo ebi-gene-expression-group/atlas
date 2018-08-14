@@ -90,7 +90,7 @@ public class TsnePlotSettingsServiceIT {
         long fileDescriptorsOpenAfter = getOpenFileCount();
 
         assertThat(fileDescriptorsOpenAfter)
-                .isEqualTo(fileDescriptorsOpenBefore + 1);
+                .isEqualTo(fileDescriptorsOpenBefore);
     }
 
     // https://stackoverflow.com/questions/16360720/how-to-find-out-number-of-files-currently-open-by-java-application
