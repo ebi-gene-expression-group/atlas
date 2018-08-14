@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -110,7 +109,7 @@ class BaselineAnalyticsSearchDaoTest {
         subject = new BaselineAnalyticsSearchDao(analyticsQueryClientMock);
     }
 
-    @RepeatedTest(100)
+    @Test
     void roundVeryTinyExpressionLevel() {
         double expressionLevel = RNG.nextDouble(Double.MIN_VALUE, 5 * Math.pow(10, -MIN_PRECISION - 1));
         assertThat(BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel))
@@ -118,7 +117,7 @@ class BaselineAnalyticsSearchDaoTest {
                .isZero();
     }
 
-    @RepeatedTest(1000)
+    @Test
     void roundTinyExpressionLevel() {
         double expressionLevel = RNG.nextDouble(5 * Math.pow(10, -MIN_PRECISION - 1), 0.1);
 
@@ -126,7 +125,7 @@ class BaselineAnalyticsSearchDaoTest {
                 .isCloseTo(expressionLevel, Offset.offset(Math.pow(10, -MIN_PRECISION) / 2));
     }
 
-    @RepeatedTest(1000)
+    @Test
     void roundSmallExpressionLevel() {
         double expressionLevel = RNG.nextDouble(0.1, 1.0);
 
@@ -134,7 +133,7 @@ class BaselineAnalyticsSearchDaoTest {
                 .isCloseTo(expressionLevel, Offset.offset(0.1 / 2));
     }
 
-    @RepeatedTest(100)
+    @Test
     void roundBigExpressionLevel() {
         double expressionLevel = RNG.nextDouble(1.0, Double.MAX_VALUE);
         assertThat(BASELINE_EXPRESSION_ROUNDER.applyAsDouble(expressionLevel))
