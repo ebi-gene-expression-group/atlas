@@ -86,8 +86,8 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         ExperimentDesign experimentDesign = getExperimentDesign();
         ExperimentDisplayDefaults experimentDisplayDefaults = getDisplayDefaults();
 
-        DataColumnGroup.DataColumnGroupList dataColumnGroupList =
-                new DataColumnGroup.DataColumnGroupList(experimentDisplayDefaults);
+        DataColumnGroup.DataColumnGroupList<Contrast> dataColumnGroupList =
+                new DataColumnGroup.DataColumnGroupList<>(experimentDisplayDefaults);
 
         //populate the keys in the order we want later
         dataColumnGroupList.addDataColumnGroupIfNotPresent("Comparison Name", true);
