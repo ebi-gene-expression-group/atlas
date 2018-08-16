@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class HealthCheckServiceTest {
+class HealthCheckServiceTest {
 
     @Mock
     private SolrCloudAdminProxy solrCloudAdminProxyMock;
@@ -33,40 +33,48 @@ public class HealthCheckServiceTest {
     private static final String MOCK_SOLR_COLLECTION_ALIAS = "mockCollectionAlias";
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         subject = new HealthCheckService(solrCloudAdminProxyMock);
     }
 
     @Test
-    public void solrCollectionsAreUp() throws IOException, SolrServerException {
+    void solrCollectionsAreUp() throws IOException, SolrServerException {
         when(solrCloudAdminProxyMock.areCollectionsUp(anyList(), any())).thenReturn(true);
 
         assertThat(subject.isSolrUp(MOCK_SOLR_COLLECTIONS, MOCK_SOLR_COLLECTION_ALIAS)).isTrue();
     }
 
     @Test
-    public void solrCollectionsAreDown() throws IOException, SolrServerException {
+    void solrCollectionsAreDown() throws IOException, SolrServerException {
         when(solrCloudAdminProxyMock.areCollectionsUp(anyList(), any())).thenReturn(false);
 
         assertThat(subject.isSolrUp(MOCK_SOLR_COLLECTIONS, MOCK_SOLR_COLLECTION_ALIAS)).isFalse();
     }
 
     @Test
-    public void solrThrowsException() throws IOException, SolrServerException {
+    void solrThrowsException() throws IOException, SolrServerException {
         when(solrCloudAdminProxyMock.areCollectionsUp(anyList(), any())).thenThrow(RuntimeException.class);
 
         assertThat(subject.isSolrUp(MOCK_SOLR_COLLECTIONS, MOCK_SOLR_COLLECTION_ALIAS)).isFalse();
     }
 
     @Test
-    public void experimentsDatabaseIsUp() {
+    void experimentsDatabaseIsUp() {
         when(experimentDaoMock.countExperiments()).thenReturn(9);
 
         assertThat(subject.isDatabaseUp(experimentDaoMock)).isTrue();
     }
+
     @Test
-    public void noExperimentsInDatabase() {
+    void noExperimentsInDatabase() {
         when(experimentDaoMock.countExperiments()).thenReturn(0);
+
+        assertThat(subject.isDatabaseUp(experimentDaoMock)).isFalse();
+    }
+
+    @Test
+    void experimentDaoThrowsException() {
+        when(experimentDaoMock.countExperiments()).thenThrow(RuntimeException.class);
 
         assertThat(subject.isDatabaseUp(experimentDaoMock)).isFalse();
     }
