@@ -28,10 +28,12 @@
 //    public void specificSelection() throws Exception {
 //
 //        Set<String> sliceAssayGroupIds =
-//                IntStream.rangeClosed(1, 934).boxed().map(i -> "g" + Integer.toString(i)).collect(Collectors.toSet());
+//                IntStream.rangeClosed(1, 934).boxed()
+//                      .map(i -> "g" + Integer.toString(i)).collect(Collectors.toSet());
 //
 //        for (double expressionLevelCutoff : ImmutableList.of(0.0, 0.5, 1.0, 10.0, 100.0, 1000.0)) {
-//            for (int assayGroupIds : ImmutableList.of(1, 10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 933, 934)) {
+//            for (int assayGroupIds :
+//                  ImmutableList.of(1, 10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 933, 934)) {
 //                for (String experimentAccession : ImmutableList.of("E-MTAB-2770", "E-MTAB-5423")) {
 //                    Set<String> selectedAssayGroupIds =
 //                            IntStream.rangeClosed(1, assayGroupIds).boxed()
@@ -56,8 +58,12 @@
 //    public void specificAll() throws Exception {
 //        Stopwatch stopwatch = Stopwatch.createStarted();
 //        subject.specificExpressionAcrossAllAssayGroups("E-MTAB-2770", 0.0, 50);
-//        LOGGER.info("E-MTAB-2770 specific search across all (934) assay groups finished in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
+//        LOGGER.info(
+//              "E-MTAB-2770 specific search across all (934) assay groups finished in {} ms",
+//              stopwatch.elapsed(TimeUnit.MILLISECONDS));
 //        subject.specificExpressionAcrossAllAssayGroups("E-MTAB-5423", 0.0, 50);
-//        LOGGER.info("E-MTAB-5423 specific search across all (934) assay groups finished in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
+//        LOGGER.info(
+//              "E-MTAB-5423 specific search across all (934) assay groups finished in {} ms",
+//              stopwatch.elapsed(TimeUnit.MILLISECONDS));
 //    }
 //}

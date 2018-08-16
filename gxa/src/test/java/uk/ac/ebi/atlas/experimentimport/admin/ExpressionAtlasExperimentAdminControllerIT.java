@@ -92,19 +92,19 @@
 //        isOk(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
 //    }
 //
-//    private void isError(String messageAboutWhatIsExpected, String result){
+//    private void isError(String messageAboutWhatIsExpected, String result) {
 //        isError(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
 //    }
 //
-//    private void isOk(String message, JsonObject object){
+//    private void isOk(String message, JsonObject object) {
 //        assertAboutResponseObject(message, object, true);
 //    }
 //
-//    private void isError(String message, JsonObject object){
+//    private void isError(String message, JsonObject object) {
 //        assertAboutResponseObject(message, object, false);
 //    }
 //
-//    private void assertAboutResponseObject(String message, JsonObject object, boolean expectedSuccessful){
+//    private void assertAboutResponseObject(String message, JsonObject object, boolean expectedSuccessful) {
 //        assertThat(
 //                message,
 //                object.has("result"),

@@ -27,7 +27,7 @@ public class AssayGroupSummaryBuilderTest {
     private static final String SAMPLE_VALUE2 = "sample value 2";
 
     @Test
-    public void build(){
+    public void build() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE);
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER2, FACTOR_VALUE2);

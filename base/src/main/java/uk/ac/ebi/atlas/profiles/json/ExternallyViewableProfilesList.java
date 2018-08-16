@@ -31,7 +31,7 @@ public class ExternallyViewableProfilesList<D extends DescribesDataColumns,
     public ExternallyViewableProfilesList(GeneProfilesList<P> profiles,
                                           Function<P, URI> provideLinkToProfile,
                                           List<D> prescribedOrderOfColumns,
-                                          Function<P, U> expressionUnitForProfile){
+                                          Function<P, U> expressionUnitForProfile) {
         this.profiles = profiles;
         this.provideLinkToProfile = provideLinkToProfile;
         this.prescribedOrderOfColumns = prescribedOrderOfColumns;
@@ -55,12 +55,12 @@ public class ExternallyViewableProfilesList<D extends DescribesDataColumns,
     public JsonObject asJson() {
         JsonObject result = new JsonObject();
 
-        for(Map.Entry<String, String> e: profiles.properties().entrySet()){
+        for (Map.Entry<String, String> e: profiles.properties().entrySet()) {
             result.addProperty(e.getKey(), e.getValue());
         }
 
         JsonArray rows = new JsonArray();
-        for(P profile : profiles) {
+        for (P profile : profiles) {
             rows.add(convert(profile));
         }
 

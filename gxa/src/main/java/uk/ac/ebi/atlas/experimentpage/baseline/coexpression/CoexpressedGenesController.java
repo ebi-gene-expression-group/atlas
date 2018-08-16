@@ -18,7 +18,7 @@ public class CoexpressedGenesController extends JsonExceptionHandlingController 
     private final CoexpressedGenesDao coexpressedGenesDao;
 
     @Inject
-    public CoexpressedGenesController(JdbcTemplate jdbcTemplate){
+    public CoexpressedGenesController(JdbcTemplate jdbcTemplate) {
         this.coexpressedGenesDao = new CoexpressedGenesDao(jdbcTemplate);
     }
 
@@ -27,6 +27,6 @@ produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchCoexpressedGenes(@RequestParam(value = "experiment") String experiment,
                                         @RequestParam(value = "identifier") String identifier) {
-        return GSON.toJson(coexpressedGenesDao.coexpressedGenesFor(experiment, identifier), Set.class);
+        return GSON.toJson(coexpressedGenesDao.coexpressedGenesfor (experiment, identifier), Set.class);
     }
 }

@@ -30,7 +30,7 @@ public class AnalysisMethodsPageController {
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods/{resource}.pdf", method = RequestMethod.GET)
     public String getAnalysisMethodsPdf(@PathVariable String experimentAccession,@PathVariable String resource) {
-        if(!buildPdfPath(experimentAccession, resource).toFile().exists()) {
+        if (!buildPdfPath(experimentAccession, resource).toFile().exists()) {
             throw new ResourceNotFoundException("No PDF for " + resource);
         }
 

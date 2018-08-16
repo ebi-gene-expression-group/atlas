@@ -45,7 +45,7 @@ public class ExpressionAtlasExperimentCheckerTest {
     }
 
 
-    Collection<String> configurationWithAssayGroups(Collection<String> assayGroupList){
+    Collection<String> configurationWithAssayGroups(Collection<String> assayGroupList) {
         ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
         ImmutableList.Builder<String> b = ImmutableList.builder();
         b.add(MessageFormat.format("<configuration experimentType=\"{0}\" r_data=\"1\">", experimentType.getDescription()),
@@ -63,17 +63,17 @@ public class ExpressionAtlasExperimentCheckerTest {
     }
 
     void setup(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile,
-                            String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2){
+                            String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2) {
         dataFileHub.addConfigurationFile(accession, configurationWithAssayGroups(ImmutableList.of(
                 assayGroupXml
         )));
         dataFileHub.addFactorsFile(accession, ImmutableList.of("<factors-definition>", "</factors-definition>"));
         addFile.accept(accession, ImmutableList.of(fileHeader));
-        addFile2.accept(accession,ImmutableList.of(fileHeader2));
+        addFile2.accept(accession, ImmutableList.of(fileHeader2));
 
     }
 
-    void setup(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile){
+    void setup(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile) {
         dataFileHub.addConfigurationFile(accession, configurationWithAssayGroups(ImmutableList.of(
                 assayGroupXml
         )));
@@ -81,106 +81,106 @@ public class ExpressionAtlasExperimentCheckerTest {
         addFile.accept(accession, ImmutableList.of(fileHeader));
 
     }
-    void assertPasses(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile){
+    void assertPasses(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile) {
         setup(assayGroupXml, fileHeader, addFile);
         subject.checkRnaSeqBaselineFiles(accession);
     }
 
-    void assertFails(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile){
+    void assertFails(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile) {
         setup(assayGroupXml, fileHeader, addFile);
-        try{
+        try {
             subject.checkRnaSeqBaselineFiles(accession);
             fail("Should fail with IllegalStateException");
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             //yum
         }
     }
 
     void assertPasses(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile,
-                      String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2){
+                      String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2) {
         setup(assayGroupXml, fileHeader, addFile, fileHeader2, addFile2);
         subject.checkRnaSeqBaselineFiles(accession);
     }
 
     void assertFails(String assayGroupXml, String[] fileHeader, BiConsumer<String, List<String[]>> addFile,
-                     String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2){
+                     String[] fileHeader2, BiConsumer<String, List<String[]>> addFile2) {
         setup(assayGroupXml, fileHeader, addFile, fileHeader2, addFile2);
-        try{
+        try {
             subject.checkRnaSeqBaselineFiles(accession);
             fail("Should fail with IllegalStateException");
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             //yum
         }
     }
 
     @Test
-    public void baselineRnaSeqFileNeedsAtLeastOneDataFile(){
-        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{}, (a,b)-> {});
+    public void baselineRnaSeqFileNeedsAtLeastOneDataFile() {
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{}, (a, b)-> {});
     }
 
 
 
 
-    void fileMatchesHeaderBasedOnAssayGroups(BiConsumer<String, List<String[]>> addFile){
-        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "g1"}, addFile);
+    void fileMatchesHeaderBasedOnAssayGroups(BiConsumer<String, List<String[]>> addFile) {
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"", "", "g1"}, addFile);
         assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
-                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "g1", "g2"},addFile);
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"", "", "g1", "g2"}, addFile);
         assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
-                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "g2", "g1"},addFile);
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"", "", "g2", "g1"}, addFile);
         assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
-                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "g1"}, addFile);
-        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "g1", "g2"},addFile);
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"", "", "g1"}, addFile);
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"", "", "g1", "g2"}, addFile);
     }
 
     @Test
-    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup1(){
+    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup1() {
         fileMatchesHeaderBasedOnAssayGroups(dataFileHub::addFpkmsExpressionFile);
     }
 
     @Test
-    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup2(){
+    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup2() {
         fileMatchesHeaderBasedOnAssayGroups(dataFileHub::addTpmsExpressionFile);
     }
 
     @Test
-    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup3(){
-        fileMatchesHeaderBasedOnAssayGroups((a,b)-> {
-            dataFileHub.addTpmsExpressionFile(a,b);
-            dataFileHub.addFpkmsExpressionFile(a,b);
+    public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup3() {
+        fileMatchesHeaderBasedOnAssayGroups((a, b)-> {
+            dataFileHub.addTpmsExpressionFile(a, b);
+            dataFileHub.addFpkmsExpressionFile(a, b);
         });
     }
 
     @Test
-    public void checkBaselineRnaSeqFileCheckTranscriptsFile(){
-        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "", "A"},dataFileHub::addTranscriptsTpmsExpressionFile,
-                new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+    public void checkBaselineRnaSeqFileCheckTranscriptsFile() {
+        assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"", "", "", "A"}, dataFileHub::addTranscriptsTpmsExpressionFile,
+                new String[]{"", "", "g1"}, dataFileHub::addTpmsExpressionFile);
         assertPasses("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
-                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "", "A", "B"},dataFileHub::addTranscriptsTpmsExpressionFile,
-                new String[]{"","", "g1", "g2"}, dataFileHub:: addTpmsExpressionFile);
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"", "", "", "A", "B"}, dataFileHub::addTranscriptsTpmsExpressionFile,
+                new String[]{"", "", "g1", "g2"}, dataFileHub:: addTpmsExpressionFile);
         assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>" +
-                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"","", "", "A"},
-                dataFileHub::addTranscriptsTpmsExpressionFile, new String[]{"","", "g1", "g2"}, dataFileHub::addTpmsExpressionFile);
-        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"","", "", "A", "B"},
-                dataFileHub::addTranscriptsTpmsExpressionFile,new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+                "<assay_group id=\"g2\"><assay>B</assay></assay_group>", new String[]{"", "", "", "A"},
+                dataFileHub::addTranscriptsTpmsExpressionFile, new String[]{"", "", "g1", "g2"}, dataFileHub::addTpmsExpressionFile);
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[]{"", "", "", "A", "B"},
+                dataFileHub::addTranscriptsTpmsExpressionFile, new String[]{"", "", "g1"}, dataFileHub::addTpmsExpressionFile);
     }
 
 
-    private void technicalReplicatesInOneAssayGroupPasses(List<String> assayTags,String [] header){
+    private void technicalReplicatesInOneAssayGroupPasses(List<String> assayTags, String [] header) {
         assertPasses("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
-                ImmutableList.builder().add("","", "").addAll(Arrays.asList(header)).build().toArray(new String[]{})
-                ,dataFileHub::addTranscriptsTpmsExpressionFile,
-                new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+                ImmutableList.builder().add("", "", "").addAll(Arrays.asList(header)).build().toArray(new String[]{})
+                , dataFileHub::addTranscriptsTpmsExpressionFile,
+                new String[]{"", "", "g1"}, dataFileHub::addTpmsExpressionFile);
     }
 
-    private void technicalReplicatesInOneAssayGroupFails(List<String> assayTags,String [] header){
+    private void technicalReplicatesInOneAssayGroupFails(List<String> assayTags, String [] header) {
         assertFails("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
-                ImmutableList.builder().add("","", "").addAll(Arrays.asList(header)).build().toArray(new String[]{}),
+                ImmutableList.builder().add("", "", "").addAll(Arrays.asList(header)).build().toArray(new String[]{}),
                 dataFileHub::addTranscriptsTpmsExpressionFile,
-                new String[]{"","", "g1"},dataFileHub::addTpmsExpressionFile);
+                new String[]{"", "", "g1"}, dataFileHub::addTpmsExpressionFile);
     }
 
     @Test
-    public void technicalReplicatesGetVerified(){
+    public void technicalReplicatesGetVerified() {
         technicalReplicatesInOneAssayGroupPasses(ImmutableList.of(
                 "<assay technical_replicate_id=\"t1\">A</assay>" ,
                 "<assay technical_replicate_id=\"t1\">B</assay>"
@@ -188,7 +188,7 @@ public class ExpressionAtlasExperimentCheckerTest {
         technicalReplicatesInOneAssayGroupFails(ImmutableList.of(
                 "<assay technical_replicate_id=\"t1\">A</assay>" ,
                 "<assay technical_replicate_id=\"t1\">B</assay>"
-        ), new String[]{"A","B"});
+        ), new String[]{"A", "B"});
         technicalReplicatesInOneAssayGroupPasses(ImmutableList.of(
                 "<assay technical_replicate_id=\"t1\">A</assay>" ,
                 "<assay technical_replicate_id=\"t1\">B</assay>",

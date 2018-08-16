@@ -21,7 +21,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.as
 public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInputDocument> {
     private final ObjectInputStream<? extends ExperimentDataPoint> experimentDataPointInputStream;
     private final Iterator<? extends ExperimentDataPoint> experimentDataPointIterator;
-    private final Map<String,Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier;
+    private final Map<String, Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier;
 
     public SolrInputDocumentInputStream(
             ObjectInputStream<? extends ExperimentDataPoint> experimentDataPointInputStream,
@@ -45,18 +45,17 @@ public class SolrInputDocumentInputStream implements ObjectInputStream<SolrInput
                     propertiesPerBioentityIdentifier.get(experimentDataPoint.bioentityIdentifier);
 
             return create(experimentDataPoint, m != null ? m : ImmutableMap.of());
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    private static SolrInputDocument create (
-            ExperimentDataPoint experimentDataPoint, Map<BioentityPropertyName, Set<String>> bioentityProperties) {
+    private static SolrInputDocument create(ExperimentDataPoint experimentDataPoint,
+                                            Map<BioentityPropertyName, Set<String>> bioentityProperties) {
 
         SolrInputDocument solrInputDocument = new SolrInputDocument();
 
-        for(Map.Entry<String, Object> e : experimentDataPoint.getProperties().entrySet()) {
+        for (Map.Entry<String, Object> e : experimentDataPoint.getProperties().entrySet()) {
             solrInputDocument.addField(e.getKey(), e.getValue());
         }
 

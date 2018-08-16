@@ -21,7 +21,9 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
     private final ConfigurationTrader configurationTrader;
     private final SpeciesFactory speciesFactory;
 
-    public BaselineExperimentFactory(ExperimentType experimentType, ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
+    public BaselineExperimentFactory(ExperimentType experimentType,
+                                     ConfigurationTrader configurationTrader,
+                                     SpeciesFactory speciesFactory) {
         this.experimentType = experimentType;
         this.configurationTrader = configurationTrader;
         this.speciesFactory = speciesFactory;

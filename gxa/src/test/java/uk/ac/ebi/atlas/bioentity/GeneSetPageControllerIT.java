@@ -31,7 +31,7 @@ public class GeneSetPageControllerIT {
         bioentityProperties("PO:0009030");
     }
 
-    private void bioentityProperties(String bioentityIdentifier){
+    private void bioentityProperties(String bioentityIdentifier) {
         Model model = new BindingAwareModelMap();
         subject.showGeneSetPage(bioentityIdentifier, "", model);
         JsonArray bioentityProperties =

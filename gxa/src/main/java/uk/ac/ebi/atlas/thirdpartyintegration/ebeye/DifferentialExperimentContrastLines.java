@@ -36,7 +36,7 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
         return result;
     }
 
-    private void populateSamples(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
+    private void populateSamples(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value) {
         for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "characteristic",
                     sample.header(), sample.value(), joinURIs(sample.valueOntologyTerms()));
@@ -44,7 +44,7 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
         }
     }
 
-    private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
+    private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value) {
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "factor",
                     factor.getHeader(), factor.getValue(), joinURIs(factor.getValueOntologyTerms()));

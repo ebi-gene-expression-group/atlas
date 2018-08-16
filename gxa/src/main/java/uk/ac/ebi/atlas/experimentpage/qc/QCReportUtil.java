@@ -13,11 +13,11 @@ import static java.nio.file.Files.newInputStream;
 
 public class QCReportUtil {
 
-    private QCReportUtil(){
+    private QCReportUtil() {
 
     }
 
-    public static void printContent(HttpServletRequest request, Writer out ){
+    public static void printContent(HttpServletRequest request, Writer out ) {
         Path filePath = (Path)request.getAttribute("contentPath");
         try(InputStream f = newInputStream(filePath)) {
             IOUtils.copy(f, out, Charset.defaultCharset());

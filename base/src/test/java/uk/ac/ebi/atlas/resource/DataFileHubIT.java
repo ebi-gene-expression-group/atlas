@@ -41,19 +41,23 @@ public class DataFileHubIT {
     @Test
     void testGetBaselineFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
-        String experimentAccession = jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_BASELINE);
+        String experimentAccession =
+                jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_BASELINE);
         LOGGER.info("Test baseline experiment files for experiment " + experimentAccession);
 
         assertAtlasResourceExists(
-                subject.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFile(ExpressionUnit.Absolute.Rna.TPM));
+                subject.getRnaSeqBaselineExperimentFiles(experimentAccession)
+                        .dataFile(ExpressionUnit.Absolute.Rna.TPM));
         assertAtlasResourceExists(
-                subject.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFile(ExpressionUnit.Absolute.Rna.FPKM));
+                subject.getRnaSeqBaselineExperimentFiles(experimentAccession)
+                        .dataFile(ExpressionUnit.Absolute.Rna.FPKM));
     }
 
     @Test
     public void testGetProteomicsBaselineFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
-        String experimentAccession = jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.PROTEOMICS_BASELINE);
+        String experimentAccession =
+                jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.PROTEOMICS_BASELINE);
         LOGGER.info("Test proteomics baseline experiment files for experiment " + experimentAccession);
 
         assertAtlasResourceExists(subject.getProteomicsBaselineExperimentFiles(experimentAccession).main);
@@ -62,7 +66,8 @@ public class DataFileHubIT {
     @Test
     void testGetDifferentialExperimentFiles() {
         DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
-        String experimentAccession = jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
+        String experimentAccession =
+                jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
         LOGGER.info("Test differential experiment files for experiment " + experimentAccession);
 
         assertAtlasResourceExists(subject.getRnaSeqDifferentialExperimentFiles(experimentAccession).analytics);

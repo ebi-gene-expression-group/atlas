@@ -29,7 +29,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     @Inject
     public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub,
                                 ExperimentPageContentService experimentPageContentService,
-                                ExperimentAttributesService experimentAttributesService){
+                                ExperimentAttributesService experimentAttributesService) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
         this.experimentPageContentService = experimentPageContentService;
@@ -50,7 +50,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return "experiment-page";
     }
 
-    private JsonObject experimentPageContentForExperiment(final Experiment<Cell> experiment, final String accessKey){
+    private JsonObject experimentPageContentForExperiment(final Experiment<Cell> experiment, final String accessKey) {
         JsonObject result = new JsonObject();
 
         result.addProperty("experimentAccession", experiment.getAccession());
@@ -66,7 +66,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                         "Results",
                         experimentPageContentService.getTsnePlotData(experiment.getAccession())));
 
-        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
+        if (dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()) {
             availableTabs.add(
                     customContentTab(
                             "experiment-design",
@@ -101,7 +101,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
     private JsonArray supplementaryInformationTabs(final Experiment experiment) {
         JsonArray supplementaryInformationTabs = new JsonArray();
-        if(dataFileHub.getSingleCellExperimentFiles(experiment.getAccession()).softwareUsed.exists()){
+        if (dataFileHub.getSingleCellExperimentFiles(experiment.getAccession()).softwareUsed.exists()) {
                 supplementaryInformationTabs.add(
                         customContentTab(
                                 "static-table",
@@ -113,7 +113,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return supplementaryInformationTabs;
     }
 
-    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
+    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value) {
         JsonObject props =  new JsonObject();
         props.add(onlyPropName, value);
         return customContentTab(tabType, name, props);

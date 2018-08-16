@@ -12,8 +12,7 @@ import static uk.ac.ebi.atlas.utils.StringUtil.splitAtLastSlash;
 
 @AutoValue
 public abstract class OntologyTerm {
-
-    private final static int DEFAULT_DEPTH = 1;
+    private static final int DEFAULT_DEPTH = 1;
 
     public abstract String accession();
     public abstract String name();
@@ -44,9 +43,8 @@ public abstract class OntologyTerm {
         return source().isEmpty() ? accession() : StringUtils.appendIfMissing(source(), "/") + accession();
     }
 
-    public static JsonElement jsonForHeaders(Set<OntologyTerm> ontologyTerms){
+    public static JsonElement jsonForHeaders(Set<OntologyTerm> ontologyTerms) {
         return ontologyTerms.isEmpty() ? JsonNull.INSTANCE : new JsonPrimitive(ontologyTerms.iterator().next()
                 .accession());
     }
-
 }

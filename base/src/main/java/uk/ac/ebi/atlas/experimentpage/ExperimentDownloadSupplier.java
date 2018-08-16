@@ -48,29 +48,38 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs extends ExperimentPageRequestPreferences> extends CanStreamSupplier<E> {
+public abstract class ExperimentDownloadSupplier<E extends Experiment, P extends ExperimentPageRequestPreferences>
+                      extends CanStreamSupplier<E> {
 
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
         return ExternallyAvailableContent.ContentType.DATA;
     }
 
-    protected abstract void write(HttpServletResponse response, Prefs preferences, E experiment, final String id) throws IOException;
+    protected abstract void write(HttpServletResponse response,
+                                  P preferences, E experiment,
+                                  String id) throws IOException;
 
-    public static abstract class ExperimentDownloadFileSupplier<E extends Experiment, Prefs extends ExperimentPageRequestPreferences> extends ExperimentDownloadSupplier<E, Prefs> {
+    public abstract static class ExperimentDownloadFileSupplier<
+                                         E extends Experiment, P extends ExperimentPageRequestPreferences>
+                                 extends ExperimentDownloadSupplier<E, P> {
 
-        protected void write(HttpServletResponse response, Prefs preferences, E experiment, final String id) throws IOException {
+        protected void write(HttpServletResponse response,
+                             P preferences,
+                             E experiment,
+                             final String id) throws IOException {
             response.setHeader(
                     "Content-Disposition",
-                    MessageFormat.format("attachment; filename=\"{0}-query-results.{1}\"", experiment.getAccession(), id));
+                    MessageFormat.format(
+                            "attachment; filename=\"{0}-query-results.{1}\"", experiment.getAccession(), id));
             response.setContentType("text/plain; charset=utf-8");
             write(response.getWriter(), preferences, experiment);
         }
 
-        protected abstract void write(Writer writer, Prefs preferences, E experiment);
+        protected abstract void write(Writer writer, P preferences, E experiment);
 
         protected ExternallyAvailableContent getOne(final E experiment,
-                                                    final Prefs preferences,
+                                                    final P preferences,
                                                     final String id,
                                                     String description) {
             return new ExternallyAvailableContent(makeUri(id),
@@ -92,24 +101,31 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
         }
     }
 
-    public static abstract class Baseline<Unit extends ExpressionUnit.Absolute, Prefs extends BaselineRequestPreferences<Unit>>
-            extends ExperimentDownloadFileSupplier<BaselineExperiment, Prefs> {
+    public abstract static class Baseline<U extends ExpressionUnit.Absolute, P extends BaselineRequestPreferences<U>>
+                                 extends ExperimentDownloadFileSupplier<BaselineExperiment, P> {
 
-
-        private final BaselineProfilesWriterFactory<Unit> baselineProfilesWriterFactory;
+        private final BaselineProfilesWriterFactory<U> baselineProfilesWriterFactory;
         private final SolrQueryService solrQueryService;
-        private final ProfileStreamFactory<AssayGroup, BaselineExpression, BaselineExperiment, BaselineProfileStreamOptions<Unit>, BaselineProfile> baselineProfileStreamFactory;
+        private final ProfileStreamFactory<
+                AssayGroup, BaselineExpression, BaselineExperiment, BaselineProfileStreamOptions<U>, BaselineProfile>
+                baselineProfileStreamFactory;
 
-        protected Baseline(BaselineProfilesWriterFactory<Unit> baselineProfilesWriterFactory, SolrQueryService solrQueryService,
-                           ProfileStreamFactory<AssayGroup, BaselineExpression, BaselineExperiment, BaselineProfileStreamOptions<Unit>, BaselineProfile> baselineProfileStreamFactory) {
+        protected Baseline(BaselineProfilesWriterFactory<U> baselineProfilesWriterFactory,
+                           SolrQueryService solrQueryService,
+                           ProfileStreamFactory<
+                                   AssayGroup,
+                                   BaselineExpression,
+                                   BaselineExperiment,
+                                   BaselineProfileStreamOptions<U>,
+                                   BaselineProfile> baselineProfileStreamFactory) {
             this.baselineProfilesWriterFactory = baselineProfilesWriterFactory;
             this.solrQueryService = solrQueryService;
             this.baselineProfileStreamFactory = baselineProfileStreamFactory;
         }
 
-        protected void write(Writer writer, Prefs preferences, BaselineExperiment experiment) {
+        protected void write(Writer writer, P preferences, BaselineExperiment experiment) {
 
-            BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
+            BaselineRequestContext<U> requestContext = new BaselineRequestContext<>(preferences, experiment);
             GeneQueryResponse geneQueryResponse =
                     solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
             baselineProfileStreamFactory.write(experiment, requestContext,
@@ -119,14 +135,17 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
     }
 
     @Named
-    public static class Proteomics extends Baseline<ExpressionUnit.Absolute.Protein, BaselineRequestPreferences<ExpressionUnit.Absolute.Protein>> {
+    public static class Proteomics
+                        extends Baseline<
+                                    ExpressionUnit.Absolute.Protein,
+                                    BaselineRequestPreferences<ExpressionUnit.Absolute.Protein>> {
 
         @Inject
-        public Proteomics(BaselineProfilesWriterFactory<ExpressionUnit.Absolute.Protein> baselineProfilesWriterFactory, SolrQueryService solrQueryService,
+        public Proteomics(BaselineProfilesWriterFactory<ExpressionUnit.Absolute.Protein> baselineProfilesWriterFactory,
+                          SolrQueryService solrQueryService,
                           ProteomicsBaselineProfileStreamFactory baselineProfileStreamFactory) {
             super(baselineProfilesWriterFactory, solrQueryService, baselineProfileStreamFactory);
         }
-
 
         @Override
         public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment) {
@@ -140,11 +159,13 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
     }
 
     @Named
-    public static class RnaSeqBaseline extends Baseline<ExpressionUnit.Absolute.Rna, RnaSeqBaselineRequestPreferences> {
+    public static class RnaSeqBaseline
+                        extends Baseline<ExpressionUnit.Absolute.Rna, RnaSeqBaselineRequestPreferences> {
         private final DataFileHub dataFileHub;
 
         @Inject
-        public RnaSeqBaseline(BaselineProfilesWriterFactory<ExpressionUnit.Absolute.Rna> baselineProfilesWriterFactory, SolrQueryService solrQueryService,
+        public RnaSeqBaseline(BaselineProfilesWriterFactory<ExpressionUnit.Absolute.Rna> baselineProfilesWriterFactory,
+                              SolrQueryService solrQueryService,
                               RnaSeqBaselineProfileStreamFactory baselineProfileStreamFactory,
                               DataFileHub dataFileHub) {
             super(baselineProfilesWriterFactory, solrQueryService, baselineProfileStreamFactory);
@@ -153,25 +174,32 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
 
         @Override
         public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment) {
-            return dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFiles().stream().map(unit -> getOne(experiment, RnaSeqBaselineRequestPreferences.requestAllData(unit),
-                    MessageFormat.format("{0}s.tsv", unit.toString().toLowerCase()),
-                    MessageFormat.format("Expression values across all genes ({0})", unit))).collect(Collectors.toList());
+            return dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFiles().stream()
+                    .map(
+                            unit ->
+                                    getOne(
+                                            experiment,
+                                            RnaSeqBaselineRequestPreferences.requestAllData(unit),
+                                            MessageFormat.format("{0}s.tsv", unit.toString().toLowerCase()),
+                                            MessageFormat.format("Expression values across all genes ({0})", unit)))
+                    .collect(Collectors.toList());
         }
     }
 
     @Named
-    public static class Microarray extends ExperimentDownloadSupplier<MicroarrayExperiment, MicroarrayRequestPreferences> {
+    public static class Microarray
+                        extends ExperimentDownloadSupplier<MicroarrayExperiment, MicroarrayRequestPreferences> {
 
         private final SolrQueryService solrQueryService;
         private final MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
         private final MicroarrayProfilesWriterFactory microarrayProfilesWriterFactory;
 
         @Inject
-        public Microarray(SolrQueryService solrQueryService, MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
+        public Microarray(SolrQueryService solrQueryService,
+                          MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
                           MicroarrayProfilesWriterFactory microarrayProfilesWriterFactory) {
             this.solrQueryService = solrQueryService;
             this.microarrayProfileStreamFactory = microarrayProfileStreamFactory;
-
             this.microarrayProfilesWriterFactory = microarrayProfilesWriterFactory;
         }
 
@@ -191,23 +219,31 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             };
         }
 
-        private java.util.function.Function<HttpServletResponse, Void> stream(MicroarrayExperiment experiment,
-                                                                              MicroarrayRequestPreferences preferences) {
+        private java.util.function.Function<HttpServletResponse, Void> stream(
+                MicroarrayExperiment experiment, MicroarrayRequestPreferences preferences) {
+
             GeneQueryResponse geneQueryResponse =
                     solrQueryService.fetchResponse(preferences.getGeneQuery(), experiment.getSpecies());
 
             List<Pair<String, Function<Writer, Void>>> documents = new ArrayList<>();
             for (String arrayDesign : experiment.getArrayDesignAccessions()) {
-                documents.add(Pair.of(
-                        MessageFormat.format("{0}-{1}-query-results.tsv", experiment.getAccession(), arrayDesign),
-                        fetchAndWriteGeneProfiles(experiment, preferences, geneQueryResponse)
-                ));
+                documents.add(
+                        Pair.of(
+                                MessageFormat.format(
+                                        "{0}-{1}-query-results.tsv", experiment.getAccession(), arrayDesign),
+                                fetchAndWriteGeneProfiles(experiment, preferences, geneQueryResponse)));
             }
-            return documents.size() == 1 ? streamFile(documents.get(0)) : streamFolder(experiment.getAccession() + "-query-results", documents);
+            return documents.size() == 1 ?
+                    streamFile(documents.get(0)) :
+                    streamFolder(experiment.getAccession() + "-query-results", documents);
+
         }
 
         @Override
-        protected void write(HttpServletResponse response, MicroarrayRequestPreferences preferences, MicroarrayExperiment experiment, String id) throws IOException {
+        protected void write(HttpServletResponse response,
+                             MicroarrayRequestPreferences preferences,
+                             MicroarrayExperiment experiment,
+                             String id) {
             stream(experiment, preferences).apply(response);
         }
 
@@ -216,24 +252,27 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             MicroarrayRequestPreferences preferences = new MicroarrayRequestPreferences();
             preferences.setFoldChangeCutoff(0.0);
             preferences.setCutoff(1.0);
-            return Collections.singleton(new ExternallyAvailableContent(
-                    makeUri("query-results"),
-                    ExternallyAvailableContent.Description.create("icon-tsv", "All expression results in the experiment"),
-                    stream(experiment, preferences)
-            ));
+            return Collections.singleton(
+                    new ExternallyAvailableContent(
+                            makeUri("query-results"),
+                            ExternallyAvailableContent.Description.create(
+                                    "icon-tsv", "All expression results in the experiment"),
+                            stream(experiment, preferences)));
         }
     }
 
     @Named
-    public static class RnaSeqDifferential extends ExperimentDownloadFileSupplier<DifferentialExperiment, DifferentialRequestPreferences> {
-
+    public static class RnaSeqDifferential
+                        extends ExperimentDownloadFileSupplier<
+                                DifferentialExperiment, DifferentialRequestPreferences> {
 
         private final RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory;
         private final SolrQueryService solrQueryService;
         private final RnaSeqDifferentialProfilesWriterFactory rnaSeqDifferentialProfilesWriterFactory;
 
         @Inject
-        public RnaSeqDifferential(RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory, SolrQueryService solrQueryService,
+        public RnaSeqDifferential(RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory,
+                                  SolrQueryService solrQueryService,
                                   RnaSeqDifferentialProfilesWriterFactory rnaSeqDifferentialProfilesWriterFactory) {
             this.rnaSeqProfileStreamFactory = rnaSeqProfileStreamFactory;
             this.solrQueryService = solrQueryService;
@@ -241,10 +280,13 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
         }
 
         @Override
-        protected void write(Writer responseWriter, DifferentialRequestPreferences differentialRequestPreferences, DifferentialExperiment experiment) {
+        protected void write(Writer responseWriter,
+                             DifferentialRequestPreferences differentialRequestPreferences,
+                             DifferentialExperiment experiment) {
             RnaSeqRequestContext context =
                     new DifferentialRequestContextFactory.RnaSeq().create(experiment, differentialRequestPreferences);
-            GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies());
+            GeneQueryResponse geneQueryResponse =
+                    solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies());
             rnaSeqProfileStreamFactory.write(
                     experiment,
                     context,
@@ -258,7 +300,8 @@ public abstract class ExperimentDownloadSupplier<E extends Experiment, Prefs ext
             DifferentialRequestPreferences preferences = new DifferentialRequestPreferences();
             preferences.setFoldChangeCutoff(0.0);
             preferences.setCutoff(1.0);
-            return Collections.singleton(getOne(experiment, preferences, "tsv", "All expression results in the experiment"));
+            return Collections.singleton(
+                    getOne(experiment, preferences, "tsv", "All expression results in the experiment"));
         }
     }
 

@@ -4,9 +4,8 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 
 public final class DifferentialTsvFileParsingUtil {
-
-    private DifferentialTsvFileParsingUtil() {
-
+    protected DifferentialTsvFileParsingUtil() {
+        throw new UnsupportedOperationException();
     }
 
     /*
@@ -16,7 +15,8 @@ public final class DifferentialTsvFileParsingUtil {
      *
      * [g1_g2.p-value, g1_2.log2foldchange, g2_g3.p-value, g2_g3.log2foldchange] => [g1_g2, g2_g3]
      *
-     * [g1_g2.p-value, g1_2.t-statistic, g1_2.log2foldchange, g2_g3.p-value, g1_2.t-statistic, g2_g3.log2foldchange] => [g1_g2, g2_g3]
+     * [g1_g2.p-value, g1_2.t-statistic, g1_2.log2foldchange, g2_g3.p-value, g1_2.t-statistic, g2_g3.log2foldchange] =>
+     * [g1_g2, g2_g3]
      */
     public static ImmutableList<String> parseHeaderIntoContrastIds(String[] contrastHeaders) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();

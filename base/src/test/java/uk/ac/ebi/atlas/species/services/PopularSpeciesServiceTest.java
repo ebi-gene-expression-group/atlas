@@ -22,18 +22,25 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PopularSpeciesServiceTest {
-
-    static final ImmutableMap<String, ImmutableList<String>> KINGDOM_TO_SPECIES = ImmutableMap.of(
-            "animals", ImmutableList.of("Homo sapiens", "Caenorhabditis elegans", "Bos taurus", "Mus musculus", "Drosophila melanogaster", "Xenopus tropicalis"),
-            "plants", ImmutableList.of("Zea mays", "Vitis vinifera", "Arabidopsis thaliana", "Glycine max", "Hordeum vulgare", "Oryza sativa"),
-            "fungi", ImmutableList.of("Aspergillus fumigatus", "Saccharomyces cerevisiae", "Schizosaccharomyces pombe")
-    );
+    private static final ImmutableMap<String, ImmutableList<String>> KINGDOM_TO_SPECIES =
+            ImmutableMap.of(
+                    "animals",
+                    ImmutableList.of(
+                            "Homo sapiens", "Caenorhabditis elegans", "Bos taurus", "Mus musculus",
+                            "Drosophila melanogaster", "Xenopus tropicalis"),
+                    "plants",
+                    ImmutableList.of(
+                            "Zea mays", "Vitis vinifera", "Arabidopsis thaliana", "Glycine max", "Hordeum vulgare",
+                            "Oryza sativa"),
+                    "fungi",
+                    ImmutableList.of(
+                            "Aspergillus fumigatus", "Saccharomyces cerevisiae", "Schizosaccharomyces pombe"));
 
     @Mock
-    PopularSpeciesDao popularSpeciesDaoMock;
+    private PopularSpeciesDao popularSpeciesDaoMock;
 
     @InjectMocks
-    PopularSpeciesService subject;
+    private PopularSpeciesService subject;
 
     @Before
     public void setUp() throws Exception {
@@ -42,7 +49,11 @@ public class PopularSpeciesServiceTest {
             for (String speciesName : speciesEntry.getValue()) {
                 int baselineExperiments = ThreadLocalRandom.current().nextInt(0, 100 + 1);
                 int differentialExperiments = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-                popularSpeciesBuilder.add(PopularSpeciesInfo.create(speciesName, speciesEntry.getKey(), baselineExperiments, differentialExperiments));
+                popularSpeciesBuilder.add(PopularSpeciesInfo.create(
+                        speciesName,
+                        speciesEntry.getKey(),
+                        baselineExperiments,
+                        differentialExperiments));
             }
         }
 
@@ -51,12 +62,14 @@ public class PopularSpeciesServiceTest {
 
     public void assertThatListIsSortedInDescendingOrder(List<PopularSpeciesInfo> list) {
         Iterator<PopularSpeciesInfo> iterator = list.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             PopularSpeciesInfo thisPopularSpecies = iterator.next();
             PopularSpeciesInfo nextPopularSpecies = iterator.hasNext() ? iterator.next() : null;
 
             if (nextPopularSpecies != null) {
-                assertThat(thisPopularSpecies.totalExperiments(),  is(greaterThanOrEqualTo(nextPopularSpecies.totalExperiments())));
+                assertThat(
+                        thisPopularSpecies.totalExperiments(),
+                        is(greaterThanOrEqualTo(nextPopularSpecies.totalExperiments())));
             }
         }
     }
@@ -70,7 +83,7 @@ public class PopularSpeciesServiceTest {
     }
 
     @Test
-    public void getPopularSpecies() throws Exception {
+    public void getPopularSpecies() {
         List<PopularSpeciesInfo> result = subject.getPopularSpecies();
 
         assertThat(result, hasSize(getKingdomToSpeciesTotalSize()));
@@ -78,7 +91,7 @@ public class PopularSpeciesServiceTest {
     }
 
     @Test
-    public void getPopularSpeciesWithHowMany() throws Exception {
+    public void getPopularSpeciesWithHowMany() {
         int howMany = getKingdomToSpeciesTotalSize();
         List<PopularSpeciesInfo> result = subject.getPopularSpecies(howMany);
 
@@ -88,7 +101,7 @@ public class PopularSpeciesServiceTest {
     }
 
     @Test
-    public void getPopularSpeciesWithHowManyByKingdom() throws Exception {
+    public void getPopularSpeciesWithHowManyByKingdom() {
         for (Map.Entry<String, ImmutableList<String>> kingdomToSpeciesEntry : KINGDOM_TO_SPECIES.entrySet()) {
             String kingdom = kingdomToSpeciesEntry.getKey();
             int howMany = ThreadLocalRandom.current().nextInt(0, kingdomToSpeciesEntry.getValue().size() + 1);
@@ -103,7 +116,9 @@ public class PopularSpeciesServiceTest {
     }
 
     @Test
-    public void requestMoreThanAvailable() throws Exception {
-        assertThat(subject.getPopularSpecies(getKingdomToSpeciesTotalSize() + 10), hasSize(getKingdomToSpeciesTotalSize()));
+    public void requestMoreThanAvailable() {
+        assertThat(
+                subject.getPopularSpecies(getKingdomToSpeciesTotalSize() + 10),
+                hasSize(getKingdomToSpeciesTotalSize()));
     }
 }

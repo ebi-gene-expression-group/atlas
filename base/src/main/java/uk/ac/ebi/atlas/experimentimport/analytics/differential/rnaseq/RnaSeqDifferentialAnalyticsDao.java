@@ -34,7 +34,8 @@ public class RnaSeqDifferentialAnalyticsDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadAnalytics(final String experimentAccession, RnaSeqDifferentialAnalyticsInputStream analyticsInputStream)  {
+    public void loadAnalytics(final String experimentAccession,
+                              RnaSeqDifferentialAnalyticsInputStream analyticsInputStream)  {
         LOGGER.info("loadAnalytics for experiment {} begin", experimentAccession);
 
         // will autoclose if DataAccessException thrown by jdbcTemplate

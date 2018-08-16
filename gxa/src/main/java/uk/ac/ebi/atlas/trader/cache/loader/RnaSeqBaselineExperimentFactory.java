@@ -14,6 +14,6 @@ public class RnaSeqBaselineExperimentFactory extends BaselineExperimentFactory {
     @Inject
     public RnaSeqBaselineExperimentFactory(ConfigurationTrader configurationTrader,
                                            SpeciesFactory speciesFactory) {
-        super(ExperimentType.RNASEQ_MRNA_BASELINE,configurationTrader, speciesFactory);
+        super(ExperimentType.RNASEQ_MRNA_BASELINE, configurationTrader, speciesFactory);
     }
 }

@@ -47,12 +47,12 @@ public class Species {
         return mappedProperties.getResourcesOfType(SpeciesProperties.GENOME_BROWSER_TYPE);
     }
 
-    public ImmutableMap<String, String> getAttributes(){
+    public ImmutableMap<String, String> getAttributes() {
         return ImmutableMap.of("species", name, "speciesReferenceName", getReferenceName());
     }
 
 
-    public boolean isUs(){
+    public boolean isUs() {
         /*
         Is this where the falling angel meets the rising ape?
          */

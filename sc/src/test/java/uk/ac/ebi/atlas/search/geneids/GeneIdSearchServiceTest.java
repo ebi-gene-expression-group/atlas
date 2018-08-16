@@ -28,7 +28,7 @@ import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomKnownBioent
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class GeneIdSearchServiceTest {
-    private final static Species HUMAN =
+    private static final Species HUMAN =
             new Species(
                     "Homo sapiens",
                     SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of()));

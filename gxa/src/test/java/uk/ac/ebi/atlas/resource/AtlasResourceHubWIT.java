@@ -60,7 +60,7 @@ class AtlasResourceHubWIT {
         }
     }
 
-    private void assertAboutResult(Map<String,JsonArray> result) throws Exception {
+    private void assertAboutResult(Map<String, JsonArray> result) throws Exception {
         for (Map.Entry<String, JsonArray> entryPerContrast : result.entrySet()) {
             for (JsonElement e : entryPerContrast.getValue()) {
                 testResourceExists(e.getAsJsonObject().get("uri").getAsString());

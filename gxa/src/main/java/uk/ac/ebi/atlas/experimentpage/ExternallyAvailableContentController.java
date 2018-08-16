@@ -27,7 +27,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 public class ExternallyAvailableContentController {
     private final ExpressionAtlasContentService expressionAtlasContentService;
 
-    public ExternallyAvailableContentController(ExpressionAtlasContentService expressionAtlasContentService){
+    public ExternallyAvailableContentController(ExpressionAtlasContentService expressionAtlasContentService) {
         this.expressionAtlasContentService = expressionAtlasContentService;
     }
 
@@ -37,9 +37,9 @@ public class ExternallyAvailableContentController {
     - the QC report needs a redirect to another Atlas page, preserving the access key
     - the typical resource needs to circle back to this page
     */
-    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey, HttpServletRequest request){
+    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey, HttpServletRequest request) {
         JsonObject result = content.description.asJson();
-        if("redirect".equals(content.uri.getScheme())){
+        if ("redirect".equals(content.uri.getScheme())) {
             try {
                 result.addProperty("url", new URL(content.uri.getSchemeSpecificPart()).toExternalForm());
 
@@ -60,9 +60,9 @@ public class ExternallyAvailableContentController {
         return result;
     }
 
-    private JsonArray contentAsJson(List<ExternallyAvailableContent> contents, String accession, String accessKey, HttpServletRequest request){
+    private JsonArray contentAsJson(List<ExternallyAvailableContent> contents, String accession, String accessKey, HttpServletRequest request) {
         JsonArray result = new JsonArray();
-        for(ExternallyAvailableContent content: contents){
+        for (ExternallyAvailableContent content: contents) {
             result.add(contentAsJson(content, accession, accessKey, request));
         }
         return result;

@@ -27,6 +27,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnalyticsIndexerServiceTest {
@@ -52,7 +53,7 @@ public class AnalyticsIndexerServiceTest {
         mockExperimentDataPointStreamFactory(experimentDataPointStreamFactory, experiment, nullArray);
 
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
-        int batchSize = 8000;
+        int batchSize = Integer.parseInt(DEFAULT_SOLR_BATCH_SIZE);
 
         int response = subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
 
@@ -61,8 +62,8 @@ public class AnalyticsIndexerServiceTest {
         assertThat(response, is(0));
     }
 
-    // TODO What are we exactly testing here? Redo tests for the whole class, or better yet, move AnalyticsIndexer to a
-    // TODO separate service!
+    // What are we exactly testing here?
+    // TODO Redo tests for the whole class, or better yet, move AnalyticsIndexer to a separate service!
     @Ignore
     public void successfulRunForSomeData() throws Exception {
 
@@ -84,7 +85,7 @@ public class AnalyticsIndexerServiceTest {
         assertThat(response, is(2));
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test(expected = RuntimeException.class)
     public void exceptionsFromIteratorArePropagated() throws Exception {
         final ExperimentDataPoint experimentDataPoint = Mockito.mock(ExperimentDataPoint.class);
 
@@ -97,7 +98,7 @@ public class AnalyticsIndexerServiceTest {
         subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test(expected = RuntimeException.class)
     public void exceptionsFromSolrAreWrappedAndThrown() throws Exception {
         final BaselineExperimentDataPoint baselineExperimentDataPointMock =
                 Mockito.mock(BaselineExperimentDataPoint.class);
@@ -112,7 +113,7 @@ public class AnalyticsIndexerServiceTest {
         subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test(expected = RuntimeException.class)
     public void exceptionsFromFilesAreWrappedAndThrown() throws Exception {
         when(experimentDataPointStreamFactory.stream(experiment))
                 .thenThrow(new NoSuchFileException(String.format("%s-tpms.tsv not found", experiment.getAccession())));

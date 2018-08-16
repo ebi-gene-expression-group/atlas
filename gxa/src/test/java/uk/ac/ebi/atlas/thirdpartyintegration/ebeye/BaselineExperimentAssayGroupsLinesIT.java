@@ -32,7 +32,7 @@ public class BaselineExperimentAssayGroupsLinesIT {
     @Test
     public void testSomeRnaSeqExperiments() throws Exception{
         Object[] a = experimentTrader.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE).toArray();
-        for(int i = 0 ; i <10 && i < a.length ; i++) {
+        for (int i = 0 ; i <10 && i < a.length ; i++) {
             testExtractExperimentDesignFromRnaSeqExperiment((String) a[i]);
         }
     }
@@ -46,10 +46,10 @@ public class BaselineExperimentAssayGroupsLinesIT {
         assertAbout(subject, experimentAccession);
     }
 
-    private void assertAbout(BaselineExperimentAssayGroupsLines subject, String experimentAccession){
+    private void assertAbout(BaselineExperimentAssayGroupsLines subject, String experimentAccession) {
         assertTrue(subject.iterator().hasNext());
         Iterator<String[]> lines = subject.iterator();
-        while(lines.hasNext()) {
+        while (lines.hasNext()) {
             String[] line = lines.next();
             String str = "This line: "+ Arrays.asList(line).toString();
 
@@ -67,7 +67,7 @@ public class BaselineExperimentAssayGroupsLinesIT {
 
     @Test
     public void testSomeProteomicsExperiments() throws Exception{
-        for(String accession : experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)){
+        for (String accession : experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)) {
             testExtractExperimentDesignFromProteomicsExperiment(accession);
         }
     }

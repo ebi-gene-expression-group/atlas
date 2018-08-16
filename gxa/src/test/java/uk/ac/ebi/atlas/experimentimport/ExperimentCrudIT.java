@@ -80,10 +80,10 @@ public class ExperimentCrudIT {
     }
 
     private boolean tryDelete(String accession) {
-        try{
+        try {
             subject.deleteExperiment(accession);
             return true;
-        } catch (ResourceNotFoundException e){
+        } catch (ResourceNotFoundException e) {
             return false;
         }
     }

@@ -25,7 +25,7 @@ public class BaselineAnalyticsFacetsReader {
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> buckets = (List<Map<String, Object>>) factorRoot.get("buckets");
 
-            for(Map<String, Object> defaultQueryFactorType : buckets)  {
+            for (Map<String, Object> defaultQueryFactorType : buckets)  {
                 String key = (String) defaultQueryFactorType.get("val");
                 String name = Factor.convertToLowerCase(key);
                 FacetTreeItem factor = FacetTreeItem.create(key, name);

@@ -18,7 +18,6 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
@@ -27,26 +26,21 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestConfig.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AnalyticsQueryClientIT {
-
-    @Value("classpath:/solr/conf")
-    Resource solrConf;
-
     @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json")
-    Resource baselineFacetsQueryJSON;
+    private Resource baselineFacetsQueryJSON;
 
     @Value("classpath:/solr-queries/differential.facets.query.json")
-    Resource differentialFacetsQueryJSON;
+    private Resource differentialFacetsQueryJSON;
 
     @Value("classpath:/solr-queries/experimentType.query.json")
-    Resource experimentTypesQueryJson;
+    private Resource experimentTypesQueryJson;
 
     @Value("classpath:/solr-queries/bioentityIdentifier.query.json")
-    Resource bioentityIdentifiersQueryJson;
+    private Resource bioentityIdentifiersQueryJson;
 
     @Mock
     private RestTemplate restTemplate;
@@ -59,7 +53,7 @@ class AnalyticsQueryClientIT {
     @BeforeEach
     void setUp() {
         subject = new TestableAnalyticsQueryClient(restTemplate, null, baselineFacetsQueryJSON,
-                differentialFacetsQueryJSON,experimentTypesQueryJson,bioentityIdentifiersQueryJson);
+                differentialFacetsQueryJSON, experimentTypesQueryJson, bioentityIdentifiersQueryJson);
     }
 
     @Test
@@ -67,7 +61,7 @@ class AnalyticsQueryClientIT {
 
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
-                .queryIdentifierSearch(SemanticQuery.create(SemanticQueryTerm.create("GO:1234567","go")))
+                .queryIdentifierSearch(SemanticQuery.create(SemanticQueryTerm.create("GO:1234567", "go")))
                 .inExperiment("E-MTAB-513")
                 .fetch();
 
@@ -169,7 +163,7 @@ class AnalyticsQueryClientIT {
         assertThat(queryMade).contains("conditions_search");
         assertThat(queryMade.split("tasty pancake").length).isGreaterThan(2);
     }
-    
+
     @Test
     void baselineFacetsOnlyReturnsBaselineExperiments() {
         String queryResponse = goodSubject.queryBuilder()
@@ -214,7 +208,7 @@ class AnalyticsQueryClientIT {
         }
 
         @Override
-        protected boolean responseNonEmpty(String jsonFromSolr){
+        protected boolean responseNonEmpty(String jsonFromSolr) {
             return true;
         }
     }

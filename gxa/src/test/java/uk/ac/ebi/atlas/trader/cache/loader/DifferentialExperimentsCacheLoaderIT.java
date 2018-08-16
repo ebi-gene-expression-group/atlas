@@ -46,10 +46,10 @@ public class DifferentialExperimentsCacheLoaderIT {
     private ExperimentsCacheLoader<DifferentialExperiment> subject;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         ExperimentDTO experimentDTO = new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
-                species, Collections.emptySet(), Collections.emptySet(),"title", new Date(),
+                species, Collections.emptySet(), Collections.emptySet(), "title", new Date(),
                 false, UUID.randomUUID().toString());
         when(expressionAtlasExperimentDao.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).thenReturn(experimentDTO);
 

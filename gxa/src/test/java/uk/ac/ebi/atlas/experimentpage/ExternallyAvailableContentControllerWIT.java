@@ -46,7 +46,7 @@ class ExternallyAvailableContentControllerWIT {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-    private String endPointForExperiment(String accession, ExternallyAvailableContent.ContentType contentType){
+    private String endPointForExperiment(String accession, ExternallyAvailableContent.ContentType contentType) {
         return MessageFormat.format("/json/experiments/{0}/resources/{1}", accession, contentType);
     }
 
@@ -74,14 +74,14 @@ class ExternallyAvailableContentControllerWIT {
 
     @Test
     void shouldReturnSomeResourcesForEachExperiment() throws Exception {
-        for(String accession : experimentTrader.getPublicExperimentAccessions(
+        for (String accession : experimentTrader.getPublicExperimentAccessions(
                 ExperimentType.RNASEQ_MRNA_BASELINE, ExperimentType.PROTEOMICS_BASELINE,
-                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)){
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)) {
             testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.DATA, true);
             testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION, true);
         }
-        for(String accession : experimentTrader.getPublicExperimentAccessions(
-                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)){
+        for (String accession : experimentTrader.getPublicExperimentAccessions(
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)) {
             testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.PLOTS, false);
         }
     }

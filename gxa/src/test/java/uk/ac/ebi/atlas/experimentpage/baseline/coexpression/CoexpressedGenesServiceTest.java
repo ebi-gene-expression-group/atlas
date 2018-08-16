@@ -32,7 +32,7 @@ public class CoexpressedGenesServiceTest {
     
     static final String EX2_GENE_ID = "EX2";
 
-    static Map<Pair<String,String>, ImmutableList<String>> stateOfDatabase = new HashMap<>();
+    static Map<Pair<String, String>, ImmutableList<String>> stateOfDatabase = new HashMap<>();
     static {
         stateOfDatabase.put(Pair.of(EX1_GENE_ID, "T0"), ImmutableList.of("C00", "C01", "C02"));
         stateOfDatabase.put(Pair.of(EX1_GENE_ID, "T1"), ImmutableList.of("C10", "C11"));
@@ -43,21 +43,21 @@ public class CoexpressedGenesServiceTest {
     static {
         solrSearchResults.put(EX1_GENE_ID, ImmutableList.of(EX1_GENE_ID));
         solrSearchResults.put(EX1_GENE_NAME, ImmutableList.of(EX1_GENE_ID));
-        solrSearchResults.put(EX2_GENE_ID,ImmutableList.of(EX2_GENE_ID));
+        solrSearchResults.put(EX2_GENE_ID, ImmutableList.of(EX2_GENE_ID));
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         subject = new CoexpressedGenesService(coexpressedGenesDao);
-        for(Map.Entry<Pair<String,String>, ImmutableList<String>> e: stateOfDatabase.entrySet()){
-            when(coexpressedGenesDao.coexpressedGenesFor(e.getKey().getLeft(), e.getKey().getRight()))
+        for (Map.Entry<Pair<String, String>, ImmutableList<String>> e: stateOfDatabase.entrySet()) {
+            when(coexpressedGenesDao.coexpressedGenesfor (e.getKey().getLeft(), e.getKey().getRight()))
                     .thenReturn(e.getValue());
         }
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms1(){
+    public void testWithRetrievedIdsSameAsQueryTerms1() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
                         ImmutableList.of("T0"), ImmutableMap.of());
@@ -66,69 +66,69 @@ public class CoexpressedGenesServiceTest {
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms2(){
+    public void testWithRetrievedIdsSameAsQueryTerms2() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
                         ImmutableList.of("T0", "T2"), ImmutableMap.of());
 
-        assertEquals(ImmutableSet.of("T0","T2"), r);
+        assertEquals(ImmutableSet.of("T0", "T2"), r);
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms3(){
+    public void testWithRetrievedIdsSameAsQueryTerms3() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
                         ImmutableList.of("T0"), ImmutableMap.of("T0", 3));
 
-        assertEquals(ImmutableSet.of("T0","C00", "C01", "C02"), r);
+        assertEquals(ImmutableSet.of("T0", "C00", "C01", "C02"), r);
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms4(){
+    public void testWithRetrievedIdsSameAsQueryTerms4() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
                         ImmutableList.of("T0", "T2"), ImmutableMap.of("T0", 3));
 
-        assertEquals(ImmutableSet.of("T0","C00", "C01", "C02", "T2"), r);
+        assertEquals(ImmutableSet.of("T0", "C00", "C01", "C02", "T2"), r);
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms5(){
+    public void testWithRetrievedIdsSameAsQueryTerms5() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
                         ImmutableList.of("T0", "T2"), ImmutableMap.of("T0", 1));
 
-        assertEquals(ImmutableSet.of("T0","C00", "T2"), r);
+        assertEquals(ImmutableSet.of("T0", "C00", "T2"), r);
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms6(){
+    public void testWithRetrievedIdsSameAsQueryTerms6() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
-                        ImmutableList.of("T0","T1"), ImmutableMap.of("T0", 1));
+                        ImmutableList.of("T0", "T1"), ImmutableMap.of("T0", 1));
 
-        assertEquals(ImmutableSet.of("T0","C00", "T1"), r);
+        assertEquals(ImmutableSet.of("T0", "C00", "T1"), r);
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms7(){
+    public void testWithRetrievedIdsSameAsQueryTerms7() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
-                        ImmutableList.of("T0","T1"), ImmutableMap.of("T0", 1, "T1", 2));
+                        ImmutableList.of("T0", "T1"), ImmutableMap.of("T0", 1, "T1", 2));
 
-        assertEquals(ImmutableSet.of("T0","C00", "T1", "C10", "C11"), r);
+        assertEquals(ImmutableSet.of("T0", "C00", "T1", "C10", "C11"), r);
     }
 
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms8(){
+    public void testWithRetrievedIdsSameAsQueryTerms8() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
                         ImmutableList.of("T0"), ImmutableMap.of("T0", 100000));
 
-        assertEquals(ImmutableSet.of("T0","C00", "C01", "C02"), r);
+        assertEquals(ImmutableSet.of("T0", "C00", "C01", "C02"), r);
     }
     @Test
-    public void testWithRetrievedIdsSameAsQueryTerms9(){
+    public void testWithRetrievedIdsSameAsQueryTerms9() {
         Collection<String> r =
                 extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
                         ImmutableList.of("T0"), ImmutableMap.of("T0", -1));

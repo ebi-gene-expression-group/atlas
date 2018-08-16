@@ -19,9 +19,9 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 public class DifferentialExperimentTopGenesService {
-    public final static String GENE_KEY = "bioentity_identifier";
-    public final static String AVERAGE_EXPRESSION_KEY = "avg_expression";
-    public final static String SPECIFICITY_KEY = "specificity";
+    public static final String GENE_KEY = "bioentity_identifier";
+    public static final String AVERAGE_EXPRESSION_KEY = "avg_expression";
+    public static final String SPECIFICITY_KEY = "specificity";
 
     private final DifferentialExperimentTopGenesDao differentialExperimentTopGenesDao;
 

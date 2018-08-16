@@ -58,7 +58,7 @@ public class ExperimentDownloadControllerIT {
         Set<String> rnaSeqExperiments = experimentTrader.getMicroarrayExperimentAccessions();
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
-        for(String accession: rnaSeqExperiments){
+        for (String accession: rnaSeqExperiments) {
 
             MicroarrayExperiment differentialExperiment = (MicroarrayExperiment)
                     experimentTrader.getPublicExperiment(accession);
@@ -75,13 +75,13 @@ public class ExperimentDownloadControllerIT {
         }
     }
 
-    private Pair<List<String>, List<String>> headersAndBody(MockHttpServletResponse response){
+    private Pair<List<String>, List<String>> headersAndBody(MockHttpServletResponse response) {
         List<String> headers = new ArrayList<>();
         List<String> body = new ArrayList<>();
 
         try {
-            for(String l : response.getContentAsString().split("\n")){
-                if(l.startsWith("#")){
+            for (String l : response.getContentAsString().split("\n")) {
+                if (l.startsWith("#")) {
                     headers.add(l);
                 } else {
                     body.add(l);
@@ -117,7 +117,7 @@ public class ExperimentDownloadControllerIT {
 
     public void weHaveSomeResults(MicroarrayExperiment experiment) throws Exception {
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
-        if(Math.random() < 0.5){
+        if (Math.random() < 0.5) {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(1D);
@@ -217,7 +217,7 @@ public class ExperimentDownloadControllerIT {
         Set<String> rnaSeqExperiments = experimentTrader.getRnaSeqDifferentialExperimentAccessions();
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
-        for(String accession: rnaSeqExperiments){
+        for (String accession: rnaSeqExperiments) {
 
             DifferentialExperiment differentialExperiment = (DifferentialExperiment)
                     experimentTrader.getPublicExperiment(accession);
@@ -257,7 +257,7 @@ public class ExperimentDownloadControllerIT {
     public void weHaveSomeResults(DifferentialExperiment experiment) throws Exception {
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
 
-        if(Math.random() < 0.5){
+        if (Math.random() < 0.5) {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(1D);
@@ -347,8 +347,8 @@ public class ExperimentDownloadControllerIT {
         Set<String> rnaSeqExperiments = experimentTrader.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
-        for(String accession: rnaSeqExperiments){
-            for(ExpressionUnit.Absolute.Rna unit: dataFileHub.getRnaSeqBaselineExperimentFiles(accession).dataFiles()){
+        for (String accession: rnaSeqExperiments) {
+            for (ExpressionUnit.Absolute.Rna unit: dataFileHub.getRnaSeqBaselineExperimentFiles(accession).dataFiles()) {
                 BaselineExperiment experiment = (BaselineExperiment)
                         experimentTrader.getPublicExperiment(accession);
 
@@ -356,12 +356,12 @@ public class ExperimentDownloadControllerIT {
 
                 weHaveSomeResultsRnaSeqBaseline(experiment, unit);
 
-                noDataWithVeryLargeCutoffRnaSeqBaseline(experiment,unit);
+                noDataWithVeryLargeCutoffRnaSeqBaseline(experiment, unit);
             }
         }
     }
 
-    public void defaultParametersHeaderRnaSeqBaseline(BaselineExperiment experiment,ExpressionUnit.Absolute.Rna unit) throws Exception {
+    public void defaultParametersHeaderRnaSeqBaseline(BaselineExperiment experiment, ExpressionUnit.Absolute.Rna unit) throws Exception {
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
         requestPreferences.setUnit(unit);
 
@@ -380,11 +380,11 @@ public class ExperimentDownloadControllerIT {
         assertThat(columnHeaders.length, greaterThan(2));
     }
 
-    public void weHaveSomeResultsRnaSeqBaseline(BaselineExperiment experiment,ExpressionUnit.Absolute.Rna unit) throws Exception {
+    public void weHaveSomeResultsRnaSeqBaseline(BaselineExperiment experiment, ExpressionUnit.Absolute.Rna unit) throws Exception {
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
         requestPreferences.setUnit(unit);
 
-        if(Math.random() < 0.5){
+        if (Math.random() < 0.5) {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(0.0);
@@ -404,7 +404,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(dataColumns, hasSize(geneNames.size()));
     }
 
-    public void noDataWithVeryLargeCutoffRnaSeqBaseline(BaselineExperiment experiment,ExpressionUnit.Absolute.Rna unit) throws Exception {
+    public void noDataWithVeryLargeCutoffRnaSeqBaseline(BaselineExperiment experiment, ExpressionUnit.Absolute.Rna unit) throws Exception {
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
         requestPreferences.setUnit(unit);
         requestPreferences.setGeneQuery(SemanticQuery.create());
@@ -424,7 +424,7 @@ public class ExperimentDownloadControllerIT {
         Set<String> experimentAccessions = experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
         assertThat(experimentAccessions, hasSize(greaterThan(0)));
 
-        for(String accession: experimentAccessions){
+        for (String accession: experimentAccessions) {
 
             BaselineExperiment experiment = (BaselineExperiment)
                     experimentTrader.getPublicExperiment(accession);
@@ -457,7 +457,7 @@ public class ExperimentDownloadControllerIT {
     public void weHaveSomeResultsProteomicsBaseline(BaselineExperiment experiment) throws Exception {
         ProteomicsBaselineRequestPreferences requestPreferences = new ProteomicsBaselineRequestPreferences();
 
-        if(Math.random() < 0.5){
+        if (Math.random() < 0.5) {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(0.0);

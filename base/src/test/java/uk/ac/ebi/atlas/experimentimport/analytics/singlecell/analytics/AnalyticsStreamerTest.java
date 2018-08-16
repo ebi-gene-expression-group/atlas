@@ -15,7 +15,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnalyticsStreamerTest {
-
     @Mock
     private AtlasResource<MatrixMarketReader> tpmsMatrixResourceMock;
 
@@ -56,6 +55,4 @@ public class AnalyticsStreamerTest {
         verify(geneIdsTsvStreamerMock).close();
         verify(cellIdsTsvStreamerMock).close();
     }
-
-
 }

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class SearchStreamBuilderTest {
     @Mock
-    CloudSolrClient cloudSolrClientMock;
+    private CloudSolrClient cloudSolrClientMock;
 
     private class DummyCollectionProxy extends CollectionProxy {
         protected DummyCollectionProxy(SolrClient solrClient, String nameOrAlias) {

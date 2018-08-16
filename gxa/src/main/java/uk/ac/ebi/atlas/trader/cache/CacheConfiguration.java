@@ -29,7 +29,7 @@ public class CacheConfiguration {
 
     @Bean(name="rnaSeqBaselineExperimentsLoadingCache")
     @Inject
-    public LoadingCache<String, BaselineExperiment> baselineExperimentsCache(RnaSeqBaselineExperimentFactory experimentFactory){
+    public LoadingCache<String, BaselineExperiment> baselineExperimentsCache(RnaSeqBaselineExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
                 .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
@@ -37,7 +37,7 @@ public class CacheConfiguration {
 
     @Bean(name="proteomicsBaselineExperimentsLoadingCache")
     @Inject
-    public LoadingCache<String, BaselineExperiment> proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentFactory experimentFactory){
+    public LoadingCache<String, BaselineExperiment> proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
                 .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
@@ -46,7 +46,7 @@ public class CacheConfiguration {
 
     @Bean(name="differentialExperimentsLoadingCache")
     @Inject
-    public LoadingCache<String, DifferentialExperiment> differentialExperimentsCache(DifferentialExperimentFactory experimentFactory){
+    public LoadingCache<String, DifferentialExperiment> differentialExperimentsCache(DifferentialExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
                 .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
@@ -54,7 +54,7 @@ public class CacheConfiguration {
 
     @Bean(name="microarrayExperimentsLoadingCache")
     @Inject
-    public LoadingCache<String, MicroarrayExperiment> microarrayExperimentsCache(MicroarrayExperimentFactory experimentFactory){
+    public LoadingCache<String, MicroarrayExperiment> microarrayExperimentsCache(MicroarrayExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
                 .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));

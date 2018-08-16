@@ -19,15 +19,15 @@ public class MicroarrayQCFiles {
 
     private final Set<Path> qcDirectory;
 
-    public MicroarrayQCFiles(AtlasResource<Set<Path>> directoryResource){
+    public MicroarrayQCFiles(AtlasResource<Set<Path>> directoryResource) {
         this(directoryResource.exists()? directoryResource.get() : ImmutableSet.<Path>of());
     }
 
-    MicroarrayQCFiles(Set<Path> qcDirectory){
+    MicroarrayQCFiles(Set<Path> qcDirectory) {
         this.qcDirectory = qcDirectory;
     }
 
-    public Optional<Path> get(final String experimentAccession, final String arrayDesignAccession){
+    public Optional<Path> get(final String experimentAccession, final String arrayDesignAccession) {
         return FluentIterable.from(qcDirectory).firstMatch(
                 path -> path.getFileName().toString().equals(folderName(experimentAccession, arrayDesignAccession))
         ).transform(new Function<Path, Path>() {
@@ -39,11 +39,11 @@ public class MicroarrayQCFiles {
         });
     }
 
-    static String folderName(String experimentAccession, String arrayDesignAccession){
+    static String folderName(String experimentAccession, String arrayDesignAccession) {
         return MessageFormat.format("{0}_{1}_QM", experimentAccession, arrayDesignAccession);
     }
 
-    public Collection<String> getArrayDesignsThatHaveQcReports(){
+    public Collection<String> getArrayDesignsThatHaveQcReports() {
         return FluentIterable.from(qcDirectory).transform(new Function<Path, String>() {
             @Nullable
             @Override
@@ -53,7 +53,7 @@ public class MicroarrayQCFiles {
         }).toSet();
     }
 
-    static Pair<String, String> experimentAndArrayDesign(String folderName){
+    static Pair<String, String> experimentAndArrayDesign(String folderName) {
         String [] xs = folderName.split("_");
         Preconditions.checkState(xs.length == 3,
                 "Folder name of QC reports expected as {experiment}_{arrayDesign}_QM, got: "+folderName);

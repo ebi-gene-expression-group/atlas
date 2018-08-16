@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class LinkToContrast extends LinkToExperimentPage<Pair<String, Contrast>> {
 
-    public LinkToContrast(SemanticQuery geneQuery){
+    public LinkToContrast(SemanticQuery geneQuery) {
         super(geneQuery);
     }
 

@@ -101,7 +101,7 @@ public class DifferentialExperimentContrastLinesTest {
     }
 
     @Test
-    public void duplicateContrastDetailLines(){
+    public void duplicateContrastDetailLines() {
         AssayGroup referenceAssayGroup = new AssayGroup("g1", ASSAY1, ASSAY2);
         AssayGroup testAssayGroup = new AssayGroup("g2", ASSAY3, ASSAY4);
         Contrast contrast1 = new Contrast(CONTRAST_ID, "array design accession", referenceAssayGroup, testAssayGroup, "display name");
@@ -145,7 +145,7 @@ public class DifferentialExperimentContrastLinesTest {
     }
 
     @Test
-    public void emptyValuesDetailLines(){
+    public void emptyValuesDetailLines() {
         AssayGroup referenceAssayGroup = new AssayGroup("g1", ASSAY1, ASSAY2);
         AssayGroup testAssayGroup = new AssayGroup("g2", ASSAY3, ASSAY4);
         Contrast contrast1 = new Contrast(CONTRAST_ID, "array design accession", referenceAssayGroup, testAssayGroup, "display name");

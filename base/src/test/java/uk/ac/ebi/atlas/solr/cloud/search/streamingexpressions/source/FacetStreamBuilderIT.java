@@ -96,7 +96,10 @@ class FacetStreamBuilderIT {
                                      .build())) {
             assertThat(filteredStreamer1.get().map(Tuple::getMap))
                     .extracting(BIOENTITY_IDENTIFIER.name())
-                    .containsExactlyInAnyOrder(filteredStreamer2.get().map(tuple -> tuple.getString(BIOENTITY_IDENTIFIER.name())).toArray());
+                    .containsExactlyInAnyOrder(
+                            filteredStreamer2.get()
+                                    .map(tuple -> tuple.getString(BIOENTITY_IDENTIFIER.name()))
+                                    .toArray());
         }
     }
 
@@ -125,7 +128,7 @@ class FacetStreamBuilderIT {
 
             List<Tuple> results = streamer.get().collect(toList());
 
-            for (int i = 0 ; i < results.size() - 1; i++) {
+            for (int i = 0; i < results.size() - 1; i++) {
                 assertThat(results.get(i).getLong("count(*)"))
                         .isLessThanOrEqualTo(results.get(i + 1).getLong("count(*)"));
             }
@@ -142,7 +145,7 @@ class FacetStreamBuilderIT {
 
             List<Tuple> results = streamer.get().collect(toList());
 
-            for (int i = 0 ; i < results.size() - 1; i++) {
+            for (int i = 0; i < results.size() - 1; i++) {
                 assertThat(results.get(i).getDouble("avg(abs(" + EXPRESSION_LEVEL.name() + "))"))
                         .isGreaterThanOrEqualTo(
                                 results.get(i + 1).getDouble(
@@ -185,5 +188,4 @@ class FacetStreamBuilderIT {
                 Arguments.of(bigSolrQueryBuilder, smallSolrQueryBuilder),
                 Arguments.of(smallSolrQueryBuilder, tinySolrQueryBuilder));
     }
-
 }

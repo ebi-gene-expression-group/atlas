@@ -21,13 +21,13 @@ public class DiffAnalyticsDAOTest {
     DiffAnalyticsDao subject;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.subject = new DiffAnalyticsDao(jdbcTemplate,dbeRowMapper);
+        this.subject = new DiffAnalyticsDao(jdbcTemplate, dbeRowMapper);
     }
 
     @Test
-    public void weQueryWithSomeReallyGoodSql(){
+    public void weQueryWithSomeReallyGoodSql() {
         String geneId = "geneId";
 
         String v = subject.buildSelect(geneId).getQuery();

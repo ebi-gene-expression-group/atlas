@@ -51,7 +51,7 @@ public class DifferentialFacetsReader {
                 .build();
 
         public static String get(String field) {
-            if(FACET_FIELDS_MAP.get(field) != null) {
+            if (FACET_FIELDS_MAP.get(field) != null) {
                 return FACET_FIELDS_MAP.get(field);
             } else {
                 return field.substring(0, 1).toUpperCase() + field.substring(1).toLowerCase();

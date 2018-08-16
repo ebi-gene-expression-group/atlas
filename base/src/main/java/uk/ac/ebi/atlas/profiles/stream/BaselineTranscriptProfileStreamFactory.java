@@ -49,9 +49,10 @@ public class BaselineTranscriptProfileStreamFactory extends
     }
 
     @Override
-    public ObjectInputStream<BaselineExpressionPerReplicateProfile> create(BaselineExperiment experiment,
-                                                                           BaselineRequestContext<ExpressionUnit.Absolute.Rna> options,
-                                                                           Collection<String> keepGeneIds) {
+    public ObjectInputStream<BaselineExpressionPerReplicateProfile>
+           create(BaselineExperiment experiment,
+                  BaselineRequestContext<ExpressionUnit.Absolute.Rna> options,
+                  Collection<String> keepGeneIds) {
         return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 

@@ -83,7 +83,7 @@ public class ExperimentPageContentServiceIT {
 
         assertThat(result).hasSize(2);
 
-        for(JsonElement download : result) {
+        for (JsonElement download : result) {
             JsonObject downloadObject = download.getAsJsonObject();
 
             assertThat(downloadObject.get("title").getAsString()).isNotEmpty();
@@ -92,7 +92,7 @@ public class ExperimentPageContentServiceIT {
 
             assertThat(downloadFiles).isNotEmpty();
 
-            for(JsonElement file : downloadFiles) {
+            for (JsonElement file : downloadFiles) {
                 JsonObject fileObject = file.getAsJsonObject();
 
                 assertThat(fileObject.has("url")).isTrue();
@@ -126,7 +126,7 @@ public class ExperimentPageContentServiceIT {
                 .containsExactlyInAnyOrder(
                         jdbcTestUtils.fetchKsFromCellClusters(experimentAccession).toArray(new Integer[0]));
 
-        if(result.has("selectedK")) {
+        if (result.has("selectedK")) {
             assertThat(jdbcTestUtils.fetchKsFromCellClusters(experimentAccession))
                     .contains(result.get("selectedK").getAsInt());
         }

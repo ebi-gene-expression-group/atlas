@@ -7,8 +7,9 @@ import static org.junit.Assert.assertThat;
 
 public class OntologyTermTest {
 
-    private final static String UBERON_0002107_URL = "http://purl.obolibrary.org/obo/UBERON_0002107";
-    private final static OntologyTerm UBERON_0002107_TERM = OntologyTerm.create("UBERON_0002107", "liver", "http://purl.obolibrary.org/obo/", 9);
+    private static final String UBERON_0002107_URL = "http://purl.obolibrary.org/obo/UBERON_0002107";
+    private static final OntologyTerm UBERON_0002107_TERM =
+            OntologyTerm.create("UBERON_0002107", "liver", "http://purl.obolibrary.org/obo/", 9);
 
     @Test
     public void createFromURI() {
@@ -23,7 +24,8 @@ public class OntologyTermTest {
 
     @Test
     public void uriWithoutSlashInSource() {
-        assertThat(OntologyTerm.create("UBERON_0002107", "liver", "http://purl.obolibrary.org/obo", 9).uri(), is(UBERON_0002107_URL));
+        assertThat(
+                OntologyTerm.create("UBERON_0002107", "liver", "http://purl.obolibrary.org/obo", 9).uri(),
+                is(UBERON_0002107_URL));
     }
-
 }

@@ -53,12 +53,12 @@ public class DifferentialExperimentContrastsTsvController {
         response.setContentType("text/tab-separated-values");
         PrintWriter writer = response.getWriter();
 
-        for(String experimentAccession : allExperimentsList){
+        for (String experimentAccession : allExperimentsList) {
             try {
                 differentialExperiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
                 diffExperimentContrastLines = new DifferentialExperimentContrastLines(differentialExperiment);
                 extractLinesToTSVFormat(diffExperimentContrastLines, writer);
-            } catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 LOGGER.error(MessageFormat.format("Failed when loading {0}, error: {1}", experimentAccession, e));
                 writer.write("Error while attempting to write "+experimentAccession+", file incomplete!!!");
                 break;
@@ -66,7 +66,7 @@ public class DifferentialExperimentContrastsTsvController {
         }
     }
 
-    private void extractLinesToTSVFormat(DifferentialExperimentContrastLines diffExperimentContrastLines,PrintWriter writer) throws IOException {
+    private void extractLinesToTSVFormat(DifferentialExperimentContrastLines diffExperimentContrastLines, PrintWriter writer) throws IOException {
 
         for (String[] line : diffExperimentContrastLines) {
             String lineTab = Joiner.on("\t").join(line);

@@ -23,9 +23,9 @@ public class SuggesterService {
     }
 
     public Stream<Map<String, String>> fetchGroupedIdSuggestions(String query, String...  species) {
-        Species[] _species = Arrays.stream(species).map(speciesFactory::create).toArray(Species[]::new);
+        Species[] speciesArray = Arrays.stream(species).map(speciesFactory::create).toArray(Species[]::new);
 
-        return suggesterDao.fetchBioentityProperties(query, DEFAULT_MAX_NUMBER_OF_SUGGESTIONS, false, _species)
+        return suggesterDao.fetchBioentityProperties(query, DEFAULT_MAX_NUMBER_OF_SUGGESTIONS, false, speciesArray)
                 .map(suggestion -> ImmutableMap.of("term", suggestion.getTerm(), "category", suggestion.getPayload()));
     }
 }

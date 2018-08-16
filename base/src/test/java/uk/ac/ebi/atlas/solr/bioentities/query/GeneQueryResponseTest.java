@@ -55,7 +55,7 @@ public class GeneQueryResponseTest {
 
     @Test
     public void allGeneIdsShouldContainTheUnionOfGeneIdsFromAllGeneSets() throws Exception {
-        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1","G4"));
+        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1", "G4"));
         assertThat(subject.getAllGeneIds(), containsInAnyOrder("G1", "G2", "G4"));
         assertThat(subject.getAllGeneIds().size(), is(3));
     }
@@ -74,7 +74,7 @@ public class GeneQueryResponseTest {
     @Test
     public void testGetQueryTerms() throws Exception {
         assertThat(subject.getQueryTerms(), containsInAnyOrder(A_QUERY_TERM));
-        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1","G4"));
+        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1", "G4"));
         assertThat(subject.getQueryTerms(), containsInAnyOrder(A_QUERY_TERM, ANOTHER_TERM));
     }
 

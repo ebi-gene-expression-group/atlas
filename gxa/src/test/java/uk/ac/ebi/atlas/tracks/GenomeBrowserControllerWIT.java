@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -28,12 +29,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class GenomeBrowserControllerWIT {
-    static final String URL_TEMPLATE = "/experiments/{1}/redirect/genome-browsers/?name={0}&geneId={2}&trackId={3}";
+    private static final String URL_TEMPLATE = "/experiments/{1}/redirect/genome-browsers/?name={0}&geneId={2}&trackId={3}";
 
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -42,34 +43,37 @@ public class GenomeBrowserControllerWIT {
 
     @Test
     public void invalidGenomeBrowserForExperimentSpecies() throws Exception {
-        this.mockMvc.perform(get(MessageFormat.format(URL_TEMPLATE, "ensemblgenomes", "E-MTAB-3827", "ENSG00000102970", "g13")))
+        this.mockMvc
+                .perform(
+                        get(MessageFormat.format(
+                                URL_TEMPLATE, "ensemblgenomes", "E-MTAB-3827", "ENSG00000102970", "g13")))
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("error-page"));
     }
 
     @Test
     public void experimentNotFound() throws Exception {
-        this.mockMvc.perform(get(MessageFormat.format(URL_TEMPLATE, "ensembl", "E-FOO-BAR", "ENSG00000102970", "g13")))
+        this.mockMvc
+                .perform(get(MessageFormat.format(URL_TEMPLATE, "ensembl", "E-FOO-BAR", "ENSG00000102970", "g13")))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("error-page"));
     }
 
     @Test
     public void miRNAExperimentsDontHaveEnsembleIdsAndCantShowTheGenomeBrowser() throws Exception {
-        this.mockMvc.perform(get(MessageFormat.format(URL_TEMPLATE, "ensembl", "E-GEOD-13316", "ENSG00000102970", "g13")))
+        this.mockMvc
+                .perform(get(MessageFormat.format(URL_TEMPLATE, "ensembl", "E-GEOD-13316", "ENSG00000102970", "g13")))
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("error-page"));
     }
 
     @Test
     public void proteomicsExperiment() throws Exception {
-        MvcResult result = this.mockMvc.perform(get(MessageFormat.format(URL_TEMPLATE, "ensembl", "E-PROT-1", "ENSG00000013297", "any")))
+        this.mockMvc
+                .perform(get(MessageFormat.format(URL_TEMPLATE, "ensembl", "E-PROT-1", "ENSG00000013297", "any")))
                 .andExpect(status().isFound())
+                .andExpect(redirectedUrl("http://www.ensembl.org/Homo_sapiens/Location/View?g=ENSG00000013297"))
                 .andReturn();
-
-        String redirectedUrl = result.getResponse().getRedirectedUrl();
-
-        assertThat(redirectedUrl, is("http://www.ensembl.org/Homo_sapiens/Location/View?g=ENSG00000013297"));
     }
 
     @Test
@@ -105,7 +109,7 @@ public class GenomeBrowserControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://ensembl.gramene.org/Glycine_max/Location/View?g=GLYMA11G00580;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling, url:http"));
         assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 
@@ -118,7 +122,7 @@ public class GenomeBrowserControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://plants.ensembl.org/Glycine_max/Location/View?g=GLYMA11G00580;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling, url:http"));
         assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 
@@ -143,7 +147,7 @@ public class GenomeBrowserControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://parasite.wormbase.org/Caenorhabditis_elegans_prjna13758/Location/View?g=WBGene00003778;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments-content/E-MEXP-1810/tracks/E-MEXP-1810.g3_g1.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-MEXP-1810/tracks/E-MEXP-1810.g3_g1.genes.log2foldchange.bedGraph=tiling, url:http"));
         assertThat(redirectedUrl, endsWith("/experiments-content/E-MEXP-1810/tracks/E-MEXP-1810.g3_g1.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 
@@ -168,7 +172,7 @@ public class GenomeBrowserControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://www.ensembl.org/Mus_musculus/Location/View?g=ENSMUSG00000029816;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.log2foldchange.bedGraph=tiling, url:http"));
         assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 

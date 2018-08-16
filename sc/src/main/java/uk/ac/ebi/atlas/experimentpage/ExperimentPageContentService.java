@@ -107,7 +107,7 @@ public class ExperimentPageContentService {
 
     public List<Publication> getPublications(List<String> identifiers) {
         List<Publication> publications = new ArrayList<>();
-        for(String id : identifiers) {
+        for (String id : identifiers) {
             europePmcClient.getPublicationByIdentifier(id).ifPresent(publications::add);
         }
 

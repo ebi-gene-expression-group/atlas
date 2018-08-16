@@ -29,17 +29,17 @@ public class MicroarrayQCFilesIT {
 
     @Test
     public void allExperiments() throws Exception {
-        for(String accession: expressionAtlasExperimentTrader.getMicroarrayExperimentAccessions()){
+        for (String accession: expressionAtlasExperimentTrader.getMicroarrayExperimentAccessions()) {
             testExperiment(accession);
         }
     }
 
-    private void testExperiment(String accession){
+    private void testExperiment(String accession) {
         MicroarrayExperiment experiment = (MicroarrayExperiment) expressionAtlasExperimentTrader.getPublicExperiment(accession);
 
         MicroarrayQCFiles microarrayQCFiles = new MicroarrayQCFiles(dataFileHub.getExperimentFiles(accession).qcFolder);
 
-        for(String arrayDesignReadOffFromFolderName: microarrayQCFiles.getArrayDesignsThatHaveQcReports()){
+        for (String arrayDesignReadOffFromFolderName: microarrayQCFiles.getArrayDesignsThatHaveQcReports()) {
             assertThat(arrayDesignReadOffFromFolderName,
                     Matchers.isOneOf(new ArrayList(experiment.getArrayDesignAccessions()).toArray()));
         }

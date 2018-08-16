@@ -14,8 +14,8 @@ public class ExperimentFileLocationService {
 
     private final DataFileHub dataFileHub;
 
-    private final static String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
-    private final static String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE = "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
+    private static final String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
+    private static final String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE = "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
 
     public ExperimentFileLocationService(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
@@ -52,7 +52,7 @@ public class ExperimentFileLocationService {
     public URI getFileUri(String experimentAccession, ExperimentFileType fileType, String accessKey) {
         String uri;
 
-        if(fileType.isArchive()) {
+        if (fileType.isArchive()) {
             uri = MessageFormat.format(EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE, experimentAccession, fileType.getId(), accessKey);
         }
         else {

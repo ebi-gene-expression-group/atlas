@@ -86,8 +86,6 @@ public class SpeciesPropertiesTraderTest {
 
     @Test
     public void failedRefreshKeepsOldProperties() {
-        int speciesPropertiesCountBeforeRefresh = subject.getAll().size();
-
         try {
             Files.copy(
                     toInputStream("invalid JSON contents", StandardCharsets.UTF_8),

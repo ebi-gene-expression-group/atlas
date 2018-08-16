@@ -47,17 +47,14 @@ public class AnalyticsSolrQueryTree {
         }
     }
 
-    private static abstract class TreeNode {
+    private abstract static class TreeNode {
         //f can't return a Null or you'll mess up the tree
-        abstract TreeNode map(final Function<Leaf, TreeNode> f);
-        abstract TreeNode filter(final Predicate<Leaf> f);
+        abstract TreeNode map(Function<Leaf, TreeNode> f);
+        abstract TreeNode filter(Predicate<Leaf> f);
     }
 
-    private static class EmptyTree extends TreeNode {
-        private final static TreeNode INSTANCE = new EmptyTree();
-
-        private EmptyTree() {
-        }
+    private static final class EmptyTree extends TreeNode {
+        private static final TreeNode INSTANCE = new EmptyTree();
 
         @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
@@ -70,9 +67,9 @@ public class AnalyticsSolrQueryTree {
         }
     }
 
-    private static class Leaf extends TreeNode {
-        final String searchField;
-        final String searchValue;
+    private static final class Leaf extends TreeNode {
+        private final String searchField;
+        private final String searchValue;
 
         private Leaf(String searchField, String searchValue) {
             this.searchField = searchField;
@@ -95,9 +92,9 @@ public class AnalyticsSolrQueryTree {
         }
     }
 
-    private static class Parent extends TreeNode {
-        private Operator operator;
-        private Collection<TreeNode> children;
+    private static final class Parent extends TreeNode {
+        private final Operator operator;
+        private final Collection<TreeNode> children;
 
         private Parent(Operator operator, Collection<TreeNode> children) {
             this.operator = operator;
@@ -135,11 +132,12 @@ public class AnalyticsSolrQueryTree {
                             .filter(treeNode -> !treeNode.equals(EmptyTree.INSTANCE))
                             .collect(toList());
 
-            return newChildren.size() == 0
-                    ? EmptyTree.INSTANCE
-                    : newChildren.size() == 1
-                    ? newChildren.iterator().next()
-                    : new Parent(operator, newChildren);
+            return newChildren.size() == 0 ?
+                    EmptyTree.INSTANCE :
+                    newChildren.size() == 1 ?
+                    newChildren.iterator().next() :
+                    // newChildren.size() > 1
+                    new Parent(operator, newChildren);
         }
     }
 
@@ -183,9 +181,9 @@ public class AnalyticsSolrQueryTree {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
             }
         } else {
-            return BIOENTITY_IDENTIFIER.name.equals(term.category().get())
-                    ? BIOENTITY_IDENTIFIER_SEARCH.name()
-                    : "keyword_" + term.category().get();
+            return BIOENTITY_IDENTIFIER.name.equals(term.category().get()) ?
+                    BIOENTITY_IDENTIFIER_SEARCH.name() :
+                    "keyword_" + term.category().get();
         }
     }
 
@@ -264,7 +262,7 @@ public class AnalyticsSolrQueryTree {
 
     private static ImmutableList<String> identifierKeywords() {
         return ImmutableList.copyOf(
-                ExperimentDataPoint.bioentityPropertyNames.stream()
+                ExperimentDataPoint.BIOENTITY_PROPERTY_NAMES.stream()
                         .filter(bioentityPropertyName -> bioentityPropertyName.isKeyword)
                         .map(AnalyticsCollectionProxy::asAnalyticsSchemaField)
                         .map(AnalyticsCollectionProxy.AnalyticsSchemaField::name)

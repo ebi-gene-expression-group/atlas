@@ -36,8 +36,8 @@ public class ExperimentFileLocationServiceIT {
     private final String MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE =
             MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE + "_cols";
 
-    private final static String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
-    private final static String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE = "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
+    private static final String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
+    private static final String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE = "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
 
     @Inject
     private JdbcUtils jdbcTestUtils;
@@ -143,7 +143,7 @@ public class ExperimentFileLocationServiceIT {
 
         assertThat(paths).hasSameSizeAs(fileNameTemplates);
 
-        for(Path path : paths) {
+        for (Path path : paths) {
             File file = path.toFile();
 
             assertThat(file).exists();

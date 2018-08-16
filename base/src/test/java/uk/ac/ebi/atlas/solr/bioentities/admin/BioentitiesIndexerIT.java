@@ -47,7 +47,9 @@ public class BioentitiesIndexerIT {
     public void setUp() throws Exception {
         embeddedBioentitiesSolrServer = embeddedSolrServerFactory.createEmbeddedSolrServerInstance("bioentities");
         bioentityPropertiesSource = mock(BioentityPropertiesSource.class);
-        subject = new BioentitiesIndexer(bioentityIndexMonitor, bioentityPropertiesSource, embeddedBioentitiesSolrServer);
+        subject =
+                new BioentitiesIndexer(
+                        bioentityIndexMonitor, bioentityPropertiesSource, embeddedBioentitiesSolrServer);
     }
 
     @After
@@ -55,23 +57,22 @@ public class BioentitiesIndexerIT {
         subject.deleteAll();
     }
 
-    @Test(timeout = 10*5000)
+    @Test(timeout = 10 * 5000)
     public void test() throws Exception {
         addAndRetrieveAreOpposites(10000);
-        for(int i = 0 ; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
             addAndRetrieveAreOpposites(5);
         }
     }
 
     private List<BioentityProperty> randomProperties(int size) {
         List<BioentityProperty> result = new ArrayList<>(size);
-        for(int i = 0 ; i< size; i++){
+        for (int i = 0; i < size; i++) {
             result.add(new BioentityProperty(
                     RandomStringUtils.randomAlphanumeric(10),
-                    RandomStringUtils.randomAlphabetic(5)+"_"+RandomStringUtils.randomAlphabetic(5),
+                    RandomStringUtils.randomAlphabetic(5) + "_" + RandomStringUtils.randomAlphabetic(5),
                     RandomStringUtils.randomAlphabetic(10),
-                    RandomStringUtils.randomAlphanumeric(10)
-                    ));
+                    RandomStringUtils.randomAlphanumeric(10)));
         }
         return result;
     }
@@ -89,10 +90,12 @@ public class BioentitiesIndexerIT {
         subject.doRebuild();
 
         embeddedBioentitiesSolrServer.commit();
-        SolrParams solrQuery = new SolrQuery("*:*").setRows(2*size+10);
+        SolrParams solrQuery = new SolrQuery("*:*").setRows(2 * size + 10);
 
         QueryResponse queryResponse = embeddedBioentitiesSolrServer.query(solrQuery);
 
-        assertThat(ImmutableSet.copyOf(queryResponse.getBeans(BioentityProperty.class)), is(ImmutableSet.copyOf(data)));
+        assertThat(
+                ImmutableSet.copyOf(queryResponse.getBeans(BioentityProperty.class)),
+                is(ImmutableSet.copyOf(data)));
     }
 }

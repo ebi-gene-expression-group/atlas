@@ -28,7 +28,7 @@ public class OrganismPartGroupingServiceIT {
     public void testGetAnatomicalSystems() {
         assertThat(subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000006"))).keySet(),
                 Matchers.contains(ColumnGroup.create
-                ("UBERON_0000949","endocrine system" )));
+                ("UBERON_0000949", "endocrine system" )));
 
     }
 
@@ -54,8 +54,8 @@ public class OrganismPartGroupingServiceIT {
     }
 
     @Test
-    public void gotYourNose(){
-        assertThat(subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004","nose"))).entrySet(), not(empty()));
-        assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004","nose"))).entrySet(), not(empty()));
+    public void gotYourNose() {
+        assertThat(subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose"))).entrySet(), not(empty()));
+        assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose"))).entrySet(), not(empty()));
     }
 }

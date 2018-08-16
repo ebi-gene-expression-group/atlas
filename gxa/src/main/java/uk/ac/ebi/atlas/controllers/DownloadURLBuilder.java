@@ -18,8 +18,8 @@ public class DownloadURLBuilder {
         this.experimentAccession = experimentAccession;
     }
 
-    public Map<String,String> dataDownloadUrls(String requestURI){
-        Map<String,String> result = new HashMap<>();
+    public Map<String, String> dataDownloadUrls(String requestURI) {
+        Map<String, String> result = new HashMap<>();
         result.put("rawDownloadUrl", buildDownloadRawUrl(requestURI));
         result.put("normalizedUrl", buildDownloadNormalizedDataUrl(requestURI));
         result.put("logFoldUrl", buildDownloadLogFoldDataUrl(requestURI));

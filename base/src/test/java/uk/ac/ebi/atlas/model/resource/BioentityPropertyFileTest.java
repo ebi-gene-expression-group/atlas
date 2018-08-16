@@ -6,11 +6,10 @@ import uk.ac.ebi.atlas.solr.bioentities.BioentityProperty;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class BioentityPropertyFileTest {
-
-    BioentityPropertyFile testFile = new BioentityPropertyFile(null, null) {
+    private BioentityPropertyFile testFile = new BioentityPropertyFile(null, null) {
         @Override
         public Stream<BioentityProperty> get() {
             return null;
@@ -32,12 +31,15 @@ public class BioentityPropertyFileTest {
                 is("words with space")
         );
         assertThat(
-                testFile.cleanUpPropertyValue("shoot apex {http://www.co-ode.org/patterns#createdBy=\\\"http://www.ebi.ac.uk/ontology/webulous#OPPL_pattern\\\"}"),
+                testFile.cleanUpPropertyValue(
+                        "shoot apex {http://www.co-ode.org/patterns#createdBy=" +
+                                "\\\"http://www.ebi.ac.uk/ontology/webulous#OPPL_pattern\\\"}"),
                 is("shoot apex")
         );
 
         assertThat(
-                testFile.cleanUpPropertyValue("Homeodomain-like/winged-helix DNA-binding family protein [Source:TAIR;Acc:AT1G17520]"),
+                testFile.cleanUpPropertyValue(
+                        "Homeodomain-like/winged-helix DNA-binding family protein [Source:TAIR;Acc:AT1G17520]"),
                 is("Homeodomain-like/winged-helix DNA-binding family protein")
         );
     }

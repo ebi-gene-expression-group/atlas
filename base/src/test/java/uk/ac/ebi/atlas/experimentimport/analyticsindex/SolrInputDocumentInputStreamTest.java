@@ -41,18 +41,18 @@ public class SolrInputDocumentInputStreamTest {
 
     private Map<String, Map<BioentityPropertyName, Set<String>>> bioentityPropertyNames =
              ImmutableMap.of(
-                    bioentityIdentifier,
-                     (Map<BioentityPropertyName, Set<String>>)
-                             ImmutableMap.of(GO,(Set<String>) ImmutableSet.of("go_id"),
-                                     GOTERM,ImmutableSet.of("go term with word pancake"),
-                                     ORTHOLOG,
-                                     ImmutableSet.of("something_we_dont_put_in_there_because_that_would_be_confusing")
-                             )
-             );
+                     bioentityIdentifier,
+                     ImmutableMap.of(
+                             GO,
+                             ImmutableSet.of("go_id"),
+                             GOTERM,
+                             ImmutableSet.of("go term with word pancake"),
+                             ORTHOLOG,
+                             ImmutableSet.of("something_we_dont_put_in_there_because_that_would_be_confusing")));
 
     private BaselineExperimentDataPoint baselineExperimentDataPoint = new BaselineExperimentDataPoint(
             MockExperiment.createBaselineExperiment(),
-            BaselineAnalytics.create(bioentityIdentifier, "column_name", 13.37, 0.0),
+            BaselineAnalytics.create(bioentityIdentifier, "column_name", 1.0, 0.0),
             "condition search");
 
     private SolrInputDocumentInputStream subject;
@@ -73,7 +73,7 @@ public class SolrInputDocumentInputStreamTest {
 
         //Baseline specific
         assertThat(result.keySet(), hasItems("default_query_factor_type", "expression_level"));
-        assertThat(result.get("expression_level").getValue(), is(13.37));
+        assertThat(result.get("expression_level").getValue(), is(1.0));
 
         //identifier search
         assertThat(result.keySet(), hasItems(asAnalyticsSchemaField(GO).name(), "identifier_search"));

@@ -11,9 +11,9 @@ public class BaselineExperimentProfilesList extends GeneProfilesList<BaselineExp
     public BaselineExperimentProfilesList() {
     }
 
-    public List<FactorAcrossExperiments> getFactorsAcrossExperiments(){
+    public List<FactorAcrossExperiments> getFactorsAcrossExperiments() {
         TreeSet<FactorAcrossExperiments> result = new TreeSet<>();
-        for(BaselineExperimentProfile profile: this){
+        for (BaselineExperimentProfile profile: this) {
             result.addAll(profile.getConditions());
         }
 

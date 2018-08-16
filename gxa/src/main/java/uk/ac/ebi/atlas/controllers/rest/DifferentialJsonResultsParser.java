@@ -49,7 +49,7 @@ public class DifferentialJsonResultsParser extends JsonExceptionHandlingControll
             return diffAnalyticsListBuilder.build();
         }
         catch(JsonParseException e) {
-            throw new RuntimeException("Input Json is missing a results field OR results field is not an Array",e);
+            throw new RuntimeException("Input Json is missing a results field OR results field is not an Array", e);
         }
     }
 

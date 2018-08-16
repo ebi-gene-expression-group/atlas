@@ -38,7 +38,7 @@ public class ExperimentOpsExecutionServiceTest {
     ExperimentOpsExecutionService subject;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         when(experimentCrudMock.findExperiment(accession)).thenReturn(experimentDTO);
         subject =
                 new ExpressionAtlasExperimentOpsExecutionService(

@@ -6,8 +6,6 @@ import uk.ac.ebi.atlas.model.Profile;
 public class BaselineExpressionPerReplicateProfile extends Profile<AssayGroup,
                                                                    BaselineExpressionPerBiologicalReplicate,
                                                                    BaselineExpressionPerReplicateProfile> {
-    private BaselineExpressionPerReplicateProfile() {
-    }
 
     public BaselineExpressionPerReplicateProfile(String geneId, String geneName) {
         super(geneId, geneName);

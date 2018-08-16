@@ -78,7 +78,7 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         PrintWriter w = response.getWriter();
-        diffMicroarrayEvidenceService.evidenceForExperiment(experiment,contrast -> {
+        diffMicroarrayEvidenceService.evidenceForExperiment(experiment, contrast -> {
             MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
             requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
             requestPreferences.setCutoff(pValueCutoff);

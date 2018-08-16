@@ -11,12 +11,10 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesDao;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
@@ -34,7 +32,7 @@ import static uk.ac.ebi.atlas.solr.BioentityPropertyName.PATHWAYNAME;
 
 public class BioentityPropertiesSourceTest {
     private Path bioentityPropertiesDirectoryLocation;
-    private SpeciesProperties HUMAN =
+    private static final SpeciesProperties HUMAN =
             SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of());
 
     private BioentityPropertiesSource subject;
@@ -106,7 +104,7 @@ public class BioentityPropertiesSourceTest {
         assertThat(subject.getAnnotationFiles().count(), is(2L));
     }
 
-    private void assertHasOneGoodResource(Stream<? extends BioentityPropertyFile> s){
+    private void assertHasOneGoodResource(Stream<? extends BioentityPropertyFile> s) {
         List<BioentityPropertyFile> l = s.collect(toList());
         assertThat(l.size(), is(1));
         assertThat(l.get(0).existsAndIsNonEmpty(), is(true));
@@ -132,7 +130,8 @@ public class BioentityPropertiesSourceTest {
     }
 
     @Test
-    public void goodButEmptyAnnotationFileWithUnknownSpeciesIsGonnaBeABlankFieldInSolrButIsOtherwiseOkayForNow() throws Exception {
+    public void goodButEmptyAnnotationFileWithUnknownSpeciesIsGonnaBeABlankFieldInSolrButIsOtherwiseOkayForNow()
+                throws Exception {
         addTemporaryFile(
                 "annotations",
                 "Unknown_species.ensgene.tsv",
@@ -190,10 +189,14 @@ public class BioentityPropertiesSourceTest {
                        .get()
                        .collect(toList()),
                 containsInAnyOrder(
-                        new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_accession", "MIMAT0001535"),
-                        new BioentityProperty("MIMAT0001535", "Homo_sapiens", "symbol", "cfa-miR-448"),
-                        new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_name", "miR-448"),
-                        new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_sequence", "UUGCAUAUGUAGGAUGUCCCAU")));
+                        new BioentityProperty(
+                                "MIMAT0001535", "Homo_sapiens", "mirbase_accession", "MIMAT0001535"),
+                        new BioentityProperty(
+                                "MIMAT0001535", "Homo_sapiens", "symbol", "cfa-miR-448"),
+                        new BioentityProperty(
+                                "MIMAT0001535", "Homo_sapiens", "mirbase_name", "miR-448"),
+                        new BioentityProperty(
+                                "MIMAT0001535", "Homo_sapiens", "mirbase_sequence", "UUGCAUAUGUAGGAUGUCCCAU")));
     }
 
     @Test
@@ -271,7 +274,8 @@ public class BioentityPropertiesSourceTest {
                 subject.getArrayDesignMappingFiles()
                        .flatMap(BioentityPropertiesSource.ArrayDesignMappingFile::get)
                        .collect(toList()),
-                containsInAnyOrder(new BioentityProperty("ENSG00000000003", "Homo_sapiens", DESIGN_ELEMENT.name, "39361_f_at")));
+                containsInAnyOrder(
+                        new BioentityProperty("ENSG00000000003", "Homo_sapiens", DESIGN_ELEMENT.name, "39361_f_at")));
     }
 
     @Test
@@ -326,9 +330,15 @@ public class BioentityPropertiesSourceTest {
                        .collect(toList()),
                 containsInAnyOrder(
                         new BioentityProperty(
-                                "ENSG00000000419", "Homo_sapiens", PATHWAYID.name, "R-HSA-162699" ),
+                                "ENSG00000000419",
+                                "Homo_sapiens",
+                                PATHWAYID.name,
+                                "R-HSA-162699"),
                         new BioentityProperty(
-                                "ENSG00000000419", "Homo_sapiens", PATHWAYNAME.name, "Synthesis of dolichyl-phosphate mannose")));
+                                "ENSG00000000419",
+                                "Homo_sapiens",
+                                PATHWAYNAME.name,
+                                "Synthesis of dolichyl-phosphate mannose")));
     }
 
     @Test
@@ -346,8 +356,14 @@ public class BioentityPropertiesSourceTest {
                        .collect(toList()),
                 containsInAnyOrder(
                         new BioentityProperty(
-                                "ENSG00000000419", "Homo_sapiens", PATHWAYID.name, "R-HSA-162699" ),
+                                "ENSG00000000419",
+                                "Homo_sapiens",
+                                PATHWAYID.name,
+                                "R-HSA-162699"),
                         new BioentityProperty(
-                                "ENSG00000000419", "Homo_sapiens", PATHWAYNAME.name, "Synthesis of dolichyl-phosphate mannose")));
+                                "ENSG00000000419",
+                                "Homo_sapiens",
+                                PATHWAYNAME.name,
+                                "Synthesis of dolichyl-phosphate mannose")));
     }
 }

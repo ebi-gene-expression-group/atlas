@@ -17,6 +17,10 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.EX
 import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryUtils.createOrBooleanQuery;
 
 public class ExperimentRequestPreferencesSolrQueryFactory {
+    protected ExperimentRequestPreferencesSolrQueryFactory() {
+        throw new UnsupportedOperationException();
+    }
+
     // The type of reqPreferences will determine the type of experiment. If you think this is confusing change the
     // method names to createSolrQueryForBaselineExperiment or something like that.
     public static SolrQuery createSolrQuery(String experimentAccession, BaselineRequestPreferences<?> reqPreferences) {

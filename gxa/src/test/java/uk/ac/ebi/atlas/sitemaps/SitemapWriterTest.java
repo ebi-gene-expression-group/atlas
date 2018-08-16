@@ -46,7 +46,7 @@ public class SitemapWriterTest {
     @Test
     public void testWriteMany() throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        subject.writeDocument(baos, Collections.nCopies(10,"myCharacteristicWord"), "urlset", "url", ImmutableMap.of());
+        subject.writeDocument(baos, Collections.nCopies(10, "myCharacteristicWord"), "urlset", "url", ImmutableMap.of());
 
         assertThat(baos.toString(Charset.defaultCharset()).split("myCharacteristicWord").length, is(11));
     }

@@ -15,7 +15,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class BaselineAnalyticsFacetsReaderTest {
 
-    private final static JsonObject RESPONSE_2_JSON_FACETS = GSON.fromJson(
+    private static final JsonObject RESPONSE_2_JSON_FACETS = GSON.fromJson(
             "{\n" +
             "  \"homo sapiens\": [\n" +
             "    {\n" +

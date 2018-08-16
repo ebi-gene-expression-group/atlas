@@ -34,55 +34,57 @@ public class DataFileHub {
     protected final Path experimentsDesignDirLocation;
     protected final Path experimentsAdminDirLocation;
 
-    protected final static String EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE = "ExpDesign-{0}.tsv";
-    final static String OP_LOG_FILE_PATH_TEMPLATE = "{0}-op-log.tsv";
+    protected static final String EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE = "ExpDesign-{0}.tsv";
+    static final String OP_LOG_FILE_PATH_TEMPLATE = "{0}-op-log.tsv";
 
-    protected final static String CONFIGURATION_FILE_PATH_TEMPLATE = "{0}/{0}-configuration.xml";
-    final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "{0}/{0}-analysis-methods.tsv";
-    protected final static String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.condensed-sdrf.tsv";
-    protected final static String IDF_FILE_PATH_TEMPLATE = "{0}/{0}.idf.txt";
+    protected static final String CONFIGURATION_FILE_PATH_TEMPLATE = "{0}/{0}-configuration.xml";
+    static final String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "{0}/{0}-analysis-methods.tsv";
+    protected static final String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.condensed-sdrf.tsv";
+    protected static final String IDF_FILE_PATH_TEMPLATE = "{0}/{0}.idf.txt";
 
-    protected final static String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "{0}/{0}.tsv";
-    protected final static String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "{0}/{0}-fpkms.tsv";
-    protected final static String RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE = "{0}/{0}-tpms.tsv";
-    protected final static String RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE = "{0}/{0}-transcripts-tpms.tsv";
+    protected static final String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "{0}/{0}.tsv";
+    protected static final String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "{0}/{0}-fpkms.tsv";
+    protected static final String RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE = "{0}/{0}-tpms.tsv";
+    protected static final String RNASEQ_BASELINE_TRANSCRIPTS_TPMS_FILE_PATH_TEMPLATE = "{0}/{0}-transcripts-tpms.tsv";
 
-    protected final static String FACTORS_FILE_PATH_TEMPLATE = "{0}/{0}-factors.xml";
-    protected final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "{0}/{0}-analytics.tsv";
-    protected final static String DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE = "{0}/{0}-percentile-ranks.tsv";
-    final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "{0}/{0}-raw-counts.tsv";
-    final static String QC_DIRECTORY_PATH_TEMPLATE = "{0}/qc";
-    final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "{0}/{0}_{1}-analytics.tsv";
-    final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE =
+    protected static final String FACTORS_FILE_PATH_TEMPLATE = "{0}/{0}-factors.xml";
+    protected static final String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "{0}/{0}-analytics.tsv";
+    protected static final String DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE = "{0}/{0}-percentile-ranks.tsv";
+    static final String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "{0}/{0}-raw-counts.tsv";
+    static final String QC_DIRECTORY_PATH_TEMPLATE = "{0}/qc";
+    static final String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "{0}/{0}_{1}-analytics.tsv";
+    static final String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE =
             "{0}/{0}_{1}-normalized-expressions.tsv";
-    final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "{0}/{0}_{1}-log-fold-changes.tsv";
-    final static String COEXPRESSION_FILE_TEMPLATE = "{0}/{0}-coexpressions.tsv.gz";
+    static final String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "{0}/{0}_{1}-log-fold-changes.tsv";
+    static final String COEXPRESSION_FILE_TEMPLATE = "{0}/{0}-coexpressions.tsv.gz";
 
-    protected final static String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "{0}/{0}.{1}.reactome.gsea.tsv";
+    protected static final String REACTOME_PATHWAYS_FILE_PATH_TEMPLATE = "{0}/{0}.{1}.reactome.gsea.tsv";
 
     // Single cell files
-    protected final static String SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE = "{0}/{0}.expression_tpm.mtx";
-    protected final static String SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE =
+    protected static final String SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE = "{0}/{0}.expression_tpm.mtx";
+    protected static final String SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_rows";
-    protected final static String SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE =
+    protected static final String SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_cols";
 
-    final static String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE = "{0}/{0}.aggregated_counts.mtx";
-    final static String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+    static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_counts.mtx";
+    static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
-    final static String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+    static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
-    final static String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE = "{0}/{0}.aggregated_filtered_counts.mtx";
-    final static String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+    static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_filtered_counts.mtx";
+    static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
-    final static String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+    static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
-    protected final static String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "{0}/{0}.tsne_perp_{1}.tsv";
-    protected final static String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.sdrf.txt";
-    protected final static String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "{0}/{0}.clusters.tsv";
-    protected final static String SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE = "{0}/{0}.software.tsv";
+    protected static final String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "{0}/{0}.tsne_perp_{1}.tsv";
+    protected static final String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.sdrf.txt";
+    protected static final String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "{0}/{0}.clusters.tsv";
+    protected static final String SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE = "{0}/{0}.software.tsv";
 
 
     @Inject
@@ -138,14 +140,23 @@ public class DataFileHub {
         public final AtlasResource<TsvWriter> experimentDesignWrite;
         public final AtlasResource<TsvStreamer> adminOpLog;
         public final AtlasResource<TsvWriter> adminOpLogWrite;
-        public final AtlasResource<TsvWriter> adminOpLogAppend;
 
         ExperimentFiles(String experimentAccession) {
-            analysisMethods = new TsvFile.ReadOnly(experimentsMageTabDirLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
-            configuration = new XmlFile.ReadOnly(experimentsMageTabDirLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
-            condensedSdrf = new TsvFile.ReadOnly(experimentsMageTabDirLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
-            idf = new TsvFile.ReadOnly(experimentsMageTabDirLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
-            qcFolder = new Directory(experimentsMageTabDirLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
+            analysisMethods =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
+            configuration =
+                    new XmlFile.ReadOnly(
+                            experimentsMageTabDirLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
+            condensedSdrf =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+            idf =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
+            qcFolder =
+                    new Directory(
+                            experimentsMageTabDirLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
 
             experimentDesign =
                     new TsvFile.ReadOnly(
@@ -158,9 +169,10 @@ public class DataFileHub {
                             EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
-            adminOpLog = new TsvFile.ReadOnly(experimentsAdminDirLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            adminOpLogWrite = new TsvFile.Overwrite(experimentsAdminDirLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
-            adminOpLogAppend = new TsvFile.Appendable(experimentsAdminDirLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            adminOpLog =
+                    new TsvFile.ReadOnly(experimentsAdminDirLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            adminOpLogWrite =
+                    new TsvFile.Overwrite(experimentsAdminDirLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
@@ -169,8 +181,12 @@ public class DataFileHub {
         public final AtlasResource<CSVReader> coexpressions;
 
         BaselineExperimentFiles(String experimentAccession) {
-            factors = new XmlFile.ReadOnly(experimentsMageTabDirLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
-            coexpressions = new TsvFile.ReadCompressed(experimentsMageTabDirLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
+            factors =
+                    new XmlFile.ReadOnly(
+                            experimentsMageTabDirLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
+            coexpressions =
+                    new TsvFile.ReadCompressed(
+                            experimentsMageTabDirLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
         }
     }
 
@@ -225,7 +241,7 @@ public class DataFileHub {
             }
 
         public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit) {
-            switch(unit) {
+            switch (unit) {
                 case FPKM:
                     return fpkms;
                 case TPM:

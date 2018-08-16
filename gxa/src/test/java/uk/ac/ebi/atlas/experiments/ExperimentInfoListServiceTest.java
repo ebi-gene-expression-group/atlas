@@ -112,7 +112,7 @@ public class ExperimentInfoListServiceTest {
                 experimentDesignMock,
                 new HashSet<>(),
                 new HashSet<>(),
-                ImmutableList.of(ArrayDesign.create(ARRAY,"ARRAY_NAME"))));
+                ImmutableList.of(ArrayDesign.create(ARRAY, "ARRAY_NAME"))));
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment<? extends DescribesDataColumns>>>
                 experimentAccessionsPerType =

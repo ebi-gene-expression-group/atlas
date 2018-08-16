@@ -30,17 +30,17 @@ public class ContrastSummary implements Iterable<ContrastProperty> {
         return properties.iterator();
     }
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject o = new JsonObject();
         JsonArray a = new JsonArray();
-        for(AssayProperty assayProperty: properties){
+        for (AssayProperty assayProperty: properties) {
             a.add(assayProperty.toJson());
         }
-        o.add("properties",a);
-        o.addProperty("experimentDescription",experimentDescription);
+        o.add("properties", a);
+        o.addProperty("experimentDescription", experimentDescription);
         o.addProperty("contrastDescription", contrastDescription);
         o.addProperty("testReplicates", testReplicates);
-        o.addProperty("referenceReplicates",referenceReplicates);
+        o.addProperty("referenceReplicates", referenceReplicates);
         return o;
     }
 }

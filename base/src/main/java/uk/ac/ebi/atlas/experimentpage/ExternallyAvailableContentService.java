@@ -29,32 +29,38 @@ public class ExternallyAvailableContentService<E extends Experiment> {
         return supplier -> supplier.get(experiment).stream();
     }
 
-    public Function<HttpServletResponse, Void> stream(E experiment, final URI uri){
+    public Function<HttpServletResponse, Void> stream(E experiment, final URI uri) {
         return suppliers.stream()
                 .filter(eSupplier -> eSupplier.comesFromThisSupplier(uri))
                 .findFirst()
-                .orElseGet(() -> { throw new ResourceNotFoundException(uri.toString());
-        }).get(experiment, uri).stream;
+                .orElseThrow(() -> new ResourceNotFoundException(uri.toString()))
+                .get(experiment, uri).stream;
     }
 
-    public List<ExternallyAvailableContent> list(final E experiment, final ExternallyAvailableContent.ContentType contentType){
+    public List<ExternallyAvailableContent> list(final E experiment,
+                                                 final ExternallyAvailableContent.ContentType contentType) {
         return suppliers.stream()
                 .filter(eSupplier -> eSupplier.contentType().equals(contentType))
                 .flatMap(extractContentFromSupplier(experiment))
                 .collect(Collectors.toList());
     }
 
-    public static String listResourcesUrl(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType){
+    public static String listResourcesUrl(String experimentAccession,
+                                          String accessKey,
+                                          ExternallyAvailableContent.ContentType contentType) {
         return LIST_RESOURCES_URL
                 .replace("{experimentAccession}", experimentAccession)
-                .replace("{contentType}", contentType.name())
-                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
+                .replace(
+                        "{contentType}",
+                        contentType.name()) + (isNotEmpty(accessKey) ? "?accessKey=" + accessKey : "");
     }
 
-    public static String streamResourcesUrl(String experimentAccession, String accessKey, String resourceName){
+    public static String streamResourcesUrl(String experimentAccession,
+                                            String accessKey,
+                                            String resourceName) {
         return STREAM_RESOURCES_URL
                 .replace("{experimentAccession}", experimentAccession)
-                .replace("**", resourceName)
-                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
+                .replace("**", resourceName) +
+                (isNotEmpty(accessKey) ? "?accessKey=" + accessKey : "");
     }
 }

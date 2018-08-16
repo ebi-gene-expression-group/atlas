@@ -26,7 +26,7 @@ public class CoexpressedGenesService {
 
     Pair<GeneQueryResponse, List<String>> extendGeneQueryResponseWithCoexpressions(GeneQueryResponse originalResponse,
                                                                                    BaselineExperiment experiment,
-                                                                                   Map<String,Integer> coexpressionsRequested,
+                                                                                   Map<String, Integer> coexpressionsRequested,
                                                                                    boolean alsoIncludeOriginalGeneQueryResponse) {
         GeneQueryResponse newGeneQuery = new GeneQueryResponse();
         List<String> prescribedOrder = new ArrayList<>();
@@ -34,7 +34,7 @@ public class CoexpressedGenesService {
             Collection<String> idsForThatTerm = originalResponse.getIds(queryTerm);
             Set<String> idsToAdd = new HashSet<>();
             for (String id : idsForThatTerm) {
-                if( alsoIncludeOriginalGeneQueryResponse) {
+                if ( alsoIncludeOriginalGeneQueryResponse) {
                     prescribedOrder.add(id);
                 }
                 if (coexpressionsRequested.containsKey(id.toUpperCase())) {
@@ -51,11 +51,11 @@ public class CoexpressedGenesService {
             }
         }
 
-        return Pair.of(newGeneQuery,prescribedOrder);
+        return Pair.of(newGeneQuery, prescribedOrder);
     }
 
     public List<String> fetchCoexpressions(String experimentAccession, String identifier, int requestedAmount) {
-        List<String> coexpressedGenes = coexpressedGenesDao.coexpressedGenesFor(experimentAccession, identifier);
+        List<String> coexpressedGenes = coexpressedGenesDao.coexpressedGenesfor (experimentAccession, identifier);
         return coexpressedGenes.subList(0, Math.min(Math.max(0, requestedAmount), coexpressedGenes.size()));
     }
 

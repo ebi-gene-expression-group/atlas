@@ -84,6 +84,7 @@ public class TsvStreamerTest {
 
         try (TsvStreamer tsvReader = new TsvStreamer(tsvInputStreamReader)) {
             // Use tsvReader
+            tsvReader.get();
         }
 
         verify(inputStreamSpy).close();
@@ -98,6 +99,7 @@ public class TsvStreamerTest {
         assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(() -> {
             try (TsvStreamer tsvReader = new TsvStreamer(readerSpy)) {
                 // Use tsvReader
+                tsvReader.get();
             }
         });
     }
@@ -111,7 +113,7 @@ public class TsvStreamerTest {
     public void closeOnEmptyIsANoOp() {
         // We check .empty() is a singleton so that each call to close operates on the same object
         assertThat(TsvStreamer.empty()).isSameAs(TsvStreamer.empty());
-        for (int i = 0 ; i < ThreadLocalRandom.current().nextInt(2, 100) ; i++) {
+        for (int i = 0; i < ThreadLocalRandom.current().nextInt(2, 100); i++) {
             TsvStreamer.empty().close();
         }
     }

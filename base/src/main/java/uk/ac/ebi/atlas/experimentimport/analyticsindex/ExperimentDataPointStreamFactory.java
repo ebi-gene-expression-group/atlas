@@ -51,7 +51,7 @@ public class ExperimentDataPointStreamFactory {
     }
 
     public ObjectInputStream<? extends ExperimentDataPoint> stream(Experiment experiment) throws IOException {
-        if(experiment instanceof MicroarrayExperiment) {
+        if (experiment instanceof MicroarrayExperiment) {
             return stream((MicroarrayExperiment) experiment);
         } else if (experiment instanceof DifferentialExperiment) {
             return stream((DifferentialExperiment) experiment);
@@ -69,7 +69,8 @@ public class ExperimentDataPointStreamFactory {
                 conditionsLookupService.conditionsPerDataColumnDescriptor(experiment));
     }
 
-    private ObjectInputStream<DifferentialExperimentDataPoint> stream(DifferentialExperiment experiment) throws IOException {
+    private ObjectInputStream<DifferentialExperimentDataPoint> stream(DifferentialExperiment experiment)
+            throws IOException {
         return new DifferentialExperimentDataPointStream(
                 experiment,
                 rnaSeqDifferentialAnalyticsInputStreamFactory.create(experiment.getAccession()),
@@ -77,11 +78,14 @@ public class ExperimentDataPointStreamFactory {
                 buildNumReplicatesByContrastId(experiment));
     }
 
-    private ObjectInputStream<MicroarrayExperimentDataPoint> stream(MicroarrayExperiment experiment) throws IOException {
+    private ObjectInputStream<MicroarrayExperimentDataPoint> stream(MicroarrayExperiment experiment)
+            throws IOException {
         Iterator<String> it = experiment.getArrayDesignAccessions().iterator();
-        ImmutableList.Builder<ObjectInputStream<? extends MicroarrayDifferentialAnalytics>> builder = ImmutableList.builder();
+        ImmutableList.Builder<ObjectInputStream<? extends MicroarrayDifferentialAnalytics>> builder =
+                ImmutableList.builder();
         while (it.hasNext()) {
-            builder.add(microarrayDifferentialAnalyticsInputStreamFactory.create(experiment.getAccession(), it.next()));
+            builder.add(
+                    microarrayDifferentialAnalyticsInputStreamFactory.create(experiment.getAccession(), it.next()));
         }
 
         return new MicroarrayExperimentDataPointStream(
@@ -95,7 +99,10 @@ public class ExperimentDataPointStreamFactory {
         ImmutableMap.Builder<String, Integer> builder = ImmutableMap.builder();
 
         for (Contrast contrast : experiment.getDataColumnDescriptors()) {
-            int numReplicates = Math.min(contrast.getReferenceAssayGroup().getReplicates(), contrast.getTestAssayGroup().getReplicates());
+            int numReplicates =
+                    Math.min(
+                            contrast.getReferenceAssayGroup().getReplicates(),
+                            contrast.getTestAssayGroup().getReplicates());
             builder.put(contrast.getId(), numReplicates);
         }
 

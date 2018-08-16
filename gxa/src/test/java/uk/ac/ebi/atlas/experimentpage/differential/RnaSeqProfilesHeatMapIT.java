@@ -53,9 +53,9 @@ public class RnaSeqProfilesHeatMapIT {
     DifferentialRequestPreferences requestPreferences;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         requestPreferences = new DifferentialRequestPreferences();
-        subject = new DifferentialProfilesHeatMap<>(rnaSeqProfileStreamFactory,solrQueryService);
+        subject = new DifferentialProfilesHeatMap<>(rnaSeqProfileStreamFactory, solrQueryService);
     }
 
     private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws Exception {
@@ -74,9 +74,9 @@ public class RnaSeqProfilesHeatMapIT {
     @Test
     public void testSomeExperiments() throws Exception {
         Collection<String> accessions = Lists.newArrayList(experimentTrader.getRnaSeqDifferentialExperimentAccessions
-                ()).subList(0,10);
+                ()).subList(0, 10);
 
-        for(String accession: accessions){
+        for (String accession: accessions) {
             setUp();
             testExperiment(accession);
         }
@@ -148,9 +148,9 @@ public class RnaSeqProfilesHeatMapIT {
     }
 
 
-    private void assertAbout(DifferentialExperiment experiment, List<RnaSeqProfile> profiles){
+    private void assertAbout(DifferentialExperiment experiment, List<RnaSeqProfile> profiles) {
 
-        for(RnaSeqProfile profile: profiles){
+        for (RnaSeqProfile profile: profiles) {
             assertThat(profile.getSpecificity(experiment.getDataColumnDescriptors()) > 0, is(true));
             assertThat(profile.getId().isEmpty(), is(false));
             assertThat(profile.getName().isEmpty(), is(false));

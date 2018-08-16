@@ -36,7 +36,7 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
             "/Location/View?g=%s;contigviewbottom=url:%s;format=BEDGRAPH";
 
     private static final String DIFFERENTIAL_TRACK_URL_PART_TEMPLATE =
-            "/Location/View?g=%s;contigviewbottom=url:%s=tiling,url:%s=pvalue;format=BEDGRAPH";
+            "/Location/View?g=%s;contigviewbottom=url:%s=tiling, url:%s=pvalue;format=BEDGRAPH";
 
     private final ExperimentTrader experimentTrader;
 

@@ -11,7 +11,6 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 class IdfParserTest {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
@@ -20,11 +19,16 @@ class IdfParserTest {
             "RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)";
     private static final String AE_DISPLAY_NAME =
             "Study investigating RNA-Seq of human individual tissues and mixture of 16 tissues";
-    private static final String[] PUBMED_IDS_ARRAY = {"22496456", "22955988", "23258890"};
-    private static final String[] PUBLICATIONS_ARRAY = {"Publication 1", "Another publication", "Yet another publication"};
-    private static final ImmutableSet<String> PUBMED_IDS = ImmutableSet.copyOf(PUBMED_IDS_ARRAY);
-    private static final String EXPECTED_CLUSTERS = "5";
-    private static final String[] ADDITIONAL_ATTRIBUTES = {"individual", "genotype", "FACS marker"};
+    private static final String[] PUBMED_IDS_ARRAY =
+            {"22496456", "22955988", "23258890"};
+    private static final String[] PUBLICATIONS_ARRAY =
+            {"Publication 1", "Another publication", "Yet another publication"};
+    private static final ImmutableSet<String> PUBMED_IDS =
+            ImmutableSet.copyOf(PUBMED_IDS_ARRAY);
+    private static final String EXPECTED_CLUSTERS =
+            "5";
+    private static final String[] ADDITIONAL_ATTRIBUTES =
+            {"individual", "genotype", "FACS marker"};
 
     private static final String[][] IDF_TXT = {
             {"Investigation Title", TITLE},
@@ -32,7 +36,10 @@ class IdfParserTest {
             {"PubMed ID", PUBMED_IDS_ARRAY[0], PUBMED_IDS_ARRAY[1], PUBMED_IDS_ARRAY[2]},
             {"Publication Title", PUBLICATIONS_ARRAY[0], PUBLICATIONS_ARRAY[1], PUBLICATIONS_ARRAY[2]},
             {"Comment[EAExpectedClusters]", EXPECTED_CLUSTERS},
-            {"Comment[EAAdditionalAttributes]", ADDITIONAL_ATTRIBUTES[0], ADDITIONAL_ATTRIBUTES[1], ADDITIONAL_ATTRIBUTES[2]}
+            {
+                "Comment[EAAdditionalAttributes]",
+                ADDITIONAL_ATTRIBUTES[0], ADDITIONAL_ATTRIBUTES[1], ADDITIONAL_ATTRIBUTES[2]
+            }
     };
 
     private static final String[][] IDF_TXT_MIXED_CASE = {
@@ -48,14 +55,14 @@ class IdfParserTest {
     private IdfParser subject;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         dataFileHub = MockDataFileHub.create();
 
         subject = new IdfParser(dataFileHub);
     }
 
     @Test
-    public void parse() {
+    void parse() {
         dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
@@ -63,11 +70,12 @@ class IdfParserTest {
         assertThat(idfParserOutput.getTitle()).isEqualTo(AE_DISPLAY_NAME);
         assertThat(idfParserOutput.getPubmedIds()).containsOnlyElementsOf(PUBMED_IDS);
         assertThat(idfParserOutput.getExpectedClusters()).isEqualTo(NumberUtils.toInt(EXPECTED_CLUSTERS));
-        assertThat(idfParserOutput.getMetadataFieldsOfInterest()).containsOnlyElementsOf(ImmutableSet.copyOf(ADDITIONAL_ATTRIBUTES));
+        assertThat(idfParserOutput.getMetadataFieldsOfInterest())
+                .containsOnlyElementsOf(ImmutableSet.copyOf(ADDITIONAL_ATTRIBUTES));
     }
 
     @Test
-    public void parseMixedCaseKeys() {
+    void parseMixedCaseKeys() {
         dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT_MIXED_CASE));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
@@ -78,7 +86,7 @@ class IdfParserTest {
     }
 
     @Test
-    public void parseNoPubmedIds() {
+    void parseNoPubmedIds() {
         dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT[0], IDF_TXT[1]));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
@@ -88,7 +96,7 @@ class IdfParserTest {
     }
 
     @Test
-    public void parseNoAeDisplayName() {
+    void parseNoAeDisplayName() {
         dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT[0], IDF_TXT[2], IDF_TXT[3]));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
@@ -98,7 +106,7 @@ class IdfParserTest {
     }
 
     @Test
-    public void parseNoAeDisplayNameNoTitle() {
+    void parseNoAeDisplayNameNoTitle() {
         dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT[2], IDF_TXT[3]));
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
@@ -108,7 +116,7 @@ class IdfParserTest {
     }
 
     @Test
-    public void parseForTABMAccession() {
+    void parseForTABMAccession() {
         dataFileHub.addIdfFile("E-TABM-0001", Arrays.asList(IDF_TXT));
 
         IdfParserOutput idfParserOutput = subject.parse("E-TABM-0001");
@@ -119,7 +127,7 @@ class IdfParserTest {
     }
 
     @Test
-    public void parseForNonMTABAccession() {
+    void parseForNonMTABAccession() {
         dataFileHub.addIdfFile("E-GEOD-0001", Arrays.asList(IDF_TXT));
 
         IdfParserOutput idfParserOutput = subject.parse("E-GEOD-0001");
@@ -130,7 +138,7 @@ class IdfParserTest {
     }
 
     @Test
-    public void parseNothing() {
+    void parseNothing() {
         dataFileHub.addIdfFile(E_MTAB_513, Collections.emptyList());
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);

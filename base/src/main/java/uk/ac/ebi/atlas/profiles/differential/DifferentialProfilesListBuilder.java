@@ -7,8 +7,8 @@ import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 import javax.inject.Named;
 
 @Named
-public class DifferentialProfilesListBuilder<P extends DifferentialProfile> implements GeneProfilesListBuilder<DifferentialProfilesList<P>> {
-
+public class DifferentialProfilesListBuilder<P extends DifferentialProfile>
+             implements GeneProfilesListBuilder<DifferentialProfilesList<P>> {
     @Override
     public DifferentialProfilesList<P> get() {
         return new DifferentialProfilesList<>();

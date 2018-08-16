@@ -152,7 +152,7 @@ public class ExperimentOpsTest {
         JsonArray failures = result.get("error").getAsJsonArray();
 
         assertThat(successes.toString(), successes.size(), is(new String[]{"success!", "<sth else>"}.length));
-        assertThat(failures.toString(),failures.size(), is(new String[]{"<error msg>", "not started"}.length));
+        assertThat(failures.toString(), failures.size(), is(new String[]{"<error msg>", "not started"}.length));
 
         Set<Map.Entry<String, JsonElement>> firstSuccess = successes.get(0).getAsJsonObject().entrySet();
         assertThat(firstSuccess.size(), is(1));
@@ -187,7 +187,7 @@ public class ExperimentOpsTest {
 
         String logResult = ImmutableList.copyOf(subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(Op.LOG))).toString();
 
-        for(Op op: Op.values()){
+        for (Op op: Op.values()) {
             boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ, Op.CACHE_REMOVE, Op.CHECK).contains(op);
             assertThat(op.toString(), logResult.contains( op.name()), is(isStateful));
         }
@@ -225,20 +225,20 @@ public class ExperimentOpsTest {
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
         verify(analyticsIndexerManager).addToAnalyticsIndex(accession);
 
-        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock, analyticsIndexerManager, baselineCoexpressionProfileLoader);
     }
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled1() throws Exception {
         doThrow(new IOException("The files are bad!"))
                 .when(experimentCrudMock)
-                .importExperiment(accession,false);
+                .importExperiment(accession, false);
 
         new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
         verify(experimentCrudMock).importExperiment(accession, false);
 
-        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock, analyticsIndexerManager, baselineCoexpressionProfileLoader);
     }
 
     @Test
@@ -247,13 +247,13 @@ public class ExperimentOpsTest {
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
-        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",new MockHttpServletResponse());
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
         verify(experimentCrudMock).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
 
-        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock, analyticsIndexerManager, baselineCoexpressionProfileLoader);
     }
 
     @Test
@@ -269,7 +269,7 @@ public class ExperimentOpsTest {
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
 
-        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrudMock, experimentCrudMock, analyticsIndexerManager, baselineCoexpressionProfileLoader);
 
         String response = responseObject.getContentAsString();
         assertThat(response, containsString("Coexpression load failed"));
@@ -283,7 +283,7 @@ public class ExperimentOpsTest {
                 .loadBaselineCoexpressionsProfile(anyString());
 
         MockHttpServletResponse responseObject = new MockHttpServletResponse();
-        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",responseObject);
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", responseObject);
 
         String response = responseObject.getContentAsString();
         assertThat(response, containsString("error"));
@@ -294,7 +294,7 @@ public class ExperimentOpsTest {
         experimentOpLogWriter.persistOpLog(accession, persisted);
 
         MockHttpServletResponse responseObject = new MockHttpServletResponse();
-        new ExperimentAdminController(subject).doOp(accession, "STATUS",responseObject);
+        new ExperimentAdminController(subject).doOp(accession, "STATUS", responseObject);
 
         JsonArray response = GSON.fromJson(responseObject.getContentAsString(), JsonArray.class).getAsJsonArray();
 
@@ -305,11 +305,11 @@ public class ExperimentOpsTest {
     public void statusReadsLastOpLogEntry() throws IOException {
         assertThat(readFromStatus(ImmutableList.of()), is(""));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
-        assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
-        assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), not(containsString("msg")));
+        assertThat(readFromStatus(ImmutableList.of(OpLogEntry.nullOp("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
+        assertThat(readFromStatus(ImmutableList.of(OpLogEntry.nullOp("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), not(containsString("msg")));
     }
 
-    private static ExperimentDTO mockDTO(String accession, ExperimentType experimentType){
+    private static ExperimentDTO mockDTO(String accession, ExperimentType experimentType) {
         return new ExperimentDTO(
                 accession,
                 experimentType,

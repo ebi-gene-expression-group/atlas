@@ -76,7 +76,7 @@ public class BaselineExperimentCacheLoaderTest {
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         AssayGroup assayGroup = mock(AssayGroup.class);
         when(assayGroup.getId()).thenReturn("assay group id 1");
 

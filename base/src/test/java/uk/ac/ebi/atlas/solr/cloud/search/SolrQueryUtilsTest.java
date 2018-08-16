@@ -18,15 +18,14 @@ import static java.util.stream.Collectors.joining;
 import static org.apache.solr.client.solrj.util.ClientUtils.escapeQueryChars;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class SolrQueryUtilsTest {
-
-    public static class DummySchemaField extends SchemaField<CollectionProxy> {
+class SolrQueryUtilsTest {
+    private static final class DummySchemaField extends SchemaField<CollectionProxy> {
         private DummySchemaField(String fieldName) {
             super(fieldName);
         }
     }
 
-    public static final DummySchemaField FIELD1 = new DummySchemaField("field1");
+    private static final DummySchemaField FIELD1 = new DummySchemaField("field1");
 
     @Test
     @DisplayName("Blank field values return an empty clause")

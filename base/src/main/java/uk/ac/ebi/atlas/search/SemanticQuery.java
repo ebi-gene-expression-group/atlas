@@ -92,7 +92,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
     public String toUrlEncodedJson() {
         try {
             return URLEncoder.encode(toJson(), "UTF-8");
-        } catch(UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             // Unreachable , UTF-8 will always be supported, even on an infinite time scale :P
             throw new UncheckedIOException(e);
         }

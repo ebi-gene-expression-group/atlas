@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CollectionProxyTest {
-
     @Mock
     private SolrClient solrClientMock;
 
@@ -88,5 +87,4 @@ public class CollectionProxyTest {
         assertThatExceptionOfType(UncheckedIOException.class)
                 .isThrownBy(() -> subject.deleteAllAndCommit());
     }
-
 }

@@ -24,36 +24,35 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentDesignFileTest {
-
-    MockDataFileHub fileHub = MockDataFileHub.create();
-    MockHttpServletResponse httpServletResponse = new MockHttpServletResponse();
-
-    @Mock
-    BaselineExperiment baselineExperiment;
+    private MockDataFileHub fileHub = MockDataFileHub.create();
+    private MockHttpServletResponse httpServletResponse = new MockHttpServletResponse();
 
     @Mock
-    MicroarrayExperiment differentialMicroarrayExperiment;
+    private BaselineExperiment baselineExperiment;
 
     @Mock
-    DifferentialExperiment differentialRnaSeqExperiment;
+    private MicroarrayExperiment differentialMicroarrayExperiment;
+
+    @Mock
+    private DifferentialExperiment differentialRnaSeqExperiment;
 
     // subject
-    ExperimentDesignFile.Baseline baselineExperimentDesignFile =
+    private ExperimentDesignFile.Baseline baselineExperimentDesignFile =
             new ExperimentDesignFile.Baseline(fileHub);
-    ExperimentDesignFile.Microarray differentialMicroarrayExperimentDesignFile =
+    private ExperimentDesignFile.Microarray differentialMicroarrayExperimentDesignFile =
             new ExperimentDesignFile.Microarray(fileHub);
-    ExperimentDesignFile.RnaSeq differentialRnaSeqExperimentDesignFile =
+    private ExperimentDesignFile.RnaSeq differentialRnaSeqExperimentDesignFile =
             new ExperimentDesignFile.RnaSeq(fileHub);
 
     @Test
-    public void hasOnlyOneContentItem() throws Exception {
+    public void hasOnlyOneContentItem() {
         assertThat(baselineExperimentDesignFile.get(baselineExperiment), hasSize(1));
         assertThat(differentialMicroarrayExperimentDesignFile.get(differentialMicroarrayExperiment), hasSize(1));
         assertThat(differentialRnaSeqExperimentDesignFile.get(differentialRnaSeqExperiment), hasSize(1));
     }
 
     @Test
-    public void hasTheRightContentType() throws Exception {
+    public void hasTheRightContentType() {
         assertThat(
                 baselineExperimentDesignFile.contentType(),
                 is(ExternallyAvailableContent.ContentType.DATA));
@@ -66,14 +65,14 @@ public class ExperimentDesignFileTest {
     }
 
     @Test
-    public void hasTheRightURI() throws Exception {
+    public void hasTheRightURI() {
         assertThat(baselineExperimentDesignFile.reservedUris(), contains("experiment-design"));
         assertThat(differentialMicroarrayExperimentDesignFile.reservedUris(), contains("experiment-design"));
         assertThat(differentialRnaSeqExperimentDesignFile.reservedUris(), contains("experiment-design"));
     }
 
     @Test
-    public void buildsGoodURLs() throws Exception {
+    public void buildsGoodURLs() {
         assertThat(
                 ExperimentDesignFile.makeUrl("E-FOOBAR", "50m3-c0d3"),
                 is(equalTo("experiments-content/E-FOOBAR/resources/experiment-design?accessKey=50m3-c0d3")));

@@ -16,7 +16,9 @@ public class ExperimentSorter {
     private final ExperimentTrader experimentTrader;
     private final ConfigurationTrader configurationTrader;
 
-    public ExperimentSorter(DataFileHub dataFileHub, ExperimentTrader experimentTrader, ConfigurationTrader configurationTrader) {
+    public ExperimentSorter(DataFileHub dataFileHub,
+                            ExperimentTrader experimentTrader,
+                            ConfigurationTrader configurationTrader) {
         this.dataFileHub = dataFileHub;
         this.experimentTrader = experimentTrader;
         this.configurationTrader = configurationTrader;
@@ -33,11 +35,13 @@ public class ExperimentSorter {
     }
 
     public TreeMultimap<Long, String> reverseSortExperimentsPerSize(ExperimentType... experimentTypes) {
-        TreeMultimap<Long, String> fileSizeToExperimentsMap = TreeMultimap.create(Collections.reverseOrder(), Ordering.natural());
+        TreeMultimap<Long, String> fileSizeToExperimentsMap =
+                TreeMultimap.create(Collections.reverseOrder(), Ordering.natural());
 
         for (ExperimentType experimentType : experimentTypes) {
             for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                fileSizeToExperimentsMap.put(estimateSizeOfExperiment(experimentAccession, experimentType), experimentAccession);
+                fileSizeToExperimentsMap.put(
+                        estimateSizeOfExperiment(experimentAccession, experimentType), experimentAccession);
             }
 
         }
@@ -79,7 +83,8 @@ public class ExperimentSorter {
     }
 
     private long estimateSizeOfRnaSeqBaselineExperiment(String experimentAccession) {
-        DataFileHub.RnaSeqBaselineExperimentFiles files = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
+        DataFileHub.RnaSeqBaselineExperimentFiles files =
+                dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
         return files.dataFile(files.dataFiles().iterator().next()).size();
     }
 

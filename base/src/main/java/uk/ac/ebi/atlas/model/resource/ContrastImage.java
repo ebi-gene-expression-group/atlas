@@ -7,8 +7,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 
 public class ContrastImage extends ExternalImage {
-
-    public static Collection<ResourceType> RESOURCE_TYPES = ImmutableList.of(
+    public static final Collection<ResourceType> RESOURCE_TYPES = ImmutableList.of(
             ResourceType.PLOT_GSEA_GO,
             ResourceType.PLOT_GSEA_INTERPRO,
             ResourceType.PLOT_GSEA_REACTOME,
@@ -18,7 +17,7 @@ public class ContrastImage extends ExternalImage {
                          String fileSystemTemplate,
                          String externalLinkTemplate,
                          String experimentAccession,
-                         String contrast){
+                         String contrast) {
         super(type,
               Paths.get(MessageFormat.format(fileSystemTemplate, experimentAccession, contrast)),
               MessageFormat.format(externalLinkTemplate, experimentAccession, contrast));
@@ -29,9 +28,9 @@ public class ContrastImage extends ExternalImage {
                          String externalLinkTemplate,
                          String experimentAccession,
                          String arrayDesign,
-                         String contrast){
+                         String contrast) {
         super(type,
-              Paths.get(MessageFormat.format(fileSystemTemplate,experimentAccession,arrayDesign,contrast)),
-              MessageFormat.format(externalLinkTemplate, experimentAccession,arrayDesign, contrast));
+              Paths.get(MessageFormat.format(fileSystemTemplate, experimentAccession, arrayDesign, contrast)),
+              MessageFormat.format(externalLinkTemplate, experimentAccession, arrayDesign, contrast));
     }
 }

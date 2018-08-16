@@ -59,7 +59,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         subject = new RnaSeqBaselineProfileStreamFactory.Impl(dataFileHub);
     }
 
-    private void setExpressionValuesTpmAndFpkm(Double tpm, Double fpkm){
+    private void setExpressionValuesTpmAndFpkm(Double tpm, Double fpkm) {
         dataFileHub.addTpmsExpressionFile(baselineExperiment.getAccession(), ImmutableList.of(
                 new String[]{"Gene ID", "Gene name", "g1"},
                 new String[]{"id_1", "name_1", tpm.toString()}
@@ -95,7 +95,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
                 new String[]{"id_3", "name_3", "3.0"}
         ));
 
-        Function<Collection<String>,List<BaselineProfile>> testWithGeneIds =
+        Function<Collection<String>, List<BaselineProfile>> testWithGeneIds =
                 geneIdsToKeep ->
                         ImmutableList.copyOf(new IterableObjectInputStream<>(
                                 subject.create(
@@ -113,7 +113,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         // I can’t think how we can arrive at an empty collection present collection from the code, but if
         // that’s the case revert the commit above
         // assertThat(testWithGeneIds.apply(ImmutableList.of()).size(), is(0));
-        assertThat(testWithGeneIds.apply(ImmutableList.of("id_1", "id_2","id_3")), is(testWithGeneIds.apply(Collections.emptySet())));
+        assertThat(testWithGeneIds.apply(ImmutableList.of("id_1", "id_2", "id_3")), is(testWithGeneIds.apply(Collections.emptySet())));
         assertThat(testWithGeneIds.apply(ImmutableList.of("id_1")).size(), is(1));
         assertThat(testWithGeneIds.apply(ImmutableList.of("id_1", "other_id")), is(testWithGeneIds.apply(ImmutableList.of("id_1"))));
 
@@ -171,7 +171,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         assertThat(
                 subject.howToReadLine(twoAssayGroupBaselineExperiment, x -> true)
                         .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()})
-                        .apply(new String[]{"id", "name", "0.1,0.2,0.3,0.4,0.5", "2.0"}).getExpression(assayGroup).toJson().get("quartiles").getAsJsonObject().size(),
+                        .apply(new String[]{"id", "name", "0.1, 0.2, 0.3, 0.4, 0.5", "2.0"}).getExpression(assayGroup).toJson().get("quartiles").getAsJsonObject().size(),
                 is(5));
     }
 

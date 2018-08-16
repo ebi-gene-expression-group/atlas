@@ -12,53 +12,53 @@ import static org.junit.Assert.assertEquals;
 public class OpTest {
 
     @Test
-    public void namesParsedAllRight(){
-        testNames(Op.COEXPRESSION_DELETE,Op.COEXPRESSION_IMPORT,Op.LIST);
+    public void namesParsedAllRight() {
+        testNames(Op.COEXPRESSION_DELETE, Op.COEXPRESSION_IMPORT, Op.LIST);
         testNames(Op.LIST);
     }
 
-    private void testNames(Op ... ops){
+    private void testNames(Op ... ops) {
         List<String> l = new ArrayList<>();
-        for(Op op: ops){
+        for (Op op: ops) {
             l.add(op.name());
         }
         assertEquals(Arrays.asList(ops), Op.opsForParameter(StringUtils.join(l, ',')));
     }
 
     @Test
-    public void synonymsWork(){
+    public void synonymsWork() {
         assertEquals(
                 Op.opsForParameter("DOUBLE_CHECK"),
-                Op.opsForParameter("CACHE_REMOVE,CHECK,CACHE_READ"));
+                Op.opsForParameter("CACHE_REMOVE, CHECK, CACHE_READ"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void wrongNameThrows1(){
+    public void wrongNameThrows1() {
         Op.opsForParameter("");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void wrongNameThrows2(){
+    public void wrongNameThrows2() {
         Op.opsForParameter("WRONG");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void wrongNameThrows3(){
-        Op.opsForParameter("LIST,WRONG");
+    public void wrongNameThrows3() {
+        Op.opsForParameter("LIST, WRONG");
     }
 
     @Test
-    public void caseDoesNotMatter(){
-        assertEquals(Op.opsForParameter("LIST,LOG"),Op.opsForParameter("list,Log"));
-        assertEquals(Op.opsForParameter("LIST,LOG"),Op.opsForParameter("LIST,loG"));
+    public void caseDoesNotMatter() {
+        assertEquals(Op.opsForParameter("LIST, LOG"), Op.opsForParameter("list, Log"));
+        assertEquals(Op.opsForParameter("LIST, LOG"), Op.opsForParameter("LIST, loG"));
     }
 
     @Test
-    public void synonymAsPartOfClauseWorks(){
+    public void synonymAsPartOfClauseWorks() {
         List<Op> a = new ArrayList<>();
         a.addAll(Op.opsForParameter("LOG"));
         a.addAll(Op.opsForParameter("LIST"));
-        assertEquals(a,Op.opsForParameter("LOG,LIST"));
+        assertEquals(a, Op.opsForParameter("LOG, LIST"));
     }
 
 }

@@ -23,8 +23,8 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
 
     private LinkedHashSet<ImmutableList<String>> buildAssayGroupsDetails(BaselineExperiment experiment) {
 
-        for(AssayGroup assayGroupById : experiment.getDataColumnDescriptors()) {
-            for(String assayAccession : assayGroupById.assaysAnalyzedForThisDataColumn()) {
+        for (AssayGroup assayGroupById : experiment.getDataColumnDescriptors()) {
+            for (String assayAccession : assayGroupById.assaysAnalyzedForThisDataColumn()) {
                 this.populateSamples(experiment, assayAccession, assayGroupById);
                 this.populateFactors(experiment, assayAccession, assayGroupById);
             }
@@ -33,7 +33,7 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
         return result;
     }
 
-    private void populateSamples(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
+    private void populateSamples(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup) {
         for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "characteristic",
                     sample.header(), sample.value(), joinURIs(sample.valueOntologyTerms()));
@@ -41,7 +41,7 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
         }
     }
 
-    private void populateFactors(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
+    private void populateFactors(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup) {
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "factor",
                     factor.getHeader(), factor.getValue(), joinURIs(factor.getValueOntologyTerms()));

@@ -36,7 +36,7 @@ public class GenePageControllerIT {
         bioentityProperties("Zm00001d001841", 0, false);
     }
 
-    private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms){
+    private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms) {
         Model model = new BindingAwareModelMap();
         subject.showGenePage(bioentityIdentifier, model);
 
@@ -45,9 +45,9 @@ public class GenePageControllerIT {
         assertTrue(bioentityIdentifier+" should have properties" , bioentityProperties.size()>=expectedMinimalSize);
 
         Map<String, Integer> gotermsAndTheirRelevance = new HashMap<>();
-        for(JsonElement e: bioentityProperties){
-            if(e.getAsJsonObject().get("type").getAsString().equals("go")){
-                for(JsonElement v: e.getAsJsonObject().get("values").getAsJsonArray()){
+        for (JsonElement e: bioentityProperties) {
+            if (e.getAsJsonObject().get("type").getAsString().equals("go")) {
+                for (JsonElement v: e.getAsJsonObject().get("values").getAsJsonArray()) {
                     gotermsAndTheirRelevance.put(
                             v.getAsJsonObject().get("text").getAsString(),
                             v.getAsJsonObject().get("relevance").getAsInt()
@@ -55,12 +55,12 @@ public class GenePageControllerIT {
                 }
             }
         }
-        if(expectGoTerms){
+        if (expectGoTerms) {
             assertThat(gotermsAndTheirRelevance.size(), Matchers.greaterThan(0));
 
-            if(gotermsAndTheirRelevance.size()> 10){
+            if (gotermsAndTheirRelevance.size()> 10) {
                 // not all the same relevance
-                assertThat(new HashSet<>(gotermsAndTheirRelevance.values()).size(),Matchers.greaterThan(1) );
+                assertThat(new HashSet<>(gotermsAndTheirRelevance.values()).size(), Matchers.greaterThan(1) );
             }
         }
 

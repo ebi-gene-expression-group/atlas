@@ -62,7 +62,7 @@ public class GeneSearchDao {
                 namedParameters,
                 (ResultSet resultSet) -> {
                     Map<String, List<String>> result = new HashMap<>();
-                    while(resultSet.next()) {
+                    while (resultSet.next()) {
                         String experimentAccession = resultSet.getString("experiment_accession");
                         String cellId = resultSet.getString("cell_id");
 

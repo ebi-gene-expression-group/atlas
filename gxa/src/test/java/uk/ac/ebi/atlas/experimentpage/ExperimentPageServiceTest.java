@@ -25,7 +25,7 @@ public class ExperimentPageServiceTest {
     ExperimentPageRequestPreferences preferences;
     ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
     @Before
-    public void setUp(){
+    public void setUp() {
         experiment = mock(Experiment.class);
         when(experiment.getAccession()).thenReturn("E-MOCK-1");
         when(experiment.getType()).thenReturn(experimentType);
@@ -40,7 +40,7 @@ public class ExperimentPageServiceTest {
 
         assertThat(result.getPath(), is("json/experiments/E-MOCK-1/genes/ENSG0000012345"));
         assertThat(result.getQuery(), containsString("cutoff=1.234"));
-        assertThat(result.getQuery(), containsString("selectedColumnIds=g1,g2"));
+        assertThat(result.getQuery(), containsString("selectedColumnIds=g1, g2"));
         assertThat(result.getQuery(), containsString("type="+ExperimentType.RNASEQ_MRNA_BASELINE.name()));
     }
 

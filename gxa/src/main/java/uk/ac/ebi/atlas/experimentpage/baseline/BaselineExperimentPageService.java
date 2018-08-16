@@ -87,7 +87,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     private JsonArray constructColumnHeaders(BaselineRequestContext<?> requestContext, BaselineExperiment experiment) {
         JsonArray result = new JsonArray();
 
-        for(AssayGroup dataColumnDescriptor : requestContext.getDataColumnsToReturn()) {
+        for (AssayGroup dataColumnDescriptor : requestContext.getDataColumnsToReturn()) {
             JsonObject o = new JsonObject();
             o.addProperty("assayGroupId", dataColumnDescriptor.getId());
             o.addProperty("factorValue", requestContext.displayNameForColumn(dataColumnDescriptor));

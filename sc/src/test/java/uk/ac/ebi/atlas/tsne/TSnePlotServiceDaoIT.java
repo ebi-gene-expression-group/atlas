@@ -74,7 +74,7 @@ class TSnePlotServiceDaoIT {
                 .doesNotHaveDuplicates();
     }
 
-    private final static String SELECT_CELL_IDS_STATEMENT =
+    private static final String SELECT_CELL_IDS_STATEMENT =
             "SELECT DISTINCT(cell_id) FROM scxa_analytics WHERE experiment_accession=?";
     private List<String> fetchCellIds(String experiment_accession) {
         return jdbcTemplate.queryForList(SELECT_CELL_IDS_STATEMENT, String.class, experiment_accession);

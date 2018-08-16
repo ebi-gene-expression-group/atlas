@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ExperimentDataPoint {
-    public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
+    public static final ImmutableList<BioentityPropertyName> BIOENTITY_PROPERTY_NAMES = ImmutableList.of(
         BioentityPropertyName.ENSGENE,
         BioentityPropertyName.GENE_BIOTYPE,
         BioentityPropertyName.HGNC_SYMBOL,
@@ -49,11 +49,11 @@ public abstract class ExperimentDataPoint {
         propertyMap.put("conditions_search", conditionSearch);
     }
 
-    public Map<String, Object> getProperties(){
+    public Map<String, Object> getProperties() {
         return propertyMap;
     }
 
     public ImmutableList<BioentityPropertyName> getRelevantBioentityPropertyNames() {
-        return bioentityPropertyNames;
+        return BIOENTITY_PROPERTY_NAMES;
     }
 }

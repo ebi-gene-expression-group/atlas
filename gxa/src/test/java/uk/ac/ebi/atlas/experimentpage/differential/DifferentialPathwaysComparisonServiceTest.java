@@ -106,7 +106,7 @@ public class DifferentialPathwaysComparisonServiceTest {
 
         when(mockDifferentialExperiment.getAccession()).thenReturn(accession);
         when(mockConfigurationTrader.getMicroarrayExperimentConfiguration(accession)).thenReturn(mockMicroarrayExperimentConfiguration);
-        when(mockConfigurationTrader.getMicroarrayExperimentConfiguration(accession).getContrasts()).thenReturn(Lists.newArrayList(c1,c2));
+        when(mockConfigurationTrader.getMicroarrayExperimentConfiguration(accession).getContrasts()).thenReturn(Lists.newArrayList(c1, c2));
 
         setUpDataForTest();
     }
@@ -252,7 +252,7 @@ public class DifferentialPathwaysComparisonServiceTest {
 
 
         when(mockDifferentialRequestContextFactory.create(mockDifferentialExperiment, mockDifferentialRequestPreferences)).thenReturn(mockRequestContext);
-        when(mockDifferentialProfilesHeatMap.fetch(mockRequestContext)).thenReturn(profile1,profile4,profile2,profile5,profile6,profile3,
-                profile9,profile7,profile8,profile10);
+        when(mockDifferentialProfilesHeatMap.fetch(mockRequestContext)).thenReturn(profile1, profile4, profile2, profile5, profile6, profile3,
+                profile9, profile7, profile8, profile10);
     }
 }

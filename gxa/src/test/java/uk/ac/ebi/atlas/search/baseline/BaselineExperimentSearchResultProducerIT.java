@@ -30,20 +30,20 @@ public class BaselineExperimentSearchResultProducerIT {
     ExperimentTrader experimentTrader;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         subject = new BaselineExperimentSearchResultProducer(experimentTrader);
     }
 
 
     @Test
-    public void weHaveTwoColumnsCorrespondingToAdultAndFetus(){
+    public void weHaveTwoColumnsCorrespondingToAdultAndFetus() {
         BaselineExperiment E_PROT_1 = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
 
 
         Map<String, Map<String, Double>> expressionsPerColumnPerExperiment = new HashMap<>();
 
         Map<String, Double> fakeResults = new HashMap<>();
-        for(AssayGroup assayGroup: E_PROT_1.getDataColumnDescriptors()) {
+        for (AssayGroup assayGroup: E_PROT_1.getDataColumnDescriptors()) {
             fakeResults.put(assayGroup.getId(), Math.random()* 10000);
         }
         expressionsPerColumnPerExperiment.put(E_PROT_1.getAccession(), fakeResults);

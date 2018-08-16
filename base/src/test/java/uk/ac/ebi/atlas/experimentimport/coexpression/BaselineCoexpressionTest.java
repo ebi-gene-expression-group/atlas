@@ -1,15 +1,14 @@
 package uk.ac.ebi.atlas.experimentimport.coexpression;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BaselineCoexpressionTest {
-
+class BaselineCoexpressionTest {
     @Test
-    public void testCompareTo() throws Exception {
+    void testCompareTo() {
         assertTrue(
-            BaselineCoexpression.create( 0.01, "GENE 2")
-            .compareTo(BaselineCoexpression.create(0.1, "GENE 2")) < 0);
+                BaselineCoexpression.create(0.01, "GENE 2")
+                        .compareTo(BaselineCoexpression.create(0.1, "GENE 2")) < 0);
     }
 }

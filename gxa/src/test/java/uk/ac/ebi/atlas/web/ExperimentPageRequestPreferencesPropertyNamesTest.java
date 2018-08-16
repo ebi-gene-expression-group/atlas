@@ -47,11 +47,11 @@ public class ExperimentPageRequestPreferencesPropertyNamesTest {
                     }
                 }).toSet();
 
-        for(String requiredProperty: baselinePageProperties){
+        for (String requiredProperty: baselinePageProperties) {
             assertThat(baselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
-        for(String requiredProperty: BeanUtils.describe(new RnaSeqBaselineRequestPreferences()).keySet()){
-            if(! requiredProperty.contains("default")){
+        for (String requiredProperty: BeanUtils.describe(new RnaSeqBaselineRequestPreferences()).keySet()) {
+            if (! requiredProperty.contains("default")) {
                 assertThat(baselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
             }
         }
@@ -66,10 +66,10 @@ public class ExperimentPageRequestPreferencesPropertyNamesTest {
                     }
                 }).toSet();
 
-        for(String requiredProperty: baselinePageProperties){
+        for (String requiredProperty: baselinePageProperties) {
             assertThat(proteomicsBaselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
-        for(String requiredProperty: BeanUtils.describe(new ProteomicsBaselineRequestPreferences()).keySet()){
+        for (String requiredProperty: BeanUtils.describe(new ProteomicsBaselineRequestPreferences()).keySet()) {
             assertThat(proteomicsBaselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
 
@@ -89,11 +89,11 @@ public class ExperimentPageRequestPreferencesPropertyNamesTest {
                     }
                 }).toSet();
 
-        for(String requiredProperty: differentialPageProperties){
+        for (String requiredProperty: differentialPageProperties) {
             assertThat(differentialRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
 
-        for(String requiredProperty:  BeanUtils.describe(new DifferentialRequestPreferences()).keySet()){
+        for (String requiredProperty:  BeanUtils.describe(new DifferentialRequestPreferences()).keySet()) {
             assertThat(differentialRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
 

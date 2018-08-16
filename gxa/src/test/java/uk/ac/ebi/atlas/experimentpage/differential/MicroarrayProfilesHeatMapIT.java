@@ -55,7 +55,7 @@ public class MicroarrayProfilesHeatMapIT {
     MicroarrayRequestPreferences requestPreferences;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         subject = new DifferentialProfilesHeatMap<>(microarrayProfileStreamFactory, solrQueryService) ;
         requestPreferences = new MicroarrayRequestPreferences();
     }
@@ -76,9 +76,9 @@ public class MicroarrayProfilesHeatMapIT {
     @Test
     public void testSomeExperiments() throws Exception {
         Collection<String> accessions = Lists.newArrayList(experimentTrader.getMicroarrayExperimentAccessions
-                ()).subList(0,10);
+                ()).subList(0, 10);
 
-        for(String accession: accessions){
+        for (String accession: accessions) {
             setUp();
             testExperiment(accession);
         }
@@ -149,9 +149,9 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
 
-    private void assertAbout(DifferentialExperiment experiment, List<MicroarrayProfile> profiles){
+    private void assertAbout(DifferentialExperiment experiment, List<MicroarrayProfile> profiles) {
 
-        for(MicroarrayProfile profile: profiles){
+        for (MicroarrayProfile profile: profiles) {
             assertThat(profile.getSpecificity(experiment.getDataColumnDescriptors()) > 0, is(true));
             assertThat(profile.getId().isEmpty(), is(false));
             assertThat(profile.getName().isEmpty(), is(false));

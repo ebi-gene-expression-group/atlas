@@ -38,18 +38,18 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
         this.experimentAttributesService = experimentAttributesService;
     }
 
-    private Stream<ExperimentDTO> allDtos(){
+    private Stream<ExperimentDTO> allDtos() {
         return experimentCrud.findAllExperiments().stream()
                 .filter(experimentDTO -> experimentDTO.getExperimentType().isSingleCell());
     }
 
     @Override
-    public List<String> findAllExperiments(){
+    public List<String> findAllExperiments() {
         return allDtos().map(ExperimentDTO::getExperimentAccession).collect(toList());
     }
 
     @Override
-    public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op){
+    public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op) {
         switch (op) {
             case LIST:
                 return Optional.of(experimentCrud.findExperiment(accession).toJson());
@@ -66,7 +66,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     }
 
     @Override
-    public Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops){
+    public Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops) {
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
         } else {
@@ -75,7 +75,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     }
 
     @Override
-    public Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Op op){
+    public Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Op op) {
         if (op.equals(Op.LIST)) {
             return Optional.of(list());
         } else {
@@ -83,7 +83,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
         }
     }
 
-    private List<Pair<String,? extends JsonElement>> list(){
+    private List<Pair<String, ? extends JsonElement>> list() {
         return allDtos()
                 .map((Function<ExperimentDTO, Pair<String, ? extends JsonElement>>) experimentDTO ->
                         Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson())).collect(toList());

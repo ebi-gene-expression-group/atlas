@@ -10,33 +10,33 @@ import static org.junit.Assert.assertThat;
 // This class extends GeneSetUtil to implicitly call the helper class default constructor, so coverage is 100%
 // Semantically it explicitly states that the tested class is not final, which might or not be what you want...
 public class GeneSetUtilTest extends GeneSetUtil {
-    private final SemanticQuery GENE_QUERY_WITH_REACTOME_CATEGORY =
+    private static final SemanticQuery GENE_QUERY_WITH_REACTOME_CATEGORY =
             SemanticQuery.create(SemanticQueryTerm.create("foo", "pathwayid"));
-    private final SemanticQuery GENE_QUERY_WITH_INTERPRO_CATEGORY =
+    private static final SemanticQuery GENE_QUERY_WITH_INTERPRO_CATEGORY =
             SemanticQuery.create(SemanticQueryTerm.create("foo", "interpro"));
-    private final SemanticQuery GENE_QUERY_WITH_GO_CATEGORY =
+    private static final SemanticQuery GENE_QUERY_WITH_GO_CATEGORY =
             SemanticQuery.create(SemanticQueryTerm.create("foo", "go"));
-    private final SemanticQuery GENE_QUERY_WITH_PO_CATEGORY =
+    private static final SemanticQuery GENE_QUERY_WITH_PO_CATEGORY =
             SemanticQuery.create(SemanticQueryTerm.create("foo", "po"));
 
-    private final SemanticQuery GENE_QUERY_WITH_REACTOME_VALUE =
+    private static final SemanticQuery GENE_QUERY_WITH_REACTOME_VALUE =
             SemanticQuery.create(SemanticQueryTerm.create("R-HSA-123"));
-    private final SemanticQuery GENE_QUERY_WITH_INTERPRO_VALUE =
+    private static final SemanticQuery GENE_QUERY_WITH_INTERPRO_VALUE =
             SemanticQuery.create(SemanticQueryTerm.create("IPR123"));
-    private final SemanticQuery GENE_QUERY_WITH_GO_VALUE =
+    private static final SemanticQuery GENE_QUERY_WITH_GO_VALUE =
             SemanticQuery.create(SemanticQueryTerm.create("GO:123"));
-    private final SemanticQuery GENE_QUERY_WITH_PO_VALUE =
+    private static final SemanticQuery GENE_QUERY_WITH_PO_VALUE =
             SemanticQuery.create(SemanticQueryTerm.create("PO:123"));
-    private final SemanticQuery GENE_QUERY_WITH_PLANT_REACTOME_VALUE =
+    private static final SemanticQuery GENE_QUERY_WITH_PLANT_REACTOME_VALUE =
             SemanticQuery.create(SemanticQueryTerm.create("123456"));
 
-    private final SemanticQuery GENE_QUERY_WITH_GENE_SET_CATEGORIES =
+    private static final SemanticQuery GENE_QUERY_WITH_GENE_SET_CATEGORIES =
             SemanticQuery.create(
                     SemanticQueryTerm.create("foo", "pathwayid"),
                     SemanticQueryTerm.create("foo", "interpro"),
                     SemanticQueryTerm.create("foo", "go"),
                     SemanticQueryTerm.create("foo", "po"));
-    private final SemanticQuery GENE_QUERY_WITH_GENE_SET_VALUES =
+    private static final SemanticQuery GENE_QUERY_WITH_GENE_SET_VALUES =
             SemanticQuery.create(
                     SemanticQueryTerm.create("R-HSA-123"),
                     SemanticQueryTerm.create("IPR123"),
@@ -44,10 +44,10 @@ public class GeneSetUtilTest extends GeneSetUtil {
                     SemanticQueryTerm.create("PO:123"),
                     SemanticQueryTerm.create("123456"));
 
-    private final SemanticQuery GENERIC_GENE_QUERY = SemanticQuery.create("zinc finger");
-    private final SemanticQuery TRICKY_GENE_QUERY =
+    private static final SemanticQuery GENERIC_GENE_QUERY = SemanticQuery.create("zinc finger");
+    private static final SemanticQuery TRICKY_GENE_QUERY =
             SemanticQuery.create(SemanticQueryTerm.create("IPR9000", "symbol"));
-    private final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
+    private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 
     @Test
     public void testIsGeneSet() {
@@ -70,7 +70,7 @@ public class GeneSetUtilTest extends GeneSetUtil {
 
     @Test
     public void emptyQuery() {
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENERIC_GENE_QUERY), is (false));
+        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENERIC_GENE_QUERY), is(false));
         assertThat(matchesGeneSetCategoryOrGeneSetValue(TRICKY_GENE_QUERY), is(false));
         assertThat(matchesGeneSetCategoryOrGeneSetValue(EMPTY_QUERY), is(false));
     }

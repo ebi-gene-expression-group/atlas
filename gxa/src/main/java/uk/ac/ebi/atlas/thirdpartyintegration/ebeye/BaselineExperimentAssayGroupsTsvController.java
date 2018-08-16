@@ -52,7 +52,7 @@ public class BaselineExperimentAssayGroupsTsvController {
                 baselineExperimentAssayGroupsLines = new BaselineExperimentAssayGroupsLines(
                         (BaselineExperiment) experiment);
                 extractLinesToTSVFormat(baselineExperimentAssayGroupsLines, writer);
-            } catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 LOGGER.error(MessageFormat.format("Failed when loading {0}, error: {1}", experiment.getAccession(), e));
                 writer.write("Error while attempting to write "+experiment.getAccession()+", file incomplete!!!");
                 break;

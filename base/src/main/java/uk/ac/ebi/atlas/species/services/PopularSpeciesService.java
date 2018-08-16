@@ -15,7 +15,7 @@ public class PopularSpeciesService {
         @Override
         protected List<PopularSpeciesInfo> create() throws Exception {
             return popularSpeciesDao.popularSpecies().stream()
-                    .sorted(PopularSpeciesInfo.ReverseComparator)
+                    .sorted(PopularSpeciesInfo.BY_SIZE_DESCENDING)
                     .collect(Collectors.toList());
         }
     };

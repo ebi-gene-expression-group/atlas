@@ -14,11 +14,8 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkState;
 
 public class AssayGroupSummaryBuilder {
-
     private ExperimentDesign experimentDesign;
-
     private AssayGroup assayGroup;
-
     private Set<AssayProperty> properties = new HashSet<>();
 
     public AssayGroupSummaryBuilder withExperimentDesign(ExperimentDesign experimentDesign) {
@@ -34,7 +31,6 @@ public class AssayGroupSummaryBuilder {
     public AssayGroupSummary build() {
         checkState(assayGroup != null && experimentDesign != null);
 
-
         Multimap<String, String> allFactorValues = HashMultimap.create();
         Multimap<String, String> allSampleValues = HashMultimap.create();
         for (String assay : assayGroup.assaysAnalyzedForThisDataColumn()) {
@@ -46,10 +42,9 @@ public class AssayGroupSummaryBuilder {
         addAssayProperties(allSampleValues, ContrastPropertyType.SAMPLE);
 
         return new AssayGroupSummary(assayGroup.getReplicates(), Sets.newTreeSet(properties));
-
     }
 
-    protected void addAssayProperties( Multimap<String, String> allValues, ContrastPropertyType contrastPropertyType) {
+    private void addAssayProperties(Multimap<String, String> allValues, ContrastPropertyType contrastPropertyType) {
         for (String name : allValues.keySet()) {
 
             AssayProperty property = new AssayProperty(name,
@@ -60,11 +55,10 @@ public class AssayGroupSummaryBuilder {
         }
     }
 
-    protected void extractAllValues(Map<String, String> samples, Multimap<String, String> allValues) {
+    private void extractAllValues(Map<String, String> samples, Multimap<String, String> allValues) {
         for (String name : samples.keySet()) {
             allValues.put(name, samples.get(name));
         }
-
     }
 }
 

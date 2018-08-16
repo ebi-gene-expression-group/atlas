@@ -68,7 +68,7 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
         response.setContentType("application/zip");
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
-        for(Path path : paths) {
+        for (Path path : paths) {
             File file = path.toFile();
 
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));

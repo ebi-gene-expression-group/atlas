@@ -49,7 +49,7 @@ public class AnalysisMethodsPageControllerIT {
     @Test
     public void testExtractProteomicsAnalysisMethods() throws IOException {
         //given
-//        subject.proteomicsAnalysisMethods(EXPERIMENT_ACCESSION,"", model, requestMock);
+//        subject.proteomicsAnalysisMethods(EXPERIMENT_ACCESSION, "", model, requestMock);
 //
 //        TsvReader tsvReader = fileTsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate).withExperimentAccession(EXPERIMENT_ACCESSION).build();
 //        List<String[]> result = tsvReader.readAll();

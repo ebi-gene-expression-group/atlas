@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.solr.EmbeddedSolrCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
@@ -64,7 +63,7 @@ public class AnalyticsCollectionProxyIT {
                     ImmutableSet.of("disease", "histology"),
                     Regulation.DOWN,
                     8,
-                    ImmutableSet.of("79094_at", "62111_at", "A_33_P3354713", "Hs.268231.0.S2_3p_at","3251920"),
+                    ImmutableSet.of("79094_at", "62111_at", "A_33_P3354713", "Hs.268231.0.S2_3p_at", "3251920"),
                     ImmutableSet.of("ENSG00000196968"),
                     ImmutableSet.of("FUT11"),
                     ImmutableSet.of("protein_coding"),
@@ -74,7 +73,8 @@ public class AnalyticsCollectionProxyIT {
                     ImmutableSet.of("R-HSA-400253", "R-HSA-110314", "R-HSA-110313", "R-HSA-110312"),
                     ImmutableSet.of("F5GYU3", "Q5PY61", "Q96C32", "F5H6Q2", "F5GXK7"),
                     "fucosyltransferase 11",
-                    "vasectomy adult male Homo sapiens testis ejaculatory azoospermia premortem idiopathi   c infertility");
+                    "vasectomy adult male Homo sapiens testis ejaculatory azoospermia premortem idiopathi   " +
+                            "c infertility");
 
     @Inject
     private EmbeddedSolrCollectionProxyFactory embeddedSolrCollectionProxyFactory;

@@ -70,7 +70,7 @@ public class BaselineAnalyticsSearchDao {
     public Map<String, Map<String, Double>> fetchExpressionLevels(SemanticQuery geneQuery,
                                                                   SemanticQuery conditionQuery,
                                                                   String species,
-                                                                  String defaultQueryFactorType){
+                                                                  String defaultQueryFactorType) {
         return aggregateExpressionLevelByDataColumnAndExperiment(
                 fetchExpressionLevelsPayload(geneQuery, conditionQuery, species, defaultQueryFactorType));
     }
@@ -93,7 +93,9 @@ public class BaselineAnalyticsSearchDao {
                 double sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
                 long numberOfGenesExpressedInAssayGroup = ((Number) assayGroup.get("count")).longValue();
 
-                double expression = BASELINE_EXPRESSION_ROUNDER.applyAsDouble(sumExpressionLevel / numberOfGenesExpressedInAssayGroup);
+                double expression =
+                        BASELINE_EXPRESSION_ROUNDER.applyAsDouble(
+                                sumExpressionLevel / numberOfGenesExpressedInAssayGroup);
 
                 if (!result.containsKey(experimentAccession)) {
                     result.put(experimentAccession, new HashMap<>());

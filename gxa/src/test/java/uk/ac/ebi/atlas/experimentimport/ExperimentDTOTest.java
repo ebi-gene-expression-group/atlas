@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public class ExperimentDTOTest {
 
-    public static ExperimentDTO mockDTO(String accession, ExperimentType experimentType){
+    public static ExperimentDTO mockDTO(String accession, ExperimentType experimentType) {
         return new ExperimentDTO(accession, experimentType,
-                "Homo sapiens", new HashSet<>(), new HashSet<>(),"title", new Date(), false, UUID.randomUUID().toString());
+                "Homo sapiens", new HashSet<>(), new HashSet<>(), "title", new Date(), false, UUID.randomUUID().toString());
     }
 }

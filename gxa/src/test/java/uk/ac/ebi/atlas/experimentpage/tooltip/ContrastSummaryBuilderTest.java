@@ -38,7 +38,7 @@ public class ContrastSummaryBuilderTest {
     private static final String FACTOR_VALUE4 = "factor value 4";
 
     @Test
-    public void build(){
+    public void build() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
         experimentDesign.putFactor(REF_ASSAY, FACTOR_HEADER, FACTOR_VALUE);
         experimentDesign.putFactor(REF_ASSAY, FACTOR_HEADER2, FACTOR_VALUE2);
@@ -64,9 +64,9 @@ public class ContrastSummaryBuilderTest {
         assertThat(contrastSummaryIterator.hasNext(), is(false));
 
         assertThat(contrastProperty1, is(new ContrastProperty(FACTOR_HEADER, FACTOR_VALUE3, FACTOR_VALUE, ContrastPropertyType.FACTOR)));
-        assertThat(contrastProperty2, is(new ContrastProperty(FACTOR_HEADER2, FACTOR_VALUE4, FACTOR_VALUE2,ContrastPropertyType.FACTOR)));
-        assertThat(contrastProperty3, is(new ContrastProperty("array design", "", "",ContrastPropertyType.SAMPLE)));
-        assertThat(contrastProperty4, is(new ContrastProperty(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_VALUE1,ContrastPropertyType.SAMPLE)));
+        assertThat(contrastProperty2, is(new ContrastProperty(FACTOR_HEADER2, FACTOR_VALUE4, FACTOR_VALUE2, ContrastPropertyType.FACTOR)));
+        assertThat(contrastProperty3, is(new ContrastProperty("array design", "", "", ContrastPropertyType.SAMPLE)));
+        assertThat(contrastProperty4, is(new ContrastProperty(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_VALUE1, ContrastPropertyType.SAMPLE)));
 
     }
 

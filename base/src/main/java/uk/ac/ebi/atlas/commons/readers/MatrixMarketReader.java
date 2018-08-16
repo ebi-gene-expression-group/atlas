@@ -50,7 +50,7 @@ public class MatrixMarketReader implements AutoCloseable {
         }
     }
 
-    static private Triple<Integer, Integer, Double> parseLine(String line) {
+    private static Triple<Integer, Integer, Double> parseLine(String line) {
         String[] splitLine = line.split(" ");
         return Triple.of(
                 Integer.parseInt(splitLine[0]),

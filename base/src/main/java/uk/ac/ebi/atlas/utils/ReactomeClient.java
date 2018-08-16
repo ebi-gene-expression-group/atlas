@@ -24,12 +24,12 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Named
 public class ReactomeClient {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactomeClient.class);
 
     static final String URL = "http://reactome.org/ContentService/data/query/ids";
-    static final String PLANT_URL="http://plantreactome.gramene.org/ContentService/data/query/ids";
     static final int QUERY_MAX_SIZE = 20;  // https://reactome.org/ContentService/#!/query/findByIdsUsingPOST
+
+    private static final String PLANT_URL = "http://plantreactome.gramene.org/ContentService/data/query/ids";
     private static final String STATIC_ID_FIELD = "stId";
     private static final String DISPLAY_NAME_FIELD = "displayName";
 
@@ -54,7 +54,7 @@ public class ReactomeClient {
         for (List<String> partition : getPartitions(stableIds)) {
             mappedStableIdsBuilder.putAll(fetchPathwayNames(partition));
         }
-        return getMappedIds(stableIds,mappedStableIdsBuilder);
+        return getMappedIds(stableIds, mappedStableIdsBuilder);
     }
 
     public ImmutableMap<String, String> getPlantPathwayNames(Collection<String> stableIds) {
@@ -62,14 +62,15 @@ public class ReactomeClient {
         for (List<String> partition : getPartitions(stableIds)) {
             mappedStableIdsBuilder.putAll(fetchPlantPathwayNames(partition));
         }
-        return getMappedIds(stableIds,mappedStableIdsBuilder);
+        return getMappedIds(stableIds, mappedStableIdsBuilder);
     }
 
-    private List<List<String>> getPartitions(Collection<String> stableIds){
+    private List<List<String>> getPartitions(Collection<String> stableIds) {
         return Lists.partition(ImmutableList.copyOf(stableIds), QUERY_MAX_SIZE);
     }
 
-    private ImmutableMap<String, String> getMappedIds(Collection<String> stableIds, ImmutableMap.Builder<String, String> mappedStableIdsBuilder) {
+    private ImmutableMap<String, String> getMappedIds(Collection<String> stableIds,
+                                                      ImmutableMap.Builder<String, String> mappedStableIdsBuilder) {
 
         ImmutableMap<String, String> mappedStableIds = mappedStableIdsBuilder.build();
         logMissingIds(stableIds, mappedStableIds);
@@ -78,11 +79,11 @@ public class ReactomeClient {
 
     private ImmutableMap<String, String> fetchPathwayNames(Collection<String> stableIds) {
 
-        return parseResponse(stableIds,URL);
+        return parseResponse(stableIds, URL);
     }
 
     private ImmutableMap<String, String> fetchPlantPathwayNames(Collection<String> stableIds) {
-        return parseResponse(stableIds,PLANT_URL);
+        return parseResponse(stableIds, PLANT_URL);
     }
 
     private ImmutableMap<String, String> parseResponse(Collection<String> stableIds, String url) {

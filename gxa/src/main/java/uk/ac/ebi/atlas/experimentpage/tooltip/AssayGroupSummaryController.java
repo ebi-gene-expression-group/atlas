@@ -29,7 +29,7 @@ public class AssayGroupSummaryController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/rest/assayGroup-summary",produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/rest/assayGroup-summary", produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTooltipAssayGroupContent(@RequestParam(value = "experimentAccession") String experimentAccession,

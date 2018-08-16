@@ -44,7 +44,7 @@ public class CellMetadataDao {
                 .map(factor -> SingleCellAnalyticsCollectionProxy.factorAsSchemaField(factor.toString()))
                 .collect(Collectors.toList());
 
-        if(queryResult.containsKey(SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE.name())) {
+        if (queryResult.containsKey(SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE.name())) {
             metadataFields.add(SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE);
         }
 

@@ -10,7 +10,11 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -18,7 +22,6 @@ import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfileTest {
-
     private static final String GENE_ID = "geneId_1";
     private static final String GENE_NAME = "geneName_1";
 
@@ -27,18 +30,18 @@ public class BaselineProfileTest {
     private AssayGroup g3 = new AssayGroup("g3", "run31", "run32");
     private AssayGroup g4 = new AssayGroup("g4", "g41");
 
-    private BaselineExpression expression_1 = new BaselineExpression(2.2);
-    private BaselineExpression expression_2 = new BaselineExpression(3D);
-    private BaselineExpression expression_3 = new BaselineExpression(3.001);
+    private BaselineExpression expression1 = new BaselineExpression(2.2);
+    private BaselineExpression expression2 = new BaselineExpression(3D);
+    private BaselineExpression expression3 = new BaselineExpression(3.001);
 
     private BaselineProfile subject;
 
     @Before
     public void setUp() throws Exception {
         subject = new BaselineProfile(GENE_ID, GENE_NAME);
-        subject.add(g1, expression_1);
-        subject.add(g2, expression_2);
-        subject.add(g3, expression_3);
+        subject.add(g1, expression1);
+        subject.add(g2, expression2);
+        subject.add(g3, expression3);
     }
 
     @Test
@@ -82,10 +85,18 @@ public class BaselineProfileTest {
 
         List<AssayGroup> assayGroups = new ArrayList<>();
         while (assayGroups.isEmpty()) {
-            if (RandomUtils.nextBoolean()) assayGroups.add(g1);
-            if (RandomUtils.nextBoolean()) assayGroups.add(g2);
-            if (RandomUtils.nextBoolean()) assayGroups.add(g3);
-            if (RandomUtils.nextBoolean()) assayGroups.add(g4);
+            if (RandomUtils.nextBoolean()) {
+                assayGroups.add(g1);
+            }
+            if (RandomUtils.nextBoolean()) {
+                assayGroups.add(g2);
+            }
+            if (RandomUtils.nextBoolean()) {
+                assayGroups.add(g3);
+            }
+            if (RandomUtils.nextBoolean()) {
+                assayGroups.add(g4);
+            }
         }
         Collections.shuffle(assayGroups);
 
@@ -95,5 +106,4 @@ public class BaselineProfileTest {
                 is(subject.getSpecificity(assayGroups) > 0)
         );
     }
-
 }

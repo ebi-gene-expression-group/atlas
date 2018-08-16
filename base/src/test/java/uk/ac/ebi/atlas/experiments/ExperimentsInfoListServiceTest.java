@@ -39,13 +39,14 @@ public class ExperimentsInfoListServiceTest {
         JsonArray result = subject.getExperimentsJson().get("aaData").getAsJsonArray();
         assertThat(result).hasSize(1);
     }
-    
+
     @Test
     public void formatIsInSyncWithWhatWeExpectAndTheDataOfMockBaselineExperiment() {
         JsonObject result = subject.getExperimentsJson().get("aaData").getAsJsonArray().get(0).getAsJsonObject();
 
         assertThat(result.has("experimentType")).isTrue();
-        assertThat(result.get("experimentType").getAsString()).isEqualToIgnoringCase(ExperimentType.RNASEQ_MRNA_BASELINE.getDescription());
+        assertThat(result.get("experimentType").getAsString())
+                .isEqualToIgnoringCase(ExperimentType.RNASEQ_MRNA_BASELINE.getDescription());
 
         assertThat(result.has("experimentAccession")).isTrue();
         assertThat(result.get("experimentAccession").getAsString()).isEqualToIgnoringCase(EXPERIMENT_ACCESSION);

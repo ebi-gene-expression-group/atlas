@@ -22,7 +22,7 @@ import java.util.HashSet;
 
 /**
  * TODO: this code could be much shorter. Make the DifferentialAnalytics and BaselineAnalytics inherit from
- * Analytics,with has a method getGeneId(), make the analytics input streams inherit from a common parent, and write
+ * Analytics, with has a method getGeneId(), make the analytics input streams inherit from a common parent, and write
  * one method that gets all gene ids for an experiment accession.
  */
 @Named

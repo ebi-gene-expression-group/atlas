@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import org.assertj.core.util.Lists;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -37,9 +35,9 @@ public class ExperimentAttributesServiceTest {
             "alternativeViewDescriptions"
     };
 
-    private static final String[] DIFFERENTIAL_EXPERIMENT_ATTRIBUTES = { "regulationValues", "contrasts" };
+    private static final String[] DIFFERENTIAL_EXPERIMENT_ATTRIBUTES = {"regulationValues", "contrasts"};
 
-    private static final String[] MICROARRAY_EXPERIMENT_ATTRIBUTES = { "arrayDesignAccessions", "arrayDesignNames" };
+    private static final String[] MICROARRAY_EXPERIMENT_ATTRIBUTES = {"arrayDesignAccessions", "arrayDesignNames"};
 
     @Mock
     private EuropePmcClient europePmcClientMock;
@@ -52,7 +50,8 @@ public class ExperimentAttributesServiceTest {
     @Test
     public void getAttributesForBaselineExperimentWithNoPublications() {
         when(europePmcClientMock.getPublicationByIdentifier(anyString())).thenReturn(Optional.empty());
-        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+        when(idfParser.parse(any()))
+                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment("FOOBAR");
         Map<String, Object> result = subject.getAttributes(experiment);
@@ -69,9 +68,12 @@ public class ExperimentAttributesServiceTest {
     public void getAttributesForBaselineExperimentWithPublicationsFromDois() {
         List<String> dois = Arrays.asList("100.100/doi", "999.100/another-doi");
 
-        when(europePmcClientMock.getPublicationByIdentifier("100.100/doi")).thenReturn(Optional.of(new Publication("", "100.100/doi", "Publication 1")));
-        when(europePmcClientMock.getPublicationByIdentifier("999.100/another-doi")).thenReturn(Optional.of(new Publication("", "999.100/another-doi", "Publication 2")));
-        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+        when(europePmcClientMock.getPublicationByIdentifier("100.100/doi"))
+                .thenReturn(Optional.of(new Publication("", "100.100/doi", "Publication 1")));
+        when(europePmcClientMock.getPublicationByIdentifier("999.100/another-doi"))
+                .thenReturn(Optional.of(new Publication("", "999.100/another-doi", "Publication 2")));
+        when(idfParser.parse(any()))
+                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(Lists.emptyList(), dois);
 
@@ -84,9 +86,12 @@ public class ExperimentAttributesServiceTest {
     public void getAttributesForBaselineExperimentWithPublicationsFromPubmedIds() {
         List<String> pubmedIds = Arrays.asList("1123", "1235");
 
-        when(europePmcClientMock.getPublicationByIdentifier("1123")).thenReturn(Optional.of(new Publication("1123", "100.100/doi", "Publication 1")));
-        when(europePmcClientMock.getPublicationByIdentifier("1235")).thenReturn(Optional.of(new Publication("1235", "999.100/another-doi", "Publication 2")));
-        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+        when(europePmcClientMock.getPublicationByIdentifier("1123"))
+                .thenReturn(Optional.of(new Publication("1123", "100.100/doi", "Publication 1")));
+        when(europePmcClientMock.getPublicationByIdentifier("1235"))
+                .thenReturn(Optional.of(new Publication("1235", "999.100/another-doi", "Publication 2")));
+        when(idfParser.parse(any()))
+                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(pubmedIds, Lists.emptyList());
 
@@ -98,7 +103,8 @@ public class ExperimentAttributesServiceTest {
     @Test
     public void getAttributesForDifferentialExperiment() {
         DifferentialExperiment experiment = MockExperiment.createDifferentialExperiment();
-        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+        when(idfParser.parse(any()))
+                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         Map<String, Object> result = subject.getAttributes(experiment);
 
@@ -111,7 +117,8 @@ public class ExperimentAttributesServiceTest {
     @Test
     public void getAttributesForMicroarrayExperiment() {
         MicroarrayExperiment experiment = MockExperiment.createMicroarrayExperiment();
-        when(idfParser.parse(any())).thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+        when(idfParser.parse(any()))
+                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
 
         Map<String, Object> result = subject.getAttributes(experiment);
 

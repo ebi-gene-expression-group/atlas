@@ -22,7 +22,7 @@ public class HealthCheckService {
 
     public boolean isSolrUp() {
         try {
-            return solrCloudAdminProxy.areCollectionsUp(Collections.singletonList("bioentities"),"scxa-analytics");
+            return solrCloudAdminProxy.areCollectionsUp(Collections.singletonList("bioentities"), "scxa-analytics");
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             return false;

@@ -7,16 +7,16 @@ import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import java.util.List;
 import java.util.function.Predicate;
 
-
 public class ProfileStreamFilter {
-
-    private ProfileStreamFilter() {
+    protected ProfileStreamFilter() {
+        throw new UnsupportedOperationException();
     }
 
-    public static <DataColumnDescriptor extends DescribesDataColumns,
-            StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
-            Prof extends Profile<DataColumnDescriptor, ?, Prof>> Predicate<Prof> create(final StreamOptions options) {
-        final List<DataColumnDescriptor> dataColumnsToReturn = options.getDataColumnsToReturn();
+    public static <D extends DescribesDataColumns, O extends ProfileStreamOptions<D>, P extends Profile<D, ?, P>>
+           Predicate<P> create(final O options) {
+
+        final List<D> dataColumnsToReturn = options.getDataColumnsToReturn();
         return prof -> prof.isExpressedAnywhereOn(dataColumnsToReturn);
+
     }
 }

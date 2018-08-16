@@ -104,7 +104,7 @@
 //
 //        searchResultProducer = new BaselineExperimentSearchResultProducer(experimentTrader);
 //
-//        searchService = new BaselineExperimentProfileSearchService(baselineExpressionDao,searchResultProducer);
+//        searchService = new BaselineExperimentProfileSearchService(baselineExpressionDao, searchResultProducer);
 //    }
 //
 //    @Test
@@ -119,8 +119,8 @@
 //    }
 //
 //    @Test
-//    public void testBaselineExperimentProfileSearchServiceWithTheSameScenario(){
-//        Set<String> geneIds = Sets.newHashSet("ENSG00000001337","ANOTHER_FAKE_IDENTIFIER");
+//    public void testBaselineExperimentProfileSearchServiceWithTheSameScenario() {
+//        Set<String> geneIds = Sets.newHashSet("ENSG00000001337", "ANOTHER_FAKE_IDENTIFIER");
 //        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 //
 //        when(baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds)).thenReturn(expressions);
@@ -130,12 +130,12 @@
 //        assertAbout(result);
 //    }
 //
-//    public void assertAbout(BaselineExperimentSearchResult result){
+//    public void assertAbout(BaselineExperimentSearchResult result) {
 //        BaselineExperimentProfilesList profiles = result.experimentProfiles;
 //        List<FactorAcrossExperiments> factors = result.factorsAcrossAllExperiments;
 //
 //        assertThat(factors.size(), is(3));
-//        assertThat(factors, contains(new FactorAcrossExperiments(LUNG), new FactorAcrossExperiments(SPLEEN),new
+//        assertThat(factors, contains(new FactorAcrossExperiments(LUNG), new FactorAcrossExperiments(SPLEEN), new
 //                FactorAcrossExperiments(THYMUS) ));
 //
 //        assertThat(profiles, hasSize(1));

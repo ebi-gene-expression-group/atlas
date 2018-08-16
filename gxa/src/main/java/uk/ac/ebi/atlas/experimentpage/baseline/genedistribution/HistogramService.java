@@ -39,7 +39,7 @@ public class HistogramService<O extends ProfileStreamOptions<?>, T extends Exper
 
 
     public HistogramService(final ProfileStreamFactory<?, ?, T, O, ?> profileStreamFactory,
-                            final ExperimentTrader experimentTrader, final double [] cutoffBins){
+                            final ExperimentTrader experimentTrader, final double [] cutoffBins) {
         this.experimentTrader = experimentTrader;
         this.cache = CacheBuilder.newBuilder().build(new CacheLoader<HistogramCacheKey<O>, HistogramAcrossGenes>() {
             @Override
@@ -54,7 +54,7 @@ public class HistogramService<O extends ProfileStreamOptions<?>, T extends Exper
         });
     }
 
-    protected HistogramAcrossGenes get(String accession, String accessKey, O streamOptions){
+    protected HistogramAcrossGenes get(String accession, String accessKey, O streamOptions) {
         try {
             return cache.get(HistogramCacheKey.create(accession, accessKey, streamOptions));
         } catch (ExecutionException e) {
@@ -76,7 +76,7 @@ public class HistogramService<O extends ProfileStreamOptions<?>, T extends Exper
             super(profileStreamFactory, experimentTrader, cutoffBins);
         }
 
-        public HistogramAcrossGenes get(String accession ,String accessKey, P preferences){
+        public HistogramAcrossGenes get(String accession , String accessKey, P preferences) {
             return get(
                     accession,
                     accessKey,

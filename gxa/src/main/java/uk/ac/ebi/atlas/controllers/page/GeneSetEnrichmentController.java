@@ -69,7 +69,7 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
         // Enriched gene retrieval was successful
         if (!result.getLeft().isPresent()) {
             model.addAttribute("species", StringUtils.capitalizeFirstLetter(species.getReferenceName()));
-            model.addAttribute("queryShort", Joiner.on(" ").join(Arrays.asList(query.split("\\W+")).subList(0,3)));
+            model.addAttribute("queryShort", Joiner.on(" ").join(Arrays.asList(query.split("\\W+")).subList(0, 3)));
             model.addAttribute("query", query);
             model.addAttribute(
                     "data", GSON.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));

@@ -50,7 +50,7 @@ public class DifferentialJsonResultsParserTest {
     @Test
     public void emptyJsonResultArrayProducesEmptyList() throws Exception {
 
-        JsonObject result = buildJsonObject(0,false);
+        JsonObject result = buildJsonObject(0, false);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
         assertThat(expression, hasSize(0));
@@ -59,7 +59,7 @@ public class DifferentialJsonResultsParserTest {
     @Test
     public void numberOfJsonObjectsInResultArrayProducesEqualLengthList() throws Exception {
 
-        JsonObject result = buildJsonObject(3,false);
+        JsonObject result = buildJsonObject(3, false);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
         assertThat(expression, hasSize(3));

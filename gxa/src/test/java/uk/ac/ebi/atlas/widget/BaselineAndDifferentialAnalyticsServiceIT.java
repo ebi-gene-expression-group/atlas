@@ -80,7 +80,7 @@ public class BaselineAndDifferentialAnalyticsServiceIT {
     }
 
     @Test
-    public void differentialAnalyticsSearchServiceHasTheRightReturnFormat(){
+    public void differentialAnalyticsSearchServiceHasTheRightReturnFormat() {
         JsonObject result =
                 differentialAnalyticsSearchService.fetchResults(SemanticQuery.create("GO:0008150"), EMPTY_QUERY);
         testDifferentialResultsAreInRightFormat(result);

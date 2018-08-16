@@ -22,7 +22,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class DifferentialExperiment extends Experiment<Contrast> {
-
     private final Set<Contrast> contrastsWithCttvPrimaryAnnotation;
 
     public DifferentialExperiment(String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts,
@@ -33,22 +32,22 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     }
 
-    private static final Function<Pair<Contrast, Boolean>, Contrast> unpack = Pair::getLeft;
+    private static final Function<Pair<Contrast, Boolean>, Contrast> UNPACK = Pair::getLeft;
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
                                      List<Pair<Contrast, Boolean>> contrasts, String description, Species species,
                                      Collection<String> pubMedIds, Collection<String> dois,
                                      ExperimentDesign experimentDesign) {
 
-        super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
+        super(experimentType, accession, lastUpdate, null, description, "", species, pubMedIds,
                 dois, experimentDesign, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
-                Collections.emptyList(), contrasts.stream().map(unpack).collect(Collectors.toList()),
+                Collections.emptyList(), contrasts.stream().map(UNPACK).collect(Collectors.toList()),
                 ExperimentDisplayDefaults.simpleDefaults());
         this.contrastsWithCttvPrimaryAnnotation =
-                contrasts.stream().filter(Pair::getRight).map(unpack).collect(Collectors.toSet());
+                contrasts.stream().filter(Pair::getRight).map(UNPACK).collect(Collectors.toSet());
     }
 
-    public boolean doesContrastHaveCttvPrimaryAnnotation(Contrast contrast){
+    public boolean doesContrastHaveCttvPrimaryAnnotation(Contrast contrast) {
         return contrastsWithCttvPrimaryAnnotation.contains(contrast);
     }
 
@@ -65,12 +64,12 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         String contrastName = "None";
         String referenceOrTest = "";
 
-        for(Contrast contrast : getDataColumnDescriptors()){
-            if(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)){
+        for (Contrast contrast : getDataColumnDescriptors()) {
+            if (contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)) {
                 contrastName = contrast.getDisplayName();
                 referenceOrTest = "reference";
                 break;
-            } else if(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)) {
+            } else if (contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)) {
                 contrastName = contrast.getDisplayName();
                 referenceOrTest = "test";
                 break;
@@ -87,34 +86,35 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         ExperimentDesign experimentDesign = getExperimentDesign();
         ExperimentDisplayDefaults experimentDisplayDefaults = getDisplayDefaults();
 
-        DataColumnGroup.DataColumnGroupList dataColumnGroupList = new DataColumnGroup.DataColumnGroupList(experimentDisplayDefaults);
+        DataColumnGroup.DataColumnGroupList dataColumnGroupList =
+                new DataColumnGroup.DataColumnGroupList(experimentDisplayDefaults);
 
         //populate the keys in the order we want later
         dataColumnGroupList.addDataColumnGroupIfNotPresent("Comparison Name", true);
-        for(String factorHeader: experimentDesign.getFactorHeaders()){
+        for (String factorHeader: experimentDesign.getFactorHeaders()) {
             dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader, false);
         }
-        for(String sampleHeader: experimentDesign.getSampleHeaders()){
+        for (String sampleHeader: experimentDesign.getSampleHeaders()) {
             dataColumnGroupList.addDataColumnGroupIfNotPresent(sampleHeader, false);
         }
 
         // add the information about which headers go to which categories
-        for(Contrast dataColumnDescriptor: getDataColumnDescriptors()){
-            dataColumnGroupList.addValueToGroupingInGroup("Comparison Name",dataColumnDescriptor.getDisplayName(), dataColumnDescriptor);
+        for (Contrast dataColumnDescriptor: getDataColumnDescriptors()) {
+            dataColumnGroupList.addValueToGroupingInGroup(
+                    "Comparison Name", dataColumnDescriptor.getDisplayName(), dataColumnDescriptor);
 
-
-            for(String assayAnalyzedForThisDataColumn : dataColumnDescriptor.assaysAnalyzedForThisDataColumn()){
-                for(Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)){
-                    dataColumnGroupList.addValueToGroupingInGroup(factor.getHeader(), factor.getValue(), dataColumnDescriptor);
+            for (String assayAnalyzedForThisDataColumn : dataColumnDescriptor.assaysAnalyzedForThisDataColumn()) {
+                for (Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)) {
+                    dataColumnGroupList.addValueToGroupingInGroup(
+                            factor.getHeader(), factor.getValue(), dataColumnDescriptor);
                 }
-                for(SampleCharacteristic sampleCharacteristic
-                        : experimentDesign.getSampleCharacteristics(assayAnalyzedForThisDataColumn)){
-                    dataColumnGroupList.addValueToGroupingInGroup(sampleCharacteristic.header(), sampleCharacteristic.value(), dataColumnDescriptor);
+                for (SampleCharacteristic sampleCharacteristic
+                        : experimentDesign.getSampleCharacteristics(assayAnalyzedForThisDataColumn)) {
+                    dataColumnGroupList.addValueToGroupingInGroup(
+                            sampleCharacteristic.header(), sampleCharacteristic.value(), dataColumnDescriptor);
                 }
             }
         }
         return dataColumnGroupList.asJson();
-
     }
-
 }

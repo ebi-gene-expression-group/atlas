@@ -38,7 +38,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     @Inject
     public ExperimentController(ExperimentTrader experimentTrader,
                                 DataFileHub dataFileHub,
-                                ExperimentAttributesService experimentAttributesService){
+                                ExperimentAttributesService experimentAttributesService) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
         this.experimentAttributesService = experimentAttributesService;
@@ -59,7 +59,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     }
 
     private JsonObject experimentPageContentForExperiment(final Experiment<? extends DescribesDataColumns> experiment,
-                                                          final String accessKey){
+                                                          final String accessKey) {
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
@@ -78,7 +78,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                 availableDataUnits(experiment.getAccession(), experiment.getType()))
         );
 
-        if(experiment.getType().isDifferential()){
+        if (experiment.getType().isDifferential()) {
             availableTabs.add(
                     customContentTab(
                             "resources",
@@ -91,7 +91,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                             ExternallyAvailableContent.ContentType.PLOTS))));
         }
 
-        if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
+        if (dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()) {
             availableTabs.add(
                     experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
                             ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey)));
@@ -117,8 +117,8 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonArray availableDataUnits(String experimentAccession, ExperimentType experimentType){
-        if(!experimentType.isRnaSeqBaseline()){
+    private JsonArray availableDataUnits(String experimentAccession, ExperimentType experimentType) {
+        if (!experimentType.isRnaSeqBaseline()) {
             return new JsonArray();
         }
         else {
@@ -153,7 +153,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                         ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
         );
 
-        if(experiment.getType().isMicroarray() &&
+        if (experiment.getType().isMicroarray() &&
                 dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()) {
             supplementaryInformationTabs.add(
                     customContentTab(
@@ -180,7 +180,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     }
 
 
-    private JsonArray formatTable(List<String []> rows){
+    private JsonArray formatTable(List<String []> rows) {
 
         JsonArray result = new JsonArray();
         for (String[] row : rows) {
@@ -193,9 +193,9 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs){
+    private JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs) {
         JsonArray result = new JsonArray();
-        for(Pair<String, String> p : pairs){
+        for (Pair<String, String> p : pairs) {
             JsonObject o = new JsonObject();
             o.addProperty(leftName, p.getLeft());
             o.addProperty(rightName, p.getRight());
@@ -204,20 +204,20 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonArray twoElementArray(String x, String y){
+    private JsonArray twoElementArray(String x, String y) {
         JsonArray result = new JsonArray();
         result.add(new JsonPrimitive(x));
         result.add(new JsonPrimitive(y));
         return result;
     }
 
-    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
+    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value) {
         JsonObject props =  new JsonObject();
         props.add(onlyPropName, value);
         return customContentTab(tabType, name, props);
     }
 
-    private JsonObject customContentTab(String tabType, String name, JsonObject props){
+    private JsonObject customContentTab(String tabType, String name, JsonObject props) {
         JsonObject result = new JsonObject();
         result.addProperty("type", tabType);
         result.addProperty("name", name);
@@ -225,7 +225,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonObject heatmapTab(JsonArray groups, String geneDistributionUrl, JsonArray availableDataUnits){
+    private JsonObject heatmapTab(JsonArray groups, String geneDistributionUrl, JsonArray availableDataUnits) {
         JsonObject props = new JsonObject();
         props.add("groups", groups);
         props.addProperty("genesDistributedByCutoffUrl", geneDistributionUrl);
@@ -233,7 +233,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return customContentTab("heatmap", "Results", props);
     }
 
-    private JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
+    private JsonObject experimentDesignTab(JsonObject table, String downloadUrl) {
         JsonObject props = new JsonObject();
         props.add("table", table);
         props.addProperty("downloadUrl", downloadUrl);

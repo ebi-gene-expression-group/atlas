@@ -18,7 +18,7 @@ import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.SOLR_MAX_ROWS;
 
 // Correctness of query syntax tested in SolrQueryUtilsTest
 class SolrQueryBuilderTest {
-    private static class DummySchemaField extends SchemaField<CollectionProxy> {
+    private static final class DummySchemaField extends SchemaField<CollectionProxy> {
         private DummySchemaField(String fieldName) {
             super(fieldName);
         }

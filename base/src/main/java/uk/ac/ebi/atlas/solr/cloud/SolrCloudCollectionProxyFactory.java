@@ -19,7 +19,10 @@ public class SolrCloudCollectionProxyFactory {
         try {
             Constructor<C> constructor = type.getConstructor(SolrClient.class);
             return constructor.newInstance(cloudSolrClient);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException |
+                InstantiationException |
+                IllegalAccessException |
+                InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

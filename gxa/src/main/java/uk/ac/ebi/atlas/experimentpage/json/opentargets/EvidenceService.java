@@ -59,7 +59,7 @@ public class EvidenceService<
     }
 
     public void evidenceForExperiment(E experiment, Function<Contrast, StreamOptions> queryForOneContrast, Consumer<JsonObject> yield) {
-        if(shouldSkip(experiment)){
+        if (shouldSkip(experiment)) {
             return;
         }
 
@@ -72,8 +72,8 @@ public class EvidenceService<
 
         Map<String, Map<Contrast, Integer>> rankPerContrastPerGene = getPercentileRanks(experiment);
 
-        for(Contrast contrast : diseaseAssociations.keySet()) {
-            for(Prof profile :
+        for (Contrast contrast : diseaseAssociations.keySet()) {
+            for (Prof profile :
                     differentialProfileStreamFactory.select(
                             experiment, queryForOneContrast.apply(contrast), Collections.emptySet(),
                             p -> p.getExpression(contrast) != null,
@@ -104,7 +104,7 @@ public class EvidenceService<
 
     }
 
-    private boolean shouldSkip(E experiment){
+    private boolean shouldSkip(E experiment) {
         return ! experiment.getSpecies().isUs()
                 || experiment.getType().isMicroRna()
                 || cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign());
@@ -235,7 +235,7 @@ public class EvidenceService<
         return result;
     }
 
-    private String organismPartProperty(SampleCharacteristic organismPart){
+    private String organismPartProperty(SampleCharacteristic organismPart) {
         return organismPart.valueOntologyTerms().stream().findFirst().map(OntologyTerm::uri).orElse(organismPart.value());
     }
 
@@ -345,8 +345,7 @@ public class EvidenceService<
     private String activity(boolean isCttvPrimary, Expr expression) {
         return MessageFormat.format(
                 "http://identifiers.org/cttv.activity/{0}",
-                isCttvPrimary
-                        ? expression.getFoldChange() > 0
+                isCttvPrimary ? expression.getFoldChange() > 0
                         ? "increased_transcript_level"
                         : "decreased_transcript_level"
                         : "unknown"
@@ -408,7 +407,7 @@ public class EvidenceService<
 
         public abstract SampleCharacteristic organismPart();
 
-        public static Optional<DiseaseAssociation> tryCreate(DifferentialExperiment experiment, Contrast contrast){
+        public static Optional<DiseaseAssociation> tryCreate(DifferentialExperiment experiment, Contrast contrast) {
             Optional<SampleCharacteristic> biosampleInfo = getBiosampleInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
             Optional<SampleCharacteristic> diseaseInfo = getDiseaseInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
 
@@ -425,7 +424,7 @@ public class EvidenceService<
 
 
         public static DiseaseAssociation create(SampleCharacteristic biosampleInfo, ExperimentDesign experimentDesign, Contrast contrast,
-                                                boolean isCttvPrimary, SampleCharacteristic diseaseInfo){
+                                                boolean isCttvPrimary, SampleCharacteristic diseaseInfo) {
             String referenceSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getReferenceAssayGroup());
             String testSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getTestAssayGroup());
             DiseaseAssociation.CONFIDENCE confidence = determineStudyConfidence(experimentDesign, diseaseInfo, contrast.getTestAssayGroup(), isCttvPrimary);
@@ -541,7 +540,7 @@ public class EvidenceService<
     If something's a factor then it is also a characteristic unless we've made a mistake.
     Example mistake was E-GEOD-23764.
      */
-    boolean cellLineAsSampleCharacteristicButNoDiseaseAsFactor(ExperimentDesign experimentDesign){
+    boolean cellLineAsSampleCharacteristicButNoDiseaseAsFactor(ExperimentDesign experimentDesign) {
         return (experimentDesign.getSampleHeaders().contains("cell line") ||
                 experimentDesign.getFactorHeaders().contains("cell line"))  &&
                 !experimentDesign.getFactorHeaders().contains("disease");

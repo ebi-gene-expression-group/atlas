@@ -10,6 +10,10 @@ import static java.util.stream.Collectors.joining;
 import static org.apache.solr.client.solrj.util.ClientUtils.escapeQueryChars;
 
 public class SolrQueryUtils {
+    protected SolrQueryUtils() {
+        throw new UnsupportedOperationException();
+    }
+
     // I don’t think using the Standard Query Parser
     // (https://lucene.apache.org/solr/guide/7_1/the-standard-query-parser.html#the-standard-query-parser) for fields
     // such as assay_group_id or experiment_accession incurs in a performance penalty since there’s no analysis that

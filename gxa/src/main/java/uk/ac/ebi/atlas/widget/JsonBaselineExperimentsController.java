@@ -85,7 +85,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                                 .collect(Collectors.toList()))
                         .orElse(JsonNull.INSTANCE));
 
-        if(!experimentProfiles.isEmpty()){
+        if (!experimentProfiles.isEmpty()) {
             result.add("columnHeaders", constructColumnHeaders(dataColumns));
 
             result.add("columnGroupings", factorGroupingService.group(source, dataColumns));
@@ -101,10 +101,10 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         return GSON.toJson(result);
     }
 
-    private JsonArray constructColumnHeaders(List<FactorAcrossExperiments> dataColumnsToReturn){
+    private JsonArray constructColumnHeaders(List<FactorAcrossExperiments> dataColumnsToReturn) {
         JsonArray result = new JsonArray();
 
-        for(FactorAcrossExperiments dataColumnDescriptor: dataColumnsToReturn){
+        for (FactorAcrossExperiments dataColumnDescriptor: dataColumnsToReturn) {
             result.add(dataColumnDescriptor.toJson());
         }
 
@@ -131,7 +131,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             return defaultValue;
         }
     }
-    private String get(Map<String, Object> model, String key){
+    private String get(Map<String, Object> model, String key) {
         return getOrDefault(model, key, "");
     }
 }

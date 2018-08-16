@@ -59,7 +59,7 @@ public class GxaExperimentDaoIT {
     public void testFindExperiments() {
         List<ExperimentDTO> experimentDTOs = subject.getAllExperimentsAsAdmin();
         assertThat(experimentDTOs.size(), greaterThan(50));
-        assertThat(experimentDTOs, hasItem(ExperimentDTO.create(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""),Sets.newHashSet(""), "", false)));
+        assertThat(experimentDTOs, hasItem(ExperimentDTO.create(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
     }
 
     @Test

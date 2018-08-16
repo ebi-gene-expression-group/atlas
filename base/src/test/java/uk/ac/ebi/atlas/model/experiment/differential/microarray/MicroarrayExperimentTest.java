@@ -19,40 +19,40 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayExperimentTest {
-
-    static final ImmutableSet<String> ARRAY_DESIGN_ACCESSIONS = ImmutableSet.of("A-AFFY-44", "A-GEOD-20277");
-    static final ImmutableSet<String> ARRAY_DESIGN_NAMES =
+    private static final ImmutableSet<String> ARRAY_DESIGN_ACCESSIONS = ImmutableSet.of("A-AFFY-44", "A-GEOD-20277");
+    private static final ImmutableSet<String> ARRAY_DESIGN_NAMES =
             ImmutableSet.of(
                     "Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]",
                     "TaqMan® Array Human MicroRNA A+B Cards Set v3.0");
 
-    static final List<ArrayDesign> arrayDesigns = ImmutableList.of(
+    private static final List<ArrayDesign> ARRAY_DESIGNS = ImmutableList.of(
             ArrayDesign.create("A-AFFY-44", "Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]"),
             ArrayDesign.create("A-GEOD-20277", "TaqMan® Array Human MicroRNA A+B Cards Set v3.0")
             );
 
-    static final String PUBMEDID = "PUBMEDID";
+    private static final String PUBMEDID = "PUBMEDID";
     private static final String DOI = "100.100/doi";
 
-    AssayGroup g1 = new AssayGroup("id", "assay 1","assay 2");
-    AssayGroup g2 = new AssayGroup("test","assay 1");
-    Contrast contrast = new Contrast("g1_g2", ARRAY_DESIGN_ACCESSIONS.iterator().next(), g1, g2, "contrast");
+    private static final AssayGroup G1 = new AssayGroup("id", "assay 1", "assay 2");
+    private static final AssayGroup G2 = new AssayGroup("test", "assay 1");
+    private static final Contrast CONTRAST =
+            new Contrast("g1_g2", ARRAY_DESIGN_ACCESSIONS.iterator().next(), G1, G2, "contrast");
 
-    MicroarrayExperiment subject;
+    private MicroarrayExperiment subject;
 
-    public static MicroarrayExperiment get(String accession, ExperimentType type, List<Contrast> contrasts, List<ArrayDesign> arrayDesigns) {
+    public static MicroarrayExperiment get(String accession,
+                                           ExperimentType type,
+                                           List<Contrast> contrasts, List<ArrayDesign> arrayDesigns) {
 
         ImmutableMap<String, String> genomeBrowser =
                 ImmutableMap.of("type", "genome_browser", "name", "Ensembl",
@@ -74,7 +74,9 @@ public class MicroarrayExperimentTest {
     @Before
     public void setUp() throws Exception {
         subject =
-                get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(contrast), arrayDesigns);
+                get(
+                        "accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                        ImmutableList.of(CONTRAST), ARRAY_DESIGNS);
     }
 
     @Test
@@ -95,7 +97,9 @@ public class MicroarrayExperimentTest {
     @Test
     public void microRnaExperimentsHaveNoGenomeBrowsers() {
         MicroarrayExperiment miRnaSubject =
-                get("accession", ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL, ImmutableList.of(contrast), arrayDesigns);
+                get(
+                        "accession", ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
+                        ImmutableList.of(CONTRAST), ARRAY_DESIGNS);
 
         assertThat(subject.getGenomeBrowserNames(), hasSize(1));
         assertThat(miRnaSubject.getGenomeBrowserNames(), hasSize(0));
@@ -104,8 +108,10 @@ public class MicroarrayExperimentTest {
     @Test
     public void buildExperimentInfo() {
         assertThat(
-                subject.buildExperimentInfo().getArrayDesignNames(), containsInAnyOrder(ARRAY_DESIGN_NAMES.toArray()));
+                subject.buildExperimentInfo().getArrayDesignNames(),
+                containsInAnyOrder(ARRAY_DESIGN_NAMES.toArray()));
         assertThat(
-                subject.buildExperimentInfo().getArrayDesigns(), containsInAnyOrder(ARRAY_DESIGN_ACCESSIONS.toArray()));
+                subject.buildExperimentInfo().getArrayDesigns(),
+                containsInAnyOrder(ARRAY_DESIGN_ACCESSIONS.toArray()));
     }
 }

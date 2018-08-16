@@ -15,7 +15,7 @@ public abstract class SpeciesProperties {
         return new AutoValue_SpeciesProperties(ensemblName, defaultQueryFactorType, kingdom, resources);
     }
 
-    public final static SpeciesProperties UNKNOWN =
+    public static final SpeciesProperties UNKNOWN =
             SpeciesProperties.create("", "", "", ImmutableList.<ImmutableMap<String, String>>of());
 
     public static final String GENOME_BROWSER_TYPE = "genome_browser";
@@ -31,7 +31,9 @@ public abstract class SpeciesProperties {
     public ImmutableCollection<ImmutableMap<String, String>> getResourcesOfType(String typeValue) {
         ImmutableList.Builder<ImmutableMap<String, String>> matchedTypeResourcesBuilder = ImmutableList.builder();
 
-        resources().stream().filter(resource -> resource.containsKey("type") && typeValue.equals(resource.get("type"))).forEach(matchedTypeResourcesBuilder::add);
+        resources().stream()
+                .filter(resource -> resource.containsKey("type") && typeValue.equals(resource.get("type")))
+                .forEach(matchedTypeResourcesBuilder::add);
 
         return matchedTypeResourcesBuilder.build();
     }

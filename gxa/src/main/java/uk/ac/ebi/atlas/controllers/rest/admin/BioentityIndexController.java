@@ -15,7 +15,7 @@ public class BioentityIndexController extends HtmlExceptionHandlingController {
     private BioentitiesIndexer bioentitiesIndexer;
     private BioentityIndexMonitor bioentityIndexMonitor;
 
-    BioentityIndexController(BioentitiesIndexer bioentitiesIndexer, BioentityIndexMonitor bioentityIndexMonitor){
+    BioentityIndexController(BioentitiesIndexer bioentitiesIndexer, BioentityIndexMonitor bioentityIndexMonitor) {
         this.bioentitiesIndexer = bioentitiesIndexer;
         this.bioentityIndexMonitor = bioentityIndexMonitor;
     }

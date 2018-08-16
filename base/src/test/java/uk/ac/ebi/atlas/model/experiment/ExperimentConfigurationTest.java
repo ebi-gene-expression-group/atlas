@@ -6,6 +6,7 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,15 +28,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-
 public class ExperimentConfigurationTest {
-
     private static Path tmpFilePath;
 
     private static final String MICROARRAY_CONFIGURATION_XML =
@@ -100,12 +100,10 @@ public class ExperimentConfigurationTest {
         Files.delete(tmpFilePath);
     }
 
-    public ExperimentConfiguration testConfiguration(String xml) {
-        class XmlReaderMock extends XmlReader {
-
+    private ExperimentConfiguration testConfiguration(String xml) {
+        final class XmlReaderMock extends XmlReader {
             private Document document;
-
-            public XmlReaderMock(XMLConfiguration xmlConfiguration) {
+            private XmlReaderMock(XMLConfiguration xmlConfiguration) {
                 super(xmlConfiguration);
             }
 
@@ -128,7 +126,7 @@ public class ExperimentConfigurationTest {
                                 .setExpressionEngine(new XPathExpressionEngine()));
 
         XMLConfiguration xmlConfiguration;
-        Document document ;
+        Document document;
         try {
             xmlConfiguration = fileBuilder.getConfiguration();
             xmlConfiguration.read(inputStream);
@@ -183,8 +181,6 @@ public class ExperimentConfigurationTest {
         assertThat(otherContrast.getId(), is(not(contrast.getId())));
     }
 
-
-
     @Test
     public void testGetExperimentType() {
         assertThat(
@@ -195,10 +191,25 @@ public class ExperimentConfigurationTest {
                 is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 
+    @Test
+    public void testOpenTargetsContrasts() {
+        assertThat(
+                testConfiguration(MICROARRAY_CONFIGURATION_XML).getContrastAndAnnotationPairs().stream()
+                    .filter(Pair::getRight)
+                    .collect(toList()),
+                hasSize(1));
+    }
+
     @Test(expected = IllegalArgumentException.class)
-    public void testContrastNeedsDisplayName(){
+    public void testContrastNeedsDisplayName() {
         testConfiguration(
-                "<configuration experimentType=\"microarray_1colour_mrna_differential\"><analytics><contrasts><contrast id=\"id\"></contrast></contrasts></analytics></configuration>"
+                "<configuration experimentType=\"microarray_1colour_mrna_differential\">" +
+                        "<analytics>" +
+                        "<contrasts>" +
+                        "<contrast id=\"id\"></contrast>" +
+                        "</contrasts>" +
+                        "</analytics>" +
+                        "</configuration>"
         ).getContrasts();
     }
 }

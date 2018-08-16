@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UniProtClientTest {
-
     private static final String UNIPROT_ID = "UNIPROT_ID";
 
     private UniProtClient subject;
@@ -29,12 +28,12 @@ public class UniProtClientTest {
     private RestTemplate restTemplateMock;
 
     @Before
-    public void initSubject() throws Exception {
+    public void initSubject() {
         subject = new UniProtClient(restTemplateMock);
     }
 
     @Test
-    public void testParseResultWithTwoIds() throws Exception {
+    public void testParseResultWithTwoIds() {
         Collection<String> strings = subject.parseResult("Entry\tCross-reference (reactome)\n" +
                 "P05026\tREACT_15518;REACT_604;");
 
@@ -42,7 +41,7 @@ public class UniProtClientTest {
     }
 
     @Test
-    public void testParseResultWithOneId() throws Exception {
+    public void testParseResultWithOneId() {
         Collection<String> strings = subject.parseResult("Entry\tCross-reference (reactome)\n" +
                 "Q8N349\tREACT_111102;\n");
 
@@ -50,7 +49,7 @@ public class UniProtClientTest {
     }
 
     @Test
-    public void testFetchReactomeIds() throws Exception {
+    public void testFetchReactomeIds() {
         String url = MessageFormat.format(UniProtClient.UNIPROT_URL, UNIPROT_ID);
         when(restTemplateMock.getForObject(url, String.class)).thenReturn("Entry\tCross-reference (reactome)\n" +
                 "Q8N349\tREACT_111102;\n");
@@ -58,10 +57,10 @@ public class UniProtClientTest {
     }
 
     @Test
-    public void testFetchReactomeIdsUniprotDown() throws Exception {
+    public void testFetchReactomeIdsUniprotDown() {
         String url = MessageFormat.format(UniProtClient.UNIPROT_URL, UNIPROT_ID);
-        Mockito.doThrow(new HttpServerErrorException(HttpStatus.valueOf(503))).when(restTemplateMock).getForObject(url, String.class);
+        Mockito.doThrow(new HttpServerErrorException(HttpStatus.valueOf(HttpStatus.SERVICE_UNAVAILABLE.value())))
+                .when(restTemplateMock).getForObject(url, String.class);
         assertThat(subject.fetchReactomeIds(UNIPROT_ID).size(), is(0));
     }
-
 }

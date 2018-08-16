@@ -20,13 +20,12 @@ import static com.google.common.base.Preconditions.checkState;
 /*
  * Reads tsv input of (NB: there may be multiple contrasts defined by the header):
  *
- * Gene ID	            Gene Name   Design Element  g2_g1.p-value   g2_g1.t-statistic   g2_g1.log2foldchange    g2_g3.p-value   g2_g3.t-statistic   g2_g3.log2foldchange
- * ENSMUSG00000041538   H2-Ob       1422201_at      0.1             0.2                 0.3                     0.7             0.8                 0.9
+ * Gene ID              Gene Name   Design Element  g2_g1.p-value   g2_g1.t-statistic   g2_g1.log2foldchange
+ * ENSMUSG00000041538   H2-Ob       1422201_at      0.1             0.2                 0.3
  *
  * and returns MicroarrayDifferentialAnalytics of:
  *
  * 1422201_at, g2_g1, 0.1, 0.2, 0.3
- * 1422201_at, g2_g4, 0.7, 0.8, 0.9
  *
  * If any of p-value, t-statistic, or log2foldchange contain NA then skip to next set
  * "inf" in any value is interpreted as Double.POSITIVE_INFINITY
@@ -65,7 +64,8 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
+            throw new UncheckedIOException(
+                    String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
@@ -98,28 +98,39 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
             String geneId = line[GENE_ID_INDEX];
             String designElement = line[DESIGN_ELEMENT_INDEX];
             String[] contrastAnalyticsArray = ArrayUtils.subarray(line, FIRST_CONTRAST_INDEX, line.length);
-            ImmutableList<String> contrastAnalyticsList = ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
+            ImmutableList<String> contrastAnalyticsList =
+                    ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
             UnmodifiableIterator<String> contrastAnalytics = contrastAnalyticsList.iterator();
 
             ImmutableList.Builder<MicroarrayDifferentialAnalytics> builder = ImmutableList.builder();
 
             for (String contrastId : contrastIds) {
 
-                checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing p-value for design element %s, contrast %s", name, lineNumber, designElement, contrastId));
+                checkState(contrastAnalytics.hasNext(), String.format(
+                        "%s line %s: missing p-value for design element %s, contrast %s",
+                        name, lineNumber, designElement, contrastId));
                 String pValueString = contrastAnalytics.next();
 
-                checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing t-statistic for design element %s, contrast %s", name, lineNumber, designElement, contrastId));
+                checkState(contrastAnalytics.hasNext(), String.format(
+                        "%s line %s: missing t-statistic for design element %s, contrast %s",
+                        name, lineNumber, designElement, contrastId));
                 String tStatisticString = contrastAnalytics.next();
 
-                checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing log2foldchange for design element %s, contrast %s", name, lineNumber, designElement, contrastId));
+                checkState(contrastAnalytics.hasNext(), String.format(
+                        "%s line %s: missing log2foldchange for design element %s, contrast %s",
+                        name, lineNumber, designElement, contrastId));
                 String foldChangeString = contrastAnalytics.next();
 
-                if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(tStatisticString) || "NA".equalsIgnoreCase(foldChangeString))) {
+                if (!("NA".equalsIgnoreCase(pValueString) ||
+                      "NA".equalsIgnoreCase(tStatisticString) ||
+                      "NA".equalsIgnoreCase(foldChangeString))) {
                     double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
                     double tStatistic = DifferentialTsvFileParsingUtil.parseDouble(tStatisticString);
                     double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
                     if (foldChange != 0.0) {
-                        MicroarrayDifferentialAnalytics dto = new MicroarrayDifferentialAnalytics(geneId, designElement, contrastId, pValue, foldChange, tStatistic);
+                        MicroarrayDifferentialAnalytics dto =
+                                new MicroarrayDifferentialAnalytics(
+                                        geneId, designElement, contrastId, pValue, foldChange, tStatistic);
                         builder.add(dto);
                     }
                 }
@@ -133,5 +144,4 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
 
         return analytics;
     }
-
 }

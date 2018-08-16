@@ -27,7 +27,7 @@ public class RequestPreferencesTest {
                     new BeanWrapperImpl(new MicroarrayRequestPreferences()).getRootInstance();
 
     @Test
-    public void testDefaultGeneQuery(){
+    public void testDefaultGeneQuery() {
         assertThat(
                 new RnaSeqBaselineRequestPreferences().getDefaultGeneQuery(),
                 is(rnaSeqBaselineDefault.getGeneQuery()));
@@ -43,7 +43,7 @@ public class RequestPreferencesTest {
     }
 
     @Test
-    public void testDefaultUnit(){
+    public void testDefaultUnit() {
         assertThat(rnaSeqBaselineDefault.getUnit(), is(ExpressionUnit.Absolute.Rna.TPM));
     }
 

@@ -23,7 +23,7 @@ public class ContrastImageFactory {
     }
 
     ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession,
-                                   Optional<String> arrayDesign, String contrastId ){
+                                   Optional<String> arrayDesign, String contrastId ) {
         String pathTemplate = "";
         switch (resourceType) {
             case PLOT_GSEA_INTERPRO:
@@ -40,7 +40,7 @@ public class ContrastImageFactory {
                 break;
         }
 
-        if (arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)){
+        if (arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)) {
             return new ContrastImage(
                     resourceType, pathTemplate, "external-resources/{0}/{1}/{2}/" + resourceType.fileName(),
                     experimentAccession, arrayDesign.get(), contrastId);

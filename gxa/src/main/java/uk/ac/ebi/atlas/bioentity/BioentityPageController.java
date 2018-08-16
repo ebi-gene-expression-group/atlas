@@ -59,7 +59,7 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
     }
 
     @Inject
-    public void setBioentityPropertyDao(BioEntityPropertyDao bioentityPropertyDao){
+    public void setBioentityPropertyDao(BioEntityPropertyDao bioentityPropertyDao) {
         this.bioentityPropertyDao = bioentityPropertyDao;
     }
 

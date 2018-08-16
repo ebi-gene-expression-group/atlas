@@ -4,10 +4,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 public class DifferentialCondition extends Condition {
-
     private String contrastId;
 
-    public DifferentialCondition(String experimentAccession, String assayGroupId, String contrastId, Collection<String> values) {
+    public DifferentialCondition(String experimentAccession,
+                                 String assayGroupId,
+                                 String contrastId,
+                                 Collection<String> values) {
         super(experimentAccession, assayGroupId, values);
         this.contrastId = contrastId;
     }
@@ -17,17 +19,22 @@ public class DifferentialCondition extends Condition {
     }
 
     @Override
-    public int hashCode() {return Objects.hash(super.hashCode(), contrastId);}
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), contrastId);
+    }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         final DifferentialCondition other = (DifferentialCondition) obj;
-        return Objects.equals(this.getExperimentAccession(), other.getExperimentAccession())
-                && Objects.equals(this.getAssayGroupId(), other.getAssayGroupId())
-                && Objects.equals(this.contrastId, other.contrastId)
-                && Objects.equals(this.getValues(), other.getValues());
+        return Objects.equals(this.getExperimentAccession(), other.getExperimentAccession()) &&
+                Objects.equals(this.getAssayGroupId(), other.getAssayGroupId()) &&
+                Objects.equals(this.contrastId, other.contrastId) &&
+                Objects.equals(this.getValues(), other.getValues());
     }
-
 }

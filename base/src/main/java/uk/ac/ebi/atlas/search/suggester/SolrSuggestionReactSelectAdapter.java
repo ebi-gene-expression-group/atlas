@@ -15,6 +15,9 @@ import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
 
 public class SolrSuggestionReactSelectAdapter {
+    protected SolrSuggestionReactSelectAdapter() {
+        throw new UnsupportedOperationException();
+    }
 
     public static JsonArray serialize(Stream<Map<String, String>> suggestions) {
         // get("label") returns a String ; get("value") returns a Map (the entry itself)

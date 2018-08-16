@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkState;
 /*
  * Reads tsv input of (NB: there may be multiple contrasts defined by the header):
  *
- * Gene ID	            Gene Name   g2_g1.p-value   g2_g1.log2foldchange    g2_g3.p-value   g2_g3.log2foldchange
+ * Gene ID              Gene Name   g2_g1.p-value   g2_g1.log2foldchange    g2_g3.p-value   g2_g3.log2foldchange
  * ENSMUSG00000041538   H2-Ob       0.1             0.3                     0.7             0.9
  *
  * and returns RnaSeqDifferentialAnalytics of:
@@ -46,7 +46,7 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
     private final String name;
     private int lineNumber = 0;
 
-    public RnaSeqDifferentialAnalyticsInputStream(Reader reader, String name) throws IOException {
+    public RnaSeqDifferentialAnalyticsInputStream(Reader reader, String name) {
         this.name = name;
         this.csvReader = new CSVReader(reader, '\t');
         String[] headers = readCsvLine();
@@ -65,7 +65,8 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
+            throw new UncheckedIOException(
+                    String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
@@ -96,24 +97,34 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
 
             String geneId = line[GENE_ID_INDEX];
             String[] contrastAnalyticsArray = ArrayUtils.subarray(line, FIRST_CONTRAST_INDEX, line.length);
-            ImmutableList<String> contrastAnalyticsList = ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
+            ImmutableList<String> contrastAnalyticsList =
+                    ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
             UnmodifiableIterator<String> contrastAnalytics = contrastAnalyticsList.iterator();
 
             ImmutableList.Builder<RnaSeqDifferentialAnalytics> builder = ImmutableList.builder();
 
             for (String contrastId : contrastIds) {
 
-                checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing p-value for gene %s, contrast %s", name, lineNumber, geneId, contrastId));
+                checkState(
+                        contrastAnalytics.hasNext(),
+                        String.format(
+                                "%s line %s: missing p-value for gene %s, contrast %s",
+                                name, lineNumber, geneId, contrastId));
                 String pValueString = contrastAnalytics.next();
 
-                checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing log2foldchange for gene %s, contrast %s", name, lineNumber, geneId, contrastId));
+                checkState(
+                        contrastAnalytics.hasNext(),
+                        String.format(
+                                "%s line %s: missing log2foldchange for gene %s, contrast %s",
+                                name, lineNumber, geneId, contrastId));
                 String foldChangeString = contrastAnalytics.next();
 
                 if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString))) {
                     double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
                     double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
                     if (foldChange != 0.0) {
-                        RnaSeqDifferentialAnalytics dto = new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
+                        RnaSeqDifferentialAnalytics dto =
+                                new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
                         builder.add(dto);
                     }
                 }
@@ -127,5 +138,4 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
 
         return analytics;
     }
-
 }

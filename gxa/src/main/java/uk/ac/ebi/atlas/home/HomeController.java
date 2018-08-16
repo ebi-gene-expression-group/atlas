@@ -54,7 +54,7 @@ public class HomeController {
         ));
     }
 
-    @RequestMapping(value = "/home",produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/home", produces = "text/html;charset=UTF-8")
     public String getHome(Model model) {
         ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
         for (PopularSpeciesInfo popularSpeciesInfo: popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)) {

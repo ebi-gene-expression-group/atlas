@@ -27,7 +27,7 @@ public class DBSolrStatusControllerIT {
     @Test
     public void dbAndSolrStatus() {
         String message = subject.dbAndSolrStatus();
-        Map<String, Object> status = GSON.fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
+        Map<String, Object> status = GSON.fromJson(message, new TypeToken<Map<String, String>>() {}.getType());
         // Or the unsafer(?) Map status = new Gson().fromJson(message, Map.class);
 
         assertThat(status.get("DB"), is("UP"));

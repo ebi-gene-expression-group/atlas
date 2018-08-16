@@ -46,7 +46,7 @@ public class ScxaExperimentTrader extends ExperimentTrader {
     }
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
-        if(experimentType.isSingleCell()) {
+        if (experimentType.isSingleCell()) {
             return getPublicExperiment(experimentAccession);
         } else {
             return null;

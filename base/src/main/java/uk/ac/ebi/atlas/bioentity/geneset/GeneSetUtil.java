@@ -6,7 +6,6 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import java.util.regex.Pattern;
 
 public class GeneSetUtil {
-
     private static final Pattern GO_REGEX = Pattern.compile("GO:\\d+", Pattern.CASE_INSENSITIVE);
     private static final Pattern PO_REGEX = Pattern.compile("PO:\\d+", Pattern.CASE_INSENSITIVE);
     private static final Pattern REACTOME_REGEX = Pattern.compile("R-[A-Z]{3}-\\d+", Pattern.CASE_INSENSITIVE);
@@ -18,6 +17,9 @@ public class GeneSetUtil {
     private static final String REACTOME_CATEGORY = "pathwayid";
     private static final String INTERPRO_CATEGORY = "interpro";
 
+    protected GeneSetUtil() {
+        throw new UnsupportedOperationException();
+    }
 
     public static boolean matchesInterProAccession(String identifier) {
         return INTER_PRO_REGEX.matcher(identifier).matches();
@@ -60,5 +62,4 @@ public class GeneSetUtil {
                 hasGeneSetCategory(term.category().get()) :
                 matchesGeneSetAccession(term.value());
     }
-
 }

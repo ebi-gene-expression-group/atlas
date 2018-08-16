@@ -109,7 +109,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         Set<String> allAssayGroupIds = new HashSet<>();
-        for(AssayGroup assayGroup : experiment.getDataColumnDescriptors()){
+        for (AssayGroup assayGroup : experiment.getDataColumnDescriptors()) {
             allAssayGroupIds.add(assayGroup.getId());
         }
 

@@ -29,7 +29,7 @@ public class SitemapController {
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, SpeciesFactory speciesFactory, SpeciesPropertiesTrader speciesPropertiesTrader){
+    public SitemapController(AnalyticsSearchService solr, SpeciesFactory speciesFactory, SpeciesPropertiesTrader speciesPropertiesTrader) {
         this.solr = solr;
         this.speciesFactory = speciesFactory;
         this.speciesPropertiesTrader = speciesPropertiesTrader;
@@ -51,7 +51,7 @@ public class SitemapController {
             ParserConfigurationException, IOException, XMLStreamException {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
-        Collection<String> various = ImmutableList.of("/experiments","/plant/experiments");
+        Collection<String> various = ImmutableList.of("/experiments", "/plant/experiments");
 
         sitemapWriter.writeGenes(
                 response.getOutputStream(), various,

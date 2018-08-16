@@ -29,7 +29,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
             IOException {
 
         responseWriter.write(getTsvFileMasthead(options, isGeneSet) + "\n");
-        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options,isGeneSet));
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options, isGeneSet));
 
         for (T profile : geneProfilesList) {
             String[] csvRow = buildCsvRow(profile, conditions);
@@ -85,7 +85,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
 
     protected abstract String getTsvFileMasthead(O options, boolean isGeneSet);
 
-    protected String[] getProfileIdColumnHeaders(O options, boolean isGeneSet){
+    protected String[] getProfileIdColumnHeaders(O options, boolean isGeneSet) {
         return new String[]{GENE_ID_COLUMN_NAME, GENE_NAME_COLUMN_NAME};
     }
 
@@ -112,7 +112,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
             return new String[]{geneProfileId, geneName, secondaryRowHeader};
         }
         //For geneSet gene Id is null
-        if(geneProfileId == null) {
+        if (geneProfileId == null) {
             return new String[]{geneName};
         }
         return new String[]{geneProfileId, geneName};

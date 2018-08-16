@@ -58,7 +58,7 @@ public class DifferentialAnalyticsSearchServiceIT {
 
     @Test
     public void fetchDifferentialFacetsForQuery3() {
-        JsonObject result = subject.fetchFacets(query,condition, speciesFactory.create(species));
+        JsonObject result = subject.fetchFacets(query, condition, speciesFactory.create(species));
         assertAboutFacets(result);
     }
 
@@ -73,18 +73,18 @@ public class DifferentialAnalyticsSearchServiceIT {
         assertAboutResults(result);
     }
 
-    private void assertAboutFacets(JsonObject result){
+    private void assertAboutFacets(JsonObject result) {
         assertThat(result.entrySet().size(), greaterThan(0));
-        for(Map.Entry<String,?> e: result.entrySet()){
+        for (Map.Entry<String, ?> e: result.entrySet()) {
             assertThat(e.getKey(),
-                    isOneOf("kingdom", "species", "experimentType", "factors", "numReplicates","regulation"));
+                    isOneOf("kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"));
         }
     }
 
-    private void assertAboutResults(JsonObject result){
+    private void assertAboutResults(JsonObject result) {
         assertTrue(result.has("results"));
         assertThat(result.get("results").getAsJsonArray().size(), greaterThan(0));
-        for(JsonElement e: result.get("results").getAsJsonArray()){
+        for (JsonElement e: result.get("results").getAsJsonArray()) {
             assertTrue(e.getAsJsonObject().has("bioentityIdentifier"));
             assertTrue(e.getAsJsonObject().has("bioentityName"));
             assertTrue(e.getAsJsonObject().has("experimentAccession"));
