@@ -25,7 +25,7 @@ public final class HealthCheckController {
     }
 
     @RequestMapping(
-            value = "/json/health",
+            value = "/json/dbsolr/status",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getHealthStatus(){

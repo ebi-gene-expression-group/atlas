@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.monitoring;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,9 +35,9 @@ class HealthCheckControllerWIT {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void requestReturnsDbAndSolrStatus() throws Exception {
-        mockMvc.perform(get("/json/health"))
+        mockMvc.perform(get("/json/dbsolr/status"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.Solr", is(oneOf("UP", "DOWN"))))
