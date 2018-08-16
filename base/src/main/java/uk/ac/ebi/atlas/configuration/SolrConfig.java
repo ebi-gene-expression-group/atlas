@@ -26,6 +26,7 @@ public class SolrConfig {
 
     @Bean
     public CloudSolrClient cloudSolrClient(@Value("${zk.host}") String zkHost) {
-        return SOLR_CLIENT_CACHE.getCloudSolrClient(zkHost);
+        return new CloudSolrClient.Builder().withZkHost(zkHost + ":2181").build();
+//        return SOLR_CLIENT_CACHE.getCloudSolrClient(zkHost);
     }
 }
