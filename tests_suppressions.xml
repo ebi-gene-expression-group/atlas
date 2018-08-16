@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <suppress files="test/" checks="MagicNumber"/>
+    <suppress files="test/" id="MainWhitespaceAround"/>
+    <suppress files="test/" id="MainParameterNumber"/>
+    <suppress files="test/" id="MainEmptyBlock"/>
+
+    <suppress files="main/" id="TestWhitespaceAround"/>
+    <suppress files="main/" id="TestParameterNumber"/>
+    <suppress files="main/" id="TestEmptyBlock"/>
+</suppressions>

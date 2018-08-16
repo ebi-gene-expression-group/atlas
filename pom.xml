@@ -212,6 +212,16 @@
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.1</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.0.1-SNAPSHOT</version>
+                    <configuration>
+                        <configLocation>atlas_checks.xml</configLocation>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
