@@ -27,14 +27,20 @@ public class BaselineAnalyticsSearchService {
         this.baselineExperimentSearchResultProducer = new BaselineExperimentSearchResultProducer(experimentTrader);
     }
 
-    public BaselineExperimentProfilesList findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery,
-                                                          Species species, String queryFactorTypeOrBlank) {
+    public BaselineExperimentProfilesList findExpressions(SemanticQuery geneQuery,
+                                                          SemanticQuery conditionQuery,
+                                                          Species species,
+                                                          String queryFactorTypeOrBlank) {
         String queryFactorType = isBlank(queryFactorTypeOrBlank) ?
                 species.getDefaultQueryFactorType() :
                 queryFactorTypeOrBlank.toUpperCase();
 
-        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(baselineAnalyticsSearchDao.
-                fetchExpressionLevels(geneQuery, conditionQuery, species.getReferenceName(), queryFactorType), queryFactorType);
+        return baselineExperimentSearchResultProducer
+                .buildProfilesForExperiments(
+                        baselineAnalyticsSearchDao
+                                .fetchExpressionLevels(
+                                        geneQuery, conditionQuery, species.getReferenceName(), queryFactorType),
+                        queryFactorType);
     }
 
     public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, Species species) {
@@ -43,7 +49,8 @@ public class BaselineAnalyticsSearchService {
 
     public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
         List<Map<String, Object>> results =
-                baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, conditionQuery, species.getReferenceName());
+                baselineAnalyticsSearchDao
+                        .fetchFacetsThatHaveExpression(geneQuery, conditionQuery, species.getReferenceName());
 
         return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
     }

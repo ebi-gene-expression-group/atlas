@@ -22,7 +22,7 @@ public abstract class DifferentialProfileStreamFactory<Expr extends Differential
     }
 
     @Override
-    protected Predicate<Expr> filterExpressions(E experiment, T options) {
+    protected Predicate<Expr> filterExpressions(T options) {
         IsDifferentialExpressionAboveCutOff<Expr> expressionFilter = new IsDifferentialExpressionAboveCutOff<>();
         expressionFilter.setPValueCutoff(options.getPValueCutoff());
         expressionFilter.setFoldChangeCutOff(options.getFoldChangeCutoff());

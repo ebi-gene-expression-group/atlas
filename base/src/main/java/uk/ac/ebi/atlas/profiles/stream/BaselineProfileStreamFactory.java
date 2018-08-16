@@ -5,7 +5,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.IsBaselineExpressionAboveCutoff;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
@@ -44,14 +43,8 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
     }
 
     @Override
-    protected Predicate<BaselineExpression> filterExpressions(BaselineExperiment experiment, StreamOptions options) {
-        IsBaselineExpressionAboveCutoff baselineExpressionFilter = new IsBaselineExpressionAboveCutoff();
-        baselineExpressionFilter.setCutoff(options.getCutoff());
-        //TODO pay attention to other options
-        // we used to only pick up expressions that will later be retrieved
-        // e.g.
-        // baselineExpressionFilter.setFilterFactors(filterFactors);
-        return baselineExpressionFilter;
+    protected Predicate<BaselineExpression> filterExpressions(StreamOptions options) {
+        return baselineExpression -> baselineExpression.isGreaterThanOrEqual(options.getCutoff());
     }
 
     protected abstract Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment,

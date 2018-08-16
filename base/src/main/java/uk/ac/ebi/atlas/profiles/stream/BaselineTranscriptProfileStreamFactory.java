@@ -66,7 +66,7 @@ public class BaselineTranscriptProfileStreamFactory extends
 
         @Override
         protected Predicate<BaselineExpressionPerBiologicalReplicate> filterExpressions(
-                BaselineExperiment experiment, BaselineRequestContext<ExpressionUnit.Absolute.Rna> options) {
+                BaselineRequestContext<ExpressionUnit.Absolute.Rna> options) {
             // We don't want to do that for now.
             return x -> true;
         }
