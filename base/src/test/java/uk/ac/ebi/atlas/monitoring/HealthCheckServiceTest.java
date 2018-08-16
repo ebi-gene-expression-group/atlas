@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDao;
 import uk.ac.ebi.atlas.solr.cloud.admin.SolrCloudAdminProxy;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class HealthCheckServiceTest {
     private SolrCloudAdminProxy solrCloudAdminProxyMock;
 
     @Mock
-    private ScxaExperimentDao experimentDaoMock;
+    private ExperimentDao experimentDaoMock;
 
     private HealthCheckService subject;
 
