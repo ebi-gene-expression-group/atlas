@@ -96,13 +96,13 @@ public class AnalyticsQueryClient {
         return new Builder();
     }
 
-    public final class Builder {
+    public class Builder {
         private static final String DEFAULT_QUERY = "*:*";
 
-        private ImmutableList.Builder<AnalyticsSolrQueryTree> queryClausesBuilder = ImmutableList.builder();
         private final SolrQuery solrQuery = new SolrQuery();
+        private ImmutableList.Builder<AnalyticsSolrQueryTree> queryClausesBuilder = ImmutableList.builder();
 
-        private Builder() {
+        protected Builder() {
             solrQuery.set("omitHeader", true);
         }
 
