@@ -7,9 +7,7 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-// This class extends GeneSetUtil to implicitly call the helper class default constructor, so coverage is 100%
-// Semantically it explicitly states that the tested class is not final, which might or not be what you want...
-public class GeneSetUtilTest extends GeneSetUtil {
+public class GeneSetUtilTest {
     private static final SemanticQuery GENE_QUERY_WITH_REACTOME_CATEGORY =
             SemanticQuery.create(SemanticQueryTerm.create("foo", "pathwayid"));
     private static final SemanticQuery GENE_QUERY_WITH_INTERPRO_CATEGORY =
@@ -51,27 +49,27 @@ public class GeneSetUtilTest extends GeneSetUtil {
 
     @Test
     public void testIsGeneSet() {
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_REACTOME_CATEGORY), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_INTERPRO_CATEGORY), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GO_CATEGORY), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_PO_CATEGORY), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_REACTOME_VALUE), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_INTERPRO_VALUE), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GO_VALUE), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_PO_VALUE), is(true));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_PLANT_REACTOME_VALUE), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_REACTOME_CATEGORY), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_INTERPRO_CATEGORY), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GO_CATEGORY), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_PO_CATEGORY), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_REACTOME_VALUE), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_INTERPRO_VALUE), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GO_VALUE), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_PO_VALUE), is(true));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_PLANT_REACTOME_VALUE), is(true));
     }
 
     @Test
     public void multiTermQuery() {
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GENE_SET_CATEGORIES), is(false));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GENE_SET_VALUES), is(false));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GENE_SET_CATEGORIES), is(false));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENE_QUERY_WITH_GENE_SET_VALUES), is(false));
     }
 
     @Test
     public void emptyQuery() {
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(GENERIC_GENE_QUERY), is(false));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(TRICKY_GENE_QUERY), is(false));
-        assertThat(matchesGeneSetCategoryOrGeneSetValue(EMPTY_QUERY), is(false));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(GENERIC_GENE_QUERY), is(false));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(TRICKY_GENE_QUERY), is(false));
+        assertThat(GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(EMPTY_QUERY), is(false));
     }
 }
