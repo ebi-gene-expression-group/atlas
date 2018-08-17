@@ -55,7 +55,8 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
                 !bioentityIdentifiers.isEmpty() && !isBlank(query),
                 "Please pass a list of genes separated by whitespace: ?query=gene_1 gene_2 ...");
 
-        Set<SemanticQueryTerm> queryTerms = bioentityIdentifiers.stream().map(SemanticQueryTerm::create).collect(Collectors.toSet());
+        Set<SemanticQueryTerm> queryTerms =
+                bioentityIdentifiers.stream().map(SemanticQueryTerm::create).collect(Collectors.toSet());
 
         Species species = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(queryTerms));
 
@@ -64,7 +65,8 @@ public class GeneSetEnrichmentController extends HtmlExceptionHandlingController
         }
 
         Pair<Optional<Exception>, Optional<JsonArray>> result =
-                geneSetEnrichmentClient.fetchEnrichedGenes(species.getEnsemblName().toLowerCase(), bioentityIdentifiers);
+                geneSetEnrichmentClient.fetchEnrichedGenes(
+                        species.getEnsemblName().toLowerCase(), bioentityIdentifiers);
 
         // Enriched gene retrieval was successful
         if (!result.getLeft().isPresent()) {

@@ -20,7 +20,8 @@ public class SitemapWriter {
     private XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
     private XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 
-    private static final String ourAddress = "http://www.ebi.ac.uk/gxa";
+    // TODO Build URL with ServletUriComponentsBuilder.fromCurrentContextPath()
+    private static final String OUR_ADDRESS = "http://www.ebi.ac.uk/gxa";
 
     public void writeSitemapIndex(OutputStream outputStream,
                                   Collection<SpeciesProperties> speciesProperties) throws XMLStreamException {
@@ -28,7 +29,7 @@ public class SitemapWriter {
         writeDocument(
                 outputStream,
                 speciesProperties.stream()
-                        .map(s -> ourAddress+"/species/"+ s.ensemblName() + "/sitemap.xml")
+                        .map(s -> OUR_ADDRESS + "/species/" + s.ensemblName() + "/sitemap.xml")
                         .collect(toImmutableList()),
                 "sitemapindex", "sitemap", ImmutableMap.of());
     }
@@ -37,8 +38,8 @@ public class SitemapWriter {
             throws
             XMLStreamException {
         List<String> urls = new ArrayList<>();
-        urls.addAll(various.stream().map(s -> ourAddress + s).collect(toImmutableList()));
-        urls.addAll(genes.stream().map(s -> ourAddress + "/genes/" + s).collect(toImmutableList()));
+        urls.addAll(various.stream().map(s -> OUR_ADDRESS + s).collect(toImmutableList()));
+        urls.addAll(genes.stream().map(s -> OUR_ADDRESS + "/genes/" + s).collect(toImmutableList()));
         writeDocument(outputStream, urls, "urlset", "url", ImmutableMap.of("changefreq", "monthly"));
     }
 
@@ -69,7 +70,7 @@ public class SitemapWriter {
     private void writeChild(XMLEventWriter writer,
                             String url,
                             String childName,
-                            Map<String, String> parameters) throws XMLStreamException{
+                            Map<String, String> parameters) throws XMLStreamException {
         writer.add(eventFactory.createStartElement("", "", childName));
         writer.add(eventFactory.createStartElement("", "", "loc"));
         writer.add(eventFactory.createCharacters(url));

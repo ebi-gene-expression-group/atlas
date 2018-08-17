@@ -78,7 +78,8 @@ public class PlantExperimentsController extends HtmlExceptionHandlingController 
                 Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
                 int numberOfAssays = experiment.getAnalysedAssays().size();
 
-                experimentDisplayNames.put(experimentAccession, experiment.getDisplayName() + " (" + numberOfAssays + " assays)");
+                experimentDisplayNames.put(
+                        experimentAccession, experiment.getDisplayName() + " (" + numberOfAssays + " assays)");
 
                 Species species = experiment.getSpecies();
                 if (species.isPlant()) {
@@ -88,7 +89,8 @@ public class PlantExperimentsController extends HtmlExceptionHandlingController 
                 }
 
             } catch (RuntimeException e) {
-                // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
+                // we don't want the entire application to crash just because one condensedSdrf file may be offline
+                // because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
         }
@@ -102,7 +104,6 @@ public class PlantExperimentsController extends HtmlExceptionHandlingController 
         LOGGER.info("Differential experiments took: {} ms", System.currentTimeMillis() - start);
     }
 
-
     /**
      * Populates numDifferentialExperimentsBySpecies and numberOfPlantExperiments for a given experimentType
      * This is a part of a work-around until https://www.pivotaltracker.com/story/show/88885788 gets implemented.
@@ -110,16 +111,18 @@ public class PlantExperimentsController extends HtmlExceptionHandlingController 
     private void populateExperimentAccessionToSpecies(ExperimentType experimentType) {
         for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             try {
-                Species species = experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getSpecies();
+                Species species =
+                        experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getSpecies();
 
                 if (species.isPlant()) {
                     Integer numSoFar = numDifferentialExperimentsBySpecies.get(species.getName());
-                    numDifferentialExperimentsBySpecies.put(species.getName(), numSoFar == null ? 1: ++numSoFar);
+                    numDifferentialExperimentsBySpecies.put(species.getName(), numSoFar == null ? 1 : ++numSoFar);
                     numberOfPlantExperiments++;
                 }
 
             } catch (RuntimeException e) {
-                // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
+                // we don't want the entire application to crash just because one condensedSdrf file may be offline
+                // because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
         }

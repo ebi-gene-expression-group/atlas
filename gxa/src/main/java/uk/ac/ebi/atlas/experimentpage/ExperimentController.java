@@ -120,8 +120,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private JsonArray availableDataUnits(String experimentAccession, ExperimentType experimentType) {
         if (!experimentType.isRnaSeqBaseline()) {
             return new JsonArray();
-        }
-        else {
+        } else {
             return GSON.toJsonTree(
                     dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFiles()).getAsJsonArray();
         }
@@ -179,9 +178,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return supplementaryInformationTabs;
     }
 
-
-    private JsonArray formatTable(List<String []> rows) {
-
+    private JsonArray formatTable(List<String[]> rows) {
         JsonArray result = new JsonArray();
         for (String[] row : rows) {
             //skip empty rows and other unexpected input

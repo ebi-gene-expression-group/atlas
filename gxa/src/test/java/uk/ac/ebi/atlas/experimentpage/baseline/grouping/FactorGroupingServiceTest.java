@@ -19,12 +19,10 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FactorGroupingServiceTest {
-
     @Mock
-    OrganismPartGroupingService organismPartGroupingService;
+    private OrganismPartGroupingService organismPartGroupingService;
 
-
-    FactorGroupingService subject;
+    private FactorGroupingService subject;
 
     @Before
     public void setUp() {
@@ -33,78 +31,76 @@ public class FactorGroupingServiceTest {
 
     @Test
     public void hasOntologyTerms() {
-
         assertThat(
                 subject.hasOntologyTerms(ImmutableMap.of()),
-                is(false)
-        );
+                is(false));
 
         assertThat(
                 subject.hasOntologyTerms(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of())),
-                is(false)
-        );
+                is(false));
 
         assertThat(
-                subject.hasOntologyTerms(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create("")))),
-                is(true)
-        );
-
+                subject.hasOntologyTerms(
+                        ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create("")))),
+                is(true));
     }
 
     @Test
     public void noOrganismPartNoFactorGrouping() {
         assertThat(
                 subject.group("DEVELOPMENTAL_STAGE", null),
-                is(new JsonArray())
-        );
+                is(new JsonArray()));
     }
 
     @Test
     public void noResultsNoFactorGrouping() {
-
         Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
-        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of());
-        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of());
+        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
+                .thenReturn(ImmutableMap.of());
+        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
+                .thenReturn(ImmutableMap.of());
+
         assertThat(
                 subject.groupOrganismPartOntologyTerms(ontologyTermsAcrossExperiments),
-                is(new JsonArray())
-        );
+                is(new JsonArray()));
     }
 
     @Test
     public void noOntologyTermsNoFactorGrouping() {
-
         Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
-        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of()));
-        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of());
+        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
+                .thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of()));
+        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
+                .thenReturn(ImmutableMap.of());
+
         assertThat(
                 subject.groupOrganismPartOntologyTerms(ontologyTermsAcrossExperiments),
-                is(new JsonArray())
-        );
+                is(new JsonArray()));
     }
 
     @Test
     public void ontologyTermsGivesFactorGrouping() {
-
         Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
-        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
-        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of());
+        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
+                .thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
+        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
+
+                .thenReturn(ImmutableMap.of());
         assertThat(
                 subject.groupOrganismPartOntologyTerms(ontologyTermsAcrossExperiments).size(),
-                is(1)
-        );
+                is(1));
     }
 
     @Test
     public void ontologyTermsGivesFactorGrouping2() {
-
         Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
-        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
-        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments)).thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
+        when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
+                .thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
+        when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
+                .thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
+
         assertThat(
                 subject.groupOrganismPartOntologyTerms(ontologyTermsAcrossExperiments).size(),
-                is(2)
-        );
+                is(2));
     }
-
 }

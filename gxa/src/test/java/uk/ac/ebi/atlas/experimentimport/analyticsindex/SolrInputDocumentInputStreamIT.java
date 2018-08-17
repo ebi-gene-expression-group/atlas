@@ -39,7 +39,6 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class})
 public class SolrInputDocumentInputStreamIT {
-
     @Inject
     private ExperimentTrader experimentTrader;
 
@@ -71,7 +70,8 @@ public class SolrInputDocumentInputStreamIT {
         assertThatExperimentInformationIsTransformedIntoSolrInputDocuments("E-GEOD-22351");
     }
 
-    private void assertThatExperimentInformationIsTransformedIntoSolrInputDocuments(String accession) throws Exception {
+    private void
+    assertThatExperimentInformationIsTransformedIntoSolrInputDocuments(String accession) throws Exception {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
         Iterable<SolrInputDocument> result = getResults(experiment);
 
@@ -80,10 +80,14 @@ public class SolrInputDocumentInputStreamIT {
             count++;
 
             assertThat(solrInputDocument.size(), greaterThan(6));
-            assertThat(experiment.getType().name().toUpperCase(),
+            assertThat(
+                    experiment.getType().name().toUpperCase(),
                     is(solrInputDocument.getField("experiment_type").getValue()));
-            assertThat(experiment.getSpecies().getReferenceName(), is(solrInputDocument.getField("species").getValue()));
+            assertThat(
+                    experiment.getSpecies().getReferenceName(),
+                    is(solrInputDocument.getField("species").getValue()));
         }
+
         assertThat(count, is(greaterThan(100)));
     }
 
@@ -97,11 +101,14 @@ public class SolrInputDocumentInputStreamIT {
         assertThatSpeciesFieldIsEnsemblName("E-MTAB-513", results);
     }
 
-    private void assertThatIdentifiersInGeneratedDocumentsMatchCurrentIndexContent(String accession, Collection<SolrInputDocument> results) {
+    private void
+    assertThatIdentifiersInGeneratedDocumentsMatchCurrentIndexContent(String accession,
+                                                                      Collection<SolrInputDocument> results) {
         Collection<String> identifiersForThatExperiment = AnalyticsSearchService.readBuckets(analyticsQueryClient
-                .queryBuilder().bioentityIdentifierFacets(-1)
-                .inExperiment
-                (accession).fetch());
+                .queryBuilder()
+                .bioentityIdentifierFacets(-1)
+                .inExperiment(accession)
+                .fetch());
 
         assertThat(identifiersForThatExperiment, not(empty()));
 
@@ -109,7 +116,6 @@ public class SolrInputDocumentInputStreamIT {
             String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
             assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier.toLowerCase()));
          }
-
     }
 
     private void assertThatDocumentsReturnContent(String accession, Collection<SolrInputDocument> results) {
@@ -118,20 +124,21 @@ public class SolrInputDocumentInputStreamIT {
             for (String fieldName: solrInputDocument.getFieldNames()) {
                 if (fieldName.startsWith("keyword_")) {
                     //we repeatedly put into the same fields but that's okay I just want one example value per field
-                    keywordFieldsPresent.put(fieldName.replace("keyword_", ""), solrInputDocument.getFieldValue
-                            (fieldName).toString());
+                    keywordFieldsPresent.put(
+                            fieldName.replace("keyword_", ""), solrInputDocument.getFieldValue(fieldName).toString());
                 }
             }
         }
 
         //category searches e.g. symbol:PIM1
         for (Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
-            assertThatIndexReturnsDatafor (accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue(), e.getKey())));
+            assertThatIndexReturnsDataFor(
+                    accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue(), e.getKey())));
         }
 
         //identifier search searches e.g. symbol:PIM
         for (Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
-            assertThatIndexReturnsDatafor (accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue())));
+            assertThatIndexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue())));
         }
 
     }
@@ -148,7 +155,7 @@ public class SolrInputDocumentInputStreamIT {
                 is(experimentTrader.getPublicExperiment(accession).getSpecies().getReferenceName()));
     }
 
-    private void assertThatIndexReturnsDatafor (String accession, SemanticQuery identifierSearch) {
+    private void assertThatIndexReturnsDataFor(String accession, SemanticQuery identifierSearch) {
         Collection<String> identifiersForThatExperiment = AnalyticsSearchService.readBuckets(
                 analyticsQueryClient.queryBuilder()
                         .bioentityIdentifierFacets(-1)
@@ -161,5 +168,4 @@ public class SolrInputDocumentInputStreamIT {
                 MessageFormat.format("Nothing in the index for {0} , {1}", accession, identifierSearch.description()),
                 identifiersForThatExperiment, not(empty()));
     }
-
 }

@@ -23,11 +23,10 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class BaselineExperimentSearchResultProducerIT {
-
-    BaselineExperimentSearchResultProducer subject;
+    private BaselineExperimentSearchResultProducer subject;
 
     @Inject
-    ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTrader;
 
     @Before
     public void setUp() {
@@ -37,20 +36,19 @@ public class BaselineExperimentSearchResultProducerIT {
 
     @Test
     public void weHaveTwoColumnsCorrespondingToAdultAndFetus() {
-        BaselineExperiment E_PROT_1 = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
-
+        BaselineExperiment eProt1 = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
 
         Map<String, Map<String, Double>> expressionsPerColumnPerExperiment = new HashMap<>();
 
         Map<String, Double> fakeResults = new HashMap<>();
-        for (AssayGroup assayGroup: E_PROT_1.getDataColumnDescriptors()) {
-            fakeResults.put(assayGroup.getId(), Math.random()* 10000);
+        for (AssayGroup assayGroup: eProt1.getDataColumnDescriptors()) {
+            fakeResults.put(assayGroup.getId(), Math.random() * 10000);
         }
-        expressionsPerColumnPerExperiment.put(E_PROT_1.getAccession(), fakeResults);
+        expressionsPerColumnPerExperiment.put(eProt1.getAccession(), fakeResults);
 
-        BaselineExperimentProfilesList result = subject.buildProfilesForExperiments(expressionsPerColumnPerExperiment, "ORGANISM_PART");
-        assertThat(result.getFactorsAcrossExperiments().size(), lessThan(E_PROT_1.getDataColumnDescriptors().size()));
+        BaselineExperimentProfilesList result =
+                subject.buildProfilesForExperiments(expressionsPerColumnPerExperiment, "ORGANISM_PART");
+        assertThat(result.getFactorsAcrossExperiments().size(), lessThan(eProt1.getDataColumnDescriptors().size()));
         assertThat(result.size(), is(2));
-
     }
 }

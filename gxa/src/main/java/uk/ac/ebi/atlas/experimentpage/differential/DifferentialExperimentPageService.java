@@ -22,19 +22,23 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import java.util.List;
 import java.util.Map;
 
-public class DifferentialExperimentPageService
-        <Expr extends DifferentialExpression, E extends DifferentialExperiment,
-                K extends DifferentialRequestPreferences,
-                P extends DifferentialProfile<Expr, P>, R extends DifferentialRequestContext<E, K>>
+public class
+DifferentialExperimentPageService<
+        X extends DifferentialExpression,
+        E extends DifferentialExperiment,
+        K extends DifferentialRequestPreferences,
+        P extends DifferentialProfile<X, P>,
+        R extends DifferentialRequestContext<E, K>>
+
         extends ExperimentPageService {
 
     private final AtlasResourceHub atlasResourceHub;
     private final DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory;
-    private final DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap;
+    private final DifferentialProfilesHeatMap<X, E, P, R> profilesHeatMap;
 
     public DifferentialExperimentPageService(
             DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory,
-            DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
+            DifferentialProfilesHeatMap<X, E, P, R> profilesHeatMap,
             AtlasResourceHub atlasResourceHub) {
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
@@ -50,7 +54,8 @@ public class DifferentialExperimentPageService
         DifferentialProfilesList<P> profiles = profilesHeatMap.fetch(requestContext);
 
         result.add("anatomogram", JsonNull.INSTANCE);
-        for (Map.Entry<String, JsonElement> e : payloadAttributes(experiment, accessKey, preferences, getTheOnlyId(profiles)).entrySet()) {
+        for (Map.Entry<String, JsonElement> e :
+                payloadAttributes(experiment, accessKey, preferences, getTheOnlyId(profiles)).entrySet()) {
             result.add(e.getKey(), e.getValue());
         }
 

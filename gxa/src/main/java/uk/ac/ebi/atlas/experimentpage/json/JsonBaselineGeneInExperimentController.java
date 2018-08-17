@@ -27,14 +27,16 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
 public class JsonBaselineGeneInExperimentController extends JsonExperimentController {
-    private final BaselineExperimentProfilesService BaselineExperimentProfilesService;
+    private final BaselineExperimentProfilesService baselineExperimentProfilesService;
     private final BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory;
 
-    public JsonBaselineGeneInExperimentController(ExperimentTrader experimentTrader,
-                                                  BaselineExperimentProfilesService BaselineExperimentProfilesService,
-                                                  BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory) {
+    public
+    JsonBaselineGeneInExperimentController(
+            ExperimentTrader experimentTrader,
+            BaselineExperimentProfilesService baselineExperimentProfilesService,
+            BaselineTranscriptProfileStreamFactory baselineTranscriptProfileStreamFactory) {
         super(experimentTrader);
-        this.BaselineExperimentProfilesService = BaselineExperimentProfilesService;
+        this.baselineExperimentProfilesService = baselineExperimentProfilesService;
         this.baselineTranscriptProfileStreamFactory = baselineTranscriptProfileStreamFactory;
     }
 
@@ -57,7 +59,7 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
         result.add("columnHeaders", columnHeaders(requestContext));
 
         GeneProfilesList<BaselineProfile> geneExpression =
-                BaselineExperimentProfilesService.getGeneProfiles(
+                baselineExperimentProfilesService.getGeneProfiles(
                         experimentAccession, requestContext.getDataColumnsToReturn(), preferences, geneId);
 
         // Do we need to set cutoff to 0? TODO Test the endpoint...
@@ -92,10 +94,8 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
         return columnHeaders;
     }
 
-    /*
-     I am not sure if any of these properties are necessary, or useful
-     we use the "cutoff", which otherwise doesn't do anything but got selected in the UI, to draw the user something visual
-    */
+    //  I am not sure if any of these properties are necessary, or useful, we use the "cutoff", which otherwise
+    // doesn't do anything but got selected in the UI, to draw the user something visual
     private JsonObject config(BaselineExperiment experiment, ExperimentPageRequestPreferences preferences) {
         JsonObject config = GSON.toJsonTree(preferences).getAsJsonObject();
         config.addProperty("cutoff", preferences.getCutoff());

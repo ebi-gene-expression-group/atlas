@@ -24,10 +24,9 @@ import java.util.Map;
 @Controller
 @Scope("request")
 public class BaselineExperimentsController extends HtmlExceptionHandlingController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentsController.class);
 
-    private ExpressionAtlasExperimentTrader experimentTrader;
+    private final ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
     public BaselineExperimentsController(ExpressionAtlasExperimentTrader experimentTrader) {
@@ -56,23 +55,25 @@ public class BaselineExperimentsController extends HtmlExceptionHandlingControll
         }
 
         Comparator<String> keyComparator = (o1, o2) -> {
-            if (o1.equals("Homo sapiens") && !o2.equals("Homo sapiens"))
+            if (o1.equals("Homo sapiens") && !o2.equals("Homo sapiens")) {
                 return -1;
-            else if (o2.equals("Homo sapiens") && !o1.equals("Homo sapiens"))
+            } else if (o2.equals("Homo sapiens") && !o1.equals("Homo sapiens")) {
                 return 1;
-            else
+            } else {
                 return o1.compareTo(o2);
+            }
         };
         // experiments should be sorted by their display name, not accession
         Comparator<String> valueComparator = (o1, o2) -> {
             // Services review: Alvis' edict for proteomics experiments to always come up at the bottom of
             // the list of experiments within each species
-            if (o1.contains("-PROT-") && !o2.contains("-PROT-"))
+            if (o1.contains("-PROT-") && !o2.contains("-PROT-")) {
                 return 1;
-            else if (o2.contains("-PROT-") && !o1.contains("-PROT-"))
+            } else if (o2.contains("-PROT-") && !o1.contains("-PROT-")) {
                 return -1;
-            else
+            } else {
                 return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
+            }
         };
         SortedSetMultimap<String, String> experimentAccessionsBySpecies =
                 TreeMultimap.create(keyComparator, valueComparator);
@@ -102,5 +103,4 @@ public class BaselineExperimentsController extends HtmlExceptionHandlingControll
 
         return "baseline-landing-page";
     }
-
 }

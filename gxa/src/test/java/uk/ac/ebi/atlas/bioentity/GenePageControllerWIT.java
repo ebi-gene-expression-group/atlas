@@ -11,9 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.configuration.WebConfig;
-import uk.ac.ebi.atlas.testutils.SolrUtils;
-
-import javax.inject.Inject;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,14 +20,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class GenePageControllerWIT {
-
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
-
-    @Inject
-    SolrUtils solrUtils;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -43,5 +36,4 @@ public class GenePageControllerWIT {
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("error-page")); // Can be a view name
     }
-
 }

@@ -17,19 +17,18 @@ import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.util.Collection;
 
-
 @Controller
 @Scope("request")
 public class SitemapController {
-
-    private SitemapWriter sitemapWriter = new SitemapWriter();
-
+    private final SitemapWriter sitemapWriter = new SitemapWriter();
     private final AnalyticsSearchService solr;
     private final SpeciesFactory speciesFactory;
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, SpeciesFactory speciesFactory, SpeciesPropertiesTrader speciesPropertiesTrader) {
+    public SitemapController(AnalyticsSearchService solr,
+                             SpeciesFactory speciesFactory,
+                             SpeciesPropertiesTrader speciesPropertiesTrader) {
         this.solr = solr;
         this.speciesFactory = speciesFactory;
         this.speciesPropertiesTrader = speciesPropertiesTrader;

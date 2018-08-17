@@ -91,8 +91,10 @@ public class BaselineExperimentProfilesDao {
             thisGeneIdDocs.forEach(solrDoc -> {
                 BaselineExpression baselineExpression =
                         solrDoc.containsKey(expressionLevelFieldNames.getRight().name()) ?
-                                parseSolrFieldValue(solrDoc.getFieldValues(expressionLevelFieldNames.getRight().name())) :
-                                parseSolrFieldValue(solrDoc.getFieldValue(expressionLevelFieldNames.getLeft().name()));
+                                parseSolrFieldValue(
+                                        solrDoc.getFieldValues(expressionLevelFieldNames.getRight().name())) :
+                                parseSolrFieldValue(
+                                        solrDoc.getFieldValue(expressionLevelFieldNames.getLeft().name()));
 
                 String assayGroupId = (String) solrDoc.getFieldValue(ASSAY_GROUP_ID.name());
                 AssayGroup thisAssayGroup = assayGroups.stream()

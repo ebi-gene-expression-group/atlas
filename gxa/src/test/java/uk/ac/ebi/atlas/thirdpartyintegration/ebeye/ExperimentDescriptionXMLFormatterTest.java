@@ -10,7 +10,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class ExperimentDescriptionXMLFormatterTest {
-
     private ExperimentDescriptionXMLFormatter subject = new ExperimentDescriptionXMLFormatter();
 
     @Test
@@ -30,7 +29,9 @@ public class ExperimentDescriptionXMLFormatterTest {
         String header = "<database>\n" +
                 "<name>Expression Atlas</name>\n" +
                 "<description>\n" +
-                "A semantically enriched database of publicly available gene and transcript expression data. The data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns under the conditions of the original experiment\n" +
+                "A semantically enriched database of publicly available gene and transcript expression data. The " +
+                "data is re-analysed in-house to detect genes showing interesting baseline and differential " +
+                "expression patterns under the conditions of the original experiment\n" +
                 "</description>\n" +
                 "<release_date>2-Dec-2012</release_date>\n" +
                 "<entry_count>100</entry_count>\n"  +
@@ -70,9 +71,9 @@ public class ExperimentDescriptionXMLFormatterTest {
                 "</cross_references>\n" +
                 "</entry>";
 
-        ExperimentDescription ed = new ExperimentDescription("E-GEOD-31677", "Long-term Salt & Water Stress in Grapes");
+        ExperimentDescription ed =
+                new ExperimentDescription("E-GEOD-31677", "Long-term Salt & Water Stress in Grapes");
 
         assertThat(subject.formatExperimentDescription(ed), is(result));
     }
-
 }

@@ -113,9 +113,9 @@ public class DifferentialResultsReader {
         }
         for (JsonObject document : filteredDocuments) {
             double foldChange = document.get("fold_change").getAsDouble();
-            String colour = foldChange > 0.0
-                    ? ColourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
-                    : ColourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
+            String colour = foldChange > 0.0 ?
+                    ColourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red") :
+                    ColourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
             document.addProperty("colour", colour);
             document.addProperty("foldChange", FOLD_CHANGE_ROUNDER.applyAsDouble(foldChange));
             results.add(document);
@@ -137,7 +137,7 @@ public class DifferentialResultsReader {
     }
 
     private void addDoublePropertyIfValid(JsonObject resultsWithLevels, String name, double value) {
-        if (!Double.isInfinite(value)&&!Double.isNaN(value)) {
+        if (!Double.isInfinite(value) && !Double.isNaN(value)) {
             resultsWithLevels.addProperty(name, FOLD_CHANGE_ROUNDER.applyAsDouble(value));
         }
     }

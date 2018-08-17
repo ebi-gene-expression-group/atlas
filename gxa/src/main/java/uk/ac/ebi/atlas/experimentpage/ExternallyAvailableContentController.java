@@ -37,7 +37,7 @@ public class ExternallyAvailableContentController {
     - the QC report needs a redirect to another Atlas page, preserving the access key
     - the typical resource needs to circle back to this page
     */
-    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey, HttpServletRequest request) {
+    private JsonObject contentAsJson(ExternallyAvailableContent content, String accession, String accessKey) {
         JsonObject result = content.description.asJson();
         if ("redirect".equals(content.uri.getScheme())) {
             try {
@@ -47,23 +47,24 @@ public class ExternallyAvailableContentController {
                 result.addProperty("url",
                         MessageFormat.format("{0}{1}",
                                 content.uri.getSchemeSpecificPart(),
-                                isNotEmpty(accessKey) ? "?accessKey="+accessKey : "")
+                                isNotEmpty(accessKey) ? "?accessKey=" + accessKey : "")
                 );
             }
 
         } else {
-            result.addProperty("url",
+            result.addProperty(
+                    "url",
                     MessageFormat.format("experiments-content/{0}/resources/{1}{2}",
-                            accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
+                            accession, content.uri.toString(), isNotEmpty(accessKey) ? "?accessKey=" + accessKey : ""
             ));
         }
         return result;
     }
 
-    private JsonArray contentAsJson(List<ExternallyAvailableContent> contents, String accession, String accessKey, HttpServletRequest request) {
+    private JsonArray contentAsJson(List<ExternallyAvailableContent> contents, String accession, String accessKey) {
         JsonArray result = new JsonArray();
         for (ExternallyAvailableContent content: contents) {
-            result.add(contentAsJson(content, accession, accessKey, request));
+            result.add(contentAsJson(content, accession, accessKey));
         }
         return result;
     }
@@ -74,8 +75,7 @@ public class ExternallyAvailableContentController {
                     produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String list(@PathVariable String experimentAccession,
                        @PathVariable String contentType,
-                       @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
-                       HttpServletRequest request) {
+                       @RequestParam(value = "accessKey", defaultValue = "") String accessKey) {
         return GSON.toJson(
                 contentAsJson(
                         expressionAtlasContentService.list(
@@ -83,8 +83,7 @@ public class ExternallyAvailableContentController {
                                 accessKey,
                                 ExternallyAvailableContent.ContentType.valueOf(contentType)),
                         experimentAccession,
-                        accessKey,
-                        request));
+                        accessKey));
     }
 
     @RequestMapping(value = "experiments-content/{experimentAccession}/resources/**",
@@ -98,9 +97,8 @@ public class ExternallyAvailableContentController {
                 URI.create(request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE)
                         .toString()
                         .replaceFirst(".*/resources/", "")
-                        .replaceFirst("\\?.*$", "")
-                )
-        ).apply(response);
+                        .replaceFirst("\\?.*$", "")))
+                .apply(response);
     }
 
 }

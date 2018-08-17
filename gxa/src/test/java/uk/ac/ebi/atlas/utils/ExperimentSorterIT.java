@@ -26,17 +26,16 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class})
 public class ExperimentSorterIT {
+    @Inject
+    private DataFileHub dataFileHub;
 
     @Inject
-    DataFileHub dataFileHub;
+    private ExperimentTrader experimentTrader;
 
     @Inject
-    ExperimentTrader experimentTrader;
+    private ConfigurationTrader configurationTrader;
 
-    @Inject
-    ConfigurationTrader configurationTrader;
-
-    ExperimentSorter subject;
+    private ExperimentSorter subject;
 
     @Before
     public void setUp() {

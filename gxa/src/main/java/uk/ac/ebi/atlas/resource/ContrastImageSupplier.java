@@ -16,7 +16,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ContrastImageSupplier<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E> {
+public abstract class
+ContrastImageSupplier<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E> {
 
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
@@ -24,7 +25,7 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
     }
 
     @Inject
-    ContrastImageFactory contrastImageFactory;
+    protected ContrastImageFactory contrastImageFactory;
 
 
     ExternallyAvailableContent.Description description(ResourceType resourceType, Contrast contrast) {
@@ -66,19 +67,25 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
 
         @Override
         public Collection<ExternallyAvailableContent> get(DifferentialExperiment experiment) {
-            return getForRnaSeqDifferentialExperiment(experiment.getAccession(), experiment.getDataColumnDescriptors());
+            return getForRnaSeqDifferentialExperiment(
+                    experiment.getAccession(), experiment.getDataColumnDescriptors());
         }
 
-        Collection<ExternallyAvailableContent> getForRnaSeqDifferentialExperiment(String experimentAccession, List<Contrast> contrasts) {
+        Collection<ExternallyAvailableContent> getForRnaSeqDifferentialExperiment(String experimentAccession,
+                                                                                  List<Contrast> contrasts) {
             ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
-            for (Contrast contrast: contrasts) {
+            for (Contrast contrast : contrasts) {
                 for (ResourceType resourceType : ContrastImage.RESOURCE_TYPES) {
-                    ExternalImage externalImage = contrastImageFactory.getContrastImage(resourceType, experimentAccession, Optional.empty(), contrast.getId());
+                    ExternalImage externalImage =
+                            contrastImageFactory.getContrastImage(
+                                    resourceType, experimentAccession, Optional.empty(), contrast.getId());
                     if (externalImage.exists()) {
-                        b.add(new ExternallyAvailableContent
-                                (makeUri(MessageFormat.format("contrast_image-{0}-{1}", resourceType.name(), contrast.getId())),
-                                        description(resourceType, contrast) , externalImage.get()
-                                ));
+                        b.add(
+                                new ExternallyAvailableContent(
+                                        makeUri(MessageFormat.format(
+                                                "contrast_image-{0}-{1}", resourceType.name(), contrast.getId())),
+                                        description(resourceType, contrast),
+                                        externalImage.get()));
                     }
                 }
             }
@@ -91,20 +98,30 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
 
         @Override
         public Collection<ExternallyAvailableContent> get(MicroarrayExperiment experiment) {
-            return getForMicroarrayExperiment(experiment.getAccession(), experiment.getDataColumnDescriptors(),  experiment.getArrayDesignAccessions());
+            return getForMicroarrayExperiment(
+                    experiment.getAccession(),
+                    experiment.getDataColumnDescriptors(),
+                    experiment.getArrayDesignAccessions());
         }
 
-        Collection<ExternallyAvailableContent> getForMicroarrayExperiment(String experimentAccession, List<Contrast> contrasts, Collection<String> arrayDesigns) {
+        Collection<ExternallyAvailableContent> getForMicroarrayExperiment(String experimentAccession,
+                                                                          List<Contrast> contrasts,
+                                                                          Collection<String> arrayDesigns) {
             ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
-            for (String arrayDesign: arrayDesigns) {
+            for (String arrayDesign : arrayDesigns) {
                 for (Contrast contrast: contrasts) {
                     for (ResourceType resourceType : ContrastImage.RESOURCE_TYPES) {
-                        ExternalImage externalImage = contrastImageFactory.getContrastImage(resourceType, experimentAccession, Optional.of(arrayDesign), contrast.getId());
+                        ExternalImage externalImage =
+                                contrastImageFactory.getContrastImage(
+                                        resourceType, experimentAccession, Optional.of(arrayDesign), contrast.getId());
                         if (externalImage.exists()) {
-                            b.add(new ExternallyAvailableContent
-                                    (makeUri(MessageFormat.format("contrast_image-{0}-{1}-{2}", resourceType.name(), contrast.getId(), arrayDesign)),
-                                            description(resourceType, contrast) , externalImage.get()
-                                    ));
+                            b.add(
+                                    new ExternallyAvailableContent(
+                                            makeUri(MessageFormat.format(
+                                                    "contrast_image-{0}-{1}-{2}",
+                                                    resourceType.name(), contrast.getId(), arrayDesign)),
+                                            description(resourceType, contrast),
+                                            externalImage.get()));
                         }
                     }
                 }

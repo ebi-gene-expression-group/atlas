@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentAssayGroupsLinesTest {
-
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String ASSAY1 = "ASSAY1";
     private static final String ASSAY2 = "ASSAY2";
@@ -61,11 +60,12 @@ public class BaselineExperimentAssayGroupsLinesTest {
 
     @Test
     public void lines() {
-
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        SampleCharacteristic sampleCharacteristic1 = SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE1, SAMPLE_ONTOLOGY_TERM1);
-        SampleCharacteristic sampleCharacteristic2 = SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_TERM2);
+        SampleCharacteristic sampleCharacteristic1 =
+                SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE1, SAMPLE_ONTOLOGY_TERM1);
+        SampleCharacteristic sampleCharacteristic2 =
+                SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_TERM2);
 
 
         experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, sampleCharacteristic1);
@@ -89,14 +89,37 @@ public class BaselineExperimentAssayGroupsLinesTest {
 
         print(subject);
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G1, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1, HTTP_OBO + SAMPLE_ONTOLOGY_ID1}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G1, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, HTTP_OBO + FACTOR_ONTOLOGY_ID1}));
+        assertThat(
+                lines.next(),
+                is(new String[] {
+                        EXPERIMENT_ACCESSION, G1, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1,
+                        HTTP_OBO + SAMPLE_ONTOLOGY_ID1}));
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G2, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_ID2}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G2, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_ID2}));
+        assertThat(
+                lines.next(),
+                is(new String[] {
+                        EXPERIMENT_ACCESSION, G1, FACTOR, FACTOR_HEADER, FACTOR_VALUE1,
+                        HTTP_OBO + FACTOR_ONTOLOGY_ID1}));
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G3, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3, ""}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G3, FACTOR, FACTOR_HEADER, FACTOR_VALUE3, ""}));
+        assertThat(
+                lines.next(),
+                is(new String[] {
+                        EXPERIMENT_ACCESSION, G2, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_ID2}));
+
+        assertThat(
+                lines.next(),
+                is(new String[] {
+                        EXPERIMENT_ACCESSION, G2, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_ID2}));
+
+        assertThat(
+                lines.next(),
+                is(new String[] {
+                        EXPERIMENT_ACCESSION, G3, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3, ""}));
+
+        assertThat(
+                lines.next(),
+                is(new String[] {
+                        EXPERIMENT_ACCESSION, G3, FACTOR, FACTOR_HEADER, FACTOR_VALUE3, ""}));
     }
 
     private void print(Iterable<String[]> rows) {
@@ -108,6 +131,4 @@ public class BaselineExperimentAssayGroupsLinesTest {
     private void print(String[] row) {
         System.out.println("\"" + Joiner.on("\",\"").useForNull("").join(row) + "\"");
     }
-
-
 }

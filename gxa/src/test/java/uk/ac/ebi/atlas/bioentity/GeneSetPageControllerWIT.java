@@ -20,11 +20,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class GeneSetPageControllerWIT {
-
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -37,5 +36,4 @@ public class GeneSetPageControllerWIT {
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("error-page")); // Can be a view name
     }
-
 }

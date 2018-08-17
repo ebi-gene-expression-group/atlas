@@ -22,11 +22,10 @@ public class CoexpressedGenesController extends JsonExceptionHandlingController 
         this.coexpressedGenesDao = new CoexpressedGenesDao(jdbcTemplate);
     }
 
-    @RequestMapping(value ={"/json/experiments/coexpression"},
-produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/json/experiments/coexpression"}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchCoexpressedGenes(@RequestParam(value = "experiment") String experiment,
                                         @RequestParam(value = "identifier") String identifier) {
-        return GSON.toJson(coexpressedGenesDao.coexpressedGenesfor (experiment, identifier), Set.class);
+        return GSON.toJson(coexpressedGenesDao.coexpressedGenesFor(experiment, identifier), Set.class);
     }
 }

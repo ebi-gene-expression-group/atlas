@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class JsonExperimentDispatcherWIT {
     @Autowired
     private WebApplicationContext wac;
+
     private MockMvc mockMvc;
 
     @BeforeEach

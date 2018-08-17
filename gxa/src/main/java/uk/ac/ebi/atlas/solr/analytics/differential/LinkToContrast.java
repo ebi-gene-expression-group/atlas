@@ -19,9 +19,8 @@ public class LinkToContrast extends LinkToExperimentPage<Pair<String, Contrast>>
 
     @Override
     public Map<String, String> perInputQueryParameters(Pair<String, Contrast> experimentAccessionAndContrast) {
-        /*
-        This is coupled to a corresponding property set in DifferentialExperiment.java, and the UI code understanding filterFactors:{<type> : <value>}
-         */
+        // This is coupled to a corresponding property set in DifferentialExperiment.java, and the UI code
+        // understanding filterFactors:{<type> : <value>}
         return ImmutableMap.of("filterFactors",
                 new RichFactorGroup(new FactorSet().add(new Factor("Comparison Name",
                         experimentAccessionAndContrast.getRight().getDisplayName()))).asUrlEncodedJson());

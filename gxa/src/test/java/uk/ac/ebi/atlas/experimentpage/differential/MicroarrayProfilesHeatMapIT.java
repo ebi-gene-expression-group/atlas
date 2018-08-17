@@ -37,35 +37,37 @@ import static org.hamcrest.Matchers.is;
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class MicroarrayProfilesHeatMapIT {
+    @Inject
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    ExpressionAtlasExperimentTrader experimentTrader;
+    private MicroarrayExperimentsCache experimentsCache;
 
     @Inject
-    MicroarrayExperimentsCache experimentsCache;
+    private MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
 
     @Inject
-    MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
+    private SolrQueryService solrQueryService;
 
-    @Inject
-    SolrQueryService solrQueryService;
+    private MicroarrayRequestPreferences requestPreferences;
 
-    DifferentialProfilesHeatMap<MicroarrayExpression, MicroarrayExperiment, MicroarrayProfile, MicroarrayRequestContext> subject;
-
-    MicroarrayRequestPreferences requestPreferences;
+    private
+    DifferentialProfilesHeatMap<
+            MicroarrayExpression, MicroarrayExperiment, MicroarrayProfile, MicroarrayRequestContext>
+            subject;
 
     @Before
     public void setUp() {
-        subject = new DifferentialProfilesHeatMap<>(microarrayProfileStreamFactory, solrQueryService) ;
+        subject = new DifferentialProfilesHeatMap<>(microarrayProfileStreamFactory, solrQueryService);
         requestPreferences = new MicroarrayRequestPreferences();
     }
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws Exception {
+    private MicroarrayRequestContext populateRequestContext(String experimentAccession) {
         return populateRequestContext(experimentAccession, 1.0, 0.0);
     }
 
     private MicroarrayRequestContext populateRequestContext(
-            String experimentAccession, double cutoff, double logFoldCutoff) throws Exception {
+            String experimentAccession, double cutoff, double logFoldCutoff) {
         requestPreferences.setFoldChangeCutoff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         MicroarrayExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -74,9 +76,9 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
     @Test
-    public void testSomeExperiments() throws Exception {
-        Collection<String> accessions = Lists.newArrayList(experimentTrader.getMicroarrayExperimentAccessions
-                ()).subList(0, 10);
+    public void testSomeExperiments() {
+        Collection<String> accessions =
+                Lists.newArrayList(experimentTrader.getMicroarrayExperimentAccessions()).subList(0, 10);
 
         for (String accession: accessions) {
             setUp();
@@ -84,18 +86,14 @@ public class MicroarrayProfilesHeatMapIT {
         }
     }
 
-    private void testExperiment(String accession) throws Exception {
-
+    private void testExperiment(String accession) {
         testDefaultParameters(accession);
-
         testNotSpecific(accession);
-
         testUpAndDownRegulated(accession);
-
         testNoResultsWithStrictCutoff(accession);
     }
 
-    private void testDefaultParameters(String accession) throws Exception {
+    private void testDefaultParameters(String accession) {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
@@ -104,7 +102,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testNotSpecific(String accession) throws Exception {
+    private void testNotSpecific(String accession) {
         requestPreferences.setSpecific(false);
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -114,7 +112,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulated(String accession) throws Exception {
+    private void testUpAndDownRegulated(String accession) {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList<MicroarrayProfile> profilesAll = subject.fetch(requestContext);
@@ -140,7 +138,7 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
 
-    private void testNoResultsWithStrictCutoff(String accession) throws Exception {
+    private void testNoResultsWithStrictCutoff(String accession) {
         MicroarrayRequestContext requestContext = populateRequestContext(accession, 0.0, 1E90d);
 
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -158,7 +156,12 @@ public class MicroarrayProfilesHeatMapIT {
         }
 
         assertThat(experiment.getAccession(), profiles.size(), greaterThan(0));
-        assertThat(experiment.getAccession(), profiles.size(), is(profiles.stream().map(p -> Joiner.on("").join(p.identifiers())).collect(Collectors.toSet()).size()));
+        assertThat(
+                experiment.getAccession(),
+                profiles.size(),
+                is(profiles.stream()
+                        .map(p -> Joiner.on("").join(p.identifiers()))
+                        .collect(Collectors.toSet()).size()));
     }
 
     private static <T extends Profile> ImmutableList<String> extractGeneNames(List<T> profiles) {
@@ -168,5 +171,4 @@ public class MicroarrayProfilesHeatMapIT {
         }
         return builder.build();
     }
-
 }

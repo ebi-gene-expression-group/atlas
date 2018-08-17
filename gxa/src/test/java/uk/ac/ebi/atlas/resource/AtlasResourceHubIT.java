@@ -24,19 +24,17 @@ import static org.junit.Assert.fail;
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class AtlasResourceHubIT {
+    @Inject
+    private AtlasResourceHub subject;
 
     @Inject
-    AtlasResourceHub subject;
-
-
-    @Inject
-    ExpressionAtlasExperimentTrader experimentTrader;
-
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     @Test
     public void dataHasRightFormatForRnaSeqExperiments() {
         for (String accession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
-            DifferentialExperiment differentialExperiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(accession);
+            DifferentialExperiment differentialExperiment =
+                    (DifferentialExperiment) experimentTrader.getPublicExperiment(accession);
 
             assertAboutResult(subject.contrastImages(differentialExperiment));
         }
@@ -45,7 +43,8 @@ public class AtlasResourceHubIT {
     @Test
     public void dataHasRightFormatForMicroarrayExperiments() {
         for (String accession : experimentTrader.getMicroarrayExperimentAccessions()) {
-            MicroarrayExperiment differentialExperiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(accession);
+            MicroarrayExperiment differentialExperiment =
+                    (MicroarrayExperiment) experimentTrader.getPublicExperiment(accession);
 
             assertAboutResult(subject.contrastImages(differentialExperiment));
         }
@@ -83,16 +82,16 @@ public class AtlasResourceHubIT {
         assertTrue(countNegatives >0);
     }
 
-     void assertAboutResult(Map<String, JsonArray> result) {
+    private void assertAboutResult(Map<String, JsonArray> result) {
         for (Map.Entry<String, JsonArray> e : result.entrySet()) {
-            assertTrue("Contrast: "+e.getKey(), e.getKey().matches("g\\d+_g\\d+"));
+            assertTrue("Contrast: " + e.getKey(), e.getKey().matches("g\\d+_g\\d+"));
 
             for (JsonElement el : e.getValue().getAsJsonArray()) {
                 assertTrue(el.getAsJsonObject().has("type"));
                 assertTrue(el.getAsJsonObject().has("uri"));
                 try {
                     ResourceType.forFileName(el.getAsJsonObject().get("type").getAsString());
-                }catch(Exception exc) {
+                } catch(Exception exc) {
                     fail(exc.getMessage());
                 }
             }

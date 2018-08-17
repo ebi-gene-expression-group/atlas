@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
+    private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     private final LinkedHashSet<ImmutableList<String>> result = new LinkedHashSet<>();
     private final LinkedHashSet<ImmutableList<String>> assayGroupsDetails;
@@ -35,8 +36,14 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
 
     private void populateSamples(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup) {
         for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
-            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "characteristic",
-                    sample.header(), sample.value(), joinURIs(sample.valueOntologyTerms()));
+            ImmutableList<String> line =
+                    ImmutableList.of(
+                            experiment.getAccession(),
+                            assayGroup.getId(),
+                            "characteristic",
+                            sample.header(),
+                            sample.value(),
+                            joinURIs(sample.valueOntologyTerms()));
             result.add(line);
         }
     }
@@ -50,8 +57,6 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     }
 
     private static String joinURIs(Set<OntologyTerm> ontologyTerms) {
-        final String ONTOLOGY_TERM_DELIMITER = " ";
-
         StringBuilder sb = new StringBuilder();
         for (OntologyTerm ontologyTerm : ontologyTerms) {
             sb.append(ontologyTerm.uri()).append(ONTOLOGY_TERM_DELIMITER);

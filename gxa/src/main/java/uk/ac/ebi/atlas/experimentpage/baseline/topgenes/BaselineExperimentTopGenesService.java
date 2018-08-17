@@ -34,7 +34,8 @@ public class BaselineExperimentTopGenesService {
     public List<String> searchSpecificGenesInBaselineExperiment(String experimentAccession,
                                                                 BaselineRequestPreferences<?> preferences) {
         try (TupleStreamer tupleStreamer =
-                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortBySpecificity(experimentAccession, preferences)) {
+                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortBySpecificity(
+                             experimentAccession, preferences)) {
             return mapBySpecifictyAndSortByAverageExpression(tupleStreamer.get(), preferences.getHeatmapMatrixSize());
         }
     }
@@ -42,7 +43,8 @@ public class BaselineExperimentTopGenesService {
     public List<String> searchMostExpressedGenesInBaselineExperiment(String experimentAccession,
                                                                      BaselineRequestPreferences<?> preferences) {
         try (TupleStreamer tupleStreamer =
-                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortByAverageExpression(experimentAccession, preferences)) {
+                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortByAverageExpression(
+                             experimentAccession, preferences)) {
             return tupleStreamer.get()
                     .map(tuple -> tuple.getString(GENE_KEY))
                     .collect(toList());

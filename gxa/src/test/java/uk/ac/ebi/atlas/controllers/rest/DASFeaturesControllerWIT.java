@@ -20,11 +20,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class DASFeaturesControllerWIT {
-
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -60,5 +59,4 @@ public class DASFeaturesControllerWIT {
                 get("/das/s4/features"))
                 .andExpect(status().isBadRequest());
     }
-
 }

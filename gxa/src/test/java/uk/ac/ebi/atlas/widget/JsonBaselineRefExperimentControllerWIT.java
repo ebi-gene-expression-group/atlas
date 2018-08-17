@@ -15,18 +15,16 @@ import uk.ac.ebi.atlas.configuration.WebConfig;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class JsonBaselineRefExperimentControllerWIT {
-
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -53,5 +51,4 @@ public class JsonBaselineRefExperimentControllerWIT {
                 // things... :(
                 //.andExpect(jsonPath("$.error").value(is("getTopGeneProfiles")));
     }
-
 }

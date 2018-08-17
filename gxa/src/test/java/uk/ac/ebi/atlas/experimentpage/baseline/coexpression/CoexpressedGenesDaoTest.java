@@ -30,7 +30,7 @@ public class CoexpressedGenesDaoTest {
         when(jdbcTemplate.queryForObject(CE_GENES_SQL_QUERY_TEMPLATE, String.class, "E-FOOBAR", "ENSGFOOBAR"))
                 .thenThrow(new EmptyResultDataAccessException(1));
 
-        assertThat(subject.coexpressedGenesfor ("E-FOOBAR", "ENSGFOOBAR")).isEmpty();
+        assertThat(subject.coexpressedGenesFor("E-FOOBAR", "ENSGFOOBAR")).isEmpty();
     }
 
     @Test
@@ -38,10 +38,8 @@ public class CoexpressedGenesDaoTest {
         when(jdbcTemplate.queryForObject(CE_GENES_SQL_QUERY_TEMPLATE, String.class, "E-FOOBAR", "ENSGFOOBAR"))
                 .thenReturn("ENSGFOOBAR, ENSGFOOBAR1, ENSGFOOBAR2, ENSGFOOBAR3");
 
-        assertThat(subject.coexpressedGenesfor ("E-FOOBAR", "ENSGFOOBAR"))
+        assertThat(subject.coexpressedGenesFor("E-FOOBAR", "ENSGFOOBAR"))
                 .hasSize(3)
                 .doesNotContain("ENSGFOOBAR");
     }
-
-
 }

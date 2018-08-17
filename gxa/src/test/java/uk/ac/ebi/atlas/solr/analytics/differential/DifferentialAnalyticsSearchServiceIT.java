@@ -24,19 +24,17 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class})
 public class DifferentialAnalyticsSearchServiceIT {
-
-    static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
-
-    @Inject
-    SpeciesFactory speciesFactory;
+    private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 
     @Inject
-    DifferentialAnalyticsSearchService subject;
+    private SpeciesFactory speciesFactory;
+
+    @Inject
+    private DifferentialAnalyticsSearchService subject;
 
     private SemanticQuery query = SemanticQuery.create("zinc finger");
     private SemanticQuery condition = SemanticQuery.create("pish");
     private String species = "oryza sativa";
-
 
     @Test
     public void fetchDifferentialFacetsForSearch() {

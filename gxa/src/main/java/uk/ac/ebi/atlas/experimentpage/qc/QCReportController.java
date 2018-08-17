@@ -17,14 +17,14 @@ import java.text.MessageFormat;
 
 @Controller
 public class QCReportController {
-
-    private static final String QC_REPORT_URL = "experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
+    private static final String QC_REPORT_URL =
+            "experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
     public static String getQcReportUrl(String experimentAccession, String arrayDesign, String accessKey) {
         return QC_REPORT_URL.replace("{experimentAccession}", experimentAccession)
                             .replace("{arrayDesign}", arrayDesign)
-                            .replace("{resource:.*}", "index.html")
-                + (org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey=" + accessKey : "");
+                            .replace("{resource:.*}", "index.html") +
+                (org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey=" + accessKey : "");
     }
 
     private ExperimentTrader experimentTrader;
@@ -55,21 +55,21 @@ public class QCReportController {
 
         request.setAttribute("contentPath",
                 new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experimentAccession).qcFolder)
-                        .get(experimentAccession, arrayDesign).or(() -> {
-                            throw new ResourceNotFoundException(
-                                    MessageFormat.format("Not found: QC report for experiment {0} and array design {1}",
-                                            experimentAccession, arrayDesign));
-                        }));
+                        .get(experimentAccession, arrayDesign)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        MessageFormat.format(
+                                                "Not found: QC report for experiment {0} and array design {1}",
+                                                experimentAccession, arrayDesign))));
 
         return "qc-template";
     }
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
-    public String forwardToQcResource(String experimentAccession, String arrayDesign, String resource) {
+    private String forwardToQcResource(String experimentAccession, String arrayDesign, String resource) {
         String path = MessageFormat.format("/expdata/{0}/qc/{1}/{2}",
                 experimentAccession, MicroarrayQCFiles.folderName(experimentAccession, arrayDesign), resource);
 
         return "forward:" + path;
     }
-
 }

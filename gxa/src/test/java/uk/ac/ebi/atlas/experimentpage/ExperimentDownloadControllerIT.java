@@ -41,36 +41,30 @@ import static org.hamcrest.Matchers.is;
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class ExperimentDownloadControllerIT {
-
     private static final int GENE_NAME_INDEX = 1;
 
     @Inject
-    ExperimentDownloadController subject;
+    private ExperimentDownloadController subject;
 
     @Inject
-    ExpressionAtlasExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    DataFileHub dataFileHub;
+    private DataFileHub dataFileHub;
 
     @Test
-    public void testSomeMicroarrayExperiments() throws Exception{
+    public void testSomeMicroarrayExperiments() {
         Set<String> rnaSeqExperiments = experimentTrader.getMicroarrayExperimentAccessions();
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
         for (String accession: rnaSeqExperiments) {
-
             MicroarrayExperiment differentialExperiment = (MicroarrayExperiment)
                     experimentTrader.getPublicExperiment(accession);
 
             defaultParametersHeader(differentialExperiment);
-
             weHaveSomeResults(differentialExperiment);
-
             upDownRegulationWorks(differentialExperiment);
-
             noDataWithVeryStrictPValueCutoff(differentialExperiment);
-
             noDataWithVeryLargeFoldChangeCutoff(differentialExperiment);
         }
     }
@@ -94,7 +88,7 @@ public class ExperimentDownloadControllerIT {
         return Pair.of(headers, body);
     }
 
-    public void defaultParametersHeader(MicroarrayExperiment experiment) throws Exception {
+    private void defaultParametersHeader(MicroarrayExperiment experiment) {
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
 
@@ -105,7 +99,8 @@ public class ExperimentDownloadControllerIT {
         String queryLine = headersAndBody.getLeft().get(1);
 
         assertThat(
-                Pattern.matches(".*Genes .* up/down differentially expressed.*"+experiment.getAccession(), queryLine),
+                Pattern.matches(
+                        ".*Genes .* up/down differentially expressed.*" + experiment.getAccession(), queryLine),
                 is(true));
 
         String[] columnHeaders = headersAndBody.getRight().get(0).split("\t");
@@ -115,7 +110,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(columnHeaders.length, greaterThan(3));
     }
 
-    public void weHaveSomeResults(MicroarrayExperiment experiment) throws Exception {
+    private void weHaveSomeResults(MicroarrayExperiment experiment) {
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         if (Math.random() < 0.5) {
             requestPreferences.setSpecific(false);
@@ -133,11 +128,9 @@ public class ExperimentDownloadControllerIT {
 
         assertThat(dataColumns, hasSize(greaterThan(0)));
         assertThat(dataColumns, hasSize(geneNames.size()));
-
     }
 
-    public void upDownRegulationWorks(MicroarrayExperiment experiment) throws Exception {
-
+    private void upDownRegulationWorks(MicroarrayExperiment experiment) {
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         requestPreferences.setRegulation(Regulation.UP);
 
@@ -164,11 +157,11 @@ public class ExperimentDownloadControllerIT {
         resultsSeparately.addAll(geneNamesUp);
         resultsSeparately.addAll(geneNamesDown);
 
-        assertThat(resultsSeparately, is(new HashSet<>(geneNamesUpDown) ));
+        assertThat(resultsSeparately, is(new HashSet<>(geneNamesUpDown)));
     }
 
 
-    public void noDataWithVeryStrictPValueCutoff(MicroarrayExperiment experiment) throws Exception {
+    private void noDataWithVeryStrictPValueCutoff(MicroarrayExperiment experiment) {
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         requestPreferences.setCutoff(1e-100);
@@ -179,9 +172,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(headersAndBody.getRight(), hasSize(1));
     }
 
-
-
-    public void noDataWithVeryLargeFoldChangeCutoff(MicroarrayExperiment experiment) throws Exception {
+    private void noDataWithVeryLargeFoldChangeCutoff(MicroarrayExperiment experiment) {
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         requestPreferences.setFoldChangeCutoff(50000D);
@@ -205,7 +196,7 @@ public class ExperimentDownloadControllerIT {
     private List<String> geneNames(List<String> lines) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (String l : lines) {
-            String[] line = l.split("\t" ,-1);
+            String[] line = l.split("\t", -1);
             builder.add(line[GENE_NAME_INDEX]);
         }
 
@@ -234,7 +225,7 @@ public class ExperimentDownloadControllerIT {
         }
     }
 
-    public void defaultParametersHeader(DifferentialExperiment experiment) throws Exception {
+    private void defaultParametersHeader(DifferentialExperiment experiment) throws Exception {
 
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
 
@@ -254,7 +245,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(columnHeaders.length, greaterThan(2));
     }
 
-    public void weHaveSomeResults(DifferentialExperiment experiment) throws Exception {
+    private void weHaveSomeResults(DifferentialExperiment experiment) throws Exception {
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
 
         if (Math.random() < 0.5) {
@@ -277,7 +268,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(dataColumns, hasSize(geneNames.size()));
     }
 
-    public void upDownRegulationWorks(DifferentialExperiment experiment) throws Exception {
+    private void upDownRegulationWorks(DifferentialExperiment experiment) throws Exception {
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
         requestPreferences.setRegulation(Regulation.UP);
 
@@ -307,8 +298,9 @@ public class ExperimentDownloadControllerIT {
         assertThat(resultsSeparately, is(new HashSet<>(geneNamesUpDown)));
     }
 
-    public void noDataWithVeryStrictPValueCutoff(DifferentialExperiment experiment) throws Exception {
-        //Sometimes the pValue is actually 0.0 due to rounding errors and then what can you do e.g. in E-GEOD-59612, not in test datasets though
+    private void noDataWithVeryStrictPValueCutoff(DifferentialExperiment experiment) throws Exception {
+        //Sometimes the pValue is actually 0.0 due to rounding errors and then what can you do e.g. in E-GEOD-59612,
+        // not in test datasets though
         MockHttpServletResponse response = new MockHttpServletResponse();
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
         requestPreferences.setCutoff(1e-100);
@@ -317,9 +309,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(headersAndBody(response).getRight(), hasSize(1));
     }
 
-
-
-    public void noDataWithVeryLargeFoldChangeCutoff(DifferentialExperiment experiment) throws Exception {
+    private void noDataWithVeryLargeFoldChangeCutoff(DifferentialExperiment experiment) throws Exception {
         MockHttpServletResponse response = new MockHttpServletResponse();
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
         requestPreferences.setFoldChangeCutoff(50000D);
@@ -331,7 +321,7 @@ public class ExperimentDownloadControllerIT {
     private ImmutableMap<String, String[]> indexByGeneName(List<String> lines) {
         ImmutableMap.Builder<String, String[]> builder = ImmutableMap.builder();
         for (String l : lines) {
-            String[] line = l.split("\t",-1);
+            String[] line = l.split("\t", -1);
             String geneName = line[GENE_NAME_INDEX];
             if (!"Gene Name".equals(geneName)) {
                 builder.put(line[GENE_NAME_INDEX-1]+" "+ line[GENE_NAME_INDEX], line);
@@ -341,14 +331,15 @@ public class ExperimentDownloadControllerIT {
         return builder.build();
     }
 
-
     @Test
-    public void testSomeRnaSeqBaselineExperiments() throws Exception{
-        Set<String> rnaSeqExperiments = experimentTrader.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
+    public void testSomeRnaSeqBaselineExperiments() throws Exception {
+        Set<String> rnaSeqExperiments =
+                experimentTrader.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
         for (String accession: rnaSeqExperiments) {
-            for (ExpressionUnit.Absolute.Rna unit: dataFileHub.getRnaSeqBaselineExperimentFiles(accession).dataFiles()) {
+            for (ExpressionUnit.Absolute.Rna unit:
+                    dataFileHub.getRnaSeqBaselineExperimentFiles(accession).dataFiles()) {
                 BaselineExperiment experiment = (BaselineExperiment)
                         experimentTrader.getPublicExperiment(accession);
 
@@ -361,7 +352,8 @@ public class ExperimentDownloadControllerIT {
         }
     }
 
-    public void defaultParametersHeaderRnaSeqBaseline(BaselineExperiment experiment, ExpressionUnit.Absolute.Rna unit) throws Exception {
+    private void defaultParametersHeaderRnaSeqBaseline(BaselineExperiment experiment,
+                                                      ExpressionUnit.Absolute.Rna unit) throws Exception {
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
         requestPreferences.setUnit(unit);
 
@@ -380,7 +372,8 @@ public class ExperimentDownloadControllerIT {
         assertThat(columnHeaders.length, greaterThan(2));
     }
 
-    public void weHaveSomeResultsRnaSeqBaseline(BaselineExperiment experiment, ExpressionUnit.Absolute.Rna unit) throws Exception {
+    private void weHaveSomeResultsRnaSeqBaseline(BaselineExperiment experiment,
+                                                ExpressionUnit.Absolute.Rna unit) throws Exception {
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
         requestPreferences.setUnit(unit);
 
@@ -404,7 +397,8 @@ public class ExperimentDownloadControllerIT {
         assertThat(dataColumns, hasSize(geneNames.size()));
     }
 
-    public void noDataWithVeryLargeCutoffRnaSeqBaseline(BaselineExperiment experiment, ExpressionUnit.Absolute.Rna unit) throws Exception {
+    private void noDataWithVeryLargeCutoffRnaSeqBaseline(BaselineExperiment experiment,
+                                                        ExpressionUnit.Absolute.Rna unit) throws Exception {
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
         requestPreferences.setUnit(unit);
         requestPreferences.setGeneQuery(SemanticQuery.create());
@@ -418,26 +412,23 @@ public class ExperimentDownloadControllerIT {
         assertThat(headersAndBody.getRight(), hasSize(1));
     }
 
-
     @Test
     public void testSomeProteomicsBaselineExperiments() throws Exception{
-        Set<String> experimentAccessions = experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
+        Set<String> experimentAccessions =
+                experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
         assertThat(experimentAccessions, hasSize(greaterThan(0)));
 
         for (String accession: experimentAccessions) {
-
             BaselineExperiment experiment = (BaselineExperiment)
                     experimentTrader.getPublicExperiment(accession);
 
             defaultParametersHeaderProteomicsBaseline(experiment);
-
             weHaveSomeResultsProteomicsBaseline(experiment);
-
             noDataWithVeryLargeCutoffProteomicsBaseline(experiment);
         }
     }
 
-    public void defaultParametersHeaderProteomicsBaseline(BaselineExperiment experiment) throws Exception {
+    private void defaultParametersHeaderProteomicsBaseline(BaselineExperiment experiment) throws Exception {
         ProteomicsBaselineRequestPreferences requestPreferences = new ProteomicsBaselineRequestPreferences();
 
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -454,7 +445,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(columnHeaders.length, greaterThan(2));
     }
 
-    public void weHaveSomeResultsProteomicsBaseline(BaselineExperiment experiment) throws Exception {
+    private void weHaveSomeResultsProteomicsBaseline(BaselineExperiment experiment) throws Exception {
         ProteomicsBaselineRequestPreferences requestPreferences = new ProteomicsBaselineRequestPreferences();
 
         if (Math.random() < 0.5) {
@@ -475,7 +466,7 @@ public class ExperimentDownloadControllerIT {
         assertThat(dataColumns, hasSize(geneNames.size()));
     }
 
-    public void noDataWithVeryLargeCutoffProteomicsBaseline(BaselineExperiment experiment) throws Exception {
+    private void noDataWithVeryLargeCutoffProteomicsBaseline(BaselineExperiment experiment) throws Exception {
         ProteomicsBaselineRequestPreferences requestPreferences = new ProteomicsBaselineRequestPreferences();
 
         requestPreferences.setCutoff(100D);
@@ -485,5 +476,4 @@ public class ExperimentDownloadControllerIT {
 
         assertThat(headersAndBody.getRight(), hasSize(1));
     }
-
 }

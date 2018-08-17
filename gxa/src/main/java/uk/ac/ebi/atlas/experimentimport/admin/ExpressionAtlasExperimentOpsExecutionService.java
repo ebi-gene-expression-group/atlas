@@ -30,7 +30,8 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     private final ExperimentAttributesService experimentAttributesService;
 
     public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
-                                                        BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
+                                                        BaselineCoexpressionProfileLoader
+                                                                baselineCoexpressionProfileLoader,
                                                         AnalyticsIndexerManager analyticsIndexerManager,
                                                         ExperimentTrader experimentTrader,
                                                         ExperimentAttributesService experimentAttributesService) {
@@ -54,7 +55,8 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case CACHE_READ:
                 return Optional.of(
                         GSON.toJsonTree(
-                                experimentAttributesService.getAttributes(getAnyExperimentWithAdminAccess(accession))));
+                                experimentAttributesService.getAttributes(
+                                        getAnyExperimentWithAdminAccess(accession))));
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
                 return Optional.of(ExperimentOps.DEFAULT_SUCCESS_RESULT);
@@ -67,7 +69,8 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops) {
+    public Optional<? extends List<Pair<String, ? extends JsonElement>>>
+           attemptExecuteForAllAccessions(Collection<Op> ops) {
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
         } else {

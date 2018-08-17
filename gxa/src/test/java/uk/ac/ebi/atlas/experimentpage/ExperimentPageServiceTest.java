@@ -37,7 +37,8 @@ public class ExperimentPageServiceTest {
         preferences.setCutoff(1.234);
         preferences.setSelectedColumnIds(ImmutableSet.of("g1", "g2"));
 
-        URI result = new ExperimentPageService().geneSpecificResultsLink(experiment, "ENSG0000012345", "", preferences);
+        URI result =
+                new ExperimentPageService().geneSpecificResultsLink(experiment, "ENSG0000012345", "", preferences);
 
         assertThat(result.getPath(), is("json/experiments/E-MOCK-1/genes/ENSG0000012345"));
         assertThat(result.getQuery(), containsString("cutoff=1.234"));
@@ -47,20 +48,20 @@ public class ExperimentPageServiceTest {
 
     @Test
     public void unitsMatterForExperimentDownloadLink() {
-        RnaSeqBaselineRequestPreferences preferences = new RnaSeqBaselineRequestPreferences();
+        RnaSeqBaselineRequestPreferences rnaSeqBaselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
 
-        preferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
+        rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
         assertThat(
-                new ExperimentPageService().experimentDownloadLink(experiment, "", preferences).toString(),
-                containsString("unit=TPM")
-        );
+                new ExperimentPageService()
+                        .experimentDownloadLink(experiment, "", rnaSeqBaselineRequestPreferences).toString(),
+                containsString("unit=TPM"));
 
-        preferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
+        rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
 
         assertThat(
-                new ExperimentPageService().experimentDownloadLink(experiment, "", preferences).toString(),
-                containsString("unit=FPKM")
-        );
+                new ExperimentPageService()
+                        .experimentDownloadLink(experiment, "", rnaSeqBaselineRequestPreferences).toString(),
+                containsString("unit=FPKM"));
     }
 
     @Test

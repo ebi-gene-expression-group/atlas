@@ -42,7 +42,8 @@
 //    BaselineExperimentExpression g3_thymus = BaselineExperimentExpression.create(E_MTAB_599, "g3", THYMUS_LEVEL);
 //    BaselineExperimentExpression g5_lung = BaselineExperimentExpression.create(E_MTAB_599, "g5", LUNG_LEVEL);
 //    BaselineExperimentExpression g6_spleen = BaselineExperimentExpression.create(E_MTAB_599, "g6", SPLEEN_LEVEL);
-//    BaselineExperimentExpression g_nonTissueExpression = BaselineExperimentExpression.create(E_GEOD_26284, "g12", IMR_90_LEVEL);
+//    BaselineExperimentExpression g_nonTissueExpression =
+//          BaselineExperimentExpression.create(E_GEOD_26284, "g12", IMR_90_LEVEL);
 //
 //    private static final String ORGANISM_PART = "ORGANISM_PART";
 //    private static final Factor LUNG = new Factor(ORGANISM_PART, "lung");
@@ -51,7 +52,8 @@
 //    private static final Factor IMR_90 = new Factor(CELL_LINE, "IMR-90");
 //    public static final ImmutableSortedSet<Factor> E_GEOD_26284_ALL_FACTORS = ImmutableSortedSet.of(IMR_90);
 //
-//    private static final ImmutableSortedSet<Factor> E_MTAB_599_ALL_FACTORS = ImmutableSortedSet.of(LUNG, SPLEEN, THYMUS);
+//    private static final ImmutableSortedSet<Factor> E_MTAB_599_ALL_FACTORS =
+//          ImmutableSortedSet.of(LUNG, SPLEEN, THYMUS);
 //
 //    @Mock
 //    private ExperimentTrader experimentTrader;
@@ -88,7 +90,8 @@
 //        when(experimentalFactors1.getFactorGroup("g3")).thenReturn(new FactorSet(THYMUS));
 //        when(experimentalFactors1.getFactorGroup("g5")).thenReturn(new FactorSet(LUNG));
 //        when(experimentalFactors1.getFactorGroup("g6")).thenReturn(new FactorSet(SPLEEN));
-//        when(experimentalFactors1.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(E_MTAB_599_ALL_FACTORS);
+//        when(experimentalFactors1.getComplementFactors(Mockito.any(FactorGroup.class)))
+//              .thenReturn(E_MTAB_599_ALL_FACTORS);
 //        when(experimentalFactors1.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
 //        when(experimentalFactors1.getDefaultQueryFactorType()).thenReturn(ORGANISM_PART);
 //
@@ -98,7 +101,8 @@
 //        when(baselineExperiment2.getAccession()).thenReturn(E_GEOD_26284);
 //        when(baselineExperiment2.getDisplayName()).thenReturn(E_GEOD_26284_NAME);
 //        when(experimentalFactors2.getFactorGroup("g12")).thenReturn(new FactorSet(IMR_90));
-//        when(experimentalFactors2.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(E_GEOD_26284_ALL_FACTORS);
+//        when(experimentalFactors2.getComplementFactors(Mockito.any(FactorGroup.class)))
+//              .thenReturn(E_GEOD_26284_ALL_FACTORS);
 //        when(experimentalFactors2.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
 //        when(experimentalFactors2.getDefaultQueryFactorType()).thenReturn(CELL_LINE);
 //
@@ -110,7 +114,8 @@
 //    @Test
 //    public void buildProfilesForTissueExperiments() {
 //        // include g_nonTissueExpression which should be filtered out
-//        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
+//        ImmutableList<BaselineExperimentExpression> expressions =
+//              ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 //
 //        BaselineExperimentSearchResult result = searchResultProducer.buildProfilesForTissueExperiments(expressions);
 //
@@ -121,7 +126,8 @@
 //    @Test
 //    public void testBaselineExperimentProfileSearchServiceWithTheSameScenario() {
 //        Set<String> geneIds = Sets.newHashSet("ENSG00000001337", "ANOTHER_FAKE_IDENTIFIER");
-//        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
+//        ImmutableList<BaselineExperimentExpression> expressions =
+//              ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 //
 //        when(baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds)).thenReturn(expressions);
 //
@@ -154,7 +160,8 @@
 //    @Test
 //    public void buildProfilesForCellLineExperiments() {
 //        // include tissue expressions which should be filtered out
-//        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
+//        ImmutableList<BaselineExperimentExpression> expressions =
+//              ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 //
 //        BaselineExperimentSearchResult result = searchResultProducer.profilesForExpressions(expressions, CELL_LINE);
 //

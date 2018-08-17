@@ -17,7 +17,7 @@ public class OpTest {
         testNames(Op.LIST);
     }
 
-    private void testNames(Op ... ops) {
+    private void testNames(Op... ops) {
         List<String> l = new ArrayList<>();
         for (Op op: ops) {
             l.add(op.name());

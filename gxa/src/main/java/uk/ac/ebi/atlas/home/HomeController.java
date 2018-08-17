@@ -28,6 +28,7 @@ public class HomeController {
     private static final int FEATURED_SPECIES = 6;
     private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
     private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
+    private static final double EASTER_EGG_PROBABILITY = 0.001;
     private static final Random RANDOM = new Random();
 
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
@@ -58,15 +59,18 @@ public class HomeController {
     public String getHome(Model model) {
         ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
         for (PopularSpeciesInfo popularSpeciesInfo: popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)) {
-            topSixSelectBuilder.put(popularSpeciesInfo.species(), StringUtils.capitalize(popularSpeciesInfo.species()));
+            topSixSelectBuilder.put(
+                    popularSpeciesInfo.species(), StringUtils.capitalize(popularSpeciesInfo.species()));
         }
         model.addAttribute("topSixByExperimentCount", topSixSelectBuilder.build());
 
-        model.addAttribute("separator", RANDOM.nextDouble() < 0.001 ? BEST_SEPARATOR : NORMAL_SEPARATOR);
+        model.addAttribute(
+                "separator", RANDOM.nextDouble() < EASTER_EGG_PROBABILITY ? BEST_SEPARATOR : NORMAL_SEPARATOR);
 
         ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
-            organismSelectBuilder.put(speciesProperties.referenceName(), StringUtils.capitalize(speciesProperties.referenceName()));
+            organismSelectBuilder.put(
+                    speciesProperties.referenceName(), StringUtils.capitalize(speciesProperties.referenceName()));
         }
 
         model.addAttribute("organisms", organismSelectBuilder.build());
@@ -74,14 +78,17 @@ public class HomeController {
 
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
 
-        model.addAttribute("speciesList", GSON.toJson(popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)));
-        model.addAttribute("animalsList", GSON.toJson(popularSpeciesService.getPopularSpecies("animals", FEATURED_SPECIES)));
-        model.addAttribute("plantsList", GSON.toJson(popularSpeciesService.getPopularSpecies("plants", FEATURED_SPECIES)));
-        model.addAttribute("fungiList", GSON.toJson(popularSpeciesService.getPopularSpecies("fungi", FEATURED_SPECIES)));
+        model.addAttribute(
+                "speciesList", GSON.toJson(popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)));
+        model.addAttribute(
+                "animalsList", GSON.toJson(popularSpeciesService.getPopularSpecies("animals", FEATURED_SPECIES)));
+        model.addAttribute(
+                "plantsList", GSON.toJson(popularSpeciesService.getPopularSpecies("plants", FEATURED_SPECIES)));
+        model.addAttribute(
+                "fungiList", GSON.toJson(popularSpeciesService.getPopularSpecies("fungi", FEATURED_SPECIES)));
 
         model.addAttribute("organismPath", ""); // Required by Spring form tag
 
         return "home";
     }
-
 }

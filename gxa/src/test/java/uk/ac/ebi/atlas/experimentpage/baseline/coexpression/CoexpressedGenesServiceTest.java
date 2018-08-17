@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.bioentities.query.GeneQueryResponse;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,37 +20,26 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CoexpressedGenesServiceTest {
-
     @Mock
-    CoexpressedGenesDao coexpressedGenesDao;
+    private CoexpressedGenesDao coexpressedGenesDao;
 
-    CoexpressedGenesService subject;
+    private static final String EX1_GENE_ID = "EX1_GENE_ID";
+    private static final String EX2_GENE_ID = "EX2";
 
-    static final String EX1_GENE_ID = "EX1_GENE_ID";
-    static final String EX1_GENE_NAME = "example_one_gene";
-    
-    static final String EX2_GENE_ID = "EX2";
+    private static final Map<Pair<String, String>, ImmutableList<String>> STATE_OF_DATABASE =
+            ImmutableMap.of(
+                    Pair.of(EX1_GENE_ID, "T0"), ImmutableList.of("C00", "C01", "C02"),
+                    Pair.of(EX1_GENE_ID, "T1"), ImmutableList.of("C10", "C11"),
+                    Pair.of(EX2_GENE_ID, "T1"), ImmutableList.of("C12"));
 
-    static Map<Pair<String, String>, ImmutableList<String>> stateOfDatabase = new HashMap<>();
-    static {
-        stateOfDatabase.put(Pair.of(EX1_GENE_ID, "T0"), ImmutableList.of("C00", "C01", "C02"));
-        stateOfDatabase.put(Pair.of(EX1_GENE_ID, "T1"), ImmutableList.of("C10", "C11"));
-        stateOfDatabase.put(Pair.of(EX2_GENE_ID, "T1"), ImmutableList.of("C12"));
-    }
-
-    static Map<String, ImmutableList<String>> solrSearchResults = new HashMap<>();
-    static {
-        solrSearchResults.put(EX1_GENE_ID, ImmutableList.of(EX1_GENE_ID));
-        solrSearchResults.put(EX1_GENE_NAME, ImmutableList.of(EX1_GENE_ID));
-        solrSearchResults.put(EX2_GENE_ID, ImmutableList.of(EX2_GENE_ID));
-    }
+    private CoexpressedGenesService subject;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         subject = new CoexpressedGenesService(coexpressedGenesDao);
-        for (Map.Entry<Pair<String, String>, ImmutableList<String>> e: stateOfDatabase.entrySet()) {
-            when(coexpressedGenesDao.coexpressedGenesfor (e.getKey().getLeft(), e.getKey().getRight()))
+        for (Map.Entry<Pair<String, String>, ImmutableList<String>> e: STATE_OF_DATABASE.entrySet()) {
+            when(coexpressedGenesDao.coexpressedGenesFor(e.getKey().getLeft(), e.getKey().getRight()))
                     .thenReturn(e.getValue());
         }
     }
@@ -137,8 +125,9 @@ public class CoexpressedGenesServiceTest {
     }
 
 
-    private ImmutableSet<String> extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds
-            (Collection<String> geneQueryTerms, Map<String, Integer> requested) {
+    private
+    ImmutableSet<String> extendGeneQueryWithCoexpressionsWhenGeneQueryTermsAreTheSameAsRetrievedIds(
+            Collection<String> geneQueryTerms, Map<String, Integer> requested) {
 
         GeneQueryResponse r = new GeneQueryResponse();
         for (String s : geneQueryTerms) {
@@ -149,10 +138,9 @@ public class CoexpressedGenesServiceTest {
         when(e.getAccession()).thenReturn(EX1_GENE_ID);
 
         Pair<GeneQueryResponse, List<String>> p =
-                subject.extendGeneQueryResponseWithCoexpressions(r, e, requested, true);
+                subject.extendGeneQueryResponseWithCoexpressions(r, e, requested);
 
         return ImmutableSet.<String>builder().addAll(p.getLeft().getAllGeneIds()).build();
 
     }
-
 }

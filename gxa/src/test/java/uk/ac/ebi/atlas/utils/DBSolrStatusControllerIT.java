@@ -18,7 +18,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class DBSolrStatusControllerIT {
 
     @Inject

@@ -14,7 +14,6 @@ import static org.junit.Assert.assertThat;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class BaselineAnalyticsFacetsReaderTest {
-
     private static final JsonObject RESPONSE_2_JSON_FACETS = GSON.fromJson(
             "{\n" +
             "  \"homo sapiens\": [\n" +
@@ -41,7 +40,9 @@ public class BaselineAnalyticsFacetsReaderTest {
 
 
     private static List<Map<String, Object>> loadJsonWithFacets() throws IOException {
-        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/uk/ac/ebi/atlas/solr/analytics/baseline/baseline.heatmap.pivot.response2.json");
+        InputStream in =
+                BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream(
+                        "/uk/ac/ebi/atlas/solr/analytics/baseline/baseline.heatmap.pivot.response2.json");
         return JsonPath.read(in, BaselineAnalyticsSearchDao.FACET_TREE_PATH);
     }
 
@@ -51,5 +52,4 @@ public class BaselineAnalyticsFacetsReaderTest {
 
         assertThat(facetsTreeJson, is(RESPONSE_2_JSON_FACETS));
     }
-
 }

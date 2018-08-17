@@ -87,7 +87,9 @@ class AutocompleteControllerWIT {
         int suggestCount = ThreadLocalRandom.current().nextInt(1, 20);
 
         this.mockMvc
-                .perform(get("/json/suggestions").param("query", "ASP").param("suggestCount", Integer.toString(suggestCount)))
+                .perform(
+                        get("/json/suggestions")
+                                .param("query", "ASP").param("suggestCount", Integer.toString(suggestCount)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(allOf(greaterThan(0), lessThanOrEqualTo(suggestCount)))))

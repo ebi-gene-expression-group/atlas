@@ -32,7 +32,8 @@ public class DifferentialExperimentTopGenesService {
     public List<String> searchSpecificGenesInDifferentialExperiment(String experimentAccession,
                                                                     DifferentialRequestPreferences preferences) {
         try (TupleStreamer tupleStreamer =
-                     differentialExperimentTopGenesDao.createForDifferentialSpecific(experimentAccession, preferences)) {
+                     differentialExperimentTopGenesDao.createForDifferentialSpecific(
+                             experimentAccession, preferences)) {
             return mapBySpecifictyAndSortByAverageExpression(tupleStreamer.get(), preferences.getHeatmapMatrixSize());
         }
     }
@@ -68,5 +69,4 @@ public class DifferentialExperimentTopGenesService {
                 .limit(maxSize)
                 .collect(toList());
     }
-
 }

@@ -19,9 +19,10 @@ public class CoexpressedGenesDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public ImmutableList<String> coexpressedGenesfor (String experiment, String identifier) {
+    public ImmutableList<String> coexpressedGenesFor(String experiment, String identifier) {
         try {
-            String result = jdbcTemplate.queryForObject(CE_GENES_SQL_QUERY_TEMPLATE, String.class, experiment, identifier);
+            String result =
+                    jdbcTemplate.queryForObject(CE_GENES_SQL_QUERY_TEMPLATE, String.class, experiment, identifier);
 
             return ImmutableList.copyOf(
                     Stream.of(result.split(","))

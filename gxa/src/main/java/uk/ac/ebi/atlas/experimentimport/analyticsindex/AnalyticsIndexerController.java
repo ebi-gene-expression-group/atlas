@@ -45,8 +45,7 @@ public class AnalyticsIndexerController {
             @RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
             @RequestParam(value = "threads", required = false, defaultValue = DEFAULT_THREADS) int numThreads,
             @RequestParam(value = "batchSize", required = false, defaultValue = DEFAULT_SOLR_BATCH_SIZE) int batchSize,
-            @RequestParam(value = "timeout", required = false, defaultValue = DEFAULT_TIMEOUT_IN_HOURS) int timeout)
-    {
+            @RequestParam(value = "timeout", required = false, defaultValue = DEFAULT_TIMEOUT_IN_HOURS) int timeout) {
 
         try {
             if (!Strings.isNullOrEmpty(experimentType)) {
@@ -95,5 +94,4 @@ public class AnalyticsIndexerController {
         LOGGER.error(e.getMessage(), e);
         return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
-
 }

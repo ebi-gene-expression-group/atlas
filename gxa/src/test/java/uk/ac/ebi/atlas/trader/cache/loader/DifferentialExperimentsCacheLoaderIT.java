@@ -22,7 +22,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -30,7 +31,6 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class})
 public class DifferentialExperimentsCacheLoaderIT {
-
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
     private String species = "Mus musculus";
 
@@ -103,5 +103,4 @@ public class DifferentialExperimentsCacheLoaderIT {
         assertThat(experiment.getDisplayName(), is(EXPERIMENT_ACCESSION));
         assertThat(experiment.getDescription(), startsWith(""));
     }
-
 }

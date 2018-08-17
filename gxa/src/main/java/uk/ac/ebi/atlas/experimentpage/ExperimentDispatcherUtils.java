@@ -6,6 +6,10 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import javax.servlet.http.HttpServletRequest;
 
 public class ExperimentDispatcherUtils {
+    protected ExperimentDispatcherUtils() {
+        throw new UnsupportedOperationException();
+    }
+
     public static boolean alreadyForwardedButNoOtherControllerHandledTheRequest(HttpServletRequest request) {
         return StringUtils.startsWith(request.getQueryString(), "type=");
     }

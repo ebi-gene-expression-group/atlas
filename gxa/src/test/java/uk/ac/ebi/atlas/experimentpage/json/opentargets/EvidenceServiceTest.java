@@ -40,7 +40,8 @@ public class EvidenceServiceTest {
     @Before
     public void setUp() {
         mockDataFileHub = MockDataFileHub.create();
-        this.subject = new EvidenceService(differentialProfileStreamFactory, mockDataFileHub, "expressionAtlasVersion");
+        this.subject =
+                new EvidenceService<>(differentialProfileStreamFactory, mockDataFileHub, "expressionAtlasVersion");
     }
 
     @Test
@@ -48,19 +49,16 @@ public class EvidenceServiceTest {
         mockDataFileHub.addPercentileRanksFile(E_GEOD_59612, ImmutableList.of(
                 "GeneId g1_g2 g3_g4".split(" "),
                 "ENSG00000000003 89 97".split(" "),
-                "ENSG00000000005 56 53".split(" ")
-        ));
+                "ENSG00000000005 56 53".split(" ")));
 
         assertThat(subject.getPercentileRanks(experiment).get("ENSG00000000003").get(c1), is(89));
     }
 
     @Test
-    public void understand_NA_AsLackOfValue() throws Exception {
-
+    public void understandNaAsLackOfValue() {
         mockDataFileHub.addPercentileRanksFile(E_GEOD_59612, ImmutableList.of(
                 "GeneId g1_g2 g3_g4".split(" "),
-                "ENSG00000000003 89 NA".split(" ")
-        ));
+                "ENSG00000000003 89 NA".split(" ")));
 
         assertThat(subject.getPercentileRanks(experiment).get("ENSG00000000003").get(c1), is(89));
         assertThat(subject.getPercentileRanks(experiment).get("ENSG00000000003").get(c2), is(nullValue()));
@@ -74,7 +72,8 @@ public class EvidenceServiceTest {
     }
 
     @Test
-    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorExcludeTypicalExperimentUsingDiseaseCellLinesForSomething() {
+    public void
+    cellLineAsSampleCharacteristicButNoDiseaseAsFactorExcludeTypicalExperimentUsingDiseaseCellLinesForSomething() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
         experimentDesign.putSampleCharacteristic("g1", "cell line", "A1");

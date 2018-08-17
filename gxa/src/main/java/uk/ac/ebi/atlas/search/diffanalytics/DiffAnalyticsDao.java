@@ -14,7 +14,6 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class DiffAnalyticsDao {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsDao.class);
     private static final int RESULT_SIZE = 50;
 
@@ -23,7 +22,7 @@ public class DiffAnalyticsDao {
 
     @Inject
     public DiffAnalyticsDao(DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper) {
-        this(new JdbcTemplate(dataSource), dbeRowMapper) ;
+        this(new JdbcTemplate(dataSource), dbeRowMapper);
     }
 
     DiffAnalyticsDao(JdbcTemplate jdbcTemplate, DiffAnalyticsRowMapper dbeRowMapper) {
@@ -56,5 +55,4 @@ public class DiffAnalyticsDao {
     DatabaseQuery<Object> buildSelect(String geneId) {
         return new DiffAnalyticsQueryBuilder(geneId).buildSelect();
     }
-
 }

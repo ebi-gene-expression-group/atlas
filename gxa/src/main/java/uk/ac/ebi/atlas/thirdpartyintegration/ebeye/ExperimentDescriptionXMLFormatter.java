@@ -14,7 +14,9 @@ public class ExperimentDescriptionXMLFormatter {
     private static final String HEADER = "<database>\n" +
             "<name>Expression Atlas</name>\n" +
             "<description>\n" +
-            "A semantically enriched database of publicly available gene and transcript expression data. The data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns under the conditions of the original experiment\n" +
+            "A semantically enriched database of publicly available gene and transcript expression data. The data " +
+            "is re-analysed in-house to detect genes showing interesting baseline and differential expression " +
+            "patterns under the conditions of the original experiment\n" +
             "</description>\n" +
             "<release_date>{0}</release_date>\n" +
             "<entry_count>{1}</entry_count>\n"  +

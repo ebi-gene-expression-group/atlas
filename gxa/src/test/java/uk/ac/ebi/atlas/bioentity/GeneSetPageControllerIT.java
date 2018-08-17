@@ -20,7 +20,6 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
 public class GeneSetPageControllerIT {
-
     @Inject
     private GeneSetPageController subject;
 
@@ -38,5 +37,4 @@ public class GeneSetPageControllerIT {
                 GSON.fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
         assertThat(bioentityProperties.size(), is(1));
     }
-
 }

@@ -89,11 +89,15 @@
 //    }
 //
 //    private void isOk(String messageAboutWhatIsExpected, String result) {
-//        isOk(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
+//        isOk(
+//              messageAboutWhatIsExpected+", was: " + result ,
+//              new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
 //    }
 //
 //    private void isError(String messageAboutWhatIsExpected, String result) {
-//        isError(messageAboutWhatIsExpected+", was: " + result , new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
+//        isError(
+//              messageAboutWhatIsExpected+", was: " + result ,
+//              new Gson().fromJson(result, JsonArray.class).get(0).getAsJsonObject());
 //    }
 //
 //    private void isOk(String message, JsonObject object) {

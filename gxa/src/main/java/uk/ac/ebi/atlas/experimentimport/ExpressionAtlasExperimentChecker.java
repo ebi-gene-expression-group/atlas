@@ -75,7 +75,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         checkBaselineFiles(experimentFiles.baselineExperimentFiles);
         ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles = experimentFiles.dataFiles();
         Preconditions.checkState(
-                dataFiles.size()> 0,
+                dataFiles.size() > 0,
                 MessageFormat.format("No data files (FPKM/TPM) present for {0}!", experimentAccession));
         for (ExpressionUnit.Absolute.Rna dataFile: dataFiles) {
             checkResourceExistsAndIsReadable(experimentFiles.dataFile(dataFile));

@@ -75,15 +75,22 @@ class ExternallyAvailableContentControllerWIT {
     @Test
     void shouldReturnSomeResourcesForEachExperiment() throws Exception {
         for (String accession : experimentTrader.getPublicExperimentAccessions(
-                ExperimentType.RNASEQ_MRNA_BASELINE, ExperimentType.PROTEOMICS_BASELINE,
-                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)) {
-            testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.DATA, true);
-            testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION, true);
+                ExperimentType.RNASEQ_MRNA_BASELINE,
+                ExperimentType.PROTEOMICS_BASELINE,
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
+                ExperimentType.MICROARRAY_ANY)) {
+
+            testAllResourcesAreNonemptyAndContainValidLinks(
+                    accession, ExternallyAvailableContent.ContentType.DATA, true);
+            testAllResourcesAreNonemptyAndContainValidLinks(
+                    accession, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION, true);
+
         }
+
         for (String accession : experimentTrader.getPublicExperimentAccessions(
                 ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)) {
-            testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.PLOTS, false);
+            testAllResourcesAreNonemptyAndContainValidLinks(
+                    accession, ExternallyAvailableContent.ContentType.PLOTS, false);
         }
     }
-
 }

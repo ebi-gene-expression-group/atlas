@@ -76,7 +76,8 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
             @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
-        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        MicroarrayExperiment experiment =
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         PrintWriter w = response.getWriter();
         diffMicroarrayEvidenceService.evidenceForExperiment(experiment, contrast -> {
             MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
@@ -98,7 +99,8 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
             @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        DifferentialExperiment experiment =
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         PrintWriter w = response.getWriter();
         diffRnaSeqEvidenceService.evidenceForExperiment(experiment, contrast -> {
             DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
@@ -107,6 +109,6 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
             requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
             requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
             return new RnaSeqRequestContext(requestPreferences, experiment);
-        }, o-> w.println(GSON.toJson(o)));
+        }, o -> w.println(GSON.toJson(o)));
     }
 }
