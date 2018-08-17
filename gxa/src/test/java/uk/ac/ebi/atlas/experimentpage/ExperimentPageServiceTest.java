@@ -20,10 +20,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ExperimentPageServiceTest {
+    private Experiment experiment;
+    private ExperimentPageRequestPreferences preferences;
+    private ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
 
-    Experiment experiment;
-    ExperimentPageRequestPreferences preferences;
-    ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
     @Before
     public void setUp() {
         experiment = mock(Experiment.class);
@@ -31,6 +31,7 @@ public class ExperimentPageServiceTest {
         when(experiment.getType()).thenReturn(experimentType);
         preferences = new RnaSeqBaselineRequestPreferences();
     }
+
     @Test
     public void testGeneSpecificResultsLink() {
         preferences.setCutoff(1.234);
@@ -40,10 +41,9 @@ public class ExperimentPageServiceTest {
 
         assertThat(result.getPath(), is("json/experiments/E-MOCK-1/genes/ENSG0000012345"));
         assertThat(result.getQuery(), containsString("cutoff=1.234"));
-        assertThat(result.getQuery(), containsString("selectedColumnIds=g1, g2"));
+        assertThat(result.getQuery(), containsString("selectedColumnIds=g1,g2"));
         assertThat(result.getQuery(), containsString("type="+ExperimentType.RNASEQ_MRNA_BASELINE.name()));
     }
-
 
     @Test
     public void unitsMatterForExperimentDownloadLink() {
