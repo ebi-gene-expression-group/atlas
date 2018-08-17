@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -143,11 +143,13 @@ public class ExperimentOpsTest {
         ops.add(Op.COEXPRESSION_DELETE); // should not be started
         ops.add(Op.COEXPRESSION_IMPORT); // should not be started
 
-        JsonObject result = subject.dispatchAndPerform(Collections.singletonList(accession), ops).iterator().next().getAsJsonObject();
+        JsonObject result =
+                subject.dispatchAndPerform(singletonList(accession), ops)
+                        .iterator()
+                        .next()
+                        .getAsJsonObject();
 
-        assertThat(result.has("accession"), is(true));
-        assertThat(result.get("accession").getAsJsonPrimitive()
-                .getAsString(), is(accession));
+        assertThat(result.get("accession").getAsJsonPrimitive().getAsString(), is(accession));
         JsonArray successes = result.get("result").getAsJsonArray();
         JsonArray failures = result.get("error").getAsJsonArray();
 
@@ -181,11 +183,11 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
             if (!op.equals(Op.CLEAR_LOG)) {
-                subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(op));
+                subject.dispatchAndPerform(singletonList(accession), singletonList(op));
             }
         }
 
-        String logResult = ImmutableList.copyOf(subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(Op.LOG))).toString();
+        String logResult = ImmutableList.copyOf(subject.dispatchAndPerform(singletonList(accession), singletonList(Op.LOG))).toString();
 
         for (Op op: Op.values()) {
             boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ, Op.CACHE_REMOVE, Op.CHECK).contains(op);
@@ -200,14 +202,14 @@ public class ExperimentOpsTest {
 
         JsonObject result =
                 subject.dispatchAndPerform(
-                        Collections.singletonList(accession),
+                        singletonList(accession),
                         Collections.singleton(Op.DELETE)).iterator().next().getAsJsonObject();
 
         assertThat(accession, is(result.get("accession").getAsString()));
         assertThat(result.get("result"), is(nullValue()));
         assertThat(result.get("error"), is(not(nullValue())));
 
-        assertThat(ImmutableList.copyOf(subject.dispatchAndPerform(Collections.singletonList(accession), Collections.singletonList(Op.LOG))).toString(),
+        assertThat(ImmutableList.copyOf(subject.dispatchAndPerform(singletonList(accession), singletonList(Op.LOG))).toString(),
                 containsString("error"));
     }
 
