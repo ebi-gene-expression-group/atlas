@@ -29,7 +29,7 @@ public class OpTest {
     public void synonymsWork() {
         assertEquals(
                 Op.opsForParameter("DOUBLE_CHECK"),
-                Op.opsForParameter("CACHE_REMOVE, CHECK, CACHE_READ"));
+                Op.opsForParameter("CACHE_REMOVE,CHECK,CACHE_READ"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -44,13 +44,13 @@ public class OpTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void wrongNameThrows3() {
-        Op.opsForParameter("LIST, WRONG");
+        Op.opsForParameter("LIST,WRONG");
     }
 
     @Test
     public void caseDoesNotMatter() {
-        assertEquals(Op.opsForParameter("LIST, LOG"), Op.opsForParameter("list, Log"));
-        assertEquals(Op.opsForParameter("LIST, LOG"), Op.opsForParameter("LIST, loG"));
+        assertEquals(Op.opsForParameter("LIST,LOG"), Op.opsForParameter("list,Log"));
+        assertEquals(Op.opsForParameter("LIST,LOG"), Op.opsForParameter("LIST,loG"));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class OpTest {
         List<Op> a = new ArrayList<>();
         a.addAll(Op.opsForParameter("LOG"));
         a.addAll(Op.opsForParameter("LIST"));
-        assertEquals(a, Op.opsForParameter("LOG, LIST"));
+        assertEquals(a, Op.opsForParameter("LOG,LIST"));
     }
 
 }
