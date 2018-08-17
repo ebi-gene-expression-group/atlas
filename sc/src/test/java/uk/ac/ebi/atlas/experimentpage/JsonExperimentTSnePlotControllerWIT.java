@@ -113,7 +113,9 @@ class JsonExperimentTSnePlotControllerWIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.series", hasSize(k)))
-                .andExpect(jsonPath("$.series[" + Integer.toString(ThreadLocalRandom.current().nextInt(0, k)) + "].data").isNotEmpty());
+                .andExpect(
+                        jsonPath("$.series[" + Integer.toString(ThreadLocalRandom.current().nextInt(0, k)) + "].data")
+                                .isNotEmpty());
     }
 
     @Test

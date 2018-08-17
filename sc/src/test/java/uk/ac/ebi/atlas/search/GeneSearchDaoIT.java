@@ -70,7 +70,7 @@ class GeneSearchDaoIT {
         assertThat(result)
                 .containsKeys("E-GEOD-106540")
                 .doesNotContainKeys("E-ENAD-13", "E-ENAD-14", "E-EHCA-2", "E-GEOD-99058");
-        
+
         // Only marker genes with probablity < 0.05 are returned
         assertThat(result.get("E-GEOD-106540"))
                 .containsOnly(

@@ -81,7 +81,9 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
                         "series",
                         modelForHighcharts(
                                 "",
-                                new TreeMap<>(tSnePlotService.fetchTSnePlotWithMetadata(experiment.getAccession(), perplexity, metadata)))));
+                                new TreeMap<>(
+                                        tSnePlotService.fetchTSnePlotWithMetadata(
+                                                experiment.getAccession(), perplexity, metadata)))));
     }
 
     @RequestMapping(
@@ -134,49 +136,4 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
     private List<Map<String, Object>> modelForHighcharts(String seriesName, Set<TSnePoint> points) {
         return ImmutableList.of(ImmutableMap.of("name", seriesName, "data", points));
     }
-
-// This is how we were doing things at one point, see comment in TSnePlotServiceDao...
-
-//    @RequestMapping(
-//            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/k/{k}/expression/{geneId}",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String tSnePlotWithExpressionAndClusters(
-//            @PathVariable String experimentAccession,
-//            @PathVariable int perplexity,
-//            @PathVariable int k,
-//            @PathVariable String geneId,
-//            @RequestParam(defaultValue = "") String accessKey) {
-//        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-//
-//        Map<Integer, Set<TSnePoint>> pointsWithExpressionAndClusters =
-//                tSnePlotService.fetchTSnePlotWithClusters(experiment.getAccession(), perplexity, k, geneId);
-//
-//        OptionalDouble max = pointsWithExpressionAndClusters.values().stream()
-//                .flatMap(Collection::stream)
-//                .map(TSnePoint::expressionLevel)
-//                .filter(Optional::isPresent)
-//                .mapToDouble(Optional::get)
-//                .filter(d -> d > 0)
-//                .max();
-//
-//        OptionalDouble min = pointsWithExpressionAndClusters.values().stream()
-//                .flatMap(Collection::stream)
-//                .map(TSnePoint::expressionLevel)
-//                .filter(Optional::isPresent)
-//                .mapToDouble(Optional::get)
-//                .filter(d -> d > 0)
-//                .min();
-//
-//        String unit = "TPM"; // Get units from experiment, or from request parameter if more than one is available
-//
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("series", modelForHighcharts(pointsWithExpressionAndClusters));
-//        model.put("unit", unit);
-//        max.ifPresent(n -> model.put("max", n));
-//        min.ifPresent(n -> model.put("min", n));
-//
-//        return GSON.toJson(model);
-//    }
-
 }

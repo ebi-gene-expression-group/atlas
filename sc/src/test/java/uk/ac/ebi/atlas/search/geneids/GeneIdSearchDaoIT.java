@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source.SearchStrea
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -105,7 +104,8 @@ class GeneIdSearchDaoIT {
             Pair<String, String> anyProperty =
                     tupleStreamer.get()
                             .map(tuple ->
-                                    Pair.of(tuple.getString(PROPERTY_VALUE.name()), tuple.getString(PROPERTY_NAME.name())))
+                                    Pair.of(tuple.getString(PROPERTY_VALUE.name()),
+                                            tuple.getString(PROPERTY_NAME.name())))
                             .findAny()
                             .orElseThrow(RuntimeException::new);
 

@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class JsonBioentityInformationControllerWIT {
+class JsonBioentityInformationControllerWIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
 
@@ -38,12 +38,12 @@ public class JsonBioentityInformationControllerWIT {
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    public void payloadIsValidJson() throws Exception {
+    void payloadIsValidJson() throws Exception {
         String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc
@@ -59,14 +59,14 @@ public class JsonBioentityInformationControllerWIT {
     }
 
     @Test
-    public void geneNotFound() throws Exception {
+    void geneNotFound() throws Exception {
         this.mockMvc
                 .perform(get("/json/bioentity_information/unknown"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void payloadContainsExpressionAtlasLink() throws Exception{
+    void payloadContainsExpressionAtlasLink() throws Exception{
         String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc

@@ -26,23 +26,28 @@ import java.util.zip.ZipOutputStream;
 
 @Controller
 public class FileDownloadController extends HtmlExceptionHandlingController {
-
-    private ExperimentFileLocationService experimentFileLocationService;
-    private ScxaExperimentTrader experimentTrader;
+    private final ExperimentFileLocationService experimentFileLocationService;
+    private final ScxaExperimentTrader experimentTrader;
 
     @Inject
-    public FileDownloadController(ExperimentFileLocationService experimentFileLocationService, ScxaExperimentTrader experimentTrader) {
+    public FileDownloadController(ExperimentFileLocationService experimentFileLocationService,
+                                  ScxaExperimentTrader experimentTrader) {
         this.experimentFileLocationService = experimentFileLocationService;
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "experiment/{experimentAccession}/download", method = RequestMethod.GET)
-    public ResponseEntity<FileSystemResource> download(@PathVariable String experimentAccession,
-                                                       @RequestParam(value= "fileType") String fileTypeId, @RequestParam(value="accessKey", defaultValue = "") String accessKey) {
+    @RequestMapping(value = "experiment/{experimentAccession}/download",
+                    method = RequestMethod.GET)
+    public ResponseEntity<FileSystemResource>
+    download(@PathVariable String experimentAccession,
+             @RequestParam(value = "fileType") String fileTypeId,
+             @RequestParam(value = "accessKey", defaultValue = "") String accessKey) {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        File file = experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.fromId(fileTypeId)).toFile();
+        File file =
+                experimentFileLocationService.getFilePath(
+                        experiment.getAccession(), ExperimentFileType.fromId(fileTypeId)).toFile();
         FileSystemResource resource = new FileSystemResource(file);
 
         return ResponseEntity.ok()
@@ -52,15 +57,19 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
                 .body(resource);
     }
 
-    @RequestMapping(value = "experiment/{experimentAccession}/download/zip", method = RequestMethod.GET, produces = "application/zip")
-    public void downloadArchive(HttpServletResponse response,
-                                @PathVariable String experimentAccession,
-                                @RequestParam(value= "fileType") String fileTypeId,
-                                @RequestParam(value="accessKey", defaultValue = "") String accessKey
-                                ) throws IOException {
+    @RequestMapping(value = "experiment/{experimentAccession}/download/zip",
+                    method = RequestMethod.GET,
+                    produces = "application/zip")
+    public void
+    downloadArchive(HttpServletResponse response,
+                    @PathVariable String experimentAccession,
+                    @RequestParam(value = "fileType") String fileTypeId,
+                    @RequestParam(value = "accessKey", defaultValue = "") String accessKey) throws IOException {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        List<Path> paths = experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId(fileTypeId));
+        List<Path> paths =
+                experimentFileLocationService.getFilePathsForArchive(
+                        experiment.getAccession(), ExperimentFileType.fromId(fileTypeId));
 
         String archiveName = experimentAccession + "-" + fileTypeId + "-files.zip";
         response.setStatus(HttpServletResponse.SC_OK);
@@ -82,5 +91,4 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
 
         zipOutputStream.close();
     }
-
 }

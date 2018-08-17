@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
+import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField;
 
 @Component
 public class CellMetadataService {
@@ -31,9 +32,11 @@ public class CellMetadataService {
     }
 
     public Map<String, String> getFactors(String experimentAccession, String cellId) {
-        SingleCellAnalyticsSchemaField[] factorFieldNames = cellMetadataDao.getFactorFieldNames(experimentAccession, cellId);
+        SingleCellAnalyticsSchemaField[] factorFieldNames =
+                cellMetadataDao.getFactorFieldNames(experimentAccession, cellId);
 
-        return cellMetadataDao.getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), factorFieldNames)
+        return cellMetadataDao.getQueryResultForMultiValueFields(
+                experimentAccession, Optional.of(cellId), factorFieldNames)
                 .entrySet().stream()
                 .collect(toMap(
                         entry -> SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName(entry.getKey()),
@@ -41,9 +44,13 @@ public class CellMetadataService {
     }
 
     public Map<String, String> getMetadata(String experimentAccession, String cellId) {
-        SingleCellAnalyticsSchemaField[] metadataFieldNames = cellMetadataDao.getMetadataFieldNames(experimentAccession).toArray(new SingleCellAnalyticsSchemaField[0]);
+        SingleCellAnalyticsSchemaField[] metadataFieldNames =
+                cellMetadataDao
+                        .getMetadataFieldNames(experimentAccession)
+                        .toArray(new SingleCellAnalyticsSchemaField[0]);
 
-        return cellMetadataDao.getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), metadataFieldNames)
+        return cellMetadataDao
+                .getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), metadataFieldNames)
                 .entrySet().stream()
                 .collect(toMap(
                         entry -> SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName(entry.getKey()),
@@ -60,10 +67,11 @@ public class CellMetadataService {
 
         SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
                 .stream()
-                .map(attribute -> SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField(attributeNameToFieldName(attribute)))
+                .map(attribute -> characteristicAsSchemaField(attributeNameToFieldName(attribute)))
                 .toArray(SingleCellAnalyticsSchemaField[]::new);
 
-        return cellMetadataDao.getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), attributeFields)
+        return cellMetadataDao
+                .getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), attributeFields)
                 .entrySet().stream()
                 .collect(toMap(
                         Map.Entry::getKey,

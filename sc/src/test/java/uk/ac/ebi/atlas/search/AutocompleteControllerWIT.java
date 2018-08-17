@@ -48,7 +48,8 @@ class AutocompleteControllerWIT {
     @Test
     void supportsMultipleSpecies() throws Exception {
         this.mockMvc
-                .perform(get("/json/suggestions").param("species", "Homo sapiens, Mus musculus").param("query", "zinc"))
+                .perform(
+                        get("/json/suggestions").param("species", "Homo sapiens, Mus musculus").param("query", "zinc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$..value", everyItem(containsStringIgnoringCase("zinc"))))
@@ -90,5 +91,4 @@ class AutocompleteControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.topSpecies", hasSize(AutocompleteController.FEATURED_SPECIES)));
     }
-
 }

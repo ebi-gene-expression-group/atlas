@@ -67,7 +67,8 @@ public class TsnePlotSettingsServiceIT {
 
     @Test
     void getPerplexitiesForValidAccession() {
-        List<Integer> result = subject.getAvailablePerplexities(jdbcTestUtils.fetchRandomSingleCellExperimentAccession());
+        List<Integer> result =
+                subject.getAvailablePerplexities(jdbcTestUtils.fetchRandomSingleCellExperimentAccession());
 
         assertThat(result)
                 .isNotEmpty()
@@ -98,9 +99,9 @@ public class TsnePlotSettingsServiceIT {
         OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();
         if (os instanceof UnixOperatingSystemMXBean) {
             return ((UnixOperatingSystemMXBean) os).getOpenFileDescriptorCount();
+        } else {
+            return -1;
         }
-
-        else return -1;
     }
 
     private Stream<String> randomSingleCellExperimentAccessionProvider() {

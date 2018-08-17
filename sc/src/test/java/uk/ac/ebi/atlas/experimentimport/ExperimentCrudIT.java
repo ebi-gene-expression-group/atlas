@@ -92,7 +92,8 @@
 //                hasItem(hasProperty("experimentAccession", is(SINGLE_CELL_ACCESSION))));
 //    }
 //
-//    public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException {
+//    public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType)
+//          throws IOException {
 //        importNewExperimentInsertsDB(experimentAccession);
 //        importExistingExperimentUpdatesDB(experimentAccession, experimentType);
 //        deleteExperimentDeletesDB(experimentAccession);
@@ -106,7 +107,8 @@
 //        assertThat(experimentCount(experimentAccession), is(1));
 //    }
 //
-//    public void importExistingExperimentUpdatesDB(String experimentAccession, ExperimentType experimentType) throws IOException {
+//    public void importExistingExperimentUpdatesDB(String experimentAccession, ExperimentType experimentType)
+//          throws IOException {
 //        ExperimentDTO originalExperimentDTO = subject.findExperiment(experimentAccession);
 //        subject.importExperiment(experimentAccession, false);
 //        assertThat(experimentCount(experimentAccession), is(1));

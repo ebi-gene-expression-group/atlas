@@ -1,16 +1,13 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
@@ -24,28 +21,25 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
-import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.BIOENTITY_IDENTIFIER;
-import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_NAME;
-import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CELL_ID;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 
 @Component
 public class GeneSearchDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchDao.class);
+    private static final double MARKER_GENE_P_VALUE_THRESHOLD = 0.05;
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
 
-    private BioentitiesCollectionProxy bioentitiesCollectionProxy;
-
-    public GeneSearchDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate, SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
+    public GeneSearchDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                         SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-        this.singleCellAnalyticsCollectionProxy = solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
-        this.bioentitiesCollectionProxy = solrCloudCollectionProxyFactory.create(BioentitiesCollectionProxy.class);
+        this.singleCellAnalyticsCollectionProxy =
+                solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
     }
 
-    private static final String SELECT_CELL_IDS_FOR_GENE_STATEMENT = 
+    private static final String SELECT_CELL_IDS_FOR_GENE_STATEMENT =
             "SELECT experiment_accession, cell_id FROM scxa_analytics AS analytics " +
                     "JOIN scxa_experiment AS experiments ON analytics.experiment_accession = experiments.accession " +
                     "WHERE gene_id=:gene_id AND private=FALSE";
@@ -85,7 +79,7 @@ public class GeneSearchDao {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId,
-                        "threshold", 0.05);
+                        "threshold", MARKER_GENE_P_VALUE_THRESHOLD);
 
         return namedParameterJdbcTemplate.query(
                 SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT,
@@ -98,7 +92,8 @@ public class GeneSearchDao {
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
 
-                        Map<Integer, List<Integer>> kAndClusterIds = result.getOrDefault(experimentAccession, new HashMap<>());
+                        Map<Integer, List<Integer>> kAndClusterIds =
+                                result.getOrDefault(experimentAccession, new HashMap<>());
                         List<Integer> clusterIds = kAndClusterIds.getOrDefault(k, new ArrayList<>());
                         clusterIds.add(clusterId);
 
@@ -113,7 +108,8 @@ public class GeneSearchDao {
 
 
     // Returns inferred cell types and organism parts for each experiment accession
-    public Map<String, Map<String, List<String>>> getFacets(List<String> cellIds, SingleCellAnalyticsSchemaField... singleCellAnalyticsSchemaFields) {
+    public Map<String, Map<String, List<String>>>
+    getFacets(List<String> cellIds, SingleCellAnalyticsSchemaField... singleCellAnalyticsSchemaFields) {
         List<SingleCellAnalyticsSchemaField> subFacetFields = Arrays.asList(singleCellAnalyticsSchemaFields);
 
         SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> queryBuilder =
@@ -123,7 +119,11 @@ public class GeneSearchDao {
                         .setSubFacetList(subFacetFields.toArray(new SingleCellAnalyticsSchemaField[0]))
                         .setRows(0);
 
-        ArrayList<SimpleOrderedMap> resultsByExperiment = (ArrayList<SimpleOrderedMap>) singleCellAnalyticsCollectionProxy.query(queryBuilder).getResponse().findRecursive("facets", EXPERIMENT_ACCESSION.name(), "buckets");
+        ArrayList<SimpleOrderedMap> resultsByExperiment =
+                (ArrayList<SimpleOrderedMap>) singleCellAnalyticsCollectionProxy
+                        .query(queryBuilder)
+                        .getResponse()
+                        .findRecursive("facets", EXPERIMENT_ACCESSION.name(), "buckets");
 
         return resultsByExperiment == null ?
                 emptyMap() :
@@ -137,22 +137,6 @@ public class GeneSearchDao {
                                         subFacetField -> getValuesForFacetField(subFacetValues, subFacetField.name())
                                 ))
                 ));
-    }
-
-    public List<String> getGeneIdsForCategory(BioentityPropertyName category, String query) {
-        SolrQueryBuilder<BioentitiesCollectionProxy> queryBuilder =
-                new SolrQueryBuilder<BioentitiesCollectionProxy>()
-                    .addQueryFieldByTerm(PROPERTY_NAME, category.name())
-                    .addQueryFieldByTerm(PROPERTY_VALUE, query)
-                    .setFieldList(BIOENTITY_IDENTIFIER);
-
-
-
-        SolrDocumentList results = bioentitiesCollectionProxy.query(queryBuilder).getResults();
-
-        return results.stream()
-                .map(x -> x.get(BIOENTITY_IDENTIFIER.name()).toString())
-                .collect(Collectors.toList());
     }
 
     private List<String> getValuesForFacetField(SimpleOrderedMap map, String facetField) {

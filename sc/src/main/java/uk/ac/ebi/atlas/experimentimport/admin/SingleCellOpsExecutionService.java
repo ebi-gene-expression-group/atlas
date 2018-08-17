@@ -66,7 +66,8 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     }
 
     @Override
-    public Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops) {
+    public Optional<? extends List<Pair<String, ? extends JsonElement>>>
+    attemptExecuteForAllAccessions(Collection<Op> ops) {
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
         } else {
@@ -132,7 +133,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
                 break;
 
             default:
-                throw new RuntimeException("Op not supported in Single Cell: "+op.name());
+                throw new RuntimeException("Op not supported in Single Cell: " + op.name());
         }
         return resultOfTheOp;
     }

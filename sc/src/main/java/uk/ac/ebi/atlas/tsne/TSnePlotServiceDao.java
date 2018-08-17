@@ -35,7 +35,10 @@ public class TSnePlotServiceDao {
                 SELECT_T_SNE_PLOT_WITH_EXPRESSION_STATEMENT,
                 namedParameters,
                 (rs, rowNum) -> TSnePoint.Dto.create(
-                        rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("expression_level"), rs.getString("cell_id")));
+                        rs.getDouble("x"),
+                        rs.getDouble("y"),
+                        rs.getDouble("expression_level"),
+                        rs.getString("cell_id")));
     }
 
     private static final String SELECT_T_SNE_PLOT_WITH_CLUSTERS_STATEMENT =

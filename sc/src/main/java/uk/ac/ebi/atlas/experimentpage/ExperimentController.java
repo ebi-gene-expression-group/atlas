@@ -25,7 +25,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private final DataFileHub dataFileHub;
     private final ExperimentPageContentService experimentPageContentService;
     private final ExperimentAttributesService experimentAttributesService;
-    
+
     @Inject
     public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub,
                                 ExperimentPageContentService experimentPageContentService,

@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.metadata.CellMetadataDao;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
-import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import javax.inject.Inject;
 
@@ -26,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class ExperimentPageContentServiceIT {
+class ExperimentPageContentServiceIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
 
@@ -37,9 +36,6 @@ public class ExperimentPageContentServiceIT {
     private DataFileHub dataFileHub;
 
     @Inject
-    private EuropePmcClient europePmcClient;
-
-    @Inject
     private TsnePlotSettingsService tsnePlotSettingsService;
 
     @Inject
@@ -48,12 +44,14 @@ public class ExperimentPageContentServiceIT {
     private ExperimentPageContentService subject;
 
     @BeforeEach
-    public void setUp() {
-        this.subject = new ExperimentPageContentService(experimentFileLocationService, dataFileHub, tsnePlotSettingsService, europePmcClient, cellMetadataDao);
+    void setUp() {
+        this.subject =
+                new ExperimentPageContentService(
+                        experimentFileLocationService, dataFileHub, tsnePlotSettingsService, cellMetadataDao);
     }
 
     @Test
-    public void getValidExperimentDesignJson() {
+    void getValidExperimentDesignJson() {
         // TODO replace empty experiment design table with mock table
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         JsonObject result = this.subject.getExperimentDesign(experimentAccession, new JsonObject(), "");
@@ -62,7 +60,7 @@ public class ExperimentPageContentServiceIT {
     }
 
     @Test
-    public void getValidAnalysisMethodsJson() {
+    void getValidAnalysisMethodsJson() {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         JsonArray result = this.subject.getAnalysisMethods(experimentAccession);
 
@@ -73,11 +71,15 @@ public class ExperimentPageContentServiceIT {
 
         assertThat(headerRow)
                 .hasSize(4)
-                .containsExactlyInAnyOrder(new JsonPrimitive("Analysis"), new JsonPrimitive("Software"), new JsonPrimitive("Version"), new JsonPrimitive("Citation"));
+                .containsExactlyInAnyOrder(
+                        new JsonPrimitive("Analysis"),
+                        new JsonPrimitive("Software"),
+                        new JsonPrimitive("Version"),
+                        new JsonPrimitive("Citation"));
     }
 
     @Test
-    public void getValidDownloadsJson() {
+    void getValidDownloadsJson() {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         JsonArray result = this.subject.getDownloads(experimentAccession, "");
 
@@ -111,7 +113,7 @@ public class ExperimentPageContentServiceIT {
     }
 
     @Test
-    public void getValidTsnePlotDataJson() {
+    void getValidTsnePlotDataJson() {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         JsonObject result = this.subject.getTsnePlotData(experimentAccession);
 
