@@ -65,7 +65,7 @@ public class BaselineExperimentCacheLoaderTest {
 
     @Mock
     private ExperimentDesign experimentDesign;
-    @Spy
+
     private static MockDataFileHub dataFileHub;
 
     private BaselineExperimentFactory subject;
