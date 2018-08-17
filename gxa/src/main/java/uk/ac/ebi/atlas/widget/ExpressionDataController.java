@@ -40,6 +40,6 @@ public final class ExpressionDataController extends JsonExceptionHandlingControl
 //    }
 
     private boolean hasBaselineTissueExpression(String geneId) {
-        return analyticsSearchService.tissueExpressionAvailablefor (SemanticQuery.create(geneId));
+        return analyticsSearchService.tissueExpressionAvailableFor(SemanticQuery.create(geneId));
     }
 }
