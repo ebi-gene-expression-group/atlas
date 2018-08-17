@@ -165,7 +165,7 @@ public class ExperimentOps {
 
     private JsonObject aggregatedResultsObject(Collection<Op> ops, JsonElement result) {
         JsonObject objectBeingReturned = new JsonObject();
-        String niceEnoughName = ops.size() != 1 ?
+        String niceEnoughName = ops.size() == 1 ?
                 ops.iterator().next().name() :
                 niceEnoughKeyName(ops);
         objectBeingReturned.add(niceEnoughName, result);
