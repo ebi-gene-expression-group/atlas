@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source;
 
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -71,7 +72,7 @@ class SearchStreamBuilderIT {
         }
     }
 
-    @Test
+    @Disabled
     void noResults() {
         SolrQueryBuilder<BioentitiesCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
         solrQueryBuilder
