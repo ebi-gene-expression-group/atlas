@@ -111,7 +111,7 @@
         <!--<module name="ParameterNumber"/>-->
         <module name="ParameterNumber">
             <property name="id" value="MainParameterNumber"/>
-            <property name="max" value="16"/>
+            <property name="max" value="20"/>
         </module>
 
         <module name="ParameterNumber">
@@ -190,7 +190,7 @@
         <module name="InnerAssignment"/>
         <!--<module name="MagicNumber"/>-->
         <module name="MagicNumber">
-            <property name="ignoreNumbers" value="-1, 0, 0.1, 0.25, 0.75,   1, 2, 3, 4, 5, 6, 60, 100, 1000, 45000"/>
+            <property name="ignoreNumbers" value="-1, 0, 0.1, 0.25, 0.75, 1, 2, 3, 4, 5, 6, 10, 60, 100, 1000, 45000"/>
         </module>
         <module name="MissingSwitchDefault"/>
         <module name="SimplifyBooleanExpression"/>
