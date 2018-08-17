@@ -36,7 +36,7 @@ public final class MockDataFileHub extends DataFileHub {
         try {
             return new MockDataFileHub();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
