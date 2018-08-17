@@ -37,8 +37,6 @@ public class ScxaExperimentDaoIT {
 
     @Before
     public void setUp() throws Exception {
-        UUID uuid = UUID.randomUUID();
-
         ExperimentDTO experimentDto =
                 new ExperimentDTO(
                         SC_ACCESSION,
@@ -54,7 +52,7 @@ public class ScxaExperimentDaoIT {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         try {
             subject.deleteExperiment(SC_ACCESSION);
         } catch (ResourceNotFoundException e) {
