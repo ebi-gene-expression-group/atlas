@@ -20,14 +20,17 @@ public class JsonBuildVersionController extends JsonExceptionHandlingController 
     private String buildNumber;
     private String buildBranch;
     private String buildCommitId;
+    private String tomcatHostname;
 
     @Inject
     public JsonBuildVersionController(@Value("${buildNumber}") String buildNumber,
                                       @Value("${buildBranch}") String buildBranch,
-                                      @Value("${buildCommitId}") String buildCommitId) {
+                                      @Value("${buildCommitId}") String buildCommitId,
+                                      @Value("${tomcatHostname}") String tomcatHostname) {
         this.buildNumber = buildNumber;
         this.buildBranch = buildBranch;
         this.buildCommitId = buildCommitId;
+        this.tomcatHostname = tomcatHostname;
     }
 
     @RequestMapping(
@@ -35,11 +38,12 @@ public class JsonBuildVersionController extends JsonExceptionHandlingController 
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    public String getBuildNumber() {
+    public String getBuildInfo() {
         return GSON.toJson(
                 ImmutableMap.of(
                         "bambooBuildVersion", buildNumber,
                         "gitBranch", buildBranch,
-                        "gitCommitID", buildCommitId));
+                        "gitCommitID", buildCommitId,
+                        "tomcatHostname", tomcatHostname));
     }
 }

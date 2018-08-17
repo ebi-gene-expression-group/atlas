@@ -41,6 +41,7 @@ public class JsonBuildVersionControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.bambooBuildVersion", isA(String.class)))
                 .andExpect(jsonPath("$.gitBranch", isA(String.class)))
-                .andExpect(jsonPath("$.gitCommitID", isA(String.class)));
+                .andExpect(jsonPath("$.gitCommitID", isA(String.class)))
+                .andExpect(jsonPath("$.tomcatHostname", isA(String.class)));
     }
 }
