@@ -129,7 +129,7 @@ public class ExpressionAtlasExperimentCheckerTest {
 
     @Test
     public void baselineRnaSeqFileNeedsAtLeastOneDataFile() {
-        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[] {}, (a, b)-> {});
+        assertFails("<assay_group id=\"g1\"><assay>A</assay></assay_group>", new String[] {}, (a, b) -> {});
     }
 
     private void fileMatchesHeaderBasedOnAssayGroups(BiConsumer<String, List<String[]>> addFile) {
@@ -177,7 +177,7 @@ public class ExpressionAtlasExperimentCheckerTest {
 
     @Test
     public void baselineRnaSeqGeneExpressionFilesArePerAssayGroup3() {
-        fileMatchesHeaderBasedOnAssayGroups((a, b)-> {
+        fileMatchesHeaderBasedOnAssayGroups((a, b) -> {
             dataFileHub.addTpmsExpressionFile(a, b);
             dataFileHub.addFpkmsExpressionFile(a, b);
         });
@@ -220,14 +220,14 @@ public class ExpressionAtlasExperimentCheckerTest {
 
 
     private void technicalReplicatesInOneAssayGroupPasses(List<String> assayTags, String[] header) {
-        assertPasses("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
+        assertPasses("<assay_group id=\"g1\">" + Joiner.on("\n").join(assayTags) + "</assay_group>",
                 ImmutableList.builder().add("", "", "").addAll(Arrays.asList(header)).build().toArray(new String[] {}),
                 dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[]{"", "", "g1"}, dataFileHub::addTpmsExpressionFile);
     }
 
     private void technicalReplicatesInOneAssayGroupFails(List<String> assayTags, String[] header) {
-        assertFails("<assay_group id=\"g1\">"+ Joiner.on("\n").join(assayTags)+"</assay_group>",
+        assertFails("<assay_group id=\"g1\">" + Joiner.on("\n").join(assayTags) + "</assay_group>",
                 ImmutableList.builder().add("", "", "").addAll(Arrays.asList(header)).build().toArray(new String[] {}),
                 dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[]{"", "", "g1"}, dataFileHub::addTpmsExpressionFile);

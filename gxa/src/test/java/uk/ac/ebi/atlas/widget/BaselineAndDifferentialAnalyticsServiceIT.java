@@ -119,11 +119,11 @@ public class BaselineAndDifferentialAnalyticsServiceIT {
 
             if (experimentType.isMicroarray()) {
                 for (String fieldName: fieldsNeededInMicroarrayDifferentialResults) {
-                    assertTrue("result has "+fieldName, jsonElement.getAsJsonObject().has(fieldName));
+                    assertTrue("result has " + fieldName, jsonElement.getAsJsonObject().has(fieldName));
                 }
             } else {
                 for (String fieldName: fieldsNeededInDifferentialResults) {
-                    assertTrue("result has "+fieldName, jsonElement.getAsJsonObject().has(fieldName));
+                    assertTrue("result has " + fieldName, jsonElement.getAsJsonObject().has(fieldName));
                 }
             }
         }

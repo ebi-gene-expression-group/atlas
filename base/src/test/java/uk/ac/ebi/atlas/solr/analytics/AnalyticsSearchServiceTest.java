@@ -19,38 +19,38 @@ public class AnalyticsSearchServiceTest {
     private static final SemanticQuery EMPTY_CONDITION_QUERY = SemanticQuery.create();
 
     private static final SemanticQuery ZINC_FINGER_QUERY = SemanticQuery.create("zinc finger");
-    private static final String ZINC_FINGER_GENE_QUERY_SEARCH_RESPONSE = "{\n"+
-            "  \"response\":{\"numFound\":78799,\"start\":0,\"docs\":[]\n"+
-            "  },\n"+
-            "  \"facet_counts\":{\n"+
-            "    \"facet_queries\":{},\n"+
-            "    \"facet_fields\":{\n"+
-            "      \"species\":[\n"+
-            "        \"homo sapiens\", 59445,\n"+
-            "        \"mus musculus\", 9060,\n"+
-            "        \"ovis aries\", 5233,\n"+
-            "        \"rattus norvegicus\", 1118,\n"+
-            "        \"caenorhabditis elegans\", 802,\n"+
-            "        \"papio anubis\", 594,\n"+
-            "        \"arabidopsis thaliana\", 377,\n"+
-            "        \"macaca mulatta\", 372,\n"+
-            "        \"monodelphis domestica\", 324,\n"+
-            "        \"xenopus tropicalis\", 305,\n"+
-            "        \"gallus gallus\", 290,\n"+
-            "        \"sorghum bicolor\", 226,\n"+
-            "        \"anolis carolinensis\", 222,\n"+
-            "        \"bos taurus\", 202,\n"+
-            "        \"triticum aestivum\", 106,\n"+
-            "        \"hordeum vulgare\", 35,\n"+
-            "        \"vitis vinifera\", 34,\n"+
-            "        \"oryza sativa\", 22,\n"+
-            "        \"zea mays\", 15,\n"+
-            "        \"glycine max\", 12,\n"+
-            "        \"danio rerio\", 4,\n"+
-            "        \"drosophila melanogaster\", 1]},\n"+
-            "    \"facet_dates\":{},\n"+
-            "    \"facet_ranges\":{},\n"+
-            "    \"facet_intervals\":{},\n"+
+    private static final String ZINC_FINGER_GENE_QUERY_SEARCH_RESPONSE = "{\n" +
+            "  \"response\":{\"numFound\":78799,\"start\":0,\"docs\":[]\n" +
+            "  },\n" +
+            "  \"facet_counts\":{\n" +
+            "    \"facet_queries\":{},\n" +
+            "    \"facet_fields\":{\n" +
+            "      \"species\":[\n" +
+            "        \"homo sapiens\", 59445,\n" +
+            "        \"mus musculus\", 9060,\n" +
+            "        \"ovis aries\", 5233,\n" +
+            "        \"rattus norvegicus\", 1118,\n" +
+            "        \"caenorhabditis elegans\", 802,\n" +
+            "        \"papio anubis\", 594,\n" +
+            "        \"arabidopsis thaliana\", 377,\n" +
+            "        \"macaca mulatta\", 372,\n" +
+            "        \"monodelphis domestica\", 324,\n" +
+            "        \"xenopus tropicalis\", 305,\n" +
+            "        \"gallus gallus\", 290,\n" +
+            "        \"sorghum bicolor\", 226,\n" +
+            "        \"anolis carolinensis\", 222,\n" +
+            "        \"bos taurus\", 202,\n" +
+            "        \"triticum aestivum\", 106,\n" +
+            "        \"hordeum vulgare\", 35,\n" +
+            "        \"vitis vinifera\", 34,\n" +
+            "        \"oryza sativa\", 22,\n" +
+            "        \"zea mays\", 15,\n" +
+            "        \"glycine max\", 12,\n" +
+            "        \"danio rerio\", 4,\n" +
+            "        \"drosophila melanogaster\", 1]},\n" +
+            "    \"facet_dates\":{},\n" +
+            "    \"facet_ranges\":{},\n" +
+            "    \"facet_intervals\":{},\n" +
             "    \"facet_heatmaps\":{}}}";
 
     private static final SemanticQuery FOOBAR_GENE_QUERY = SemanticQuery.create("foobar");

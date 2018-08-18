@@ -48,7 +48,7 @@ class FileDownloadControllerWIT {
         this.mockMvc.perform(get(FILE_DOWNLOAD_URL, EXPERIMENT_ACCESSION)
                 .param("fileType", ExperimentFileType.EXPERIMENT_DESIGN.getId()))
                 .andExpect(status().isOk())
-                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+expectedFileName))
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedFileName))
                 .andExpect(content().contentType(MediaType.TEXT_PLAIN));
     }
 
@@ -78,7 +78,7 @@ class FileDownloadControllerWIT {
                 .param("fileType", ExperimentFileType.QUANTIFICATION_FILTERED.getId()))
                 .andExpect(status().isOk())
                 .andExpect(
-                        header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+expectedArchiveName))
+                        header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
                 .andExpect(content().contentType("application/zip"));
     }
 

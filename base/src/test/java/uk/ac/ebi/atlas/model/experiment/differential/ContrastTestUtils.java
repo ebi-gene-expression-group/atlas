@@ -15,7 +15,7 @@ public class ContrastTestUtils {
     public static List<Contrast> get(int num) {
         ImmutableList.Builder<Contrast> b = ImmutableList.builder();
 
-        for (int i = 1; i < num+1; i++) {
+        for (int i = 1; i < num + 1; i++) {
             b.add(
                     new Contrast(
                             "contrast_" + i,

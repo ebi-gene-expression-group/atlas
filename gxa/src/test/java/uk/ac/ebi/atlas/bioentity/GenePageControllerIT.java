@@ -23,7 +23,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class GenePageControllerIT {
 
     @Inject
@@ -61,7 +61,7 @@ public class GenePageControllerIT {
         if (expectGoTerms) {
             assertThat(gotermsAndTheirRelevance.size(), greaterThan(0));
 
-            if (gotermsAndTheirRelevance.size()> 10) {
+            if (gotermsAndTheirRelevance.size() > 10) {
                 // not all the same relevance
                 assertThat(new HashSet<>(gotermsAndTheirRelevance.values()).size(), greaterThan(1));
             }

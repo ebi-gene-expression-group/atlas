@@ -11,12 +11,12 @@ import static org.junit.Assert.assertThat;
 
 public class BiologicalReplicateTest {
 
-    @Test(expected=RuntimeException.class)
+    @Test(expected = RuntimeException.class)
     public void replicateIdCantBeAnAssayId() {
         new BiologicalReplicate("Foobar", ImmutableSet.of("Foo", "Foobar", "Bar"));
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test(expected = RuntimeException.class)
     public void replicateNeedsAtLeastOneAssayId() {
         new BiologicalReplicate("Foobar", Collections.emptySet());
     }

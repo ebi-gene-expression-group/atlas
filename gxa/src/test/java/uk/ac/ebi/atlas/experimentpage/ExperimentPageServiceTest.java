@@ -43,7 +43,7 @@ public class ExperimentPageServiceTest {
         assertThat(result.getPath(), is("json/experiments/E-MOCK-1/genes/ENSG0000012345"));
         assertThat(result.getQuery(), containsString("cutoff=1.234"));
         assertThat(result.getQuery(), containsString("selectedColumnIds=g1,g2"));
-        assertThat(result.getQuery(), containsString("type="+ExperimentType.RNASEQ_MRNA_BASELINE.name()));
+        assertThat(result.getQuery(), containsString("type=" + ExperimentType.RNASEQ_MRNA_BASELINE.name()));
     }
 
     @Test

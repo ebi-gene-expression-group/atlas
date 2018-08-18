@@ -78,21 +78,21 @@ public class AtlasResourceHubIT {
                 countNegatives++;
             }
         }
-        assertTrue(countPositives >0);
-        assertTrue(countNegatives >0);
+        assertTrue(countPositives > 0);
+        assertTrue(countNegatives > 0);
     }
 
     private void assertAboutResult(Map<String, JsonArray> result) {
-        for (Map.Entry<String, JsonArray> e : result.entrySet()) {
-            assertTrue("Contrast: " + e.getKey(), e.getKey().matches("g\\d+_g\\d+"));
+        for (Map.Entry<String, JsonArray> entry : result.entrySet()) {
+            assertTrue("Contrast: " + entry.getKey(), entry.getKey().matches("g\\d+_g\\d+"));
 
-            for (JsonElement el : e.getValue().getAsJsonArray()) {
-                assertTrue(el.getAsJsonObject().has("type"));
-                assertTrue(el.getAsJsonObject().has("uri"));
+            for (JsonElement element : entry.getValue().getAsJsonArray()) {
+                assertTrue(element.getAsJsonObject().has("type"));
+                assertTrue(element.getAsJsonObject().has("uri"));
                 try {
-                    ResourceType.forFileName(el.getAsJsonObject().get("type").getAsString());
-                } catch(Exception exc) {
-                    fail(exc.getMessage());
+                    ResourceType.forFileName(element.getAsJsonObject().get("type").getAsString());
+                } catch (Exception e) {
+                    fail(e.getMessage());
                 }
             }
         }

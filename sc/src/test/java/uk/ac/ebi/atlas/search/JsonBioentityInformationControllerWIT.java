@@ -66,7 +66,7 @@ class JsonBioentityInformationControllerWIT {
     }
 
     @Test
-    void payloadContainsExpressionAtlasLink() throws Exception{
+    void payloadContainsExpressionAtlasLink() throws Exception {
         String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc

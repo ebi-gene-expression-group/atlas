@@ -52,7 +52,7 @@ public class ExperimentOpsExecutionServiceTest {
     }
 
     @Test
-    public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception{
+    public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.attemptExecuteStatefulOp(ACCESSION, Op.UPDATE_DESIGN);
         verify(experimentTrader).removeExperimentFromCache(ACCESSION);
     }

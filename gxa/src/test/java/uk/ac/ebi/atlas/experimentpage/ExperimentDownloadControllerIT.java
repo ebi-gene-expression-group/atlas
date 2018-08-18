@@ -187,7 +187,8 @@ public class ExperimentDownloadControllerIT {
         ImmutableMap.Builder<String, String[]> builder = ImmutableMap.builder();
         for (String l : lines) {
             String[] line = l.split("\t", -1);
-            builder.put(line[GENE_NAME_INDEX-1]+" "+ line[GENE_NAME_INDEX]+" "+ line[GENE_NAME_INDEX+1], line);
+            builder.put(
+                    line[GENE_NAME_INDEX - 1] + " " + line[GENE_NAME_INDEX] + " " + line[GENE_NAME_INDEX + 1], line);
         }
 
         return builder.build();
@@ -204,7 +205,7 @@ public class ExperimentDownloadControllerIT {
     }
 
     @Test
-    public void testSomeRnaSeqExperiments() throws Exception{
+    public void testSomeRnaSeqExperiments() throws Exception {
         Set<String> rnaSeqExperiments = experimentTrader.getRnaSeqDifferentialExperimentAccessions();
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
@@ -236,7 +237,8 @@ public class ExperimentDownloadControllerIT {
         String queryLine = headersAndBody.getLeft().get(1);
 
         assertThat(
-                Pattern.matches(".*Genes .* up/down differentially expressed.*"+experiment.getAccession(), queryLine),
+                Pattern.matches(
+                        ".*Genes .* up/down differentially expressed.*" + experiment.getAccession(), queryLine),
                 is(true));
 
         String[] columnHeaders = headersAndBody.getRight().get(0).split("\t");
@@ -324,7 +326,7 @@ public class ExperimentDownloadControllerIT {
             String[] line = l.split("\t", -1);
             String geneName = line[GENE_NAME_INDEX];
             if (!"Gene Name".equals(geneName)) {
-                builder.put(line[GENE_NAME_INDEX-1]+" "+ line[GENE_NAME_INDEX], line);
+                builder.put(line[GENE_NAME_INDEX - 1] + " " + line[GENE_NAME_INDEX], line);
             }
         }
 
@@ -364,7 +366,7 @@ public class ExperimentDownloadControllerIT {
 
         String queryLine = headersAndBody.getLeft().get(1);
 
-        assertThat(Pattern.matches(".*Genes .* expressed.*"+experiment.getAccession(), queryLine), is(true));
+        assertThat(Pattern.matches(".*Genes .* expressed.*" + experiment.getAccession(), queryLine), is(true));
 
         String[] columnHeaders = headersAndBody.getRight().get(0).split("\t");
         assertThat("Gene ID", is(columnHeaders[0]));
@@ -413,7 +415,7 @@ public class ExperimentDownloadControllerIT {
     }
 
     @Test
-    public void testSomeProteomicsBaselineExperiments() throws Exception{
+    public void testSomeProteomicsBaselineExperiments() throws Exception {
         Set<String> experimentAccessions =
                 experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
         assertThat(experimentAccessions, hasSize(greaterThan(0)));
@@ -437,7 +439,7 @@ public class ExperimentDownloadControllerIT {
 
         String queryLine = headersAndBody.getLeft().get(1);
 
-        assertThat(Pattern.matches(".*Genes .* expressed.*"+experiment.getAccession(), queryLine), is(true));
+        assertThat(Pattern.matches(".*Genes .* expressed.*" + experiment.getAccession(), queryLine), is(true));
 
         String[] columnHeaders = headersAndBody.getRight().get(0).split("\t");
         assertThat("Gene ID", is(columnHeaders[0]));

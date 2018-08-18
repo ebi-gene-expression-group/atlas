@@ -20,7 +20,6 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = WebConfig.class)
 public class DBSolrStatusControllerIT {
-
     @Inject
     private DBSolrStatusController subject;
 

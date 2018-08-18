@@ -30,10 +30,10 @@ public class BaselineExperimentTest {
 
     @Test
     public void orderOfAssayGroupsIsPreserved() {
-        int num = (int) Math.round(Math.random()*10000);
+        int num = (int) Math.round(Math.random() * 10000);
         List<AssayGroup> assayGroups = new ArrayList<>(num);
-        for (int i = 0; i< num; i++) {
-            assayGroups.add(new AssayGroup("id_"+i, "assay_"+i));
+        for (int i = 0; i < num; i++) {
+            assayGroups.add(new AssayGroup("id_" + i, "assay_" + i));
         }
 
         assertThat(MockExperiment.createBaselineExperiment(assayGroups).getDataColumnDescriptors())

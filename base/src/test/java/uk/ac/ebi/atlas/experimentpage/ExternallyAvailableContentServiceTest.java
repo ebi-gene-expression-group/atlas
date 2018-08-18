@@ -95,7 +95,7 @@ public class ExternallyAvailableContentServiceTest {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
             return ImmutableList.of(
-                    new ExternallyAvailableContent(redirectRoot+"/"+experiment.getAccession(),
+                    new ExternallyAvailableContent(redirectRoot + "/" + experiment.getAccession(),
                             ExternallyAvailableContent.Description.create("", ""))
             );
         }
@@ -221,7 +221,7 @@ public class ExternallyAvailableContentServiceTest {
         assertThat(
                 new RedirectingSupplier("https://www.ebi.ac.uk/gxa/experiments")
                         .get(experiment).iterator().next().uri.getSchemeSpecificPart(),
-                is("https://www.ebi.ac.uk/gxa/experiments/"+experiment.getAccession()));
+                is("https://www.ebi.ac.uk/gxa/experiments/" + experiment.getAccession()));
 
     }
 

@@ -105,7 +105,7 @@ class SolrQueryUtilsTest {
 
         assertThat(splittedRangeQuery)
                 .hasSize(2)
-                .containsExactly(FIELD1.name(), "[" + Double.toString(min)+ " TO " + Double.toString(max) + "]");
+                .containsExactly(FIELD1.name(), "[" + Double.toString(min) + " TO " + Double.toString(max) + "]");
     }
 
     private static Stream<Arguments> randomDoublesProvider() {
