@@ -600,6 +600,8 @@
                 <jdbc.password>YxyR9PKvOAtY</jdbc.password>
                 <zk.host>lime</zk.host>
                 <solr.host>lime</solr.host>
+                <!-- Must match any of the appenders defined in logback-test.xml -->
+                <test.logs>STDOUT</test.logs>
             </properties>
         </profile>
 
@@ -613,6 +615,8 @@
                 <jdbc.password>atlas3dev</jdbc.password>
                 <zk.host>localhost</zk.host>
                 <solr.host>localhost</solr.host>
+                <!-- Must match any of the appenders defined in logback-test.xml -->
+                <test.logs>STDOUT</test.logs>
             </properties>
         </profile>
 
@@ -627,6 +631,8 @@
                 <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
                 <zk.host>lime.ebi.ac.uk</zk.host>
                 <solr.host>lime.ebi.ac.uk</solr.host>
+                <!-- Must match any of the appenders defined in logback-test.xml -->
+                <test.logs>FILE</test.logs>
             </properties>
         </profile>
 
