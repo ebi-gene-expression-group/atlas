@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -146,7 +146,7 @@ public class ExternallyAvailableContentServiceTest {
 
     @Test
     public void noSuppliersReturnsEmptyList() {
-        testNoResourcesListed(ImmutableList.<ExternallyAvailableContent.Supplier<Experiment>>of());
+        testNoResourcesListed(ImmutableList.of());
     }
 
     @Test
@@ -156,7 +156,7 @@ public class ExternallyAvailableContentServiceTest {
 
     @Test
     public void noResourcesThrows() {
-        testNotFound(ImmutableList.<ExternallyAvailableContent.Supplier<Experiment>>of(), externallyAvailableContent);
+        testNotFound(ImmutableList.of(), externallyAvailableContent);
         testNotFound(ImmutableList.of(nullSupplier), externallyAvailableContent);
         testNotFound(ImmutableList.of(differentSupplier), externallyAvailableContent);
         testNotFound(ImmutableList.of(nullSupplier, differentSupplier), externallyAvailableContent);
@@ -193,7 +193,7 @@ public class ExternallyAvailableContentServiceTest {
         ExternallyAvailableContent contentWithRedirect = redirectingSupplier.get(experiment).iterator().next();
         assertThat(contentWithRedirect.uri.getScheme(), is("redirect"));
 
-        assertThat(externallyAvailableContent.uri.getScheme(), isEmptyOrNullString());
+        assertThat(externallyAvailableContent.uri.getScheme(), is(emptyOrNullString()));
     }
 
     @Test

@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isA;
-import static org.hamcrest.Matchers.isOneOf;
+import static org.hamcrest.Matchers.oneOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -63,7 +63,7 @@ class JsonExperimentTSnePlotControllerWIT {
                 .andExpect(jsonPath("$.min", is(greaterThan(0.0))))
                 .andExpect(jsonPath("$.max", isA(Number.class)))
                 .andExpect(jsonPath("$.max", is(greaterThan(0.0))))
-                .andExpect(jsonPath("$.unit", isOneOf("TPM")))
+                .andExpect(jsonPath("$.unit", is(oneOf("TPM"))))
                 .andExpect(jsonPath("$.series", hasSize(greaterThan(0))));
     }
 
@@ -79,7 +79,7 @@ class JsonExperimentTSnePlotControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min").doesNotExist())
                 .andExpect(jsonPath("$.max").doesNotExist())
-                .andExpect(jsonPath("$.unit", isOneOf("TPM")))
+                .andExpect(jsonPath("$.unit", is(oneOf("TPM"))))
                 .andExpect(jsonPath("$.series", hasSize(greaterThan(0))))
                 .andExpect(jsonPath("$.series..expressionLevel", everyItem(is(0.0))));
     }
@@ -95,7 +95,7 @@ class JsonExperimentTSnePlotControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min").doesNotExist())
                 .andExpect(jsonPath("$.max").doesNotExist())
-                .andExpect(jsonPath("$.unit", isOneOf("TPM")))
+                .andExpect(jsonPath("$.unit", is(oneOf("TPM"))))
                 .andExpect(jsonPath("$.series", hasSize(greaterThan(0))))
                 .andExpect(jsonPath("$.series..expressionLevel", everyItem(is(0.0))));
     }
