@@ -38,7 +38,7 @@ class ExperimentRequestPreferencesSolrQueryFactoryTest {
                         "*")
                 .hasFieldOrPropertyWithValue(
                         "rows",
-                        SolrQueryBuilder.MAX_ROWS);
+                        SolrQueryBuilder.DEFAULT_ROWS);
     }
 
     @Test
@@ -62,7 +62,7 @@ class ExperimentRequestPreferencesSolrQueryFactoryTest {
                         "*")
                 .hasFieldOrPropertyWithValue(
                         "rows",
-                        SolrQueryBuilder.MAX_ROWS);
+                        SolrQueryBuilder.DEFAULT_ROWS);
     }
 
     @Test

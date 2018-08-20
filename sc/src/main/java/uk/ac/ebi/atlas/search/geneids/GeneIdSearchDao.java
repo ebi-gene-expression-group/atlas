@@ -74,7 +74,7 @@ public class GeneIdSearchDao {
                     .findFirst()
                     .map((x) ->
                             searchWithinGeneIdsExpressedInExperiments(
-                                    bioentitiesQueryBuilder.setRows(SolrQueryBuilder.MAX_ROWS)));
+                                    bioentitiesQueryBuilder.setRows(SolrQueryBuilder.DEFAULT_ROWS)));
         }
 
     }
