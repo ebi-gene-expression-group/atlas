@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
@@ -31,6 +33,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialProfileComparatorTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialProfileComparatorTest.class);
+    
     private List<Contrast> mockContrasts = ContrastTestUtils.get(3);
 
     private Set<Contrast> allContrasts = ImmutableSet.copyOf(mockContrasts);
@@ -207,7 +211,7 @@ public class DifferentialProfileComparatorTest {
         subject = new DifferentialProfileComparator<>(true, CONTRASTS, CONTRASTS, Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(SEQUENCE_PROFILES, subject);
-        System.out.println(Joiner.on("\n").join(sortedProfilesArray));
+        LOGGER.debug(Joiner.on("\n").join(sortedProfilesArray));
 
         String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_1, GENE_6, GENE_2, GENE_3, GENE_4, GENE_5));
@@ -219,7 +223,7 @@ public class DifferentialProfileComparatorTest {
                 Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(SEQUENCE_PROFILES, subject);
-        System.out.println(Joiner.on("\n").join(sortedProfilesArray));
+        LOGGER.debug(Joiner.on("\n").join(sortedProfilesArray));
 
         String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_1, GENE_2, GENE_3, GENE_4, GENE_5, GENE_6));
@@ -230,7 +234,7 @@ public class DifferentialProfileComparatorTest {
         subject = new DifferentialProfileComparator<>(false, CONTRASTS, CONTRASTS, Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(SEQUENCE_PROFILES, subject);
-        System.out.println(Joiner.on("\n").join(sortedProfilesArray));
+        LOGGER.debug(Joiner.on("\n").join(sortedProfilesArray));
 
         String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_6, GENE_2, GENE_3, GENE_4, GENE_5, GENE_1));
@@ -241,7 +245,7 @@ public class DifferentialProfileComparatorTest {
         subject = new DifferentialProfileComparator<>(false, CONTRASTS.subList(0, 1), CONTRASTS, Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(SEQUENCE_PROFILES, subject);
-        System.out.println(Joiner.on("\n").join(sortedProfilesArray));
+        LOGGER.debug(Joiner.on("\n").join(sortedProfilesArray));
 
         String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_2, GENE_3, GENE_6, GENE_4, GENE_5, GENE_1));
@@ -273,7 +277,7 @@ public class DifferentialProfileComparatorTest {
         subject = new DifferentialProfileComparator<>(false, CONTRASTS, CONTRASTS, Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(SEQUENCE_PROFILES_2, subject);
-        System.out.println(Joiner.on("\n").join(sortedProfilesArray));
+        LOGGER.debug(Joiner.on("\n").join(sortedProfilesArray));
 
         String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_1, GENE_2, GENE_3));
