@@ -220,6 +220,8 @@
                     <configuration>
                         <configLocation>atlas_checks.xml</configLocation>
                         <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <cacheFile>${project.build.directory}/checkstyle/checkstyle-cachefile</cacheFile>
+                        <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
                     </configuration>
                 </plugin>
             </plugins>
