@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.search;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,11 +120,13 @@ public class GeneSearchDao {
                         .setSubFacetList(subFacetFields)
                         .setRows(0);
 
-        ArrayList<SimpleOrderedMap> resultsByExperiment =
-                (ArrayList<SimpleOrderedMap>) singleCellAnalyticsCollectionProxy
-                        .query(queryBuilder)
-                        .getResponse()
-                        .findRecursive("facets", EXPERIMENT_ACCESSION.name(), "buckets");
+        List<SimpleOrderedMap> resultsByExperiment =
+                extractSimpleOrderdMaps(
+                        singleCellAnalyticsCollectionProxy
+                                .query(queryBuilder)
+                                .getResponse()
+                                .findRecursive("facets", EXPERIMENT_ACCESSION.name(), "buckets"));
+
 
         return resultsByExperiment == null ?
                 emptyMap() :
@@ -141,11 +143,23 @@ public class GeneSearchDao {
     }
 
     private List<String> getValuesForFacetField(SimpleOrderedMap map, String facetField) {
-        ArrayList<SimpleOrderedMap> results = (ArrayList<SimpleOrderedMap>) map.findRecursive(facetField, "buckets");
+        List<SimpleOrderedMap> results = extractSimpleOrderdMaps(map.findRecursive(facetField, "buckets"));
 
         return results
                 .stream()
                 .map(x -> x.get("val").toString())
                 .collect(Collectors.toList());
+    }
+
+    private static List<SimpleOrderedMap> extractSimpleOrderdMaps(Object o) {
+        ImmutableList.Builder<SimpleOrderedMap> builder = ImmutableList.builder();
+        if (o instanceof ArrayList) {
+            for (Object element : (ArrayList) o) {
+                if (element instanceof SimpleOrderedMap) {
+                    builder.add((SimpleOrderedMap) element);
+                }
+            }
+        }
+        return builder.build();
     }
 }
