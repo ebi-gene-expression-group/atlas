@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialProfileComparatorTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialProfileComparatorTest.class);
-    
+
     private List<Contrast> mockContrasts = ContrastTestUtils.get(3);
 
     private Set<Contrast> allContrasts = ImmutableSet.copyOf(mockContrasts);
