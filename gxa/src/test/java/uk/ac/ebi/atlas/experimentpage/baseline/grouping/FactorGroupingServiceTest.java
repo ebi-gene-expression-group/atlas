@@ -14,13 +14,15 @@ import java.util.Collection;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FactorGroupingServiceTest {
     @Mock
     private OrganismPartGroupingService organismPartGroupingService;
+
+    @Mock
+    private Collection<OntologyTerm> ontologyTermsAcrossExperiments;
 
     private FactorGroupingService subject;
 
@@ -54,7 +56,6 @@ public class FactorGroupingServiceTest {
 
     @Test
     public void noResultsNoFactorGrouping() {
-        Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
         when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
                 .thenReturn(ImmutableMap.of());
         when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
@@ -67,7 +68,6 @@ public class FactorGroupingServiceTest {
 
     @Test
     public void noOntologyTermsNoFactorGrouping() {
-        Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
         when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
                 .thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of()));
         when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
@@ -80,7 +80,6 @@ public class FactorGroupingServiceTest {
 
     @Test
     public void ontologyTermsGivesFactorGrouping() {
-        Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
         when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
                 .thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
         when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
@@ -93,7 +92,6 @@ public class FactorGroupingServiceTest {
 
     @Test
     public void ontologyTermsGivesFactorGrouping2() {
-        Collection<OntologyTerm> ontologyTermsAcrossExperiments = mock(Collection.class);
         when(organismPartGroupingService.getAnatomicalSystemsGrouping(ontologyTermsAcrossExperiments))
                 .thenReturn(ImmutableMap.of(ColumnGroup.create("", ""), ImmutableSet.of(OntologyTerm.create(""))));
         when(organismPartGroupingService.getOrgansGrouping(ontologyTermsAcrossExperiments))
