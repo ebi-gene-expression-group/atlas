@@ -23,7 +23,7 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
     // ERROR (qtp511707818-76) [   ] o.a.s.s.HttpSolrCall null:java.lang.IllegalArgumentException:
     // maxSize must be <= 2147483630; got: 2147483646
     public static final int SOLR_MAX_ROWS = 2147483630;
-    public static final int DEFAULT_ROWS = 1000000;
+    public static final int DEFAULT_ROWS = 100000;
 
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
