@@ -6,11 +6,4 @@
 
 <suppressions>
     <suppress files="test/" checks="MagicNumber"/>
-    <suppress files="test/" id="MainWhitespaceAround"/>
-    <suppress files="test/" id="MainParameterNumber"/>
-    <suppress files="test/" id="MainEmptyBlock"/>
-
-    <suppress files="main/" id="TestWhitespaceAround"/>
-    <suppress files="main/" id="TestParameterNumber"/>
-    <suppress files="main/" id="TestEmptyBlock"/>
 </suppressions>

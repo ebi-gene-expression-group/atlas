@@ -20,6 +20,8 @@
 -->
 
 <module name="Checker">
+    <property name="severity" value="warning"/>
+
     <!--
         If you set the basedir property below, then all reported file
         names will be relative to the specified directory. See
@@ -110,12 +112,10 @@
         <module name="MethodLength"/>
         <!--<module name="ParameterNumber"/>-->
         <module name="ParameterNumber">
-            <property name="id" value="MainParameterNumber"/>
-            <property name="max" value="20"/>
+            <property name="max" value="23"/>
         </module>
 
         <module name="ParameterNumber">
-            <property name="id" value="TestParameterNumber"/>
             <property name="max" value="23"/>
         </module>
 
@@ -137,18 +137,10 @@
         <module name="WhitespaceAfter"/>
         <!--<module name="WhitespaceAround"/>-->
         <module name="WhitespaceAround">
-            <property name="id" value="MainWhitespaceAround"/>
-            <property name="allowEmptyMethods" value="true"/>
-            <property name="allowEmptyLambdas" value="true"/>
-        </module>
-
-        <module name="WhitespaceAround">
-            <property name="id" value="TestWhitespaceAround"/>
             <property name="allowEmptyConstructors" value="true"/>
             <property name="allowEmptyMethods" value="true"/>
             <property name="allowEmptyLambdas" value="true"/>
         </module>
-
 
         <!-- Modifier Checks                                    -->
         <!-- See http://checkstyle.sf.net/config_modifiers.html -->
@@ -159,12 +151,6 @@
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
         <module name="AvoidNestedBlocks"/>
         <module name="EmptyBlock">
-            <property name="id" value="MainEmptyBlock"/>
-        </module>
-
-
-        <module name="EmptyBlock">
-            <property name="id" value="TestEmptyBlock"/>
             <property name="option" value="text"/>
         </module>
 
