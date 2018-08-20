@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import javax.inject.Named;
 import java.text.DateFormat;
