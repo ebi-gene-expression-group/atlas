@@ -56,14 +56,14 @@ public class DiffAnalyticsRowMapperTest {
     }
 
     @Test
-    public void testBuildDifferentialExpression() throws Exception {
-        DifferentialExpression expression = subject.buildDifferentialExpression(0.001, 1, null, contrast);
+    public void testBuildDifferentialExpression() {
+        DifferentialExpression expression = subject.buildDifferentialExpression(0.001, 1, null);
         MatcherAssert.assertThat(expression.getClass().getName(), Is.is(DifferentialExpression.class.getName()));
     }
 
     @Test
-    public void testBuildMicroarrayExpression() throws Exception {
-        DifferentialExpression expression = subject.buildDifferentialExpression(0.001, 1, "1.1", contrast);
+    public void testBuildMicroarrayExpression() {
+        DifferentialExpression expression = subject.buildDifferentialExpression(0.001, 1, "1.1");
         MatcherAssert.assertThat(expression.getClass().getName(), Is.is(MicroarrayExpression.class.getName()));
     }
 }
