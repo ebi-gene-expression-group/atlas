@@ -34,6 +34,7 @@
         <solr.version>7.1.0</solr.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.18.3</mockito.version>
+        <skip.surefire.tests>${skipTests}</skip.surefire.tests>
     </properties>
 
     <build>
@@ -57,6 +58,9 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.21.0</version>
                     <configuration>
+                        <!-- skips surefire tests without skipping failsafe tests.
+                             Property value seems to magically default to false -->
+                        <skipTests>${skip.surefire.tests}</skipTests>
                         <!-- Sets the VM argument line used when unit tests are run, used by JaCoCo -->
                         <argLine>${surefireArgLine}</argLine>
                     </configuration>
