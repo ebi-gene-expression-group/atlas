@@ -70,6 +70,14 @@ TabContent.propTypes = {
 const RedirectWithSearchAndHash = (props) =>
   <Redirect to={{ pathname: props.pathname, search: props.location.search, hash: props.location.hash}} />
 
+RedirectWithSearchAndHash.propTypes = {
+  pathname: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+      hash: PropTypes.string.isRequired
+  }).isRequired
+}
+
 const RedirectWithLocation = withRouter(RedirectWithSearchAndHash)
 
 

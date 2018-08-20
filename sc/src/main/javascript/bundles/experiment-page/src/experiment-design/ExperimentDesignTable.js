@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactTable from 'react-table'
 import {uniq, curry} from 'lodash'
 import toPlural from 'pluralize'
@@ -34,5 +35,10 @@ const ExperimentDesignTable = ({data, headers}) =>
     style={{fontSize: `small`}}
     data={data}
   />
+
+ExperimentDesignTable.propTypes = {
+    data: PropTypes.array.isRequired,
+    headers: PropTypes.array.isRequired
+}
 
 export default ExperimentDesignTable
