@@ -70,7 +70,7 @@ class SolrQueryBuilderTest {
     @Test
     @DisplayName("Default number of rows is “big enough”, whatever that means")
     void defaultNumberOfRows() {
-        assertThat(new SolrQueryBuilder<>().build().getRows()).isGreaterThanOrEqualTo(1000000);
+        assertThat(new SolrQueryBuilder<>().build().getRows()).isGreaterThanOrEqualTo(1000);
     }
 
     @Test
