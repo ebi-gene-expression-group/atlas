@@ -14,9 +14,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toMap;
 
 @Component
 public class SolrCloudAdminProxy {
@@ -71,9 +74,7 @@ public class SolrCloudAdminProxy {
             collectionStatus.get("shards");
             LinkedHashMap shards = (LinkedHashMap) collectionStatus.get("shards");
 
-            Stream<LinkedHashMap> shardStream = shards.values().stream();
-
-            List<LinkedHashMap> replicas = shardStream
+            List<LinkedHashMap> replicas = mapOfLinkedHashMap(shards).values().stream()
                     .map(x -> x.get("replicas"))
                     .map(LinkedHashMap.class::cast)
                     .collect(Collectors.toList());
@@ -81,7 +82,7 @@ public class SolrCloudAdminProxy {
             Set<String> inactiveStatuses = new HashSet<>();
 
             replicas.forEach(replica -> {
-                Stream<LinkedHashMap> replicaNodesStream = replica.values().stream();
+                Stream<LinkedHashMap> replicaNodesStream = mapOfLinkedHashMap(replica).values().stream();
 
                 replicaNodesStream.forEach(node -> {
                     String nodeStatus = node.get("state").toString();
@@ -93,5 +94,13 @@ public class SolrCloudAdminProxy {
 
             return inactiveStatuses;
         }
+    }
+
+    private static Map<String, LinkedHashMap> mapOfLinkedHashMap(LinkedHashMap<?, ?> map) {
+        return map.entrySet().stream()
+                .filter(entry -> entry.getKey() instanceof String && entry.getValue() instanceof LinkedHashMap)
+                .collect(toMap(
+                        entry -> (String) entry.getKey(),
+                        entry -> (LinkedHashMap) entry.getValue()));
     }
 }
