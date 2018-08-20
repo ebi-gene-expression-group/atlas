@@ -6,11 +6,13 @@ import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField;
@@ -32,7 +34,7 @@ public class CellMetadataService {
     }
 
     public Map<String, String> getFactors(String experimentAccession, String cellId) {
-        SingleCellAnalyticsSchemaField[] factorFieldNames =
+        List<SingleCellAnalyticsSchemaField> factorFieldNames =
                 cellMetadataDao.getFactorFieldNames(experimentAccession, cellId);
 
         return cellMetadataDao.getQueryResultForMultiValueFields(
@@ -44,10 +46,8 @@ public class CellMetadataService {
     }
 
     public Map<String, String> getMetadata(String experimentAccession, String cellId) {
-        SingleCellAnalyticsSchemaField[] metadataFieldNames =
-                cellMetadataDao
-                        .getMetadataFieldNames(experimentAccession)
-                        .toArray(new SingleCellAnalyticsSchemaField[0]);
+        List<SingleCellAnalyticsSchemaField> metadataFieldNames =
+                cellMetadataDao.getMetadataFieldNames(experimentAccession);
 
         return cellMetadataDao
                 .getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), metadataFieldNames)
@@ -65,10 +65,10 @@ public class CellMetadataService {
             return emptyMap();
         }
 
-        SingleCellAnalyticsSchemaField[] attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
+        List<SingleCellAnalyticsSchemaField> attributeFields = idfParserOutput.getMetadataFieldsOfInterest()
                 .stream()
                 .map(attribute -> characteristicAsSchemaField(attributeNameToFieldName(attribute)))
-                .toArray(SingleCellAnalyticsSchemaField[]::new);
+                .collect(toList());
 
         return cellMetadataDao
                 .getQueryResultForMultiValueFields(experimentAccession, Optional.of(cellId), attributeFields)

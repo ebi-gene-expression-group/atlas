@@ -95,7 +95,7 @@ class GeneIdSearchDaoIT {
         queryBuilder
                 .addQueryFieldByTerm(BIOENTITY_IDENTIFIER, geneId)
                 .sortBy(PROPERTY_NAME, SolrQuery.ORDER.asc)
-                .setFieldList(PROPERTY_VALUE, PROPERTY_NAME);
+                .setFieldList(ImmutableSet.of(PROPERTY_VALUE, PROPERTY_NAME));
 
         try (TupleStreamer tupleStreamer =
                      TupleStreamer.of(new SearchStreamBuilder<>(bioentitiesCollectionProxy, queryBuilder).build())) {

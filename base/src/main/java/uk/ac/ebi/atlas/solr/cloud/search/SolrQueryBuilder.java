@@ -34,11 +34,16 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
     private String facetField;
     private ImmutableSet.Builder<String> subFacetBuilder = ImmutableSet.builder();
 
-    private int rows = MAX_ROWS;
+    private int rows = DEFAULT_ROWS;
 
-    public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByTerm(U field, String... values) {
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByTerm(U field, Collection<String> values) {
         fqClausesBuilder.add(createOrBooleanQuery(field, values));
         return this;
+    }
+
+    // Convenience method when filtering by a single value
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByTerm(U field, String value) {
+        return addFilterFieldByTerm(field, ImmutableSet.of(value));
     }
 
     public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByRangeMin(U field, double min) {
@@ -58,30 +63,34 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         return this;
     }
 
-    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, String... values) {
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, Collection<String> values) {
         qClausesBuilder.add(createOrBooleanQuery(field, values));
         return this;
     }
 
-    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, Collection<String> values) {
-        return addQueryFieldByTerm(field, values.toArray(new String[0]));
+    // Convenience method when querying a single value
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, String value) {
+        return addQueryFieldByTerm(field, ImmutableSet.of(value));
     }
 
-    @SafeVarargs
-    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFieldList(U... fields) {
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFieldList(Collection<U> fields) {
         for (SchemaField field : fields) {
             flBuilder.add(field.name());
         }
         return this;
     }
 
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFieldList(U field) {
+        return setFieldList(ImmutableSet.of(field));
+    }
+
+
     public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFacetField(U field) {
         facetField = field.name();
         return this;
     }
 
-    @SafeVarargs
-    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setSubFacetList(U... fields) {
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setSubFacetList(Collection<U> fields) {
         for (SchemaField field : fields) {
             subFacetBuilder.add(field.name());
         }

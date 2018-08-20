@@ -22,10 +22,12 @@ import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.ASSAY_GROUP_ID;
 import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
@@ -156,7 +158,7 @@ class FacetStreamBuilderIT {
     }
 
     private static Stream<Arguments> solrQueryBuildersProvider() {
-        String[] assayGroups = IntStream.range(1, 16).boxed().map(i -> "g" + i.toString()).toArray(String[]::new);
+        Set<String> assayGroups = IntStream.range(1, 16).boxed().map(i -> "g" + i.toString()).collect(toSet());
 
         SolrQueryBuilder<AnalyticsCollectionProxy> hugeSolrQueryBuilder = new SolrQueryBuilder<>();
         hugeSolrQueryBuilder

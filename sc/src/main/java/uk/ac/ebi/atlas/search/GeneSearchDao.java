@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,7 +117,7 @@ public class GeneSearchDao {
                 new SolrQueryBuilder<SingleCellAnalyticsCollectionProxy>()
                         .addQueryFieldByTerm(CELL_ID, cellIds)
                         .setFacetField(EXPERIMENT_ACCESSION)
-                        .setSubFacetList(subFacetFields.toArray(new SingleCellAnalyticsSchemaField[0]))
+                        .setSubFacetList(subFacetFields)
                         .setRows(0);
 
         ArrayList<SimpleOrderedMap> resultsByExperiment =

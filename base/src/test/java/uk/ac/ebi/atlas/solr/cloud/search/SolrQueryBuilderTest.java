@@ -11,8 +11,6 @@ import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.SOLR_MAX_ROWS;
 
@@ -40,32 +38,18 @@ class SolrQueryBuilderTest {
     void multipleQueryClausesAreJoinedWithAnd() {
         SolrQuery solrQuery =
                 new SolrQueryBuilder<>()
-                        .addQueryFieldByTerm(FIELD1, "value1")
-                        .addQueryFieldByTerm(FIELD2, "value21", "value22")
+                        .addQueryFieldByTerm(FIELD1, ImmutableSet.of("value1"))
+                        .addQueryFieldByTerm(FIELD2, ImmutableSet.of("value21", "value22"))
                         .build();
 
         assertThat(solrQuery.getQuery().split(" AND ")).hasSize(2);
     }
 
     @Test
-    void setsOrVarargs() {
-        assertThat(new SolrQueryBuilder<>().addQueryFieldByTerm(FIELD1).build().getQuery())
-                .isEqualTo(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, emptySet()).build().getQuery());
-
-        assertThat(new SolrQueryBuilder<>().addQueryFieldByTerm(FIELD1, "value1").build().getQuery())
-                .isEqualTo(new SolrQueryBuilder().addQueryFieldByTerm(FIELD1, singleton("value1")).build().getQuery());
-
-        assertThat(new SolrQueryBuilder<>().addQueryFieldByTerm(FIELD1, "value1", "value2").build().getQuery())
-                .isEqualTo(
-                        new SolrQueryBuilder()
-                                .addQueryFieldByTerm(FIELD1, ImmutableSet.of("value1", "value2")).build().getQuery());
-    }
-
-    @Test
     void testFilterQueries() {
         SolrQuery solrQuery =
                 new SolrQueryBuilder<>()
-                        .addFilterFieldByTerm(FIELD1, "value1")
+                        .addFilterFieldByTerm(FIELD1, ImmutableSet.of("value1"))
                         .addFilterFieldByRangeMin(FIELD2, 0.0)
                         .addFilterFieldByRangeMax(FIELD2, 0.0)
                         .addFilterFieldByRangeMinMax(FIELD2, 0.0, 0.0)
@@ -78,7 +62,8 @@ class SolrQueryBuilderTest {
 
     @Test
     void testSetFieldList() {
-        assertThat(new SolrQueryBuilder<>().setFieldList(FIELD1, FIELD2).build().getFields().split(","))
+        assertThat(
+                new SolrQueryBuilder<>().setFieldList(ImmutableSet.of(FIELD1, FIELD2)).build().getFields().split(","))
                 .containsExactlyInAnyOrder(FIELD1.name(), FIELD2.name());
     }
 
@@ -98,7 +83,8 @@ class SolrQueryBuilderTest {
     void searchValuesAreDeduped() {
         SolrQuery solrQuery =
                 new SolrQueryBuilder<>()
-                        .addQueryFieldByTerm(FIELD1, "value1", "value2", "value2", "value3", "value3", "value3")
+                        .addQueryFieldByTerm(
+                                FIELD1, ImmutableSet.of("value1", "value2", "value2", "value3", "value3", "value3"))
                         .build();
 
         assertThat(solrQuery.getQuery())

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.metadata;
 
+import com.google.common.collect.ImmutableSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -134,7 +135,8 @@ class CellMetadataDaoIT {
     void getFieldValuesForNoFieldsReturnsEmpty() {
         String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
 
-        assertThat(subject.getQueryResultForMultiValueFields(experimentAccession, Optional.empty())).isEmpty();
+        assertThat(subject.getQueryResultForMultiValueFields(experimentAccession, Optional.empty(), ImmutableSet.of()))
+                .isEmpty();
     }
 
     private Stream<String> experimentsWithMetadataProvider() {

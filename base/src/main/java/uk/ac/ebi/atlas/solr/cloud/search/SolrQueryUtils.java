@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.solr.cloud.search;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import static java.util.stream.Collectors.joining;
@@ -28,21 +27,17 @@ public class SolrQueryUtils {
         return "\"" + escapeQueryChars(str.trim()) + "\"";
     }
 
-    public static String createOrBooleanQuery(SchemaField field, String... values) {
-        return Arrays.stream(values).anyMatch(StringUtils::isNotBlank) ?
+    public static String createOrBooleanQuery(SchemaField field, Collection<String> values) {
+        return values.stream().anyMatch(StringUtils::isNotBlank) ?
                 String.format(
                         STANDARD_QUERY_PARSER_FIELD_QUERY_TEMPLATE,
                         field.name(),
-                        Arrays.stream(values)
+                        values.stream()
                                 .filter(StringUtils::isNotBlank)
                                 .map(SolrQueryUtils::normalize)
                                 .distinct()
                                 .collect(joining(" OR "))) :
                 "";
-    }
-
-    public static String createOrBooleanQuery(SchemaField field, Collection<String> values) {
-        return createOrBooleanQuery(field, values.toArray(new String[0]));
     }
 
     public static String createLowerBoundRangeQuery(SchemaField field, double min) {
