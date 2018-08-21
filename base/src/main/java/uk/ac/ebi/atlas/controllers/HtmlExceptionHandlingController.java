@@ -42,7 +42,7 @@ public abstract class HtmlExceptionHandlingController {
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ModelAndView handleExcpetionFallback(Exception e) {
+    public ModelAndView handleExceptionFallback(Exception e) {
         LOGGER.error("{} - {}", e.getMessage(), Joiner.on("\n\t").join(e.getStackTrace()));
         ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());
