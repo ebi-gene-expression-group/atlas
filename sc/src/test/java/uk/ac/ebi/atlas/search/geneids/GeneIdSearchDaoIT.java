@@ -32,7 +32,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.
 
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GeneIdSearchDaoIT {
     @Inject
@@ -110,8 +110,11 @@ class GeneIdSearchDaoIT {
                             .orElseThrow(RuntimeException::new);
 
             assertThat(subject.searchGeneIds(anyProperty.getLeft(), anyProperty.getRight()))
-                    .hasValueSatisfying(results ->
-                            assertThat(results).contains(geneId));
+                    .hasValueSatisfying(results -> {
+                        if (!results.isEmpty()) {
+                            assertThat(results).contains(geneId);
+                        }
+                    });
         }
     }
 
