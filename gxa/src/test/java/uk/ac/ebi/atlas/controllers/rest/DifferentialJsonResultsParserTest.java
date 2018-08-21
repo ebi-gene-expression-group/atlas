@@ -38,14 +38,6 @@ public class DifferentialJsonResultsParserTest {
     }
 
     @Test
-    public void invalidJsonResultThrows() {
-        thrown.expect(RuntimeException.class);
-
-        JsonObject result = new JsonObject();
-        result.addProperty("results", 1);
-    }
-
-    @Test
     public void emptyJsonResultArrayProducesEmptyList() {
         JsonObject result = buildJsonObject(0, false);
 
