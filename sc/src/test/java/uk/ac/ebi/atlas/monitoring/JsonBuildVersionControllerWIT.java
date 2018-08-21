@@ -38,7 +38,7 @@ public class JsonBuildVersionControllerWIT {
     @Test
     public void requestReturnsBuildInfo() throws Exception {
         mockMvc.perform(get("/json/build"))
-                .andExpect(status().isOk()).andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.bambooBuildVersion", isA(String.class)))
                 .andExpect(jsonPath("$.gitBranch", isA(String.class)))
