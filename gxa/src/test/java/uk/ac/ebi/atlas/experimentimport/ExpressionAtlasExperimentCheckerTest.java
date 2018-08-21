@@ -186,7 +186,9 @@ public class ExpressionAtlasExperimentCheckerTest {
     @Test
     public void checkBaselineRnaSeqFileCheckTranscriptsFile() {
         assertPasses(
-                "<assay_group id=\"g1\"><assay>A</assay></assay_group>",
+                "<assay_group id=\"g1\">" +
+                        "<assay>A</assay>" +
+                "</assay_group>",
                 new String[] {"", "", "", "A"},
                 dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[] {"", "", "g1"},
@@ -194,7 +196,10 @@ public class ExpressionAtlasExperimentCheckerTest {
 
         assertPasses(
                 "<assay_group id=\"g1\">" +
-                        "<assay>A</assay></assay_group>assay_group id=\"g2\"><assay>B</assay>" +
+                        "<assay>A</assay>" +
+                "</assay_group>" +
+                "<assay_group id=\"g2\">" +
+                        "<assay>B</assay>" +
                 "</assay_group>",
                 new String[] {"", "", "", "A", "B"},
                 dataFileHub::addTranscriptsTpmsExpressionFile,
@@ -203,7 +208,9 @@ public class ExpressionAtlasExperimentCheckerTest {
 
         assertFails(
                 "<assay_group id=\"g1\">" +
-                        "<assay>A</assay></assay_group><assay_group id=\"g2\"><assay>B</assay>" +
+                        "<assay>A</assay>" +
+                "</assay_group>" +
+                        "<assay_group id=\"g2\"><assay>B</assay>" +
                 "</assay_group>",
                 new String[] {"", "", "", "A"},
                 dataFileHub::addTranscriptsTpmsExpressionFile,
@@ -211,7 +218,9 @@ public class ExpressionAtlasExperimentCheckerTest {
                 dataFileHub::addTpmsExpressionFile);
 
         assertFails(
-                "<assay_group id=\"g1\"><assay>A</assay></assay_group>",
+                "<assay_group id=\"g1\">" +
+                        "<assay>A</assay>" +
+                "</assay_group>",
                 new String[] {"", "", "", "A", "B"},
                 dataFileHub::addTranscriptsTpmsExpressionFile,
                 new String[] {"", "", "g1"},
