@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experiments;
 
-import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,18 +11,17 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.Nullable;
 import java.text.MessageFormat;
+import java.util.Optional;
 
 public class ExperimentMetadataEnrichmentService {
-
     private final ExperimentTrader experimentTrader;
 
     public ExperimentMetadataEnrichmentService(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 
-
     private String comparisonTitle(Experiment e, String chosenContrast) {
-        if (e != null && e instanceof DifferentialExperiment) {
+        if (e instanceof DifferentialExperiment) {
            Contrast c = ((DifferentialExperiment) e).getDataColumnDescriptor(chosenContrast);
             if (c != null) {
                 return c.getDisplayName();
@@ -33,7 +31,7 @@ public class ExperimentMetadataEnrichmentService {
     }
 
     private String experimentName(@Nullable Experiment experiment, String experimentAccession) {
-        return Optional.fromNullable(experiment).transform(e -> e.getDescription()).or(experimentAccession);
+        return Optional.ofNullable(experiment).map(Experiment::getDescription).orElse(experimentAccession);
     }
 
     private JsonObject nameWithUrl(String name, String url) {
