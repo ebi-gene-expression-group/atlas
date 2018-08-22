@@ -106,4 +106,12 @@ public class ScxaExperimentDao extends ExperimentDao {
         checkExperimentFound(experimentDtos.size() == 1, accession);
         return experimentDtos.get(0);
     }
+
+    // Returns comma-separated IDs, or null if there are no IDs
+    private String getPublicationIdsAsString(Collection<String> publicationIds) {
+        return publicationIds.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.joining(", "),
+                        (result) -> result.isEmpty() ? null : result));
+    }
 }
