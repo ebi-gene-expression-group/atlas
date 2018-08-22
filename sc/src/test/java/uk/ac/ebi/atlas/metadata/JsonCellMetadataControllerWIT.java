@@ -79,8 +79,7 @@ class JsonCellMetadataControllerWIT {
         String cellId = "BAR";
 
         this.mockMvc
-                .perform(get(
-                        "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata")).andDo(print())
+                .perform(get("/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata"))
                 .andExpect(status().is4xxClientError());
     }
 
