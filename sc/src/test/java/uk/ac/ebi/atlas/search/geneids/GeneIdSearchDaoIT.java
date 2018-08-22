@@ -110,11 +110,8 @@ class GeneIdSearchDaoIT {
                             .orElseThrow(RuntimeException::new);
 
             assertThat(subject.searchGeneIds(anyProperty.getLeft(), anyProperty.getRight()))
-                    .hasValueSatisfying(results -> {
-                        if (!results.isEmpty()) {
-                            assertThat(results).contains(geneId);
-                        }
-                    });
+                    .hasValueSatisfying(results ->
+                            assertThat(results).contains(geneId));
         }
     }
 
