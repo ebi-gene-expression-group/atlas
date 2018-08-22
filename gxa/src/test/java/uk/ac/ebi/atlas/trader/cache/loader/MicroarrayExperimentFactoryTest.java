@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -47,6 +48,9 @@ public class MicroarrayExperimentFactoryTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
+    private IdfParserOutput idfParserOutputMock;
+
+    @Mock
     private ArrayDesignDAO arrayDesignDAO;
 
     private MicroarrayExperimentFactory subject;
@@ -72,7 +76,7 @@ public class MicroarrayExperimentFactoryTest {
 
     @Test
     public void testLoad() {
-        MicroarrayExperiment microarrayExperiment = subject.create(experimentDTOMock, experimentDesignMock);
+        MicroarrayExperiment microarrayExperiment = subject.create(experimentDTOMock, experimentDesignMock, idfParserOutputMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGN_ID));
         assertThat(microarrayExperiment.getSpecies(), is(SPECIES));

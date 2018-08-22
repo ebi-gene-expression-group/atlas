@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -63,6 +64,9 @@ public class BaselineExperimentCacheLoaderTest {
     @Mock
     private ExperimentDesign experimentDesign;
 
+    @Mock
+    private IdfParserOutput idfParserOutputMock;
+
     private static MockDataFileHub dataFileHub;
 
     private BaselineExperimentFactory subject;
@@ -111,19 +115,19 @@ public class BaselineExperimentCacheLoaderTest {
     @Test(expected = IllegalStateException.class)
     public void assayGroupsShouldBeNonEmpty() {
         when(configuration.getAssayGroups()).thenReturn(ImmutableList.of());
-        subject.create(dto, experimentDesign);
+        subject.create(dto, experimentDesign, idfParserOutputMock);
     }
 
     @Test
     public void useAllCollaborators() {
-        subject.create(dto, experimentDesign);
+        subject.create(dto, experimentDesign, idfParserOutputMock);
         verifyCollaborators();
         noMoreInteractionsWithCollaborators();
     }
 
     @Test
     public void noAlternativeViewsForTypicalExperiment() {
-        BaselineExperiment e = subject.create(dto, experimentDesign);
+        BaselineExperiment e = subject.create(dto, experimentDesign, idfParserOutputMock);
 
         assertThat(e.alternativeViews(), hasSize(0));
         verifyCollaborators();
@@ -141,7 +145,7 @@ public class BaselineExperimentCacheLoaderTest {
         String s = "default query factor of other experiment";
         when(alternativeViewBaselineConfiguration.getDefaultQueryFactorType()).thenReturn(s);
 
-        BaselineExperiment e = subject.create(dto, experimentDesign);
+        BaselineExperiment e = subject.create(dto, experimentDesign, idfParserOutputMock);
 
         assertThat(e.alternativeViews(), hasSize(1));
         assertThat(e.alternativeViews().get(0).getLeft(), is(alternativeViewAccession));

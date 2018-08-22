@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.trader;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
@@ -21,12 +22,13 @@ public class ScxaExperimentTrader extends ExperimentTrader {
     @Inject
     public ScxaExperimentTrader(ScxaExperimentDao experimentDao,
                                 SingleCellRnaSeqBaselineExperimentFactory experimentFactory,
-                                ExperimentDesignParser experimentDesignParser) {
+                                ExperimentDesignParser experimentDesignParser,
+                                IdfParser idfParser) {
         super(experimentDao);
         baselineExperimentsCache =
                 CacheBuilder.newBuilder().build(
                         new ExperimentsCacheLoader<>(
-                                experimentDesignParser, experimentDao, experimentFactory));
+                                experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
     public Experiment<Cell> getPublicExperiment(String experimentAccession) {

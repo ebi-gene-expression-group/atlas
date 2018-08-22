@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
@@ -24,7 +25,7 @@ public class DifferentialExperimentFactory implements ExperimentFactory<Differen
 
     @Override
     public DifferentialExperiment create(ExperimentDTO experimentDTO,
-                                         ExperimentDesign experimentDesign) {
+                                         ExperimentDesign experimentDesign, IdfParserOutput idfParserOutput) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -35,7 +36,7 @@ public class DifferentialExperimentFactory implements ExperimentFactory<Differen
                 experimentAccession,
                 experimentDTO.getLastUpdate(),
                 experimentConfiguration.getContrastAndAnnotationPairs(),
-                experimentDTO.getTitle(),
+                idfParserOutput.getTitle(),
                 speciesFactory.create(experimentDTO.getSpecies()),
                 experimentDTO.getPubmedIds(),
                 experimentDTO.getDois(),

@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.trader.cache.loader;
 
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentConfiguration;
@@ -32,7 +33,7 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
 
     @Override
     public MicroarrayExperiment create(ExperimentDTO experimentDTO,
-                                       ExperimentDesign experimentDesign) {
+                                       ExperimentDesign experimentDesign, IdfParserOutput idfParserOutput) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -44,7 +45,7 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
                 experimentAccession,
                 experimentDTO.getLastUpdate(),
                 experimentConfiguration.getContrastAndAnnotationPairs(),
-                experimentDTO.getTitle(),
+                idfParserOutput.getTitle(),
                 speciesFactory.create(experimentDTO.getSpecies()),
                 experimentDesign,
                 experimentDTO.getPubmedIds(),
