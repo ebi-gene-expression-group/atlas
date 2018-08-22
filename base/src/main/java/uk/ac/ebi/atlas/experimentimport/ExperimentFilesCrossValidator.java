@@ -16,7 +16,7 @@ public class ExperimentFilesCrossValidator {
     private final ExperimentDesign experimentDesign;
     private LazyReference<List<AssayGroup>> assayGroups = new LazyReference<List<AssayGroup>>() {
         @Override
-        protected List<AssayGroup> create() throws Exception {
+        protected List<AssayGroup> create() {
             return experimentConfiguration.getAssayGroups();
         }
     };

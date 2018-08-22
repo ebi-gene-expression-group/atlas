@@ -25,7 +25,7 @@ public class MicroarrayProfileTest {
     }
 
     @Test
-    public void hasDesignElementProperty() throws Exception {
+    public void hasDesignElementProperty() {
         assertThat(subject.properties(), hasEntry("designElement", DESIGN_ELEMENT_NAME));
     }
 }

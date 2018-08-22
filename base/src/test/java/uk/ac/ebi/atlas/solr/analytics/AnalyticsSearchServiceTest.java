@@ -82,7 +82,7 @@ public class AnalyticsSearchServiceTest {
     }
 
     @Test
-    public void findSpecies() throws Exception {
+    public void findSpecies() {
         ImmutableList<String> speciesList = subject.findSpecies(ZINC_FINGER_QUERY, EMPTY_CONDITION_QUERY);
 
         assertThat(speciesList.get(0), is("homo sapiens"));
@@ -91,7 +91,7 @@ public class AnalyticsSearchServiceTest {
     }
 
     @Test
-    public void findNoSpecies() throws Exception {
+    public void findNoSpecies() {
         ImmutableList<String> speciesList = subject.findSpecies(FOOBAR_GENE_QUERY, EMPTY_CONDITION_QUERY);
 
         assertThat(speciesList, is(empty()));

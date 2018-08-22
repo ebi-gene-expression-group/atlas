@@ -53,7 +53,7 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
-    public void propertyValuesByTypeReactome() throws Exception {
+    public void propertyValuesByTypeReactome() {
         assertThat(
                 subject.propertyValuesByType("R-HSA-0000000", false),
                 hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
@@ -63,7 +63,7 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
-    public void propertyValuesByTypePlantReactome() throws Exception {
+    public void propertyValuesByTypePlantReactome() {
         assertThat(
                 subject.propertyValuesByType("R-GMA-2744341", true),
                 hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
@@ -73,7 +73,7 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
-    public void propertyValuesByTypeGeneOntology() throws Exception {
+    public void propertyValuesByTypeGeneOntology() {
         assertThat(
                 subject.propertyValuesByType("GO:0000000", false),
                 hasEntry(is(BioentityPropertyName.GO), isA(Set.class)));
@@ -83,7 +83,7 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
-    public void propertyValuesByTypePlantOntology() throws Exception {
+    public void propertyValuesByTypePlantOntology() {
         assertThat(
                 subject.propertyValuesByType("PO:0000000", false),
                 hasEntry(is(BioentityPropertyName.PO), isA(Set.class)));
@@ -93,7 +93,7 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
-    public void propertyValuesByTypeInterPro() throws Exception {
+    public void propertyValuesByTypeInterPro() {
         assertThat(
                 subject.propertyValuesByType("IPR0000000", false),
                 hasEntry(is(BioentityPropertyName.INTERPRO), isA(Set.class)));
@@ -103,7 +103,7 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
-    public void typeIsCaseInsensitive() throws Exception {
+    public void typeIsCaseInsensitive() {
         assertThat(
                 subject.propertyValuesByType("r-hsa-0000000", false),
                 hasEntry(is(BioentityPropertyName.PATHWAYID), isA(Set.class)));
@@ -119,7 +119,7 @@ public class GeneSetPropertyServiceTest {
     }
 
     @Test
-    public void propertyValuesByTypeUnknown() throws Exception {
+    public void propertyValuesByTypeUnknown() {
         Map<BioentityPropertyName, Set<String>> emptyMapOfPropertyValuesByType = ImmutableMap.of();
 
         assertThat(subject.propertyValuesByType("foobar", false), is(emptyMapOfPropertyValuesByType));

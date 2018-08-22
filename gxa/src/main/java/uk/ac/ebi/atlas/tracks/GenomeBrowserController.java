@@ -53,8 +53,7 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
                                           @RequestParam String geneId,
                                           @RequestParam(required = false, defaultValue = "") String trackId,
                                           @RequestParam(required = false, defaultValue = "") String accessKey,
-                                          HttpServletRequest request)
-            throws IOException {
+                                          HttpServletRequest request) {
 
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 

@@ -17,7 +17,7 @@ public class BioentityPropertyFileTest {
     };
 
     @Test
-    public void testCleanUpPropertyValue() throws Exception {
+    public void testCleanUpPropertyValue() {
         assertThat(
                 testFile.cleanUpPropertyValue("BRCA1"),
                 is("BRCA1")

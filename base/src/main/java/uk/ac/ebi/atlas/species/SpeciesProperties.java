@@ -16,7 +16,7 @@ public abstract class SpeciesProperties {
     }
 
     public static final SpeciesProperties UNKNOWN =
-            SpeciesProperties.create("", "", "", ImmutableList.<ImmutableMap<String, String>>of());
+            SpeciesProperties.create("", "", "", ImmutableList.of());
 
     public static final String GENOME_BROWSER_TYPE = "genome_browser";
 

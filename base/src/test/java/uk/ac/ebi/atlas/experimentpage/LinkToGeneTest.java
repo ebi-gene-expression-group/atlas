@@ -26,7 +26,7 @@ public class LinkToGeneTest {
 
     // The hash will be set by the view, see search-results.jsp
     @Test
-    public void linksAtNoSpecificTab() throws Exception {
+    public void linksAtNoSpecificTab() {
         assertThat(subject.apply(new DummyProfile("geneId", "geneName")).toString(), endsWith("geneId"));
     }
 

@@ -87,8 +87,8 @@ public class DifferentialExperimentContrastLinesTest {
                         ImmutableList.of(Pair.of(contrast1, true)),
                         "description",
                         new Species("species", SpeciesProperties.UNKNOWN),
-                        ImmutableSet.<String>of(),
-                        ImmutableSet.<String>of(),
+                        ImmutableSet.of(),
+                        ImmutableSet.of(),
                         experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);

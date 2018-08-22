@@ -36,18 +36,14 @@ public class SitemapController {
 
 
     @RequestMapping(value = "/sitemap.xml")
-    public void mainSitemap(HttpServletResponse response)
-    throws ParserConfigurationException, IOException, XMLStreamException {
-
+    public void mainSitemap(HttpServletResponse response) throws IOException, XMLStreamException {
         response.setContentType(MediaType.TEXT_XML_VALUE);
-
         sitemapWriter.writeSitemapIndex(response.getOutputStream(), speciesPropertiesTrader.getAll());
-
     }
 
     @RequestMapping(value = "/species/{species}/sitemap.xml")
-    public void sitemapForSpecies(@PathVariable String species, HttpServletResponse response) throws
-            ParserConfigurationException, IOException, XMLStreamException {
+    public void sitemapForSpecies(@PathVariable String species,
+                                  HttpServletResponse response) throws IOException, XMLStreamException {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
         Collection<String> various = ImmutableList.of("/experiments", "/plant/experiments");

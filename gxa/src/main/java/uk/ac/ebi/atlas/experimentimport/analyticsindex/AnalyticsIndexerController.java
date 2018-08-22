@@ -73,7 +73,7 @@ public class AnalyticsIndexerController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String handleException(Exception e) throws IOException {
+    public String handleException(Exception e) {
         String lineSeparator = "<br>";
         LOGGER.error(e.getMessage(), e);
 
@@ -90,7 +90,7 @@ public class AnalyticsIndexerController {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
-    public String handleResourceNotFoundException(Exception e) throws IOException {
+    public String handleResourceNotFoundException(Exception e) {
         LOGGER.error(e.getMessage(), e);
         return e.getClass().getSimpleName() + ": " + e.getMessage();
     }

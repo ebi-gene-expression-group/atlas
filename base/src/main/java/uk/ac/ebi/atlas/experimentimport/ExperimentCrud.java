@@ -162,11 +162,11 @@ public class ExperimentCrud {
         return experimentDao.getAllExperimentsAsAdmin();
     }
 
-    public void makeExperimentPrivate(String experimentAccession) throws IOException {
+    public void makeExperimentPrivate(String experimentAccession) {
         setExperimentPrivacyStatus(experimentAccession, true);
     }
 
-    public void makeExperimentPublic(String experimentAccession) throws IOException {
+    public void makeExperimentPublic(String experimentAccession) {
         setExperimentPrivacyStatus(experimentAccession, false);
     }
 

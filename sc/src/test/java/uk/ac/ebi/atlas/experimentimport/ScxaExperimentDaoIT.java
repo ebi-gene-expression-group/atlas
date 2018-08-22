@@ -55,7 +55,7 @@ public class ScxaExperimentDaoIT {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         try {
             subject.deleteExperiment(SC_ACCESSION);
         } catch (ResourceNotFoundException e) {
