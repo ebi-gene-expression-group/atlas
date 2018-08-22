@@ -172,13 +172,6 @@ class AnalyticsQueryClientIT {
                 .queryIdentifierOrConditionsSearch(SemanticQuery.create("lung"))
                 .fetch();
 
-    @Test
-    void baselineFacetsOnlyReturnsBaselineExperiments() {
-        String queryResponse = goodSubject.queryBuilder()
-                .baselineFacets()
-                .queryIdentifierOrConditionsSearch(SemanticQuery.create("lung"))
-                .fetch();
-
         List<String> experimentTypes =
                 JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS))
                         .parse(queryResponse)
