@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class TracksControllerWIT {
     private static final MessageFormat URL_TEMPLATE =
             new MessageFormat("/experiments-content/{0}/tracks/{0}.{1}.genes.expressions.bedGraph");

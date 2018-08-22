@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ExperimentCheckerIT {
     private static final String RNA_SEQ_BASELINE_EXPERIMENT_ACCESSION = "E-MTAB-513";
     private static final String PROTEOMICS_BASELINE_EXPERIMENT_ACCESSION = "E-PROT-1";

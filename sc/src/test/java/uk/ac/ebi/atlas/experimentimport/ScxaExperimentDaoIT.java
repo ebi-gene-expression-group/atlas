@@ -27,7 +27,7 @@ import static org.junit.Assume.assumeThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ScxaExperimentDaoIT {
     private static final String SC_ACCESSION = "TEST-SC";
     private static final UUID RANDOM_UUID = UUID.randomUUID();

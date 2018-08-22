@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class DifferentialAnalyticsSearchServiceIT {
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 

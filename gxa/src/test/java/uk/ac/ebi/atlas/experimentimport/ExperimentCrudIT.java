@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verify;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ExperimentCrudIT {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

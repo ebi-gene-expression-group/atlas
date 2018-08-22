@@ -27,7 +27,7 @@ import static org.junit.Assert.fail;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class GxaExperimentDaoIT {
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_GEOD_5614 = "E-GEOD-5614";

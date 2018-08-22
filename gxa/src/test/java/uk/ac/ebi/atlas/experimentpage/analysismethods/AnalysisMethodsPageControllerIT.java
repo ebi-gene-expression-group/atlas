@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class AnalysisMethodsPageControllerIT {
     private static final String EXPERIMENT_ACCESSION = "E-PROT-1";
 

@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ProteomicsBaselineExperimentsCacheLoaderIT {
     private static final String E_PROT_1 = "E-PROT-1";
     private static final String DEVELOPMENTAL_STAGE = "developmental stage";

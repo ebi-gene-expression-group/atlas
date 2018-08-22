@@ -28,7 +28,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class BaselineAndDifferentialAnalyticsServiceIT {
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 

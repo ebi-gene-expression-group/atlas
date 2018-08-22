@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class MicroarrayProfilesHeatMapIT {
     @Inject
     private ExpressionAtlasExperimentTrader experimentTrader;

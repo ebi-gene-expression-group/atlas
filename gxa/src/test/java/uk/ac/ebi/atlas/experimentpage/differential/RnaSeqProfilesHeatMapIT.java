@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class RnaSeqProfilesHeatMapIT {
     @Inject
     private ExpressionAtlasExperimentTrader experimentTrader;

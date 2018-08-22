@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class GenomeBrowserControllerWIT {
     private static final String URL_TEMPLATE =
             "/experiments/{1}/redirect/genome-browsers/?name={0}&geneId={2}&trackId={3}";

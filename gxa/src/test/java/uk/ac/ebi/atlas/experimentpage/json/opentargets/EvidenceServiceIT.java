@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class EvidenceServiceIT {
     @Inject
     private ExpressionAtlasExperimentTrader experimentTrader;

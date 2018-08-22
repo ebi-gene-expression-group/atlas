@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // to Spring 5.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 @TestInstance(Lifecycle.PER_CLASS)  // @BeforeAll and @MethodSource need not be static :)
 class ExperimentControllerWIT {
     private static final String URL = "/experiments/{experimentAccession}";

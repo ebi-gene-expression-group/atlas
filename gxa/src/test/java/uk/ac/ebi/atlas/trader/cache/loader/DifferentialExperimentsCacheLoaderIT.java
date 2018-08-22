@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class DifferentialExperimentsCacheLoaderIT {
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
     private String species = "Mus musculus";

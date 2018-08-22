@@ -37,7 +37,7 @@ import static org.junit.Assert.assertThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class SolrInputDocumentInputStreamIT {
     @Inject
     private ExperimentTrader experimentTrader;
