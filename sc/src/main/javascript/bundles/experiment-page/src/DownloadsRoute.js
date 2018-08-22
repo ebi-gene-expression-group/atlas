@@ -4,7 +4,7 @@ import LinksToResources from './supplementary-information/LinksToResources'
 
 const DownloadsRoute = ({atlasUrl, data}) => {
   const downloadLinks = data.map((download) =>
-    <div className={`small-12 columns margin-bottom-xlarge`}>
+    <div key={`download`} className={`small-12 columns margin-bottom-xlarge`}>
       <h3 key={`title`}>{download.title}</h3>
       <LinksToResources key={`links`} data={download.files} atlasUrl={atlasUrl}/>
     </div>
