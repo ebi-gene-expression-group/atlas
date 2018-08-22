@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = {WebConfig.class})
 class HealthCheckControllerWIT {
 
     @Autowired
@@ -33,6 +33,15 @@ class HealthCheckControllerWIT {
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+    }
+
+    @Test
+    void requestReturnsDbAndSolrStatusLegacy() throws Exception {
+        mockMvc.perform(get("/json/dbsolr/status"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.Solr", is(oneOf("UP", "DOWN"))))
+                .andExpect(jsonPath("$.DB", is(oneOf("UP", "DOWN"))));
     }
 
     @Test
