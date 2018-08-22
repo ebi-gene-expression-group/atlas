@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
@@ -163,6 +164,13 @@ class AnalyticsQueryClientIT {
         assertThat(queryMade).contains("conditions_search");
         assertThat(queryMade.split("tasty pancake").length).isGreaterThan(2);
     }
+    
+    @Test
+    void baselineFacetsOnlyReturnsBaselineExperiments() {
+        String queryResponse = goodSubject.queryBuilder()
+                .baselineFacets()
+                .queryIdentifierOrConditionsSearch(SemanticQuery.create("lung"))
+                .fetch();
 
     @Test
     void baselineFacetsOnlyReturnsBaselineExperiments() {

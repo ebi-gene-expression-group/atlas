@@ -37,8 +37,6 @@ public class ScxaExperimentDaoIT {
 
     @Before
     public void setUp() throws Exception {
-        UUID uuid = UUID.randomUUID();
-
         ExperimentDTO experimentDto =
                 new ExperimentDTO(
                         SC_ACCESSION,

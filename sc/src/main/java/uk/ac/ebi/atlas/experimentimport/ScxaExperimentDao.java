@@ -7,8 +7,10 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -47,8 +49,8 @@ public class ScxaExperimentDao extends ExperimentDao {
                 experimentDto.getSpecies(),
                 experimentDto.isPrivate(),
                 accessKeyUuid.toString(),
-                experimentDto.getPubmedIds().stream().collect(Collectors.joining(", ")),
-                experimentDto.getDois().stream().collect(Collectors.joining(", ")),
+                getPublicationIdsAsString(experimentDto.getPubmedIds()),
+                getPublicationIdsAsString(experimentDto.getDois()),
                 experimentDto.getTitle());
     }
 
