@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.singlecell.analytics.AnalyticsStreamer;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -30,12 +29,6 @@ public class SingleCellAnalyticsLoader implements AnalyticsLoader {
     @Override
     public void deleteAnalytics(String experimentAccession) {
         deleteExpression(experimentAccession);
-    }
-
-    @Transactional
-    public void reloadExpression(String experimentAccession) {
-        deleteExpression(experimentAccession);
-        loadExpression(experimentAccession);
     }
 
     private void loadExpression(String experimentAccession) {

@@ -20,11 +20,9 @@ import java.util.stream.StreamSupport;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
-/*
-I provide additional behaviour to factorGroup without refactoring.
-
-TODO get rid of FactorSet and me, make FactorGroup a class around an immutable map - potentially with a builder -  and put all the methods there!
- */
+// I provide additional behaviour to factorGroup without refactoring.
+// TODO Get rid of FactorSet and me, make FactorGroup a class around an immutable map - potentially with a builder -
+// TODO and put all the methods there!
 public class RichFactorGroup {
     private final FactorGroup factorGroup;
 
@@ -41,15 +39,15 @@ public class RichFactorGroup {
     public String asUrlEncodedJson() {
         try {
             return URLEncoder.encode(GSON.toJson(asJson()), "UTF-8");
-        } catch(UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    //Coupled to the experiment page client code - over there we can have multiple factor values per type
+    // Coupled to the experiment page client code - over there we can have multiple factor values per type
     JsonObject asJson() {
         JsonObject result = new JsonObject();
-        for(Factor factor: factorGroup){
+        for (Factor factor: factorGroup) {
             JsonArray values = new JsonArray();
             values.add(new JsonPrimitive(factor.getValue()));
             result.add(factor.getType(), values);
@@ -60,8 +58,8 @@ public class RichFactorGroup {
 
     public static Set<String> typesWithCommonValues(Iterable<FactorGroup> factorGroups) {
         Multimap<String, String> allValuesPerType = LinkedListMultimap.create();
-        for(FactorGroup factorGroup: factorGroups){
-            for(Factor factor: factorGroup){
+        for (FactorGroup factorGroup: factorGroups) {
+            for (Factor factor: factorGroup) {
                 allValuesPerType.put(factor.getType(), factor.getValue());
             }
         }
@@ -93,8 +91,8 @@ public class RichFactorGroup {
     }
 
     public static boolean isSubgroup(FactorGroup moreSpecificGroup, FactorGroup moreGeneralGroup) {
-        for(Factor factor: moreGeneralGroup){
-            if(! moreSpecificGroup.factorOfType(factor.getType()).equals(factor)){
+        for (Factor factor: moreGeneralGroup) {
+            if (!moreSpecificGroup.factorOfType(factor.getType()).equals(factor)) {
                 return false;
             }
         }

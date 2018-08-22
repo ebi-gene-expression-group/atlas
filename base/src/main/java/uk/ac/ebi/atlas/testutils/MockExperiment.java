@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.RandomStringUtils;
@@ -29,27 +28,35 @@ import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 public class MockExperiment {
+    protected MockExperiment() {
+        throw new UnsupportedOperationException();
+    }
 
-    private static final String SPECIES_NAME = "Homo sapiens";
-    private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of());
-    private static final String DESCRIPTION = "This is the experiment description";
-    private static final String DISPLAY_NAME = "Experiment Display Name";
-    private static final List<String> PUBMEDID = singletonList("PUBMEDID");
-    private static final List<String> DOI = singletonList("100.100/doi");
-
-    private static final List<String> PROVIDER_URL = Arrays.asList("http://www.provider.com","http://www.provider1.com");
-    private static final List<String> PROVIDER_DESCRIPTION = Arrays.asList("Baseline experiment data provider","Another baseline experiment data provider");
-
-    private static final String EXPERIMENT_ACCESSION = RandomDataTestUtils.getRandomExperimentAccession();
-
-    private static final ImmutableSet<String> ARRAY_DESIGN_ACCESSIONS = ImmutableSet.of("A-AFFY-44", "A-GEOD-20277");
-
-    private static final List<ArrayDesign> arrayDesigns = ImmutableList.of(
-            ArrayDesign.create("A-AFFY-44", "Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]"),
-            ArrayDesign.create("A-GEOD-20277", "TaqMan® Array Human MicroRNA A+B Cards Set v3.0")
-    );
-
-    private static final List<Contrast> contrasts = ImmutableList.of(
+    private static final String SPECIES_NAME =
+            "Homo sapiens";
+    private static final SpeciesProperties SPECIES_PROPERTIES =
+            SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of());
+    private static final String DESCRIPTION =
+            "This is the experiment description";
+    private static final String DISPLAY_NAME =
+            "Experiment Display Name";
+    private static final List<String> PUBMEDID =
+            singletonList("PUBMEDID");
+    private static final List<String> DOI =
+            singletonList("100.100/doi");
+    private static final List<String> PROVIDER_URL =
+            Arrays.asList("http://www.provider.com", "http://www.provider1.com");
+    private static final List<String> PROVIDER_DESCRIPTION =
+            Arrays.asList("Baseline experiment data provider", "Another baseline experiment data provider");
+    private static final String EXPERIMENT_ACCESSION =
+            RandomDataTestUtils.getRandomExperimentAccession();
+    private static final ImmutableSet<String> ARRAY_DESIGN_ACCESSIONS =
+            ImmutableSet.of("A-AFFY-44", "A-GEOD-20277");
+    private static final List<ArrayDesign> ARRAY_DESIGNS =
+            ImmutableList.of(
+                    ArrayDesign.create("A-AFFY-44", "Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]"),
+                    ArrayDesign.create("A-GEOD-20277", "TaqMan® Array Human MicroRNA A+B Cards Set v3.0"));
+    private static final List<Contrast> CONTRASTS = ImmutableList.of(
             new Contrast(
                     "g1_g2",
                     ARRAY_DESIGN_ACCESSIONS.iterator().next(),
@@ -85,14 +92,17 @@ public class MockExperiment {
                 assayGroups);
     }
 
-    public static BaselineExperiment createBaselineExperiment(ExperimentDesign experimentDesign, List<AssayGroup> assayGroups) {
+    public static BaselineExperiment createBaselineExperiment(ExperimentDesign experimentDesign,
+                                                              List<AssayGroup> assayGroups) {
         return createBaselineExperiment(
                 experimentDesign,
                 assayGroups,
                 ExperimentDisplayDefaults.simpleDefaults());
     }
 
-    public static BaselineExperiment createBaselineExperiment(String accession, ExperimentDesign experimentDesign, List<AssayGroup> assayGroups) {
+    public static BaselineExperiment createBaselineExperiment(String accession,
+                                                              ExperimentDesign experimentDesign,
+                                                              List<AssayGroup> assayGroups) {
         return createBaselineExperiment(
                 accession,
                 experimentDesign,
@@ -156,13 +166,13 @@ public class MockExperiment {
                 ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
                 EXPERIMENT_ACCESSION,
                 new Date(),
-                contrasts.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
+                CONTRASTS.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
                 DESCRIPTION,
                 new Species(SPECIES_NAME, SPECIES_PROPERTIES),
                 mockExperimentDesign(MockAssayGroups.create()),
                 Sets.newHashSet(PUBMEDID),
                 Sets.newHashSet(DOI),
-                arrayDesigns);
+                ARRAY_DESIGNS);
     }
 
     public static DifferentialExperiment createDifferentialExperiment() {
@@ -170,7 +180,7 @@ public class MockExperiment {
         return new DifferentialExperiment(
                 EXPERIMENT_ACCESSION,
                 new Date(),
-                contrasts.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
+                CONTRASTS.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
                 DESCRIPTION,
                 new Species(SPECIES_NAME, SPECIES_PROPERTIES),
                 Sets.newHashSet(PUBMEDID),
@@ -200,12 +210,12 @@ public class MockExperiment {
                 Sets.newHashSet(DOI), experimentDesign);
     }
 
-    public static ExperimentDesign mockExperimentDesign(List<AssayGroup> assayGroups){
+    public static ExperimentDesign mockExperimentDesign(List<AssayGroup> assayGroups) {
         ExperimentDesign experimentDesign = new ExperimentDesign();
-        for(AssayGroup assayGroup : assayGroups){
+        for (AssayGroup assayGroup : assayGroups) {
             String value1 = RandomStringUtils.random(5);
             String value2 = RandomStringUtils.random(5);
-            for(String assay : assayGroup.assaysAnalyzedForThisDataColumn()){
+            for (String assay : assayGroup.assaysAnalyzedForThisDataColumn()) {
                 experimentDesign.putFactor(assay, "type1", value1);
                 experimentDesign.putFactor(assay, "type2", value2);
             }

@@ -11,8 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
-import uk.ac.ebi.atlas.metadata.CellMetadataService;
-import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
@@ -24,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 class CellMetadataServiceIT {
     @Inject
     private IdfParser idfParser;
@@ -42,7 +40,8 @@ class CellMetadataServiceIT {
 
     @Test
     void existingInferredCellType() {
-        // Ideally we would retrieve a random experiment accession, but not all experiments have the inferred cell type characteristic
+        // Ideally we would retrieve a random experiment accession, but not all experiments have the inferred cell
+        // type characteristic
         String cellId = jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-14");
         assertThat(
                 subject.getInferredCellType(
@@ -89,7 +88,8 @@ class CellMetadataServiceIT {
 
     @Test
     void experimentWithMetadataFieldsInIdf() {
-        // Ideally we would retrieve a random experiment accession, but not all experiments have curated metadata files in the idf file
+        // Ideally we would retrieve a random experiment accession, but not all experiments have curated metadata
+        // files in the IDF file
         assertThat(
                 subject.getIdfFileAttributes(
                         "E-ENAD-14",
@@ -127,7 +127,8 @@ class CellMetadataServiceIT {
         // E-GEOD-99058 and E-ENAD-13 do not have any factors
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13") )
+                .filter(accession ->
+                        !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"))
                 .collect(Collectors.toSet());
     }
 }

@@ -16,9 +16,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SequenceObjectInputStreamTest {
-
-    private final static Object RETURN_VALUE1 = new Object();
-    private final static Object RETURN_VALUE2 = new Object();
+    private static final Object RETURN_VALUE1 = new Object();
+    private static final Object RETURN_VALUE2 = new Object();
 
     @Mock
     private ObjectInputStream<Object> objectInputStreamMock1;

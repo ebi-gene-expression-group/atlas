@@ -46,7 +46,7 @@ public class FactorGroupingService {
                 "Anatomical Systems",
                 "Anatomical system")
                 .ifPresent(result::add);
-        
+
         return result;
     }
 
@@ -54,7 +54,9 @@ public class FactorGroupingService {
         return m.values().stream().map(Set::size).reduce(0, (integer, integer2) -> integer + integer2) > 0;
     }
 
-    private Optional<JsonObject> groupingAsJson(Map<ColumnGroup, Set<OntologyTerm>> grouping, String name, String memberName) {
+    private Optional<JsonObject> groupingAsJson(Map<ColumnGroup, Set<OntologyTerm>> grouping,
+                                                String name,
+                                                String memberName) {
         return groupsAsJson(grouping).map(a -> {
             JsonObject result = new JsonObject();
             result.addProperty("name", name);

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AnalyticsIndexerManager {
+    // String because Spring won’t let us use anything but strings in controller defaults
     protected static final String DEFAULT_THREADS = "8";
     protected static final String DEFAULT_SOLR_BATCH_SIZE = "32768";
     protected static final String DEFAULT_TIMEOUT_IN_HOURS = "24";
@@ -33,9 +34,12 @@ public class AnalyticsIndexerManager {
     private AnalyticsIndexerService analyticsIndexerService;
     protected final ExperimentTrader experimentTrader;
 
-    public AnalyticsIndexerManager(ExperimentSorter experimentSorter, AnalyticsIndexerMonitor analyticsIndexerMonitor,
-                                   BioentityIdentifiersReader bioentityIdentifiersReader, AnalyticsIndexerService analyticsIndexerService,
-                                   ExperimentTrader experimentTrader, BioentityPropertiesDao bioentityPropertiesDao) {
+    public AnalyticsIndexerManager(ExperimentSorter experimentSorter,
+                                   AnalyticsIndexerMonitor analyticsIndexerMonitor,
+                                   BioentityIdentifiersReader bioentityIdentifiersReader,
+                                   AnalyticsIndexerService analyticsIndexerService,
+                                   ExperimentTrader experimentTrader,
+                                   BioentityPropertiesDao bioentityPropertiesDao) {
         this.experimentSorter = experimentSorter;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
         this.bioentityIdentifiersReader = bioentityIdentifiersReader;
@@ -45,8 +49,12 @@ public class AnalyticsIndexerManager {
     }
 
     public int addToAnalyticsIndex(String experimentAccession) {
-        int result = addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
-                (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)), 8000);
+        int result =
+                addToAnalyticsIndex(
+                        experimentAccession,
+                        bioentityPropertiesDao.getMap(
+                                bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)),
+                        Integer.parseInt(DEFAULT_SOLR_BATCH_SIZE));
 
         analyticsIndexerService.commitAfterAdd();
 
@@ -63,13 +71,15 @@ public class AnalyticsIndexerManager {
 
         analyticsIndexerMonitor.update("Analytics index build has started: sorting experiments by size");
 
-        TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortAllExperimentsPerSize();
+        TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions =
+                experimentSorter.reverseSortAllExperimentsPerSize();
         analyticsIndexerMonitor.update(descendingFileSizeToExperimentAccessions);
 
         ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch =
                 bioentityPropertiesDao.getMap(bioentityIdentifiersReader
                         .getBioentityIdsFromExperiments(ExperimentType.values()));
-        analyticsIndexerMonitor.update("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
+        analyticsIndexerMonitor.update(
+                "Extracted " + bioentityIdToIdentifierSearch.size() + " bioentityIds from experiments");
 
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(),
                 bioentityIdToIdentifierSearch, threads, batchSize, timeout);
@@ -90,7 +100,7 @@ public class AnalyticsIndexerManager {
                         .getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiments(experimentType));
 
         analyticsIndexerMonitor
-                .update("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
+                .update("Extracted " + bioentityIdToIdentifierSearch.size() + " bioentityIds from experiments");
 
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(),
                 bioentityIdToIdentifierSearch, threads, batchSize, timeout);
@@ -127,23 +137,26 @@ public class AnalyticsIndexerManager {
         threadPool.shutdown();
         try {
             if (threadPool.awaitTermination(timeout, TimeUnit.HOURS)) {
-                analyticsIndexerMonitor.update("Pool shut down successfully. All threads finished within the specified timeout.\n");
-            }
-            else {
+                analyticsIndexerMonitor.update(
+                        "Pool shut down successfully. All threads finished within the specified timeout.\n");
+            } else {
                 analyticsIndexerMonitor.update("Pool timed out. Initiating shutdown of running threads...\n");
                 threadPool.shutdownNow();
                 // Wait a while for tasks to respond to being cancelled
                 if (threadPool.awaitTermination(LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME, TimeUnit.MINUTES)) {
                     analyticsIndexerMonitor.update("Threads closed successfully.\n");
                 } else {
-                    analyticsIndexerMonitor.update("Unable to close open threads. This means there is a thread leak in the current session.\n");
+                    analyticsIndexerMonitor.update(
+                            "Unable to close open threads. " +
+                            "This means there is a thread leak in the current session.\n");
                 }
             }
         } catch (InterruptedException e) {
             // (Re-)Cancel if current thread also interrupted
             threadPool.shutdownNow();
             Thread.currentThread().interrupt();
-            analyticsIndexerMonitor.update("Pool main thread interrupted. Make sure there are no remaining running threads.\n");
+            analyticsIndexerMonitor.update(
+                    "Pool main thread interrupted. Make sure there are no remaining running threads.\n");
         }
 
         analyticsIndexerMonitor.update(null);
@@ -155,7 +168,7 @@ public class AnalyticsIndexerManager {
                 bioentityIdToIdentifierSearch;
         private final int batchSize;
 
-        public ReindexTask(String experimentAccession,
+        ReindexTask(String experimentAccession,
                            ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch,
                            int batchSize) {
             this.experimentAccession = experimentAccession;

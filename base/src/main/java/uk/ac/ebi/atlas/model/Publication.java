@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Publication {
-
     @JsonProperty("pmid")
     private String pubmedId;
 
@@ -64,20 +63,18 @@ public class Publication {
 
     // Retrieves authors citation-style. If there are more than 5 authors, it appends "et al" after the 5th
     public String getAuthors() {
-        if(authors != null) {
+        if (authors != null) {
             String[] authorsArray = authors.split(",");
 
             if (authorsArray.length < 5) {
                 return authors;
-            }
-            else {
+            } else {
                 String shownAuthors = String.join(",", Arrays.copyOfRange(authorsArray, 0, 5));
-
-                return String.join(" ",shownAuthors, "et al.");
+                return String.join(" ", shownAuthors, "et al.");
             }
         }
 
-        return authors;
+        return null;
     }
 
     public String getFullAuthorList() {

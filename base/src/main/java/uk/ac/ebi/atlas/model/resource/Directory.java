@@ -7,13 +7,12 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Set;
 
 public class Directory extends AtlasResource<Set<Path>> {
     public Directory(Path parentDirectory, String template, String... args) {
-        super(parentDirectory.resolve(MessageFormat.format(template, (Object []) args)));
+        super(parentDirectory.resolve(MessageFormat.format(template, (Object[]) args)));
     }
 
     @Override

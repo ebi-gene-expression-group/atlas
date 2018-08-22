@@ -37,25 +37,36 @@ public class MicroarrayProfileStreamFactory
     }
 
     @Override
-    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayRequestContext options, Collection<String> keepGeneIds) {
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment,
+                                                       MicroarrayRequestContext options,
+                                                       Collection<String> keepGeneIds) {
         return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
-    static class Impl extends
-            DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile> {
+    static class Impl
+                 extends DifferentialProfileStreamFactory<
+                            MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile> {
 
         @Inject
-        public Impl(DataFileHub dataFileHub) {
+        Impl(DataFileHub dataFileHub) {
             super(dataFileHub);
         }
 
         @Override
-        protected Function<String[], Function<String[], MicroarrayProfile>> howToReadLine(final MicroarrayExperiment experiment, final Predicate<MicroarrayExpression> expressionFilter) {
-            return strings -> new DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(strings, experiment, expressionFilter) {
+        protected Function<String[], Function<String[], MicroarrayProfile>>
+                  howToReadLine(final MicroarrayExperiment experiment,
+                                final Predicate<MicroarrayExpression> expressionFilter) {
+            return strings ->
+                    new DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(
+                            strings, experiment, expressionFilter) {
                 @Nullable
                 @Override
-                protected MicroarrayExpression nextExpression(Integer index, Contrast correspondingColumn, String[] currentLine) {
-                    Preconditions.checkState(currentLine.length > index + 2, "Expecting row of the format ... <pvalue_i> <tstat_i> <foldchange_i> ...");
+                protected MicroarrayExpression nextExpression(Integer index,
+                                                              Contrast correspondingColumn,
+                                                              String[] currentLine) {
+                    Preconditions.checkState(
+                            currentLine.length > index + 2,
+                            "Expecting row of the format ... <pvalue_i> <tstat_i> <foldchange_i> ...");
                     String pValueString = currentLine[index];
                     String tStatisticString = currentLine[index + 1];
                     String foldChangeString = currentLine[index + 2];
@@ -78,10 +89,13 @@ public class MicroarrayProfileStreamFactory
         }
 
         @Override
-        protected Collection<ObjectInputStream<String[]>> getDataFiles(MicroarrayExperiment experiment, MicroarrayRequestContext options) {
+        protected Collection<ObjectInputStream<String[]>> getDataFiles(MicroarrayExperiment experiment,
+                                                                       MicroarrayRequestContext options) {
             Vector<ObjectInputStream<String[]>> inputStreams = new Vector<>();
             for (String arrayDesignAccession : options.getArrayDesignAccessions()) {
-                ObjectInputStream<String[]> stream = dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesignAccession).analytics.get();
+                ObjectInputStream<String[]> stream =
+                        dataFileHub.getMicroarrayExperimentFiles(
+                                experiment.getAccession(), arrayDesignAccession).analytics.get();
                 inputStreams.add(stream);
             }
             return inputStreams;

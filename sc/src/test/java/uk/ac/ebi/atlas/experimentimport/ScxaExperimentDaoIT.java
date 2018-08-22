@@ -27,13 +27,13 @@ import static org.junit.Assume.assumeThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ScxaExperimentDaoIT {
     private static final String SC_ACCESSION = "TEST-SC";
     private static final UUID RANDOM_UUID = UUID.randomUUID();
 
     @Inject
-    ScxaExperimentDao subject;
+    private ScxaExperimentDao subject;
 
     @Before
     public void setUp() throws Exception {
@@ -44,7 +44,8 @@ public class ScxaExperimentDaoIT {
                         "Homo sapiens",
                         Sets.newHashSet("PubMed ID 1", "PubMed ID 2"),
                         Sets.newHashSet("100.100/doi", "200.200/doi"),
-                        "Single-cell RNA-seq analysis of human pancreas from healthy individuals and type 2 diabetes patients",
+                        "Single-cell RNA-seq analysis of human pancreas from healthy individuals and type 2 " +
+                                "diabetes patients",
                         new SimpleDateFormat("yyyy-MM-dd").parse("2017-01-31"),
                         true,
                         RANDOM_UUID.toString());
@@ -63,8 +64,13 @@ public class ScxaExperimentDaoIT {
 
     @Test
     public void publicExperimentsDontIncludePrivateExperiments() {
-        assumeThat(subject.findExperiment(SC_ACCESSION, RANDOM_UUID.toString()), hasProperty("experimentAccession", is(SC_ACCESSION)));
-        assertThat(subject.findPublicExperimentAccessions(), not(hasItem("experimentAccession")));
+        assumeThat(
+                subject.findExperiment(SC_ACCESSION, RANDOM_UUID.toString()),
+                hasProperty("experimentAccession", is(SC_ACCESSION)));
+
+        assertThat(
+                subject.findPublicExperimentAccessions(),
+                not(hasItem("experimentAccession")));
     }
 
     @Test
@@ -96,7 +102,9 @@ public class ScxaExperimentDaoIT {
     public final ExpectedException exception = ExpectedException.none();
     @Test
     public void forPrivateExperimentsAccessKeyIsRequired() {
-        assertThat(subject.findExperiment(SC_ACCESSION, RANDOM_UUID.toString()), hasProperty("experimentAccession", is(SC_ACCESSION)));
+        assertThat(
+                subject.findExperiment(SC_ACCESSION, RANDOM_UUID.toString()),
+                hasProperty("experimentAccession", is(SC_ACCESSION)));
 
         exception.expect(ResourceNotFoundException.class);
         subject.findExperiment(SC_ACCESSION, "foobar");

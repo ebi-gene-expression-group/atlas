@@ -8,7 +8,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 public class LinkToGeneTest {
-
     class DummyProfile extends Profile {
         DummyProfile(String id, String name) {
             super(id, name);
@@ -21,13 +20,13 @@ public class LinkToGeneTest {
     }
 
     // Not comprehensive, if gene IDs need to use any of the following chars we need to use a URLEncoder
-    String[] ILLEGAL_CHARS = {"%", "^", "|", "<", ">", "`", "\"", "\\", "[", "]", "{", "}"};
+    private static final String[] ILLEGAL_CHARS = {"%", "^", "|", "<", ">", "`", "\"", "\\", "[", "]", "{", "}"};
 
-    LinkToGene<DummyProfile> subject = new LinkToGene<>();
+    private LinkToGene<DummyProfile> subject = new LinkToGene<>();
 
     // The hash will be set by the view, see search-results.jsp
     @Test
-    public void linksAtNoSpecificTab() throws Exception {
+    public void linksAtNoSpecificTab() {
         assertThat(subject.apply(new DummyProfile("geneId", "geneName")).toString(), endsWith("geneId"));
     }
 
@@ -42,5 +41,4 @@ public class LinkToGeneTest {
             }
         }
     }
-
 }

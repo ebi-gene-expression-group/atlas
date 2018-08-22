@@ -28,7 +28,7 @@ public class AdminInterceptorTest {
 
     @Test
     public void anyAuthenticatedUserHasAdminRights() {
-        when(requestMock.getUserPrincipal()).thenReturn(() -> random(ThreadLocalRandom.current().nextInt(128)));
+        when(requestMock.getUserPrincipal()).thenReturn(() -> random(ThreadLocalRandom.current().nextInt(100)));
         assertThat(subject.preHandle(requestMock, null, null)).isTrue();
 
         when(requestMock.getUserPrincipal()).thenReturn(null);

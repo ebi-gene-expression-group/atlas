@@ -23,11 +23,11 @@ public class AssayGroupSummary implements Iterable<AssayProperty> {
     }
 
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject o = new JsonObject();
         o.addProperty("replicates", replicates);
         JsonArray a = new JsonArray();
-        for(AssayProperty assayProperty: properties){
+        for (AssayProperty assayProperty: properties) {
             a.add(assayProperty.toJson());
         }
         o.add("properties", a);

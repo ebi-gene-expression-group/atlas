@@ -26,13 +26,12 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class AnalyticsStreamerIT {
-
     private static final String EXPERIMENT_ACCESSION = "TEST-SINGLE-CELL";
-
     private static final int MAX_ROWS = 100;
     private static final int MAX_COLS = 500;
     private static final double MAX_EXPRESSION  = 10000000.0;
     private static final double SPARSE_FACTOR = 0.85;
+
     private MockDataFileHub dataFileHub;
 
     private Triple<Collection<Triple>, String[], String[]> randomMatrixMarketGenerator(int maxRows,
@@ -49,8 +48,8 @@ public class AnalyticsStreamerIT {
                         .toArray(String[]::new);
 
         ImmutableList.Builder<Triple> matrixBuilder = ImmutableList.builder();
-        for (int i = 0 ; i < geneIds.length ; i++) {
-            for (int j = 0 ; j < cellIds.length ; j++) {
+        for (int i = 0; i < geneIds.length; i++) {
+            for (int j = 0; j < cellIds.length; j++) {
                 if (ThreadLocalRandom.current().nextDouble() > sparseFactor) {
                     matrixBuilder.add(
                             Triple.of(i + 1, j + 1, ThreadLocalRandom.current().nextDouble(0.1, maxExpression)));
@@ -76,7 +75,10 @@ public class AnalyticsStreamerIT {
         List<String> cellIds = ImmutableList.copyOf(matrixMarketFiles.getRight());
 
         dataFileHub.addMatrixMarketExpressionFiles(
-                Paths.get(EXPERIMENT_ACCESSION), matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
+                Paths.get(EXPERIMENT_ACCESSION),
+                matrixEntries,
+                matrixMarketFiles.getMiddle(),
+                matrixMarketFiles.getRight());
         SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(EXPERIMENT_ACCESSION);
 
         try (AnalyticsStreamer singleCellAnalyticsStreamer =
@@ -100,12 +102,14 @@ public class AnalyticsStreamerIT {
         Collection<Triple> matrixEntries = matrixMarketFiles.getLeft();
 
         dataFileHub.addMatrixMarketExpressionFiles(
-                Paths.get(EXPERIMENT_ACCESSION), matrixEntries, matrixMarketFiles.getMiddle(), matrixMarketFiles.getRight());
+                Paths.get(EXPERIMENT_ACCESSION),
+                matrixEntries,
+                matrixMarketFiles.getMiddle(),
+                matrixMarketFiles.getRight());
 
         SingleCellExperimentFiles files = dataFileHub.getSingleCellExperimentFiles(EXPERIMENT_ACCESSION);
         try (AnalyticsStreamer singleCellAnalyticsStreamer =
                      new AnalyticsStreamer(files.tpmsMatrix, files.geneIdsTsv, files.cellIdsTsv)) {
-
             assertThat(singleCellAnalyticsStreamer.get().collect(Collectors.toList()), hasSize(0));
         }
     }

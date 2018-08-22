@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;

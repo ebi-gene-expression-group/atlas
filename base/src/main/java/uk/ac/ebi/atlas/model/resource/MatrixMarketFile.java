@@ -9,8 +9,8 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 
 public class MatrixMarketFile extends AtlasResource<MatrixMarketReader> {
-    public MatrixMarketFile(Path parentDirectory, String template, String ... args) {
-        super(parentDirectory.resolve(MessageFormat.format(template, (Object []) args)));
+    public MatrixMarketFile(Path parentDirectory, String template, String... args) {
+        super(parentDirectory.resolve(MessageFormat.format(template, (Object[]) args)));
     }
 
     public MatrixMarketReader get() {
@@ -19,6 +19,5 @@ public class MatrixMarketFile extends AtlasResource<MatrixMarketReader> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

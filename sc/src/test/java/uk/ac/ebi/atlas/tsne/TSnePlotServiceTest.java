@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.metadata.CellMetadataDao;
-import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
 import java.util.Arrays;
@@ -110,12 +110,16 @@ class TSnePlotServiceTest {
                         Function.identity(),
                         value -> metadataValues.get(ThreadLocalRandom.current().nextInt(0, metadataValues.size()))));
 
-        when(cellMetadataDaoMock.getMetadataValueForCellIds(eq(experimentAccession), any(SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField.class), eq(cellIds)))
+        when(
+                cellMetadataDaoMock.getMetadataValueForCellIds(
+                        eq(experimentAccession), any(SingleCellAnalyticsSchemaField.class), eq(cellIds)))
                 .thenReturn(cellMetadata);
 
-        Map<String, Set<TSnePoint>> results = subject.fetchTSnePlotWithMetadata(experimentAccession, perplexity, metadataCategory);
+        Map<String, Set<TSnePoint>> results =
+                subject.fetchTSnePlotWithMetadata(experimentAccession, perplexity, metadataCategory);
 
-        assertThat(results).containsOnlyKeys(metadataValues.stream().map(StringUtils::capitalize).toArray(String[]::new));
+        assertThat(results)
+                .containsOnlyKeys(metadataValues.stream().map(StringUtils::capitalize).toArray(String[]::new));
     }
 
     @Test

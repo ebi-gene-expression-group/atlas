@@ -7,7 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -23,7 +22,6 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +38,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentCacheLoaderTest {
-
     private String experimentAccession = "E-MOCK-1";
 
     private ExperimentDTO dto =
@@ -55,7 +52,7 @@ public class BaselineExperimentCacheLoaderTest {
                     false,
                     "accessKeyUUID");
     @Mock
-    private ConfigurationTrader configurationTrader ;
+    private ConfigurationTrader configurationTrader;
     @Mock
     private SpeciesFactory speciesFactoryMock;
     @Mock
@@ -65,7 +62,7 @@ public class BaselineExperimentCacheLoaderTest {
 
     @Mock
     private ExperimentDesign experimentDesign;
-    @Spy
+
     private static MockDataFileHub dataFileHub;
 
     private BaselineExperimentFactory subject;
@@ -76,7 +73,7 @@ public class BaselineExperimentCacheLoaderTest {
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         AssayGroup assayGroup = mock(AssayGroup.class);
         when(assayGroup.getId()).thenReturn("assay group id 1");
 
@@ -86,13 +83,17 @@ public class BaselineExperimentCacheLoaderTest {
 
         subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
-        when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
+        when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession))
+                .thenReturn(baselineConfiguration);
         when(baselineConfiguration.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
 
-        when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
-                        SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of())));
-
+        when(speciesFactoryMock.create(dto.getSpecies()))
+                .thenReturn(
+                        new Species(
+                                "Homo sapiens",
+                                SpeciesProperties.create(
+                                        "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of())));
     }
 
     private void verifyCollaborators() {
@@ -107,7 +108,7 @@ public class BaselineExperimentCacheLoaderTest {
                 speciesFactoryMock);
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void assayGroupsShouldBeNonEmpty() {
         when(configuration.getAssayGroups()).thenReturn(ImmutableList.of());
         subject.create(dto, experimentDesign);
@@ -151,6 +152,4 @@ public class BaselineExperimentCacheLoaderTest {
         verify(configurationTrader).getBaselineFactorsConfiguration(alternativeViewAccession);
         noMoreInteractionsWithCollaborators();
     }
-
-    
 }

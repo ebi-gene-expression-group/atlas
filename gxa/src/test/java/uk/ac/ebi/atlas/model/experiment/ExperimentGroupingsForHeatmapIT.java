@@ -23,27 +23,24 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ExperimentGroupingsForHeatmapIT {
-
     @Inject
-    ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTrader;
 
     @Test
-    public void testSomeGoodExperiments() throws Exception {
-
+    public void testSomeGoodExperiments() {
         outputInFineFormatForExperiment("E-MTAB-513");
         outputInFineFormatForExperiment("E-MTAB-2706");
         outputInFineFormatForExperiment("E-GEOD-54705");
         outputInFineFormatForExperiment("E-MTAB-4260");
-
     }
 
     /*
     For differential experiments, a few groupings repeat and we might need something else for them.
      */
 
-    public void outputInFineFormatForExperiment(String accession){
+    private void outputInFineFormatForExperiment(String accession) {
         Experiment<DescribesDataColumns> experiment = experimentTrader.getPublicExperiment(accession);
 
         List<String> allDescriptorIds = experiment.getDataColumnDescriptors().stream()
@@ -54,14 +51,14 @@ public class ExperimentGroupingsForHeatmapIT {
 
         assertThat(result.size(), greaterThan(0));
 
-        for(JsonElement element: result){
+        for (JsonElement element: result) {
             assertTrue(element.getAsJsonObject().has("name"));
             assertTrue(element.getAsJsonObject().has("selected"));
             assertThat(element.getAsJsonObject().get("groupings").getAsJsonArray().size(), greaterThan(0));
-            for(JsonElement grouping: element.getAsJsonObject().get("groupings").getAsJsonArray()){
+            for (JsonElement grouping: element.getAsJsonObject().get("groupings").getAsJsonArray()) {
                 assertThat(grouping.getAsJsonArray().size(), is(2));
                 assertThat(grouping.getAsJsonArray().get(1).getAsJsonArray().size(), greaterThan(0));
-                for(JsonElement groupingValue : grouping.getAsJsonArray().get(1).getAsJsonArray()){
+                for (JsonElement groupingValue : grouping.getAsJsonArray().get(1).getAsJsonArray()) {
                     assertTrue(allDescriptorIds.contains(groupingValue.getAsString()));
                 }
             }

@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class EuropePmcClientIT {
-
     @Inject
     private EuropePmcClient subject;
 
@@ -29,7 +28,8 @@ public class EuropePmcClientIT {
                 .extracting("doi", "authors", "title")
                 .isNotEmpty();
 
-        assertThat(result.orElseThrow(RuntimeException::new).getDoi()).isEqualToIgnoringCase("10.1126/sciimmunol.aan8664");
+        assertThat(result.orElseThrow(RuntimeException::new).getDoi())
+                .isEqualToIgnoringCase("10.1126/sciimmunol.aan8664");
     }
 
     @Test
@@ -51,5 +51,4 @@ public class EuropePmcClientIT {
 
         assertThat(result.isPresent()).isFalse();
     }
-
 }

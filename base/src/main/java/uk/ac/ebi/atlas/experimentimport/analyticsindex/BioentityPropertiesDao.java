@@ -31,11 +31,15 @@ public class BioentityPropertiesDao {
 
         ImmutableMap.Builder<String, Map<BioentityPropertyName, Set<String>>> mapBuilder = new ImmutableMap.Builder<>();
         for (String bioentityIdentifier : bioentityIdentifiers) {
-            mapBuilder.put(bioentityIdentifier, gxaSolrClient.getMap(bioentityIdentifier, ExperimentDataPoint.bioentityPropertyNames));
+            mapBuilder.put(
+                    bioentityIdentifier,
+                    gxaSolrClient.getMap(bioentityIdentifier, ExperimentDataPoint.BIOENTITY_PROPERTY_NAMES));
         }
 
         stopWatch.stop();
-        LOGGER.debug("Bioentity properties for {} bioentities fetched in {} seconds", bioentityIdentifiers.size(), stopWatch.getTotalTimeSeconds());
+        LOGGER.debug(
+                "Bioentity properties for {} bioentities fetched in {} seconds",
+                bioentityIdentifiers.size(), stopWatch.getTotalTimeSeconds());
 
         return mapBuilder.build();
     }

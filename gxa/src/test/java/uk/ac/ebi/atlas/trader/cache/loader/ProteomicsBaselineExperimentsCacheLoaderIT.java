@@ -31,15 +31,15 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ProteomicsBaselineExperimentsCacheLoaderIT {
-
     private static final String E_PROT_1 = "E-PROT-1";
     private static final String DEVELOPMENTAL_STAGE = "developmental stage";
     private static final String ORGANISM_PART = "organism part";
@@ -109,7 +109,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         Set<String> allAssayGroupIds = new HashSet<>();
-        for(AssayGroup assayGroup : experiment.getDataColumnDescriptors()){
+        for (AssayGroup assayGroup : experiment.getDataColumnDescriptors()) {
             allAssayGroupIds.add(assayGroup.getId());
         }
 
@@ -122,12 +122,13 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     public void experimentalFactors() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
-        //System.out.println("\"" + Joiner.on("\", \"").join(allFactors));
+        FactorGroup adultAdrenal =
+                new FactorSet()
+                        .add(new Factor(DEVELOPMENTAL_STAGE, "adult")).add(new Factor(ORGANISM_PART, "adrenal gland"));
+        FactorGroup fetusTestis =
+                new FactorSet()
+                        .add(new Factor(DEVELOPMENTAL_STAGE, "fetus")).add(new Factor(ORGANISM_PART, "testis"));
 
-        FactorGroup adultAdrenal = new FactorSet().add(new Factor(DEVELOPMENTAL_STAGE, "adult")).add( new Factor
-                (ORGANISM_PART, "adrenal gland"));
-        FactorGroup fetusTestis = new FactorSet().add(new Factor(DEVELOPMENTAL_STAGE, "fetus")).add( new Factor
-                (ORGANISM_PART, "testis"));
         assertThat(experiment.getFactors(experiment.getDataColumnDescriptor("g1")), is(adultAdrenal));
         assertThat(experiment.getFactors(experiment.getDataColumnDescriptor("g30")), is(fetusTestis));
     }
@@ -141,21 +142,28 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         assertThat(experimentDesign.getFactorHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM_PART));
         assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
 
-        Iterator<SampleCharacteristic> sampleCharacteristicIterator = experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
+        Iterator<SampleCharacteristic> sampleCharacteristicIterator =
+                experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
 
         SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(ORGANISM));
         assertThat(sampleCharacteristic.value(), is("Homo sapiens"));
-        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+        assertThat(
+                sampleCharacteristic.valueOntologyTerms().iterator().next().uri(),
+                is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(ORGANISM_PART));
         assertThat(sampleCharacteristic.value(), is("ovary"));
-        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+        assertThat(
+                sampleCharacteristic.valueOntologyTerms().iterator().next().uri(),
+                is("http://www.ebi.ac.uk/efo/EFO_0000973"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(DEVELOPMENTAL_STAGE));
         assertThat(sampleCharacteristic.value(), is("adult"));
-        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://www.ebi.ac.uk/efo/EFO_0001272"));
+        assertThat(
+                sampleCharacteristic.valueOntologyTerms().iterator().next().uri(),
+                is("http://www.ebi.ac.uk/efo/EFO_0001272"));
     }
 }

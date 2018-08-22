@@ -10,7 +10,6 @@ import java.io.OutputStream;
 
 @Named
 public class ImageIOUtils {
-
     public BufferedImage read(InputStream inputStream) throws IOException {
         return ImageIO.read(inputStream);
     }
@@ -18,5 +17,4 @@ public class ImageIOUtils {
     public boolean write(RenderedImage im, String formatName, OutputStream output) throws IOException {
         return ImageIO.write(im, formatName, output);
     }
-
 }

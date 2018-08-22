@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.metadata;
 
+import com.google.common.collect.ImmutableSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
-import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
@@ -27,9 +28,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CellMetadataDaoIT {
+class CellMetadataDaoIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(CellMetadataDaoIT.class);
 
     @Inject
@@ -46,12 +47,12 @@ public class CellMetadataDaoIT {
 
     @ParameterizedTest
     @MethodSource("experimentsWithMetadataProvider")
-    public void validExperimentAccessionHasMetadataFields(String experimentAccession) {
+    void validExperimentAccessionHasMetadataFields(String experimentAccession) {
         assertThat(subject.getMetadataFieldNames(experimentAccession)).isNotEmpty();
     }
 
     @Test
-    public void invalidExperimentAccessionHasNoMetadata() {
+    void invalidExperimentAccessionHasNoMetadata() {
         String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
 
         assertThat(subject.getMetadataFieldNames(experimentAccession)).isEmpty();
@@ -59,28 +60,32 @@ public class CellMetadataDaoIT {
 
     @ParameterizedTest
     @MethodSource("experimentsWithMetadataProvider")
-    public void invalidCellIdHasNoMetadata(String experimentAccession) {
+    void invalidCellIdHasNoMetadata(String experimentAccession) {
         String cellId = "FOOBAR";
 
-        List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
+        List<SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
 
         assertThat(metadataFieldNames)
                 .isNotEmpty()
-                .allSatisfy(field -> assertThat(subject.getMetadataValueForCellId(experimentAccession, field, cellId)).isNotPresent());
+                .allSatisfy(field ->
+                        assertThat(subject.getMetadataValueForCellId(experimentAccession, field, cellId))
+                                .isNotPresent());
     }
 
     @ParameterizedTest
     @MethodSource("experimentsWithMetadataProvider")
-    public void validCellIdHasMetadataValues(String experimentAccession) {
+    void validCellIdHasMetadataValues(String experimentAccession) {
         String cellId = jdbcUtils.fetchRandomCellFromExperiment(experimentAccession);
 
-        LOGGER.info("Retrieving metadata field names for experiment " + experimentAccession);
-        List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
+        LOGGER.info("Retrieving metadata field names for experiment {}", experimentAccession);
+        List<SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
 
         assertThat(metadataFieldNames)
                 .isNotEmpty()
                 .allSatisfy(field -> {
-                    LOGGER.info("Retrieving values for " + field.displayName() + " metadata for cell ID " + cellId + " from experiment " + experimentAccession);
+                    LOGGER.info(
+                            "Retrieving values for {} metadata for cell ID {} from experiment {}",
+                            field.displayName(), cellId, experimentAccession);
 
                     assertThat(subject.getMetadataValueForCellId(experimentAccession, field, cellId)).isPresent();
                 });
@@ -88,15 +93,15 @@ public class CellMetadataDaoIT {
 
     @ParameterizedTest
     @MethodSource("experimentsWithFactorsProvider")
-    public void validExperimentAccessionHasFactorFields(String experimentAccession) {
+    void validExperimentAccessionHasFactorFields(String experimentAccession) {
         String cellId = jdbcUtils.fetchRandomCellFromExperiment(experimentAccession);
 
-        LOGGER.info("Retrieving factor fields for cell ID " + cellId + " from experiment " + experimentAccession);
+        LOGGER.info("Retrieving factor fields for cell ID {} from experiment {}", cellId, experimentAccession);
         assertThat(subject.getFactorFieldNames(experimentAccession, cellId)).isNotEmpty();
     }
 
     @Test
-    public void invalidCellIdAndExperimentAccessionHasNoFactorFields() {
+    void invalidCellIdAndExperimentAccessionHasNoFactorFields() {
         String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
         String cellId = "FOO";
 
@@ -105,16 +110,20 @@ public class CellMetadataDaoIT {
 
     @ParameterizedTest
     @MethodSource("experimentsWithMetadataProvider")
-    public void validCellIdsHaveMetadataValues(String experimentAccession) {
-        List<String> cellIds = jdbcUtils.fetchRandomListOfCellsFromExperiment(experimentAccession, ThreadLocalRandom.current().nextInt(1, 2000));
+    void validCellIdsHaveMetadataValues(String experimentAccession) {
+        List<String> cellIds =
+                jdbcUtils.fetchRandomListOfCellsFromExperiment(
+                        experimentAccession, ThreadLocalRandom.current().nextInt(1, 2000));
 
-        LOGGER.info("Retrieving metadata field names for experiment " + experimentAccession);
-        List<SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
+        LOGGER.info("Retrieving metadata field names for experiment {}", experimentAccession);
+        List<SingleCellAnalyticsSchemaField> metadataFieldNames = subject.getMetadataFieldNames(experimentAccession);
 
         assertThat(metadataFieldNames)
                 .isNotEmpty()
                 .allSatisfy(field -> {
-                    LOGGER.info("Retrieving values for " + field.displayName() + " metadata for " + cellIds.size() + " random cell IDs from experiment " + experimentAccession);
+                    LOGGER.info(
+                            "Retrieving values for {} metadata for {} random cell IDs from experiment {}",
+                            field.displayName(), cellIds.size(), experimentAccession);
 
                     assertThat(subject.getMetadataValueForCellIds(experimentAccession, field, cellIds))
                             .isNotEmpty()
@@ -123,10 +132,11 @@ public class CellMetadataDaoIT {
     }
 
     @Test
-    public void getFieldValuesForNoFieldsReturnsEmpty() {
+    void getFieldValuesForNoFieldsReturnsEmpty() {
         String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
 
-        assertThat(subject.getQueryResultForMultiValueFields(experimentAccession, Optional.empty())).isEmpty();
+        assertThat(subject.getQueryResultForMultiValueFields(experimentAccession, Optional.empty(), ImmutableSet.of()))
+                .isEmpty();
     }
 
     private Stream<String> experimentsWithMetadataProvider() {
@@ -140,6 +150,7 @@ public class CellMetadataDaoIT {
         // E-GEOD-99058 and E-ENAD-13 do not have any factors
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"));
+                .filter(accession ->
+                        !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"));
     }
 }

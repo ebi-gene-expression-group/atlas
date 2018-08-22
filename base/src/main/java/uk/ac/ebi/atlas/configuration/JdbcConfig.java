@@ -36,7 +36,6 @@ public class JdbcConfig {
         hikariConfig.setDataSourceProperties(dataSourceProperties);
 
         hikariConfig.setConnectionTestQuery("SELECT 1");
-        hikariConfig.setMaximumPoolSize(10);
     }
 
     @Bean(destroyMethod = "close")

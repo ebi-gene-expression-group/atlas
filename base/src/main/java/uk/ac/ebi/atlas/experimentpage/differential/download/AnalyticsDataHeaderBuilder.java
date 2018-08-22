@@ -21,12 +21,12 @@ public class AnalyticsDataHeaderBuilder implements Function<String[], String[]> 
         this.fixedColumnNumber = fixedColumnNumber;
     }
 
-    public static AnalyticsDataHeaderBuilder microarray(MicroarrayExperiment experiment) {
-        return new AnalyticsDataHeaderBuilder(experiment, 3);
+    public AnalyticsDataHeaderBuilder(MicroarrayExperiment experiment) {
+        this(experiment, 3);
     }
 
-    public static AnalyticsDataHeaderBuilder rnaSeq(DifferentialExperiment experiment) {
-        return new AnalyticsDataHeaderBuilder(experiment, 2);
+    public AnalyticsDataHeaderBuilder(DifferentialExperiment experiment) {
+        this(experiment, 2);
     }
 
     @Override

@@ -21,13 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class JsonBaselineExperimentsControllerWIT {
-
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -55,5 +54,4 @@ public class JsonBaselineExperimentsControllerWIT {
                 .andExpect(content().string(Matchers.containsString("error")));
 
     }
-
 }

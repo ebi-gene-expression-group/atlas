@@ -12,7 +12,7 @@ public interface ExpressionUnit {
             ANY;
 
             @Override
-            public String toString(){
+            public String toString() {
                 return "";
             }
         }
@@ -22,7 +22,7 @@ public interface ExpressionUnit {
         FOLD_CHANGE;
 
         @Override
-        public String toString(){
+        public String toString() {
             return "Log2 fold change";
         }
     }

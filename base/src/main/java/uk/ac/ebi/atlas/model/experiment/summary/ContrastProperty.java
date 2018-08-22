@@ -3,12 +3,16 @@ package uk.ac.ebi.atlas.model.experiment.summary;
 import com.google.common.base.MoreObjects;
 import com.google.gson.JsonObject;
 
+import java.util.Objects;
+
 public class ContrastProperty extends AssayProperty {
+    private final String referenceValue;
 
-    private String referenceValue;
-
-    public ContrastProperty(String propertyName, String testValue, String referenceValue, ContrastPropertyType contrastPropertyType) {
-        super(propertyName, testValue, contrastPropertyType );
+    public ContrastProperty(String propertyName,
+                            String testValue,
+                            String referenceValue,
+                            ContrastPropertyType contrastPropertyType) {
+        super(propertyName, testValue, contrastPropertyType);
         this.referenceValue = referenceValue;
     }
 
@@ -18,9 +22,15 @@ public class ContrastProperty extends AssayProperty {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ContrastProperty)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ContrastProperty)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         ContrastProperty that = (ContrastProperty) o;
 
@@ -31,9 +41,7 @@ public class ContrastProperty extends AssayProperty {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (referenceValue != null ? referenceValue.toLowerCase().hashCode() : 0);
-        return result;
+        return Objects.hash(referenceValue != null ? referenceValue.toLowerCase().hashCode() : 0);
     }
 
     @Override
@@ -44,11 +52,11 @@ public class ContrastProperty extends AssayProperty {
                 .add("testValue", testValue)
                 .toString();
     }
+
     @Override
     public JsonObject toJson() {
         JsonObject o = super.toJson();
         o.addProperty("referenceValue", referenceValue);
         return o;
     }
-
 }

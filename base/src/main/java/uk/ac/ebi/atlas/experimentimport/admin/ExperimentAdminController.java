@@ -34,14 +34,14 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             value = "",
             produces = "application/json;charset=UTF-8")
     public void listAllExperiments(HttpServletResponse response) throws IOException {
-        doOp("all", "list" ,response);
+        doOp("all", "list", response);
     }
 
     @RequestMapping(
             value = "/{accessionsOrCryForHelp}",
             method = RequestMethod.GET)
     public String listExperiments(@PathVariable("accessionsOrCryForHelp") String accessionsOrCryForHelp) {
-        if("help".equalsIgnoreCase(accessionsOrCryForHelp)) {
+        if ("help".equalsIgnoreCase(accessionsOrCryForHelp)) {
             return "forward:/admin/experiments/help";
         } else {
             return "forward:/admin/experiments/" + accessionsOrCryForHelp + "/list";
@@ -65,9 +65,10 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             writer.setIndent("  ");
             writer.beginArray();
 
-            final Collection<String> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
-                    ? ImmutableList.of()
-                    : ImmutableList.copyOf(readAccessions(accessionParameter));
+            final Collection<String> accessions =
+                    accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all") ?
+                            ImmutableList.of() :
+                            ImmutableList.copyOf(readAccessions(accessionParameter));
 
             Iterable<JsonElement> result =
                     maybeOps(opParameter)
@@ -86,25 +87,25 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
         }
     }
 
-    private Optional<List<Op>> maybeOps(String opParameter){
-        try{
+    private Optional<List<Op>> maybeOps(String opParameter) {
+        try {
             return Optional.of(Op.opsForParameter(opParameter));
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return Optional.empty();
         }
     }
 
-    private JsonElement errorMessage(String accessionParameter, Exception e){
+    private JsonElement errorMessage(String accessionParameter, Exception e) {
         JsonObject result = new JsonObject();
         result.addProperty("accession", accessionParameter);
-        result.addProperty("error", e.getMessage()!=null? e.getMessage() : e.toString());
+        result.addProperty("error", e.getMessage() != null ? e.getMessage() : e.toString());
         return result;
     }
 
-    private JsonElement usageMessage(String opParameter){
+    private JsonElement usageMessage(String opParameter) {
         JsonObject messageObject = new JsonObject();
-        messageObject.addProperty("error","Could not understand: " + opParameter );
-        messageObject.addProperty("help","see gxa/admin/experiments/help for more info");
+        messageObject.addProperty("error", "Could not understand: " + opParameter);
+        messageObject.addProperty("help", "see gxa/admin/experiments/help for more info");
         return messageObject;
     }
 

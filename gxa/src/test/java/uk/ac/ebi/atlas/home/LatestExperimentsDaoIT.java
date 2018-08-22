@@ -19,11 +19,10 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class LatestExperimentsDaoIT {
-
     @Inject
-    LatestExperimentsDao subject;
+    private LatestExperimentsDao subject;
 
     @Test
     public void experimentsCount() {
@@ -48,5 +47,4 @@ public class LatestExperimentsDaoIT {
                 subject.fetchLatestExperimentAccessions(ImmutableSet.copyOf(ExperimentType.values())),
                 hasSize(LatestExperimentsDao.LIMIT));
     }
-
 }

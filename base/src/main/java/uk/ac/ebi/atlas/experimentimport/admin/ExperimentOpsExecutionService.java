@@ -14,9 +14,9 @@ public interface ExperimentOpsExecutionService {
 
     Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op);
 
-    Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops);
+    Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops);
 
-    Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Op op);
+    Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Op op);
 
     JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws IOException;
 }

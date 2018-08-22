@@ -5,7 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
@@ -26,18 +29,19 @@ public class RnaSeqProfileStreamFactoryTest {
 
     private RnaSeqProfileStreamFactory subject;
 
-    private static final AssayGroup g1 = new AssayGroup("g1", "assay_1");
-    private static final AssayGroup g2 = new AssayGroup("g2", "assay_2");
-    private static final AssayGroup g3 = new AssayGroup("g3", "assay_3");
+    private static final AssayGroup G1 = new AssayGroup("g1", "assay_1");
+    private static final AssayGroup G2 = new AssayGroup("g2", "assay_2");
+    private static final AssayGroup G3 = new AssayGroup("g3", "assay_3");
 
-    private static final Contrast g1_g2 = new Contrast("g1_g2", null, g1, g2, "contrast 1");
-    private static final Contrast g1_g3 = new Contrast("g1_g3", null, g1, g3, "contrast 2");
+    private static final Contrast G1_G2 = new Contrast("g1_g2", null, G1, G2, "contrast 1");
+    private static final Contrast G1_G3 = new Contrast("g1_g3", null, G1, G3, "contrast 2");
 
-    private static final DifferentialExperiment experiment =
-            createDifferentialExperiment("accession", ImmutableList.of(g1_g2, g1_g3));
+    private static final DifferentialExperiment EXPERIMENT =
+            createDifferentialExperiment("accession", ImmutableList.of(G1_G2, G1_G3));
 
-    private static final String[] header =
-            new String[]{"Gene ID", "Gene Name", "g1_g2.p-value", "g1_g2.log2foldchange", "g1_g3.p-value", "g1_g3.log2foldchange"};
+    private static final String[] HEADER =
+            new String[] {
+            "Gene ID", "Gene Name", "g1_g2.p-value", "g1_g2.log2foldchange", "g1_g3.p-value", "g1_g3.log2foldchange"};
 
     @Before
     public void setUp() throws Exception {
@@ -45,14 +49,18 @@ public class RnaSeqProfileStreamFactoryTest {
         subject = new RnaSeqProfileStreamFactory(dataFileHub);
     }
 
-    private void testCaseNoExpressionFilter(List<String[]> dataLines, Collection<String> getGeneIds, List<RnaSeqProfile> expected) {
+    private void testCaseNoExpressionFilter(List<String[]> dataLines,
+                                            Collection<String> getGeneIds,
+                                            List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(0.0);
         differentialRequestPreferences.setCutoff(1.0);
         testCase(dataLines, getGeneIds, expected, differentialRequestPreferences);
     }
 
-    private void testCaseNoCutoff(List<String[]> dataLines, Regulation regulation, List<RnaSeqProfile> expected) {
+    private void testCaseNoCutoff(List<String[]> dataLines,
+                                  Regulation regulation,
+                                  List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(0.0);
         differentialRequestPreferences.setCutoff(1.0);
@@ -60,233 +68,181 @@ public class RnaSeqProfileStreamFactoryTest {
         testCase(dataLines, Collections.emptySet(), expected, differentialRequestPreferences);
     }
 
-    private void testCaseFoldChangeCutoff(List<String[]> dataLines, Double foldChangeCutoff, List<RnaSeqProfile> expected) {
+    private void testCaseFoldChangeCutoff(List<String[]> dataLines,
+                                          Double foldChangeCutoff,
+                                          List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(foldChangeCutoff);
         differentialRequestPreferences.setCutoff(1.0);
         testCase(dataLines, Collections.emptySet(), expected, differentialRequestPreferences);
     }
 
-    private void testCasePValueCutoff(List<String[]> dataLines, Double pValueCutoff, List<RnaSeqProfile> expected) {
+    private void testCasePValueCutoff(List<String[]> dataLines,
+                                      Double pValueCutoff,
+                                      List<RnaSeqProfile> expected) {
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setFoldChangeCutoff(0.0);
         differentialRequestPreferences.setCutoff(pValueCutoff);
         testCase(dataLines, Collections.emptySet(), expected, differentialRequestPreferences);
     }
 
-    private void testCase(List<String[]> dataLines, Collection<String> getGeneIds, List<RnaSeqProfile> expected, DifferentialRequestPreferences differentialRequestPreferences) {
-        dataFileHub.addRnaSeqAnalyticsFile(experiment.getAccession(), dataLines);
+    private void testCase(List<String[]> dataLines,
+                          Collection<String> getGeneIds,
+                          List<RnaSeqProfile> expected,
+                          DifferentialRequestPreferences differentialRequestPreferences) {
+        dataFileHub.addRnaSeqAnalyticsFile(EXPERIMENT.getAccession(), dataLines);
         assertThat(
                 ImmutableList.copyOf(
-                        new IterableObjectInputStream<>(subject.create(experiment, new RnaSeqRequestContext(differentialRequestPreferences, experiment), getGeneIds))
-                ),
-                is(expected)
-        );
+                        new IterableObjectInputStream<>(
+                                subject.create(
+                                        EXPERIMENT,
+                                        new RnaSeqRequestContext(differentialRequestPreferences, EXPERIMENT),
+                                        getGeneIds))),
+                is(expected));
     }
 
     private RnaSeqProfile profile(String id, String name,
-                          DifferentialExpression expressionForG1_G2,
-                          DifferentialExpression expressionForG1_G3) {
+                          DifferentialExpression expressionForG1G2,
+                          DifferentialExpression expressionForG1G3) {
         RnaSeqProfile profile = new RnaSeqProfile(id, name);
-        Optional.ofNullable(expressionForG1_G2).ifPresent(e ->
-                profile.add(g1_g2, e)
-        );
-        Optional.ofNullable(expressionForG1_G3).ifPresent(e ->
-                profile.add(g1_g3, e)
-        );
+        Optional.ofNullable(expressionForG1G2).ifPresent(e -> profile.add(G1_G2, e));
+        Optional.ofNullable(expressionForG1G3).ifPresent(e -> profile.add(G1_G3, e));
         return profile;
     }
 
     @Test
     public void nullCases() {
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header
-                ),
+                ImmutableList.of(HEADER),
                 Collections.emptySet(),
-                ImmutableList.of()
-        );
+                ImmutableList.of());
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header
-                ),
+                ImmutableList.of(HEADER),
                 ImmutableList.of("id_1"),
-                ImmutableList.of()
-        );
+                ImmutableList.of());
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.05", "2.0", "NA", "NA"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.05", "2.0", "NA", "NA"}),
                 ImmutableList.of("different_id"),
-                ImmutableList.of()
-        );
+                ImmutableList.of());
     }
 
     @Test
     public void emptyProfileCases() {
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "NA", "NA", "NA", "NA"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "NA", "NA", "NA", "NA"}),
                 ImmutableList.of("id_1"),
-                ImmutableList.of(profile("id_1", "name_1", null, null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, null)));
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.05", "NA", "NA", "NA"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.05", "NA", "NA", "NA"}),
                 ImmutableList.of("id_1"),
-                ImmutableList.of(profile("id_1", "name_1", null, null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, null)));
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "NA", "2.0", "NA", "NA"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "NA", "2.0", "NA", "NA"}),
                 ImmutableList.of("id_1"),
-                ImmutableList.of(profile("id_1", "name_1", null, null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, null)));
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "NA", "-2.0", "NA", "NA"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "NA", "-2.0", "NA", "NA"}),
                 ImmutableList.of("id_1"),
-                ImmutableList.of(profile("id_1", "name_1", null, null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, null)));
     }
 
     @Test
     public void getDataNoCutoff() {
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "NA", "NA"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "NA", "NA"}),
                 Collections.emptySet(),
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), null)));
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "NA", "NA"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "NA", "NA"}),
                 ImmutableList.of("id_1"),
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), null)));
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "NA", "NA", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "NA", "NA", "0.03", "4.0"}),
                 Collections.emptySet(),
-                ImmutableList.of(profile("id_1", "name_1", null, new DifferentialExpression(0.03, 4.0)))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, new DifferentialExpression(0.03, 4.0))));
+
         testCaseNoExpressionFilter(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}),
                 Collections.emptySet(),
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), new DifferentialExpression(0.03, 4.0)))
-        );
-        testCaseNoExpressionFilter(
                 ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "-2.0", "NA", "NA"}
-                ),
+                        profile(
+                                "id_1", "name_1",
+                                new DifferentialExpression(0.01, 2.0), new DifferentialExpression(0.03, 4.0))));
+
+        testCaseNoExpressionFilter(
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "-2.0", "NA", "NA"}),
                 ImmutableList.of("id_1"),
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, -2.0), null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, -2.0), null)));
     }
 
 
     @Test
-    public void getDataRegulation(){
+    public void getDataRegulation() {
         testCaseNoCutoff(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "-2.0", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "-2.0", "0.03", "4.0"}),
                 Regulation.UP_DOWN,
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, -2.0), new DifferentialExpression(0.03, 4.0)))
-        );
-        testCaseNoCutoff(
                 ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "-2.0", "0.03", "4.0"}
-                ),
+                        profile(
+                                "id_1", "name_1",
+                                new DifferentialExpression(0.01, -2.0), new DifferentialExpression(0.03, 4.0))));
+
+        testCaseNoCutoff(
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "-2.0", "0.03", "4.0"}),
                 Regulation.UP,
-                ImmutableList.of(profile("id_1", "name_1", null, new DifferentialExpression(0.03, 4.0)))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, new DifferentialExpression(0.03, 4.0))));
+
         testCaseNoCutoff(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "-2.0", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "-2.0", "0.03", "4.0"}),
                 Regulation.DOWN,
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, -2.0), null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, -2.0), null)));
     }
 
     @Test
-    public void getDataFoldChangeCutoff(){
+    public void getDataFoldChangeCutoff() {
         testCaseFoldChangeCutoff(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}),
                 0.0,
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), new DifferentialExpression(0.03, 4.0)))
-        );
-        testCaseFoldChangeCutoff(
                 ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}
-                ),
+                        profile(
+                                "id_1", "name_1",
+                                new DifferentialExpression(0.01, 2.0), new DifferentialExpression(0.03, 4.0))));
+
+        testCaseFoldChangeCutoff(
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}),
                 2.5,
-                ImmutableList.of(profile("id_1", "name_1", null, new DifferentialExpression(0.03, 4.0)))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, new DifferentialExpression(0.03, 4.0))));
+
         testCaseFoldChangeCutoff(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}),
                 4.5,
-                ImmutableList.of(profile("id_1", "name_1", null, null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", null, null)));
     }
 
     @Test
-    public void getDataPValueCutoff(){
+    public void getDataPValueCutoff() {
         testCasePValueCutoff(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}),
                 1.0,
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), new DifferentialExpression(0.03, 4.0)))
-        );
-        testCasePValueCutoff(
                 ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}
-                ),
+                        profile(
+                                "id_1", "name_1",
+                                new DifferentialExpression(0.01, 2.0), new DifferentialExpression(0.03, 4.0))));
+
+        testCasePValueCutoff(
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}),
                 0.02,
-                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0),null))
-        );
+                ImmutableList.of(profile("id_1", "name_1", new DifferentialExpression(0.01, 2.0), null)));
+
         testCasePValueCutoff(
-                ImmutableList.of(
-                        header,
-                        new String[]{"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}
-                ),
+                ImmutableList.of(HEADER, new String[] {"id_1", "name_1", "0.01", "2.0", "0.03", "4.0"}),
                 0.005,
-                ImmutableList.of(profile("id_1", "name_1", null, null))
-        );
-
+                ImmutableList.of(profile("id_1", "name_1", null, null)));
     }
-
 }

@@ -72,6 +72,7 @@
        The examples below can be used to load some solr-contribs along
        with their external dependencies.
     -->
+  <!--
   <lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
 
@@ -83,6 +84,7 @@
 
   <lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
+  -->
   <!-- an exact 'path' can be used instead of a 'dir' to specify a
        specific jar file.  This will cause a serious error to be logged
        if it can't be loaded.
@@ -694,10 +696,10 @@
       <str name="echoParams">explicit</str>
       <int name="rows">10</int>
       <!-- Default search field
-         <str name="df">text</str> 
+         <str name="df">text</str>
         -->
       <!-- Change from JSON to XML format (the default prior to Solr 7.0)
-         <str name="wt">xml</str> 
+         <str name="wt">xml</str>
         -->
     </lst>
     <!-- In addition to defaults, "appends" params can be specified

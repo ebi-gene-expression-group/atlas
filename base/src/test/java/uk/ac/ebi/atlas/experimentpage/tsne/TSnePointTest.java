@@ -24,6 +24,5 @@ public class TSnePointTest {
         TSnePoint tSnePointWithExpression = TSnePoint.create(0.0, 0.0, 1.0, "A");
         assertThat(GSON.fromJson(GSON.toJson(tSnePointWithExpression), autoValuedInstance.getClass()))
                 .isEqualTo(tSnePointWithExpression);
-
     }
 }

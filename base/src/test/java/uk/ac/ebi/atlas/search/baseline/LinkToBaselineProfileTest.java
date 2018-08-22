@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
@@ -15,21 +14,31 @@ import java.net.URI;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
 public class LinkToBaselineProfileTest {
+    private String factorHeader = "header";
+    private String queryFactorType = Factor.normalize(factorHeader);
+    private FactorGroup factorGroup = new FactorSet().add(new Factor(factorHeader, "value"));
+    private BaselineExperiment singleFactorExperiment =
+            MockExperiment.createBaselineExperiment("single_factor_experiment_accession");
+    private BaselineExperimentProfile singleFactorProfile =
+            new BaselineExperimentProfile(
+                    singleFactorExperiment, factorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
 
-    String factorHeader = "header";
-    String queryFactorType = Factor.normalize(factorHeader);
-    FactorGroup factorGroup = new FactorSet().add(new Factor(factorHeader, "value"));
-    BaselineExperiment singleFactorExperiment = MockExperiment.createBaselineExperiment("single_factor_experiment_accession");
-    BaselineExperimentProfile singleFactorProfile = new BaselineExperimentProfile(singleFactorExperiment, factorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
-
-    FactorGroup twoFactorsFactorGroup = new FactorSet().add(new Factor(factorHeader, "value")).add(new Factor("header_2", "value_21"));
-    FactorGroup secondTwoFactorsFactorGroup = new FactorSet().add(new Factor(factorHeader, "value")).add(new Factor("header_2", "value_22"));
-    BaselineExperiment twoFactorExperiment = MockExperiment.createBaselineExperiment("two_factor_experiment_accession");
-    BaselineExperimentProfile twoFactorProfile = new BaselineExperimentProfile(twoFactorExperiment, twoFactorsFactorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
-    BaselineExperimentProfile secondTwoFactorProfile = new BaselineExperimentProfile(twoFactorExperiment, secondTwoFactorsFactorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
+    private FactorGroup twoFactorsFactorGroup =
+            new FactorSet().add(new Factor(factorHeader, "value")).add(new Factor("header_2", "value_21"));
+    private FactorGroup secondTwoFactorsFactorGroup =
+            new FactorSet().add(new Factor(factorHeader, "value")).add(new Factor("header_2", "value_22"));
+    private BaselineExperiment twoFactorExperiment =
+            MockExperiment.createBaselineExperiment("two_factor_experiment_accession");
+    private BaselineExperimentProfile twoFactorProfile =
+            new BaselineExperimentProfile(
+                    twoFactorExperiment, twoFactorsFactorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
+    private BaselineExperimentProfile secondTwoFactorProfile =
+            new BaselineExperimentProfile(
+                    twoFactorExperiment, secondTwoFactorsFactorGroup.withoutTypes(ImmutableList.of(queryFactorType)));
 
 
     @Test
@@ -50,7 +59,7 @@ public class LinkToBaselineProfileTest {
     }
 
     @Test
-    public void profilesWithDifferentFactorGroupsHaveDifferentUrls(){
+    public void profilesWithDifferentFactorGroupsHaveDifferentUrls() {
         URI result = new LinkToBaselineProfile(SemanticQuery.create("ASPM")).apply(twoFactorProfile);
         URI secondResult = new LinkToBaselineProfile(SemanticQuery.create("ASPM")).apply(secondTwoFactorProfile);
 
@@ -58,7 +67,7 @@ public class LinkToBaselineProfileTest {
     }
 
     @Test
-    public void geneQueryParameter(){
+    public void geneQueryParameter() {
 
         assertThat(new LinkToBaselineProfile(SemanticQuery.create("ASPM")).apply(singleFactorProfile).toString(),
                 containsString("geneQuery="));
@@ -68,7 +77,7 @@ public class LinkToBaselineProfileTest {
     }
 
     @Test
-    public void filterFactorsParameter(){
+    public void filterFactorsParameter() {
 
         LinkToBaselineProfile linkToBaselineProfile = new LinkToBaselineProfile(SemanticQuery.create("ASPM"));
 
@@ -78,5 +87,4 @@ public class LinkToBaselineProfileTest {
                 not(containsString("filterFactors=")));
 
     }
-
 }

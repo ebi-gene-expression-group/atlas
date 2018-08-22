@@ -17,7 +17,8 @@ import java.nio.file.Paths;
 public class EmbeddedSolrCollectionProxyFactory {
     private final CoreContainer coreContainer;
 
-    public EmbeddedSolrCollectionProxyFactory(@Value("${data.files.location}") String dataFilesLocation) throws IOException {
+    public EmbeddedSolrCollectionProxyFactory(@Value("${data.files.location}") String dataFilesLocation)
+           throws IOException {
         Path solrTempDirectory = Files.createTempDirectory("");
         FileUtils.copyDirectory(Paths.get(dataFilesLocation).resolve("solr").toFile(), solrTempDirectory.toFile());
         coreContainer = new CoreContainer(solrTempDirectory.toString());

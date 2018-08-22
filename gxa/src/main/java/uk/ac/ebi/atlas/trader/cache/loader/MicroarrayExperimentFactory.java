@@ -32,7 +32,7 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
 
     @Override
     public MicroarrayExperiment create(ExperimentDTO experimentDTO,
-                                       ExperimentDesign experimentDesign){
+                                       ExperimentDesign experimentDesign) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 

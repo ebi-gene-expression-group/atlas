@@ -1,12 +1,9 @@
 package uk.ac.ebi.atlas.download;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
 import java.util.stream.Stream;
@@ -14,23 +11,23 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class ExperimentFileTypeTest {
-
+class ExperimentFileTypeTest {
     @ParameterizedTest
     @MethodSource("stringAndExperimentFileTypeProvider")
-    public void fileTypeFromValidId(String fileTypeId, ExperimentFileType fileType) {
+    void fileTypeFromValidId(String fileTypeId, ExperimentFileType fileType) {
         assertThat(ExperimentFileType.fromId(fileTypeId)).isEqualByComparingTo(fileType);
     }
 
     @Test
-    public void fileTypeFromEmptyIdThrowsException() {
+    void fileTypeFromEmptyIdThrowsException() {
         assertThatExceptionOfType(ResourceNotFoundException.class).isThrownBy(() -> ExperimentFileType.fromId(""));
 
     }
 
     @Test
-    public void fileTypeFromNonexistentIdThrowsException() {
-        assertThatExceptionOfType(ResourceNotFoundException.class).isThrownBy(() -> ExperimentFileType.fromId("foo-bar"));
+    void fileTypeFromNonexistentIdThrowsException() {
+        assertThatExceptionOfType(ResourceNotFoundException.class)
+                .isThrownBy(() -> ExperimentFileType.fromId("foo-bar"));
 
     }
 

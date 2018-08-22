@@ -20,28 +20,44 @@ import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
 public class AnalyticsCollectionProxy extends CollectionProxy {
-    public static class AnalyticsSchemaField extends SchemaField<AnalyticsCollectionProxy> {
+    public static final class AnalyticsSchemaField extends SchemaField<AnalyticsCollectionProxy> {
         private AnalyticsSchemaField(String fieldName) {
             super(fieldName);
         }
     }
 
-    public static final AnalyticsSchemaField BIOENTITY_IDENTIFIER = new AnalyticsSchemaField("bioentity_identifier");
-    public static final AnalyticsSchemaField BIOENTITY_IDENTIFIER_SEARCH = new AnalyticsSchemaField("bioentity_identifier_search");
-    public static final AnalyticsSchemaField EXPERIMENT_ACCESSION = new AnalyticsSchemaField("experiment_accession");
-    public static final AnalyticsSchemaField EXPERIMENT_TYPE = new AnalyticsSchemaField("experiment_type");
-    public static final AnalyticsSchemaField ASSAY_GROUP_ID = new AnalyticsSchemaField("assay_group_id");
-    // public static final AnalyticsSchemaField CONTRAST_ID = new AnalyticsSchemaField("contrast_id");
-    public static final AnalyticsSchemaField EXPRESSION_LEVEL = new AnalyticsSchemaField("expression_level");
-    public static final AnalyticsSchemaField EXPRESSION_LEVEL_FPKM = new AnalyticsSchemaField("expression_level_fpkm");
-    public static final AnalyticsSchemaField EXPRESSION_LEVELS = new AnalyticsSchemaField("expression_levels");
-    public static final AnalyticsSchemaField EXPRESSION_LEVELS_FPKM = new AnalyticsSchemaField("expression_levels_fpkm");
-    public static final AnalyticsSchemaField LOG_2_FOLD_CHANGE = new AnalyticsSchemaField("fold_change");
-    // public static final AnalyticsSchemaField ADJUSTED_P_VALUE = new AnalyticsSchemaField("p_value");
-    public static final AnalyticsSchemaField IDENTIFIER_SEARCH = new AnalyticsSchemaField("identifier_search");
-    public static final AnalyticsSchemaField CONDITIONS_SEARCH = new AnalyticsSchemaField("conditions_search");
-    public static final AnalyticsSchemaField SPECIES = new AnalyticsSchemaField("species");
-    public static final AnalyticsSchemaField DEFAULT_FACTOR_TYPE = new AnalyticsSchemaField("default_query_factor_type");
+    public static final AnalyticsSchemaField BIOENTITY_IDENTIFIER =
+            new AnalyticsSchemaField("bioentity_identifier");
+    public static final AnalyticsSchemaField BIOENTITY_IDENTIFIER_SEARCH =
+            new AnalyticsSchemaField("bioentity_identifier_search");
+    public static final AnalyticsSchemaField EXPERIMENT_ACCESSION =
+            new AnalyticsSchemaField("experiment_accession");
+    public static final AnalyticsSchemaField EXPERIMENT_TYPE =
+            new AnalyticsSchemaField("experiment_type");
+    public static final AnalyticsSchemaField ASSAY_GROUP_ID =
+            new AnalyticsSchemaField("assay_group_id");
+    // public static final AnalyticsSchemaField CONTRAST_ID =
+    //        new AnalyticsSchemaField("contrast_id");
+    public static final AnalyticsSchemaField EXPRESSION_LEVEL =
+            new AnalyticsSchemaField("expression_level");
+    public static final AnalyticsSchemaField EXPRESSION_LEVEL_FPKM =
+            new AnalyticsSchemaField("expression_level_fpkm");
+    public static final AnalyticsSchemaField EXPRESSION_LEVELS =
+            new AnalyticsSchemaField("expression_levels");
+    public static final AnalyticsSchemaField EXPRESSION_LEVELS_FPKM =
+            new AnalyticsSchemaField("expression_levels_fpkm");
+    public static final AnalyticsSchemaField LOG_2_FOLD_CHANGE =
+            new AnalyticsSchemaField("fold_change");
+    // public static final AnalyticsSchemaField ADJUSTED_P_VALUE =
+    //        new AnalyticsSchemaField("p_value");
+    public static final AnalyticsSchemaField IDENTIFIER_SEARCH =
+            new AnalyticsSchemaField("identifier_search");
+    public static final AnalyticsSchemaField CONDITIONS_SEARCH =
+            new AnalyticsSchemaField("conditions_search");
+    public static final AnalyticsSchemaField SPECIES =
+            new AnalyticsSchemaField("species");
+    public static final AnalyticsSchemaField DEFAULT_FACTOR_TYPE =
+            new AnalyticsSchemaField("default_query_factor_type");
 
     public static AnalyticsSchemaField asAnalyticsSchemaField(BioentityPropertyName bioentityPropertyName) {
         return bioentityPropertyName.isKeyword ?
@@ -66,7 +82,8 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
         // search matched against the bioentity identifier. This requirement can be removed after
 
         Set<String> identifierSearchValues = queryMap.getOrDefault(IDENTIFIER_SEARCH, new HashSet<>());
-        Set<String> bioentityIdentifierSearchValues = new HashSet<>(queryMap.getOrDefault(BIOENTITY_IDENTIFIER_SEARCH, new HashSet<>()));
+        Set<String> bioentityIdentifierSearchValues =
+                new HashSet<>(queryMap.getOrDefault(BIOENTITY_IDENTIFIER_SEARCH, new HashSet<>()));
         bioentityIdentifierSearchValues.addAll(identifierSearchValues);
         if (!bioentityIdentifierSearchValues.isEmpty()) {
             queryMap.put(BIOENTITY_IDENTIFIER_SEARCH, bioentityIdentifierSearchValues);

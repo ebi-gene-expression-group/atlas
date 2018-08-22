@@ -24,7 +24,7 @@ public class GeneSearchService {
         this.geneSearchDao = geneSearchDao;
 
     }
-    
+
     // Map<Gene ID, Map<Experiment accession, List<Cell IDs>>>
     public Map<String, Map<String, List<String>>> getCellIdsInExperiments(String... geneIds) {
         return fetchInParallel(

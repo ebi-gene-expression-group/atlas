@@ -33,7 +33,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 class AutocompleteControllerWIT {
     @Autowired
     private WebApplicationContext wac;
@@ -48,10 +48,11 @@ class AutocompleteControllerWIT {
     @Test
     void supportsMultipleSpecies() throws Exception {
         this.mockMvc
-                .perform(get("/json/suggestions").param("species", "Homo sapiens,Mus musculus").param("query", "zinc").param("suggestCount", "100"))
+                .perform(
+                        get("/json/suggestions").param("species", "Homo sapiens,Mus musculus").param("query", "ASPM"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$..value", everyItem(containsStringIgnoringCase("zinc"))))
+                .andExpect(jsonPath("$..value", everyItem(containsStringIgnoringCase("ASPM"))))
                 .andExpect(jsonPath("$..category", everyItem(anyOf(startsWith("ENSG"), startsWith("ENSMUSG")))))
                 .andExpect(jsonPath("$..category", hasItem(startsWith("ENSG"))))
                 .andExpect(jsonPath("$..category", hasItem(startsWith("ENSMUSG"))));
@@ -90,5 +91,4 @@ class AutocompleteControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.topSpecies", hasSize(AutocompleteController.FEATURED_SPECIES)));
     }
-
 }

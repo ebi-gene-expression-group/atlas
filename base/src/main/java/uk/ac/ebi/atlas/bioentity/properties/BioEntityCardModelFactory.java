@@ -32,7 +32,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @Named
 public class BioEntityCardModelFactory {
     // These are displayed in the header, so we don’t show them in the card table
-    private final static ImmutableList<BioentityPropertyName> SKIP_PROPERTIES = ImmutableList.of(DESCRIPTION, SYMBOL);
+    private static final ImmutableList<BioentityPropertyName> SKIP_PROPERTIES = ImmutableList.of(DESCRIPTION, SYMBOL);
 
     private final ArrayDesignDAO arrayDesignDao;
     private final BioEntityPropertyService bioEntityPropertyService;
@@ -53,14 +53,14 @@ public class BioEntityCardModelFactory {
         Map<String, Object> result = new HashMap<>();
 
         result.put("entityBriefName",
-                StringUtils.isEmpty(entityName)
-                        ? identifier
-                        : entityName);
+                StringUtils.isEmpty(entityName) ?
+                        identifier :
+                        entityName);
 
         result.put("entityFullName",
-                StringUtils.isEmpty(entityName)
-                        ? identifier
-                        : MessageFormat.format("{0} ({1})", identifier, entityName));
+                StringUtils.isEmpty(entityName) ?
+                        identifier :
+                        MessageFormat.format("{0} ({1})", identifier, entityName));
 
         result.put("bioEntityDescription", getBioEntityDescription(propertyValuesByType));
 
@@ -115,7 +115,7 @@ public class BioEntityCardModelFactory {
         return result;
     }
 
-    private void addDesignElements(String identifier,Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
+    private void addDesignElements(String identifier, Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
         Set<String> designElements = ImmutableSet.copyOf(arrayDesignDao.getDesignElements(identifier));
 
         if (!designElements.isEmpty()) {
@@ -123,7 +123,7 @@ public class BioEntityCardModelFactory {
         }
     }
 
-    private String getBioEntityDescription( Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
+    private String getBioEntityDescription(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
         String firstValueOfDescription =
                 propertyValuesByType.getOrDefault(DESCRIPTION, ImmutableSet.of("")).iterator().next();
         return StringUtils.substringBefore(firstValueOfDescription, "[").trim();

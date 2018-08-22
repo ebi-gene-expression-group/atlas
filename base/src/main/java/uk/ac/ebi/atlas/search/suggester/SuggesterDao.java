@@ -27,17 +27,23 @@ public class SuggesterDao {
     }
 
     @Deprecated
-    public List<SemanticQueryTerm> fetchPropertySuggestions(String query, int numberOfSuggestions, String... species) {
+    public List<SemanticQueryTerm> fetchPropertySuggestions(String query,
+                                                            int numberOfSuggestions,
+                                                            String... species) {
         return fetchSuggestions("propertySuggester", query, numberOfSuggestions, species);
     }
 
     @Deprecated
-    public List<SemanticQueryTerm> fetchBioentitySuggestions(String query, int numberOfSuggestions, String... species) {
+    public List<SemanticQueryTerm> fetchBioentitySuggestions(String query,
+                                                             int numberOfSuggestions,
+                                                             String... species) {
         return fetchSuggestions("bioentitySuggester", query, numberOfSuggestions, species);
     }
 
     @Deprecated
-    private List<SemanticQueryTerm> fetchSuggestions(String suggesterDictionary, String query, int numberOfSuggestions, String... species) {
+    private List<SemanticQueryTerm> fetchSuggestions(String suggesterDictionary,
+                                                     String query,
+                                                     int numberOfSuggestions, String... species) {
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setRequestHandler("/suggest")
                 .setParam("suggest.dictionary", suggesterDictionary)

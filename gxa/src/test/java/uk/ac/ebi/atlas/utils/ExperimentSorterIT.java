@@ -24,23 +24,22 @@ import static org.junit.Assert.assertTrue;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ExperimentSorterIT {
+    @Inject
+    private DataFileHub dataFileHub;
 
     @Inject
-    DataFileHub dataFileHub;
+    private ExperimentTrader experimentTrader;
 
     @Inject
-    ExperimentTrader experimentTrader;
+    private ConfigurationTrader configurationTrader;
 
-    @Inject
-    ConfigurationTrader configurationTrader;
-
-    ExperimentSorter subject;
+    private ExperimentSorter subject;
 
     @Before
-    public void setUp(){
-        subject = new ExperimentSorter(dataFileHub,experimentTrader, configurationTrader);
+    public void setUp() {
+        subject = new ExperimentSorter(dataFileHub, experimentTrader, configurationTrader);
     }
 
     @Test
@@ -59,11 +58,11 @@ public class ExperimentSorterIT {
         Long firstSize = -1L;
         Long lastSize = -1L;
 
-        for(Map.Entry<Long, Collection<String>> e: subject.reverseSortAllExperimentsPerSize().asMap().entrySet()){
-            if(e.getValue().contains(lastExperiment)){
+        for (Map.Entry<Long, Collection<String>> e: subject.reverseSortAllExperimentsPerSize().asMap().entrySet()) {
+            if (e.getValue().contains(lastExperiment)) {
                 lastSize = e.getKey();
             }
-            if(e.getValue().contains(firstExperiment)){
+            if (e.getValue().contains(firstExperiment)) {
                 firstSize = e.getKey();
             }
         }

@@ -9,25 +9,24 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class RequestPreferencesTest {
-
-    RnaSeqBaselineRequestPreferences rnaSeqBaselineDefault =
+    private RnaSeqBaselineRequestPreferences rnaSeqBaselineDefault =
             (RnaSeqBaselineRequestPreferences)
                     new BeanWrapperImpl(new RnaSeqBaselineRequestPreferences()).getRootInstance();
 
-    ProteomicsBaselineRequestPreferences proteomicsBaselineDefault =
+    private ProteomicsBaselineRequestPreferences proteomicsBaselineDefault =
             (ProteomicsBaselineRequestPreferences)
                     new BeanWrapperImpl(new ProteomicsBaselineRequestPreferences()).getRootInstance();
 
-    DifferentialRequestPreferences differentialDefault =
+    private DifferentialRequestPreferences differentialDefault =
             (DifferentialRequestPreferences)
                     new BeanWrapperImpl(new DifferentialRequestPreferences()).getRootInstance();
 
-    MicroarrayRequestPreferences microarrayDefault =
+    private MicroarrayRequestPreferences microarrayDefault =
             (MicroarrayRequestPreferences)
                     new BeanWrapperImpl(new MicroarrayRequestPreferences()).getRootInstance();
 
     @Test
-    public void testDefaultGeneQuery(){
+    public void testDefaultGeneQuery() {
         assertThat(
                 new RnaSeqBaselineRequestPreferences().getDefaultGeneQuery(),
                 is(rnaSeqBaselineDefault.getGeneQuery()));
@@ -43,9 +42,7 @@ public class RequestPreferencesTest {
     }
 
     @Test
-    public void testDefaultUnit(){
+    public void testDefaultUnit() {
         assertThat(rnaSeqBaselineDefault.getUnit(), is(ExpressionUnit.Absolute.Rna.TPM));
     }
-
-
 }

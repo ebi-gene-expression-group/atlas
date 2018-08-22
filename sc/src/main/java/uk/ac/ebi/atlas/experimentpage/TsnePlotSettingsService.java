@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,14 +17,17 @@ public class TsnePlotSettingsService {
     private final IdfParser idfParser;
     private final TSnePlotServiceDao tSnePlotServiceDao;
 
-    public TsnePlotSettingsService(DataFileHub dataFileHub, IdfParser idfParser, TSnePlotServiceDao tSnePlotServiceDao) {
+    public TsnePlotSettingsService(DataFileHub dataFileHub,
+                                   IdfParser idfParser,
+                                   TSnePlotServiceDao tSnePlotServiceDao) {
         this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
         this.tSnePlotServiceDao = tSnePlotServiceDao;
     }
 
     public List<Integer> getAvailableClusters(String experimentAccession) {
-        try (TsvStreamer clustersTsvStreamer = dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
+        try (TsvStreamer clustersTsvStreamer =
+                     dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
             return clustersTsvStreamer.get()
                     .skip(1)
                     .map(line -> Integer.parseInt(line[1]))
@@ -41,11 +43,12 @@ public class TsnePlotSettingsService {
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
         // Only add preferred cluster property if it exists in the idf file and it is one of the available k values
-        if (idfParserOutput.getExpectedClusters() != 0 && getAvailableClusters(experimentAccession).contains(idfParserOutput.getExpectedClusters())) {
+        if (idfParserOutput.getExpectedClusters() != 0 &&
+            getAvailableClusters(experimentAccession).contains(idfParserOutput.getExpectedClusters())) {
             return Optional.of(idfParserOutput.getExpectedClusters());
-        }
-        else {
-            try (TsvStreamer clustersTsvStreamer = dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
+        } else {
+            try (TsvStreamer clustersTsvStreamer =
+                         dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
                 return clustersTsvStreamer.get()
                         .skip(1)
                         .filter(line -> line[0].equalsIgnoreCase("true"))

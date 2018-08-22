@@ -30,30 +30,30 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
             Stream.of(GENE_ID_1, GENE_NAME_1, "1", "2", "3", "4", "0.5").collect(joining("\t"));
     private static final String TSV_LINE_2_TPM =
             Stream.of(GENE_ID_2, GENE_NAME_2, "0.00", "0.1", "1", "0", "1").collect(joining("\t"));
-    private static String TSV_CONTENTS_TPM =
+    private static final String TSV_CONTENTS_TPM =
             Stream.of(TSV_HEADER, TSV_LINE_1_TPM, TSV_LINE_2_TPM).collect(joining("\n"));
 
     private static final String TSV_LINE_1_FPKM =
             Stream.of(GENE_ID_1, GENE_NAME_1, "0.5", "0.8", "2", "2.9", "0.1").collect(joining("\t"));
     private static final String TSV_LINE_2_FPKM =
             Stream.of(GENE_ID_2, GENE_NAME_2, "0.00", "0", "0.5", "0", "0.5").collect(joining("\t"));
-    private static String TSV_CONTENTS_FPKM =
+    private static final String TSV_CONTENTS_FPKM =
             Stream.of(TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
 
     private static final String NOT_REALLY_BAD_TSV_HEADER =
             Stream.of("GeneID", "GeneName", "g1", "g2", "g3", "g4", "g5").collect(joining("\t"));
-    private static String TSV_CONTENTS_FPKM_NOT_REALLY_BAD_HEADER =
+    private static final String TSV_CONTENTS_FPKM_NOT_REALLY_BAD_HEADER =
             Stream.of(NOT_REALLY_BAD_TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
 
     private static final String BAD_TSV_HEADER =
             Stream.of("Gene ID", "Gene Name", "g1", "g2", "g3", "g5", "g4").collect(joining("\t"));
-    private static String TSV_CONTENTS_FPKM_BAD_HEADER =
+    private static final String TSV_CONTENTS_FPKM_BAD_HEADER =
             Stream.of(BAD_TSV_HEADER, TSV_LINE_1_FPKM, TSV_LINE_2_FPKM).collect(joining("\n"));
 
-    private static String TSV_CONTENTS_FPKM_BAD_GENE_IDS =
+    private static final String TSV_CONTENTS_FPKM_BAD_GENE_IDS =
             Stream.of(TSV_HEADER, TSV_LINE_2_FPKM, TSV_LINE_1_FPKM).collect(joining("\n"));
 
-    private static String TSV_CONTENTS_FPKM_ONE_LINE =
+    private static final String TSV_CONTENTS_FPKM_ONE_LINE =
             Stream.of(TSV_HEADER, TSV_LINE_1_FPKM).collect(joining("\n"));
 
     private static final String TSV_LINE_NO_EXPRESSION =
@@ -62,12 +62,6 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
             Stream.of(TSV_HEADER, TSV_LINE_NO_EXPRESSION, TSV_LINE_2_TPM).collect(joining("\n"));
     private static final String TSV_CONTENTS_FPKM_WITH_ZERO_LINE =
             Stream.of(TSV_HEADER, TSV_LINE_NO_EXPRESSION, TSV_LINE_2_FPKM).collect(joining("\n"));
-
-
-    private static final String TSV_LINE_QUARTILES =
-            Stream.of(
-                    GENE_ID_1, GENE_NAME_1, "1,1,1,1,1", "2,2,2,2,2", "3,3,3,3,3", "4,4,4,4,4", "0.5,0.5,0.5,0.5,0.5")
-                    .collect(joining("\t"));
 
     @Test
     public void skipsZeroes() {
@@ -141,8 +135,8 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
 
         try (RnaSeqBaselineAnalyticsInputStream subject =
                      new RnaSeqBaselineAnalyticsInputStream(Optional.of(readerTpmsSpy), Optional.of(readerFpkmsSpy))) {
-            while(subject.readNext() != null) {
-
+            while (subject.readNext() != null) {
+                // Do something...
             }
         }
 
@@ -210,7 +204,7 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
                                     Optional.of(new StringReader(TSV_CONTENTS_TPM)),
                                     Optional.of(new StringReader(TSV_CONTENTS_FPKM_BAD_GENE_IDS)))) {
                                 while (subject.readNext() != null) {
-
+                                    // Do something...
                                 }
                             }
                         })
@@ -227,7 +221,7 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
                                     Optional.of(new StringReader(TSV_CONTENTS_TPM)),
                                     Optional.of(new StringReader(TSV_CONTENTS_FPKM_ONE_LINE)))) {
                                 while (subject.readNext() != null) {
-
+                                    // Do something...
                                 }
                             }
                         })

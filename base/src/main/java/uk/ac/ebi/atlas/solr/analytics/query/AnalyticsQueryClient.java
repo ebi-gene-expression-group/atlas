@@ -45,12 +45,13 @@ public class AnalyticsQueryClient {
     private final Resource bioentityIdentifiersQueryJson;
 
     @Inject
-    public AnalyticsQueryClient(RestTemplate restTemplate,
-                                @Value("${solr.host}") String solrHost,
-                                @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json") Resource baselineFacetsQueryJson,
-                                @Value("classpath:/solr-queries/differential.facets.query.json") Resource differentialFacetsQueryJson,
-                                @Value("classpath:/solr-queries/experimentType.query.json") Resource experimentTypesQueryJson,
-                                @Value("classpath:/solr-queries/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
+    public AnalyticsQueryClient(
+            RestTemplate restTemplate,
+            @Value("${solr.host}") String solrHost,
+            @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json") Resource baselineFacetsQueryJson,
+            @Value("classpath:/solr-queries/differential.facets.query.json") Resource differentialFacetsQueryJson,
+            @Value("classpath:/solr-queries/experimentType.query.json") Resource experimentTypesQueryJson,
+            @Value("classpath:/solr-queries/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson) {
         this.restTemplate = restTemplate;
         this.solrBaseUrl = "http://" + solrHost + ":8983/solr/analytics/";
         this.baselineFacetsQueryJson = baselineFacetsQueryJson;
@@ -59,7 +60,7 @@ public class AnalyticsQueryClient {
         this.bioentityIdentifiersQueryJson = bioentityIdentifiersQueryJson;
     }
 
-    private String fetchResults(SolrQuery... qs ) {
+    private String fetchResults(SolrQuery... qs) {
         String result = "{}";
 
         for (SolrQuery q: qs) {
@@ -76,7 +77,7 @@ public class AnalyticsQueryClient {
 
     protected boolean responseNonEmpty(String jsonFromSolr) {
         Integer numFound =  JsonPath.read(jsonFromSolr, "$.response.numFound");
-        return numFound!= null && numFound>0;
+        return numFound != null && numFound > 0;
     }
 
 
@@ -91,20 +92,17 @@ public class AnalyticsQueryClient {
         }
     }
 
-    public Builder queryBuilder(){
+    public Builder queryBuilder() {
         return new Builder();
     }
 
-
     public class Builder {
-
         private static final String DEFAULT_QUERY = "*:*";
 
+        private final SolrQuery solrQuery = new SolrQuery();
         private ImmutableList.Builder<AnalyticsSolrQueryTree> queryClausesBuilder = ImmutableList.builder();
 
-        final SolrQuery solrQuery = new SolrQuery();
-
-        private Builder(){
+        protected Builder() {
             solrQuery.set("omitHeader", true);
         }
 
@@ -114,7 +112,7 @@ public class AnalyticsQueryClient {
 
         private void setFacets(Resource r) {
             solrQuery.setRows(0);
-            solrQuery.set("json.facet", ResourceUtils.readPlainTextResource(r).replaceAll("\\s+",""));
+            solrQuery.set("json.facet", ResourceUtils.readPlainTextResource(r).replaceAll("\\s+", ""));
         }
 
         public Builder filterBaselineExperiments() {
@@ -151,7 +149,7 @@ public class AnalyticsQueryClient {
 
         public Builder differentialResults() {
             solrQuery.setRows(1000);
-            solrQuery.set("sort", "abs(fold_change)desc,p_value asc");
+            solrQuery.set("sort", "abs(fold_change)desc, p_value asc");
             return differential();
         }
 
@@ -238,7 +236,7 @@ public class AnalyticsQueryClient {
             List<String> qsForQueryClauses = qsForQueryClauses(queryClausesBuilder.build());
             SolrQuery[] solrQueries = new SolrQuery[qsForQueryClauses.size()];
 
-            for (int i = 0 ; i < qsForQueryClauses.size() ; i++) {
+            for (int i = 0; i < qsForQueryClauses.size(); i++) {
                 SolrQuery c = solrQuery.getCopy();
                 c.setQuery(qsForQueryClauses.get(i));
                 solrQueries[i] = c;

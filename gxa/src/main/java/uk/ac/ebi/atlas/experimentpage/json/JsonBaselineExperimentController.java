@@ -39,16 +39,17 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     private final HistogramService.RnaSeq rnaSeqHistograms;
     private final HistogramService.Proteomics proteomicsHistograms;
 
-    public JsonBaselineExperimentController(ExperimentTrader experimentTrader,
-                                            CoexpressedGenesService coexpressedGenesService,
-                                            BaselineExperimentProfilesService BaselineExperimentProfilesService,
-                                            RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
-                                            ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory,
-                                            SpeciesInferrer speciesInferrer) {
+    public
+    JsonBaselineExperimentController(ExperimentTrader experimentTrader,
+                                     CoexpressedGenesService coexpressedGenesService,
+                                     BaselineExperimentProfilesService baselineExperimentProfilesService,
+                                     RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
+                                     ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory,
+                                     SpeciesInferrer speciesInferrer) {
         super(experimentTrader);
 
         this.baselineExperimentPageService =
-                new BaselineExperimentPageService(BaselineExperimentProfilesService, coexpressedGenesService);
+                new BaselineExperimentPageService(baselineExperimentProfilesService, coexpressedGenesService);
 
         this.rnaSeqHistograms =
                 new HistogramService.RnaSeq(rnaSeqBaselineProfileStreamFactory, experimentTrader);

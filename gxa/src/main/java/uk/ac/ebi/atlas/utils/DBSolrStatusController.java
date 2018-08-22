@@ -26,7 +26,7 @@ I added the check which now checks, on each VM, that the page on
 /gxa/json/dbsolr/status
 
 contains the text:
-{"DB":"UP","Solr":"UP"}
+{"DB":"UP", "Solr":"UP"}
 
 if it's not found it should remove your node from the pool. IF you want to test
 it you could try to change it in one of the PG VMs which should stop receiving
@@ -50,10 +50,10 @@ public final class DBSolrStatusController extends JsonExceptionHandlingControlle
         this.solrClient = solrClientAnalytics;
     }
 
-    @RequestMapping(value = "/json/dbsolr/status",produces = "application/json")
+    @RequestMapping(value = "/json/dbsolr/status", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String dbAndSolrStatus(){
+    public String dbAndSolrStatus() {
         //check database is up or down
         Integer experimentsSize = expressionAtlasExperimentDao.countExperiments();
         String dbStatus = (experimentsSize > 0) ? "UP" : "DOWN";
@@ -61,7 +61,7 @@ public final class DBSolrStatusController extends JsonExceptionHandlingControlle
         //check solr is up or down
         String solrStatus = "UP";
         try {
-            if(solrClient.ping().getStatus() == 0) {
+            if (solrClient.ping().getStatus() == 0) {
                 solrStatus = "UP";
             }
         } catch (Exception e) {

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.qc;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,37 +13,37 @@ import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import javax.inject.Inject;
 import java.util.ArrayList;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.oneOf;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class MicroarrayQCFilesIT {
+    @Inject
+    private ExpressionAtlasExperimentTrader expressionAtlasExperimentTrader;
 
     @Inject
-    ExpressionAtlasExperimentTrader expressionAtlasExperimentTrader;
-
-    @Inject
-    DataFileHub dataFileHub;
+    private DataFileHub dataFileHub;
 
     @Test
-    public void allExperiments() throws Exception {
-        for(String accession: expressionAtlasExperimentTrader.getMicroarrayExperimentAccessions()){
+    public void allExperiments() {
+        for (String accession: expressionAtlasExperimentTrader.getMicroarrayExperimentAccessions()) {
             testExperiment(accession);
         }
     }
 
-    private void testExperiment(String accession){
-        MicroarrayExperiment experiment = (MicroarrayExperiment) expressionAtlasExperimentTrader.getPublicExperiment(accession);
+    private void testExperiment(String accession) {
+        MicroarrayExperiment experiment =
+                (MicroarrayExperiment) expressionAtlasExperimentTrader.getPublicExperiment(accession);
+        MicroarrayQCFiles microarrayQCFiles =
+                new MicroarrayQCFiles(dataFileHub.getExperimentFiles(accession).qcFolder);
 
-        MicroarrayQCFiles microarrayQCFiles = new MicroarrayQCFiles(dataFileHub.getExperimentFiles(accession).qcFolder);
-
-        for(String arrayDesignReadOffFromFolderName: microarrayQCFiles.getArrayDesignsThatHaveQcReports()){
+        for (String arrayDesignReadOffFromFolderName : microarrayQCFiles.getArrayDesignsThatHaveQcReports()) {
             assertThat(arrayDesignReadOffFromFolderName,
-                    Matchers.isOneOf(new ArrayList(experiment.getArrayDesignAccessions()).toArray()));
+                    is(oneOf(new ArrayList<>(experiment.getArrayDesignAccessions()).toArray())));
         }
 
     }
-
-
 }

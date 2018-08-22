@@ -30,8 +30,10 @@ public class BaselineExperimentProfilesService {
                                                                 BaselineRequestPreferences<?> preferences) {
 
         List<String> topGeneIds = preferences.isSpecific() ?
-                baselineExperimentTopGenesService.searchSpecificGenesInBaselineExperiment(experimentAccession, preferences) :
-                baselineExperimentTopGenesService.searchMostExpressedGenesInBaselineExperiment(experimentAccession, preferences);
+                baselineExperimentTopGenesService.searchSpecificGenesInBaselineExperiment(
+                        experimentAccession, preferences) :
+                baselineExperimentTopGenesService.searchMostExpressedGenesInBaselineExperiment(
+                        experimentAccession, preferences);
 
         return baselineExperimentProfilesDao.fetchProfiles(topGeneIds, assayGroups, preferences, experimentAccession);
     }

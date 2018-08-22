@@ -16,9 +16,9 @@ public class BaselineAnalyticsInputStreamFactoryTest {
     private static final String EXPERIMENT_ACCESSION_RNASEQ_TPMS = "E-FOOBAR-TPMS";
     private static final String EXPERIMENT_ACCESSION_RNASQ_FPKMS = "E-FOOBAR-FPKMS";
     private static final String EXPERIMENT_ACCESSION_PROTEOMICS = "E-FOOBAR-PROT";
-    private static final String EXPERIMENT_ACCESSION_NO_TPMS_FPKMS= "E-FOOBAR";
+    private static final String EXPERIMENT_ACCESSION_NO_TPMS_FPKMS = "E-FOOBAR";
 
-    BaselineAnalyticsInputStreamFactory subject;
+    private BaselineAnalyticsInputStreamFactory subject;
 
     @Before
     public void setUp() throws Exception {

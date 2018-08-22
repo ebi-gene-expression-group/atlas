@@ -10,7 +10,7 @@ public enum Regulation {
 
     private String label;
 
-    Regulation(String label){
+    Regulation(String label) {
         this.label = label;
     }
 

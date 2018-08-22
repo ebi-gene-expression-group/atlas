@@ -32,16 +32,16 @@ public class BaselineExperimentConfiguration {
     }
 
     public Set<Factor> getDefaultFilterFactors() {
-
-        Set<Factor> defaultFilterFactors = xmlReader.getMap("defaultFilterFactors", "type", "value").entrySet().stream().map(e -> new Factor(e.getKey(), e.getValue())).collect(Collectors.toSet());
-
-        return defaultFilterFactors;
+        return xmlReader.getMap("defaultFilterFactors", "type", "value").entrySet().stream()
+                .map(e -> new Factor(e.getKey(), e.getValue()))
+                .collect(Collectors.toSet());
     }
 
     public String getDefaultQueryFactorType() {
-
         String defaultQueryFactorType = xmlReader.getString("defaultQueryFactorType");
-        Preconditions.checkState(StringUtils.isNotEmpty(defaultQueryFactorType), "defaultQueryFactorType missing from factors file!");
+        Preconditions.checkState(
+                StringUtils.isNotEmpty(defaultQueryFactorType),
+                "defaultQueryFactorType missing from factors file!");
 
         return defaultQueryFactorType;
     }
@@ -59,22 +59,23 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getAlternativeViews() {
-        List<String> result = xmlReader.getList("alternativeView").stream().filter(o -> o.toString().matches("E-\\w+-\\d+")).map(Object::toString).collect(Collectors.toList());
-
-        return result;
+        return xmlReader.getList("alternativeView").stream()
+                .filter(o -> o.matches("E-\\w+-\\d+"))
+                .map(Object::toString)
+                .collect(Collectors.toList());
     }
-    public String disclaimer(){
-        if("true".equals(xmlReader.getString("fortLauderdale"))){
+    public String disclaimer() {
+        if ("true".equals(xmlReader.getString("fortLauderdale"))) {
             return "fortLauderdale";
-        } else if (StringUtils.isNotEmpty(xmlReader.getString("disclaimer"))){
+        } else if (StringUtils.isNotEmpty(xmlReader.getString("disclaimer"))) {
             return xmlReader.getString("disclaimer");
         } else {
             return "";
         }
     }
 
-    static List<String> commaSeparatedStringToList(String s){
-        if(StringUtils.isEmpty(s)){
+    private static List<String> commaSeparatedStringToList(String s) {
+        if (StringUtils.isEmpty(s)) {
             return ImmutableList.of();
         } else {
             return ImmutableList.copyOf(Arrays.asList(s.split("\\W*,\\W*")));

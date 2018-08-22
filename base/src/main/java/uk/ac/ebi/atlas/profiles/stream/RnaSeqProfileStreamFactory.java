@@ -38,7 +38,9 @@ public class RnaSeqProfileStreamFactory
     }
 
     @Override
-    public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, RnaSeqRequestContext options, Collection<String> keepGeneIds) {
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment,
+                                                   RnaSeqRequestContext options,
+                                                   Collection<String> keepGeneIds) {
         return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
@@ -51,12 +53,20 @@ public class RnaSeqProfileStreamFactory
         }
 
         @Override
-        protected Function<String[], Function<String[], RnaSeqProfile>> howToReadLine(final DifferentialExperiment experiment, final Predicate<DifferentialExpression> expressionFilter) {
-            return strings -> new DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(strings, experiment, expressionFilter) {
+        protected Function<String[], Function<String[], RnaSeqProfile>>
+                  howToReadLine(final DifferentialExperiment experiment,
+                                final Predicate<DifferentialExpression> expressionFilter) {
+            return strings ->
+                    new DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(
+                            strings, experiment, expressionFilter) {
                 @Nullable
                 @Override
-                protected DifferentialExpression nextExpression(Integer index, Contrast correspondingColumn, String[] currentLine) {
-                    Preconditions.checkState(currentLine.length > index + 1, "Expecting row of the format ... <pvalue_i> <foldchange_i> ...");
+                protected DifferentialExpression nextExpression(Integer index,
+                                                                Contrast correspondingColumn,
+                                                                String[] currentLine) {
+                    Preconditions.checkState(
+                            currentLine.length > index + 1,
+                            "Expecting row of the format ... <pvalue_i> <foldchange_i> ...");
                     String pValueString = currentLine[index];
                     String foldChangeString = currentLine[index + 1];
                     if (notAllDoubles(pValueString, foldChangeString)) {
@@ -74,8 +84,10 @@ public class RnaSeqProfileStreamFactory
         }
 
         @Override
-        protected Collection<ObjectInputStream<String[]>> getDataFiles(DifferentialExperiment experiment, RnaSeqRequestContext options) {
-            return ImmutableList.of(dataFileHub.getRnaSeqDifferentialExperimentFiles(experiment.getAccession()).analytics.get());
+        protected Collection<ObjectInputStream<String[]>> getDataFiles(DifferentialExperiment experiment,
+                                                                       RnaSeqRequestContext options) {
+            return ImmutableList.of(
+                    dataFileHub.getRnaSeqDifferentialExperimentFiles(experiment.getAccession()).analytics.get());
         }
     }
 

@@ -10,7 +10,10 @@ public class CondensedSdrfParserOutput {
     private ExperimentDesign experimentDesign;
     private String species;
 
-    CondensedSdrfParserOutput(String experimentAccession, ExperimentType experimentType, ExperimentDesign experimentDesign, String species) {
+    CondensedSdrfParserOutput(String experimentAccession,
+                              ExperimentType experimentType,
+                              ExperimentDesign experimentDesign,
+                              String species) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
         this.experimentDesign = experimentDesign;

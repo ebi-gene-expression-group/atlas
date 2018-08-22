@@ -20,7 +20,12 @@ public class ExpressionAtlasAnalyticsIndexerManager extends AnalyticsIndexerMana
                                                   AnalyticsIndexerMonitor analyticsIndexerMonitor,
                                                   ExpressionAtlasBioentityIdentifiersReader bioentityIdentifiersReader,
                                                   BioentityPropertiesDao bioentityPropertiesDao) {
-        super(new ExperimentSorter(dataFileHub, experimentTrader, configurationTrader),
-                analyticsIndexerMonitor, bioentityIdentifiersReader, analyticsIndexerService, experimentTrader, bioentityPropertiesDao);
+        super(
+                new ExperimentSorter(dataFileHub, experimentTrader, configurationTrader),
+                analyticsIndexerMonitor,
+                bioentityIdentifiersReader,
+                analyticsIndexerService,
+                experimentTrader,
+                bioentityPropertiesDao);
     }
 }

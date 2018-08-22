@@ -25,7 +25,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayExperimentFactoryTest {
-
     private static final String ACCESSION = "accession";
     private static final String ARRAYDESIGN_ID = "arraydesignId";
     private static final String ARRAYDESIGN_NAME = "arraydesignName";
@@ -63,9 +62,12 @@ public class MicroarrayExperimentFactoryTest {
 
         when(speciesFactory.create(SPECIES_STRING)).thenReturn(SPECIES);
 
-        when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
-        when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)));
-        when(arrayDesignDAO.getArrayDesign(ARRAYDESIGN_ID)).thenReturn(ArrayDesign.create(ARRAYDESIGN_ID, ARRAYDESIGN_NAME));
+        when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION))
+                .thenReturn(experimentConfigurationMock);
+        when(experimentConfigurationMock.getArrayDesignAccessions())
+                .thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)));
+        when(arrayDesignDAO.getArrayDesign(ARRAYDESIGN_ID))
+                .thenReturn(ArrayDesign.create(ARRAYDESIGN_ID, ARRAYDESIGN_NAME));
     }
 
     @Test

@@ -29,7 +29,9 @@ public class GxaAnalyticsLoaderFactory implements AnalyticsLoaderFactory {
             return microarrayDifferentialAnalyticsLoader;
         } else {
             LOGGER.warn("No analytics loader for experiment type {} (skipping)",  experimentType);
-            return new AnalyticsLoader() {};
+            return new AnalyticsLoader() {
+
+            };
         }
     }
 }

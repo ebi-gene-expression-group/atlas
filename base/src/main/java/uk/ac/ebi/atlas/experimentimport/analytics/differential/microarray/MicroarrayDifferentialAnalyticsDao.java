@@ -13,9 +13,7 @@ import java.sql.SQLException;
 
 @Named
 public class MicroarrayDifferentialAnalyticsDao {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayDifferentialAnalyticsDao.class);
-
     private static final String ANALYTICS_INSERT = "INSERT INTO MICROARRAY_DIFF_ANALYTICS " +
             "(designelement, experiment, arraydesign, contrastid, pval, log2fold, tstat) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final int DESIGNELEMENT = 1;
@@ -36,7 +34,9 @@ public class MicroarrayDifferentialAnalyticsDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadAnalytics(final String experimentAccession, final String arrayDesign, MicroarrayDifferentialAnalyticsInputStream analyticsInputStream)  {
+    public void loadAnalytics(final String experimentAccession,
+                              final String arrayDesign,
+                              MicroarrayDifferentialAnalyticsInputStream analyticsInputStream)  {
         LOGGER.info("loadAnalytics for experiment {} begin", experimentAccession);
 
         // will autoclose if DataAccessException thrown by jdbcTemplate

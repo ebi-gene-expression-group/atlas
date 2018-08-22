@@ -20,15 +20,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class TracksControllerWIT {
-    static final MessageFormat URL_TEMPLATE =
+    private static final MessageFormat URL_TEMPLATE =
             new MessageFormat("/experiments-content/{0}/tracks/{0}.{1}.genes.expressions.bedGraph");
 
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -37,21 +37,21 @@ public class TracksControllerWIT {
 
     @Test
     public void getTrackFile() throws Exception {
-        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[]{"E-MTAB-513", "g1"})))
+        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[] {"E-MTAB-513", "g1"})))
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
     public void getTrackOfUnknownExperiment() throws Exception {
-        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[]{"E-FOO-BAR", "g1"})))
+        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[] {"E-FOO-BAR", "g1"})))
                 .andExpect(status().isNotFound())
                 .andReturn();
     }
 
     @Test
     public void getUnknownTrackEndsUpIn404NotFound() throws Exception {
-        MvcResult result = this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[]{"E-MTAB-513", "gFooBar"})))
+        MvcResult result = this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[] {"E-MTAB-513", "gFooBar"})))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -62,23 +62,24 @@ public class TracksControllerWIT {
 
     @Test
     public void getTrackPrivateExperimentWithoutAcessKey() throws Exception {
-        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[]{"E-MTAB-3871", "g1"})))
+        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[] {"E-MTAB-3871", "g1"})))
                 .andExpect(status().isNotFound())
                 .andReturn();
     }
 
     @Test
     public void getTrackPrivateExperimentWitIncorrectAcessKey() throws Exception {
-        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[]{"E-MTAB-3871", "g1"}) + "?accessKey=foo-bar"))
+        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[] {"E-MTAB-3871", "g1"}) + "?accessKey=foo-bar"))
                 .andExpect(status().isNotFound())
                 .andReturn();
     }
 
     @Test
     public void getTrackPrivateExperimentWithGoodAcessKey() throws Exception {
-        this.mockMvc.perform(get(URL_TEMPLATE.format(new Object[]{"E-MTAB-3871", "g1"}) + "?accessKey=9fc53802-bc7f-4404-bce6-2eb7851d10bf"))
+        this.mockMvc.perform(
+                get(URL_TEMPLATE.format(
+                        new Object[] {"E-MTAB-3871", "g1"}) + "?accessKey=9fc53802-bc7f-4404-bce6-2eb7851d10bf"))
                 .andExpect(status().isOk())
                 .andReturn();
     }
-
 }

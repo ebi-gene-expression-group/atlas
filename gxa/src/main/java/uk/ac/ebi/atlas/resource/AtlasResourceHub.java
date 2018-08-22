@@ -27,16 +27,16 @@ public class AtlasResourceHub {
         this.extraInfoFactory = extraInfoFactory;
     }
 
-    public Map<String,JsonArray> contrastImages(DifferentialExperiment differentialExperiment) {
-        Map<String,JsonArray>  result = new HashMap<>();
+    public Map<String, JsonArray> contrastImages(DifferentialExperiment differentialExperiment) {
+        Map<String, JsonArray>  result = new HashMap<>();
         for (Contrast contrast : differentialExperiment.getDataColumnDescriptors()) {
             Optional<String> arrayDesign =
-                    differentialExperiment instanceof MicroarrayExperiment
-                            ? Optional.of(contrast.getArrayDesignAccession())
-                            : Optional.empty();
+                    differentialExperiment instanceof MicroarrayExperiment ?
+                            Optional.of(contrast.getArrayDesignAccession()) :
+                            Optional.empty();
 
             JsonArray resultsForThisContrast = new JsonArray();
-            for (ResourceType resourceType : ContrastImage.RESOURCE_TYPES){
+            for (ResourceType resourceType : ContrastImage.RESOURCE_TYPES) {
                 ExternalImage externalImage =
                         contrastImageFactory.getContrastImage(
                                 resourceType,
@@ -53,7 +53,7 @@ public class AtlasResourceHub {
         return result;
     }
 
-    public boolean hasExtraInfo(Experiment experiment){
+    public boolean hasExtraInfo(Experiment experiment) {
         return extraInfoFactory.getExtraInfo(experiment.getAccession()).exists();
     }
 

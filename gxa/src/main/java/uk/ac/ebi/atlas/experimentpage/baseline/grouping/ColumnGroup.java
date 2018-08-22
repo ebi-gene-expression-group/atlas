@@ -10,11 +10,11 @@ public abstract class ColumnGroup {
     abstract String name();
 
 
-    public static ColumnGroup create(String id, String name){
-        return new AutoValue_ColumnGroup(id,name);
+    public static ColumnGroup create(String id, String name) {
+        return new AutoValue_ColumnGroup(id, name);
     }
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject result = new JsonObject();
         result.addProperty("id", id());
         result.addProperty("name", name());

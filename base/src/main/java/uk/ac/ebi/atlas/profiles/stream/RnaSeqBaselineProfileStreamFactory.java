@@ -45,17 +45,22 @@ public class RnaSeqBaselineProfileStreamFactory
         return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
-    static class Impl extends
-            BaselineProfileStreamFactory<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>> {
+    static class Impl
+                 extends BaselineProfileStreamFactory<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>> {
 
         @Inject
-        public Impl(DataFileHub dataFileHub) {
+        Impl(DataFileHub dataFileHub) {
             super(dataFileHub);
         }
 
         @Override
-        protected Collection<ObjectInputStream<String[]>> getDataFiles(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
-            return ImmutableList.of(dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).get());
+        protected Collection<ObjectInputStream<String[]>>
+                  getDataFiles(BaselineExperiment experiment,
+                               BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
+            return ImmutableList.of(
+                    dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession())
+                            .dataFile(options.getExpressionUnit())
+                            .get());
         }
 
         @Override
@@ -71,10 +76,12 @@ public class RnaSeqBaselineProfileStreamFactory
 
             Map<Integer, AssayGroup> result = b.build();
 
-            Preconditions.checkState(result.size() == experiment.getDataColumnDescriptors().size(),
-                    MessageFormat.format("Mismatch between data columns read in from the header:{0}, and data columns in experiment:{1}",
-                            result.size(), experiment.getDataColumnDescriptors().size())
-            );
+            Preconditions.checkState(
+                    result.size() == experiment.getDataColumnDescriptors().size(),
+                    MessageFormat.format(
+                            "Mismatch between data columns read in from the header:{0}, " +
+                            "and data columns in experiment:{1}",
+                            result.size(), experiment.getDataColumnDescriptors().size()));
 
             return result;
         }

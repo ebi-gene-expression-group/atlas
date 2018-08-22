@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TsnePlotSettingsServiceTest {
-
     @Mock
     private IdfParser idfParserMock;
 
@@ -69,12 +68,21 @@ class TsnePlotSettingsServiceTest {
     @Test
     @DisplayName("Expected clusters value in idf is a valid cluster")
     void expectedClustersOnlyInIdf() {
-        dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITH_IDF_K));
+        dataFileHubMock.addClustersFile(
+                EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITH_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(
+                        new IdfParserOutput(
+                                "Title",
+                                "Description",
+                                Collections.emptyList(),
+                                Integer.parseInt(IDF_PREFERRED_K),
+                                Collections.emptyList()));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION))
+                .isPresent();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get())
+                .isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
     }
 
     @Test
@@ -82,18 +90,33 @@ class TsnePlotSettingsServiceTest {
     void expectedClustersInIdfAndClustersTsv() {
         dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITH_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(
+                        new IdfParserOutput(
+                                "Title",
+                                "Description",
+                                Collections.emptyList(),
+                                Integer.parseInt(IDF_PREFERRED_K),
+                                Collections.emptyList()));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION))
+                .isPresent();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get())
+                .isEqualTo(Integer.parseInt(IDF_PREFERRED_K));
     }
 
     @Test
     @DisplayName("Expected clusters in idf is invalid and no value in clusters.tsv")
     void invalidExpectedClustersInIdf() {
-        dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
+        dataFileHubMock.addClustersFile(
+                EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title",  "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(
+                        new IdfParserOutput(
+                                "Title",
+                                "Description",
+                                Collections.emptyList(),
+                                Integer.parseInt(IDF_PREFERRED_K),
+                                Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isNotPresent();
     }
@@ -101,31 +124,56 @@ class TsnePlotSettingsServiceTest {
     @Test
     @DisplayName("Expected clusters in idf is invalid and expected clusters in clusters.tsv")
     void invalidIdfValueValidClustersTsv() {
-        dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
+        dataFileHubMock.addClustersFile(
+                EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), Integer.parseInt(IDF_PREFERRED_K), Collections.emptyList()));
+                .thenReturn(
+                        new IdfParserOutput(
+                                "Title",
+                                "Description",
+                                Collections.emptyList(),
+                                Integer.parseInt(IDF_PREFERRED_K),
+                                Collections.emptyList()));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION))
+                .isPresent();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get())
+                .isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
     }
 
     @Test
     @DisplayName("No value in idf, expected clusters in clusters.tsv")
     void noIdfValueValidClustersTsv() {
-        dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
+        dataFileHubMock.addClustersFile(
+                EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITH_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), 0, Collections.emptyList()));
+                .thenReturn(
+                        new IdfParserOutput(
+                                "Title",
+                                "Description",
+                                Collections.emptyList(),
+                                0,
+                                Collections.emptyList()));
 
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isPresent();
-        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get()).isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION))
+                .isPresent();
+        assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION).get())
+                .isEqualTo(Integer.parseInt(CLUSTERS_TSV_PREFERRED_K));
     }
 
     @Test
     @DisplayName("No value in idf or clusters.tsv")
     void noExpectedClusters() {
-        dataFileHubMock.addClustersFile(EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
+        dataFileHubMock.addClustersFile(
+                EXPERIMENT_ACCESSION, Arrays.asList(CLUSTERS_TSV_WITHOUT_PREFFERED_K_WITHOUT_IDF_K));
         when(idfParserMock.parse(EXPERIMENT_ACCESSION))
-                .thenReturn(new IdfParserOutput("Title", "Description", Collections.emptyList(), 0, Collections.emptyList()));
+                .thenReturn(
+                        new IdfParserOutput(
+                                "Title",
+                                "Description",
+                                Collections.emptyList(),
+                                0,
+                                Collections.emptyList()));
 
         assertThat(subject.getExpectedClusters(EXPERIMENT_ACCESSION)).isNotPresent();
     }
@@ -133,12 +181,12 @@ class TsnePlotSettingsServiceTest {
     @Test
     @DisplayName("Valid perplexities in database")
     void validPerplexities() {
-        List<Integer> PERPLEXITIES = Arrays.asList(1, 5, 25, 20, 10, 5);
-        when(tSnePlotServiceDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(PERPLEXITIES);
+        List<Integer> expectedPerplexities = Arrays.asList(1, 5, 25, 20, 10, 5);
+        when(tSnePlotServiceDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(expectedPerplexities);
 
         assertThat(subject.getAvailablePerplexities(EXPERIMENT_ACCESSION))
-                .hasSameSizeAs(PERPLEXITIES)
-                .containsExactlyElementsOf(PERPLEXITIES);
+                .hasSameSizeAs(expectedPerplexities)
+                .containsExactlyElementsOf(expectedPerplexities);
     }
 
     @Test

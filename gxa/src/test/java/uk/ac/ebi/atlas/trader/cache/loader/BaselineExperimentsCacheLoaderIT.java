@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class BaselineExperimentsCacheLoaderIT {
 
     private String accession = "E-MTAB-513";

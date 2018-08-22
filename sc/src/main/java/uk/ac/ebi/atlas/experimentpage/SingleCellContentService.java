@@ -36,10 +36,13 @@ public class SingleCellContentService {
         this.experimentTrader = experimentTrader;
     }
 
-    public List<ExternallyAvailableContent> list(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType) {
+    public List<ExternallyAvailableContent> list(String experimentAccession,
+                                                 String accessKey,
+                                                 ExternallyAvailableContent.ContentType contentType) {
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        return rnaSeqBaselineExperimentExternallyAvailableContentService.list((BaselineExperiment) experiment, contentType);
+        return rnaSeqBaselineExperimentExternallyAvailableContentService.list(
+                (BaselineExperiment) experiment, contentType);
 
     }
 }

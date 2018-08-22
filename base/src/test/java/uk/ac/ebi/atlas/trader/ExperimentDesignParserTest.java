@@ -87,7 +87,9 @@ public class ExperimentDesignParserTest {
     public void testParseHeaders() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getFactorHeaders(), IsIterableContainingInOrder.contains(GENOTYPE));
-        assertThat(experimentDesign.getSampleHeaders(), IsIterableContainingInOrder.contains(SAMPLE_NAME_1, "Genotype", "Organism", SAMPLE_NAME_2));
+        assertThat(
+                experimentDesign.getSampleHeaders(),
+                IsIterableContainingInOrder.contains(SAMPLE_NAME_1, "Genotype", "Organism", SAMPLE_NAME_2));
     }
 
     @Test
@@ -101,8 +103,12 @@ public class ExperimentDesignParserTest {
     @Test
     public void testParseSamples() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
-        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
+        assertThat(
+                experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_1),
+                is(RD_INSTAR_LARVA));
+        assertThat(
+                experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_1),
+                is(RD_INSTAR_LARVA));
         assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_2), is(""));
         assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_2), is(OREGON_R));
         assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
@@ -125,7 +131,9 @@ public class ExperimentDesignParserTest {
     @Test
     public void testGetAllRunOrAssay() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getAllRunOrAssay(), IsIterableContainingInOrder.contains(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
+        assertThat(
+                experimentDesign.getAllRunOrAssay(),
+                IsIterableContainingInOrder.contains(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
     }
 
     @Test

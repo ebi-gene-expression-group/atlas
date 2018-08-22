@@ -33,8 +33,10 @@ public class ExternalImageController {
 
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/{fileName}")
-    public void streamRnaSeqImage(HttpServletResponse response, @PathVariable String experimentAccession, @PathVariable String
-                                              contrastName, @PathVariable String fileName) {
+    public void streamRnaSeqImage(HttpServletResponse response,
+                                  @PathVariable String experimentAccession,
+                                  @PathVariable String contrastName,
+                                  @PathVariable String fileName) {
 
         streamExternalImage(response, contrastImageFactory.getContrastImage(
                 ResourceType.forFileName(fileName),
@@ -44,10 +46,13 @@ public class ExternalImageController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{contrastName}/{fileName}")
-    public void streamMicroarrayImage(HttpServletResponse response, @PathVariable String experimentAccession,
-                                            @PathVariable String arrayDesignAccession, @PathVariable String
-                                                        contrastName, @PathVariable String fileName) {
+    @RequestMapping(
+            value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{contrastName}/{fileName}")
+    public void streamMicroarrayImage(HttpServletResponse response,
+                                      @PathVariable String experimentAccession,
+                                      @PathVariable String arrayDesignAccession,
+                                      @PathVariable String contrastName,
+                                      @PathVariable String fileName) {
 
         streamExternalImage(
                 response,
@@ -58,7 +63,7 @@ public class ExternalImageController {
                         contrastName).get());
     }
 
-    void streamExternalImage(HttpServletResponse response, Function<HttpServletResponse, Void> callback) {
+    private void streamExternalImage(HttpServletResponse response, Function<HttpServletResponse, Void> callback) {
         callback.apply(response);
     }
 }

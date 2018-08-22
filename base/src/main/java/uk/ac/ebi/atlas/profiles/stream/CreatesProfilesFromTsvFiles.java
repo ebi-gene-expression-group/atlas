@@ -45,7 +45,7 @@ public abstract class CreatesProfilesFromTsvFiles<D extends DescribesDataColumns
                 line -> keepGeneIds.contains(line[0]);
     }
 
-    protected final Pair<Predicate<String[]>, Predicate<E>> filter(O options, Collection<String>keepGeneIds) {
+    protected final Pair<Predicate<String[]>, Predicate<E>> filter(O options, Collection<String> keepGeneIds) {
         return Pair.of(keepLine(keepGeneIds), filterExpressions(options));
     }
 
@@ -108,7 +108,7 @@ public abstract class CreatesProfilesFromTsvFiles<D extends DescribesDataColumns
             @Override
             public P readNext() {
                 String[] next;
-                while ((next = lines.readNext())!= null) {
+                while ((next = lines.readNext()) != null) {
                     if (keepLines.test(next)) {
                         return readLine.apply(next);
                     }

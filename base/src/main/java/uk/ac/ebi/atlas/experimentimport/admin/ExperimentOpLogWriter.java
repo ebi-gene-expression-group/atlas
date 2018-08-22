@@ -16,7 +16,7 @@ public class ExperimentOpLogWriter {
 
     private final DataFileHub dataFileHub;
 
-    public ExperimentOpLogWriter(DataFileHub dataFileHub){
+    public ExperimentOpLogWriter(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
     }
 

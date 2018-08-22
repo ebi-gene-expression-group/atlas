@@ -14,9 +14,9 @@ public class GeneQueryResponse {
 
     private Multimap<String, String> geneIdsByQueryTerm = LinkedHashMultimap.create();
 
-    public GeneQueryResponse addGeneIds(String queryTerm, Set<String> geneIds){
+    public GeneQueryResponse addGeneIds(String queryTerm, Set<String> geneIds) {
         checkArgument(StringUtils.isNotBlank(queryTerm));
-        if(!geneIdsByQueryTerm.containsKey(queryTerm)) {
+        if (!geneIdsByQueryTerm.containsKey(queryTerm)) {
 
             if (!geneIds.isEmpty()) {
                 geneIdsByQueryTerm.putAll(queryTerm, geneIds);
@@ -26,7 +26,7 @@ public class GeneQueryResponse {
         return this;
     }
 
-    public Set<String> getAllGeneIds(){
+    public Set<String> getAllGeneIds() {
         return Sets.newHashSet(geneIdsByQueryTerm.values());
     }
 

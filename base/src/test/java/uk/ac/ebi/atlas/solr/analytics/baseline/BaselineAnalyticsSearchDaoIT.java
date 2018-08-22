@@ -19,26 +19,26 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class BaselineAnalyticsSearchDaoIT {
-
     @Inject
-    BaselineAnalyticsSearchDao subject;
+    private BaselineAnalyticsSearchDao subject;
 
-    //if fails check http://lime.ebi.ac.uk:8983/solr/analytics/query?q=identifierSearch:(%22kinase%22)%20AND%20defaultQueryFactorType:ORGANISM_PART&rows=0&omitHeader=true&fq=experimentType:(rnaseq_mrna_baseline%20OR%20proteomics_baseline)&json.facet=%7B%22experimentType%22:%7B%22terms%22:%7B%22field%22:%22experimentType%22,%22facet%22:%7B%22species%22:%7B%22terms%22:%7B%22field%22:%22species%22,%22facet%22:%7B%22defaultQueryFactorType%22:%7B%22terms%22:%7B%22field%22:%22defaultQueryFactorType%22,%22facet%22:%7B%22experimentAccession%22:%7B%22terms%22:%7B%22field%22:%22experimentAccession%22,%22facet%22:%7B%22assayGroupId%22:%7B%22terms%22:%7B%22field%22:%22assayGroupId%22,%22limit%22:1000,%22facet%22:%7B%22sumExpressionLevel%22:%22sum(expressionLevel)%22%7D%7D%7D,%22uniqueIdentifiers%22:%22unique(bioentityIdentifier)%22%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D
-    //kinase is a popular kind of protein and at least one experiment should have it
+    // In case of failure check:
+    // https://gist.github.com/alfonsomunozpomer/1ed495e8ea26d1f11655beef00e109e7
+    // kinase is a popular protein and at least one experiment should have it
     @Test
-    public void fetchExpressionLevelsFromSolr(){
+    public void fetchExpressionLevelsFromSolr() {
         String species = "homo sapiens";
         String defaultQueryFactorType = "ORGANISM_PART";
         List<Map<String, Object>> result =
-                subject.fetchExpressionLevelsPayload(SemanticQuery.create("kinase"), SemanticQuery.create(), species, defaultQueryFactorType);
+                subject.fetchExpressionLevelsPayload(
+                        SemanticQuery.create("kinase"), SemanticQuery.create(), species, defaultQueryFactorType);
 
         assertThat(result.size(), greaterThan(0));
 
-        for(Map<String, Object> m : result){
-            for(String key: ImmutableList.of("val","uniqueIdentifiers","assayGroupId")){
+        for (Map<String, Object> m : result) {
+            for (String key: ImmutableList.of("val", "uniqueIdentifiers", "assayGroupId")) {
                 assertNotNull(m.get(key));
             }
         }
     }
-
 }

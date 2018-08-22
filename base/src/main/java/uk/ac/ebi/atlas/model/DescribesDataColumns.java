@@ -10,7 +10,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 public abstract class DescribesDataColumns {
     protected final String id;
 
-    public DescribesDataColumns(String id){
+    public DescribesDataColumns(String id) {
         checkArgument(isNotBlank(id));
         this.id = id;
     }
@@ -24,18 +24,24 @@ public abstract class DescribesDataColumns {
     public abstract Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn();
 
     @Override
-    public int hashCode() {return id.hashCode();}
+    public int hashCode() {
+        return id.hashCode();
+    }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         final DescribesDataColumns other = (DescribesDataColumns) obj;
         return Objects.equals(this.id, other.id);
     }
 
     @Override
-    public String toString(){
-        return MessageFormat.format("{0} '{'id={1}'}'", this.getClass().getSimpleName() , id);
+    public String toString() {
+        return MessageFormat.format("{0} '{'id={1}'}'", this.getClass().getSimpleName(), id);
     }
 }

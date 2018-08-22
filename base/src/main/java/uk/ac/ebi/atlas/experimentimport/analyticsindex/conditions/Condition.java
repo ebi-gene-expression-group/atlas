@@ -7,11 +7,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 public class Condition {
-
     private String experimentAccession;
-
     private String assayGroupId;
-
     private Collection<String> values;
 
     public Condition(String experimentAccession, String assayGroupId, Collection<String> values) {
@@ -33,16 +30,22 @@ public class Condition {
     }
 
     @Override
-    public int hashCode() {return Objects.hash(experimentAccession, assayGroupId, values);}
+    public int hashCode() {
+        return Objects.hash(experimentAccession, assayGroupId, values);
+    }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         final Condition other = (Condition) obj;
         return Objects.equals(this.experimentAccession, other.experimentAccession) &&
-                Objects.equals(this.assayGroupId, other.assayGroupId) &&
-                Iterables.elementsEqual(this.values, other.values);
+               Objects.equals(this.assayGroupId, other.assayGroupId) &&
+               Iterables.elementsEqual(this.values, other.values);
     }
 
     @Override

@@ -5,6 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class SearchDescription {
+    protected SearchDescription() {
+        throw new UnsupportedOperationException();
+    }
 
     public static String get(SemanticQuery geneQuery) {
         return get(geneQuery, SemanticQuery.create(), "");

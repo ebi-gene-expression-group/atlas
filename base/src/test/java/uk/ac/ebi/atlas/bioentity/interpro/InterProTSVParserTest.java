@@ -17,9 +17,9 @@ import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InterProTSVParserTest {
-    private final static String IPR000001 = "IPR000001";
-    private final static String KRINGLE = "Kringle";
-    private final static String DOMAIN = "Domain";
+    private static final String IPR000001 = "IPR000001";
+    private static final String KRINGLE = "Kringle";
+    private static final String DOMAIN = "Domain";
 
     private InterProTSVParser subject;
 
@@ -39,7 +39,9 @@ public class InterProTSVParserTest {
 
         Map<String, OntologyTerm> map = subject.parse();
 
-        assertThat(map.get(IPR000001), is(OntologyTerm.create(IPR000001, KRINGLE + " (" + DOMAIN.toLowerCase()+ ")")));
+        assertThat(
+                map.get(IPR000001),
+                is(OntologyTerm.create(IPR000001, KRINGLE + " (" + DOMAIN.toLowerCase() + ")")));
     }
 
     @Test

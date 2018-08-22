@@ -68,7 +68,7 @@ public class DifferentialExpression implements Expression {
     public double getLevel() {
         return getFoldChange();
     }
-    
+
     public boolean isOverExpressed() {
         return foldChange > 0;
     }
@@ -93,7 +93,7 @@ public class DifferentialExpression implements Expression {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return MessageFormat.format("DifferentialExpression foldChange={0} pValue={1}", foldChange, pValue);
     }
 }

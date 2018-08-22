@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source.SearchStrea
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +32,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.
 
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GeneIdSearchDaoIT {
     @Inject
@@ -96,7 +95,7 @@ class GeneIdSearchDaoIT {
         queryBuilder
                 .addQueryFieldByTerm(BIOENTITY_IDENTIFIER, geneId)
                 .sortBy(PROPERTY_NAME, SolrQuery.ORDER.asc)
-                .setFieldList(PROPERTY_VALUE, PROPERTY_NAME);
+                .setFieldList(ImmutableSet.of(PROPERTY_VALUE, PROPERTY_NAME));
 
         try (TupleStreamer tupleStreamer =
                      TupleStreamer.of(new SearchStreamBuilder<>(bioentitiesCollectionProxy, queryBuilder).build())) {
@@ -105,7 +104,8 @@ class GeneIdSearchDaoIT {
             Pair<String, String> anyProperty =
                     tupleStreamer.get()
                             .map(tuple ->
-                                    Pair.of(tuple.getString(PROPERTY_VALUE.name()), tuple.getString(PROPERTY_NAME.name())))
+                                    Pair.of(tuple.getString(PROPERTY_VALUE.name()),
+                                            tuple.getString(PROPERTY_NAME.name())))
                             .findAny()
                             .orElseThrow(RuntimeException::new);
 

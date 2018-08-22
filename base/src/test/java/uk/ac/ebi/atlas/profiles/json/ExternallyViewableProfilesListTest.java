@@ -59,14 +59,14 @@ public class ExternallyViewableProfilesListTest {
 
         JsonObject result =
                 ExternallyViewableProfilesList.createForExperimentProfiles(
-                        SemanticQuery.create(), profiles,factorsAcrossExperiments).asJson();
+                        SemanticQuery.create(), profiles, factorsAcrossExperiments).asJson();
 
 
         assertThat(
                 result.get("rows").getAsJsonArray().size(),
                 is(ImmutableList.of(firstProfile, secondProfile).size()));
 
-        for(JsonElement row: result.get("rows").getAsJsonArray()){
+        for (JsonElement row: result.get("rows").getAsJsonArray()) {
             assertThat(
                     row.getAsJsonObject().get("expressions").getAsJsonArray().size(),
                     is(factorsAcrossExperiments.size()));
@@ -89,19 +89,19 @@ public class ExternallyViewableProfilesListTest {
         AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
         AssayGroup g3 = new AssayGroup("g3", "run_31", "run_32");
 
-        Contrast g1_g2 = new Contrast("g1_g2","", g1, g2, "first contrast");
-        Contrast g1_g3 = new Contrast("g1_g3","", g1, g3, "second contrast");
+        Contrast g1g2 = new Contrast("g1_g2", "", g1, g2, "first contrast");
+        Contrast g1g3 = new Contrast("g1_g3", "", g1, g3, "second contrast");
 
 
-        List<Contrast> factorsAcrossExperiments = ImmutableList.of(g1_g2, g1_g3);
+        List<Contrast> factorsAcrossExperiments = ImmutableList.of(g1g2, g1g3);
 
         RnaSeqProfile p1 = new RnaSeqProfile("gene_1_id", "gene_1_name");
-        p1.add(g1_g2, new DifferentialExpression(1000, 10));
-        p1.add(g1_g3, new DifferentialExpression(2000, 20));
+        p1.add(g1g2, new DifferentialExpression(1000, 10));
+        p1.add(g1g3, new DifferentialExpression(2000, 20));
 
 
         RnaSeqProfile p2 = new RnaSeqProfile("gene_2_id", "gene_2_name");
-        p2.add(g1_g2, new DifferentialExpression(3000, 30));
+        p2.add(g1g2, new DifferentialExpression(3000, 30));
 
         DifferentialProfilesList<RnaSeqProfile> profiles = new DifferentialProfilesList<>();
         profiles.add(p1);
@@ -115,8 +115,10 @@ public class ExternallyViewableProfilesListTest {
 
         assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(p1, p2).size()));
 
-        for(JsonElement row: result.get("rows").getAsJsonArray()){
-            assertThat(row.getAsJsonObject().get("expressions").getAsJsonArray().size(), is(factorsAcrossExperiments.size()));
+        for (JsonElement row: result.get("rows").getAsJsonArray()) {
+            assertThat(
+                    row.getAsJsonObject().get("expressions").getAsJsonArray().size(),
+                    is(factorsAcrossExperiments.size()));
         }
     }
 }

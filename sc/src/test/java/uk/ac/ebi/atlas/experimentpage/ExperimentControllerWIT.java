@@ -31,10 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // to Spring 5.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 @TestInstance(Lifecycle.PER_CLASS)  // @BeforeAll and @MethodSource need not be static :)
-public class ExperimentControllerWIT {
-    private final String URL = "/experiments/{experimentAccession}";
+class ExperimentControllerWIT {
+    private static final String URL = "/experiments/{experimentAccession}";
 
     @Inject
     private JdbcUtils jdbcTestUtils;
@@ -42,23 +42,24 @@ public class ExperimentControllerWIT {
     private MockMvc mockMvc;
 
     @BeforeAll
-    public void setUp(WebApplicationContext wac) {
+    void setUp(WebApplicationContext wac) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
     @ParameterizedTest
     @MethodSource("publicExperimentsProvider")
-    public void validExperimentAccession(String experimentAccession) throws Exception {
+    void validExperimentAccession(String experimentAccession) throws Exception {
         mockMvc.perform(get(URL, experimentAccession))
                     .andExpect(status().isOk())
                     .andExpect(view().name("experiment-page"))
                     .andExpect(model().attribute("experimentAccession", experimentAccession))
-                    .andExpect(model().attribute("type", ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE.getHumanDescription()))
+                    .andExpect(model().attribute(
+                            "type", ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE.getHumanDescription()))
                     .andExpect(model().attributeExists("content"));
     }
 
     @Test
-    public void invalidExperimentAccession() throws Exception {
+    void invalidExperimentAccession() throws Exception {
         mockMvc.perform(get(URL, "FOO"))
                 .andExpect(status().is(400))
                 .andExpect(view().name("error-page"));
@@ -67,5 +68,4 @@ public class ExperimentControllerWIT {
     private Iterable<String> publicExperimentsProvider() {
         return jdbcTestUtils.getPublicSingleCellExperimentAccessions();
     }
-
 }

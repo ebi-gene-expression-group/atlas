@@ -22,16 +22,34 @@ public class ProteomicsBaselineAnalyticsInputStreamTest {
     private static final String GENE_NAME_1 = "CASP10";
     private static final String GENE_NAME_2 = "SLC4A1";
 
-    private static final String TSV_HEADER = Joiner.on("\t").join(new String[]{"Gene ID", "Gene Name", "g1.SpectralCount", "g2.SpectralCount", "g3.SpectralCount", "g4.SpectralCount", "g5.SpectralCount", "g1.WithInSampleAbundance", "g2.WithInSampleAbundance", "g3.WithInSampleAbundance", "g4.WithInSampleAbundance", "g5.WithInSampleAbundance"});
-    private static final String TSV_LINE_1 = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "7", "8", "5", "0", "0", "5.01E+06", "1.33E-05", "7.90E-06", "0"});
-    private static final String TSV_LINE_2 = Joiner.on("\t").join(new String[]{GENE_ID_2, GENE_NAME_2, "80.5", "0", "0", "4", "25", "0.000309075", "0", "0", "2.82E+06", "8.49E-05"});
+    private static final String TSV_HEADER =
+            Joiner.on("\t").join(new String[] {
+                    "Gene ID", "Gene Name",
+                    "g1.SpectralCount", "g2.SpectralCount", "g3.SpectralCount", "g4.SpectralCount", "g5.SpectralCount",
+                    "g1.WithInSampleAbundance", "g2.WithInSampleAbundance", "g3.WithInSampleAbundance",
+                    "g4.WithInSampleAbundance", "g5.WithInSampleAbundance"});
+    private static final String TSV_LINE_1 =
+            Joiner.on("\t").join(new String[] {
+                    GENE_ID_1, GENE_NAME_1, "0", "7", "8", "5", "0", "0", "5.01E+06", "1.33E-05", "7.90E-06", "0"});
+    private static final String TSV_LINE_2 =
+            Joiner.on("\t").join(new String[] {
+                    GENE_ID_2, GENE_NAME_2,
+                    "80.5", "0", "0", "4", "25", "0.000309075", "0", "0", "2.82E+06", "8.49E-05"});
 
-    private static final String TSV_LINE_NO_EXPRESSION = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"});
-    private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "5", "0", "0", "0", "NA", "7.90E-06", "0"});
-    private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "5", "0", "0", "NA", "0", "7.90E-06"});
-    private static final String TSV_LINE_NA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "5", "0", "0", "0", "0", "7.90E-06", "NA", "0", "0"});
+    private static final String TSV_LINE_NO_EXPRESSION =
+            Joiner.on("\t").join(new String[] {
+                    GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"});
+    private static final String TSV_LINE_LOWDATA =
+            Joiner.on("\t").join(new String[] {
+                    GENE_ID_1, GENE_NAME_1, "0", "0", "0", "5", "0", "0", "0", "NA", "7.90E-06", "0"});
+    private static final String TSV_LINE_FAIL =
+            Joiner.on("\t").join(new String[] {
+                    GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "5", "0", "0", "NA", "0", "7.90E-06"});
+    private static final String TSV_LINE_NA =
+            Joiner.on("\t").join(new String[] {
+                    GENE_ID_1, GENE_NAME_1, "0", "5", "0", "0", "0", "0", "7.90E-06", "NA", "0", "0"});
 
-    private static String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
+    private static final String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
 
     @Test
     public void readTwoTsvLines() {
@@ -107,7 +125,8 @@ public class ProteomicsBaselineAnalyticsInputStreamTest {
     public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
         Reader reader = spy(new StringReader(TSV_CONTENTS));
 
-        try (ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(reader, "Test")) {
+        try (ProteomicsBaselineAnalyticsInputStream subject =
+                     new ProteomicsBaselineAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
         }
 
@@ -118,7 +137,8 @@ public class ProteomicsBaselineAnalyticsInputStreamTest {
     public void tryResourcesAutoClosesUnderlyingReaderOnException() throws IOException {
         Reader reader = spy(new StringReader(TSV_CONTENTS));
 
-        try (ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(reader, "Test")) {
+        try (ProteomicsBaselineAnalyticsInputStream subject =
+                     new ProteomicsBaselineAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {

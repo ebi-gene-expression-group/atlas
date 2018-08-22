@@ -68,7 +68,10 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         // likely need to change GeneQuery and use internally a SemanticQuery
         String category =
                 requestParams.keySet().stream()
-                        .filter(actualField -> validQueryFields.anyMatch(validField -> validField.equalsIgnoreCase(actualField)))
+                        .filter(
+                                actualField ->
+                                        validQueryFields.anyMatch(
+                                                validField -> validField.equalsIgnoreCase(actualField)))
                         .findFirst()
                         .orElseThrow(() -> new RuntimeException("Error parsing query"));
 
@@ -81,7 +84,9 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                            .orElseGet(() -> GeneQuery.create(queryTerm));
         } else {
             geneQuery =
-                    species.map(_species -> GeneQuery.create(queryTerm, BioentityPropertyName.getByName(category), _species))
+                    species.map(
+                            _species ->
+                                    GeneQuery.create(queryTerm, BioentityPropertyName.getByName(category), _species))
                            .orElseGet(() -> GeneQuery.create(queryTerm, BioentityPropertyName.getByName(category)));
 
         }
@@ -121,7 +126,8 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         // but if there’s an entry the list will have at least on element
         ImmutableList<ImmutableMap<String, Object>> results =
                 expressedGeneIdEntries.stream()
-                        // TODO Measure in production if parallelising the stream below results in any speedup (the more experiments we have the better)
+                        // TODO Measure in production if parallelising the stream below results in any speedup
+                        // TODO (the more experiments we have the better)
                         .flatMap(entry -> entry.getValue().entrySet().stream().map(exp2cells -> {
 
                             // Inside this map-within-a-flatMap we unfold expressedGeneIdEntries to triplets of...
@@ -129,12 +135,14 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                             String experimentAccession = exp2cells.getKey();
                             List<String> cellIds = exp2cells.getValue();
 
-                            Map<String, Object> experimentAttributes = getExperimentInformation(experimentAccession, geneId);
+                            Map<String, Object> experimentAttributes =
+                                    getExperimentInformation(experimentAccession, geneId);
                             List<Map<String, String>> facets =
                                     unfoldFacets(geneSearchService.getFacets(cellIds)
                                             .getOrDefault(experimentAccession, ImmutableMap.of()));
 
-                            if (markerGeneFacets.containsKey(geneId) && markerGeneFacets.get(geneId).containsKey(experimentAccession)) {
+                            if (markerGeneFacets.containsKey(geneId) &&
+                                markerGeneFacets.get(geneId).containsKey(experimentAccession)) {
                                 facets.add(
                                         ImmutableMap.of(
                                                 "group", "Marker genes",

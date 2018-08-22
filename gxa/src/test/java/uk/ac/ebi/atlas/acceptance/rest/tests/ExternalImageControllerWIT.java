@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 class ExternalImageControllerWIT {
     private static final String EXTRA_INFO_EXPERIMENT_ACCESSION = "E-MTAB-2812";
     private static final String RNASEQ_EXPERIMENT_ACCESSION = "E-GEOD-54705";

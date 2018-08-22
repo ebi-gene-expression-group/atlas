@@ -34,6 +34,7 @@
         <solr.version>7.1.0</solr.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.18.3</mockito.version>
+        <skip.surefire.tests>${skipTests}</skip.surefire.tests>
     </properties>
 
     <build>
@@ -57,6 +58,9 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.21.0</version>
                     <configuration>
+                        <!-- skips surefire tests without skipping failsafe tests.
+                             Property value seems to magically default to false -->
+                        <skipTests>${skip.surefire.tests}</skipTests>
                         <!-- Sets the VM argument line used when unit tests are run, used by JaCoCo -->
                         <argLine>${surefireArgLine}</argLine>
                     </configuration>
@@ -211,6 +215,18 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.0.1-SNAPSHOT</version>
+                    <configuration>
+                        <configLocation>atlas_checks.xml</configLocation>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <cacheFile>${project.build.directory}/checkstyle/checkstyle-cachefile</cacheFile>
+                        <outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -588,6 +604,8 @@
                 <jdbc.password>YxyR9PKvOAtY</jdbc.password>
                 <zk.host>lime</zk.host>
                 <solr.host>lime</solr.host>
+                <!-- Must match any of the appenders defined in logback-test.xml -->
+                <test.logs>STDOUT</test.logs>
             </properties>
         </profile>
 
@@ -601,6 +619,8 @@
                 <jdbc.password>atlas3dev</jdbc.password>
                 <zk.host>localhost</zk.host>
                 <solr.host>localhost</solr.host>
+                <!-- Must match any of the appenders defined in logback-test.xml -->
+                <test.logs>STDOUT</test.logs>
             </properties>
         </profile>
 
@@ -615,6 +635,8 @@
                 <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
                 <zk.host>lime.ebi.ac.uk</zk.host>
                 <solr.host>lime.ebi.ac.uk</solr.host>
+                <!-- Must match any of the appenders defined in logback-test.xml -->
+                <test.logs>FILE</test.logs>
             </properties>
         </profile>
 

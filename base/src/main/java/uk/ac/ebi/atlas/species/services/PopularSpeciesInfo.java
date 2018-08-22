@@ -6,15 +6,24 @@ import java.util.Comparator;
 
 @AutoValue
 public abstract class PopularSpeciesInfo {
-    static PopularSpeciesInfo create(String species, String kingdom, long baselineExperiments, long differentialExperiments) {
-        return new AutoValue_PopularSpeciesInfo(species, kingdom, baselineExperiments + differentialExperiments, baselineExperiments, differentialExperiments);
-    }
-
     public abstract String species();
     public abstract String kingdom();
     public abstract long totalExperiments();
     public abstract long baselineExperiments();
     public abstract long differentialExperiments();
 
-    static Comparator<PopularSpeciesInfo> ReverseComparator = (o1, o2) -> -Long.compare(o1.totalExperiments(), o2.totalExperiments());
+    static PopularSpeciesInfo create(String species,
+                                     String kingdom,
+                                     long baselineExperiments,
+                                     long differentialExperiments) {
+        return new AutoValue_PopularSpeciesInfo(
+                species,
+                kingdom,
+                baselineExperiments + differentialExperiments,
+                baselineExperiments,
+                differentialExperiments);
+    }
+
+    static final Comparator<PopularSpeciesInfo> BY_SIZE_DESCENDING =
+            (o1, o2) -> -Long.compare(o1.totalExperiments(), o2.totalExperiments());
 }

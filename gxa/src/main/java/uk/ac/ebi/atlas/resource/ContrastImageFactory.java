@@ -22,8 +22,10 @@ public class ContrastImageFactory {
         microarrayPathTemplate = experimentPathTemplate.resolve("{0}_{1}-{2}-mvaPlot.png").toString();
     }
 
-    ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession,
-                                   Optional<String> arrayDesign, String contrastId ){
+    ExternalImage getContrastImage(ResourceType resourceType,
+                                   String experimentAccession,
+                                   Optional<String> arrayDesign,
+                                   String contrastId) {
         String pathTemplate = "";
         switch (resourceType) {
             case PLOT_GSEA_INTERPRO:
@@ -38,9 +40,11 @@ public class ContrastImageFactory {
             case PLOT_MA:
                 pathTemplate = arrayDesign.isPresent() ? microarrayPathTemplate : rnaSeqPathTemplate;
                 break;
+            default:
+                throw new IllegalArgumentException("Unknown resourece type" + resourceType.fileName());
         }
 
-        if (arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)){
+        if (arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)) {
             return new ContrastImage(
                     resourceType, pathTemplate, "external-resources/{0}/{1}/{2}/" + resourceType.fileName(),
                     experimentAccession, arrayDesign.get(), contrastId);
@@ -51,7 +55,7 @@ public class ContrastImageFactory {
         }
     }
 
-    ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession, String contrastId ) {
+    ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession, String contrastId) {
         return getContrastImage(resourceType, experimentAccession, Optional.empty(), contrastId);
     }
 }

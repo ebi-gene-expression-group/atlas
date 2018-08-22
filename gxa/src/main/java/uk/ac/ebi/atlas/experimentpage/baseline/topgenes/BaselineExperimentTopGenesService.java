@@ -21,9 +21,9 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 public class BaselineExperimentTopGenesService {
-    public final static String GENE_KEY = "bioentity_identifier";
-    public final static String AVERAGE_EXPRESSION_KEY = "avg_expression";
-    public final static String SPECIFICITY_KEY = "specificity";
+    public static final String GENE_KEY = "bioentity_identifier";
+    public static final String AVERAGE_EXPRESSION_KEY = "avg_expression";
+    public static final String SPECIFICITY_KEY = "specificity";
 
     private final BaselineExperimentTopGenesDao baselineExperimentTopGenesDao;
 
@@ -34,7 +34,8 @@ public class BaselineExperimentTopGenesService {
     public List<String> searchSpecificGenesInBaselineExperiment(String experimentAccession,
                                                                 BaselineRequestPreferences<?> preferences) {
         try (TupleStreamer tupleStreamer =
-                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortBySpecificity(experimentAccession, preferences)) {
+                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortBySpecificity(
+                             experimentAccession, preferences)) {
             return mapBySpecifictyAndSortByAverageExpression(tupleStreamer.get(), preferences.getHeatmapMatrixSize());
         }
     }
@@ -42,7 +43,8 @@ public class BaselineExperimentTopGenesService {
     public List<String> searchMostExpressedGenesInBaselineExperiment(String experimentAccession,
                                                                      BaselineRequestPreferences<?> preferences) {
         try (TupleStreamer tupleStreamer =
-                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortByAverageExpression(experimentAccession, preferences)) {
+                     baselineExperimentTopGenesDao.aggregateGeneIdsAndSortByAverageExpression(
+                             experimentAccession, preferences)) {
             return tupleStreamer.get()
                     .map(tuple -> tuple.getString(GENE_KEY))
                     .collect(toList());

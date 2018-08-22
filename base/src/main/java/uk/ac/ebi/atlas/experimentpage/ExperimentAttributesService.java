@@ -42,8 +42,7 @@ public class ExperimentAttributesService {
 
         if (!experiment.getDois().isEmpty()) {
             result.put("publications", getPublications(experiment.getDois()));
-        }
-        else if (!experiment.getPubMedIds().isEmpty()) {
+        } else if (!experiment.getPubMedIds().isEmpty()) {
             result.put("publications", getPublications(experiment.getPubMedIds()));
         }
 
@@ -68,13 +67,12 @@ public class ExperimentAttributesService {
         result.put("alternativeViewDescriptions", experiment.getAlternativeViewDescriptions());
 
         // TODO This could probably be improved...
-        if(experiment instanceof MicroarrayExperiment) {
+        if (experiment instanceof MicroarrayExperiment) {
             MicroarrayExperiment microarrayExperiment = (MicroarrayExperiment) experiment;
 
             result.put("arrayDesignAccessions", microarrayExperiment.getArrayDesignAccessions());
             result.put("arrayDesignNames", microarrayExperiment.getArrayDesignNames());
-        }
-        else if(experiment instanceof DifferentialExperiment) {
+        } else if (experiment instanceof DifferentialExperiment) {
             result.put("regulationValues", Regulation.values());
             result.put("contrasts", experiment.getDataColumnDescriptors());
         }
@@ -84,7 +82,7 @@ public class ExperimentAttributesService {
 
     private List<Publication> getPublications(List<String> identifiers) {
         List<Publication> publications = new ArrayList<>();
-        for(String id : identifiers) {
+        for (String id : identifiers) {
             europePmcClient.getPublicationByIdentifier(id).ifPresent(publications::add);
         }
 

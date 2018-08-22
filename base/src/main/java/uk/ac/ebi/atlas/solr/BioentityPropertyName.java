@@ -17,7 +17,7 @@ public enum BioentityPropertyName {
     ENTREZGENE("entrezgene", false, "Entrez", 80),
     FLYBASE_GENE_ID("flybase_gene_id", false, "FlyBase gene ID (Fruit fly)", 80),
     GENE_BIOTYPE("gene_biotype", true, "Gene biotype", 80),
-    GO("go", true,"Gene ontology", 0),
+    GO("go", true, "Gene ontology", 0),
     GOTERM("goterm", false, "Gene ontology term", 0),
     HGNC_SYMBOL("hgnc_symbol", true, "HGNC symbol (Human)", 80),
     INTERPRO("interpro", true, "InterPro", 0),
@@ -30,9 +30,9 @@ public enum BioentityPropertyName {
     MIRBASE_NAME("mirbase_name", true, "miRBase name", 0),
     MIRBASE_SEQUENCE("mirbase_sequence", false, "miRBase Sequence", 0),
     ORTHOLOG("ortholog", false, "Ortholog", 0),
-    PATHWAYID("pathwayid", true,"Reactome pathway ID", 0),
+    PATHWAYID("pathwayid", true, "Reactome pathway ID", 0),
     PATHWAYNAME("pathwayname", false, "Pathway name", 0),
-    PO("po", true,"Plant ontology", 0),
+    PO("po", true, "Plant ontology", 0),
     POTERM("poterm", false, "Plant ontology term", 0),
     RGD_SYMBOL("rgd_symbol", true, "RGD symbol", 0),
     SYMBOL("symbol", true, "Symbol", 90),
@@ -42,7 +42,7 @@ public enum BioentityPropertyName {
     WBPSTRANSCRIPT("wbpstranscript", true, "WBPS transcript", 0),
     WBPSPROTEIN("wbpsprotein", true, "WBPS protein", 0);
 
-    final static private ImmutableMap<String, BioentityPropertyName> PROPERTIES_BY_NAME =
+    private static final ImmutableMap<String, BioentityPropertyName> PROPERTIES_BY_NAME =
             ImmutableMap.copyOf(Arrays.stream(values()).collect(Collectors.toMap(v -> v.name, v -> v)));
 
     public final String name;

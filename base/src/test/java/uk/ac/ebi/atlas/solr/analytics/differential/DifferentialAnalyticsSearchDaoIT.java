@@ -29,7 +29,11 @@ public class DifferentialAnalyticsSearchDaoIT {
 
     @Test
     public void differentialSearchWithUrlParams() {
-        String json = subject.fetchResultsAboveDefaultFoldChange(SemanticQuery.create("zinc finger"), SemanticQuery.create(), speciesFactory.create("mus musculus").getReferenceName());
+        String json =
+                subject.fetchResultsAboveDefaultFoldChange(
+                        SemanticQuery.create("zinc finger"),
+                        SemanticQuery.create(),
+                        speciesFactory.create("mus musculus").getReferenceName());
 
         ReadContext jsonCtx = JsonPath.parse(json);
 
@@ -40,5 +44,4 @@ public class DifferentialAnalyticsSearchDaoIT {
         assertThat(experimentTypesFromJson, hasItem("MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL"));
 
     }
-
 }

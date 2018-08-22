@@ -18,12 +18,11 @@ public class CoexpressedGenesController extends JsonExceptionHandlingController 
     private final CoexpressedGenesDao coexpressedGenesDao;
 
     @Inject
-    public CoexpressedGenesController(JdbcTemplate jdbcTemplate){
+    public CoexpressedGenesController(JdbcTemplate jdbcTemplate) {
         this.coexpressedGenesDao = new CoexpressedGenesDao(jdbcTemplate);
     }
 
-    @RequestMapping(value ={"/json/experiments/coexpression"},
-produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/json/experiments/coexpression"}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchCoexpressedGenes(@RequestParam(value = "experiment") String experiment,
                                         @RequestParam(value = "identifier") String identifier) {

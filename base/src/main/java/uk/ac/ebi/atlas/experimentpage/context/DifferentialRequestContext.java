@@ -22,7 +22,7 @@ public class DifferentialRequestContext
         return contrast.getDisplayName();
     }
 
-    public E getExperiment(){
+    public E getExperiment() {
         return experiment;
     }
 

@@ -28,7 +28,7 @@ import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomKnownBioent
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class GeneIdSearchServiceTest {
-    private final static Species HUMAN =
+    private static final Species HUMAN =
             new Species(
                     "Homo sapiens",
                     SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of()));
@@ -89,12 +89,10 @@ class GeneIdSearchServiceTest {
 
     @Test
     void ifAtLeastOneIdMatchesWeGetNonEmptyOptional() {
-        BioentityPropertyName _randomIdPropertyName = getRandomKnownBioentityPropertyName();
-        while (!SPECIES_OVERRIDE_PROPERTY_NAMES.contains(_randomIdPropertyName)) {
-            _randomIdPropertyName = getRandomKnownBioentityPropertyName();
+        BioentityPropertyName randomIdPropertyName = getRandomKnownBioentityPropertyName();
+        while (!SPECIES_OVERRIDE_PROPERTY_NAMES.contains(randomIdPropertyName)) {
+            randomIdPropertyName = getRandomKnownBioentityPropertyName();
         }
-
-        BioentityPropertyName randomIdPropertyName = _randomIdPropertyName;
 
         ID_PROPERTY_NAMES.forEach(propertyName -> {
             when(geneIdSearchDao.searchGeneIds("foobar", propertyName.name, HUMAN.getEnsemblName()))
@@ -125,7 +123,8 @@ class GeneIdSearchServiceTest {
                 ID_PROPERTY_NAMES.subList(0, ID_PROPERTY_NAMES.indexOf(randomIdPropertyName));
 
         ImmutableList<BioentityPropertyName> idPropertyNamesAfter =
-                ID_PROPERTY_NAMES.subList(ID_PROPERTY_NAMES.indexOf(randomIdPropertyName) + 1, ID_PROPERTY_NAMES.size());
+                ID_PROPERTY_NAMES.subList(
+                        ID_PROPERTY_NAMES.indexOf(randomIdPropertyName) + 1, ID_PROPERTY_NAMES.size());
 
         idPropertyNamesBefore.forEach(propertyName -> {
             when(geneIdSearchDao.searchGeneIds("foobar", propertyName.name, HUMAN.getEnsemblName()))
