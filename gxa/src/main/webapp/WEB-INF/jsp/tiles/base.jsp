@@ -82,8 +82,9 @@
 
 <tiles:insertAttribute name="global-footer"/>
 
-<!-- JavaScript -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 
 <!-- Don’t defer or async, these two need to be loaded before other bundles, which are effectively deferred -->
 <script src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>
