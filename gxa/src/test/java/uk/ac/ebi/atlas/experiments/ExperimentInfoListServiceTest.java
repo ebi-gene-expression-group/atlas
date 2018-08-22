@@ -41,7 +41,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentInfoListServiceTest {
-
     private static final String FACTOR_NAME = "FACTOR_NAME";
     private static final String SPECIES = "SPECIES";
     private static final String BASELINE_ACCESSION = "E-BLAH-1";
@@ -67,7 +66,6 @@ public class ExperimentInfoListServiceTest {
     private ExperimentDesign experimentDesignMock;
 
     private ExperimentInfoListService subject;
-
 
     @Before
     public void setUp() {
@@ -112,7 +110,7 @@ public class ExperimentInfoListServiceTest {
                 experimentDesignMock,
                 new HashSet<>(),
                 new HashSet<>(),
-                ImmutableList.of(ArrayDesign.create(ARRAY,"ARRAY_NAME"))));
+                ImmutableList.of(ArrayDesign.create(ARRAY, "ARRAY_NAME"))));
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment<? extends DescribesDataColumns>>>
                 experimentAccessionsPerType =
@@ -125,8 +123,9 @@ public class ExperimentInfoListServiceTest {
 
         doAnswer(invocationOnMock -> {
             ExperimentType experimentType = (ExperimentType) invocationOnMock.getArguments()[0];
-            return experimentAccessionsPerType.containsKey(experimentType) ? experimentAccessionsPerType.get
-                    (experimentType) : ImmutableSet.of();
+            return experimentAccessionsPerType.containsKey(experimentType) ?
+                    experimentAccessionsPerType.get(experimentType) :
+                    ImmutableSet.of();
         }).when(experimentTraderMock).getPublicExperiments(any());
 
         //call real method on big method, small one takes from this map
@@ -154,5 +153,4 @@ public class ExperimentInfoListServiceTest {
         assertThat(experimentInfo.getSpecies(), is(SPECIES));
         assertThat(experimentInfo.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
-
 }

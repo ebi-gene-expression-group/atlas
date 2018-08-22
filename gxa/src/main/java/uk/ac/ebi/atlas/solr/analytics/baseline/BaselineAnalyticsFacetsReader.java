@@ -12,10 +12,14 @@ import java.util.Map;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class BaselineAnalyticsFacetsReader {
+    protected BaselineAnalyticsFacetsReader() {
+        throw new UnsupportedOperationException();
+    }
 
     public static JsonObject generateFacetsTreeJson(List<Map<String, Object>> results) {
 
-        TreeMultimap<String, FacetTreeItem> facetTreeMultimap = TreeMultimap.create(new HomoSapiensFirstComparator(), new OrganismPartFirstComparator());
+        TreeMultimap<String, FacetTreeItem> facetTreeMultimap =
+                TreeMultimap.create(new HomoSapiensFirstComparator(), new OrganismPartFirstComparator());
 
         for (Map<String, Object> experiment : results) {
             String species = (String) experiment.get("val");
@@ -25,7 +29,7 @@ public class BaselineAnalyticsFacetsReader {
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> buckets = (List<Map<String, Object>>) factorRoot.get("buckets");
 
-            for(Map<String, Object> defaultQueryFactorType : buckets)  {
+            for (Map<String, Object> defaultQueryFactorType : buckets)  {
                 String key = (String) defaultQueryFactorType.get("val");
                 String name = Factor.convertToLowerCase(key);
                 FacetTreeItem factor = FacetTreeItem.create(key, name);
@@ -46,8 +50,7 @@ public class BaselineAnalyticsFacetsReader {
                 return -1;
             } else if ("homo sapiens".equalsIgnoreCase(o2)) {
                 return 1;
-            }
-            else {
+            } else {
                 return o1.compareTo(o2);
             }
         }

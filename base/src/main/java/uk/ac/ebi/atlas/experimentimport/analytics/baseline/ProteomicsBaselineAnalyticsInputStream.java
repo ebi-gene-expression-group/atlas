@@ -22,8 +22,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 /*
  * Reads tsv input of:
  *
- * Gene ID Gene Name g1.SpectralCount g2.SpectralCount g3.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance g3.WithInSampleAbundance
- * ENSG00000000003  TSPAN6  0   7   8   5010000 0   0.0000079
+ * Gene ID         Gene Name g1.SpectralCount g2.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance
+ * ENSG00000000003 TSPAN6    0                7                5010000                  0.0000079
  *
  * and returns BaselineAnalytics of:
  *
@@ -73,7 +73,8 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new UncheckedIOException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
+            throw new UncheckedIOException(
+                    String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
@@ -103,7 +104,7 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
 
         String geneId = line[GENE_ID_COLUMN_INDEX];
         String[] expressionLevels = ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
-        ImmutableList<BaselineAnalytics> baselineAnalytics = createList(geneId, sampleAbundanceAssayGroupIds, expressionLevels);
+        ImmutableList<BaselineAnalytics> baselineAnalytics = createList(geneId, expressionLevels);
 
         if (baselineAnalytics.isEmpty()) {
             return readNextNonZeroLine();
@@ -112,11 +113,9 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
         return baselineAnalytics;
     }
 
-    private ImmutableList<BaselineAnalytics> createList(String geneId, Map<Integer, String> sampleAbundanceAssayGroupIds, String[] expressionLevels) {
-        checkArgument(StringUtils.isNotBlank(geneId), "Cannot load proteomics baseline analytics - gene id is blank");
-        // TODO: @rpetry - commented the E-PROT-1-specific test below in order to test loading of a new type of proteomics experiment, E-PROT-3
-        // checkArgument(sampleAbundanceAssayGroupIds.size() * 2 == expressionLevels.length,
-        //              String.format("Cannot load proteomics baseline analytics - expecting [%s]->[%s] expressions but got [%s] instead.", Joiner.on(", ").join(sampleAbundanceAssayGroupIds.keySet()),  Joiner.on(", ").join(sampleAbundanceAssayGroupIds.entrySet()), Joiner.on(", ").join(expressionLevels)));
+    private ImmutableList<BaselineAnalytics> createList(String geneId,
+                                                        String[] expressionLevels) {
+        checkArgument(StringUtils.isNotBlank(geneId), "Cannot load proteomics baseline analytics - gene ID is blank");
 
         ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
 

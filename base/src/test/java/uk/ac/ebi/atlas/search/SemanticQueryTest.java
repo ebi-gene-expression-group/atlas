@@ -6,14 +6,11 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import org.junit.Test;
 
-import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class SemanticQueryTest {
 
@@ -49,7 +46,7 @@ public class SemanticQueryTest {
 
     @Test
     public void testEmptyGeneQuery() {
-        SemanticQuery subject =
+        subject =
                 SemanticQuery.create(
                         SemanticQueryTerm.create("", "symbol"),
                         SemanticQueryTerm.create(" ", "synonym"),
@@ -59,7 +56,7 @@ public class SemanticQueryTest {
 
     @Test
     public void testRemovesRepeatedTerms() {
-        SemanticQuery subject =
+        subject =
                 SemanticQuery.create(
                         SemanticQueryTerm.create("BRCA2", "symbol"),
                         SemanticQueryTerm.create("BRCA2", "symbol"));
@@ -100,11 +97,11 @@ public class SemanticQueryTest {
         // This can come from the search page if a user enters repeated terms
         String geneQueryBrca2WithRepeats =
                 "[" +
-                        "{\"value\":\"BRCA2\",\"category\":\"symbol\"}," +
-                        "{\"value\":\"BRCA2\",\"category\":\"symbol\"}," +
-                        "{\"value\":\"BRCA2B\",\"category\":\"synonym\"}," +
-                        "{\"value\":\"BRCA2B\",\"category\":\"synonym\"}," +
-                        "{\"value\":\"BRCA2 repeat\",\"category\":\"\"}," +
+                        "{\"value\":\"BRCA2\",\"category\":\"symbol\"}, " +
+                        "{\"value\":\"BRCA2\",\"category\":\"symbol\"}, " +
+                        "{\"value\":\"BRCA2B\",\"category\":\"synonym\"}, " +
+                        "{\"value\":\"BRCA2B\",\"category\":\"synonym\"}, " +
+                        "{\"value\":\"BRCA2 repeat\",\"category\":\"\"}, " +
                         "{\"value\":\"BRCA2 repeat\",\"category\":\"\"}" +
                 "]";
 
@@ -127,7 +124,7 @@ public class SemanticQueryTest {
 
     @Test
     public void groupingByCategory() {
-        SemanticQuery subject =
+        subject =
                 SemanticQuery.create(
                         SemanticQueryTerm.create("BRCA2", "symbol"),
                         SemanticQueryTerm.create("BRCA2B", "synonym"),

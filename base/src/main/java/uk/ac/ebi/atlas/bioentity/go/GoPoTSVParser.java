@@ -33,7 +33,7 @@ public class GoPoTSVParser {
         while ((line = csvReader.readNext()) != null) {
             if (line.length > TERM_ACCESSION_COLUMN_INDEX) {
                 String accession = line[TERM_ACCESSION_COLUMN_INDEX];
-                if(accession.matches(startsWithGoPoRegex)) {
+                if (accession.matches(startsWithGoPoRegex)) {
                     String name = line.length > TERM_NAME_COLUMN_INDEX ? line[TERM_NAME_COLUMN_INDEX] : "";
                     int depth = parseDepth(line);
                     multimapBuilder.put(accession, OntologyTerm.create(accession, name, "", depth));
@@ -65,7 +65,9 @@ public class GoPoTSVParser {
 
     private int parseDepth(String[] line) {
         try {
-            return line.length > TERM_DEPTH_COLUMN_INDEX ? Integer.parseInt(line[TERM_DEPTH_COLUMN_INDEX]) : DEFAULT_DEPTH;
+            return line.length > TERM_DEPTH_COLUMN_INDEX ?
+                    Integer.parseInt(line[TERM_DEPTH_COLUMN_INDEX]) :
+                    DEFAULT_DEPTH;
         } catch (NumberFormatException e) {
             return DEFAULT_DEPTH;
         }

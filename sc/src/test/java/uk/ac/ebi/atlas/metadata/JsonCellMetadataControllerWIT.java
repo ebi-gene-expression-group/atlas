@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.metadata;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.isA;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -33,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JsonCellMetadataControllerWIT {
     @Inject
@@ -81,8 +79,7 @@ class JsonCellMetadataControllerWIT {
         String cellId = "BAR";
 
         this.mockMvc
-                .perform(get(
-                        "/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata")).andDo(print())
+                .perform(get("/json/experiment/" + experimentAccession + "/cell/" + cellId + "/metadata"))
                 .andExpect(status().is4xxClientError());
     }
 

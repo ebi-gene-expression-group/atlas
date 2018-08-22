@@ -18,56 +18,43 @@ import uk.ac.ebi.atlas.trader.ContrastTrader;
 import java.util.List;
 import java.util.Random;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.isA;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialJsonResultsParserTest {
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
     private DifferentialJsonResultsParser subject;
+
     @Mock
     private ContrastTrader contrastTraderMock;
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp() {
         subject = new DifferentialJsonResultsParser(contrastTraderMock);
     }
 
     @Test
-    public void invalidJsonResultThrows() throws Exception {
-
-        thrown.expect(RuntimeException.class);
-
-        JsonObject result = new JsonObject();
-        result.addProperty("results", 1);
-
-        List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
-    }
-
-    @Test
-    public void emptyJsonResultArrayProducesEmptyList() throws Exception {
-
-        JsonObject result = buildJsonObject(0,false);
+    public void emptyJsonResultArrayProducesEmptyList() {
+        JsonObject result = buildJsonObject(0, false);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
         assertThat(expression, hasSize(0));
     }
 
     @Test
-    public void numberOfJsonObjectsInResultArrayProducesEqualLengthList() throws Exception {
-
-        JsonObject result = buildJsonObject(3,false);
+    public void numberOfJsonObjectsInResultArrayProducesEqualLengthList() {
+        JsonObject result = buildJsonObject(3, false);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
         assertThat(expression, hasSize(3));
     }
 
     @Test
-    public void secondJsonObjectsInResultArrayEqualsSecondElementOfList() throws Exception {
-
+    public void secondJsonObjectsInResultArrayEqualsSecondElementOfList() {
         JsonObject result = buildJsonObject(4, false);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
@@ -80,8 +67,7 @@ public class DifferentialJsonResultsParserTest {
     }
 
     @Test
-    public void testingJsonObjectWithoutTstatistic() throws Exception {
-
+    public void testingJsonObjectWithoutTstatistic() {
         JsonObject testObject = new JsonObject();
 
         testObject.addProperty("experiment_accession", "e" + 4);
@@ -106,8 +92,7 @@ public class DifferentialJsonResultsParserTest {
     }
 
     @Test
-    public void rejectInvalidJsonObjectsInResultArray() throws Exception {
-
+    public void rejectInvalidJsonObjectsInResultArray() {
         JsonObject result = buildJsonObject(3, true);
 
         List<DiffAnalytics> expression = subject.parseDifferentialResults(result);
@@ -116,20 +101,17 @@ public class DifferentialJsonResultsParserTest {
     }
 
     private JsonObject buildJsonObject(int arraySize, boolean addInvalidElement) {
-
         JsonObject result = new JsonObject();
         JsonArray results = new JsonArray();
         JsonObject testObject = new JsonObject();
-        RandomStringUtils randomString = new RandomStringUtils();
         Random random = new Random();
 
         for (int i = 1; i <= arraySize; i++) {
-
             JsonObject element = new JsonObject();
-            element.addProperty("experiment_accession", randomString.random(5) + i);
-            element.addProperty("contrast_id", randomString.random(7) + i);
-            element.addProperty("bioentity_identifier", randomString.random(3) + i);
-            element.addProperty("species", randomString.random(4) + i);
+            element.addProperty("experiment_accession", RandomStringUtils.random(5) + i);
+            element.addProperty("contrast_id", RandomStringUtils.random(7) + i);
+            element.addProperty("bioentity_identifier", RandomStringUtils.random(3) + i);
+            element.addProperty("species", RandomStringUtils.random(4) + i);
             element.addProperty("p_value", random.nextDouble());
             element.addProperty("fold_change", random.nextDouble());
             element.addProperty("t_statistic", random.nextDouble());
@@ -138,10 +120,10 @@ public class DifferentialJsonResultsParserTest {
         }
 
         if (addInvalidElement) {
-            testObject.addProperty("experiment accession", randomString.random(5));
-            testObject.addProperty("contrast_id", randomString.random(10));
-            testObject.addProperty("bioentity_identifier", randomString.random(15));
-            testObject.addProperty("species", randomString.random(6));
+            testObject.addProperty("experiment accession", RandomStringUtils.random(5));
+            testObject.addProperty("contrast_id", RandomStringUtils.random(10));
+            testObject.addProperty("bioentity_identifier", RandomStringUtils.random(15));
+            testObject.addProperty("species", RandomStringUtils.random(6));
             testObject.addProperty("p_value", random.nextDouble());
             testObject.addProperty("fold_change", random.nextDouble());
             testObject.addProperty("t_statistic", random.nextDouble());
@@ -153,5 +135,4 @@ public class DifferentialJsonResultsParserTest {
         result.add("results", results);
         return result;
     }
-
 }

@@ -21,7 +21,8 @@ public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Inject
-    public void setAnalyticsInputStreamFactory(MicroarrayDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory) {
+    public void setAnalyticsInputStreamFactory(
+            MicroarrayDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory) {
         this.analyticsInputStreamFactory = analyticsInputStreamFactory;
     }
 

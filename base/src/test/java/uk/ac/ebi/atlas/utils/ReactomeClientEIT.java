@@ -19,8 +19,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class ReactomeClientEIT {
-
-    private static Set<String> SET_OF_45_STABLE_IDS = ImmutableSet.of(
+    private static final Set<String> SET_OF_45_STABLE_IDS = ImmutableSet.of(
             "R-HSA-15869", "R-HSA-37001", "R-HSA-43124", "R-HSA-48888", "R-HSA-49155",
             "R-HSA-49189", "R-HSA-49191", "R-HSA-49291", "R-HSA-49335", "R-HSA-49459",
             "R-HSA-49489", "R-HSA-49491", "R-HSA-49493", "R-HSA-49495", "R-HSA-49699",
@@ -35,12 +34,12 @@ public class ReactomeClientEIT {
     private ReactomeClient subject;
 
     @Test
-    public void getMoreThanMaxQuerySizeIds() throws Exception {
+    public void getMoreThanMaxQuerySizeIds() {
         assertThat(subject.getPathwayNames(SET_OF_45_STABLE_IDS).entrySet(), hasSize(SET_OF_45_STABLE_IDS.size()));
     }
 
     @Test
-    public void getNonExistingIds() throws Exception {
+    public void getNonExistingIds() {
         assertThat(subject.getPathwayNames(ImmutableSet.of("R-HSA-FOOBAR")).entrySet(), hasSize(0));
         assertThat(subject.getPathwayName("R-HSA-FOOBAR"), is(Optional.empty()));
     }

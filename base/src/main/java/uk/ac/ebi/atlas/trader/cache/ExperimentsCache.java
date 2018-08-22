@@ -8,7 +8,7 @@ public abstract class ExperimentsCache<T extends Experiment<? extends DescribesD
 
     private final LoadingCache<String, T> experiments;
 
-    public ExperimentsCache(LoadingCache<String, T> experiments){
+    public ExperimentsCache(LoadingCache<String, T> experiments) {
         this.experiments = experiments;
     }
 

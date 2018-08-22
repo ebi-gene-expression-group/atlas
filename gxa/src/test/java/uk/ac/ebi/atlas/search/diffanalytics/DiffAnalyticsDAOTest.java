@@ -11,23 +11,22 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.assertTrue;
 
 public class DiffAnalyticsDAOTest {
+    @Mock
+    private JdbcTemplate jdbcTemplate;
 
     @Mock
-    JdbcTemplate jdbcTemplate;
+    private DiffAnalyticsRowMapper dbeRowMapper;
 
-    @Mock
-    DiffAnalyticsRowMapper dbeRowMapper;
-
-    DiffAnalyticsDao subject;
+    private DiffAnalyticsDao subject;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.subject = new DiffAnalyticsDao(jdbcTemplate,dbeRowMapper);
+        this.subject = new DiffAnalyticsDao(jdbcTemplate, dbeRowMapper);
     }
 
     @Test
-    public void weQueryWithSomeReallyGoodSql(){
+    public void weQueryWithSomeReallyGoodSql() {
         String geneId = "geneId";
 
         String v = subject.buildSelect(geneId).getQuery();
@@ -35,5 +34,4 @@ public class DiffAnalyticsDAOTest {
         assertTrue(Pattern.matches("SELECT.*FROM.*", v.toUpperCase()));
         assertTrue(v.toUpperCase().contains("PRIVATE = 'F'"));
     }
-
 }

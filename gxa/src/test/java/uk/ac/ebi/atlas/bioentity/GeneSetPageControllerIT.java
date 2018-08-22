@@ -18,9 +18,8 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class GeneSetPageControllerIT {
-
     @Inject
     private GeneSetPageController subject;
 
@@ -31,12 +30,11 @@ public class GeneSetPageControllerIT {
         bioentityProperties("PO:0009030");
     }
 
-    private void bioentityProperties(String bioentityIdentifier){
+    private void bioentityProperties(String bioentityIdentifier) {
         Model model = new BindingAwareModelMap();
         subject.showGeneSetPage(bioentityIdentifier, "", model);
         JsonArray bioentityProperties =
                 GSON.fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
         assertThat(bioentityProperties.size(), is(1));
     }
-
 }

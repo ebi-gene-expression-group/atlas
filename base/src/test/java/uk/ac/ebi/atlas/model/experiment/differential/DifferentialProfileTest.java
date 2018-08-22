@@ -19,7 +19,7 @@ public class DifferentialProfileTest {
     private static final String GENE_NAME = "A_GENE_NAME";
 
 
-    private List<Contrast> fakeContrasts = ContrastTest.get(2);
+    private List<Contrast> fakeContrasts = ContrastTestUtils.get(2);
 
     private RnaSeqProfile subject;
 
@@ -31,15 +31,15 @@ public class DifferentialProfileTest {
 
 
     @Test
-    public void addingAnOverExpressedExpressionShouldUpdateMinAndMaxUpRegulatedLevelsAndSpecificity() throws Exception {
+    public void addingAnOverExpressedExpressionShouldUpdateMinAndMaxUpRegulatedLevelsAndSpecificity() {
         DifferentialExpression differentialExpressionMock1
                 = new DifferentialExpression(0.05, 0.4D);
         DifferentialExpression differentialExpressionMock2
                 = new DifferentialExpression(0.05, 0.6D);
 
         //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0), differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1), differentialExpressionMock2);
 
         //then
         assertThat(subject.getSpecificity(Regulation.UP), is(2L));
@@ -48,15 +48,15 @@ public class DifferentialProfileTest {
     }
 
     @Test
-    public void addingUnderExpressedExpressionsShouldUpdateMinAndMaxDownRegulatedLevelsAndSpecificity() throws Exception {
+    public void addingUnderExpressedExpressionsShouldUpdateMinAndMaxDownRegulatedLevelsAndSpecificity() {
         DifferentialExpression differentialExpressionMock1
                 = new DifferentialExpression(0.05, -0.3D);
         DifferentialExpression differentialExpressionMock2
                 = new DifferentialExpression(0.05, -0.5D);
 
         //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0), differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1), differentialExpressionMock2);
 
         //then
         assertThat(subject.getSpecificity(Regulation.DOWN), is(2L));
@@ -65,15 +65,15 @@ public class DifferentialProfileTest {
     }
 
     @Test
-    public void getAverageExpressionLevelOnShouldReturnAverageValueOfOneExpression() throws Exception {
+    public void getAverageExpressionLevelOnShouldReturnAverageValueOfOneExpression() {
         DifferentialExpression differentialExpressionMock1
                 = new DifferentialExpression(0.05, -0.3D);
         DifferentialExpression differentialExpressionMock2
                 = new DifferentialExpression(0.05, 0.3D);
 
         //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0), differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1), differentialExpressionMock2);
 
         //then
         double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(fakeContrasts));
@@ -81,15 +81,15 @@ public class DifferentialProfileTest {
     }
 
     @Test
-    public void getAverageExpressionLevelOnShouldReturnAverageValueOfBoth() throws Exception {
+    public void getAverageExpressionLevelOnShouldReturnAverageValueOfBoth() {
         DifferentialExpression differentialExpressionMock1
                 = new DifferentialExpression(0.05, -0.3D);
         DifferentialExpression differentialExpressionMock2
                 = new DifferentialExpression(0.05, -0.5D);
 
         //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0), differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1), differentialExpressionMock2);
 
         //then
         double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(fakeContrasts));

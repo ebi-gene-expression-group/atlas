@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Objects;
@@ -8,24 +7,20 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 
 public class DiffAnalytics {
+    private final String bioentityId;
+    private final String bioentityName;
+    private final String experimentAccession;
+    private final DifferentialExpression expression;
+    private final String species;
+    private final Contrast contrast;
 
-    private String bioentityId;
-
-    private String bioentityName;
-
-    private String experimentAccession;
-
-    private DifferentialExpression expression;
-
-    private String species;
-    
-    private Contrast contrast;
-
-    public DiffAnalytics(String bioentityId, String bioentityName, String experimentAccession, DifferentialExpression expression,
+    public DiffAnalytics(String bioentityId,
+                         String bioentityName,
+                         String experimentAccession,
+                         DifferentialExpression expression,
                          String species, Contrast contrast) {
         this.bioentityId = bioentityId;
         this.bioentityName = bioentityName;
-
         this.experimentAccession = experimentAccession;
         this.expression = expression;
         this.species = species;
@@ -56,11 +51,14 @@ public class DiffAnalytics {
         return StringUtils.isEmpty(bioentityName) ? bioentityId : bioentityName;
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         DiffAnalytics that = (DiffAnalytics) o;
         return Objects.equal(bioentityId, that.bioentityId) &&
                 Objects.equal(bioentityName, that.bioentityName) &&

@@ -10,12 +10,16 @@ import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import java.util.Set;
 
 public class Contrast extends DescribesDataColumns implements Comparable<Contrast> {
-    private String arrayDesignAccession; //used only for micro-array experiments
-    private AssayGroup referenceAssayGroup;
-    private AssayGroup testAssayGroup;
-    private String displayName;
+    private final String arrayDesignAccession; //used only for micro-array experiments
+    private final AssayGroup referenceAssayGroup;
+    private final AssayGroup testAssayGroup;
+    private final String displayName;
 
-    public Contrast(String id, String arrayDesignAccession, AssayGroup referenceAssayGroup, AssayGroup testAssayGroup, String displayName) {
+    public Contrast(String id,
+                    String arrayDesignAccession,
+                    AssayGroup referenceAssayGroup,
+                    AssayGroup testAssayGroup,
+                    String displayName) {
         super(id);
         this.arrayDesignAccession = arrayDesignAccession;
         this.referenceAssayGroup = referenceAssayGroup;

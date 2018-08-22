@@ -33,7 +33,10 @@ public class MiscellaneousAnalyticsSearchDao {
                         .fetch();
     }
 
-    String searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, int facetLimit) {
+    String searchBioentityIdentifiers(SemanticQuery geneQuery,
+                                      SemanticQuery conditionQuery,
+                                      String species,
+                                      int facetLimit) {
         return analyticsQueryClient.queryBuilder()
                         .bioentityIdentifierFacets(facetLimit)
                         .queryIdentifierSearch(geneQuery)
@@ -52,7 +55,8 @@ public class MiscellaneousAnalyticsSearchDao {
 
     String getBioentityIdentifiersForSpecies(String species) {
         return analyticsQueryClient.queryBuilder()
-                        .bioentityIdentifierFacets(45000) // Something less than 50k because of sitemap limitations, plus some wiggle room for extra data
+                        // Something less than 50k because of sitemap limitations, plus some wiggle room for extra data
+                        .bioentityIdentifierFacets(45000)
                         .ofSpecies(species)
                         .fetch();
     }

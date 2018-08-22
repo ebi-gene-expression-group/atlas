@@ -35,7 +35,9 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
 
     @Override
     public JsonObject toJson() {
-        if (data.size() == 0) return new JsonObject();
+        if (data.size() == 0) {
+            return new JsonObject();
+        }
         JsonObject result = new JsonObject();
 
         double[] expressionValuesSorted = expressionValuesSorted();
@@ -71,8 +73,12 @@ public class BaselineExpressionPerBiologicalReplicate implements Expression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         BaselineExpressionPerBiologicalReplicate that = (BaselineExpressionPerBiologicalReplicate) o;
         return Objects.equals(data, that.data);
     }

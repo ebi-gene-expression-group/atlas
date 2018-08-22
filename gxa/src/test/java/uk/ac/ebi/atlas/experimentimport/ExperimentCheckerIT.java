@@ -12,9 +12,8 @@ import javax.inject.Inject;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class ExperimentCheckerIT {
-
     private static final String RNA_SEQ_BASELINE_EXPERIMENT_ACCESSION = "E-MTAB-513";
     private static final String PROTEOMICS_BASELINE_EXPERIMENT_ACCESSION = "E-PROT-1";
     private static final String RNA_SEQ_DIFFERENTIAL_EXPERIMENT_ACCESION = "E-MTAB-4289";
@@ -25,20 +24,23 @@ public class ExperimentCheckerIT {
     private ExperimentChecker subject;
 
     @Test
-    public void testCheckBaseline() throws Exception {
+    public void testCheckBaseline() {
         subject.checkAllFiles(RNA_SEQ_BASELINE_EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
         subject.checkAllFiles(PROTEOMICS_BASELINE_EXPERIMENT_ACCESSION, ExperimentType.PROTEOMICS_BASELINE);
     }
 
     @Test
-    public void testCheckDifferential() throws Exception {
+    public void testCheckDifferential() {
         subject.checkAllFiles(RNA_SEQ_DIFFERENTIAL_EXPERIMENT_ACCESION, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
     }
 
     @Test
-    public void testCheckMicroarray() throws Exception {
-        subject.checkAllFiles(MICROARRAY_1_COLOUR_DIFFERENTIAL_EXPERIMENT_ACCESION, ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
-        subject.checkAllFiles(MICROARRAY_2_COLOUR_DIFFERENTIAL_EXPERIMENT_ACCESION, ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
+    public void testCheckMicroarray() {
+        subject.checkAllFiles(
+                MICROARRAY_1_COLOUR_DIFFERENTIAL_EXPERIMENT_ACCESION,
+                ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
+        subject.checkAllFiles(
+                MICROARRAY_2_COLOUR_DIFFERENTIAL_EXPERIMENT_ACCESION,
+                ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
     }
-
 }

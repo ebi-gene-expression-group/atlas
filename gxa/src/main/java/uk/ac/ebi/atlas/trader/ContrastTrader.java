@@ -22,13 +22,13 @@ public class ContrastTrader {
     public Contrast getContrast(String experimentAccession, String contrastId) {
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         //ToDo: we have to class cast here, to fix we need to have a common type for all diff experiments
-        return ((DifferentialExperiment)experiment).getDataColumnDescriptor(contrastId);
+        return ((DifferentialExperiment) experiment).getDataColumnDescriptor(contrastId);
     }
 
     public Contrast getContrastFromCache(String experimentAccession, ExperimentType experimentType, String contrastId) {
         try {
             Experiment experiment = experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
-            return ((DifferentialExperiment)experiment).getDataColumnDescriptor(contrastId);
+            return ((DifferentialExperiment) experiment).getDataColumnDescriptor(contrastId);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }

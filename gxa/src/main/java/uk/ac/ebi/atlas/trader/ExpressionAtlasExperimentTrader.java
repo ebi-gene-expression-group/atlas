@@ -49,7 +49,8 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
 
     private ExperimentType getExperimentType(String experimentAccession, String accessKey) {
         Pair<String, String> k = Pair.of(experimentAccession, accessKey);
-        experimentTypes.computeIfAbsent(k, k_ -> experimentDao.findExperiment(k_.getLeft(), k_.getRight()).getExperimentType());
+        experimentTypes.computeIfAbsent(
+                k, k_ -> experimentDao.findExperiment(k_.getLeft(), k_.getRight()).getExperimentType());
         return experimentTypes.get(k);
     }
 

@@ -7,12 +7,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class DifferentialExpressionTest {
+    private  static final double P_VALUE = 0.0005;
+    private  static final double FOLD_CHANGE = 42.0;
+    private  static final double SMALL_P_VALUE = 1.17501162847487E-242;
 
-    public static final double P_VALUE = 0.0005;
-    public static final double FOLD_CHANGE = 42.0;
-    public static final double SMALL_P_VALUE = 1.17501162847487E-242;
-
-    DifferentialExpression subject;
+    private DifferentialExpression subject;
 
     @Before
     public void setUp() throws Exception {
@@ -51,10 +50,8 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testUnderExpressedGeneIsForRegulation() {
-        //when
         DifferentialExpression expression = new DifferentialExpression(1.0, -1.0);
 
-        //then
         assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
         assertThat(expression.isRegulatedLike(Regulation.UP), is(false));
         assertThat(expression.isRegulatedLike(Regulation.DOWN), is(true));
@@ -62,10 +59,8 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testOverExpressedGeneIsForRegulation() {
-        //when
         DifferentialExpression expression = new DifferentialExpression(1.0, 1.0);
 
-        //then
         assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
         assertThat(expression.isRegulatedLike(Regulation.UP), is(true));
         assertThat(expression.isRegulatedLike(Regulation.DOWN), is(false));
@@ -73,11 +68,8 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testSmallPValue() {
-        //when
         DifferentialExpression expression = new DifferentialExpression(SMALL_P_VALUE, -1.0);
 
-        //then
         assertThat(expression.getPValue(), is(0D));
     }
-
 }

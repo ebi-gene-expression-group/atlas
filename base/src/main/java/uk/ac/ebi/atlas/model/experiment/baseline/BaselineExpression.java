@@ -24,7 +24,7 @@ public class BaselineExpression implements Expression {
                               double median,
                               double upperQuartile,
                               double max) {
-        this(median, new double[] { min,lowerQuartile, median, upperQuartile, max });
+        this(median, new double[] {min, lowerQuartile, median, upperQuartile, max});
     }
 
 

@@ -28,7 +28,7 @@ public class ConfigurationTraderIT {
     }
 
     @Test
-    public void EProtOneHasTwoMenuFilterFactors() {
+    public void eProt1HasTwoMenuFilterFactors() {
         BaselineExperimentConfiguration bc = subject.getBaselineFactorsConfiguration("E-PROT-1");
         assertThat(bc.getMenuFilterFactorTypes().size(), greaterThan(1));
     }

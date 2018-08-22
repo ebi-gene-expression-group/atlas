@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class ArrayDesignDAOIT {
+    private static final int ENSG00000109929_ARRAY_DESIGNS = 74;
 
     @Inject
     private ArrayDesignDAO subject;
@@ -29,8 +30,7 @@ public class ArrayDesignDAOIT {
 
     @Test
     public void testGetAllArrayDesignMapNames() {
-        Map<String,String> arrayDesigns = subject.getArrayDesignMapNames();
-        assertThat(arrayDesigns.size(), is(74));
+        Map<String, String> arrayDesigns = subject.getArrayDesignMapNames();
+        assertThat(arrayDesigns.size(), is(ENSG00000109929_ARRAY_DESIGNS));
     }
-
 }

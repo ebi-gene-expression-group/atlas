@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -12,7 +10,6 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.DataFileHubFactory;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
@@ -26,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,16 +31,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BaselineExperimentBuilderIT {
 
     private static final String SPECIES_NAME = "Homo sapiens";
-    private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of());
+    private static final SpeciesProperties SPECIES_PROPERTIES =
+            SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of());
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
     private static final String DESCRIPTION = "description";
     private static final String DISPLAY_NAME = "displayName";
 
-    private static final List<String> PUBMEDID = Arrays.asList("PUBMEDID");
-    private static final List<String> DOI = Arrays.asList("00.1/DOI");
-    private static final List<String> PROVIDER_URL = Arrays.asList("http://www.provider.com","http://www.provider1.com");
-    private static final List<String> PROVIDER_DESCRIPTION = Arrays.asList("Baseline experiment data provider","Another baseline experiment data provider");
+    private static final List<String> PUBMEDID = singletonList("PUBMEDID");
+    private static final List<String> DOI = singletonList("00.1/DOI");
+    private static final List<String> PROVIDER_URL =
+            Arrays.asList("http://www.provider.com", "http://www.provider1.com");
+    private static final List<String> PROVIDER_DESCRIPTION =
+            Arrays.asList("Baseline experiment data provider", "Another baseline experiment data provider");
 
     @Inject
     private EuropePmcClient europePmcClient;

@@ -27,7 +27,7 @@ public class PopularSpeciesDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
-    public PopularSpeciesDao(JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory){
+    public PopularSpeciesDao(JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory) {
         this.jdbcTemplate = jdbcTemplate;
         this.speciesFactory = speciesFactory;
     }
@@ -48,9 +48,11 @@ public class PopularSpeciesDao {
 
             Pair<Long, Long> experimentCounts = speciesToExperimentCounts.get(species);
             if (experimentType.isBaseline()) {
-                speciesToExperimentCounts.put(species, Pair.of(experimentCounts.getLeft() + experimentCount, experimentCounts.getRight()));
+                speciesToExperimentCounts.put(
+                        species, Pair.of(experimentCounts.getLeft() + experimentCount, experimentCounts.getRight()));
             } else { //if (experimentType.isDifferential()) {
-                speciesToExperimentCounts.put(species, Pair.of(experimentCounts.getLeft(), experimentCounts.getRight() + experimentCount));
+                speciesToExperimentCounts.put(
+                        species, Pair.of(experimentCounts.getLeft(), experimentCounts.getRight() + experimentCount));
             }
         }
 
@@ -61,7 +63,8 @@ public class PopularSpeciesDao {
             long baselineExperimentsCount = speciesToExperimentCount.getValue().getLeft();
             long differentialExperimentsCount = speciesToExperimentCount.getValue().getRight();
             popularSpeciesInfoBuilder.add(
-                    PopularSpeciesInfo.create(speciesName, kingdom, baselineExperimentsCount, differentialExperimentsCount)
+                    PopularSpeciesInfo.create(
+                            speciesName, kingdom, baselineExperimentsCount, differentialExperimentsCount)
             );
         }
 

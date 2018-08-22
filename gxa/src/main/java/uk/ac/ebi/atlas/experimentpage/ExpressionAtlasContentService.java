@@ -99,29 +99,37 @@ public class ExpressionAtlasContentService {
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         if (experiment.getType().isProteomicsBaseline()) {
-            return proteomicsBaselineExperimentExternallyAvailableContentService.stream((BaselineExperiment) experiment, uri);
+            return proteomicsBaselineExperimentExternallyAvailableContentService.stream(
+                    (BaselineExperiment) experiment, uri);
         } else if (experiment.getType().isRnaSeqBaseline()) {
-            return rnaSeqBaselineExperimentExternallyAvailableContentService.stream((BaselineExperiment) experiment, uri);
+            return rnaSeqBaselineExperimentExternallyAvailableContentService.stream(
+                    (BaselineExperiment) experiment, uri);
         } else if (experiment.getType().isRnaSeqDifferential()) {
-            return rnaSeqDifferentialExperimentExternallyAvailableContentService.stream((DifferentialExperiment) experiment, uri);
+            return rnaSeqDifferentialExperimentExternallyAvailableContentService.stream(
+                    (DifferentialExperiment) experiment, uri);
         } else {
-            return microarrayExperimentExternallyAvailableContentService.stream((MicroarrayExperiment) experiment, uri);
+            return microarrayExperimentExternallyAvailableContentService.stream(
+                    (MicroarrayExperiment) experiment, uri);
         }
     }
 
-    public List<ExternallyAvailableContent> list(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType) {
+    public List<ExternallyAvailableContent> list(String experimentAccession,
+                                                 String accessKey,
+                                                 ExternallyAvailableContent.ContentType contentType) {
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         if (experiment.getType().isProteomicsBaseline()) {
-            return proteomicsBaselineExperimentExternallyAvailableContentService.list((BaselineExperiment) experiment, contentType);
+            return proteomicsBaselineExperimentExternallyAvailableContentService.list(
+                    (BaselineExperiment) experiment, contentType);
         } else if (experiment.getType().isRnaSeqBaseline()) {
-            return rnaSeqBaselineExperimentExternallyAvailableContentService.list((BaselineExperiment) experiment, contentType);
+            return rnaSeqBaselineExperimentExternallyAvailableContentService.list(
+                    (BaselineExperiment) experiment, contentType);
         } else if (experiment.getType().isRnaSeqDifferential()) {
-            return rnaSeqDifferentialExperimentExternallyAvailableContentService.list((DifferentialExperiment) experiment, contentType);
+            return rnaSeqDifferentialExperimentExternallyAvailableContentService.list(
+                    (DifferentialExperiment) experiment, contentType);
         } else {
-            return microarrayExperimentExternallyAvailableContentService.list((MicroarrayExperiment) experiment, contentType);
+            return microarrayExperimentExternallyAvailableContentService.list(
+                    (MicroarrayExperiment) experiment, contentType);
         }
     }
-
-
 }

@@ -66,7 +66,8 @@ public class AnalyticsSearchServiceIT {
 
     @Test
     public void searchMoreThanOneBioentityIdentifier() {
-        ImmutableSet<String> result = subject.searchMoreThanOneBioentityIdentifier(query, condition, species.getReferenceName());
+        ImmutableSet<String> result =
+                subject.searchMoreThanOneBioentityIdentifier(query, condition, species.getReferenceName());
         assertThat(result.size(), greaterThan(0));
     }
 
@@ -78,11 +79,10 @@ public class AnalyticsSearchServiceIT {
 
 
     @Test
-    public void getBioentityIdentifiersForSpecies(){
+    public void getBioentityIdentifiersForSpecies() {
         Collection<String> result = subject.getBioentityIdentifiersForSpecies(species.getReferenceName());
         assertThat(result.size(), greaterThan(100));
     }
-
 
     @Test
     public void tissueExpressionAvailableFor() {
@@ -92,31 +92,33 @@ public class AnalyticsSearchServiceIT {
 
     @Test
     public void speciesOfEmptyQuery() {
-        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(), SemanticQuery.create());
-        assertThat(species.size(), is(greaterThan(25)));    // Number of species present in analytics index is now 27
+        ImmutableList<String> speciesList = subject.findSpecies(SemanticQuery.create(), SemanticQuery.create());
+        assertThat(speciesList.size(), is(greaterThan(25)));  // Number of species present in analytics index is now 27
     }
 
     @Test
     public void speciesWhenNoResults() {
         SemanticQueryTerm foobarQueryTerm = SemanticQueryTerm.create("Foo", "Bar");
-        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(), SemanticQuery.create(foobarQueryTerm));
-        assertThat(species, hasSize(0));
+        ImmutableList<String> speciesList =
+                subject.findSpecies(SemanticQuery.create(), SemanticQuery.create(foobarQueryTerm));
+        assertThat(speciesList, hasSize(0));
     }
 
     @Test
     public void speciesSpecificSearch() {
         SemanticQueryTerm reactomeQueryTerm = SemanticQueryTerm.create("R-MMU-69002", "pathwayid");
-        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
-        assertThat(species, hasSize(1));
-        assertThat(species.get(0), is("mus musculus"));
+        ImmutableList<String> speciesList =
+                subject.findSpecies(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
+        assertThat(speciesList, hasSize(1));
+        assertThat(speciesList.get(0), is("mus musculus"));
     }
 
     @Test
     public void multipleSpeciesSearch() {
         SemanticQueryTerm reactomeQueryTerm = SemanticQueryTerm.create("GO:0008150", "go");
-        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
-        assertThat(species.size(), is(greaterThan(0)));
-        assertThat(speciesFactory.create(species.get(0)).isUnknown(), is(false));
+        ImmutableList<String> speciesList =
+                subject.findSpecies(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
+        assertThat(speciesList.size(), is(greaterThan(0)));
+        assertThat(speciesFactory.create(speciesList.get(0)).isUnknown(), is(false));
     }
-
 }

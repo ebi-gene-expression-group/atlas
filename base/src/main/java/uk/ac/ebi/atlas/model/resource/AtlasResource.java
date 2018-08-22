@@ -21,10 +21,9 @@ public abstract class AtlasResource<T> {
 
     public boolean existsAndIsNonEmpty() {
         return exists() && (
-                path.toFile().isDirectory()
-                        ? path.toFile().list().length > 0
-                        : path.toFile().length() > 0
-        );
+                path.toFile().isDirectory() ?
+                        path.toFile().list().length > 0 :
+                        path.toFile().length() > 0);
     }
 
     public boolean isReadable() {

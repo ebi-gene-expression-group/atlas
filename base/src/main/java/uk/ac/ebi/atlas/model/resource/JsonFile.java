@@ -10,9 +10,8 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 
 public abstract class JsonFile<T> extends AtlasResource<T> {
-
-    public JsonFile(String parentDirectory, String template, String ... args) {
-        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object []) args)));
+    public JsonFile(String parentDirectory, String template, String... args) {
+        super(Paths.get(parentDirectory, MessageFormat.format(template, (Object[]) args)));
     }
 
     public static class ReadOnly extends JsonFile<JsonReader> {

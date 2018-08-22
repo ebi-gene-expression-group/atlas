@@ -27,22 +27,22 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HistogramServiceTest {
-    MockDataFileHub dataFileHub;
+    private MockDataFileHub dataFileHub;
 
-    RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory;
-
-    @Mock
-    ExperimentTrader experimentTrader;
+    private RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory;
 
     @Mock
-    BaselineExperiment experiment;
+    private ExperimentTrader experimentTrader;
 
-    CutoffScale.Scaled cutoffScale = new CutoffScale.Scaled();
+    @Mock
+    private BaselineExperiment experiment;
 
-    HistogramService<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>, BaselineExperiment> subject;
+    private CutoffScale.Scaled cutoffScale = new CutoffScale.Scaled();
+
+    private HistogramService<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>, BaselineExperiment> subject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         dataFileHub = MockDataFileHub.create();
         rnaSeqBaselineProfileStreamFactory = Mockito.spy(new RnaSeqBaselineProfileStreamFactory(dataFileHub));
 
@@ -53,12 +53,13 @@ public class HistogramServiceTest {
 
         when(experimentTrader.getExperiment("accession", "")).thenReturn(experiment);
 
-        dataFileHub.addTpmsExpressionFile("accession", ImmutableList.of( new String[]{"Gene ID", "Gene name"},
-                new String[]{"id_1", "name_1"}));
+        dataFileHub.addTpmsExpressionFile(
+                "accession",
+                ImmutableList.of(new String[] {"Gene ID", "Gene name"}, new String[] {"id_1", "name_1"}));
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testGet() {
         BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> baselineProfileStreamOptions =
                 new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment);
         JsonObject result = subject.get("accession", "", baselineProfileStreamOptions).asJson();
@@ -69,7 +70,7 @@ public class HistogramServiceTest {
     }
 
     @Test
-    public void cachingWorks() throws Exception {
+    public void cachingWorks() {
         subject.get(
                 "accession", "",
                 new BaselineRequestContext<>(new RnaSeqBaselineRequestPreferences(), experiment)).asJson();

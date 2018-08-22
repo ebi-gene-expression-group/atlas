@@ -41,25 +41,32 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class EvidenceService<
-        Expr extends DifferentialExpression, E extends DifferentialExperiment,
-        StreamOptions extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr, Prof>> {
+public class
+EvidenceService<
+        X extends DifferentialExpression,
+        E extends DifferentialExperiment,
+        O extends DifferentialProfileStreamOptions,
+        P extends Profile<Contrast, X, P>> {
 
-    private final ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory;
+    private static final double MIN_P_VALUE = 1e-234;
+
+    private final ProfileStreamFactory<Contrast, X, E, O, P> differentialProfileStreamFactory;
     private final DataFileHub dataFileHub;
     private final String expressionAtlasVersion;
 
 
     public EvidenceService(
-            ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory,
+            ProfileStreamFactory<Contrast, X, E, O, P> differentialProfileStreamFactory,
             DataFileHub dataFileHub, String expressionAtlasVersion) {
         this.differentialProfileStreamFactory = differentialProfileStreamFactory;
         this.dataFileHub = dataFileHub;
         this.expressionAtlasVersion = expressionAtlasVersion;
     }
 
-    public void evidenceForExperiment(E experiment, Function<Contrast, StreamOptions> queryForOneContrast, Consumer<JsonObject> yield) {
-        if(shouldSkip(experiment)){
+    public void evidenceForExperiment(E experiment,
+                                      Function<Contrast, O> queryForOneContrast,
+                                      Consumer<JsonObject> yield) {
+        if (shouldSkip(experiment)) {
             return;
         }
 
@@ -72,20 +79,22 @@ public class EvidenceService<
 
         Map<String, Map<Contrast, Integer>> rankPerContrastPerGene = getPercentileRanks(experiment);
 
-        for(Contrast contrast : diseaseAssociations.keySet()) {
-            for(Prof profile :
+        for (Contrast contrast : diseaseAssociations.keySet()) {
+            for (P profile :
                     differentialProfileStreamFactory.select(
                             experiment, queryForOneContrast.apply(contrast), Collections.emptySet(),
                             p -> p.getExpression(contrast) != null,
                             new MinMaxProfileRanking<>(
-                                    Comparator.comparing(p -> - Math.abs(p.getExpressionLevel(contrast))),
+                                    Comparator.comparing(p -> -Math.abs(p.getExpressionLevel(contrast))),
                                     GeneProfilesList::new))) {
 
                 // If experiment is microarray, retrieve probe ID
-                // TODO: Or could check experiment.getType().isMicroarray() instead?
-                Optional<String> probeId = profile instanceof MicroarrayProfile ? Optional.of(((MicroarrayProfile) profile).getDesignElementName()) : Optional.empty();
+                // TODO Or could check experiment.getType().isMicroarray() instead?
+                Optional<String> probeId = profile instanceof MicroarrayProfile ?
+                        Optional.of(((MicroarrayProfile) profile).getDesignElementName()) :
+                        Optional.empty();
 
-                Expr expression = profile.getExpression(contrast);
+                X expression = profile.getExpression(contrast);
                 if (expression != null) {
                     piecesOfEvidence(
                             experiment,
@@ -104,16 +113,16 @@ public class EvidenceService<
 
     }
 
-    private boolean shouldSkip(E experiment){
-        return ! experiment.getSpecies().isUs()
-                || experiment.getType().isMicroRna()
-                || cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign());
+    private boolean shouldSkip(E experiment) {
+        return !experiment.getSpecies().isUs() ||
+                experiment.getType().isMicroRna() ||
+                cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign());
     }
 
     private void piecesOfEvidence(E experiment,
                                   String methodDescription,
                                   DiseaseAssociation linkToDisease,
-                                  Expr expression,
+                                  X expression,
                                   Integer foldChangeRank,
                                   String ensemblGeneId,
                                   Optional<String> probeId,
@@ -144,7 +153,7 @@ public class EvidenceService<
                                        SampleCharacteristic biosampleInfo,
                                        Pair<String, String> testAndReferenceLabels,
                                        DiseaseAssociation.CONFIDENCE confidence,
-                                       Expr expression,
+                                       X expression,
                                        Integer foldChangeRank,
                                        String ensemblGeneId,
                                        Optional<String> probeId,
@@ -201,21 +210,23 @@ public class EvidenceService<
     }
 
     private JsonObject evidence(E experiment, String ensemblGeneId,
-                        Expr expression, Integer foldChangeRank,
-                        Pair<String, String> testAndReferenceLabels,
-                        Contrast contrast,
-                        DiseaseAssociation.CONFIDENCE confidence,
-                        String methodDescription,
-                        SampleCharacteristic organismPart) {
+                                X expression, Integer foldChangeRank,
+                                Pair<String, String> testAndReferenceLabels,
+                                Contrast contrast,
+                                DiseaseAssociation.CONFIDENCE confidence,
+                                String methodDescription,
+                                SampleCharacteristic organismPart) {
         JsonObject result = new JsonObject();
         result.addProperty("is_associated", true);
-        result.addProperty("unique_experiment_reference", MessageFormat.format("STUDYID_{0}", experiment.getAccession()));
+        result.addProperty(
+                "unique_experiment_reference", MessageFormat.format("STUDYID_{0}", experiment.getAccession()));
         result.add("urls", linkUrls(experiment.getAccession(), ensemblGeneId));
         result.add("evidence_codes", evidenceCodes(experiment.getType()));
         result.add("log2_fold_change", log2FoldChange(expression, foldChangeRank));
         result.addProperty("test_sample", testAndReferenceLabels.getLeft());
         result.addProperty("reference_sample", testAndReferenceLabels.getRight());
-        result.addProperty("date_asserted", new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss'Z'").format(experiment.getLastUpdate()));
+        result.addProperty(
+                "date_asserted", new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss'Z'").format(experiment.getLastUpdate()));
         result.addProperty("experiment_overview", experiment.getDescription());
         result.addProperty("comparison_name", contrast.getDisplayName());
         result.addProperty("organism_part", organismPartProperty(organismPart));
@@ -235,8 +246,11 @@ public class EvidenceService<
         return result;
     }
 
-    private String organismPartProperty(SampleCharacteristic organismPart){
-        return organismPart.valueOntologyTerms().stream().findFirst().map(OntologyTerm::uri).orElse(organismPart.value());
+    private String organismPartProperty(SampleCharacteristic organismPart) {
+        return organismPart.valueOntologyTerms().stream()
+                .findFirst()
+                .map(OntologyTerm::uri)
+                .orElse(organismPart.value());
     }
 
     private JsonArray linkUrls(String experimentAccession, String ensemblGeneId) {
@@ -247,7 +261,9 @@ public class EvidenceService<
         ));
         result.add(linkUrl(
                 "Gene expression in Expression Atlas",
-                MessageFormat.format("http://www.ebi.ac.uk/gxa/experiments/{0}?geneQuery={1}", experimentAccession, ensemblGeneId) //change me to the new format!
+                MessageFormat.format(
+                        "http://www.ebi.ac.uk/gxa/experiments/{0}?geneQuery={1}",
+                        experimentAccession, ensemblGeneId) //change me to the new format!
         ));
         result.add(linkUrl(
                 "Baseline gene expression in Expression Atlas",
@@ -259,10 +275,10 @@ public class EvidenceService<
     /*
     original comment:
     fix me- we also need to account for the GSEA codes:
-	http://purl.obolibrary.org/obo/ECO:0000358 differential geneset expression evidence from microarray experiment
-	http://purl.obolibrary.org/obo/ECO:0000359 differential geneset expression evidence from RNA-seq experiment
-	But we are not including this data in the JSON report for now.
-     */
+    http://purl.obolibrary.org/obo/ECO:0000358 differential geneset expression evidence from microarray experiment
+    http://purl.obolibrary.org/obo/ECO:0000359 differential geneset expression evidence from RNA-seq experiment
+    But we are not including this data in the JSON report for now.
+    */
     private JsonArray evidenceCodes(ExperimentType experimentType) {
         JsonArray result = new JsonArray();
         if (experimentType.isMicroarray()) {
@@ -273,18 +289,19 @@ public class EvidenceService<
         return result;
     }
 
-    private JsonObject log2FoldChange(Expr expression, Integer foldChangeRank) {
+    private JsonObject log2FoldChange(X expression, Integer foldChangeRank) {
         JsonObject result = new JsonObject();
         result.addProperty("value", expression.getFoldChange());
         result.addProperty("percentile_rank", foldChangeRank);
         return result;
     }
 
-    double getPValue(Expr expression) {
-        return Double.valueOf(String.format("%3.2e", expression.getPValue() == 0.0 ? 1e-234 : expression.getPValue()));
+    double getPValue(X expression) {
+        return Double.valueOf(
+                String.format("%3.2e", expression.getPValue() == 0.0 ? MIN_P_VALUE : expression.getPValue()));
     }
 
-    private JsonObject resourceScore(Expr expression, String methodDescription) {
+    private JsonObject resourceScore(X expression, String methodDescription) {
         JsonObject result = new JsonObject();
         /*
         probability estimates shouldn't be zero but sometimes we get them from the pipeline as rounding errors
@@ -332,7 +349,10 @@ public class EvidenceService<
         return result;
     }
 
-    private JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName, Optional<String> probeId) {
+    private JsonObject uniqueAssociationFields(String ensemblGeneId,
+                                               String experimentAccession,
+                                               String comparisonName,
+                                               Optional<String> probeId) {
         JsonObject result = new JsonObject();
         result.addProperty("geneID", geneUri(ensemblGeneId));
         result.addProperty("study_id", experimentAccessionUri(experimentAccession));
@@ -342,18 +362,18 @@ public class EvidenceService<
         return result;
     }
 
-    private String activity(boolean isCttvPrimary, Expr expression) {
+    private String activity(boolean isCttvPrimary, X expression) {
         return MessageFormat.format(
                 "http://identifiers.org/cttv.activity/{0}",
-                isCttvPrimary
-                        ? expression.getFoldChange() > 0
-                        ? "increased_transcript_level"
-                        : "decreased_transcript_level"
-                        : "unknown"
+                isCttvPrimary ?
+                        expression.getFoldChange() > 0 ?
+                                "increased_transcript_level" :
+                                "decreased_transcript_level" :
+                        "unknown"
         );
     }
 
-    private JsonObject target(String ensemblGeneId, boolean isCttvPrimary, Expr expression) {
+    private JsonObject target(String ensemblGeneId, boolean isCttvPrimary, X expression) {
         JsonObject result = new JsonObject();
         result.addProperty("id", geneUri(ensemblGeneId));
         result.addProperty("target_type", "http://identifiers.org/cttv.target/transcript_evidence");
@@ -377,7 +397,6 @@ public class EvidenceService<
         return result;
     }
 
-
     private Map<Contrast, DiseaseAssociation> getDiseaseAssociations(DifferentialExperiment experiment) {
         Map<Contrast, DiseaseAssociation> result = new HashMap<>();
         for (Contrast contrast : experiment.getDataColumnDescriptors()) {
@@ -387,9 +406,8 @@ public class EvidenceService<
         return result;
     }
 
-
     @AutoValue
-    static abstract class DiseaseAssociation {
+    abstract static class DiseaseAssociation {
         enum CONFIDENCE {
             LOW, MEDIUM, HIGH
         }
@@ -408,29 +426,51 @@ public class EvidenceService<
 
         public abstract SampleCharacteristic organismPart();
 
-        public static Optional<DiseaseAssociation> tryCreate(DifferentialExperiment experiment, Contrast contrast){
-            Optional<SampleCharacteristic> biosampleInfo = getBiosampleInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
-            Optional<SampleCharacteristic> diseaseInfo = getDiseaseInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
+        public static Optional<DiseaseAssociation> tryCreate(DifferentialExperiment experiment, Contrast contrast) {
+            Optional<SampleCharacteristic> biosampleInfo =
+                    getBiosampleInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
+            Optional<SampleCharacteristic> diseaseInfo =
+                    getDiseaseInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
 
             if (biosampleInfo.isPresent() && diseaseInfo.isPresent()) {
                 return Optional.of(
                         DiseaseAssociation.create(
-                                biosampleInfo.get(), experiment.getExperimentDesign(), contrast, experiment.doesContrastHaveCttvPrimaryAnnotation(contrast), diseaseInfo.get()
-                        )
-                );
+                                biosampleInfo.get(),
+                                experiment.getExperimentDesign(),
+                                contrast,
+                                experiment.doesContrastHaveCttvPrimaryAnnotation(contrast),
+                                diseaseInfo.get()));
             } else {
                 return Optional.empty();
             }
         }
 
 
-        public static DiseaseAssociation create(SampleCharacteristic biosampleInfo, ExperimentDesign experimentDesign, Contrast contrast,
-                                                boolean isCttvPrimary, SampleCharacteristic diseaseInfo){
+        public static DiseaseAssociation create(SampleCharacteristic biosampleInfo,
+                                                ExperimentDesign experimentDesign,
+                                                Contrast contrast,
+                                                boolean isCttvPrimary,
+                                                SampleCharacteristic diseaseInfo) {
             String referenceSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getReferenceAssayGroup());
             String testSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getTestAssayGroup());
-            DiseaseAssociation.CONFIDENCE confidence = determineStudyConfidence(experimentDesign, diseaseInfo, contrast.getTestAssayGroup(), isCttvPrimary);
-            SampleCharacteristic organismPart = Optional.ofNullable(experimentDesign.getSampleCharacteristic(contrast.getTestAssayGroup().getFirstAssayAccession(), "organism part")).orElse(SampleCharacteristic.create("organism part", ""));
-            return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo, referenceSampleLabel, testSampleLabel, diseaseInfo, confidence, isCttvPrimary, organismPart);
+            DiseaseAssociation.CONFIDENCE confidence =
+                    determineStudyConfidence(
+                            experimentDesign, diseaseInfo, contrast.getTestAssayGroup(), isCttvPrimary);
+            SampleCharacteristic organismPart =
+                    Optional.ofNullable(
+                            experimentDesign.getSampleCharacteristic(
+                                    contrast.getTestAssayGroup().getFirstAssayAccession(),
+                                    "organism part"))
+                            .orElse(SampleCharacteristic.create("organism part", ""));
+
+            return new AutoValue_EvidenceService_DiseaseAssociation(
+                    biosampleInfo,
+                    referenceSampleLabel,
+                    testSampleLabel,
+                    diseaseInfo,
+                    confidence,
+                    isCttvPrimary,
+                    organismPart);
         }
     }
 
@@ -440,7 +480,7 @@ public class EvidenceService<
     https://github.com/opentargets/json_schema/blob/master/src/evidence/expression.json
     "test_sample", "reference_sample"
      */
-    static String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup) {
+    private static String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup) {
         return experimentDesign.getFactorValues(assayGroup.getFirstAssayAccession()).values().stream()
                 .filter(StringUtils::isNotEmpty)
                 .collect(Collectors.joining("; "));
@@ -451,10 +491,12 @@ public class EvidenceService<
     This will either be an organism part, a cell line, or a cell type.
     When we couldn't determine this we used to issue a warning asking curators to curate this.
      */
-    static Optional<SampleCharacteristic> getBiosampleInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
+    private static Optional<SampleCharacteristic> getBiosampleInfo(final ExperimentDesign experimentDesign,
+                                                                   AssayGroup testAssayGroup) {
         return Stream.of("organism part", "cell line", "cell type").flatMap(
                 x -> {
-                    SampleCharacteristic s = experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), x);
+                    SampleCharacteristic s =
+                            experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), x);
                     return s == null ? Stream.empty() : Stream.of(s);
                 }
         ).findFirst();
@@ -465,7 +507,8 @@ public class EvidenceService<
     Original comment:
     # Go through the types (should probably always only be one)...
      */
-    static Optional<SampleCharacteristic> getDiseaseInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
+    private static Optional<SampleCharacteristic> getDiseaseInfo(final ExperimentDesign experimentDesign,
+                                                                 AssayGroup testAssayGroup) {
         return experimentDesign.getSampleCharacteristics(testAssayGroup.getFirstAssayAccession()).stream().filter(
                 sampleCharacteristic -> sampleCharacteristic.header().toLowerCase().contains("disease")
                         && !StringUtils.containsAny(sampleCharacteristic.value().toLowerCase(),
@@ -482,8 +525,10 @@ public class EvidenceService<
     characteristics and something else is the factor e.g a treatment, the
     confidence is "low".
     */
-    private static DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign, SampleCharacteristic diseaseCharacteristic,
-                                                                   AssayGroup testAssayGroup, boolean isCttvPrimary) {
+    private static DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign,
+                                                                          SampleCharacteristic diseaseCharacteristic,
+                                                                          AssayGroup testAssayGroup,
+                                                                          boolean isCttvPrimary) {
         FactorSet factors = experimentDesign.getFactors(testAssayGroup.getFirstAssayAccession());
         if (!factors.factorsByType.keySet().contains(Factor.normalize(diseaseCharacteristic.header()))) {
             return DiseaseAssociation.CONFIDENCE.LOW;
@@ -503,7 +548,8 @@ public class EvidenceService<
     }
 
     private Map<String, Map<Contrast, Integer>> readPercentileRanks(E experiment, ObjectInputStream<String[]> lines) {
-        Map<Integer, Contrast> whichContrastInWhichLine = percentileRanksColumnsFromHeader(lines.readNext(), experiment);
+        Map<Integer, Contrast> whichContrastInWhichLine =
+                percentileRanksColumnsFromHeader(lines.readNext(), experiment);
         Map<String, Map<Contrast, Integer>> result = new HashMap<>();
         for (String[] line : new IterableObjectInputStream<>(lines)) {
             Map<Contrast, Integer> resultForThisGene = new HashMap<>();
@@ -528,7 +574,9 @@ public class EvidenceService<
     }
 
     private String getMethodDescriptionFromAnalysisMethodsFile(E experiment) {
-        try (TsvStreamer tsvStreamer = dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
+        try (
+                TsvStreamer tsvStreamer =
+                        dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get()) {
             return tsvStreamer.get()
                     .filter(line -> line.length > 1)
                     .filter(line -> line[0].toLowerCase().contains("differential expression"))
@@ -541,7 +589,7 @@ public class EvidenceService<
     If something's a factor then it is also a characteristic unless we've made a mistake.
     Example mistake was E-GEOD-23764.
      */
-    boolean cellLineAsSampleCharacteristicButNoDiseaseAsFactor(ExperimentDesign experimentDesign){
+    boolean cellLineAsSampleCharacteristicButNoDiseaseAsFactor(ExperimentDesign experimentDesign) {
         return (experimentDesign.getSampleHeaders().contains("cell line") ||
                 experimentDesign.getFactorHeaders().contains("cell line"))  &&
                 !experimentDesign.getFactorHeaders().contains("disease");

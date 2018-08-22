@@ -29,5 +29,6 @@ public abstract class ExperimentDTOResultSetExtractor implements ResultSetExtrac
         return Lists.newArrayList(experimentByAccession.values());
     }
 
-    protected abstract ExperimentDTO createExperimentDTO(ResultSet resultSet, String experimentAccession) throws SQLException;
+    protected abstract ExperimentDTO createExperimentDTO(ResultSet resultSet,
+                                                         String experimentAccession) throws SQLException;
 }

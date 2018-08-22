@@ -11,7 +11,12 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
 import static uk.ac.ebi.atlas.testutils.MockExperiment.createDifferentialExperiment;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
@@ -32,7 +37,7 @@ public class DifferentialExperimentTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = createDifferentialExperiment("accession",ImmutableList.of(c1, c2));
+        subject = createDifferentialExperiment("accession", ImmutableList.of(c1, c2));
     }
 
     @Test
@@ -48,7 +53,7 @@ public class DifferentialExperimentTest {
 
     @Test
     public void testGetAssayAccessions() {
-        assertThat(subject.getAnalysedAssays(), hasItems("assay1", "assay2", "assay3","assay41", "assay42"));
+        assertThat(subject.getAnalysedAssays(), hasItems("assay1", "assay2", "assay3", "assay41", "assay42"));
     }
 
     @Test

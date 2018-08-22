@@ -38,15 +38,15 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
               alternativeViews, alternativeViewDescriptions, assayGroups, experimentDisplayDefaults);
     }
 
-    public FactorGroup getFactors(AssayGroup assayGroup){
+    public FactorGroup getFactors(AssayGroup assayGroup) {
         return experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
     }
 
     @Override
     protected JsonObject propertiesForAssay(String runOrAssay) {
         boolean analysed = false;
-        for(AssayGroup assayGroup : getDataColumnDescriptors()){
-            if(assayGroup.assaysAnalyzedForThisDataColumn().contains(runOrAssay)){
+        for (AssayGroup assayGroup : getDataColumnDescriptors()) {
+            if (assayGroup.assaysAnalyzedForThisDataColumn().contains(runOrAssay)) {
                 analysed = true;
                 break;
             }
@@ -65,26 +65,26 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
                 new DataColumnGroup.DataColumnGroupList<>(experimentDisplayDefaults);
 
         //populate the keys in the order we want later
-        for(String factorHeader: experimentDisplayDefaults.prescribedOrderOfFilters()){
+        for (String factorHeader: experimentDisplayDefaults.prescribedOrderOfFilters()) {
             dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader, true);
         }
-        for(String factorHeader: experimentDesign.getFactorHeaders()){
+        for (String factorHeader: experimentDesign.getFactorHeaders()) {
             dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader, true);
         }
-        for(String sampleHeader: experimentDesign.getSampleHeaders()){
+        for (String sampleHeader: experimentDesign.getSampleHeaders()) {
             dataColumnGroupList.addDataColumnGroupIfNotPresent(sampleHeader, false);
         }
 
         // add the information about which headers go to which categories
-        for(AssayGroup dataColumnDescriptor: getDataColumnDescriptors()){
-            for(String assayAnalyzedForThisDataColumn :
+        for (AssayGroup dataColumnDescriptor: getDataColumnDescriptors()) {
+            for (String assayAnalyzedForThisDataColumn :
                     dataColumnDescriptor.assaysAnalyzedForThisDataColumn()) {
-                for(Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)) {
+                for (Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)) {
                     dataColumnGroupList.addValueToGroupingInGroup(
                             factor.getHeader(), factor.getValue(), dataColumnDescriptor);
                 }
 
-                for(SampleCharacteristic sampleCharacteristic
+                for (SampleCharacteristic sampleCharacteristic
                         : experimentDesign.getSampleCharacteristics(assayAnalyzedForThisDataColumn)) {
                     dataColumnGroupList.addValueToGroupingInGroup(
                             sampleCharacteristic.header(), sampleCharacteristic.value(), dataColumnDescriptor);

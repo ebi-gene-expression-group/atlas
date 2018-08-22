@@ -17,21 +17,21 @@ public class SpeciesPropertiesDaoTest {
 
     private static final String SPECIES_PROPERTIES_JSON_WITH_UNKNOWN_FIELD =
             "[{" +
-            "  \"name\":\"Arabidopsis_lyrata\"," +
-            "  \"defaultQueryFactorType\":\"ORGANISM_PART\"," +
-            "  \"kingdom\":\"plants\"," +
+            "  \"name\":\"Arabidopsis_lyrata\", " +
+            "  \"defaultQueryFactorType\":\"ORGANISM_PART\", " +
+            "  \"kingdom\":\"plants\", " +
             "  \"resources\":[" +
             "      {" +
-            "        \"type\":\"genome_browser\"," +
-            "        \"name\":\"Ensembl Plants\"," +
+            "        \"type\":\"genome_browser\", " +
+            "        \"name\":\"Ensembl Plants\", " +
             "        \"url\":\"http://plants.ensembl.org/Arabidopsis_lyrata\"" +
-            "      }," +
+            "      }, " +
             "      {" +
-            "        \"type\":\"genome_browser\"," +
-            "        \"name\":\"Ensembl Plants\"," +
+            "        \"type\":\"genome_browser\", " +
+            "        \"name\":\"Ensembl Plants\", " +
             "        \"url\":\"http://plants.ensembl.org/Arabidopsis_lyrata\"" +
             "      }" +
-            "  ]," +
+            "  ], " +
             "  \"foo\":\"bar\"" +
             "}]";
 

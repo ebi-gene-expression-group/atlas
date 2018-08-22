@@ -2,9 +2,8 @@ package uk.ac.ebi.atlas.experimentpage.analysismethods;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -13,10 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 
-/*
-I only know of E-PROT-1 that has this - and it's linked in the analysis methods tsv so can't change the url easily :(
-It seems to "win" against the all-grabbing /experiments/{experimentAccession}/** but it's fragile!
- */
+// I only know of E-PROT-1 that has this - and it's linked in the analysis methods tsv so can't change the url easily
+// It seems to "win" against the all-grabbing /experiments/{experimentAccession}/** but it's fragile!
 @Controller
 @Scope("request")
 public class AnalysisMethodsPageController {
@@ -28,9 +25,9 @@ public class AnalysisMethodsPageController {
                 dataFileHub.getExperimentMageTabDirLocation().resolve("{0}").resolve("{1}.pdf").toString();
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods/{resource}.pdf", method = RequestMethod.GET)
-    public String getAnalysisMethodsPdf(@PathVariable String experimentAccession,@PathVariable String resource) {
-        if(!buildPdfPath(experimentAccession, resource).toFile().exists()) {
+    @GetMapping(value = "/experiments/{experimentAccession}/analysis-methods/{resource}.pdf")
+    public String getAnalysisMethodsPdf(@PathVariable String experimentAccession, @PathVariable String resource) {
+        if (!buildPdfPath(experimentAccession, resource).toFile().exists()) {
             throw new ResourceNotFoundException("No PDF for " + resource);
         }
 
@@ -47,19 +44,3 @@ public class AnalysisMethodsPageController {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

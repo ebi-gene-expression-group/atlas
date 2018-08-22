@@ -20,7 +20,7 @@ public class ArrayDesignDAO {
         @Override
         protected List<ArrayDesign> create() {
             return jdbcTemplate.queryForList("SELECT * FROM ARRAYDESIGN").stream().map(
-                    e -> ArrayDesign.create((String) e.get("ACCESSION"), (String)e.get("NAME") )
+                    e -> ArrayDesign.create((String) e.get("ACCESSION"), (String) e.get("NAME"))
             ).collect(Collectors.toList());
         }
     };
@@ -35,7 +35,7 @@ public class ArrayDesignDAO {
         return jdbcTemplate.queryForList(query, new String[]{geneIdentifier}, String.class);
     }
 
-    public ArrayDesign getArrayDesign(String accession){
+    public ArrayDesign getArrayDesign(String accession) {
         return arrayDesigns.get().stream()
                 .filter(a -> a.accession().equals(accession))
                 .findFirst().orElse(ArrayDesign.createForUnknownName(accession));
@@ -49,7 +49,7 @@ public class ArrayDesignDAO {
 
         for (Map<String, Object> arrayDesign : allArrayDesigns) {
             String accession = (String) arrayDesign.get("ACCESSION");
-            String name = (String)arrayDesign.get("NAME");
+            String name = (String) arrayDesign.get("NAME");
             mapBuilder.put(accession, name);
 
         }

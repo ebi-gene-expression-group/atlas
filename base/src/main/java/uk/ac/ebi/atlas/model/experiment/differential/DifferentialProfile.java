@@ -9,12 +9,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public abstract class DifferentialProfile<T extends DifferentialExpression,
                                           Self extends Profile<Contrast, T, Self>>
-
-extends Profile<Contrast, T, Self> {
+                      extends Profile<Contrast, T, Self> {
 
     private static final double MIN_P_VALUE = 1;
-
-    protected DifferentialProfile(){}
 
     public DifferentialProfile(String geneId, String geneName) {
         super(geneId, geneName);
@@ -34,7 +31,7 @@ extends Profile<Contrast, T, Self> {
 
         for (Contrast contrast : contrasts) {
             T expression = getExpression(contrast);
-            if (expression != null ) {
+            if (expression != null) {
                 pValueTotal += expression.getPValue();
             } else {
                 pValueTotal += MIN_P_VALUE;
@@ -43,5 +40,4 @@ extends Profile<Contrast, T, Self> {
 
         return pValueTotal / contrasts.size();
     }
-
 }

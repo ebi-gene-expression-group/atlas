@@ -30,7 +30,8 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     private final ExperimentAttributesService experimentAttributesService;
 
     public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
-                                                        BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
+                                                        BaselineCoexpressionProfileLoader
+                                                                baselineCoexpressionProfileLoader,
                                                         AnalyticsIndexerManager analyticsIndexerManager,
                                                         ExperimentTrader experimentTrader,
                                                         ExperimentAttributesService experimentAttributesService) {
@@ -42,7 +43,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public List<String> findAllExperiments(){
+    public List<String> findAllExperiments() {
         return allDtos().map(ExperimentDTO::getExperimentAccession).collect(toList());
     }
 
@@ -54,7 +55,8 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case CACHE_READ:
                 return Optional.of(
                         GSON.toJsonTree(
-                                experimentAttributesService.getAttributes(getAnyExperimentWithAdminAccess(accession))));
+                                experimentAttributesService.getAttributes(
+                                        getAnyExperimentWithAdminAccess(accession))));
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
                 return Optional.of(ExperimentOps.DEFAULT_SUCCESS_RESULT);
@@ -67,7 +69,8 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     @Override
-    public Optional<? extends List<Pair<String, ? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops) {
+    public Optional<? extends List<Pair<String, ? extends JsonElement>>>
+           attemptExecuteForAllAccessions(Collection<Op> ops) {
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
         } else {
@@ -94,7 +97,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         return experimentCrud.findAllExperiments().stream();
     }
 
-    private List<Pair<String, ? extends JsonElement>> list(){
+    private List<Pair<String, ? extends JsonElement>> list() {
         return allDtos()
                 .map(experimentDTO -> Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson()))
                 .collect(toList());
@@ -137,19 +140,19 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 resultOfTheOp =
                         new JsonPrimitive(
                                 String.format(
-                                        " deleted %,d and loaded %,d coexpression profiles", deleteCount, loadCount));
+                                        " deleted %, d and loaded %, d coexpression profiles", deleteCount, loadCount));
                 break;
             case COEXPRESSION_IMPORT:
                 loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(accession);
-                resultOfTheOp = new JsonPrimitive(String.format(" loaded %,d coexpression profiles", loadCount));
+                resultOfTheOp = new JsonPrimitive(String.format(" loaded %, d coexpression profiles", loadCount));
                 break;
             case COEXPRESSION_DELETE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
-                resultOfTheOp = new JsonPrimitive(String.format(" deleted %,d coexpression profiles", deleteCount));
+                resultOfTheOp = new JsonPrimitive(String.format(" deleted %, d coexpression profiles", deleteCount));
                 break;
             case ANALYTICS_IMPORT:
                 loadCount = analyticsIndexerManager.addToAnalyticsIndex(accession);
-                resultOfTheOp = new JsonPrimitive(String.format("(re)indexed %,d documents", loadCount));
+                resultOfTheOp = new JsonPrimitive(String.format("(re)indexed %, d documents", loadCount));
                 break;
             case ANALYTICS_DELETE:
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);

@@ -21,18 +21,19 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class SolrQueryServiceIT {
-
     @Inject
-    SolrQueryService subject;
+    private SolrQueryService subject;
 
     @Test
     public void getKnownSpeciesWithCategory() {
         assertThat(
-                subject.fetchSpecies(SemanticQueryTerm.create("ENSMUSG00000019082", BioentityPropertyName.ENSGENE.name())),
+                subject.fetchSpecies(
+                        SemanticQueryTerm.create("ENSMUSG00000019082", BioentityPropertyName.ENSGENE.name())),
                 hasItem(equalToIgnoringCase("mus_musculus")));
 
         assertThat(
-                subject.fetchSpecies(SemanticQueryTerm.create("FBgn0260743", BioentityPropertyName.FLYBASE_GENE_ID.name())),
+                subject.fetchSpecies(
+                        SemanticQueryTerm.create("FBgn0260743", BioentityPropertyName.FLYBASE_GENE_ID.name())),
                 hasItem(equalToIgnoringCase("drosophila_melanogaster")));
     }
 

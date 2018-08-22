@@ -25,21 +25,20 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class LatestExperimentsServiceIT {
-
-    static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-
-    @Inject
-    ExperimentTrader experimentTrader;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    LatestExperimentsDao latestExperimentsDao;
+    private ExperimentTrader experimentTrader;
 
-    LatestExperimentsService subject;
+    @Inject
+    private LatestExperimentsDao latestExperimentsDao;
+
+    private LatestExperimentsService subject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         subject =
                 new LatestExperimentsService(
                         latestExperimentsDao, experimentTrader,

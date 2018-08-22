@@ -9,7 +9,6 @@
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 <%--@elvariable id="alternativeViews" type="List<String>"--%>
 <%--@elvariable id="alternativeViewDescriptions" type="List<String>"--%>
-<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>

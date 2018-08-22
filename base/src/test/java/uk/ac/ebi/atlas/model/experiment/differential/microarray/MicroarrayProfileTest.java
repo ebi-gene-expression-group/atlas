@@ -7,12 +7,11 @@ import static org.hamcrest.Matchers.hasEntry;
 import static org.junit.Assert.assertThat;
 
 public class MicroarrayProfileTest {
-
-    public static final String DESIGN_ELEMENT_NAME = "designElementName";
-    public static final String GENE_ID = "geneId";
+    private static final String DESIGN_ELEMENT_NAME = "designElementName";
+    private static final String GENE_ID = "geneId";
     private static final String GENE_NAME = "geneName";
 
-    MicroarrayProfile subject;
+    private MicroarrayProfile subject;
 
     @Before
     public void setUp() throws Exception {
@@ -26,7 +25,7 @@ public class MicroarrayProfileTest {
     }
 
     @Test
-    public void hasDesignElementProperty() throws Exception {
+    public void hasDesignElementProperty() {
         assertThat(subject.properties(), hasEntry("designElement", DESIGN_ELEMENT_NAME));
     }
 }

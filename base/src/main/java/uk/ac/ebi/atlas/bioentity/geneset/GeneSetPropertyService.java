@@ -37,25 +37,29 @@ public class GeneSetPropertyService {
         this.reactomeClient = reactomeClient;
     }
 
-    public static final List<BioentityPropertyName> all =
+    public static final List<BioentityPropertyName> ALL =
             ImmutableList.of(PATHWAYID, GO, PO, INTERPRO);
 
     public Map<BioentityPropertyName, Set<String>> propertyValuesByType(String identifier, boolean isPlant) {
         identifier = identifier.toUpperCase();
 
         if (GeneSetUtil.matchesReactomeID(identifier)) {
-            if(isPlant){
-                return propertyValuesByType(PATHWAYID, identifier, reactomeClient.getPlantPathwayName(identifier).orElse(""));
-            }
-            else{
-                return propertyValuesByType(PATHWAYID, identifier, reactomeClient.getPathwayName(identifier).orElse(""));
+            if (isPlant) {
+                return propertyValuesByType(
+                        PATHWAYID, identifier, reactomeClient.getPlantPathwayName(identifier).orElse(""));
+            } else {
+                return propertyValuesByType(
+                        PATHWAYID, identifier, reactomeClient.getPathwayName(identifier).orElse(""));
             }
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
-            return propertyValuesByType(GO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
+            return propertyValuesByType(
+                    GO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
-            return propertyValuesByType(PO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
-        }else if (GeneSetUtil.matchesInterProAccession(identifier)) {
-            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
+            return propertyValuesByType(
+                    PO, identifier, goPoTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
+        } else if (GeneSetUtil.matchesInterProAccession(identifier)) {
+            return propertyValuesByType(
+                    INTERPRO, identifier, interProTermTrader.get(identifier).map(OntologyTerm::name).orElse(""));
         } else {
             return ImmutableMap.of();
         }

@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,14 +19,12 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IterableObjectInputStreamTest {
+    private static final int MAX_STREAM_SIZE = 10000;
 
-    static final int MAX_STREAM_SIZE = 10000;
+    private int streamSize;
+    private DummyObjectInputStream spyInputStream;
 
-    int streamSize;
-
-    DummyObjectInputStream spyInputStream;
-
-    IterableObjectInputStream<Object> subject;
+    private IterableObjectInputStream<Object> subject;
 
     @Before
     public void setUp() throws Exception {
@@ -37,9 +34,9 @@ public class IterableObjectInputStreamTest {
     }
 
     @Test
-    public void nextClosesTheStreamWhenExhausted() throws Exception {
+    public void nextClosesTheStreamWhenExhausted() {
         Iterator<Object> subjectIterator = subject.iterator();
-        for (int i = 0 ; i < streamSize ; i++) {
+        for (int i = 0; i < streamSize; i++) {
             assertThat(subjectIterator.next(), is(not(nullValue())));
         }
         assertThat(subjectIterator.next(), is(nullValue()));
@@ -47,23 +44,23 @@ public class IterableObjectInputStreamTest {
     }
 
     @Test
-    public void callToIteratorConsumesObjectFromStream() throws Exception {
-        for (int i = 0 ; i < streamSize ; i++) {
+    public void callToIteratorConsumesObjectFromStream() {
+        for (int i = 0; i < streamSize; i++) {
             assertThat(subject.iterator().hasNext(), is(true));
         }
         assertThat(subject.iterator().hasNext(), is(false));
     }
 
     class DummyObjectInputStream implements ObjectInputStream<Object> {
-        volatile int count;
+        private int count;
 
-        DummyObjectInputStream(int elements){
+        DummyObjectInputStream(int elements) {
             count = elements;
         }
 
         @Override
         public Object readNext() {
-            if(count > 0) {
+            if (count > 0) {
                 count = count - 1;
                 return new Object();
             } else {
@@ -72,8 +69,6 @@ public class IterableObjectInputStreamTest {
         }
 
         @Override
-        public void close() throws IOException {
-
-        }
+        public void close() {}
     }
 }

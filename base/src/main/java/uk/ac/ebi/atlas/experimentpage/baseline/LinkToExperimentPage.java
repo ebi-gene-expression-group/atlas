@@ -22,7 +22,7 @@ public abstract class LinkToExperimentPage<Input> implements Function<Input, URI
             throw new RuntimeException(e);
         }
 
-        params = geneQuery.size()>0 ? ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson()): ImmutableMap.of();
+        params = geneQuery.size() > 0 ? ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson()) : ImmutableMap.of();
     }
 
     public abstract Map<String, String> perInputQueryParameters(Input input);
@@ -35,8 +35,10 @@ public abstract class LinkToExperimentPage<Input> implements Function<Input, URI
         Map<String, String> allQueryParams =
                 ImmutableMap.<String, String>builder().putAll(params).putAll(perInputQueryParameters(input)).build();
 
-        return experimentsLocation.resolve(accession(input) +
-                (allQueryParams.isEmpty() ? "" : "?" + Joiner.on("&").withKeyValueSeparator("=").join(allQueryParams))
-        );
+        return experimentsLocation.resolve(
+                accession(input) +
+                (allQueryParams.isEmpty() ?
+                        "" :
+                        "?" + Joiner.on("&").withKeyValueSeparator("=").join(allQueryParams)));
     }
 }

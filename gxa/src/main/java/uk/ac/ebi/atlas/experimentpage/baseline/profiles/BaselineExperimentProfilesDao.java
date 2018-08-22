@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.profiles;
 
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -63,11 +64,12 @@ public class BaselineExperimentProfilesDao {
                 .addQueryFieldByTerm(BIOENTITY_IDENTIFIER_SEARCH, geneIds)
                 .addQueryFieldByTerm(ASSAY_GROUP_ID, preferences.getSelectedColumnIds())
                 .setFieldList(
-                        BIOENTITY_IDENTIFIER,
-                        expressionLevelFieldNames.getLeft(),
-                        expressionLevelFieldNames.getRight(),
-                        ASSAY_GROUP_ID,
-                        asAnalyticsSchemaField(BioentityPropertyName.SYMBOL))
+                        ImmutableSet.of(
+                            BIOENTITY_IDENTIFIER,
+                            expressionLevelFieldNames.getLeft(),
+                            expressionLevelFieldNames.getRight(),
+                            ASSAY_GROUP_ID,
+                            asAnalyticsSchemaField(BioentityPropertyName.SYMBOL)))
                 .setRows(maximumNumberOfDocs);
 
         QueryResponse queryResponse = analyticsCollectionProxy.query(solrQueryBuilder);
@@ -91,8 +93,10 @@ public class BaselineExperimentProfilesDao {
             thisGeneIdDocs.forEach(solrDoc -> {
                 BaselineExpression baselineExpression =
                         solrDoc.containsKey(expressionLevelFieldNames.getRight().name()) ?
-                                parseSolrFieldValue(solrDoc.getFieldValues(expressionLevelFieldNames.getRight().name())) :
-                                parseSolrFieldValue(solrDoc.getFieldValue(expressionLevelFieldNames.getLeft().name()));
+                                parseSolrFieldValue(
+                                        solrDoc.getFieldValues(expressionLevelFieldNames.getRight().name())) :
+                                parseSolrFieldValue(
+                                        solrDoc.getFieldValue(expressionLevelFieldNames.getLeft().name()));
 
                 String assayGroupId = (String) solrDoc.getFieldValue(ASSAY_GROUP_ID.name());
                 AssayGroup thisAssayGroup = assayGroups.stream()

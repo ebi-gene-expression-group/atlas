@@ -18,16 +18,15 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class DBSolrStatusControllerIT {
-
     @Inject
     private DBSolrStatusController subject;
 
     @Test
     public void dbAndSolrStatus() {
         String message = subject.dbAndSolrStatus();
-        Map<String, Object> status = GSON.fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
+        Map<String, Object> status = GSON.fromJson(message, new TypeToken<Map<String, String>>() {}.getType());
         // Or the unsafer(?) Map status = new Gson().fromJson(message, Map.class);
 
         assertThat(status.get("DB"), is("UP"));

@@ -16,9 +16,8 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class BioentitiesSolrClientIT {
-
     @Inject
-    public BioentitiesSolrClient subject;
+    private BioentitiesSolrClient subject;
 
     @Test
     public void testGetBioentityIdentifiers() {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 public abstract class HtmlExceptionHandlingController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(HtmlExceptionHandlingController.class);
 
     @Autowired
@@ -43,7 +42,7 @@ public abstract class HtmlExceptionHandlingController {
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ModelAndView InternalServerHandleException(Exception e) {
+    public ModelAndView handleExceptionFallback(Exception e) {
         LOGGER.error("{} - {}", e.getMessage(), Joiner.on("\n\t").join(e.getStackTrace()));
         ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());

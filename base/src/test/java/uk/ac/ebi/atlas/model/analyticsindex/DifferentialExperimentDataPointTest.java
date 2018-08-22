@@ -12,8 +12,9 @@ public class DifferentialExperimentDataPointTest {
     @Test
     public void testGetRelevantBioentityPropertyNames() {
         DifferentialExperimentDataPoint subject =
-                new DifferentialExperimentDataPoint(createDifferentialExperiment(
-                        "E-GEOD-54705", ImmutableList.of()), new RnaSeqDifferentialAnalytics("","",0.03, 1.23),"",5);
+                new DifferentialExperimentDataPoint(
+                        createDifferentialExperiment("E-GEOD-54705", ImmutableList.of()),
+                        new RnaSeqDifferentialAnalytics("", "", 0.03, 1.23), "", 5);
 
         assertThat(subject.getProperties())
                 .containsKeys("factors", "regulation", "contrast_id", "num_replicates", "fold_change", "p_value")

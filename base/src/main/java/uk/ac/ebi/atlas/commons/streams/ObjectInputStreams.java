@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.function.Predicate;
 
 public class ObjectInputStreams {
-
-    private ObjectInputStreams() {
+    protected ObjectInputStreams() {
+        throw new UnsupportedOperationException();
     }
 
     public static <X> ObjectInputStream<X> filter(final ObjectInputStream<X> unfiltered, final Predicate<X> keep) {
@@ -15,7 +15,7 @@ public class ObjectInputStreams {
                 X result;
                 do {
                     result = unfiltered.readNext();
-                    if(result == null){
+                    if (result == null) {
                         return null;
                     }
                 } while (!keep.test(result));

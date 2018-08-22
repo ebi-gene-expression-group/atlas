@@ -44,7 +44,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
 
     }
 
-    protected Function<HttpServletResponse, Void> streamFile(Pair<String,Function<Writer, Void>> p) {
+    protected Function<HttpServletResponse, Void> streamFile(Pair<String, Function<Writer, Void>> p) {
         return streamFile(p.getLeft(), p.getRight());
     }
 
@@ -52,10 +52,10 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
             final String fileName, final Function<Writer, Void> document) {
 
         return response -> {
-            response.setHeader("Content-Disposition", "attachment; filename=\""+fileName + "\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
             response.setContentType("text/plain; charset=utf-8");
 
-            try(Writer writer = response.getWriter()){
+            try (Writer writer = response.getWriter()) {
                 document.apply(writer);
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
@@ -73,7 +73,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
         return writer -> {
             try (ObjectInputStream<String[]> stream = resource.get();
                  CSVWriter csvWriter =
-                         new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
+                         new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
                 String[] headers = whatToDoWithTheHeaders.apply(stream.readNext());
 
                 csvWriter.writeNext(headers);
@@ -99,7 +99,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
         return writer -> {
             try (CSVReader csvReader = new CSVReader(resource.getReader(), '\t');
                  CSVWriter csvWriter =
-                         new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
+                         new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
                 String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
 
                 csvWriter.writeNext(headers);

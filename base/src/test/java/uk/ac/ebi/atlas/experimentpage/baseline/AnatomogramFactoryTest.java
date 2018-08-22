@@ -23,9 +23,9 @@ public class AnatomogramFactoryTest {
         AssayGroup g4 = new AssayGroup("g4", "r4");
         List<AssayGroup> assayGroups = ImmutableList.of(g1, g2, g3, g4);
 
-        experimentDesign.putFactor("r1", AnatomogramFactory.factorTypeWithAnatomogram, "liver");
-        experimentDesign.putFactor("r2", AnatomogramFactory.factorTypeWithAnatomogram, "liver");
-        experimentDesign.putFactor("r3", AnatomogramFactory.factorTypeWithAnatomogram, "heart");
+        experimentDesign.putFactor("r1", AnatomogramFactory.FACTOR_TYPE_WITH_ANATOMOGRAM, "liver");
+        experimentDesign.putFactor("r2", AnatomogramFactory.FACTOR_TYPE_WITH_ANATOMOGRAM, "liver");
+        experimentDesign.putFactor("r3", AnatomogramFactory.FACTOR_TYPE_WITH_ANATOMOGRAM, "heart");
         experimentDesign.putFactor("r1", "other_type", "a");
         experimentDesign.putFactor("r2", "other_type", "b");
         experimentDesign.putFactor("r3", "other_type", "c");

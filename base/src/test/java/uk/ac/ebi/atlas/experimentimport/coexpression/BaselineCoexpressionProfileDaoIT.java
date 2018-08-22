@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -28,38 +27,43 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(classes = TestConfig.class)
 public class BaselineCoexpressionProfileDaoIT {
 
-    private static String EXPERIMENT_ACCESSION = "E-FOOBAR";
-    private static int CE_PROFILES_COUNT = 100;
-    private static int GENE_ID_CODE_LENGTH = 11;
+    private static final String EXPERIMENT_ACCESSION = "E-FOOBAR";
+    private static final int CE_PROFILES_COUNT = 100;
+    private static final int GENE_ID_CODE_LENGTH = 11;
 
     // Used to check the DB
     @Inject
     private JdbcTemplate jdbcTemplate;
 
     @Mock
-    DummyBaselineCoexpressionProfileInputStream baselineCoexpressionProfileInputStream;
+    private DummyBaselineCoexpressionProfileInputStream baselineCoexpressionProfileInputStream;
 
-    BaselineCoexpressionProfileDao subject;
+    private BaselineCoexpressionProfileDao subject;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_CE_PROFILES WHERE EXPERIMENT = ?", EXPERIMENT_ACCESSION);
         subject = new BaselineCoexpressionProfileDao(jdbcTemplate);
         baselineCoexpressionProfileInputStream = new DummyBaselineCoexpressionProfileInputStream();
     }
 
     @Test
-    public void loadCoexpressionsProfile() throws Exception {
-        assertThat(subject.loadCoexpressionsProfile(EXPERIMENT_ACCESSION, baselineCoexpressionProfileInputStream), is(CE_PROFILES_COUNT));
-        assertThat(subject.deleteCoexpressionsProfile(EXPERIMENT_ACCESSION), is(CE_PROFILES_COUNT));
+    public void loadCoexpressionsProfile() {
+        assertThat(
+                subject.loadCoexpressionsProfile(EXPERIMENT_ACCESSION, baselineCoexpressionProfileInputStream),
+                is(CE_PROFILES_COUNT));
+        assertThat(
+                subject.deleteCoexpressionsProfile(EXPERIMENT_ACCESSION),
+                is(CE_PROFILES_COUNT));
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_CE_PROFILES WHERE EXPERIMENT = ?", EXPERIMENT_ACCESSION);
     }
 
-    private class DummyBaselineCoexpressionProfileInputStream implements ObjectInputStream<BaselineCoexpressionProfile> {
+    private final class DummyBaselineCoexpressionProfileInputStream
+                        implements ObjectInputStream<BaselineCoexpressionProfile> {
 
         private int position = 0;
         private List<BaselineCoexpressionProfile> baselineCoexpressionProfiles;
@@ -75,18 +79,22 @@ public class BaselineCoexpressionProfileDaoIT {
                             new BaselineCoexpressionProfile(
                                     geneId,
                                     geneIds.stream()
-                                            .map(_geneId -> BaselineCoexpression.create(ThreadLocalRandom.current().nextDouble(), _geneId))
+                                            .map(_geneId ->
+                                                    BaselineCoexpression.create(
+                                                            ThreadLocalRandom.current().nextDouble(), _geneId))
                                             .collect(Collectors.toList())))
                             .collect(Collectors.toList());
         }
 
         @Override
         public BaselineCoexpressionProfile readNext() {
-            return position < baselineCoexpressionProfiles.size() ? baselineCoexpressionProfiles.get(position++) : null;
+            return position < baselineCoexpressionProfiles.size() ?
+                    baselineCoexpressionProfiles.get(position++) :
+                    null;
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
 
         }
     }

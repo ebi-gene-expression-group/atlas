@@ -24,7 +24,7 @@ public class BioentityIndexMonitorTest {
     }
 
     @Test
-    public void startShouldResetIndexingProgress(){
+    public void startShouldResetIndexingProgress() {
         subject.start();
         verify(indexingProgressMock).reset();
     }

@@ -26,16 +26,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class JsonBioentityInformationControllerWIT {
-
     @Autowired
-    WebApplicationContext wac;
+    private WebApplicationContext wac;
 
     @Inject
-    SolrUtils solrUtils;
+    private SolrUtils solrUtils;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -47,8 +46,7 @@ public class JsonBioentityInformationControllerWIT {
         String geneId = solrUtils.fetchRandomGeneFromAnalytics();
 
         this.mockMvc
-                .perform(get(
-                        "/json/bioentity_information/" + geneId))
+                .perform(get("/json/bioentity_information/" + geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[0].type", isA(String.class)))

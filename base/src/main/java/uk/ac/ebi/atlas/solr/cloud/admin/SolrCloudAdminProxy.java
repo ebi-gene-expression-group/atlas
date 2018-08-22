@@ -14,9 +14,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toMap;
 
 @Component
 public class SolrCloudAdminProxy {
@@ -26,7 +29,8 @@ public class SolrCloudAdminProxy {
         this.cloudSolrClient = cloudSolrClient;
     }
 
-    public boolean areCollectionsUp(List<String> collectionNames, String... aliasedCollectionNames) throws IOException, SolrServerException {
+    public boolean areCollectionsUp(List<String> collectionNames, String... aliasedCollectionNames)
+            throws IOException, SolrServerException {
         List<String> aliases = Arrays.asList(aliasedCollectionNames);
         SolrRequest request = new CollectionAdminRequest.ClusterStatus();
 
@@ -52,29 +56,25 @@ public class SolrCloudAdminProxy {
 
         Object collectionName = aliases.get(alias);
 
-        if(collectionName != null) {
+        if (collectionName != null) {
             return collectionName.toString();
-        }
-        else {
+        } else {
             throw new RuntimeException("The alias " + alias + " does not match any collections in Solr");
         }
     }
 
     // Returns a set of statuses that are not "active" for each node in a shard for a given Solr collection.
     private Set<String> getInactiveShardStatusesForCollection(NamedList<Object> response, String collectionName) {
-        LinkedHashMap collectionStatus = (LinkedHashMap) response.findRecursive("cluster", "collections", collectionName);
+        LinkedHashMap collectionStatus =
+                (LinkedHashMap) response.findRecursive("cluster", "collections", collectionName);
 
         if (MapUtils.isEmpty(collectionStatus)) {
             throw new RuntimeException("The collection " + collectionName + " does not exist in Solr");
-        }
-        else {
+        } else {
             collectionStatus.get("shards");
             LinkedHashMap shards = (LinkedHashMap) collectionStatus.get("shards");
 
-            Stream<LinkedHashMap> shardStream = shards.values()
-                    .stream();
-
-            List<LinkedHashMap> replicas = shardStream
+            List<LinkedHashMap> replicas = mapOfLinkedHashMap(shards).values().stream()
                     .map(x -> x.get("replicas"))
                     .map(LinkedHashMap.class::cast)
                     .collect(Collectors.toList());
@@ -82,13 +82,11 @@ public class SolrCloudAdminProxy {
             Set<String> inactiveStatuses = new HashSet<>();
 
             replicas.forEach(replica -> {
-                Stream<LinkedHashMap> replicaNodesStream = replica
-                        .values()
-                        .stream();
+                Stream<LinkedHashMap> replicaNodesStream = mapOfLinkedHashMap(replica).values().stream();
 
                 replicaNodesStream.forEach(node -> {
                     String nodeStatus = node.get("state").toString();
-                    if(!nodeStatus.equalsIgnoreCase("active")) {
+                    if (!nodeStatus.equalsIgnoreCase("active")) {
                         inactiveStatuses.add(nodeStatus);
                     }
                 });
@@ -96,5 +94,13 @@ public class SolrCloudAdminProxy {
 
             return inactiveStatuses;
         }
+    }
+
+    private static Map<String, LinkedHashMap> mapOfLinkedHashMap(LinkedHashMap<?, ?> map) {
+        return map.entrySet().stream()
+                .filter(entry -> entry.getKey() instanceof String && entry.getValue() instanceof LinkedHashMap)
+                .collect(toMap(
+                        entry -> (String) entry.getKey(),
+                        entry -> (LinkedHashMap) entry.getValue()));
     }
 }

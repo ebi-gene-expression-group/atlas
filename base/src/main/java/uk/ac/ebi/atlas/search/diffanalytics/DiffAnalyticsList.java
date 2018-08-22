@@ -8,7 +8,7 @@ public class DiffAnalyticsList extends ArrayList<DiffAnalytics> {
 
     private int totalNumberOfResults;
 
-    public DiffAnalyticsList(){
+    public DiffAnalyticsList() {
     }
 
     public DiffAnalyticsList(List<DiffAnalytics> diffAnalyticses, int totalNumberOfResults) {

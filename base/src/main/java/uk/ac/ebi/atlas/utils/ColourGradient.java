@@ -2,11 +2,18 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Preconditions;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class ColourGradient {
+    protected ColourGradient() {
+        throw new UnsupportedOperationException();
+    }
 
-    public static String getGradientColour(double value, double min, double max, String lowValueColourString, String highValueColourString) {
+    public static String getGradientColour(double value,
+                                           double min,
+                                           double max,
+                                           String lowValueColourString,
+                                           String highValueColourString) {
         Preconditions.checkArgument(
                 value >= 0.0 && value >= min && value <= max ||
                 value < 0 && value <= min && value >= max);
@@ -30,14 +37,18 @@ public class ColourGradient {
 
     private static Color getColourByName(String colourName) {
         try {
-            return (Color)Color.class.getField(colourName).get(null);
+            return (Color) Color.class.getField(colourName).get(null);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
     // Determines what colour a heat map cell should be based upon the cell values.
-    private static Color getGradientColour(double value, double min, double max, Color lowValueColour, Color highValueColour) {
+    private static Color getGradientColour(double value,
+                                           double min,
+                                           double max,
+                                           Color lowValueColour,
+                                           Color highValueColour) {
         double percentPosition = calculatePercentPosition(value, min, max);
 
         // Which colour group does that put us in.
@@ -46,14 +57,13 @@ public class ColourGradient {
         return calculateColorForPosition(colourPosition, lowValueColour, highValueColour);
     }
 
-
     private static Color calculateColorForPosition(int colourPosition, Color lowValueColour, Color highValueColour) {
         int r = lowValueColour.getRed();
         int g = lowValueColour.getGreen();
         int b = lowValueColour.getBlue();
 
         // Make n shifts of the colour, where n is the colourPosition.
-        for (int i = 0 ; i < colourPosition ; i++) {
+        for (int i = 0; i < colourPosition; i++) {
             int rDistance = r - highValueColour.getRed();
             int gDistance = g - highValueColour.getGreen();
             int bDistance = b - highValueColour.getBlue();

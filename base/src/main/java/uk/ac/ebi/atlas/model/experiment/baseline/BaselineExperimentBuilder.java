@@ -40,7 +40,7 @@ public class BaselineExperimentBuilder {
     private List<String> alternativeViews = Collections.emptyList();
     private List<String> alternativeViewDescriptions = Collections.emptyList();
 
-    public BaselineExperimentBuilder forSpecies(Species species){
+    public BaselineExperimentBuilder forSpecies(Species species) {
         this.species = species;
         return this;
     }
@@ -124,7 +124,7 @@ public class BaselineExperimentBuilder {
         return new
                 BaselineExperiment(experimentType, experimentAccession, lastUpdate, description,
                 displayName, disclaimer, species, pubMedIds, dois, experimentDesign, assayGroups, dataProviderURL,
-                dataProviderDescription, alternativeViews, alternativeViewDescriptions , experimentDisplayDefaults);
+                dataProviderDescription, alternativeViews, alternativeViewDescriptions, experimentDisplayDefaults);
     }
 
     private void validate() {

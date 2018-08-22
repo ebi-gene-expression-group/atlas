@@ -130,7 +130,6 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
         ImmutableList<BaselineAnalytics> baselineAnalytics =
                 createList(
                         geneId,
-                        assayGroupIds,
                         expressionLevelsTpm.orElse(new String[0]),
                         expressionLevelsFpkm.orElse(new String[0]));
 
@@ -142,7 +141,6 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
     }
 
     private ImmutableList<BaselineAnalytics> createList(String geneId,
-                                                        String[] assayGroupIds,
                                                         String[] expressionLevelsTpm,
                                                         String[] expressionLevelsFpkm) {
         checkArgument(StringUtils.isNotBlank(geneId), "Cannot read baseline analytics: gene ID is blank");
@@ -166,16 +164,24 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
                 Stream.of(expressionLevelsFpkm).map(BaselineExpression::create).toArray(BaselineExpression[]::new);
 
         ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
-        for (int i = 0 ; i < Math.max(baselineExpressionsTpm.length, baselineExpressionsFpkm.length) ; i++) {
+        for (int i = 0; i < Math.max(baselineExpressionsTpm.length, baselineExpressionsFpkm.length); i++) {
             if (baselineExpressionsTpm.length > 0 && baselineExpressionsTpm[i].getLevel() > 0.0 ||
                     baselineExpressionsFpkm.length > 0 && baselineExpressionsFpkm[i].getLevel() > 0.0) {
                 builder.add(BaselineAnalytics.create(
                         geneId,
                         assayGroupIds[i],
-                        baselineExpressionsTpm.length > 0 ? baselineExpressionsTpm[i].getLevel() : 0.0,
-                        baselineExpressionsFpkm.length > 0 ? baselineExpressionsFpkm[i].getLevel() : 0.0,
-                        baselineExpressionsTpm.length > 0 ? baselineExpressionsTpm[i].getQuartiles() : new double[0],
-                        baselineExpressionsFpkm.length > 0 ? baselineExpressionsFpkm[i].getQuartiles() : new double[0]));
+                        baselineExpressionsTpm.length > 0 ?
+                                baselineExpressionsTpm[i].getLevel() :
+                                0.0,
+                        baselineExpressionsFpkm.length > 0 ?
+                                baselineExpressionsFpkm[i].getLevel() :
+                                0.0,
+                        baselineExpressionsTpm.length > 0 ?
+                                baselineExpressionsTpm[i].getQuartiles() :
+                                new double[0],
+                        baselineExpressionsFpkm.length > 0 ?
+                                baselineExpressionsFpkm[i].getQuartiles() :
+                                new double[0]));
             }
         }
         return builder.build();

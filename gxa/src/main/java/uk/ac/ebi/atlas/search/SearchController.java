@@ -2,9 +2,7 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.common.SolrException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +29,6 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @Controller
 @Scope("prototype")
 public class SearchController extends HtmlExceptionHandlingController {
-    @Autowired
-    private Environment env;
-
     private final AnalyticsSearchService analyticsSearchService;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final SpeciesFactory speciesFactory;
@@ -69,7 +64,8 @@ public class SearchController extends HtmlExceptionHandlingController {
         model.addAttribute("species", species.getReferenceName());
 
         // Matches gene set ID -> Gene set page
-        // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
+        // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be
+        // TODO incorrectly redirected to /genesets/GO:FOOBAR
         if (conditionQuery.isEmpty() && GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(geneQuery)) {
             String geneSetId = geneQuery.terms().iterator().next().value();
 
@@ -96,9 +92,8 @@ public class SearchController extends HtmlExceptionHandlingController {
         if (conditionQuery.isEmpty() && geneIds.size() == 1) {
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
             return "redirect:/genes/" + geneIds.iterator().next();
-        }
-        // Resolves to multiple IDs or the query includes a condition -> General results page
-        else {
+        } else {
+            // Resolves to multiple IDs or the query includes a condition -> General results page
             ImmutableSet<String> experimentTypes =
                     analyticsSearchService.fetchExperimentTypes(
                             geneQuery, conditionQuery, species.getReferenceName());

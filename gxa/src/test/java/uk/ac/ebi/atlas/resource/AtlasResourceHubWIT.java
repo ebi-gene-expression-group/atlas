@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 class AtlasResourceHubWIT {
     @Inject
     private AtlasResourceHub subject;
@@ -60,7 +60,7 @@ class AtlasResourceHubWIT {
         }
     }
 
-    private void assertAboutResult(Map<String,JsonArray> result) throws Exception {
+    private void assertAboutResult(Map<String, JsonArray> result) throws Exception {
         for (Map.Entry<String, JsonArray> entryPerContrast : result.entrySet()) {
             for (JsonElement e : entryPerContrast.getValue()) {
                 testResourceExists(e.getAsJsonObject().get("uri").getAsString());

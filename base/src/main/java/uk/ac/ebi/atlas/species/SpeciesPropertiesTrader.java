@@ -18,7 +18,6 @@ import java.util.Collection;
 
 @Named
 public class SpeciesPropertiesTrader {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesPropertiesTrader.class);
 
     private SpeciesPropertiesDao speciesPropertiesDao;
@@ -96,22 +95,22 @@ public class SpeciesPropertiesTrader {
                 StringUtils.lowerCase(fromWords(truncate(toWords(nullSafe(str)))))));
     }
 
-    private static String nullSafe(String str){
+    private static String nullSafe(String str) {
         return StringUtils.isEmpty(str) ? "" : str;
     }
-    private static String toWords(String str){
+    private static String toWords(String str) {
         return str.toLowerCase().replace("_", " ");
     }
-    private static String truncate(String str){
+    private static String truncate(String str) {
         return Joiner.on(' ').skipNulls().join(Arrays.copyOf(str.split(" "), 2));
     }
 
-    private static String fromWords(String str){
+    private static String fromWords(String str) {
         return str.replace(" ", "_");
     }
 
-    private static final ImmutableMap<String, String> exceptions = ImmutableMap.of("Canis_lupus", "Canis_familiaris");
+    private static final ImmutableMap<String, String> EXCEPTIONS = ImmutableMap.of("Canis_lupus", "Canis_familiaris");
     private static String applyExceptions(String str) {
-        return exceptions.getOrDefault(str, str);
+        return EXCEPTIONS.getOrDefault(str, str);
     }
 }

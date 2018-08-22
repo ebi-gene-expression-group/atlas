@@ -9,23 +9,22 @@ public enum ResourceType {
     PLOT_GSEA_REACTOME("gsea_reactome"),
     EXTRA_INFO("extra-info");
 
-    ResourceType(String resourceName){
+    public final String resourceName;
+
+    ResourceType(String resourceName) {
         this.resourceName = resourceName;
     }
 
-    String resourceName;
-
-    public String fileName(){
-        return resourceName+".png";
+    public String fileName() {
+        return resourceName + ".png";
     }
 
-
-    public static ResourceType forFileName(String fileName){
-        for(ResourceType type : values()){
-            if(type.fileName().contains(fileName)){
+    public static ResourceType forFileName(String fileName) {
+        for (ResourceType type : values()) {
+            if (type.fileName().contains(fileName)) {
                 return type;
             }
         }
-        throw new ResourceNotFoundException("no matching resource for file: "+fileName);
+        throw new ResourceNotFoundException("no matching resource for file: " + fileName);
     }
 }

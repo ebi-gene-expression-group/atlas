@@ -15,7 +15,6 @@ import java.sql.SQLException;
 @Named
 @Scope("prototype")
 class DiffAnalyticsRowMapper implements RowMapper<DiffAnalytics> {
-
     //Used to handle positive/negative infinite values in the DB
     private static final int INFINITY_VALUE = 1000000;
 
@@ -31,9 +30,13 @@ class DiffAnalyticsRowMapper implements RowMapper<DiffAnalytics> {
         String experimentAccession = rs.getString(DiffAnalyticsQueryBuilder.EXPERIMENT);
         String contrastId = rs.getString(DiffAnalyticsQueryBuilder.CONTRASTID);
 
-        //TODO: getting contrast is slow because we go back to the database to get the experiment for each contrast
+        //TODO Getting contrast is slow because we go back to the database to get the experiment for each contrast
         Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
-        DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DiffAnalyticsQueryBuilder.PVALUE), rs.getDouble(DiffAnalyticsQueryBuilder.LOG_2_FOLD), rs.getString(DiffAnalyticsQueryBuilder.TSTAT), contrast);
+        DifferentialExpression expression =
+                buildDifferentialExpression(
+                        rs.getDouble(DiffAnalyticsQueryBuilder.PVALUE),
+                        rs.getDouble(DiffAnalyticsQueryBuilder.LOG_2_FOLD),
+                        rs.getString(DiffAnalyticsQueryBuilder.TSTAT));
 
         return new DiffAnalytics(
                 rs.getString(DiffAnalyticsQueryBuilder.IDENTIFIER),
@@ -43,11 +46,12 @@ class DiffAnalyticsRowMapper implements RowMapper<DiffAnalytics> {
                 rs.getString(DiffAnalyticsQueryBuilder.ORGANISM), contrast);
     }
 
-    DifferentialExpression buildDifferentialExpression(double pValue, double foldChange, String tstatistic, Contrast contrast) {
+    DifferentialExpression buildDifferentialExpression(double pValue, double foldChange, String tstatistic) {
 
         if (foldChange == INFINITY_VALUE) {
             foldChange = Double.POSITIVE_INFINITY;
         }
+
         if (foldChange == -INFINITY_VALUE) {
             foldChange = Double.NEGATIVE_INFINITY;
         }
@@ -55,8 +59,7 @@ class DiffAnalyticsRowMapper implements RowMapper<DiffAnalytics> {
         if (tstatistic == null) {
             return new DifferentialExpression(pValue, foldChange);
         }
+
         return new MicroarrayExpression(pValue, foldChange, Double.parseDouble(tstatistic));
-
-
     }
 }

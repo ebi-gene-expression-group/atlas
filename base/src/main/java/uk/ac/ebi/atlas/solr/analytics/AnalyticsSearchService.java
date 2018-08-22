@@ -26,11 +26,11 @@ public class AnalyticsSearchService {
         return fetchExperimentTypes(SemanticQuery.create(bioentityIdentifier), SemanticQuery.create(), "");
     }
 
-    public static ImmutableSet<String> readBuckets(String response){
-        List<Map<String,Object>> res = JsonPath.read(response, "$..buckets[*]");
+    public static ImmutableSet<String> readBuckets(String response) {
+        List<Map<String, Object>> res = JsonPath.read(response, "$..buckets[*]");
 
         ImmutableSet.Builder<String> b = ImmutableSet.builder();
-        for(Map<String,Object> m: res) {
+        for (Map<String, Object> m: res) {
             b.add(m.get("val").toString());
         }
         return b.build();
@@ -47,47 +47,59 @@ public class AnalyticsSearchService {
 
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, String speciesReferenceName) {
+    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery,
+                                                     SemanticQuery conditionQuery,
+                                                     String speciesReferenceName) {
 
-        String response = miscellaneousAnalyticsSearchDao.fetchExperimentTypes(geneQuery, conditionQuery, speciesReferenceName);
-
-        return readBuckets(response);
-    }
-
-    public ImmutableSet<String> searchMoreThanOneBioentityIdentifier(SemanticQuery geneQuery, SemanticQuery conditionQuery, String speciesReferenceName) {
-
-        String response = miscellaneousAnalyticsSearchDao.searchBioentityIdentifiers(geneQuery, conditionQuery, speciesReferenceName, 2);
+        String response =
+                miscellaneousAnalyticsSearchDao.fetchExperimentTypes(geneQuery, conditionQuery, speciesReferenceName);
 
         return readBuckets(response);
     }
 
-    public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, String speciesReferenceName) {
+    public ImmutableSet<String> searchMoreThanOneBioentityIdentifier(SemanticQuery geneQuery,
+                                                                     SemanticQuery conditionQuery,
+                                                                     String speciesReferenceName) {
 
-        String response = miscellaneousAnalyticsSearchDao.searchBioentityIdentifiers(geneQuery, conditionQuery, speciesReferenceName, -1);
+        String response =
+                miscellaneousAnalyticsSearchDao.searchBioentityIdentifiers(
+                        geneQuery, conditionQuery, speciesReferenceName, 2);
+
         return readBuckets(response);
     }
 
-    public Collection<String> getBioentityIdentifiersForSpecies(String speciesReferenceName){
+    public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery,
+                                                           SemanticQuery conditionQuery,
+                                                           String speciesReferenceName) {
+
+        String response =
+                miscellaneousAnalyticsSearchDao.searchBioentityIdentifiers(
+                        geneQuery, conditionQuery, speciesReferenceName, -1);
+        return readBuckets(response);
+    }
+
+    public Collection<String> getBioentityIdentifiersForSpecies(String speciesReferenceName) {
 
         String response = miscellaneousAnalyticsSearchDao.getBioentityIdentifiersForSpecies(speciesReferenceName);
         return readBuckets(response);
     }
 
     public boolean tissueExpressionAvailableFor(SemanticQuery geneQuery) {
-        String response = miscellaneousAnalyticsSearchDao.searchBioentityIdentifiersForTissuesInBaselineExperiments(geneQuery);
+        String response =
+                miscellaneousAnalyticsSearchDao.searchBioentityIdentifiersForTissuesInBaselineExperiments(geneQuery);
 
-        return ! readBuckets(response).isEmpty();
+        return !readBuckets(response).isEmpty();
     }
 
     public ImmutableList<String> findSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
         return readSpecies(miscellaneousAnalyticsSearchDao.getSpecies(geneQuery, conditionQuery));
     }
 
-    private static ImmutableList<String> readSpecies(String response){
+    private static ImmutableList<String> readSpecies(String response) {
         JSONArray res = JsonPath.read(response, "$..species[*]");
 
         ImmutableList.Builder<String> b = ImmutableList.builder();
-        for (int i = 0 ; i < res.size() ; i += 2) {
+        for (int i = 0; i < res.size(); i += 2) {
             b.add(res.get(i).toString());
         }
         return b.build();

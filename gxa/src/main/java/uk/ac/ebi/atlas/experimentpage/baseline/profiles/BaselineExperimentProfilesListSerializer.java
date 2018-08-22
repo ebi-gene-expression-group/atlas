@@ -10,6 +10,10 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 
 public class BaselineExperimentProfilesListSerializer {
+    protected BaselineExperimentProfilesListSerializer() {
+        throw new UnsupportedOperationException();
+    }
+
     public static JsonObject serialize(GeneProfilesList<? extends Profile<AssayGroup, ?, ?>> profilesList,
                                        BaselineRequestContext<? extends ExpressionUnit.Absolute> requestContext) {
         return new

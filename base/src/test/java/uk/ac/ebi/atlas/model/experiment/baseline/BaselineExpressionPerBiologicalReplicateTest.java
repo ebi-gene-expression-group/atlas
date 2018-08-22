@@ -18,27 +18,19 @@ public class BaselineExpressionPerBiologicalReplicateTest {
         assertThat(
                 new BaselineExpressionPerBiologicalReplicate(
                         ImmutableMap.of(
-                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0)
-                        )
-                ).getLevel(), is(1.0));
+                                new BiologicalReplicate("assay_1"), new BaselineExpression(1.0))).getLevel(), is(1.0));
 
         assertThat(
                 new BaselineExpressionPerBiologicalReplicate(
                         ImmutableMap.of(
                                 new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(1.0)
-
-                        )
-                ).getLevel(), is(1.0));
+                                new BiologicalReplicate("assay_2"), new BaselineExpression(1.0))).getLevel(), is(1.0));
 
         assertThat(
                 new BaselineExpressionPerBiologicalReplicate(
                         ImmutableMap.of(
                                 new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
-                                new BiologicalReplicate("assay_2"), new BaselineExpression(2.0)
-
-                        )
-                ).getLevel(), is(1.5));
+                                new BiologicalReplicate("assay_2"), new BaselineExpression(2.0))).getLevel(), is(1.5));
 
     }
 
@@ -49,9 +41,10 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                         ImmutableMap.of(
                                 new BiologicalReplicate("assay_1"), new BaselineExpression(1.0),
                                 new BiologicalReplicate("assay_2"), new BaselineExpression(2.0),
-                                new BiologicalReplicate("t1", ImmutableSet.of("assay_3", "assay_4")), new BaselineExpression(0.5)
-                        )
-                ).toJson(), is(GSON.fromJson(
+                                new BiologicalReplicate(
+                                        "t1", ImmutableSet.of("assay_3", "assay_4")), new BaselineExpression(0.5)))
+                        .toJson(),
+                is(GSON.fromJson(
                         "{\n" +
                                 "    \"stats\": {\n" +
                                 "        \"total\": 3.5,\n" +
@@ -80,9 +73,6 @@ public class BaselineExpressionPerBiologicalReplicateTest {
                                 "            \"expression_absolute_units\": 0.5\n" +
                                 "        }\n" +
                                 "    }]\n" +
-                                "}", JsonObject.class
-                )));
+                                "}", JsonObject.class)));
     }
-
-
 }

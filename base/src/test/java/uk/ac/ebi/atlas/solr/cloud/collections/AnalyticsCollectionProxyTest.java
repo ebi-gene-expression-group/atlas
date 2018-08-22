@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.solr.cloud.collections;
 
 import org.junit.jupiter.api.Test;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
-import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

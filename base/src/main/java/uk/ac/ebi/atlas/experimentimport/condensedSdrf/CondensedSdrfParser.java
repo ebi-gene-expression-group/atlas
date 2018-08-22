@@ -64,7 +64,7 @@ public class CondensedSdrfParser {
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
 
         try (TsvStreamer tsvStreamer = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get()) {
-            for (Iterator<String[]> tsvIterator = tsvStreamer.get().iterator(); tsvIterator.hasNext() ; ) {
+            for (Iterator<String[]> tsvIterator = tsvStreamer.get().iterator(); tsvIterator.hasNext();) {
                 String[] tsvLine = tsvIterator.next();
 
                 switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {

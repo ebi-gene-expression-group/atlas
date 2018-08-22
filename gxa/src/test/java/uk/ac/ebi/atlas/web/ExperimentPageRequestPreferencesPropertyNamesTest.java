@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.beanutils.BeanUtils;
 import org.hamcrest.Matchers;
@@ -9,93 +7,74 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.annotation.Nullable;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentPageRequestPreferencesPropertyNamesTest {
-
-
-    List<String> commonProperties = ImmutableList.of(
+    private static final List<String> COMMON_PROPERTIES = ImmutableList.of(
             "selectedColumnIds",
             "geneQuery",
             "specific",
             "heatmapMatrixSize",
             "cutoff"
-
     );
 
     @Test
     public void testCommonProperties() throws  Exception {
-        List<String> baselinePageProperties =
-                ImmutableList.<String>builder()
-                .addAll(commonProperties)
-                .build();
-
+        List<String> baselinePageProperties = ImmutableList.copyOf(COMMON_PROPERTIES);
 
         Set<String> baselineRequestPreferencesProperties =
-                FluentIterable.from(Introspector.getBeanInfo(BaselineRequestPreferences.class ).getPropertyDescriptors()).transform(new Function<PropertyDescriptor, String>() {
-                    @Nullable
-                    @Override
-                    public String apply(@Nullable PropertyDescriptor propertyDescriptor) {
-                        return propertyDescriptor.getName();
-                    }
-                }).toSet();
+                Arrays.stream(Introspector.getBeanInfo(BaselineRequestPreferences.class).getPropertyDescriptors())
+                        .map(PropertyDescriptor::getName)
+                        .collect(toSet());
 
-        for(String requiredProperty: baselinePageProperties){
+        for (String requiredProperty: baselinePageProperties) {
             assertThat(baselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
-        for(String requiredProperty: BeanUtils.describe(new RnaSeqBaselineRequestPreferences()).keySet()){
-            if(! requiredProperty.contains("default")){
+        for (String requiredProperty: BeanUtils.describe(new RnaSeqBaselineRequestPreferences()).keySet()) {
+            if (!requiredProperty.contains("default")) {
                 assertThat(baselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
             }
         }
 
-
         Set<String> proteomicsBaselineRequestPreferencesProperties =
-                FluentIterable.from(Introspector.getBeanInfo( ProteomicsBaselineRequestPreferences.class ).getPropertyDescriptors()).transform(new Function<PropertyDescriptor, String>() {
-                    @Nullable
-                    @Override
-                    public String apply(@Nullable PropertyDescriptor propertyDescriptor) {
-                        return propertyDescriptor.getName();
-                    }
-                }).toSet();
+                Arrays.stream(Introspector.getBeanInfo(
+                        ProteomicsBaselineRequestPreferences.class).getPropertyDescriptors())
+                        .map(PropertyDescriptor::getName)
+                        .collect(toSet());
 
-        for(String requiredProperty: baselinePageProperties){
+        for (String requiredProperty: baselinePageProperties) {
             assertThat(proteomicsBaselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
-        for(String requiredProperty: BeanUtils.describe(new ProteomicsBaselineRequestPreferences()).keySet()){
+        for (String requiredProperty: BeanUtils.describe(new ProteomicsBaselineRequestPreferences()).keySet()) {
             assertThat(proteomicsBaselineRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
 
         List<String> differentialPageProperties =
                 ImmutableList.<String>builder()
-                        .addAll(commonProperties)
+                        .addAll(COMMON_PROPERTIES)
                         .add("regulation")
                         .add("foldChangeCutoff")
                         .build();
 
         Set<String> differentialRequestPreferencesProperties =
-                FluentIterable.from(Introspector.getBeanInfo(DifferentialRequestPreferences.class ).getPropertyDescriptors()).transform(new Function<PropertyDescriptor, String>() {
-                    @Nullable
-                    @Override
-                    public String apply(@Nullable PropertyDescriptor propertyDescriptor) {
-                        return propertyDescriptor.getName();
-                    }
-                }).toSet();
+                Arrays.stream(Introspector.getBeanInfo(DifferentialRequestPreferences.class).getPropertyDescriptors())
+                        .map(PropertyDescriptor::getName)
+                        .collect(toSet());
 
-        for(String requiredProperty: differentialPageProperties){
+        for (String requiredProperty: differentialPageProperties) {
             assertThat(differentialRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
 
-        for(String requiredProperty:  BeanUtils.describe(new DifferentialRequestPreferences()).keySet()){
+        for (String requiredProperty:  BeanUtils.describe(new DifferentialRequestPreferences()).keySet()) {
             assertThat(differentialRequestPreferencesProperties, Matchers.hasItem(requiredProperty));
         }
-
     }
 }

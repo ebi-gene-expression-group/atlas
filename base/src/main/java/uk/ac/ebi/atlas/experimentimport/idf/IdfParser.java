@@ -56,13 +56,16 @@ public class IdfParser {
                                             .collect(Collectors.toList())));
 
             String title;
-            if(experimentAccession.startsWith("E-MTAB") || experimentAccession.startsWith("E-TABM")) { // Experiments that are regularly updated in ArrayExpress
-                 title = getParsedOutputByKey(AE_EXPERIMENT_DISPLAY_NAME_ID, getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList()))
-                        .stream()
-                        .findFirst()
-                        .orElse("");
-            }
-            else {
+            // Experiments that are regularly updated in ArrayExpress
+            if (experimentAccession.startsWith("E-MTAB") || experimentAccession.startsWith("E-TABM")) {
+                 title =
+                         getParsedOutputByKey(
+                                 AE_EXPERIMENT_DISPLAY_NAME_ID,
+                                 getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList()))
+                                 .stream()
+                                 .findFirst()
+                                 .orElse("");
+            } else {
                 title = getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList())
                         .stream()
                         .findFirst()
@@ -85,7 +88,8 @@ public class IdfParser {
                         .orElse(""),
                     0);
 
-            List<String> metadataFieldsOfInterest = getParsedOutputByKey(ADDITIONAL_ATTRIBUTES_ID, Collections.emptyList());
+            List<String> metadataFieldsOfInterest =
+                    getParsedOutputByKey(ADDITIONAL_ATTRIBUTES_ID, Collections.emptyList());
 
             return new IdfParserOutput(
                     title,
@@ -98,8 +102,11 @@ public class IdfParser {
         }
     }
 
-    // For each publication title, retrieves corresponding PubMed ID and DOI (if they exist) and creates a list of Publication objects
-    private List<Publication> createListOfPublications(List<String> pubmedIds, List<String> publicationTitles, List<String> publicationDois) {
+    // For each publication title, retrieves corresponding PubMed ID and DOI (if they exist) and creates a list of
+    // Publication objects
+    private List<Publication> createListOfPublications(List<String> pubmedIds,
+                                                       List<String> publicationTitles,
+                                                       List<String> publicationDois) {
         List<Publication> publications = new ArrayList<>();
 
         if (!publicationTitles.isEmpty()) {

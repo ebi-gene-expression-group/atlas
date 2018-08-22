@@ -34,6 +34,14 @@ public class ScxaExperimentDtoResultSetExtractor extends ExperimentDTOResultSetE
                 Sets.newHashSet(Splitter.on(", ").split(doisString));
 
         return new ExperimentDTO(
-                experimentAccession, experimentType, species, pubMedIds, dois, title, lastUpdate, isPrivate, accessKeyUUID);
+                experimentAccession,
+                experimentType,
+                species,
+                pubMedIds,
+                dois,
+                title,
+                lastUpdate,
+                isPrivate,
+                accessKeyUUID);
     }
 }

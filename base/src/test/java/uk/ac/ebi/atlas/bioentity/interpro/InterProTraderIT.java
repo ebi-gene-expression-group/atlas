@@ -17,12 +17,11 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class InterProTraderIT {
-
     private static final OntologyTerm FIRST_TERM = OntologyTerm.create("IPR000001", "Kringle (domain)");
     private static final OntologyTerm LAST_TERM = OntologyTerm.create("IPR029787", "Nucleotide cyclase (domain)");
 
     @Inject
-    InterProTrader subject;
+    private InterProTrader subject;
 
     @Test
     public void hasFirstTerm() {

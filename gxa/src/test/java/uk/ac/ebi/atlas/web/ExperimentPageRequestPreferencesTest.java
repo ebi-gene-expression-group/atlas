@@ -10,21 +10,21 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentPageRequestPreferencesTest {
-
     private ExperimentPageRequestPreferences subject;
 
     @Before
     public void setUp() {
         subject = new RnaSeqBaselineRequestPreferences();
     }
-    
+
     @Test
     public void heatmapMatrixSizeIsSetToTheDefaultRankingSizeIfRequestDoesntSpecifyAnyValue() {
-        assertThat(subject.getHeatmapMatrixSize(), is(ExperimentPageRequestPreferences.DEFAULT_NUMBER_OF_RANKED_GENES));
+        assertThat(
+                subject.getHeatmapMatrixSize(),
+                is(ExperimentPageRequestPreferences.DEFAULT_NUMBER_OF_RANKED_GENES));
         //and given
         subject.setHeatmapMatrixSize(33);
         //then
         assertThat(subject.getHeatmapMatrixSize(), is(33));
     }
-
 }

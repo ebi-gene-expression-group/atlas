@@ -6,19 +6,20 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 public abstract class DifferentialRequestContextFactory<E extends DifferentialExperiment,
-                                                        K extends DifferentialRequestPreferences,
-                                                        R extends DifferentialRequestContext<E, K>> {
+                                                        P extends DifferentialRequestPreferences,
+                                                        R extends DifferentialRequestContext<E, P>> {
 
     //abstract factory pattern - you can't generically use a constructor :(
     //future Java 8 using programmer, do refactor with Supplier<R>
     //or change API of DifferentialExperimentPageService.populateModelWithHeatmapData
-    public abstract R create(E experiment, K preferences);
+    public abstract R create(E experiment, P preferences);
 
     public static class RnaSeq extends DifferentialRequestContextFactory<DifferentialExperiment,
                                                                          DifferentialRequestPreferences,
                                                                          RnaSeqRequestContext> {
         @Override
-        public RnaSeqRequestContext create(DifferentialExperiment experiment, DifferentialRequestPreferences preferences) {
+        public RnaSeqRequestContext create(DifferentialExperiment experiment,
+                                           DifferentialRequestPreferences preferences) {
             return new RnaSeqRequestContext(preferences, experiment);
         }
     }
@@ -27,8 +28,9 @@ public abstract class DifferentialRequestContextFactory<E extends DifferentialEx
                                                                              MicroarrayRequestPreferences,
                                                                              MicroarrayRequestContext> {
         @Override
-        public MicroarrayRequestContext create(MicroarrayExperiment experiment, MicroarrayRequestPreferences preferences) {
-            return new MicroarrayRequestContext(preferences,experiment);
+        public MicroarrayRequestContext create(MicroarrayExperiment experiment,
+                                               MicroarrayRequestPreferences preferences) {
+            return new MicroarrayRequestContext(preferences, experiment);
         }
     }
 

@@ -16,11 +16,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.MessageFormat;
 
-/**
- * Generates a tsv url with a List of all assayGroups_id details for all baseline experiments
- */
+// Generates a tsv url with a List of all assayGroups_id details for all baseline experiments
 @Controller
 @Scope("request")
 public class BaselineExperimentAssayGroupsTsvController {
@@ -52,17 +49,17 @@ public class BaselineExperimentAssayGroupsTsvController {
                 baselineExperimentAssayGroupsLines = new BaselineExperimentAssayGroupsLines(
                         (BaselineExperiment) experiment);
                 extractLinesToTSVFormat(baselineExperimentAssayGroupsLines, writer);
-            } catch (RuntimeException e){
-                LOGGER.error(MessageFormat.format("Failed when loading {0}, error: {1}", experiment.getAccession(), e));
-                writer.write("Error while attempting to write "+experiment.getAccession()+", file incomplete!!!");
+            } catch (RuntimeException e) {
+                LOGGER.error("Failed when loading {}, error: {}", experiment.getAccession(), e);
+                writer.write("Error while attempting to write " + experiment.getAccession() + ", file incomplete!");
                 break;
             }
         }
     }
 
 
-    private void extractLinesToTSVFormat(BaselineExperimentAssayGroupsLines baselineExperimentAssayGroupsLines, PrintWriter writer ) throws IOException {
-
+    private void extractLinesToTSVFormat(BaselineExperimentAssayGroupsLines baselineExperimentAssayGroupsLines,
+                                         PrintWriter writer) {
         for (String[] line : baselineExperimentAssayGroupsLines) {
             String lineTab = Joiner.on("\t").join(line);
             writer.write(lineTab + "\n");

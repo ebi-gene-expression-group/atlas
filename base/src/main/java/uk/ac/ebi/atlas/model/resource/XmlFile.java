@@ -11,9 +11,9 @@ import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 
-public abstract class XmlFile<T> extends AtlasResource<T>{
-    public XmlFile(Path parentDirectory, String template, String ... args) {
-        super(parentDirectory.resolve(MessageFormat.format(template, (Object [])args)));
+public abstract class XmlFile<T> extends AtlasResource<T> {
+    public XmlFile(Path parentDirectory, String template, String... args) {
+        super(parentDirectory.resolve(MessageFormat.format(template, (Object[]) args)));
     }
 
     public static class ReadOnly extends XmlFile<XmlReader> {

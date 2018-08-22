@@ -53,7 +53,9 @@ public class BioEntityCardPropertiesIT {
     public void fungiEnsemblUrl() {
         Species species = speciesFactory.create("saccharomyces cerevisiae");
         assertThat(BioEntityCardProperties.getUrlTemplate(ENSGENE, species))
-                .isEqualTo("http://" + species.getKingdom() + ".ensembl.org/" + species.getEnsemblName() + "/Gene/Summary?g={0}");
+                .isEqualTo(
+                        "http://" + species.getKingdom() + ".ensembl.org/" + species.getEnsemblName() +
+                        "/Gene/Summary?g={0}");
     }
 
     @Test
@@ -83,7 +85,7 @@ public class BioEntityCardPropertiesIT {
     }
 
     @Test
-    public void BioentityPropertyWithNoUrl() {
+    public void bioentityPropertyWithNoUrl() {
         Species species = speciesFactory.create("drosophila melanogaster");
         // Either a property which we didn’t deem relevant enough to be included in the gene information tab...
         assertThat(BioEntityCardProperties.getUrlTemplate(FLYBASE_GENE_ID, species))

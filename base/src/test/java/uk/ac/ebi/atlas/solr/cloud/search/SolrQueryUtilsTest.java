@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
+import com.google.common.collect.ImmutableSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,41 +13,39 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.joining;
 import static org.apache.solr.client.solrj.util.ClientUtils.escapeQueryChars;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class SolrQueryUtilsTest {
-
-    public static class DummySchemaField extends SchemaField<CollectionProxy> {
+class SolrQueryUtilsTest {
+    private static final class DummySchemaField extends SchemaField<CollectionProxy> {
         private DummySchemaField(String fieldName) {
             super(fieldName);
         }
     }
 
-    public static final DummySchemaField FIELD1 = new DummySchemaField("field1");
+    private static final DummySchemaField FIELD1 = new DummySchemaField("field1");
 
     @Test
     @DisplayName("Blank field values return an empty clause")
     void testEmptyValuesInBooleanQuery() {
-        assertThat(SolrQueryUtils.createOrBooleanQuery(FIELD1))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ""))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, " "))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, " ", "\t"))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, " ", "\t", "\n"))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, " ", "\t", "\n", "\r"))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, emptySet()))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, singleton(" \t\n  ")))
+        assertThat(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of()))
+                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of("")))
+                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of(" ")))
+                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of(" ", "\t")))
+                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of(" ", "\t", "\n")))
+                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of(" ", "\t", "\n", "\r")))
+                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of(" \t\n  ")))
                 .isEmpty();
     }
 
     @Test
     @DisplayName("Field values are deduped")
     void testDuplicatedValuesInBooleanQuery() {
-        assertThat(SolrQueryUtils.createOrBooleanQuery(FIELD1, "value1", "value1", "value2", "value2"))
-                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, "value1", "value2"))
+        assertThat(
+                SolrQueryUtils.createOrBooleanQuery(
+                        FIELD1, ImmutableSet.of("value1", "value1", "value2", "value2")))
+                .isEqualTo(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of("value1", "value2")))
                 .containsOnlyOnce("value1")
                 .containsOnlyOnce("value2");
     }
@@ -57,7 +56,7 @@ public class SolrQueryUtilsTest {
         String value1 = "   value1   ";
         String value2 = ") value2+\"";
 
-        assertThat(SolrQueryUtils.createOrBooleanQuery(FIELD1, value1, value2))
+        assertThat(SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of(value1, value2)))
                 .containsOnlyOnce("\"" + escapeQueryChars(value1.trim()) + "\"")
                 .containsOnlyOnce("\"" + escapeQueryChars(value2.trim()) + "\"");
     }
@@ -67,7 +66,8 @@ public class SolrQueryUtilsTest {
     void testBooleanQueryFormat() {
         String value1 = "value1";
         String value2 = "value2";
-        String[] splittedOrQuery = SolrQueryUtils.createOrBooleanQuery(FIELD1, value1, value2).split(":");
+        String[] splittedOrQuery =
+                SolrQueryUtils.createOrBooleanQuery(FIELD1, ImmutableSet.of(value1, value2)).split(":");
 
         assertThat(splittedOrQuery)
                 .hasSize(2)
@@ -106,7 +106,7 @@ public class SolrQueryUtilsTest {
 
         assertThat(splittedRangeQuery)
                 .hasSize(2)
-                .containsExactly(FIELD1.name(), "[" + Double.toString(min)+ " TO " + Double.toString(max) + "]");
+                .containsExactly(FIELD1.name(), "[" + Double.toString(min) + " TO " + Double.toString(max) + "]");
     }
 
     private static Stream<Arguments> randomDoublesProvider() {

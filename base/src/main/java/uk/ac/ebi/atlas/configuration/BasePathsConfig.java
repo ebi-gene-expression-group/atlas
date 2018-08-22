@@ -11,13 +11,18 @@ import java.nio.file.Paths;
 @Configuration
 @PropertySource("classpath:configuration.properties")
 public class BasePathsConfig {
-    protected final String dataFilesLocation;
-    protected final String experimentFilesLocation;
+    private final String dataFilesLocation;
+    private final String experimentFilesLocation;
 
     public BasePathsConfig(@Value("${data.files.location}") String dataFilesLocation,
                            @Value("${experiment.files.location}") String experimentFilesLocation) {
         this.dataFilesLocation = dataFilesLocation;
         this.experimentFilesLocation = experimentFilesLocation;
+    }
+
+    @Bean
+    public Path dataFilesPath() {
+        return Paths.get(dataFilesLocation);
     }
 
     @Bean
@@ -27,7 +32,7 @@ public class BasePathsConfig {
 
     @Bean
     public Path bioentityPropertiesDirPath() {
-        return Paths.get(dataFilesLocation).resolve("bioentity_properties");
+        return dataFilesPath().resolve("bioentity_properties");
     }
 
     @Bean

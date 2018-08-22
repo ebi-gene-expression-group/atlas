@@ -19,6 +19,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_NAME;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.SPECIES;
+import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.SOLR_MAX_ROWS;
 
 // Search gene IDs in scxa-gene2experiment by gene property name/value and species (bioentities collection)
 @Component
@@ -74,7 +75,7 @@ public class GeneIdSearchDao {
                     .findFirst()
                     .map((x) ->
                             searchWithinGeneIdsExpressedInExperiments(
-                                    bioentitiesQueryBuilder.setRows(SolrQueryBuilder.MAX_ROWS)));
+                                    bioentitiesQueryBuilder.setRows(SolrQueryBuilder.DEFAULT_ROWS)));
         }
 
     }
@@ -86,7 +87,8 @@ public class GeneIdSearchDao {
         SolrQueryBuilder<Gene2ExperimentCollectionProxy> g2eQueryBuilder =
                 new SolrQueryBuilder<Gene2ExperimentCollectionProxy>()
                         .setFieldList(Gene2ExperimentCollectionProxy.BIOENTITY_IDENTIFIER)
-                        .sortBy(Gene2ExperimentCollectionProxy.BIOENTITY_IDENTIFIER, SolrQuery.ORDER.asc);
+                        .sortBy(Gene2ExperimentCollectionProxy.BIOENTITY_IDENTIFIER, SolrQuery.ORDER.asc)
+                        .setRows(SOLR_MAX_ROWS);
 
         SearchStreamBuilder<BioentitiesCollectionProxy> bioentitiesSearchBuilder =
                 new SearchStreamBuilder<>(bioentitiesCollectionProxy, bioentitiesQueryBuilder);
