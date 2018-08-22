@@ -1,25 +1,32 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
+import static java.util.stream.Collectors.joining;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.wrap;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentAssayGroupsLinesTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentAssayGroupsLinesTest.class);
+
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String ASSAY1 = "ASSAY1";
     private static final String ASSAY2 = "ASSAY2";
@@ -87,7 +94,12 @@ public class BaselineExperimentAssayGroupsLinesTest {
 
         Iterator<String[]> lines = subject.iterator();
 
-        print(subject);
+        subject.forEach(line ->
+                LOGGER.info(
+                        Arrays.stream(line)
+                                .map(field -> wrap(field, "\""))
+                                .map(field -> isBlank(field) ? "\"\"" : field)
+                                .collect(joining(","))));
 
         assertThat(
                 lines.next(),
@@ -120,15 +132,5 @@ public class BaselineExperimentAssayGroupsLinesTest {
                 lines.next(),
                 is(new String[] {
                         EXPERIMENT_ACCESSION, G3, FACTOR, FACTOR_HEADER, FACTOR_VALUE3, ""}));
-    }
-
-    private void print(Iterable<String[]> rows) {
-        for (String[] row: rows) {
-            print(row);
-        }
-    }
-
-    private void print(String[] row) {
-        System.out.println("\"" + Joiner.on("\",\"").useForNull("").join(row) + "\"");
     }
 }
