@@ -37,8 +37,8 @@ const ExperimentDesignTable = ({data, headers}) =>
   />
 
 ExperimentDesignTable.propTypes = {
-    data: PropTypes.array.isRequired,
-    headers: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  headers: PropTypes.array.isRequired
 }
 
 export default ExperimentDesignTable

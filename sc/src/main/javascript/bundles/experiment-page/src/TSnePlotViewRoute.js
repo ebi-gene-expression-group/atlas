@@ -28,53 +28,54 @@ const TSnePlotViewRoute = (props) => {
 
   return (
     <div className={`margin-top-large`}>
-      <TSnePlotView atlasUrl={atlasUrl}
-                    suggesterEndpoint={suggesterEndpoint}
-                    wrapperClassName={`row expanded`}
-                    clusterPlotClassName={`small-12 large-6 columns`}
-                    expressionPlotClassName={`small-12 large-6 columns`}
-                    speciesName={species}
-                    experimentAccession={experimentAccession}
-                    ks={ks}
-                    metadata={metadata}
-                    selectedColourBy={search.k || search.metadata || props.selectedK || props.ks[0].toString()}
-                    selectedColourByCategory={search.colourBy || `clusters`} // Is the plot coloured by clusters or metadata
-                    highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
-                    perplexities={perplexitiesOrdered}
-                    selectedPerplexity={Number(search.perplexity) || perplexitiesOrdered[Math.round((perplexitiesOrdered.length - 1) / 2)]}
-                    geneId={search.geneId || ``}
-                    height={800}
-                    onSelectGeneId={
-                      (geneId) => {
-                        const query = new URLSearchParams(history.location.search)
-                        query.set(`geneId`, geneId)
-                        resetHighlightClusters(query)
-                        updateUrlWithParams(query)
-                      }
-                    }
-                    onChangePerplexity={
-                      (perplexity) => {
-                        const query = new URLSearchParams(history.location.search)
-                        query.set(`perplexity`, perplexity)
-                        updateUrlWithParams(query)
-                      }
-                    }
-                    onChangeColourBy={
-                      (colourByCategory, colourByValue) => {
-                        const query = new URLSearchParams(history.location.search)
-                        query.set(`colourBy`, colourByCategory)
-                        if(colourByCategory === `clusters`) {
-                          query.set(`k`, colourByValue)
-                          query.delete(`metadata`)
-                        }
-                        else if(colourByCategory === `metadata`) {
-                          query.set(`metadata`, colourByValue)
-                          query.delete(`k`)
-                        }
-                        resetHighlightClusters(query)
-                        updateUrlWithParams(query)
-                      }
-                    }
+      <TSnePlotView
+        atlasUrl={atlasUrl}
+        suggesterEndpoint={suggesterEndpoint}
+        wrapperClassName={`row expanded`}
+        clusterPlotClassName={`small-12 large-6 columns`}
+        expressionPlotClassName={`small-12 large-6 columns`}
+        speciesName={species}
+        experimentAccession={experimentAccession}
+        ks={ks}
+        metadata={metadata}
+        selectedColourBy={search.k || search.metadata || props.selectedK || props.ks[0].toString()}
+        selectedColourByCategory={search.colourBy || `clusters`} // Is the plot coloured by clusters or metadata
+        highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
+        perplexities={perplexitiesOrdered}
+        selectedPerplexity={Number(search.perplexity) || perplexitiesOrdered[Math.round((perplexitiesOrdered.length - 1) / 2)]}
+        geneId={search.geneId || ``}
+        height={800}
+        onSelectGeneId={
+          (geneId) => {
+            const query = new URLSearchParams(history.location.search)
+            query.set(`geneId`, geneId)
+            resetHighlightClusters(query)
+            updateUrlWithParams(query)
+          }
+        }
+        onChangePerplexity={
+          (perplexity) => {
+            const query = new URLSearchParams(history.location.search)
+            query.set(`perplexity`, perplexity)
+            updateUrlWithParams(query)
+          }
+        }
+        onChangeColourBy={
+          (colourByCategory, colourByValue) => {
+            const query = new URLSearchParams(history.location.search)
+            query.set(`colourBy`, colourByCategory)
+            if(colourByCategory === `clusters`) {
+              query.set(`k`, colourByValue)
+              query.delete(`metadata`)
+            }
+            else if(colourByCategory === `metadata`) {
+              query.set(`metadata`, colourByValue)
+              query.delete(`k`)
+            }
+            resetHighlightClusters(query)
+            updateUrlWithParams(query)
+          }
+        }
       />
       {
         search.geneId &&

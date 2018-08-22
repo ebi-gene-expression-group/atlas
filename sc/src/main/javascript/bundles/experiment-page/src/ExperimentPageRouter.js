@@ -38,11 +38,11 @@ const TopRibbon = ({tabNames, routeProps}) =>
       tabNames.map((tabName) =>
         <li title={tabName} key={tabName} className={`tabs-title`}>
           <NavLink to={{pathname:`/${tabName}`, search: routeProps.location.search, hash: routeProps.location.hash}}
-                   activeStyle={{color: `#0a0a0a`, background: `#e6e6e6`}}>
+            activeStyle={{color: `#0a0a0a`, background: `#e6e6e6`}}>
             {tabName}
           </NavLink>
         </li>
-    )}
+      )}
   </ul>
 
 TopRibbon.propTypes = {
@@ -73,8 +73,8 @@ const RedirectWithSearchAndHash = (props) =>
 RedirectWithSearchAndHash.propTypes = {
   pathname: PropTypes.string.isRequired,
   location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-      hash: PropTypes.string.isRequired
+    search: PropTypes.string.isRequired,
+    hash: PropTypes.string.isRequired
   }).isRequired
 }
 
@@ -94,14 +94,14 @@ const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, spec
     <BrowserRouter basename={URI(`experiments/${experimentAccession}`, URI(atlasUrl).path()).toString()}>
       <div>
         <Route path={`/`}
-               render={ (routeProps) => <TopRibbon tabNames={tabs.map((tab) => tab.name)} routeProps={routeProps}/> }
+          render={ (routeProps) => <TopRibbon tabNames={tabs.map((tab) => tab.name)} routeProps={routeProps}/> }
         />
         <Switch>
           {
             tabs.map((tab) =>
               <Route key={tab.name}
-                     path={`/${tab.name}`}
-                     render={ (routeProps) => <TabContent type={tab.type} tabProps={tab.props} commonProps={tabCommonProps} routeProps={routeProps}/> }
+                path={`/${tab.name}`}
+                render={ (routeProps) => <TabContent type={tab.type} tabProps={tab.props} commonProps={tabCommonProps} routeProps={routeProps}/> }
               />
             )
           }

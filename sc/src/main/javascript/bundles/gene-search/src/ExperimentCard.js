@@ -63,7 +63,7 @@ class ExperimentCard extends React.Component {
     })
     return (
       <ExperimentCardDiv>
-      <span className={`label`}>
+        <span className={`label`}>
           {lastUpdated} | <i>{species}</i>
         </span>
         <h5>
