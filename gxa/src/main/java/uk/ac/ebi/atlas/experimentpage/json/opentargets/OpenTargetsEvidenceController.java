@@ -52,7 +52,8 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
                                          DataFileHub dataFileHub,
                                          Environment props) {
         super(experimentTrader);
-        String resourcesVersion = props.getProperty("projectVersion");
+        // String resourcesVersion = props.getProperty("projectVersion");
+        String resourcesVersion = "prod.23";
 
         diffRnaSeqEvidenceService =
                 new EvidenceService<>(rnaSeqProfileStreamFactory, dataFileHub, resourcesVersion);
