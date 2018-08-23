@@ -33,13 +33,13 @@ public class JdbcUtils {
 
     public String fetchRandomSingleCellExperimentAccession() {
         return jdbcTemplate.queryForObject(
-                "SELECT accession FROM scxa_experiment ORDER BY RANDOM() LIMIT 1",
+                "SELECT accession FROM scxa_experiment TABLESAMPLE SYSTEM_ROWS(1)",
                 String.class);
     }
 
     public String fetchRandomExpressionAtlasExperimentAccession() {
         return jdbcTemplate.queryForObject(
-                "SELECT accession FROM experiment ORDER BY RANDOM() LIMIT 1",
+                "SELECT accession FROM experiment TABLESAMPLE SYSTEM_ROWS(1)",
                 String.class);
     }
 
@@ -52,7 +52,7 @@ public class JdbcUtils {
 
     public String fetchRandomGene() {
         return jdbcTemplate.queryForObject(
-                "SELECT gene_id FROM scxa_analytics ORDER BY RANDOM() LIMIT 1",
+                "SELECT gene_id FROM scxa_analytics TABLESAMPLE SYSTEM_ROWS(1)",
                 String.class);
     }
 
