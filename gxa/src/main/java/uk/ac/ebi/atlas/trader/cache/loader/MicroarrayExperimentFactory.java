@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
@@ -9,18 +10,14 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.stream.Collectors;
 
-@Named
+@Component
 public class MicroarrayExperimentFactory implements ExperimentFactory<MicroarrayExperiment> {
-
     private final ConfigurationTrader configurationTrader;
     private final SpeciesFactory speciesFactory;
     private final ArrayDesignDAO arrayDesignDAO;
 
-    @Inject
     public MicroarrayExperimentFactory(ConfigurationTrader configurationTrader,
                                        SpeciesFactory speciesFactory,
                                        ArrayDesignDAO arrayDesignDAO) {
@@ -33,7 +30,8 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
 
     @Override
     public MicroarrayExperiment create(ExperimentDTO experimentDTO,
-                                       ExperimentDesign experimentDesign, IdfParserOutput idfParserOutput) {
+                                       ExperimentDesign experimentDesign,
+                                       IdfParserOutput idfParserOutput) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -53,10 +51,8 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
                 experimentConfiguration
                         .getArrayDesignAccessions()
                         .stream()
-                        .map(a -> arrayDesignDAO.getArrayDesign(a))
+                        .map(arrayDesignDAO::getArrayDesign)
                         .collect(Collectors.toList())
         );
-
     }
-
 }
