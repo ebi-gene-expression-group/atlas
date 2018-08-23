@@ -64,6 +64,7 @@ public class ExperimentDesignTable {
         JsonObject result = new JsonObject();
 
         result.add("properties", experiment.propertiesForAssay(runOrAssay));
+        result.add("properties2", experiment.propertiesForAssayV2(runOrAssay));
 
         result.add(
                 "values",

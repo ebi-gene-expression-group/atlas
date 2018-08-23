@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItems;
@@ -95,5 +97,30 @@ public class DifferentialExperimentTest {
         String stringDump = GSON.toJson(result);
 
         assertThat(stringDump.indexOf("very_disease"), lessThan(stringDump.indexOf("totally_normal")));
+    }
+
+    @Test
+    public void blah() {
+        AssayGroup referenceAssayGroup = new AssayGroup("g1", "assay1_1");
+        AssayGroup testAssayGroup1 = new AssayGroup("g2", "assay2_1", "assay2_2");
+        AssayGroup testAssayGroup2 = new AssayGroup("g3", "assay3_1", "assay3_2");
+
+        Contrast c1 = new Contrast("g1_g2", null, referenceAssayGroup, testAssayGroup1, "'Reference' vs 'Test1'");
+        Contrast c2 = new Contrast("g1_g3", null, referenceAssayGroup, testAssayGroup2, "'Reference' vs 'Test2'");
+
+        subject = createDifferentialExperiment("accession", ImmutableList.of(c1, c2));
+
+        JsonObject expectedResults1 = new JsonObject();
+        expectedResults1.addProperty("contrastName", "'Reference' vs 'Test1'");
+        expectedResults1.addProperty("referenceOrTest", "reference");
+
+        JsonObject expectedResults2 = new JsonObject();
+        expectedResults2.addProperty("contrastName", "'Reference' vs 'Test2'");
+        expectedResults2.addProperty("referenceOrTest", "reference");
+
+
+        assertThat(subject.propertiesForAssayV2("assay1_1").get(0), is(equalTo(expectedResults1)));
+        assertThat(subject.propertiesForAssayV2("assay1_1").get(1), is(equalTo(expectedResults2)));
+        assertThat(subject.propertiesForAssayV2("assay1_1").size(), is(equalTo(2)));
     }
 }

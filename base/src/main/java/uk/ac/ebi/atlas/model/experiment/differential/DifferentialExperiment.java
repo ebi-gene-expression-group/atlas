@@ -82,6 +82,34 @@ public class DifferentialExperiment extends Experiment<Contrast> {
     }
 
     @Override
+    protected JsonArray propertiesForAssayV2(String runOrAssay) {
+        JsonArray contrasts= new JsonArray();
+
+        for (Contrast contrast : getDataColumnDescriptors()) {
+            if (contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)) {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("contrastName", contrast.getDisplayName());
+                jsonObject.addProperty("referenceOrTest", "reference");
+                contrasts.add(jsonObject);
+            } else if (contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)) {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("contrastName", contrast.getDisplayName());
+                jsonObject.addProperty("referenceOrTest", "test");
+                contrasts.add(jsonObject);
+            }
+        }
+
+        if (contrasts.size() == 0) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("contrastName", "None");
+            jsonObject.addProperty("referenceOrTest", "");
+            contrasts.add(jsonObject);
+        }
+
+        return contrasts;
+    }
+
+    @Override
     public JsonArray groupingsForHeatmap() {
         ExperimentDesign experimentDesign = getExperimentDesign();
         ExperimentDisplayDefaults experimentDisplayDefaults = getDisplayDefaults();
