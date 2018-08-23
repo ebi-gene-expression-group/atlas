@@ -24,7 +24,9 @@ public class CacheConfiguration {
     private final GxaExperimentDao experimentDao;
     private final IdfParser idfParser;
 
-    public CacheConfiguration(ExperimentDesignParser experimentDesignParser, GxaExperimentDao experimentDao, IdfParser idfParser) {
+    public CacheConfiguration(ExperimentDesignParser experimentDesignParser,
+                              GxaExperimentDao experimentDao,
+                              IdfParser idfParser) {
         this.experimentDesignParser = experimentDesignParser;
         this.experimentDao = experimentDao;
         this.idfParser = idfParser;
@@ -36,7 +38,8 @@ public class CacheConfiguration {
     baselineExperimentsCache(RnaSeqBaselineExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory, idfParser));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
     @Bean(name = "proteomicsBaselineExperimentsLoadingCache")
@@ -45,7 +48,8 @@ public class CacheConfiguration {
     proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory, idfParser));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
 
@@ -55,7 +59,8 @@ public class CacheConfiguration {
     differentialExperimentsCache(DifferentialExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory, idfParser));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
     @Bean(name = "microarrayExperimentsLoadingCache")
@@ -64,6 +69,7 @@ public class CacheConfiguration {
     microarrayExperimentsCache(MicroarrayExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory, idfParser));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 }
