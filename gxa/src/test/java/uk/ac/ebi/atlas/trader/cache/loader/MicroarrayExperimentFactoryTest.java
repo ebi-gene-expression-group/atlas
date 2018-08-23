@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import com.google.common.collect.Sets;
+import org.hamcrest.core.Is;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +23,7 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
@@ -76,11 +79,22 @@ public class MicroarrayExperimentFactoryTest {
 
     @Test
     public void testLoad() {
-        MicroarrayExperiment microarrayExperiment = subject.create(experimentDTOMock, experimentDesignMock, idfParserOutputMock);
+        MicroarrayExperiment microarrayExperiment =
+                subject.create(experimentDTOMock, experimentDesignMock, idfParserOutputMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGN_ID));
         assertThat(microarrayExperiment.getSpecies(), is(SPECIES));
         assertThat(microarrayExperiment.getExperimentDesign(), is(experimentDesignMock));
         assertThat(microarrayExperiment.getArrayDesignNames(), hasItem(ARRAYDESIGN_NAME));
     }
+
+    @Test
+    public void idfTitleOverridesDatabaseTitleInExperimentDescription() {
+        when(idfParserOutputMock.getTitle()).thenReturn("IDF title");
+        when(experimentDTOMock.getTitle()).thenReturn("DTO title");
+        Assert.assertThat(
+                subject.create(experimentDTOMock, experimentDesignMock, idfParserOutputMock),
+                hasProperty("description", Is.is("IDF title")));
+    }
+
 }
