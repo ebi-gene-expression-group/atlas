@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaselineExperimentFactory implements ExperimentFactory<BaselineExperiment> {
-
     private final ExperimentType experimentType;
     private final ConfigurationTrader configurationTrader;
     private final SpeciesFactory speciesFactory;
@@ -29,7 +28,6 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
         this.configurationTrader = configurationTrader;
         this.speciesFactory = speciesFactory;
     }
-
 
     @Override
     public BaselineExperiment create(ExperimentDTO experimentDTO,
