@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.math.NumberUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.TestPropertySource;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import java.util.Arrays;
@@ -48,6 +49,19 @@ class IdfParserTest {
             {"PubMed id", PUBMED_IDS_ARRAY[0], PUBMED_IDS_ARRAY[1], PUBMED_IDS_ARRAY[2]},
             {"publication title", PUBLICATIONS_ARRAY[0], PUBLICATIONS_ARRAY[1], PUBLICATIONS_ARRAY[2]},
             {"comment[eaexpectedclusters]", EXPECTED_CLUSTERS}
+    };
+
+    private static final String[][] IDF_TXT_DUPLICATE_FIELDS = {
+            {"Investigation Title", TITLE},
+            {"Comment[AEExperimentDisplayName]", AE_DISPLAY_NAME},
+            {"Comment[AEExperimentDisplayName]", "Foobar"},
+            {"PubMed ID", PUBMED_IDS_ARRAY[0], PUBMED_IDS_ARRAY[1], PUBMED_IDS_ARRAY[2]},
+            {"Publication Title", PUBLICATIONS_ARRAY[0], PUBLICATIONS_ARRAY[1], PUBLICATIONS_ARRAY[2]},
+            {"Comment[EAExpectedClusters]", EXPECTED_CLUSTERS},
+            {
+                    "Comment[EAAdditionalAttributes]",
+                    ADDITIONAL_ATTRIBUTES[0], ADDITIONAL_ATTRIBUTES[1], ADDITIONAL_ATTRIBUTES[2]
+            }
     };
 
     private MockDataFileHub dataFileHub;
@@ -146,5 +160,14 @@ class IdfParserTest {
         assertThat(idfParserOutput.getTitle()).isEmpty();
         assertThat(idfParserOutput.getPublications()).isEmpty();
         assertThat(idfParserOutput.getExpectedClusters()).isEqualTo(0);
+    }
+
+    @Test
+    void keepsOnlyFirstValueOfDuplicateFields() {
+        dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT_DUPLICATE_FIELDS));
+
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
+
+        assertThat(idfParserOutput.getTitle()).isEqualTo(AE_DISPLAY_NAME);
     }
 }

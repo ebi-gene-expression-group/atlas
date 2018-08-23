@@ -53,7 +53,8 @@ public class IdfParser {
                                     line -> Arrays.stream(line)
                                             .skip(1)
                                             .filter(item -> !item.isEmpty())
-                                            .collect(Collectors.toList())));
+                                            .collect(Collectors.toList()),
+                                    (accumulatedValues, newValue) -> accumulatedValues));
 
             String title;
             // Experiments that are regularly updated in ArrayExpress
