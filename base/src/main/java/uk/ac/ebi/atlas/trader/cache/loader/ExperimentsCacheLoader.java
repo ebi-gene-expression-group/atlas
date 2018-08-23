@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDao;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
@@ -17,13 +19,16 @@ public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<St
     private final ExperimentDesignParser experimentDesignParser;
     private final ExperimentDao experimentDao;
     private final ExperimentFactory<T> experimentFactory;
+    private final IdfParser idfParser;
 
     public ExperimentsCacheLoader(ExperimentDesignParser experimentDesignParser,
                                   ExperimentDao experimentDao,
-                                  ExperimentFactory<T> experimentFactory) {
+                                  ExperimentFactory<T> experimentFactory,
+                                  IdfParser idfParser) {
         this.experimentDesignParser = experimentDesignParser;
         this.experimentDao = experimentDao;
         this.experimentFactory = experimentFactory;
+        this.idfParser = idfParser;
     }
 
     @Override
@@ -32,7 +37,8 @@ public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<St
 
         ExperimentDTO experimentDTO = experimentDao.getExperimentAsAdmin(experimentAccession);
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
+        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
-        return experimentFactory.create(experimentDTO, experimentDesign);
+        return experimentFactory.create(experimentDTO, experimentDesign, idfParserOutput);
     }
 }

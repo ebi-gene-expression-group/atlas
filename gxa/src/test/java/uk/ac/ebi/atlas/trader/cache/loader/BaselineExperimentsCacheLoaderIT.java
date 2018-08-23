@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
@@ -42,6 +43,9 @@ public class BaselineExperimentsCacheLoaderIT {
     @Inject
     private ExperimentDesignParser experimentDesignParser;
 
+    @Inject
+    private IdfParser idfParser;
+
     private ExperimentsCacheLoader<BaselineExperiment> subject;
 
     @Before
@@ -59,7 +63,7 @@ public class BaselineExperimentsCacheLoaderIT {
 
         subject =
                 new ExperimentsCacheLoader<>(
-                        experimentDesignParser, expressionAtlasExperimentDao, rnaSeqBaselineExperimentFactory);
+                        experimentDesignParser, expressionAtlasExperimentDao, rnaSeqBaselineExperimentFactory, idfParser);
     }
 
 

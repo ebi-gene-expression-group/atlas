@@ -5,6 +5,7 @@ import com.google.common.cache.LoadingCache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -21,10 +22,14 @@ import javax.inject.Inject;
 public class CacheConfiguration {
     private final ExperimentDesignParser experimentDesignParser;
     private final GxaExperimentDao experimentDao;
+    private final IdfParser idfParser;
 
-    public CacheConfiguration(ExperimentDesignParser experimentDesignParser, GxaExperimentDao experimentDao) {
+    public CacheConfiguration(ExperimentDesignParser experimentDesignParser,
+                              GxaExperimentDao experimentDao,
+                              IdfParser idfParser) {
         this.experimentDesignParser = experimentDesignParser;
         this.experimentDao = experimentDao;
+        this.idfParser = idfParser;
     }
 
     @Bean(name = "rnaSeqBaselineExperimentsLoadingCache")
@@ -33,7 +38,8 @@ public class CacheConfiguration {
     baselineExperimentsCache(RnaSeqBaselineExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
     @Bean(name = "proteomicsBaselineExperimentsLoadingCache")
@@ -42,7 +48,8 @@ public class CacheConfiguration {
     proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
 
@@ -52,7 +59,8 @@ public class CacheConfiguration {
     differentialExperimentsCache(DifferentialExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
     @Bean(name = "microarrayExperimentsLoadingCache")
@@ -61,6 +69,7 @@ public class CacheConfiguration {
     microarrayExperimentsCache(MicroarrayExperimentFactory experimentFactory) {
 
         return CacheBuilder.newBuilder()
-                .build(new ExperimentsCacheLoader<>(experimentDesignParser, experimentDao, experimentFactory));
+                .build(new ExperimentsCacheLoader<>(
+                        experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 }
