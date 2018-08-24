@@ -61,7 +61,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
     @Override
     protected JsonObject propertiesForAssay(String runOrAssay) {
         JsonObject result = new JsonObject();
-        String contrastName = "None";
+        String contrastName = "Excluded from analysis";
         String referenceOrTest = "";
 
         for (Contrast contrast : getDataColumnDescriptors()) {
@@ -101,7 +101,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
         if (contrasts.size() == 0) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("contrastName", "None");
+            jsonObject.addProperty("contrastName", "Excluded from analysis");
             jsonObject.addProperty("referenceOrTest", "");
             contrasts.add(jsonObject);
         }
