@@ -286,3 +286,11 @@ a.baseline {
     /* Overrides .tabs-title > a in theme-atlas.css */
     color: gray !important;
 }
+
+.anchored a {
+    visibility: hidden;
+}
+
+.anchored:hover a {
+    visibility: visible;
+}
