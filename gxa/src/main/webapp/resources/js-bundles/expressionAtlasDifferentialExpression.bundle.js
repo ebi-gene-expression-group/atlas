@@ -1,7 +1,7 @@
 var expressionAtlasDifferentialExpression =
 webpackJsonp_name_([1],{
 
-/***/ 101:
+/***/ 103:
 /*!****************************************************************!*\
   !*** ./node_modules/react-transition-group/utils/PropTypes.js ***!
   \****************************************************************/
@@ -62,7 +62,7 @@ var nameShape = exports.nameShape = _propTypes2.default.oneOfType([_propTypes2.d
 
 /***/ }),
 
-/***/ 1147:
+/***/ 1151:
 /*!************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/index.js ***!
   \************************************************************/
@@ -86,7 +86,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _DifferentialRouterLoader = __webpack_require__(/*! ./DifferentialRouterLoader */ 1148);
+var _DifferentialRouterLoader = __webpack_require__(/*! ./DifferentialRouterLoader */ 1152);
 
 var _DifferentialRouterLoader2 = _interopRequireDefault(_DifferentialRouterLoader);
 
@@ -102,7 +102,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 1148:
+/***/ 1152:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DifferentialRouterLoader.js ***!
   \*******************************************************************************/
@@ -139,11 +139,11 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRefetch = __webpack_require__(/*! react-refetch */ 56);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _DifferentialRouter = __webpack_require__(/*! ./DifferentialRouter */ 1149);
+var _DifferentialRouter = __webpack_require__(/*! ./DifferentialRouter */ 1153);
 
 var _DifferentialRouter2 = _interopRequireDefault(_DifferentialRouter);
 
@@ -266,7 +266,7 @@ exports.default = (0, _reactRefetch.connect)(function (props) {
 
 /***/ }),
 
-/***/ 1149:
+/***/ 1153:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DifferentialRouter.js ***!
   \*************************************************************************/
@@ -311,15 +311,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _DifferentialResults = __webpack_require__(/*! ./DifferentialResults */ 1150);
+var _DifferentialResults = __webpack_require__(/*! ./DifferentialResults */ 1154);
 
 var _DifferentialResults2 = _interopRequireDefault(_DifferentialResults);
 
-var _DifferentialFacetsTree = __webpack_require__(/*! ./facets-tree/DifferentialFacetsTree */ 1178);
+var _DifferentialFacetsTree = __webpack_require__(/*! ./facets-tree/DifferentialFacetsTree */ 1182);
 
 var _DifferentialFacetsTree2 = _interopRequireDefault(_DifferentialFacetsTree);
 
-var _urlManager = __webpack_require__(/*! ./urlManager */ 1180);
+var _urlManager = __webpack_require__(/*! ./urlManager */ 1184);
 
 var _urlManager2 = _interopRequireDefault(_urlManager);
 
@@ -518,7 +518,7 @@ exports.default = DifferentialRouter;
 
 /***/ }),
 
-/***/ 1150:
+/***/ 1154:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DifferentialResults.js ***!
   \**************************************************************************/
@@ -563,7 +563,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -575,27 +575,27 @@ var _reactEbiSpecies = __webpack_require__(/*! react-ebi-species */ 274);
 
 var _reactEbiSpecies2 = _interopRequireDefault(_reactEbiSpecies);
 
-var _DisplayLevelsButton = __webpack_require__(/*! ./DisplayLevelsButton */ 1151);
+var _DisplayLevelsButton = __webpack_require__(/*! ./DisplayLevelsButton */ 1155);
 
 var _DisplayLevelsButton2 = _interopRequireDefault(_DisplayLevelsButton);
 
-var _DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton */ 1152);
+var _DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton */ 1156);
 
 var _DifferentialDownloadButton2 = _interopRequireDefault(_DifferentialDownloadButton);
 
-var _DifferentialFoldChangeCell = __webpack_require__(/*! ./DifferentialFoldChangeCell */ 1153);
+var _DifferentialFoldChangeCell = __webpack_require__(/*! ./DifferentialFoldChangeCell */ 1157);
 
 var _DifferentialFoldChangeCell2 = _interopRequireDefault(_DifferentialFoldChangeCell);
 
-var _LegendDifferential = __webpack_require__(/*! ./legend/LegendDifferential */ 1170);
+var _LegendDifferential = __webpack_require__(/*! ./legend/LegendDifferential */ 1174);
 
 var _LegendDifferential2 = _interopRequireDefault(_LegendDifferential);
 
-var _ContrastTooltipLoader = __webpack_require__(/*! ./tooltip/ContrastTooltipLoader */ 1174);
+var _ContrastTooltipLoader = __webpack_require__(/*! ./tooltip/ContrastTooltipLoader */ 1178);
 
 var _ContrastTooltipLoader2 = _interopRequireDefault(_ContrastTooltipLoader);
 
-__webpack_require__(/*! ./DifferentialResults.css */ 1176);
+__webpack_require__(/*! ./DifferentialResults.css */ 1180);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -728,7 +728,7 @@ exports.default = DifferentialResults;
 
 /***/ }),
 
-/***/ 1151:
+/***/ 1155:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DisplayLevelsButton.js ***!
   \**************************************************************************/
@@ -770,7 +770,7 @@ exports.default = DisplayLevelsButton;
 
 /***/ }),
 
-/***/ 1152:
+/***/ 1156:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DifferentialDownloadButton.js ***!
   \*********************************************************************************/
@@ -845,7 +845,7 @@ exports.default = DownloadDifferentialButton;
 
 /***/ }),
 
-/***/ 1153:
+/***/ 1157:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DifferentialFoldChangeCell.js ***!
   \*********************************************************************************/
@@ -882,9 +882,9 @@ var _reactTooltip = __webpack_require__(/*! react-tooltip */ 468);
 
 var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-__webpack_require__(/*! ./DifferentialFoldChangeCell.css */ 1166);
+__webpack_require__(/*! ./DifferentialFoldChangeCell.css */ 1170);
 
-var _DifferentialFoldChangeCellInfo = __webpack_require__(/*! ./tooltip/DifferentialFoldChangeCellInfo */ 1168);
+var _DifferentialFoldChangeCellInfo = __webpack_require__(/*! ./tooltip/DifferentialFoldChangeCellInfo */ 1172);
 
 var _DifferentialFoldChangeCellInfo2 = _interopRequireDefault(_DifferentialFoldChangeCellInfo);
 
@@ -920,7 +920,7 @@ exports.default = DifferentialCell;
 
 /***/ }),
 
-/***/ 1154:
+/***/ 1158:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/classnames/index.js ***!
   \********************************************************************************/
@@ -981,7 +981,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 1155:
+/***/ 1159:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/decorators/staticMethods.js ***!
   \***********************************************************************************************************/
@@ -1071,7 +1071,7 @@ var dispatchGlobalEvent = function dispatchGlobalEvent(eventName, opts) {
 
 /***/ }),
 
-/***/ 1156:
+/***/ 1160:
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/decorators/windowListener.js ***!
   \************************************************************************************************************/
@@ -1131,7 +1131,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 1157:
+/***/ 1161:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/decorators/customEvent.js ***!
   \*********************************************************************************************************/
@@ -1231,7 +1231,7 @@ var customListener = void 0;
 
 /***/ }),
 
-/***/ 1158:
+/***/ 1162:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/decorators/isCapture.js ***!
   \*******************************************************************************************************/
@@ -1255,7 +1255,7 @@ exports.default = function (target) {
 
 /***/ }),
 
-/***/ 1159:
+/***/ 1163:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/decorators/getEffect.js ***!
   \*******************************************************************************************************/
@@ -1279,7 +1279,7 @@ exports.default = function (target) {
 
 /***/ }),
 
-/***/ 1160:
+/***/ 1164:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/decorators/trackRemoval.js ***!
   \**********************************************************************************************************/
@@ -1382,7 +1382,7 @@ var getMutationObserverClass = function getMutationObserverClass() {
 
 /***/ }),
 
-/***/ 1161:
+/***/ 1165:
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/utils/getPosition.js ***!
   \****************************************************************************************************/
@@ -1703,7 +1703,7 @@ var getParent = function getParent(currentTarget) {
 
 /***/ }),
 
-/***/ 1162:
+/***/ 1166:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/utils/getTipContent.js ***!
   \******************************************************************************************************/
@@ -1747,7 +1747,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 1163:
+/***/ 1167:
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/utils/aria.js ***!
   \*********************************************************************************************/
@@ -1783,7 +1783,7 @@ function parseAria(props) {
 
 /***/ }),
 
-/***/ 1164:
+/***/ 1168:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/utils/nodeListToArray.js ***!
   \********************************************************************************************************/
@@ -1810,7 +1810,7 @@ exports.default = function (nodeList) {
 
 /***/ }),
 
-/***/ 1165:
+/***/ 1169:
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/node_modules/react-tooltip/dist/style.js ***!
   \****************************************************************************************/
@@ -1828,7 +1828,7 @@ exports.default = '.__react_component_tooltip{border-radius:3px;display:inline-b
 
 /***/ }),
 
-/***/ 1166:
+/***/ 1170:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DifferentialFoldChangeCell.css ***!
   \**********************************************************************************/
@@ -1837,7 +1837,7 @@ exports.default = '.__react_component_tooltip{border-radius:3px;display:inline-b
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader!./DifferentialFoldChangeCell.css */ 1167);
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!./DifferentialFoldChangeCell.css */ 1171);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1884,7 +1884,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 1167:
+/***/ 1171:
 /*!************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/differential-expression/lib/DifferentialFoldChangeCell.css ***!
   \************************************************************************************************************/
@@ -1904,7 +1904,7 @@ exports.push([module.i, ".gxaDifferentialCell {\n    background-color: white;\n 
 
 /***/ }),
 
-/***/ 1168:
+/***/ 1172:
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/tooltip/DifferentialFoldChangeCellInfo.js ***!
   \*********************************************************************************************/
@@ -1954,7 +1954,7 @@ exports.default = DifferentialFoldChangeCellInfo;
 
 /***/ }),
 
-/***/ 1169:
+/***/ 1173:
 /*!********************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/differential-expression/lib/tooltip/DifferentialResultsTooltip.css ***!
   \********************************************************************************************************************/
@@ -1974,7 +1974,7 @@ exports.push([module.i, ".gxaDifferentialResultsTooltip {\n    padding: 2px !imp
 
 /***/ }),
 
-/***/ 1170:
+/***/ 1174:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/legend/LegendDifferential.js ***!
   \********************************************************************************/
@@ -1997,7 +1997,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _LegendRow = __webpack_require__(/*! ./LegendRow */ 1171);
+var _LegendRow = __webpack_require__(/*! ./LegendRow */ 1175);
 
 var _LegendRow2 = _interopRequireDefault(_LegendRow);
 
@@ -2030,7 +2030,7 @@ exports.default = LegendDifferential;
 
 /***/ }),
 
-/***/ 1171:
+/***/ 1175:
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/legend/LegendRow.js ***!
   \***********************************************************************/
@@ -2053,7 +2053,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-__webpack_require__(/*! ./gxaGradient.css */ 1172);
+__webpack_require__(/*! ./gxaGradient.css */ 1176);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -2083,7 +2083,7 @@ exports.default = LegendRow;
 
 /***/ }),
 
-/***/ 1172:
+/***/ 1176:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/legend/gxaGradient.css ***!
   \**************************************************************************/
@@ -2092,7 +2092,7 @@ exports.default = LegendRow;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader!./gxaGradient.css */ 1173);
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader!./gxaGradient.css */ 1177);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -2139,7 +2139,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 1173:
+/***/ 1177:
 /*!****************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/differential-expression/lib/legend/gxaGradient.css ***!
   \****************************************************************************************************/
@@ -2159,7 +2159,7 @@ exports.push([module.i, ".gxaDiffLegendLevelCell {\n    display: table-cell;\n  
 
 /***/ }),
 
-/***/ 1174:
+/***/ 1178:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/tooltip/ContrastTooltipLoader.js ***!
   \************************************************************************************/
@@ -2200,11 +2200,11 @@ var _reactTooltip = __webpack_require__(/*! react-tooltip */ 468);
 
 var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _ContrastInfo = __webpack_require__(/*! ./ContrastInfo */ 1175);
+var _ContrastInfo = __webpack_require__(/*! ./ContrastInfo */ 1179);
 
 var _ContrastInfo2 = _interopRequireDefault(_ContrastInfo);
 
@@ -2276,7 +2276,7 @@ exports.default = (0, _reactRefetch.connect)(function (props) {
 
 /***/ }),
 
-/***/ 1175:
+/***/ 1179:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/tooltip/ContrastInfo.js ***!
   \***************************************************************************/
@@ -2362,7 +2362,7 @@ exports.default = ContrastInfo;
 
 /***/ }),
 
-/***/ 1176:
+/***/ 1180:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/DifferentialResults.css ***!
   \***************************************************************************/
@@ -2371,7 +2371,7 @@ exports.default = ContrastInfo;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader!./DifferentialResults.css */ 1177);
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!./DifferentialResults.css */ 1181);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -2418,7 +2418,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 1177:
+/***/ 1181:
 /*!*****************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/differential-expression/lib/DifferentialResults.css ***!
   \*****************************************************************************************************/
@@ -2438,7 +2438,7 @@ exports.push([module.i, ".gxaDifferentialResultsTable th, .gxaDifferentialResult
 
 /***/ }),
 
-/***/ 1178:
+/***/ 1182:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/facets-tree/DifferentialFacetsTree.js ***!
   \*****************************************************************************************/
@@ -2471,7 +2471,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _propTypes3 = __webpack_require__(/*! ./propTypes */ 1179);
+var _propTypes3 = __webpack_require__(/*! ./propTypes */ 1183);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -2540,7 +2540,7 @@ exports.default = DifferentialFacetsTree;
 
 /***/ }),
 
-/***/ 1179:
+/***/ 1183:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/facets-tree/propTypes.js ***!
   \****************************************************************************/
@@ -2581,7 +2581,7 @@ exports.facetItemDataPropTypes = facetItemDataPropTypes;
 
 /***/ }),
 
-/***/ 1180:
+/***/ 1184:
 /*!*****************************************************************!*\
   !*** ./atlas_bundles/differential-expression/lib/urlManager.js ***!
   \*****************************************************************/
@@ -2596,11 +2596,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _url = __webpack_require__(/*! url */ 147);
+var _url = __webpack_require__(/*! url */ 149);
 
 var _url2 = _interopRequireDefault(_url);
 
-var _querystring = __webpack_require__(/*! querystring */ 238);
+var _querystring = __webpack_require__(/*! querystring */ 240);
 
 var _querystring2 = _interopRequireDefault(_querystring);
 
@@ -2711,11 +2711,11 @@ var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 50);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _FormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 217);
+var _FormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 219);
 
 var _FormGroup2 = _interopRequireDefault(_FormGroup);
 
-var _FormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 216);
+var _FormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 218);
 
 var _FormControl2 = _interopRequireDefault(_FormControl);
 
@@ -3170,7 +3170,7 @@ function getSyncState(component, state) {
   return result;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 17), __webpack_require__(/*! ./../process/browser.js */ 32)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 17), __webpack_require__(/*! ./../process/browser.js */ 31)))
 
 /***/ }),
 
@@ -3393,7 +3393,7 @@ var _CSSTransitionGroupChild = __webpack_require__(/*! ./CSSTransitionGroupChild
 
 var _CSSTransitionGroupChild2 = _interopRequireDefault(_CSSTransitionGroupChild);
 
-var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 101);
+var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 103);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3495,7 +3495,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _warning = __webpack_require__(/*! warning */ 12);
+var _warning = __webpack_require__(/*! warning */ 16);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -3899,11 +3899,11 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _addClass = __webpack_require__(/*! dom-helpers/class/addClass */ 218);
+var _addClass = __webpack_require__(/*! dom-helpers/class/addClass */ 220);
 
 var _addClass2 = _interopRequireDefault(_addClass);
 
-var _removeClass = __webpack_require__(/*! dom-helpers/class/removeClass */ 219);
+var _removeClass = __webpack_require__(/*! dom-helpers/class/removeClass */ 221);
 
 var _removeClass2 = _interopRequireDefault(_removeClass);
 
@@ -3911,7 +3911,7 @@ var _requestAnimationFrame = __webpack_require__(/*! dom-helpers/util/requestAni
 
 var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
 
-var _properties = __webpack_require__(/*! dom-helpers/transition/properties */ 132);
+var _properties = __webpack_require__(/*! dom-helpers/transition/properties */ 134);
 
 var _react = __webpack_require__(/*! react */ 0);
 
@@ -3923,7 +3923,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
-var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 101);
+var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 103);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4140,7 +4140,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(/*! ./inDOM */ 38);
+var _inDOM = __webpack_require__(/*! ./inDOM */ 37);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -7019,49 +7019,49 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _classnames = __webpack_require__(/*! classnames */ 1154);
+var _classnames = __webpack_require__(/*! classnames */ 1158);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _staticMethods = __webpack_require__(/*! ./decorators/staticMethods */ 1155);
+var _staticMethods = __webpack_require__(/*! ./decorators/staticMethods */ 1159);
 
 var _staticMethods2 = _interopRequireDefault(_staticMethods);
 
-var _windowListener = __webpack_require__(/*! ./decorators/windowListener */ 1156);
+var _windowListener = __webpack_require__(/*! ./decorators/windowListener */ 1160);
 
 var _windowListener2 = _interopRequireDefault(_windowListener);
 
-var _customEvent = __webpack_require__(/*! ./decorators/customEvent */ 1157);
+var _customEvent = __webpack_require__(/*! ./decorators/customEvent */ 1161);
 
 var _customEvent2 = _interopRequireDefault(_customEvent);
 
-var _isCapture = __webpack_require__(/*! ./decorators/isCapture */ 1158);
+var _isCapture = __webpack_require__(/*! ./decorators/isCapture */ 1162);
 
 var _isCapture2 = _interopRequireDefault(_isCapture);
 
-var _getEffect = __webpack_require__(/*! ./decorators/getEffect */ 1159);
+var _getEffect = __webpack_require__(/*! ./decorators/getEffect */ 1163);
 
 var _getEffect2 = _interopRequireDefault(_getEffect);
 
-var _trackRemoval = __webpack_require__(/*! ./decorators/trackRemoval */ 1160);
+var _trackRemoval = __webpack_require__(/*! ./decorators/trackRemoval */ 1164);
 
 var _trackRemoval2 = _interopRequireDefault(_trackRemoval);
 
-var _getPosition = __webpack_require__(/*! ./utils/getPosition */ 1161);
+var _getPosition = __webpack_require__(/*! ./utils/getPosition */ 1165);
 
 var _getPosition2 = _interopRequireDefault(_getPosition);
 
-var _getTipContent = __webpack_require__(/*! ./utils/getTipContent */ 1162);
+var _getTipContent = __webpack_require__(/*! ./utils/getTipContent */ 1166);
 
 var _getTipContent2 = _interopRequireDefault(_getTipContent);
 
-var _aria = __webpack_require__(/*! ./utils/aria */ 1163);
+var _aria = __webpack_require__(/*! ./utils/aria */ 1167);
 
-var _nodeListToArray = __webpack_require__(/*! ./utils/nodeListToArray */ 1164);
+var _nodeListToArray = __webpack_require__(/*! ./utils/nodeListToArray */ 1168);
 
 var _nodeListToArray2 = _interopRequireDefault(_nodeListToArray);
 
-var _style = __webpack_require__(/*! ./style */ 1165);
+var _style = __webpack_require__(/*! ./style */ 1169);
 
 var _style2 = _interopRequireDefault(_style);
 
@@ -7621,7 +7621,7 @@ exports.default = {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader!./DifferentialResultsTooltip.css */ 1169);
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader!./DifferentialResultsTooltip.css */ 1173);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -7713,5 +7713,5 @@ _emojiData2.default.forEach(function (_ref) {
 
 /***/ })
 
-},[1147]);
+},[1151]);
 //# sourceMappingURL=expressionAtlasDifferentialExpression.bundle.js.map

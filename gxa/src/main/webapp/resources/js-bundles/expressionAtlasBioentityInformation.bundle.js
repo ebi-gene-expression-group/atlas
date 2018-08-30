@@ -1,7 +1,7 @@
 var expressionAtlasBioentityInformation =
 webpackJsonp_name_([4],{
 
-/***/ 1181:
+/***/ 1185:
 /*!******************************************************!*\
   !*** ./atlas_bundles/bioentity-information/index.js ***!
   \******************************************************/
@@ -17,13 +17,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _scAtlasBioentityInformation = __webpack_require__(/*! sc-atlas-bioentity-information */ 1182);
+var _scAtlasBioentityInformation = __webpack_require__(/*! sc-atlas-bioentity-information */ 1186);
 
 exports.render = _scAtlasBioentityInformation.render;
 
 /***/ }),
 
-/***/ 1182:
+/***/ 1186:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/node_modules/sc-atlas-bioentity-information/lib/index.js ***!
   \******************************************************************************************************/
@@ -47,7 +47,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _BioentityInformation = __webpack_require__(/*! ./BioentityInformation.js */ 1183);
+var _BioentityInformation = __webpack_require__(/*! ./BioentityInformation.js */ 1187);
 
 var _BioentityInformation2 = _interopRequireDefault(_BioentityInformation);
 
@@ -62,7 +62,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 1183:
+/***/ 1187:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/node_modules/sc-atlas-bioentity-information/lib/BioentityInformation.js ***!
   \*********************************************************************************************************************/
@@ -87,15 +87,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _BioentityProperty = __webpack_require__(/*! ./BioentityProperty */ 1184);
+var _BioentityProperty = __webpack_require__(/*! ./BioentityProperty */ 1188);
 
 var _BioentityProperty2 = _interopRequireDefault(_BioentityProperty);
 
-var _Loading = __webpack_require__(/*! ./Loading */ 1185);
+var _Loading = __webpack_require__(/*! ./Loading */ 1189);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -261,7 +261,7 @@ exports.default = BioentityInformation;
 
 /***/ }),
 
-/***/ 1184:
+/***/ 1188:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/node_modules/sc-atlas-bioentity-information/lib/BioentityProperty.js ***!
   \******************************************************************************************************************/
@@ -404,7 +404,7 @@ exports.default = BioentityProperty;
 
 /***/ }),
 
-/***/ 1185:
+/***/ 1189:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/node_modules/sc-atlas-bioentity-information/lib/Loading.js ***!
   \********************************************************************************************************/
@@ -427,7 +427,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 16);
+var _urijs = __webpack_require__(/*! urijs */ 15);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -441,7 +441,7 @@ var Loading = function Loading(props) {
   return _react2.default.createElement(
     'div',
     { className: 'text-center' },
-    _react2.default.createElement('img', { className: 'small-centered', src: (0, _urijs2.default)(__webpack_require__(/*! ./images/loading.gif */ 1186), props.resourcesUrl).toString() })
+    _react2.default.createElement('img', { className: 'small-centered', src: (0, _urijs2.default)(__webpack_require__(/*! ./images/loading.gif */ 1190), props.resourcesUrl).toString() })
   );
 };
 
@@ -458,7 +458,7 @@ exports.default = Loading;
 
 /***/ }),
 
-/***/ 1186:
+/***/ 1190:
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/node_modules/sc-atlas-bioentity-information/lib/images/loading.gif ***!
   \****************************************************************************************************************/
@@ -470,5 +470,5 @@ module.exports = __webpack_require__.p + "e5d9a446341dc8fd32fee7401aa8e252.gif";
 
 /***/ })
 
-},[1181]);
+},[1185]);
 //# sourceMappingURL=expressionAtlasBioentityInformation.bundle.js.map
