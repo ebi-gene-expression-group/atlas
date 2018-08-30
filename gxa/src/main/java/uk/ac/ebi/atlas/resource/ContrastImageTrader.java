@@ -16,15 +16,12 @@ import java.util.Map;
 import java.util.Optional;
 
 @Named
-public class AtlasResourceHub {
-
+public class ContrastImageTrader {
     private ContrastImageFactory contrastImageFactory;
-    private ExtraInfoFactory extraInfoFactory;
 
     @Inject
-    public AtlasResourceHub(ContrastImageFactory contrastImageFactory, ExtraInfoFactory extraInfoFactory) {
+    public ContrastImageTrader(ContrastImageFactory contrastImageFactory) {
         this.contrastImageFactory = contrastImageFactory;
-        this.extraInfoFactory = extraInfoFactory;
     }
 
     public Map<String, JsonArray> contrastImages(DifferentialExperiment differentialExperiment) {
@@ -52,9 +49,4 @@ public class AtlasResourceHub {
         }
         return result;
     }
-
-    public boolean hasExtraInfo(Experiment experiment) {
-        return extraInfoFactory.getExtraInfo(experiment.getAccession()).exists();
-    }
-
 }

@@ -21,14 +21,6 @@
         </h3>
         <h5>${type}</h5>
 
-        <c:if test="${hasExtraInfo}">
-        <a id="extra-info"
-           href="${pageContext.request.contextPath}/external-resources/${experimentAccession}/extra-info.png">
-            <img alt="more information"
-                 src="${pageContext.request.contextPath}/resources/images/overview_button.png">
-        </a>
-        </c:if>
-
         <div id="experimentOrganisms">Organism:
             <span style="font-style:italic">${species}</span>
         </div>

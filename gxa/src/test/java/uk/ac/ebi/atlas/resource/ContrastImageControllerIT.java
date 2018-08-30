@@ -26,9 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = WebConfig.class)
-class AtlasResourceHubWIT {
+class ContrastImageControllerIT {
     @Inject
-    private AtlasResourceHub subject;
+    private ContrastImageTrader subject;
 
     @Inject
     private ExpressionAtlasExperimentTrader experimentTrader;

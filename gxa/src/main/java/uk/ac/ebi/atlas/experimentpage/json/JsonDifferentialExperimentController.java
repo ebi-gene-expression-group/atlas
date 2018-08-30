@@ -23,7 +23,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfil
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
-import uk.ac.ebi.atlas.resource.AtlasResourceHub;
+import uk.ac.ebi.atlas.resource.ContrastImageTrader;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -57,7 +57,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
                                                 RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory,
                                                 MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
                                                 SolrQueryService solrQueryService,
-                                                AtlasResourceHub atlasResourceHub) {
+                                                ContrastImageTrader atlasResourceHub) {
         super(experimentTrader);
 
         diffRnaSeqExperimentPageService =

@@ -12,23 +12,12 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Controller
-public class ExternalImageController {
+public class ContrastImageController {
     private ContrastImageFactory contrastImageFactory;
-    private ExtraInfoFactory extraInfoFactory;
 
     @Inject
-    public ExternalImageController(ExtraInfoFactory extraInfoFactory,
-                                   ContrastImageFactory contrastImageFactory) {
-        this.extraInfoFactory = extraInfoFactory;
+    public ContrastImageController(ContrastImageFactory contrastImageFactory) {
         this.contrastImageFactory = contrastImageFactory;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/external-resources/{experimentAccession}/extra-info.png")
-    public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession) {
-
-        streamExternalImage(response, extraInfoFactory.getExtraInfo(experimentAccession).get());
-
     }
 
     @ResponseBody
