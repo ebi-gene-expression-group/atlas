@@ -50,14 +50,14 @@ class GoPoTraderIT {
     }
 
     private Stream<OntologyTerm> randomGoOntologyTermAccessionProvider() throws IOException {
-        return Stream.of(randomAccessionProvider("GO"));
+        return Stream.of(randomTermProvider("GO"));
     }
 
     private Stream<OntologyTerm> randomPoOntologyTermAccessionProvider() throws IOException {
-        return Stream.of(randomAccessionProvider("PO"));
+        return Stream.of(randomTermProvider("PO"));
     }
 
-    private OntologyTerm randomAccessionProvider(String prefix) throws IOException {
+    private OntologyTerm randomTermProvider(String prefix) throws IOException {
         long numLines = Files.lines(goPoFilePath).count();
 
         String randomLine = "";
