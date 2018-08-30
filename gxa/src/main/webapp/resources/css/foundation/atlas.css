@@ -289,3 +289,11 @@ a.baseline {
 .anchored:hover a {
     visibility: visible;
 }
+
+img.icon {
+    height: 28px;
+}
+
+img.big-icon {
+    height: 64px;
+}
