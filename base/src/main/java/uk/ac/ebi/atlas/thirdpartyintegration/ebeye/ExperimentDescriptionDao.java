@@ -7,14 +7,14 @@ import javax.inject.Named;
 import java.util.List;
 
 @Named
-public class ExperimentDescriptionDAO {
+public class ExperimentDescriptionDao {
 
     private final JdbcTemplate jdbcTemplate;
 
     private final ExperimentDescriptionRowMapper experimentDescriptionRowMapper;
 
     @Inject
-    public ExperimentDescriptionDAO(JdbcTemplate jdbcTemplate,
+    public ExperimentDescriptionDao(JdbcTemplate jdbcTemplate,
                                     ExperimentDescriptionRowMapper experimentDescriptionRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.experimentDescriptionRowMapper = experimentDescriptionRowMapper;

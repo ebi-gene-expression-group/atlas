@@ -13,13 +13,13 @@ import java.util.List;
 
 @Controller
 @Scope("request")
-public class EBEyeSearchController {
-    private final ExperimentDescriptionXMLFormatter experimentDescriptionXMLFormatter;
-    private final ExperimentDescriptionDAO experimentDescriptionDAO;
+public class EbEyeSearchController {
+    private final ExperimentDescriptionXmlFormatter experimentDescriptionXMLFormatter;
+    private final ExperimentDescriptionDao experimentDescriptionDAO;
 
     @Inject
-    public EBEyeSearchController(ExperimentDescriptionDAO experimentDescriptionDAO,
-                                 ExperimentDescriptionXMLFormatter experimentDescriptionXMLFormatter) {
+    public EbEyeSearchController(ExperimentDescriptionDao experimentDescriptionDAO,
+                                 ExperimentDescriptionXmlFormatter experimentDescriptionXMLFormatter) {
         this.experimentDescriptionDAO = experimentDescriptionDAO;
         this.experimentDescriptionXMLFormatter = experimentDescriptionXMLFormatter;
     }

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
-import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.experimentimport.efo.EfoLookupService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -18,10 +18,10 @@ import java.util.Set;
 
 @Named
 public class ConditionsLookupService {
-    private EFOLookupService efoLookupService;
+    private EfoLookupService efoLookupService;
 
     @Inject
-    public ConditionsLookupService(EFOLookupService efoLookupService) {
+    public ConditionsLookupService(EfoLookupService efoLookupService) {
         this.efoLookupService = efoLookupService;
     }
 

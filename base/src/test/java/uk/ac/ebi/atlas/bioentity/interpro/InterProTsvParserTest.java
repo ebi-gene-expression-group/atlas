@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-class InterProTSVParserTest {
+class InterProTsvParserTest {
     private static final String IPR000001 = "IPR000001";
     private static final String KRINGLE = "Kringle";
     private static final String DOMAIN = "Domain";
@@ -30,7 +30,7 @@ class InterProTSVParserTest {
         when(tsvStreamerMock.get())
                 .thenReturn(Stream.<String[]>of(new String[] {KRINGLE, IPR000001, DOMAIN}));
 
-        Map<String, OntologyTerm> map = InterProTSVParser.parse(tsvStreamerMock);
+        Map<String, OntologyTerm> map = InterProTsvParser.parse(tsvStreamerMock);
 
         assertThat(map.get(IPR000001))
                 .isEqualTo(OntologyTerm.create(IPR000001, KRINGLE + " (" + DOMAIN.toLowerCase() + ")"));
@@ -41,7 +41,7 @@ class InterProTSVParserTest {
         when(tsvStreamerMock.get())
                 .thenReturn(Stream.<String[]>of(new String[] {"foo:0000001", "bar"}));
 
-        Map<String, OntologyTerm> map = InterProTSVParser.parse(tsvStreamerMock);
+        Map<String, OntologyTerm> map = InterProTsvParser.parse(tsvStreamerMock);
 
         assertThat(map).isEmpty();
     }
@@ -51,7 +51,7 @@ class InterProTSVParserTest {
         when(tsvStreamerMock.get())
                 .thenReturn(Stream.<String[]>of(new String[] {IPR000001, "", "", "", "", ""}));
 
-        Map<String, OntologyTerm> map = InterProTSVParser.parse(tsvStreamerMock);
+        Map<String, OntologyTerm> map = InterProTsvParser.parse(tsvStreamerMock);
 
         assertThat(map).isEmpty();
     }
@@ -62,7 +62,7 @@ class InterProTSVParserTest {
         when(tsvStreamerMock.get())
                 .thenReturn(Stream.of(new String[] {}, new String[] {"", "", "", "", "", ""}));
 
-        Map<String, OntologyTerm> map = InterProTSVParser.parse(tsvStreamerMock);
+        Map<String, OntologyTerm> map = InterProTsvParser.parse(tsvStreamerMock);
 
         assertThat(map).isEmpty();
     }

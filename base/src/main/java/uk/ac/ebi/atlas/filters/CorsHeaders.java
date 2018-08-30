@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CORSHeaders extends OncePerRequestFilter {
+public class CorsHeaders extends OncePerRequestFilter {
 
     @Override
     protected final void doFilterInternal(HttpServletRequest request,

@@ -37,8 +37,8 @@ public class MicroarrayQCFilesIT {
     private void testExperiment(String accession) {
         MicroarrayExperiment experiment =
                 (MicroarrayExperiment) expressionAtlasExperimentTrader.getPublicExperiment(accession);
-        MicroarrayQCFiles microarrayQCFiles =
-                new MicroarrayQCFiles(dataFileHub.getExperimentFiles(accession).qcFolder);
+        MicroarrayQcFiles microarrayQCFiles =
+                new MicroarrayQcFiles(dataFileHub.getExperimentFiles(accession).qcFolder);
 
         for (String arrayDesignReadOffFromFolderName : microarrayQCFiles.getArrayDesignsThatHaveQcReports()) {
             assertThat(arrayDesignReadOffFromFolderName,

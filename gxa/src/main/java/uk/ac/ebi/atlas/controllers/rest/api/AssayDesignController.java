@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
+import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -13,10 +13,10 @@ import java.util.Map;
 @Controller
 @Scope("request")
 public class AssayDesignController {
-    private final ArrayDesignDAO arrayDesignDAO;
+    private final ArrayDesignDao arrayDesignDAO;
 
     @Inject
-    public AssayDesignController(ArrayDesignDAO arrayDesignDAO) {
+    public AssayDesignController(ArrayDesignDao arrayDesignDAO) {
         this.arrayDesignDAO = arrayDesignDAO;
     }
 

@@ -14,14 +14,14 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
-public class MicroarrayQCFiles {
+public class MicroarrayQcFiles {
     private final Set<Path> qcDirectory;
 
-    public MicroarrayQCFiles(AtlasResource<Set<Path>> directoryResource) {
+    public MicroarrayQcFiles(AtlasResource<Set<Path>> directoryResource) {
         this(directoryResource.exists() ? directoryResource.get() : ImmutableSet.of());
     }
 
-    private MicroarrayQCFiles(Set<Path> qcDirectory) {
+    private MicroarrayQcFiles(Set<Path> qcDirectory) {
         this.qcDirectory = qcDirectory;
     }
 

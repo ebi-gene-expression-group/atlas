@@ -10,14 +10,14 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 
-public class RnaSeqQCFiles {
+public class RnaSeqQcFiles {
     private final Set<Path> qcDirectory;
 
-    public RnaSeqQCFiles(AtlasResource<Set<Path>> directoryResource) {
+    public RnaSeqQcFiles(AtlasResource<Set<Path>> directoryResource) {
         this(directoryResource.exists() ? directoryResource.get() : ImmutableSet.of());
     }
 
-    RnaSeqQCFiles(Set<Path> qcDirectory) {
+    RnaSeqQcFiles(Set<Path> qcDirectory) {
         this.qcDirectory = qcDirectory;
     }
 

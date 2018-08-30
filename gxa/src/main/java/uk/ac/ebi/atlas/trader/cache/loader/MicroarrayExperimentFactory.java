@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
+import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 public class MicroarrayExperimentFactory implements ExperimentFactory<MicroarrayExperiment> {
     private final ConfigurationTrader configurationTrader;
     private final SpeciesFactory speciesFactory;
-    private final ArrayDesignDAO arrayDesignDAO;
+    private final ArrayDesignDao arrayDesignDAO;
 
     public MicroarrayExperimentFactory(ConfigurationTrader configurationTrader,
                                        SpeciesFactory speciesFactory,
-                                       ArrayDesignDAO arrayDesignDAO) {
+                                       ArrayDesignDao arrayDesignDAO) {
 
         this.configurationTrader = configurationTrader;
         this.speciesFactory = speciesFactory;

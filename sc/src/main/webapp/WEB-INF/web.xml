@@ -48,7 +48,7 @@
 
     <filter>
         <filter-name>cors-headers</filter-name>
-        <filter-class>uk.ac.ebi.atlas.filters.CORSHeaders</filter-class>
+        <filter-class>uk.ac.ebi.atlas.filters.CorsHeaders</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>cors-headers</filter-name>

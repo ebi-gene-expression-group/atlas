@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
-import uk.ac.ebi.atlas.experimentimport.efo.EFOTreeNodesTrader;
+import uk.ac.ebi.atlas.experimentimport.efo.EfoLookupService;
+import uk.ac.ebi.atlas.experimentimport.efo.EfoTreeNodesTrader;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -41,7 +41,7 @@ public class ConditionsLookupServiceTest {
     private Contrast contrastMock;
 
     @Mock
-    private EFOLookupService efoLookupService;
+    private EfoLookupService efoLookupService;
 
     @Before
     public void setup() {
@@ -130,7 +130,7 @@ public class ConditionsLookupServiceTest {
 
     private void testWithOneAssayGroup(BiConsumer<AssayGroup, ExperimentDesign> setup,
                                        Collection<String> expectedConditions) {
-        EFOTreeNodesTrader m = mock(EFOTreeNodesTrader.class);
+        EfoTreeNodesTrader m = mock(EfoTreeNodesTrader.class);
         when(m.getTreeNodes()).thenReturn(ImmutableMap.of());
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
@@ -141,7 +141,7 @@ public class ConditionsLookupServiceTest {
 
 
         assertThat(
-                new ConditionsLookupService(new EFOLookupService(m))
+                new ConditionsLookupService(new EfoLookupService(m))
                         .conditionsPerDataColumnDescriptor(MockExperiment.createBaselineExperiment(
                                 experimentDesign, assayGroups)),
                 is(ImmutableSetMultimap.builder().putAll(assayGroup.getId(), expectedConditions).build()));
@@ -149,7 +149,7 @@ public class ConditionsLookupServiceTest {
 
     private void testWithOneContrast(BiConsumer<Contrast, ExperimentDesign> setup,
                                      Collection<String> expectedConditions) {
-        EFOTreeNodesTrader m = mock(EFOTreeNodesTrader.class);
+        EfoTreeNodesTrader m = mock(EfoTreeNodesTrader.class);
         when(m.getTreeNodes()).thenReturn(ImmutableMap.of());
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
@@ -159,7 +159,7 @@ public class ConditionsLookupServiceTest {
         setup.accept(contrast, experimentDesign);
 
         assertThat(
-                new ConditionsLookupService(new EFOLookupService(m))
+                new ConditionsLookupService(new EfoLookupService(m))
                         .conditionsPerDataColumnDescriptor(createDifferentialExperiment(
                                 "accession", contrasts, experimentDesign)),
                 is(ImmutableSetMultimap.builder().putAll(contrast.getId(), expectedConditions).build()));

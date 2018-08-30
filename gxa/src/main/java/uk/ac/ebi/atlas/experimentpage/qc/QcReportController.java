@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 
 @Controller
-public class QCReportController {
+public class QcReportController {
     private static final String QC_REPORT_URL =
             "experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
@@ -31,7 +31,7 @@ public class QCReportController {
     private final DataFileHub dataFileHub;
 
     @Inject
-    public QCReportController(ExperimentTrader experimentTrader, DataFileHub dataFileHub) {
+    public QcReportController(ExperimentTrader experimentTrader, DataFileHub dataFileHub) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
     }
@@ -54,7 +54,7 @@ public class QCReportController {
         Preconditions.checkNotNull(experimentTrader.getExperiment(experimentAccession, accessKey));
 
         request.setAttribute("contentPath",
-                new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experimentAccession).qcFolder)
+                new MicroarrayQcFiles(dataFileHub.getExperimentFiles(experimentAccession).qcFolder)
                         .get(experimentAccession, arrayDesign)
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
@@ -68,7 +68,7 @@ public class QCReportController {
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     private String forwardToQcResource(String experimentAccession, String arrayDesign, String resource) {
         String path = MessageFormat.format("/expdata/{0}/qc/{1}/{2}",
-                experimentAccession, MicroarrayQCFiles.folderName(experimentAccession, arrayDesign), resource);
+                experimentAccession, MicroarrayQcFiles.folderName(experimentAccession, arrayDesign), resource);
 
         return "forward:" + path;
     }

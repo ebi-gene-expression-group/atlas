@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Named
-public class ExperimentDescriptionXMLFormatter {
+public class ExperimentDescriptionXmlFormatter {
 
     private static final String HEADER = "<database>\n" +
             "<name>Expression Atlas</name>\n" +

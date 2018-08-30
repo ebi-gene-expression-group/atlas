@@ -20,7 +20,7 @@ public class GoPoTrader {
 
     public GoPoTrader(Path goPoFilePath) {
         try (CSVReader tsvReader = CsvReaderFactory.createForTsv(goPoFilePath.toString())) {
-            accessionToTerm = new GoPoTSVParser(tsvReader).parse();
+            accessionToTerm = new GoPoTsvParser(tsvReader).parse();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

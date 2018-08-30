@@ -11,8 +11,8 @@ import java.net.URL;
 import java.util.Map;
 
 @Named
-public class EFOTreeNodesTrader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EFOTreeNodesTrader.class);
+public class EfoTreeNodesTrader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EfoTreeNodesTrader.class);
     private static final String EFO_OWL_FILE_URL = "https://www.ebi.ac.uk/efo/efo.owl";
 
     // efoLoader.load is not thread-safe so we serialize concurrent access using a LazyReference

@@ -16,11 +16,11 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class ArrayDesignDAOIT {
+public class ArrayDesignDaoIT {
     private static final int ENSG00000109929_ARRAY_DESIGNS = 74;
 
     @Inject
-    private ArrayDesignDAO subject;
+    private ArrayDesignDao subject;
 
     @Test
     public void testGetDesignElements() {

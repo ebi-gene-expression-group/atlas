@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import java.io.IOException;
 import java.util.Collection;
 
-public class GoPoTSVParser {
+public class GoPoTsvParser {
 
     private static final String[] VALID_PREFIXES = {"GO:", "PO:"};
 
@@ -20,7 +20,7 @@ public class GoPoTSVParser {
 
     private final CSVReader csvReader;
 
-    public GoPoTSVParser(CSVReader csvReader) {
+    public GoPoTsvParser(CSVReader csvReader) {
         this.csvReader = csvReader;
     }
 

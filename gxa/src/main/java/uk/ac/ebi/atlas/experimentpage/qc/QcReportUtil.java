@@ -12,8 +12,8 @@ import java.nio.file.Path;
 
 import static java.nio.file.Files.newInputStream;
 
-public class QCReportUtil {
-    protected QCReportUtil() {
+public class QcReportUtil {
+    protected QcReportUtil() {
         throw new UnsupportedOperationException();
     }
 

@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
-import uk.ac.ebi.atlas.experimentpage.qc.RnaSeqQCReport;
+import uk.ac.ebi.atlas.experimentpage.qc.RnaSeqQcReport;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -48,7 +48,7 @@ public class ExpressionAtlasContentService {
             ExperimentDesignFile.Baseline baselineExperimentDesignFile,
             ExperimentDesignFile.RnaSeq rnaSeqDifferentialExperimentDesignFile,
             ExperimentDesignFile.Microarray microarrayExperimentDesignFile,
-            RnaSeqQCReport rnaSeqQCReport,
+            RnaSeqQcReport rnaSeqQCReport,
             LinkToArrayExpress.RnaSeqBaseline rnaSeqBaselineLinkToArrayExpress,
             LinkToArrayExpress.ProteomicsBaseline proteomicsBaselineLinkToArrayExpress,
             LinkToArrayExpress.Differential differentialLinkToArrayExpress,

@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescription;
-import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescriptionDAO;
+import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescriptionDao;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -16,9 +16,9 @@ import static org.hamcrest.Matchers.hasItem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class ExperimentDescriptionDAOIT {
+public class ExperimentDescriptionDaoIT {
     @Inject
-    private ExperimentDescriptionDAO subject;
+    private ExperimentDescriptionDao subject;
 
     private static final ExperimentDescription E_MTAB_513 =
             new ExperimentDescription(

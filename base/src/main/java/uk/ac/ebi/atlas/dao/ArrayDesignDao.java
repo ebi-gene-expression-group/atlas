@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Named
-public class ArrayDesignDAO {
+public class ArrayDesignDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -26,7 +26,7 @@ public class ArrayDesignDAO {
     };
 
     @Inject
-    public ArrayDesignDAO(JdbcTemplate jdbcTemplate) {
+    public ArrayDesignDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

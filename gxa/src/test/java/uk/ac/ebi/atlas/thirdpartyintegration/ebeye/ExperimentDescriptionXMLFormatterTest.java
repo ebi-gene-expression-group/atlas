@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class ExperimentDescriptionXMLFormatterTest {
-    private ExperimentDescriptionXMLFormatter subject = new ExperimentDescriptionXMLFormatter();
+    private ExperimentDescriptionXmlFormatter subject = new ExperimentDescriptionXmlFormatter();
 
     @Test
     public void dateFormat() throws ParseException {

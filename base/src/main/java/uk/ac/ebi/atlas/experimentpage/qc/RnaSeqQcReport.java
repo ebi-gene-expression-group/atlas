@@ -16,7 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Named
-public class RnaSeqQCReport extends CanStreamSupplier<DifferentialExperiment> {
+public class RnaSeqQcReport extends CanStreamSupplier<DifferentialExperiment> {
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
         return ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION;
@@ -25,7 +25,7 @@ public class RnaSeqQCReport extends CanStreamSupplier<DifferentialExperiment> {
     private final DataFileHub dataFileHub;
 
     @Inject
-    public RnaSeqQCReport(DataFileHub dataFileHub) {
+    public RnaSeqQcReport(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
     }
 
@@ -33,7 +33,7 @@ public class RnaSeqQCReport extends CanStreamSupplier<DifferentialExperiment> {
     public Collection<ExternallyAvailableContent> get(DifferentialExperiment experiment) {
 
         List<Pair<String, Function<Writer, Void>>> documents =
-                new RnaSeqQCFiles(
+                new RnaSeqQcFiles(
                         dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder).get().entrySet().stream()
                         .map(stringAtlasResourceEntry ->
                                 Pair.of(stringAtlasResourceEntry.getKey(),

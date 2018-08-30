@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 @Named
-public class ImageIOUtils {
+public class ImageIoUtils {
     public BufferedImage read(InputStream inputStream) throws IOException {
         return ImageIO.read(inputStream);
     }

@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.Set;
 
 @Named
-public class EFOLookupService {
+public class EfoLookupService {
 
-    private EFOTreeNodesTrader efoTreeNodesTrader;
+    private EfoTreeNodesTrader efoTreeNodesTrader;
     private ImmutableMap<String, EFONode> idToEFONode;
 
     @Inject
-    public EFOLookupService(EFOTreeNodesTrader efoTreeNodesTrader) {
+    public EfoLookupService(EfoTreeNodesTrader efoTreeNodesTrader) {
         this.efoTreeNodesTrader = efoTreeNodesTrader;
     }
 

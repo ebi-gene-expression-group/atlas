@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class EFOLookupServiceEIT {
+public class EfoLookupServiceIT {
     private static final String BTO_0002690 = "BTO_0002690";
     private static final String GO_0023014 = "GO_0023014";
 
@@ -24,7 +24,7 @@ public class EFOLookupServiceEIT {
     private static final int COMMON_PARENTS = 1;
 
     @Inject
-    private EFOLookupService subject;
+    private EfoLookupService subject;
 
     @Test
     public void allParents() {

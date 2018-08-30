@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GoPoTSVParserTest {
+public class GoPoTsvParserTest {
     private static final String GO_0000001 = "GO:0000001";
     private static final String MITOCHONDRION_INHERITANCE = "mitochondrion inheritance";
     private static final int DEPTH_6 = 6;
@@ -23,14 +23,14 @@ public class GoPoTSVParserTest {
     private static final String PO_0000001 = "PO:0000001";
     private static final String EMBRYO_PROPER = "embryo proper";
 
-    private GoPoTSVParser subject;
+    private GoPoTsvParser subject;
 
     @Mock
     private CSVReader tsvReaderMock;
 
     @Before
     public void setUp() {
-        subject = new GoPoTSVParser(tsvReaderMock);
+        subject = new GoPoTsvParser(tsvReaderMock);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class GoPoTSVParserTest {
 
         assertThat(map.get(PO_0000001).accession(), is(PO_0000001));
         assertThat(map.get(PO_0000001).name(), is(EMBRYO_PROPER));
-        assertThat(map.get(PO_0000001).depth(), is(GoPoTSVParser.DEFAULT_DEPTH));
+        assertThat(map.get(PO_0000001).depth(), is(GoPoTsvParser.DEFAULT_DEPTH));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class GoPoTSVParserTest {
 
         assertThat(map.size(), is(1));
         assertThat(map.get(GO_0000001).name(), is(""));
-        assertThat(map.get(GO_0000001).depth(), is(GoPoTSVParser.DEFAULT_DEPTH));
+        assertThat(map.get(GO_0000001).depth(), is(GoPoTsvParser.DEFAULT_DEPTH));
     }
 
 

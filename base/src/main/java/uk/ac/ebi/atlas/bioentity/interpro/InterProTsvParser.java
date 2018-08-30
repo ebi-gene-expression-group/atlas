@@ -6,12 +6,12 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
-public class InterProTSVParser {
+public class InterProTsvParser {
     private static final int NAME_COLUMN_INDEX = 0;
     private static final int ACCESSION_COLUMN_INDEX = 1;
     private static final int TYPE_COLUMN_INDEX = 2;
 
-    protected InterProTSVParser() {
+    protected InterProTsvParser() {
         throw new UnsupportedOperationException();
     }
 
