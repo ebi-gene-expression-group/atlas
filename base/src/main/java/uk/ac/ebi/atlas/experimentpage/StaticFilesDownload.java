@@ -55,7 +55,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
             b.add(new ExternallyAvailableContent(
                     HEATMAP_URL.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create(
-                            "icon-pdf",
+                            "icon-clustered-heatmap",
                             "Heatmap of aggregated expression data")));
         }
 
