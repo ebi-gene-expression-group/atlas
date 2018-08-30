@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.atlas.model.arraydesign;
 
 import org.junit.jupiter.api.Test;
 

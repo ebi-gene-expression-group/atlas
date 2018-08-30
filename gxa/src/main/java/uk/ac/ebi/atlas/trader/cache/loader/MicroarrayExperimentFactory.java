@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.atlas.dao.ArrayDesignDao;
+import uk.ac.ebi.atlas.model.arraydesign.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;

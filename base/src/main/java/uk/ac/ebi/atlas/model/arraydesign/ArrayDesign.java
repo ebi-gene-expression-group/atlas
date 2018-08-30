@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.atlas.model.arraydesign;
 
 import com.google.auto.value.AutoValue;
 

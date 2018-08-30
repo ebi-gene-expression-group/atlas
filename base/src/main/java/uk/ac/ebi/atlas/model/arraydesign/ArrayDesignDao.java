@@ -1,27 +1,26 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.model.arraydesign;
 
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.model.ArrayDesign;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Named
 public class ArrayDesignDao {
-
     private final JdbcTemplate jdbcTemplate;
 
     private final LazyReference<List<ArrayDesign>> arrayDesigns = new LazyReference<List<ArrayDesign>>() {
         @Override
         protected List<ArrayDesign> create() {
-            return jdbcTemplate.queryForList("SELECT * FROM ARRAYDESIGN").stream().map(
-                    e -> ArrayDesign.create((String) e.get("ACCESSION"), (String) e.get("NAME"))
-            ).collect(Collectors.toList());
+            return jdbcTemplate.queryForList("SELECT * FROM ARRAYDESIGN").stream()
+                    .map(e -> ArrayDesign.create((String) e.get("ACCESSION"), (String) e.get("NAME")))
+                    .collect(Collectors.toList());
         }
     };
 
@@ -36,9 +35,12 @@ public class ArrayDesignDao {
     }
 
     public ArrayDesign getArrayDesign(String accession) {
-        return arrayDesigns.get().stream()
+        return Optional.ofNullable(arrayDesigns.get())
+                .orElseThrow(RuntimeException::new)
+                .stream()
                 .filter(a -> a.accession().equals(accession))
-                .findFirst().orElse(ArrayDesign.createForUnknownName(accession));
+                .findFirst()
+                .orElse(ArrayDesign.createForUnknownName(accession));
     }
 
     public Map<String, String> getArrayDesignMapNames() {
@@ -55,5 +57,4 @@ public class ArrayDesignDao {
         }
         return mapBuilder.build();
     }
-
 }

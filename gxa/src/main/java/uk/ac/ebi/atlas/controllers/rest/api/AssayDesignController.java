@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.dao.ArrayDesignDao;
+import uk.ac.ebi.atlas.model.arraydesign.ArrayDesignDao;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class AssayDesignController {
         this.arrayDesignDAO = arrayDesignDAO;
     }
 
-    @RequestMapping(value = "/api/arraydesigns.txt", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/api/arraydesign.txt", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllArrayDesignsWithNames() {
         Map<String, String> arrayDesigns = arrayDesignDAO.getArrayDesignMapNames();
