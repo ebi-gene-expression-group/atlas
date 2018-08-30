@@ -1,15 +1,16 @@
 package uk.ac.ebi.atlas.bioentity.interpro;
 
-import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -19,8 +20,9 @@ public class InterProTrader {
     private final ImmutableMap<String, OntologyTerm> accessionToTerm;
 
     public InterProTrader(Path interProFilePath) {
-        try (CSVReader tsvReader = CsvReaderFactory.createForTsv(interProFilePath.toString())) {
-            accessionToTerm = new InterProTSVParser(tsvReader).parse();
+        try (TsvStreamer tsvStreamer =
+                     new TsvStreamer(Files.newBufferedReader(interProFilePath, StandardCharsets.UTF_8))) {
+            accessionToTerm = InterProTSVParser.parse(tsvStreamer);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
