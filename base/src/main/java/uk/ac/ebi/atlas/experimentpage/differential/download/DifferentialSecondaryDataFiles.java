@@ -59,7 +59,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 builder.add(new ExternallyAvailableContent(
                                 makeUri("raw-counts"),
                                 ExternallyAvailableContent.Description.create(
-                                        "icon-raw-counts    ", "All raw counts for the experiment"),
+                                        "icon-raw-counts", "All raw counts for the experiment"),
                                 streamFile(
                                         experiment.getAccession() + "-raw-counts.tsv",
                                         readFromResourceAndWriteTsv(rawCounts, Function.identity()))));
