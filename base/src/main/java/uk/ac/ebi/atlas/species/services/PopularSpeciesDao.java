@@ -17,11 +17,9 @@ import java.util.Map;
 public class PopularSpeciesDao {
 
     protected static final String SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY =
-            "SELECT experiment_organism.organism, experiment.type, " +
-            "count(experiment_organism.organism) AS c " +
+            "SELECT species, type, COUNT(species) " +
             "FROM experiment " +
-            "LEFT OUTER JOIN  experiment_organism ON experiment_organism.experiment=experiment.accession " +
-            "WHERE private=FALSE GROUP BY experiment.type, experiment_organism.organism";
+            "WHERE private=FALSE GROUP BY type, species";
 
     private final SpeciesFactory speciesFactory;
     private final JdbcTemplate jdbcTemplate;

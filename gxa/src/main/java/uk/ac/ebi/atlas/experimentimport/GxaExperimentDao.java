@@ -20,23 +20,18 @@ public class GxaExperimentDao extends ExperimentDao {
     // Create
     private static final String INSERT_NEW_EXPERIMENT =
             "INSERT INTO experiment " +
-            "(accession, type, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String INSERT_EXPERIMENT_SPECIES =
-            "INSERT INTO experiment_organism (experiment, organism) values (?, ?)";
+            "(accession, type, species, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?, ?)";
     // Read
     private static final String SELECT_EXPERIMENT_AS_ADMIN_BY_ACCESSION =
             "SELECT * FROM experiment " +
-            "LEFT OUTER JOIN  experiment_organism on experiment_organism.experiment=experiment.accession " +
             "WHERE accession=?";
     private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY =
             "SELECT * FROM experiment " +
-            "LEFT OUTER JOIN  experiment_organism on experiment_organism.experiment=experiment.accession " +
             "WHERE accession=? AND (private=FALSE OR access_key=?)";
     private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE =
             "SELECT accession FROM public_experiment WHERE type IN(:experimentTypes)";
     private static final String SELECT_ALL_EXPERIMENTS_AS_ADMIN =
-            "SELECT * FROM experiment " +
-            "LEFT OUTER JOIN  experiment_organism on experiment_organism.experiment=experiment.accession";
+            "SELECT * FROM experiment";
     private static final String COUNT_EXPERIMENTS = "SELECT COUNT(*) FROM experiment";
     // Update
     private static final String UPDATE_EXPERIMENT = "UPDATE experiment SET private=? where accession=?";
@@ -57,16 +52,11 @@ public class GxaExperimentDao extends ExperimentDao {
                 INSERT_NEW_EXPERIMENT,
                 experimentDto.getExperimentAccession(),
                 experimentDto.getExperimentType().name(),
+                experimentDto.getSpecies(),
                 experimentDto.isPrivate(),
                 accessKeyUuid.toString(),
                 experimentDto.getPubmedIds().stream().collect(Collectors.joining(", ")),
                 experimentDto.getTitle());
-
-        // Add species row
-        jdbcTemplate.update(
-                INSERT_EXPERIMENT_SPECIES,
-                experimentDto.getExperimentAccession(),
-                experimentDto.getSpecies());
     }
 
     @Override
