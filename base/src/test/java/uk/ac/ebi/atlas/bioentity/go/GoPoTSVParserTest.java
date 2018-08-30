@@ -37,7 +37,7 @@ public class GoPoTSVParserTest {
     public void parseLineWithDepthField() throws Exception {
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {
-                        GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6)})
+                        GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6)})
                 .willReturn(null);
 
         Map<String, OntologyTerm> map = subject.parse();
@@ -51,11 +51,11 @@ public class GoPoTSVParserTest {
     public void duplicatesGetMinimumDepth() throws Exception {
         given(tsvReaderMock.readNext())
                 .willReturn(new String[]
-                        {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6 + 1)})
+                        {GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6 + 1)})
                 .willReturn(new String[]
-                        {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6)})
+                        {GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6)})
                 .willReturn(new String[]
-                        {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6 + 2)})
+                        {GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6 + 2)})
                 .willReturn(null);
 
         Map<String, OntologyTerm> map = subject.parse();
