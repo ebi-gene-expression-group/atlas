@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
+package uk.ac.ebi.atlas.ebeye;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;

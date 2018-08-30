@@ -1,12 +1,12 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.ebeye;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
-import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescription;
-import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescriptionDao;
+import uk.ac.ebi.atlas.ebeye.ExperimentDescription;
+import uk.ac.ebi.atlas.ebeye.ExperimentDescriptionDao;
 
 import javax.inject.Inject;
 import java.util.List;
