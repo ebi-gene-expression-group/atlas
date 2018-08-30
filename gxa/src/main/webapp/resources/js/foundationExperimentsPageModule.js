@@ -25,10 +25,10 @@ var foundationExperimentsPageModule = (function ($) {
 
     function formatExperimentType(data, contextPath) {
         if (data === 'RNASEQ_MRNA_BASELINE' || data === 'PROTEOMICS_BASELINE') {
-            return '<img src= "' + contextPath + '/resources/images/allup2_transparent_bkg.png" alt="baseline"/>';
+            return '<img src= "' + contextPath + '/resources/images/experiments-table/baseline.png" alt="baseline"/>';
         }
         if (data === 'RNASEQ_MRNA_DIFFERENTIAL' || data === 'MICROARRAY_ANY') {
-            return '<img src="' + contextPath + '/resources/images/updown_transparent_bkg.png" alt="differential"/>';
+            return '<img src="' + contextPath + '/resources/images/experiments-table/differential.png" alt="differential"/>';
         }
         return data;
     }

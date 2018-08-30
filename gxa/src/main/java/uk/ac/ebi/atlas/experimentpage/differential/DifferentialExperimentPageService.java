@@ -16,7 +16,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
-import uk.ac.ebi.atlas.resource.AtlasResourceHub;
+import uk.ac.ebi.atlas.resource.ContrastImageTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.List;
@@ -32,17 +32,17 @@ DifferentialExperimentPageService<
 
         extends ExperimentPageService {
 
-    private final AtlasResourceHub atlasResourceHub;
+    private final ContrastImageTrader contrastImageTrader;
     private final DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory;
     private final DifferentialProfilesHeatMap<X, E, P, R> profilesHeatMap;
 
     public DifferentialExperimentPageService(
             DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory,
             DifferentialProfilesHeatMap<X, E, P, R> profilesHeatMap,
-            AtlasResourceHub atlasResourceHub) {
+            ContrastImageTrader contrastImageTrader) {
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
-        this.atlasResourceHub = atlasResourceHub;
+        this.contrastImageTrader = contrastImageTrader;
 
     }
 
@@ -71,7 +71,7 @@ DifferentialExperimentPageService<
     private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment
             differentialExperiment) {
         JsonArray result = new JsonArray();
-        Map<String, JsonArray> contrastImages = atlasResourceHub.contrastImages(differentialExperiment);
+        Map<String, JsonArray> contrastImages = contrastImageTrader.contrastImages(differentialExperiment);
         for (Contrast contrast : contrasts) {
             JsonObject o = contrast.toJson();
             o.add("contrastSummary", new ContrastSummaryBuilder()
