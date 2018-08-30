@@ -8,7 +8,7 @@
                 <a href="${pageContext.request.contextPath}/home" title="Back to Expression Atlas homepage">
                     <div class="media-object columns small-8" id="local-title">
                         <div class="media-object-section hide-for-small-only">
-                            <img src="${pageContext.request.contextPath}/resources/images/logos/logo_atlas.png" alt="Expression Atlas logo" style="height:7em">
+                            <img src="${pageContext.request.contextPath}/resources/images/expression-atlas.png" alt="Expression Atlas logo" style="height:7em">
                         </div>
                         <div class="media-object-section">
                             <h1>Expression&nbsp;Atlas</h1>
