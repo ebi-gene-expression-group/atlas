@@ -37,12 +37,12 @@ public class BasePathsConfig {
 
     @Bean
     public Path goPoFilePath() {
-        return bioentityPropertiesDirPath().resolve("go").resolve("goIDToTerm.tsv");
+        return bioentityPropertiesDirPath().resolve("go-po-id-term-depth.tsv");
     }
 
     @Bean
     public Path interProFilePath() {
-        return bioentityPropertiesDirPath().resolve("interpro").resolve("interproIDToTypeTerm.tsv");
+        return bioentityPropertiesDirPath().resolve("interpro-term-id-type.tsv");
     }
 
     @Bean
