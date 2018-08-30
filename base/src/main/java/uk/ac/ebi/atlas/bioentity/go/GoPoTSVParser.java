@@ -15,7 +15,7 @@ public class GoPoTSVParser {
 
     private static final int TERM_ACCESSION_COLUMN_INDEX = 0;
     private static final int TERM_NAME_COLUMN_INDEX = 1;
-    private static final int TERM_DEPTH_COLUMN_INDEX = 3;
+    private static final int TERM_DEPTH_COLUMN_INDEX = 2;
     public static final int DEFAULT_DEPTH = 1;
 
     private final CSVReader csvReader;
