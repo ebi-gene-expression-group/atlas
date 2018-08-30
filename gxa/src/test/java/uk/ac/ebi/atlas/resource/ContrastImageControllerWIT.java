@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.resource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,13 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = WebConfig.class)
-class ExternalImageControllerWIT {
-    private static final String EXTRA_INFO_EXPERIMENT_ACCESSION = "E-MTAB-2812";
+class ContrastImageControllerWIT {
     private static final String RNASEQ_EXPERIMENT_ACCESSION = "E-GEOD-54705";
     private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-GEOD-34130";
 
-    private static final String EXTRA_INFO_IMAGE_URL =
-            "/external-resources/".concat(EXTRA_INFO_EXPERIMENT_ACCESSION).concat("/extra-info.png");
     private static final String RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE =
             "/external-resources/".concat(RNASEQ_EXPERIMENT_ACCESSION).concat("/{0}/ma-plot.png");
     private static final String MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE =
@@ -51,11 +48,6 @@ class ExternalImageControllerWIT {
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-    }
-
-    @Test
-    void responseForExtraInfoImageShouldBeNonEmpty() throws Exception {
-        responseAssertions(this.mockMvc.perform(get(EXTRA_INFO_IMAGE_URL)));
     }
 
     @Test
