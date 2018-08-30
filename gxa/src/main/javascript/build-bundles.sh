@@ -22,13 +22,13 @@ do
     echo "Upgrading $dir:"
     cd $dir
     # Upgrade everything but React and Webpack to their latest versions
-    ncu -x '/(react.*)|(webpack.*)/' -a
+    ncu -x '/(react.*)|(webpack.*)|(babel.*)/' -a
     npm install
     popd > /dev/null
 done
 
 # Upgrade everything but React and Webpack to their latest versions
-ncu -x '/(react.*)|(webpack.*)/' -a
+ncu -x '/(react.*)|(webpack.*)|(babel.*)/' -a
 npm install
 
 npm run $1

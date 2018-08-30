@@ -1,7 +1,7 @@
 var expressionAtlasBaselineExpression =
 webpackJsonp_name_([2],{
 
-/***/ 101:
+/***/ 103:
 /*!****************************************************************!*\
   !*** ./node_modules/react-transition-group/utils/PropTypes.js ***!
   \****************************************************************/
@@ -62,7 +62,7 @@ var nameShape = exports.nameShape = _propTypes2.default.oneOfType([_propTypes2.d
 
 /***/ }),
 
-/***/ 1138:
+/***/ 1142:
 /*!****************************************************!*\
   !*** ./atlas_bundles/baseline-expression/index.js ***!
   \****************************************************/
@@ -78,7 +78,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _baselineRenderer = __webpack_require__(/*! ./src/baselineRenderer.jsx */ 1139);
+var _baselineRenderer = __webpack_require__(/*! ./src/baselineRenderer.jsx */ 1143);
 
 var _baselineRenderer2 = _interopRequireDefault(_baselineRenderer);
 
@@ -88,7 +88,7 @@ exports.render = _baselineRenderer2.default;
 
 /***/ }),
 
-/***/ 1139:
+/***/ 1143:
 /*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/baselineRenderer.jsx ***!
   \********************************************************************/
@@ -130,7 +130,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _BaselineRouter = __webpack_require__(/*! ./BaselineRouter.jsx */ 1140);
+var _BaselineRouter = __webpack_require__(/*! ./BaselineRouter.jsx */ 1144);
 
 var _BaselineRouter2 = _interopRequireDefault(_BaselineRouter);
 
@@ -138,7 +138,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 1140:
+/***/ 1144:
 /*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineRouter.jsx ***!
   \******************************************************************/
@@ -163,11 +163,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _BaselineFacetsTree = __webpack_require__(/*! ./facets-tree/BaselineFacetsTree.jsx */ 1141);
+var _BaselineFacetsTree = __webpack_require__(/*! ./facets-tree/BaselineFacetsTree.jsx */ 1145);
 
 var _BaselineFacetsTree2 = _interopRequireDefault(_BaselineFacetsTree);
 
-var _BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 1144);
+var _BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 1148);
 
 var _BaselineHeatmaps2 = _interopRequireDefault(_BaselineHeatmaps);
 
@@ -179,7 +179,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var UrlManager = __webpack_require__(/*! ./urlManager.js */ 1146);
+var UrlManager = __webpack_require__(/*! ./urlManager.js */ 1150);
 
 var BaselineRouter = function (_React$Component) {
     _inherits(BaselineRouter, _React$Component);
@@ -405,7 +405,7 @@ exports.default = BaselineRouter;
 
 /***/ }),
 
-/***/ 1141:
+/***/ 1145:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.jsx ***!
   \**********************************************************************************/
@@ -428,7 +428,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Facet = __webpack_require__(/*! ./Facet.jsx */ 1142);
+var _Facet = __webpack_require__(/*! ./Facet.jsx */ 1146);
 
 var _Facet2 = _interopRequireDefault(_Facet);
 
@@ -499,7 +499,7 @@ exports.default = BaselineFacetsTree;
 
 /***/ }),
 
-/***/ 1142:
+/***/ 1146:
 /*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/Facet.jsx ***!
   \*********************************************************************/
@@ -522,7 +522,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _FacetItem = __webpack_require__(/*! ./FacetItem.jsx */ 1143);
+var _FacetItem = __webpack_require__(/*! ./FacetItem.jsx */ 1147);
 
 var _FacetItem2 = _interopRequireDefault(_FacetItem);
 
@@ -571,7 +571,7 @@ exports.default = Facet;
 
 /***/ }),
 
-/***/ 1143:
+/***/ 1147:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/FacetItem.jsx ***!
   \*************************************************************************/
@@ -622,7 +622,7 @@ exports.default = FacetItem;
 
 /***/ }),
 
-/***/ 1144:
+/***/ 1148:
 /*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmaps.jsx ***!
   \********************************************************************/
@@ -647,7 +647,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 1145);
+var _BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 1149);
 
 var _BaselineHeatmapWidget2 = _interopRequireDefault(_BaselineHeatmapWidget);
 
@@ -733,7 +733,7 @@ exports.default = BaselineHeatmaps;
 
 /***/ }),
 
-/***/ 1145:
+/***/ 1149:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmapWidget.jsx ***!
   \*************************************************************************/
@@ -756,7 +756,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 149);
+var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 151);
 
 var _expressionAtlasHeatmapHighcharts2 = _interopRequireDefault(_expressionAtlasHeatmapHighcharts);
 
@@ -805,7 +805,7 @@ exports.default = BaselineHeatmapWidget;
 
 /***/ }),
 
-/***/ 1146:
+/***/ 1150:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/urlManager.js ***!
   \*************************************************************/
@@ -816,8 +816,8 @@ exports.default = BaselineHeatmapWidget;
 "use strict";
 
 
-var Url = __webpack_require__(/*! url */ 147);
-var QueryString = __webpack_require__(/*! querystring */ 238);
+var Url = __webpack_require__(/*! url */ 149);
+var QueryString = __webpack_require__(/*! querystring */ 240);
 
 /**
  * Stringify the `query` object, assign it to the `bs` search field in the URL and store it in the History
@@ -915,11 +915,11 @@ var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 50);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _FormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 217);
+var _FormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 219);
 
 var _FormGroup2 = _interopRequireDefault(_FormGroup);
 
-var _FormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 216);
+var _FormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 218);
 
 var _FormControl2 = _interopRequireDefault(_FormControl);
 
@@ -1374,7 +1374,7 @@ function getSyncState(component, state) {
   return result;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 17), __webpack_require__(/*! ./../process/browser.js */ 32)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 17), __webpack_require__(/*! ./../process/browser.js */ 31)))
 
 /***/ }),
 
@@ -1597,7 +1597,7 @@ var _CSSTransitionGroupChild = __webpack_require__(/*! ./CSSTransitionGroupChild
 
 var _CSSTransitionGroupChild2 = _interopRequireDefault(_CSSTransitionGroupChild);
 
-var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 101);
+var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 103);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1699,7 +1699,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _warning = __webpack_require__(/*! warning */ 12);
+var _warning = __webpack_require__(/*! warning */ 16);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -2103,11 +2103,11 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _addClass = __webpack_require__(/*! dom-helpers/class/addClass */ 218);
+var _addClass = __webpack_require__(/*! dom-helpers/class/addClass */ 220);
 
 var _addClass2 = _interopRequireDefault(_addClass);
 
-var _removeClass = __webpack_require__(/*! dom-helpers/class/removeClass */ 219);
+var _removeClass = __webpack_require__(/*! dom-helpers/class/removeClass */ 221);
 
 var _removeClass2 = _interopRequireDefault(_removeClass);
 
@@ -2115,7 +2115,7 @@ var _requestAnimationFrame = __webpack_require__(/*! dom-helpers/util/requestAni
 
 var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
 
-var _properties = __webpack_require__(/*! dom-helpers/transition/properties */ 132);
+var _properties = __webpack_require__(/*! dom-helpers/transition/properties */ 134);
 
 var _react = __webpack_require__(/*! react */ 0);
 
@@ -2127,7 +2127,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactDom = __webpack_require__(/*! react-dom */ 11);
 
-var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 101);
+var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 103);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2344,7 +2344,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(/*! ./inDOM */ 38);
+var _inDOM = __webpack_require__(/*! ./inDOM */ 37);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -4929,5 +4929,5 @@ _emojiData2.default.forEach(function (_ref) {
 
 /***/ })
 
-},[1138]);
+},[1142]);
 //# sourceMappingURL=expressionAtlasBaselineExpression.bundle.js.map
