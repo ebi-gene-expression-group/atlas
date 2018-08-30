@@ -47,7 +47,7 @@
 
     <!-- If you have a custom header image or colour -->
     <meta name="ebi:masthead-color" content="rgb(0,124,130)" />
-    <meta name="ebi:masthead-image" content="${pageContext.request.contextPath}/resources/images/dots_matrix_background.png" />
+    <meta name="ebi:masthead-image" content="${pageContext.request.contextPath}/resources/images/dots-matrix-background.png" />
 
     <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
     <!-- also inform ES so we can host your colour palette file -->
