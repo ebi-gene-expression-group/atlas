@@ -22,7 +22,7 @@ public class ExperimentDescriptionDAO {
 
     public List<ExperimentDescription> selectAllPublicExperimentDescriptions() {
         return jdbcTemplate.query(
-                "SELECT accession, title FROM experiment WHERE PRIVATE='F'", experimentDescriptionRowMapper);
+                "SELECT accession, title FROM experiment WHERE PRIVATE=FALSE", experimentDescriptionRowMapper);
     }
 
 }

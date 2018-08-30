@@ -31,7 +31,7 @@ public class GxaExperimentDao extends ExperimentDao {
     private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY =
             "SELECT * FROM experiment " +
             "LEFT OUTER JOIN  experiment_organism on experiment_organism.experiment=experiment.accession " +
-            "WHERE accession=? AND (private='F' OR access_key=?)";
+            "WHERE accession=? AND (private=FALSE OR access_key=?)";
     private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE =
             "SELECT accession FROM public_experiment WHERE type IN(:experimentTypes)";
     private static final String SELECT_ALL_EXPERIMENTS_AS_ADMIN =
@@ -57,7 +57,7 @@ public class GxaExperimentDao extends ExperimentDao {
                 INSERT_NEW_EXPERIMENT,
                 experimentDto.getExperimentAccession(),
                 experimentDto.getExperimentType().name(),
-                isPrivateAsString(experimentDto.isPrivate()),
+                experimentDto.isPrivate(),
                 accessKeyUuid.toString(),
                 experimentDto.getPubmedIds().stream().collect(Collectors.joining(", ")),
                 experimentDto.getTitle());
@@ -116,7 +116,7 @@ public class GxaExperimentDao extends ExperimentDao {
 
     @Override
     public void setExperimentPrivacyStatus(String experimentAccession, boolean isPrivate) {
-        int recordsCount = jdbcTemplate.update(UPDATE_EXPERIMENT, isPrivateAsString(isPrivate), experimentAccession);
+        int recordsCount = jdbcTemplate.update(UPDATE_EXPERIMENT, isPrivate, experimentAccession);
         checkExperimentFound(recordsCount == 1, experimentAccession);
     }
 
@@ -124,10 +124,6 @@ public class GxaExperimentDao extends ExperimentDao {
     public void deleteExperiment(String experimentAccession) {
         int deletedRecordsCount = jdbcTemplate.update(DELETE_EXPERIMENT, experimentAccession);
         checkExperimentFound(deletedRecordsCount == 1, experimentAccession);
-    }
-
-    private String isPrivateAsString(boolean isPrivate) {
-        return isPrivate ? "T" : "F";
     }
 
     private ExperimentDTO getSingleExperiment(List<ExperimentDTO> experimentDtos, String accession) {

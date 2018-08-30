@@ -21,7 +21,7 @@ public class PopularSpeciesDao {
             "count(experiment_organism.organism) AS c " +
             "FROM experiment " +
             "LEFT OUTER JOIN  experiment_organism ON experiment_organism.experiment=experiment.accession " +
-            "WHERE private='F' GROUP BY experiment.type, experiment_organism.organism";
+            "WHERE private=FALSE GROUP BY experiment.type, experiment_organism.organism";
 
     private final SpeciesFactory speciesFactory;
     private final JdbcTemplate jdbcTemplate;
