@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import java.nio.file.Path;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,13 +24,16 @@ class DataFileHubIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataFileHubIT.class);
 
     @Inject
-    private DataFileHubFactory dataFileHubFactory;
+    private Path dataFilesPath;
+
     @Inject
     private JdbcUtils jdbcUtils;
 
+    private DataFileHub subject;
+
     @Test
     void testGetExperimentFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession = jdbcUtils.fetchRandomExpressionAtlasExperimentAccession();
         LOGGER.info("Test experiment files for experiment {}", experimentAccession);
 
@@ -40,7 +44,7 @@ class DataFileHubIT {
 
     @Test
     void testGetBaselineFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession =
                 jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_BASELINE);
         LOGGER.info("Test baseline experiment files for experiment {}", experimentAccession);
@@ -55,7 +59,7 @@ class DataFileHubIT {
 
     @Test
     void testGetProteomicsBaselineFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession =
                 jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.PROTEOMICS_BASELINE);
         LOGGER.info("Test proteomics baseline experiment files for experiment {}", experimentAccession);
@@ -65,7 +69,7 @@ class DataFileHubIT {
 
     @Test
     void testGetDifferentialExperimentFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession =
                 jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
         LOGGER.info("Test differential experiment files for experiment {}", experimentAccession);
@@ -77,7 +81,7 @@ class DataFileHubIT {
     @Test
     void findsTSnePlotFiles() {
         String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
-        DataFileHub subject = dataFileHubFactory.getScxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("scxa"));
         LOGGER.info("Test tsne plot files for experiment {}", experimentAccession);
         assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs.values());
     }

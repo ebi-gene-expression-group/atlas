@@ -7,10 +7,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.resource.DataFileHubFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,16 +24,15 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class MicroarrayExperimentConfigurationIT {
-
     @Inject
-    private DataFileHubFactory dataFileHubFactory;
+    private Path dataFilesPath;
 
     private MicroarrayExperimentConfiguration subject;
 
     @Before
     public void setUp() {
         subject =
-                new ConfigurationTrader(dataFileHubFactory.getGxaDataFileHub())
+                new ConfigurationTrader(new DataFileHub(dataFilesPath.resolve("scxa")))
                         .getMicroarrayExperimentConfiguration("E-GEOD-13316");
     }
 

@@ -7,27 +7,29 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.configuration.TestConfig;
-import uk.ac.ebi.atlas.resource.DataFileHubFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+
+import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class IdfParserIT {
-
+class IdfParserIT {
     @Inject
-    private DataFileHubFactory dataFileHubFactory;
+    private Path dataFilesPath;
+
     @Inject
     private JdbcUtils jdbcUtils;
 
     @ParameterizedTest
     @MethodSource("singleCellExperimentsProvider")
-    public void testParserForSingleCell(String experimentAccession) {
-        IdfParser idfParser = new IdfParser(dataFileHubFactory.getScxaDataFileHub());
+    void testParserForSingleCell(String experimentAccession) {
+        IdfParser idfParser = new IdfParser(new DataFileHub(dataFilesPath.resolve("scxa")));
         IdfParserOutput result = idfParser.parse(experimentAccession);
 
         assertThat(result.getExpectedClusters()).isGreaterThanOrEqualTo(0);
@@ -38,8 +40,8 @@ public class IdfParserIT {
 
     @ParameterizedTest
     @MethodSource("expressionAtlasExperimentsProvider")
-    public void testParserForExpressionAtlas(String experimentAccession) {
-        IdfParser idfParser = new IdfParser(dataFileHubFactory.getGxaDataFileHub());
+    void testParserForExpressionAtlas(String experimentAccession) {
+        IdfParser idfParser = new IdfParser(new DataFileHub(dataFilesPath.resolve("gxa")));
 
         IdfParserOutput result = idfParser.parse(experimentAccession);
 
