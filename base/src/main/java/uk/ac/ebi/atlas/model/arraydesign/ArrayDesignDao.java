@@ -1,60 +1,44 @@
 package uk.ac.ebi.atlas.model.arraydesign;
 
-import com.atlassian.util.concurrent.LazyReference;
-import com.google.common.collect.ImmutableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Named
 public class ArrayDesignDao {
-    private final JdbcTemplate jdbcTemplate;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ArrayDesignDao.class);
 
-    private final LazyReference<List<ArrayDesign>> arrayDesigns = new LazyReference<List<ArrayDesign>>() {
-        @Override
-        protected List<ArrayDesign> create() {
-            return jdbcTemplate.queryForList("SELECT * FROM ARRAYDESIGN").stream()
-                    .map(e -> ArrayDesign.create((String) e.get("ACCESSION"), (String) e.get("NAME")))
-                    .collect(Collectors.toList());
-        }
-    };
+    private final JdbcTemplate jdbcTemplate;
 
     @Inject
     public ArrayDesignDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    private static final String SELECT_DESIGNELEMENT_WHERE_IDENTIFIER =
+            "SELECT designelement FROM designelement_mapping WHERE identifier=?";
     public List<String> getDesignElements(String geneIdentifier) {
-        String query = "SELECT DESIGNELEMENT FROM DESIGNELEMENT_MAPPING WHERE IDENTIFIER=?";
-        return jdbcTemplate.queryForList(query, new String[]{geneIdentifier}, String.class);
+        LOGGER.debug("Fetching design elements for identifier {}...", geneIdentifier);
+        return jdbcTemplate.queryForList(SELECT_DESIGNELEMENT_WHERE_IDENTIFIER, String.class, geneIdentifier);
     }
 
+    private static final String SELECT_ARRAYDESIGN_WHERE_ACCESSION =
+            "SELECT * FROM arraydesign WHERE accession=?";
     public ArrayDesign getArrayDesign(String accession) {
-        return Optional.ofNullable(arrayDesigns.get())
-                .orElseThrow(RuntimeException::new)
-                .stream()
-                .filter(a -> a.accession().equals(accession))
-                .findFirst()
-                .orElse(ArrayDesign.createForUnknownName(accession));
-    }
-
-    public Map<String, String> getArrayDesignMapNames() {
-        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
-
-        String query = "SELECT * FROM ARRAYDESIGN";
-        List<Map<String, Object>> allArrayDesigns = jdbcTemplate.queryForList(query);
-
-        for (Map<String, Object> arrayDesign : allArrayDesigns) {
-            String accession = (String) arrayDesign.get("ACCESSION");
-            String name = (String) arrayDesign.get("NAME");
-            mapBuilder.put(accession, name);
-
+        try {
+            LOGGER.debug("Fetching array design for accession {}...", accession);
+            return jdbcTemplate.queryForObject(
+                    SELECT_ARRAYDESIGN_WHERE_ACCESSION,
+                    (rs, rowNum) -> ArrayDesign.create(rs.getString("accession"), rs.getString("name")),
+                    accession);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            LOGGER.warn("Array design of accession {} could not be found", accession);
+            return ArrayDesign.createForUnknownName(accession);
         }
-        return mapBuilder.build();
     }
 }
