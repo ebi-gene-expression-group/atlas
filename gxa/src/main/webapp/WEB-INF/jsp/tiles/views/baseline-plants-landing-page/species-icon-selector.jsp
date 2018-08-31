@@ -119,7 +119,7 @@
     </c:when>
     <c:when test="${species == 'Schistosoma mansoni'}">
         <c:set var="speciesIconCode" value="W"/>
-        <c:set var="speciesColorCode" value="red"/>
+        <c:set var="speciesColorCode" value="blue"/>
     </c:when>
     <c:when test="${species == 'Setaria italica'}">
         <c:set var="speciesIconCode" value="%"/>
