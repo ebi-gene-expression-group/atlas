@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.math.NumberUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.TestPropertySource;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import java.util.Arrays;
@@ -62,6 +61,11 @@ class IdfParserTest {
                     "Comment[EAAdditionalAttributes]",
                     ADDITIONAL_ATTRIBUTES[0], ADDITIONAL_ATTRIBUTES[1], ADDITIONAL_ATTRIBUTES[2]
             }
+    };
+
+    private static final String[][] IDF_TXT_EMPTY_DISPLAY_NAME = {
+            {"Investigation Title", TITLE},
+            {"Comment[AEExperimentDisplayName]", ""}
     };
 
     private MockDataFileHub dataFileHub;
@@ -169,5 +173,14 @@ class IdfParserTest {
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
         assertThat(idfParserOutput.getTitle()).isEqualTo(AE_DISPLAY_NAME);
+    }
+
+    @Test
+    void skipsEmptyDisplayName() {
+        dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT_EMPTY_DISPLAY_NAME));
+
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
+
+        assertThat(idfParserOutput.getTitle()).isEqualTo(TITLE);
     }
 }
