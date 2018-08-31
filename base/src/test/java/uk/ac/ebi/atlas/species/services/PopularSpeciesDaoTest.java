@@ -26,29 +26,36 @@ import static uk.ac.ebi.atlas.species.services.PopularSpeciesDao.SPECIES_WITH_EX
 
 @RunWith(MockitoJUnitRunner.class)
 public class PopularSpeciesDaoTest {
+    private static final SpeciesProperties ANIMAL_PROPERTIES =
+            SpeciesProperties.create("name", "factor", "animals", ImmutableList.of(ImmutableMap.of()));
+    private static final Species ANIMAL_SPECIES = new Species("Some animal", ANIMAL_PROPERTIES);
 
-    static final SpeciesProperties ANIMAL_PROPERTIES = SpeciesProperties.create("name", "factor", "animals", ImmutableList.of(ImmutableMap.<String, String>of()));
-    static final Species ANIMAL_SPECIES = new Species("Some animal", ANIMAL_PROPERTIES);
+    private static final SpeciesProperties PLANT_PROPERTIES =
+            SpeciesProperties.create("name", "factor", "plants", ImmutableList.of(ImmutableMap.of()));
+    private static final Species PLANT_SPECIES = new Species("Some plant", PLANT_PROPERTIES);
 
-    static final SpeciesProperties PLANT_PROPERTIES = SpeciesProperties.create("name", "factor", "plants", ImmutableList.of(ImmutableMap.<String, String>of()));
-    static final Species PLANT_SPECIES = new Species("Some plant", PLANT_PROPERTIES);
+    private static final SpeciesProperties FUNGI_PROPERTIES =
+            SpeciesProperties.create("name", "factor", "fungi", ImmutableList.of(ImmutableMap.of()));
+    private static final Species FUNGI_SPECIES = new Species("Some fungi", FUNGI_PROPERTIES);
 
-    static final SpeciesProperties FUNGI_PROPERTIES = SpeciesProperties.create("name", "factor", "fungi", ImmutableList.of(ImmutableMap.<String, String>of()));
-    static final Species FUNGI_SPECIES = new Species("Some fungi", FUNGI_PROPERTIES);
+    private static final ImmutableList<String> ANIMAL_SPECIES_NAMES =
+            ImmutableList.of("Homo sapiens", "Caenorhabditis elegans", "Bos taurus", "Mus musculus",
+                    "Drosophila melanogaster", "Xenopus tropicalis");
+    private static final ImmutableList<String> PLANT_SPECIES_NAMES =
+            ImmutableList.of("Zea mays", "Vitis vinifera", "Arabidopsis thaliana", "Glycine max", "Hordeum vulgare",
+                    "Oryza sativa");
+    private static final ImmutableList<String> FUNGI_SPECIES_NAMES =
+            ImmutableList.of("Aspergillus fumigatus", "Saccharomyces cerevisiae", "Schizosaccharomyces pombe");
 
-    static final ImmutableList<String> ANIMAL_SPECIES_NAMES = ImmutableList.of("Homo sapiens", "Caenorhabditis elegans", "Bos taurus", "Mus musculus", "Drosophila melanogaster", "Xenopus tropicalis");
-    static final ImmutableList<String> PLANT_SPECIES_NAMES = ImmutableList.of("Zea mays", "Vitis vinifera", "Arabidopsis thaliana", "Glycine max", "Hordeum vulgare", "Oryza sativa");
-    static final ImmutableList<String> FUNGI_SPECIES_NAMES = ImmutableList.of("Aspergillus fumigatus", "Saccharomyces cerevisiae", "Schizosaccharomyces pombe");
-
-    static ImmutableMap<String, Pair<Integer, Integer>> expectedValues;
+    private static ImmutableMap<String, Pair<Integer, Integer>> expectedValues;
 
     @Mock
-    JdbcTemplate jdbcTemplateMock;
+    private JdbcTemplate jdbcTemplateMock;
 
     @Mock
-    SpeciesFactory speciesFactoryMock;
+    private SpeciesFactory speciesFactoryMock;
 
-    PopularSpeciesDao subject;
+    private PopularSpeciesDao subject;
 
     @Before
     public void setUp() throws Exception {
@@ -79,27 +86,38 @@ public class PopularSpeciesDaoTest {
                 }
 
                 resultsBuilder.add(
-                        ImmutableMap.<String, Object>of("organism", speciesName, "type", experimentType.toString(), "c", experimentsCount)
-                );
+                        ImmutableMap.of(
+                                "organism", speciesName, "type", experimentType.toString(), "c", experimentsCount));
             }
 
-            speciesToExperimentCountBuilder.put(speciesName, Pair.of(baselineExperimentsCount, differentialExperimentsCount));
+            speciesToExperimentCountBuilder.put(
+                    speciesName,
+                    Pair.of(baselineExperimentsCount, differentialExperimentsCount));
         }
 
         expectedValues = speciesToExperimentCountBuilder.build();
 
-        when(jdbcTemplateMock.queryForList(SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY)).thenReturn(resultsBuilder.build().asList());
+        when(jdbcTemplateMock.queryForList(SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY))
+                .thenReturn(resultsBuilder.build().asList());
         subject = new PopularSpeciesDao(jdbcTemplateMock, speciesFactoryMock);
     }
 
     @Test
-    public void popularSpecies() throws Exception {
-        assertThat(subject.popularSpecies(), hasSize(ANIMAL_SPECIES_NAMES.size() + PLANT_SPECIES_NAMES.size() + FUNGI_SPECIES_NAMES.size()));
+    public void popularSpecies() {
+        assertThat(
+                subject.popularSpecies(),
+                hasSize(ANIMAL_SPECIES_NAMES.size() + PLANT_SPECIES_NAMES.size() + FUNGI_SPECIES_NAMES.size()));
 
         for (PopularSpeciesInfo popularSpeciesInfo : subject.popularSpecies()) {
-            assertThat(popularSpeciesInfo.baselineExperiments(), is((long) expectedValues.get(popularSpeciesInfo.species()).getLeft()));
-            assertThat(popularSpeciesInfo.differentialExperiments(), is((long) expectedValues.get(popularSpeciesInfo.species()).getRight()));
-            assertThat(popularSpeciesInfo.kingdom(), is(speciesFactoryMock.create(popularSpeciesInfo.species()).getKingdom()));
+            assertThat(
+                    popularSpeciesInfo.baselineExperiments(),
+                    is((long) expectedValues.get(popularSpeciesInfo.species()).getLeft()));
+            assertThat(
+                    popularSpeciesInfo.differentialExperiments(),
+                    is((long) expectedValues.get(popularSpeciesInfo.species()).getRight()));
+            assertThat(
+                    popularSpeciesInfo.kingdom(),
+                    is(speciesFactoryMock.create(popularSpeciesInfo.species()).getKingdom()));
         }
     }
 }

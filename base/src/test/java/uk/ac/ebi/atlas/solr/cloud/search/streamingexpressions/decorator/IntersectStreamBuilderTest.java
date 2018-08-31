@@ -22,8 +22,8 @@ class IntersectStreamBuilderTest {
         }
     }
 
-    private final static String SORT_FIELD = "field1";
-    
+    private static final String SORT_FIELD = "field1";
+
     private List<Tuple> streamA = ImmutableList.of(
             new Tuple(ImmutableMap.of(SORT_FIELD, "a", "field2", "x")),
             new Tuple(ImmutableMap.of(SORT_FIELD, "b", "field2", "y")),
@@ -42,11 +42,15 @@ class IntersectStreamBuilderTest {
             new Tuple(ImmutableMap.of(SORT_FIELD, "d", "field3", "w")));
 
 
-    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderA = DummyTupleStreamBuilder.create(streamA, SORT_FIELD, true);
-    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderB = DummyTupleStreamBuilder.create(streamB, SORT_FIELD, true);
-    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderC = DummyTupleStreamBuilder.create(streamC, SORT_FIELD, true);
-    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderD = DummyTupleStreamBuilder.create(streamD, SORT_FIELD, true);
-    
+    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderA =
+            DummyTupleStreamBuilder.create(streamA, SORT_FIELD, true);
+    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderB =
+            DummyTupleStreamBuilder.create(streamB, SORT_FIELD, true);
+    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderC =
+            DummyTupleStreamBuilder.create(streamC, SORT_FIELD, true);
+    private TupleStreamBuilder<DummyCollectionProxy> tupleStreamBuilderD =
+            DummyTupleStreamBuilder.create(streamD, SORT_FIELD, true);
+
     @Test
     void intersectOnSelfReturnsSelf() {
         assertAboutIntersectStreamBuilder(

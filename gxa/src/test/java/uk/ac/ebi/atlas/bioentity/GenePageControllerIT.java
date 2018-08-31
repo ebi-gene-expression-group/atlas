@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.bioentity;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,13 +16,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class GenePageControllerIT {
 
     @Inject
@@ -36,18 +36,21 @@ public class GenePageControllerIT {
         bioentityProperties("Zm00001d001841", 0, false);
     }
 
-    private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms){
+    private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms) {
         Model model = new BindingAwareModelMap();
         subject.showGenePage(bioentityIdentifier, model);
 
-        JsonArray bioentityProperties = GSON.fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
+        JsonArray bioentityProperties =
+                GSON.fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
 
-        assertTrue(bioentityIdentifier+" should have properties" , bioentityProperties.size()>=expectedMinimalSize);
+        assertTrue(
+                bioentityIdentifier + " should have properties",
+                bioentityProperties.size() >= expectedMinimalSize);
 
         Map<String, Integer> gotermsAndTheirRelevance = new HashMap<>();
-        for(JsonElement e: bioentityProperties){
-            if(e.getAsJsonObject().get("type").getAsString().equals("go")){
-                for(JsonElement v: e.getAsJsonObject().get("values").getAsJsonArray()){
+        for (JsonElement e: bioentityProperties) {
+            if (e.getAsJsonObject().get("type").getAsString().equals("go")) {
+                for (JsonElement v: e.getAsJsonObject().get("values").getAsJsonArray()) {
                     gotermsAndTheirRelevance.put(
                             v.getAsJsonObject().get("text").getAsString(),
                             v.getAsJsonObject().get("relevance").getAsInt()
@@ -55,14 +58,13 @@ public class GenePageControllerIT {
                 }
             }
         }
-        if(expectGoTerms){
-            assertThat(gotermsAndTheirRelevance.size(), Matchers.greaterThan(0));
+        if (expectGoTerms) {
+            assertThat(gotermsAndTheirRelevance.size(), greaterThan(0));
 
-            if(gotermsAndTheirRelevance.size()> 10){
+            if (gotermsAndTheirRelevance.size() > 10) {
                 // not all the same relevance
-                assertThat(new HashSet<>(gotermsAndTheirRelevance.values()).size(),Matchers.greaterThan(1) );
+                assertThat(new HashSet<>(gotermsAndTheirRelevance.values()).size(), greaterThan(1));
             }
         }
-
     }
 }

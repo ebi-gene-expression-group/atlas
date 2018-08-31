@@ -9,7 +9,6 @@
 <%--@elvariable id="type" type="String"--%>
 <%--@elvariable id="alternativeViews" type="List<String>"--%>
 <%--@elvariable id="alternativeViewDescriptions" type="List<String>"--%>
-<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -33,14 +32,6 @@
             </h3>
 
             <h5>${type}</h5>
-
-            <c:if test="${hasExtraInfo}">
-            <a id="extra-info"
-               href="${pageContext.request.contextPath}/external-resources/${experimentAccession}/extra-info.png">
-                <img alt="more information"
-                     src="${pageContext.request.contextPath}/resources/images/overview_button.png">
-            </a>
-            </c:if>
 
             <div id="experimentOrganisms">Organism:
                 <span style="font-style:italic">${species}</span>

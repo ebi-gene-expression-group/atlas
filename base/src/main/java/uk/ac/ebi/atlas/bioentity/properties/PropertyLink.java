@@ -22,7 +22,9 @@ public class PropertyLink {
         return url;
     }
 
-    public int getRelevance() { return relevance; }
+    public int getRelevance() {
+        return relevance;
+    }
 
     public JsonObject toJson() {
         JsonObject result = new JsonObject();

@@ -18,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class SolrCloudCollectionProxyFactoryTest {
     private class NullaryConstructorCollectionProxy extends CollectionProxy {
-        public NullaryConstructorCollectionProxy() {
+        NullaryConstructorCollectionProxy() {
             super(null, null);
         }
     }
 
     private class TwoArgConstructorCollectionProxy extends CollectionProxy {
-        public TwoArgConstructorCollectionProxy(SolrClient solrClient, String name) {
+        TwoArgConstructorCollectionProxy(SolrClient solrClient, String name) {
             super(solrClient, name);
         }
     }
@@ -52,7 +52,7 @@ class SolrCloudCollectionProxyFactoryTest {
                 .withCauseInstanceOf(NoSuchMethodException.class);
     }
 
-    public static Stream<Class<? extends CollectionProxy>> collectionProxyTypeProvider() {
+    private static Stream<Class<? extends CollectionProxy>> collectionProxyTypeProvider() {
         return Stream.of(
                 BioentitiesCollectionProxy.class,
                 AnalyticsCollectionProxy.class,

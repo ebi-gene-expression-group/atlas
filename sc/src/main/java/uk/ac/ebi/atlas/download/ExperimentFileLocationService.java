@@ -14,8 +14,10 @@ public class ExperimentFileLocationService {
 
     private final DataFileHub dataFileHub;
 
-    private final static String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
-    private final static String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE = "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
+    private static final String EXPERIMENT_FILES_URI_TEMPLATE =
+            "experiment/{0}/download?fileType={1}&accessKey={2}";
+    private static final String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE =
+            "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
 
     public ExperimentFileLocationService(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
@@ -24,7 +26,9 @@ public class ExperimentFileLocationService {
     public Path getFilePath(String experimentAccession, ExperimentFileType fileType) {
         switch (fileType) {
             case EXPERIMENT_DESIGN:
-                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.experimentDesign.getPath();
+                return dataFileHub
+                        .getSingleCellExperimentFiles(experimentAccession)
+                        .experimentFiles.experimentDesign.getPath();
             case SDRF:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).sdrf.getPath();
             case IDF:
@@ -50,14 +54,11 @@ public class ExperimentFileLocationService {
     }
 
     public URI getFileUri(String experimentAccession, ExperimentFileType fileType, String accessKey) {
-        String uri;
-
-        if(fileType.isArchive()) {
-            uri = MessageFormat.format(EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE, experimentAccession, fileType.getId(), accessKey);
-        }
-        else {
-            uri = MessageFormat.format(EXPERIMENT_FILES_URI_TEMPLATE, experimentAccession, fileType.getId(), accessKey);
-        }
+        String uri = fileType.isArchive() ?
+                MessageFormat.format(
+                        EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE, experimentAccession, fileType.getId(), accessKey) :
+                MessageFormat.format(
+                        EXPERIMENT_FILES_URI_TEMPLATE, experimentAccession, fileType.getId(), accessKey);
 
         return URI.create(uri);
     }

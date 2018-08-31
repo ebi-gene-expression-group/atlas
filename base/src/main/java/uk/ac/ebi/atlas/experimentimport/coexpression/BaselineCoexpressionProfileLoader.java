@@ -24,7 +24,7 @@ public class BaselineCoexpressionProfileLoader {
     }
 
     @Inject
-    public void setDataFileHub(DataFileHub dataFileHub){
+    public void setDataFileHub(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
     }
 

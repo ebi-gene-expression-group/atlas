@@ -23,14 +23,14 @@ public class BioentityIdentifierQueryBuilder {
     private StringBuilder queryStringBuilder = new StringBuilder();
     private String queryString;
 
-    public BioentityIdentifierQueryBuilder forTerm(SemanticQueryTerm term){
+    public BioentityIdentifierQueryBuilder forTerm(SemanticQueryTerm term) {
         this.queryString = asBioentitiesCollectionQuery(term);
         return this;
     }
 
-    public BioentityIdentifierQueryBuilder withSpecies(Species species){
+    public BioentityIdentifierQueryBuilder withSpecies(Species species) {
         // No need to lowercase the species field, it is of type lowercase in Solr
-        if (!species.isUnknown()){
+        if (!species.isUnknown()) {
             queryStringBuilder.append(" AND " + SPECIES_FIELD + ":\"").append(species.getEnsemblName()).append("\"");
         }
         return this;

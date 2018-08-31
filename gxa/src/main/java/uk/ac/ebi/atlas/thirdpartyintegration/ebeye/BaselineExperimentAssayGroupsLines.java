@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
+    private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     private final LinkedHashSet<ImmutableList<String>> result = new LinkedHashSet<>();
     private final LinkedHashSet<ImmutableList<String>> assayGroupsDetails;
@@ -23,8 +24,8 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
 
     private LinkedHashSet<ImmutableList<String>> buildAssayGroupsDetails(BaselineExperiment experiment) {
 
-        for(AssayGroup assayGroupById : experiment.getDataColumnDescriptors()) {
-            for(String assayAccession : assayGroupById.assaysAnalyzedForThisDataColumn()) {
+        for (AssayGroup assayGroupById : experiment.getDataColumnDescriptors()) {
+            for (String assayAccession : assayGroupById.assaysAnalyzedForThisDataColumn()) {
                 this.populateSamples(experiment, assayAccession, assayGroupById);
                 this.populateFactors(experiment, assayAccession, assayGroupById);
             }
@@ -33,15 +34,21 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
         return result;
     }
 
-    private void populateSamples(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
+    private void populateSamples(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup) {
         for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
-            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "characteristic",
-                    sample.header(), sample.value(), joinURIs(sample.valueOntologyTerms()));
+            ImmutableList<String> line =
+                    ImmutableList.of(
+                            experiment.getAccession(),
+                            assayGroup.getId(),
+                            "characteristic",
+                            sample.header(),
+                            sample.value(),
+                            joinURIs(sample.valueOntologyTerms()));
             result.add(line);
         }
     }
 
-    private void populateFactors(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
+    private void populateFactors(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup) {
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "factor",
                     factor.getHeader(), factor.getValue(), joinURIs(factor.getValueOntologyTerms()));
@@ -50,8 +57,6 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     }
 
     private static String joinURIs(Set<OntologyTerm> ontologyTerms) {
-        final String ONTOLOGY_TERM_DELIMITER = " ";
-
         StringBuilder sb = new StringBuilder();
         for (OntologyTerm ontologyTerm : ontologyTerms) {
             sb.append(ontologyTerm.uri()).append(ONTOLOGY_TERM_DELIMITER);

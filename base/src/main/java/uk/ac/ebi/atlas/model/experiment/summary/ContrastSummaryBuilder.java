@@ -14,15 +14,11 @@ import java.util.Set;
 import java.util.SortedSet;
 
 public class ContrastSummaryBuilder {
-
-    protected static final String ARRAY_DESIGN = "array design";
+    private static final String ARRAY_DESIGN = "array design";
 
     private Contrast contrast;
-
     private ExperimentDesign experimentDesign;
-
     private String experimentDescription;
-
     private Set<ContrastProperty> properties = new HashSet<>();
 
 
@@ -62,7 +58,9 @@ public class ContrastSummaryBuilder {
 
 
         for (String factorHeader : experimentDesign.getFactorHeaders()) {
-            ContrastProperty property = composeContrastProperty(allTestFactorValues, allRefFactorValues, factorHeader, ContrastPropertyType.FACTOR);
+            ContrastProperty property =
+                    composeContrastProperty(
+                            allTestFactorValues, allRefFactorValues, factorHeader, ContrastPropertyType.FACTOR);
             properties.add(property);
         }
 
@@ -70,13 +68,20 @@ public class ContrastSummaryBuilder {
         SortedSet<String> sampleHeaders = Sets.newTreeSet(experimentDesign.getSampleHeaders());
         sampleHeaders.add(ARRAY_DESIGN);
         for (String sampleHeader : sampleHeaders) {
-            ContrastProperty property = composeContrastProperty(allTestSampleValues, allRefSampleValues, sampleHeader, ContrastPropertyType.SAMPLE);
+            ContrastProperty property =
+                    composeContrastProperty(
+                            allTestSampleValues, allRefSampleValues, sampleHeader, ContrastPropertyType.SAMPLE);
             properties.add(property);
         }
 
         int testReplicates = contrast.getTestAssayGroup().getReplicates();
         int referenceReplicates = contrast.getReferenceAssayGroup().getReplicates();
-        return new ContrastSummary(experimentDescription, contrast.getDisplayName(), testReplicates, referenceReplicates, Sets.newTreeSet(properties));
+        return new ContrastSummary(
+                experimentDescription,
+                contrast.getDisplayName(),
+                testReplicates,
+                referenceReplicates,
+                Sets.newTreeSet(properties));
     }
 
     private void extractAllValues(Map<String, String> samples, Multimap<String, String> allValues) {
@@ -86,7 +91,8 @@ public class ContrastSummaryBuilder {
 
     }
 
-    private ContrastProperty composeContrastProperty(Multimap<String, String> allTestValues, Multimap<String, String> allReferenceValues,
+    private ContrastProperty composeContrastProperty(Multimap<String, String> allTestValues,
+                                                     Multimap<String, String> allReferenceValues,
                                                      String header, ContrastPropertyType contrastPropertyType) {
         Collection<String> testValues = allTestValues.get(header);
         Collection<String> referenceValues = allReferenceValues.get(header);

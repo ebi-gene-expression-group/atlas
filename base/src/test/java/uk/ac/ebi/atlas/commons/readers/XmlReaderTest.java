@@ -9,12 +9,11 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class XmlReaderTest {
 
-    private static String E_MTAB_2812 = "E-MTAB-2812";
-    private static List<String> E_MTAB_2812_FACTORS_XML = Lists.newArrayList(
+    private static final String E_MTAB_2812 = "E-MTAB-2812";
+    private static final List<String> E_MTAB_2812_FACTORS_XML = Lists.newArrayList(
             "<factors-definition>\n",
             "    <defaultFilterFactors>\n",
             "        <filterFactor>\n",
@@ -27,7 +26,7 @@ public class XmlReaderTest {
             "        </filterFactor>\n",
             "    </defaultFilterFactors>\n",
             "    <defaultQueryFactorType>DEVELOPMENTAL_STAGE</defaultQueryFactorType>\n",
-            "    <menuFilterFactorTypes>SEX,ORGANISM_PART,DEVELOPMENTAL_STAGE</menuFilterFactorTypes>\n",
+            "    <menuFilterFactorTypes>SEX, ORGANISM_PART, DEVELOPMENTAL_STAGE</menuFilterFactorTypes>\n",
             "    <landingPageDisplayName>Developmental Stages - modENCODE</landingPageDisplayName>\n",
             "    <speciesMapping/>\n",
             "</factors-definition>"
@@ -38,14 +37,14 @@ public class XmlReaderTest {
     private XmlReader subject;
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
         dataFileHub = MockDataFileHub.create();
         dataFileHub.addFactorsFile(E_MTAB_2812, E_MTAB_2812_FACTORS_XML);
 //        dataFileHub.addConfigurationFile(E_MTAB_2812, E_MTAB_2812_FACTORS_XML);
     }
 
     @Test
-    public void readDefaultFilterFactors(){
+    public void readDefaultFilterFactors() {
         subject = dataFileHub.getRnaSeqBaselineExperimentFiles(E_MTAB_2812).baselineExperimentFiles.factors.get();
         assertThat(subject.getMap("defaultFilterFactors", "type", "value").size(), is(2));
     }

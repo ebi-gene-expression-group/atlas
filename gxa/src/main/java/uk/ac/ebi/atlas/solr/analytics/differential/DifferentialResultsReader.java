@@ -8,12 +8,12 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.ParseContext;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.math.util.MathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
@@ -24,12 +24,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.function.DoubleUnaryOperator;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Named
 public class DifferentialResultsReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialResultsReader.class);
+
+    private static final DoubleUnaryOperator FOLD_CHANGE_ROUNDER = foldChange -> MathUtils.round(foldChange, 1);
 
     private static final String DOCS_PATH = "$.response.docs[*]";
     private static final ParseContext PARSE_CONTEXT =
@@ -61,7 +64,7 @@ public class DifferentialResultsReader {
 
             String bioentityName = "";
             Object bioentityNamesOrEmpty = document.get("keyword_symbol");
-            if(bioentityNamesOrEmpty!=null && bioentityNamesOrEmpty instanceof Collection && ((Collection) bioentityNamesOrEmpty).size()>0){
+            if (bioentityNamesOrEmpty instanceof Collection && ((Collection) bioentityNamesOrEmpty).size() > 0) {
                 bioentityName = ((Collection) bioentityNamesOrEmpty).iterator().next().toString();
             }
 
@@ -79,7 +82,9 @@ public class DifferentialResultsReader {
 
             DifferentialExperiment experiment;
             try {
-                experiment= (DifferentialExperiment)  experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
+                experiment =
+                        (DifferentialExperiment) experimentTrader.getExperimentFromCache(
+                                experimentAccession, experimentType);
             } catch (ExecutionException e) {
                 LOGGER.error("Error adding differential result: {}", e.getMessage());
                 continue;
@@ -97,7 +102,7 @@ public class DifferentialResultsReader {
             o.addProperty("foldChange", foldChange);
             o.addProperty("pValue", pValue);
             o.addProperty("comparison", contrast.getDisplayName());
-            o.addProperty("experimentName",experiment.getDescription());
+            o.addProperty("experimentName", experiment.getDescription());
             o.addProperty("uri", linkToContrast.apply(Pair.of(experimentAccession, contrast)).toString());
 
             if (document.containsKey("t_statistic")) {
@@ -108,19 +113,19 @@ public class DifferentialResultsReader {
         }
         for (JsonObject document : filteredDocuments) {
             double foldChange = document.get("fold_change").getAsDouble();
-            String colour = foldChange > 0.0
-                    ? ColourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
-                    : ColourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
+            String colour = foldChange > 0.0 ?
+                    ColourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red") :
+                    ColourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
             document.addProperty("colour", colour);
-            document.addProperty("foldChange", FoldChangeRounder.round(foldChange));
+            document.addProperty("foldChange", FOLD_CHANGE_ROUNDER.applyAsDouble(foldChange));
             results.add(document);
         }
 
         resultsWithLevels.add("results", results);
-        addDoublePropertyIfValid(resultsWithLevels,"maxDownLevel",maxDownLevel);
-        addDoublePropertyIfValid(resultsWithLevels,"minDownLevel",minDownLevel);
-        addDoublePropertyIfValid(resultsWithLevels,"minUpLevel",minUpLevel);
-        addDoublePropertyIfValid(resultsWithLevels,"maxUpLevel",maxUpLevel);
+        addDoublePropertyIfValid(resultsWithLevels, "maxDownLevel", maxDownLevel);
+        addDoublePropertyIfValid(resultsWithLevels, "minDownLevel", minDownLevel);
+        addDoublePropertyIfValid(resultsWithLevels, "minUpLevel", minUpLevel);
+        addDoublePropertyIfValid(resultsWithLevels, "maxUpLevel", maxUpLevel);
 
         return resultsWithLevels;
     }
@@ -131,9 +136,9 @@ public class DifferentialResultsReader {
                Double.parseDouble((String) object);
     }
 
-    private void addDoublePropertyIfValid(JsonObject resultsWithLevels, String name, double value){
-        if(!Double.isInfinite(value)&&!Double.isNaN(value)){
-            resultsWithLevels.addProperty(name,FoldChangeRounder.round(value));
+    private void addDoublePropertyIfValid(JsonObject resultsWithLevels, String name, double value) {
+        if (!Double.isInfinite(value) && !Double.isNaN(value)) {
+            resultsWithLevels.addProperty(name, FOLD_CHANGE_ROUNDER.applyAsDouble(value));
         }
     }
 

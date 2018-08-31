@@ -11,18 +11,16 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class BaselineExperimentsCacheLoaderIT {
 
     private String accession = "E-MTAB-513";
@@ -42,11 +40,11 @@ public class BaselineExperimentsCacheLoaderIT {
     @Mock
     private GxaExperimentDao expressionAtlasExperimentDao;
 
-    @Mock
-    private ArrayExpressClient arrayExpressClient;
-
     @Inject
     private ExperimentDesignParser experimentDesignParser;
+
+    @Inject
+    private IdfParser idfParser;
 
     private ExperimentsCacheLoader<BaselineExperiment> subject;
 
@@ -63,16 +61,15 @@ public class BaselineExperimentsCacheLoaderIT {
                 UUID.randomUUID().toString());
         when(expressionAtlasExperimentDao.getExperimentAsAdmin(accession)).thenReturn(experimentDTO);
 
-        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser, expressionAtlasExperimentDao,
-                rnaSeqBaselineExperimentFactory );
+        subject =
+                new ExperimentsCacheLoader<>(
+                        experimentDesignParser, expressionAtlasExperimentDao, rnaSeqBaselineExperimentFactory, idfParser);
     }
 
 
     @Test
     public void correctSpeciesReadFromDatabase() {
-        //given
         BaselineExperiment experiment = subject.load(accession);
-        //then
         String species = experiment.getSpecies().getName();
         assertThat(species).isEqualTo("Homo sapiens");
     }
@@ -87,13 +84,11 @@ public class BaselineExperimentsCacheLoaderIT {
                         "ERR030872", "ERR030873", "ERR030874", "ERR030875", "ERR030876", "ERR030877", "ERR030878",
                         "ERR030879", "ERR030880", "ERR030881", "ERR030882", "ERR030883", "ERR030884", "ERR030885",
                         "ERR030886", "ERR030887");
-
     }
 
     @Test
     public void experimentShouldContainAssayGroups() {
         BaselineExperiment experiment = subject.load(accession);
-
         assertThat(experiment.getDataColumnDescriptors()).hasSize(16);
     }
 

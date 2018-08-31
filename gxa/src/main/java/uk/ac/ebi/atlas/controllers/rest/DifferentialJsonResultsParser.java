@@ -21,7 +21,6 @@ import java.util.function.Function;
 
 @Named
 public class DifferentialJsonResultsParser extends JsonExceptionHandlingController {
-
     private ContrastTrader contrastTrader;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialJsonResultsParser.class);
@@ -47,58 +46,50 @@ public class DifferentialJsonResultsParser extends JsonExceptionHandlingControll
             }
 
             return diffAnalyticsListBuilder.build();
-        }
-        catch(JsonParseException e) {
-            throw new RuntimeException("Input Json is missing a results field OR results field is not an Array",e);
+        } catch (JsonParseException e) {
+            throw new RuntimeException("Input Json is missing a results field OR results field is not an Array", e);
         }
     }
 
     private DiffAnalytics buildDiffAnalyticsObject(JsonElement element) {
-
         try {
-
             JsonObject resultObj = element.getAsJsonObject();
 
             String experimentAccession = resultObj.get("experiment_accession").getAsString();
-
             String bioentityIdentifier = resultObj.get("bioentity_identifier").getAsString();
-
             String contrastId = resultObj.get("contrast_id").getAsString();
-
             Double pValue = resultObj.get("p_value").getAsDouble();
-
             Double foldChange = resultObj.get("fold_change").getAsDouble();
-
-            String keywordSymbol = Optional.of(resultObj.get("keyword_symbol")).map(JsonElement::getAsString).orElse(bioentityIdentifier);
+            String keywordSymbol =
+                    Optional.of(
+                            resultObj.get("keyword_symbol")).map(JsonElement::getAsString).orElse(bioentityIdentifier);
 
             Optional<Double> tStatistic =
                     Optional.ofNullable(resultObj.get("t_statistic"))
                             .map(JsonElement::getAsDouble);
 
-            Function<Double, DifferentialExpression> microarrayExpressionMapper = ts -> new MicroarrayExpression(pValue, foldChange, ts);
-            DifferentialExpression expression = tStatistic.map(microarrayExpressionMapper).orElse(new DifferentialExpression(pValue, foldChange));
+            Function<Double, DifferentialExpression> microarrayExpressionMapper =
+                    ts -> new MicroarrayExpression(pValue, foldChange, ts);
+            DifferentialExpression expression =
+                    tStatistic.map(microarrayExpressionMapper).orElse(new DifferentialExpression(pValue, foldChange));
 
             Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
 
 
-            /*  Data coming from database has species name following Binomial nomenclature notation for naming species i.e. first character of species to be capital
-                but data in solr doesn't follow this notation so to make it consistent first character of species is uppercase
-            */
+            // Data coming from database has species name following Binomial nomenclature notation for naming species
+            // i.e. first character of species to be capital but data in solr doesn't follow this notation so to make
+            // it consistent first character of species is uppercase
 
             String species = resultObj.get("species").getAsString();
             species = species.substring(0, 1).toUpperCase() + species.substring(1);
 
-            return new DiffAnalytics(bioentityIdentifier, keywordSymbol, experimentAccession, expression, species, contrast);
-        }
-
-        /*NullPointerException is catched here to handle the case where invalid
-          Json object is skipped and the program execution runs as usual*/
-
-        catch (NullPointerException e) {
+            return new DiffAnalytics(
+                    bioentityIdentifier, keywordSymbol, experimentAccession, expression, species, contrast);
+        } catch (NullPointerException e) {
+            // NullPointerException is catched here to handle the case where invalid
+            // Json object is skipped and the program execution runs as usual
             LOGGER.error("Error adding differential result: {}", element);
             return null;
         }
     }
-
-
 }

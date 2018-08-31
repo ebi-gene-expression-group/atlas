@@ -32,7 +32,7 @@ public abstract class CreatesProfilesFromTsvFiles<D extends DescribesDataColumns
         this.dataFileHub = dataFileHub;
     }
 
-    protected abstract Predicate<E> filterExpressions(T experiment, O options);
+    protected abstract Predicate<E> filterExpressions(O options);
 
     /*
     Assumption: all Atlas data files have ids in the first column.
@@ -45,10 +45,8 @@ public abstract class CreatesProfilesFromTsvFiles<D extends DescribesDataColumns
                 line -> keepGeneIds.contains(line[0]);
     }
 
-    protected final Pair<Predicate<String[]>, Predicate<E>> filter(T experiment,
-                                                                   O options,
-                                                                   Collection<String>keepGeneIds) {
-        return Pair.of(keepLine(keepGeneIds), filterExpressions(experiment, options));
+    protected final Pair<Predicate<String[]>, Predicate<E>> filter(O options, Collection<String> keepGeneIds) {
+        return Pair.of(keepLine(keepGeneIds), filterExpressions(options));
     }
 
     public ObjectInputStream<P> create(T experiment, O options, Collection<String> keepGeneIds) {
@@ -57,7 +55,7 @@ public abstract class CreatesProfilesFromTsvFiles<D extends DescribesDataColumns
                 getDataFiles(experiment, options)
                         .stream()
                         .map(dataFile -> readNextLineStream(
-                                howToReadLine(experiment, filterExpressions(experiment, options)),
+                                howToReadLine(experiment, filterExpressions(options)),
                                 keepLine(keepGeneIds),
                                 dataFile))
                         .collect(Collectors.toCollection(Vector::new));
@@ -110,7 +108,7 @@ public abstract class CreatesProfilesFromTsvFiles<D extends DescribesDataColumns
             @Override
             public P readNext() {
                 String[] next;
-                while ((next = lines.readNext())!= null) {
+                while ((next = lines.readNext()) != null) {
                     if (keepLines.test(next)) {
                         return readLine.apply(next);
                     }

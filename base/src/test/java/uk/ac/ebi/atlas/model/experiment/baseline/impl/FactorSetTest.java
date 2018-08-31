@@ -1,12 +1,9 @@
-
 package uk.ac.ebi.atlas.model.experiment.baseline.impl;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import java.util.List;
 
@@ -15,7 +12,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class FactorSetTest {
-
     private FactorSet subject;
 
     private Factor factorOne = new Factor("type1", "value1");
@@ -29,19 +25,18 @@ public class FactorSetTest {
     }
 
     @Test
-    public void factorByTypeShouldSucceed() throws Exception {
+    public void factorByTypeShouldSucceed() {
         assertThat(subject.factorOfType("TYPE2"), is(factorTwo));
     }
 
     @Test
-    public void factorByTypeShouldFail() throws Exception {
+    public void factorByTypeShouldFail() {
         assertThat(subject.factorOfType("type2"), is(nullValue()));
         assertThat(subject.factorOfType("typeX"), is(nullValue()));
     }
 
     @Test
     public void equalsShouldSucceed() {
-
         FactorSet equalsToSubject = new FactorSet().add(factorTwo).add(factorOne).add(factorThree);
 
         assertThat(subject.equals(equalsToSubject), is(true));
@@ -50,15 +45,14 @@ public class FactorSetTest {
 
         assertThat(subject.equals(equalsToSubject), is(true));
 
-        FactorSet equalsToSubjectWithDuplicates = new FactorSet().add(factorTwo).add(factorTwo).add(factorOne).add(factorThree);
+        FactorSet equalsToSubjectWithDuplicates =
+                new FactorSet().add(factorTwo).add(factorTwo).add(factorOne).add(factorThree);
 
         assertThat(subject.equals(equalsToSubjectWithDuplicates), is(true));
-
     }
 
     @Test
     public void equalsShouldFail() {
-
         FactorSet differentFactors = new FactorSet().add(new Factor("typeX", "valueX")).add(factorThree);
 
         assertThat(subject.equals(differentFactors), is(false));
@@ -67,13 +61,14 @@ public class FactorSetTest {
 
         assertThat(subject.equals(subsetOfSubject), is(false));
 
-        FactorSet supersetOfSubject = new FactorSet().add(factorTwo).add(factorThree).add(factorOne).add(new Factor("typeX", "valueX"));
+        FactorSet supersetOfSubject =
+                new FactorSet().add(factorTwo).add(factorThree).add(factorOne).add(new Factor("typeX", "valueX"));
 
         assertThat(subject.equals(supersetOfSubject), is(false));
     }
 
     @Test
-    public void testRemove() throws Exception {
+    public void testRemove() {
         List<Factor> afterRemoval = Lists.newArrayList(factorThree);
         assertThat(subject.without(Lists.newArrayList(factorOne, factorTwo)), is(afterRemoval));
     }
@@ -99,6 +94,6 @@ public class FactorSetTest {
 
     @Test
     public void testFactorWithMultipleOntologyTerms() {
-
+        // TODO
     }
 }

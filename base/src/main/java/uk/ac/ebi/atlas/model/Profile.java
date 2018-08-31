@@ -27,8 +27,12 @@ public abstract class Profile<D extends DescribesDataColumns,
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Profile)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Profile)) {
+            return false;
+        }
         Profile<?, ?, ?> profile = (Profile<?, ?, ?>) o;
         return Objects.equal(expressionsByCondition, profile.expressionsByCondition) &&
                 Objects.equal(getId(), profile.getId()) &&
@@ -39,8 +43,6 @@ public abstract class Profile<D extends DescribesDataColumns,
     public int hashCode() {
         return Objects.hashCode(expressionsByCondition, getId(), getName());
     }
-
-    protected Profile() {}
 
     protected Profile(String id, String name) {
         this.id = id;
@@ -153,7 +155,7 @@ public abstract class Profile<D extends DescribesDataColumns,
                 .toString();
     }
 
-    public Map<String,String> properties() {
+    public Map<String, String> properties() {
         return ImmutableMap.of("id", id, "name", getName());
     }
 

@@ -14,17 +14,14 @@ import java.util.Optional;
 
 @Component
 public class EuropePmcClient {
-
-    private final static String URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={0}&format=json";
+    private static final String URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={0}&format=json";
 
     private RestTemplate restTemplate;
-
     private ObjectMapper mapper;
 
     @Inject
     public EuropePmcClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-
         this.mapper = new ObjectMapper();
     }
 
@@ -38,17 +35,16 @@ public class EuropePmcClient {
         query = "\"" + query + "\"";
         ResponseEntity<String> response = restTemplate.getForEntity(MessageFormat.format(URL, query), String.class);
 
-        if(response.getStatusCode().is2xxSuccessful()) {
+        if (response.getStatusCode().is2xxSuccessful()) {
             try {
                 JsonNode responseAsJson = mapper.readTree(response.getBody());
 
                 if (responseAsJson.has("resultList")) {
                     JsonNode publicationResultList = responseAsJson.get("resultList").get("result");
 
-                    if(publicationResultList.has(0)) {
+                    if (publicationResultList.has(0)) {
                         return Optional.of(mapper.readValue(publicationResultList.get(0), Publication.class));
-                    }
-                    else {
+                    } else {
                         return Optional.empty();
                     }
                 }

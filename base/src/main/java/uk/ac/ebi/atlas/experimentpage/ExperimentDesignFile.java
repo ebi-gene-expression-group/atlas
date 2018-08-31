@@ -37,7 +37,7 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
     @Named
     public static class Baseline extends ExperimentDesignFile<BaselineExperiment> {
         @Inject
-        public Baseline(DataFileHub dataFileHub){
+        public Baseline(DataFileHub dataFileHub) {
             super(dataFileHub);
         }
     }
@@ -64,7 +64,7 @@ public abstract class ExperimentDesignFile<E extends Experiment<? extends Descri
     }
 
     @Override
-    protected Collection<String> reservedUris(){
+    protected Collection<String> reservedUris() {
         return Collections.singleton("experiment-design");
     }
 

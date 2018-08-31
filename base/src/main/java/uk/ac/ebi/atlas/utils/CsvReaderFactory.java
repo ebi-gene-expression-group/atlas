@@ -14,6 +14,9 @@ import java.nio.file.Path;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CsvReaderFactory {
+    protected CsvReaderFactory() {
+        throw new UnsupportedOperationException();
+    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderFactory.class);
 

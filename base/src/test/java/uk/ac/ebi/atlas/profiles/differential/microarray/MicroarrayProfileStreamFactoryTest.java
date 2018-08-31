@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.model.ArrayDesign;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
+import uk.ac.ebi.atlas.model.experiment.differential.ContrastTestUtils;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
@@ -31,50 +31,48 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(value = MockitoJUnitRunner.class)
 public class MicroarrayProfileStreamFactoryTest {
+    private static final String GENE_ID = "gene_id";
+    private static final String GENE_NAME = "gene_name";
+    private static final String DESIGN_ELEMENT = "design_element";
+    private static final String GENE_ID_2 = "gene_id_2";
+    private static final String GENE_NAME_2 = "gene_name_2";
+    private static final String DESIGN_ELEMENT_2 = "design_element_2";
+    private static final String P_VALUE = "6.4460598240872E-6";
+    private static final String FOLD_CHANGE = "-1.68509426666667";
+    private static final String T_STAT = "-20.5528971215852";
 
-    String GENE_ID = "gene_id";
-    String GENE_NAME = "gene_name";
-    String DESIGN_ELEMENT = "design_element";
-    String GENE_ID_2 = "gene_id_2";
-    String GENE_NAME_2 = "gene_name_2";
-    String DESIGN_ELEMENT_2 = "design_element_2";
-    String P_VALUE = "6.4460598240872E-6";
-    String FOLD_CHANGE = "-1.68509426666667";
-    String T_STAT = "-20.5528971215852";
-
-    String P_VALUE_2 = "0.0004000391565989";
-    String T_STAT_2 = "-9.36995510274818";
-    String FOLD_CHANGE_2 = "-0.788061466666666";
-
+    private static final String P_VALUE_2 = "0.0004000391565989";
+    private static final String T_STAT_2 = "-9.36995510274818";
+    private static final String FOLD_CHANGE_2 = "-0.788061466666666";
 
     @Test
-    public void twoRowsWithOneProfileEach(){
+    public void twoRowsWithOneProfileEach() {
         String header =
                 Joiner.on("\t").join(
                         new String[] {
                                 "gene id", "gene name", "design element", "contrast_1.p-value", "contrast_1.t-stat",
                                 "contrast_1.fold-change"});
-        String LINE1 =
+        String line1 =
                 Joiner.on("\t").join(
                         new String[] {GENE_ID, GENE_NAME, DESIGN_ELEMENT, P_VALUE, T_STAT, FOLD_CHANGE});
-        String LINE2 =
+        String line2 =
                 Joiner.on("\t").join(
                         new String[] {GENE_ID_2, GENE_NAME_2, DESIGN_ELEMENT_2, P_VALUE_2, T_STAT_2, FOLD_CHANGE_2});
-        List<Contrast> contrasts = ContrastTest.get(1);
-        List<String> LINES = ImmutableList.of(header, LINE1, LINE2);
-        
-        List<MicroarrayProfile> sequenceProfiles = loadProfiles(contrasts, LINES);
+        List<Contrast> contrasts = ContrastTestUtils.get(1);
+        List<String> lines = ImmutableList.of(header, line1, line2);
+
+        List<MicroarrayProfile> sequenceProfiles = loadProfiles(contrasts, lines);
         assertThat(sequenceProfiles.size(), is(2));
 
         assertThat(sequenceProfiles.get(0).getId(), is(GENE_ID));
         assertThat(sequenceProfiles.get(0).getName(), is(GENE_NAME));
         assertThat(sequenceProfiles.get(0).getSpecificity(), is(1L));
-        
+
         MicroarrayExpression e00 = sequenceProfiles.get(0).getExpression(contrasts.get(0));
         assertThat(e00.getPValue(), is(Double.parseDouble(P_VALUE)));
         assertThat(e00.getFoldChange(), is(Double.parseDouble(FOLD_CHANGE)));
         assertThat(e00.getTstatistic(), is(Double.parseDouble(T_STAT)));
-        
+
         assertThat(sequenceProfiles.get(1).getId(), is(GENE_ID_2));
         assertThat(sequenceProfiles.get(1).getName(), is(GENE_NAME_2));
         assertThat(sequenceProfiles.get(1).getSpecificity(), is(1L));
@@ -85,22 +83,22 @@ public class MicroarrayProfileStreamFactoryTest {
     }
 
     @Test
-    public void oneRowWithTwoProfilesEach(){
+    public void oneRowWithTwoProfilesEach() {
         String header =
                 Joiner.on("\t").join(
                         new String[] {
                                 "gene id", "gene name", "design element", "contrast_1.p-value", "contrast_1.t-stat",
                                 "contrast_1.fold-change", "contrast_2.p-value", "contrast_2.t-stat",
                                 "contrast_2.fold-change"});
-        String LINE_2_CONTRASTS =
+        String line2Contrasts =
                 Joiner.on("\t").join(
                         new String[] {
                                 GENE_ID, GENE_NAME, DESIGN_ELEMENT, P_VALUE, T_STAT, FOLD_CHANGE, P_VALUE_2, T_STAT_2,
                                 FOLD_CHANGE_2});
-        List<Contrast> contrasts = ContrastTest.get(2);
-        List<String> LINES = ImmutableList.of(header, LINE_2_CONTRASTS);
+        List<Contrast> contrasts = ContrastTestUtils.get(2);
+        List<String> lines = ImmutableList.of(header, line2Contrasts);
 
-        List<MicroarrayProfile> sequenceProfiles = loadProfiles(contrasts, LINES);
+        List<MicroarrayProfile> sequenceProfiles = loadProfiles(contrasts, lines);
         assertThat(sequenceProfiles.size(), is(1));
         assertThat(sequenceProfiles.get(0).getId(), is(GENE_ID));
         assertThat(sequenceProfiles.get(0).getName(), is(GENE_NAME));
@@ -137,7 +135,6 @@ public class MicroarrayProfileStreamFactoryTest {
         microarrayRequestPreferences.setFoldChangeCutoff(0.0);
         microarrayRequestPreferences.setCutoff(1.0);
 
-
         MicroarrayRequestContext microarrayRequestContext =
                 new MicroarrayRequestContext(microarrayRequestPreferences, experiment);
 
@@ -148,5 +145,4 @@ public class MicroarrayProfileStreamFactoryTest {
                                 new DifferentialProfilesList<>(
                                         Lists.newArrayList(new IterableObjectInputStream<>(profiles))));
     }
-
 }

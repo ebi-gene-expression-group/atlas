@@ -37,7 +37,7 @@ public class BioEntityPropertyDao {
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
     }
-    
+
     public Set<String> fetchGeneIdsForPropertyValue(BioentityPropertyName bioentityPropertyName,
                                                     String bioentityPropertyValue) {
         return solrClient.getBioentityIdentifiers(bioentityPropertyName, bioentityPropertyValue);

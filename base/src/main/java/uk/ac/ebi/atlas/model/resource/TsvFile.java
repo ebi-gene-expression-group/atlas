@@ -17,10 +17,10 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.zip.GZIPInputStream;
 
-public abstract class TsvFile<T> extends AtlasResource<T>{
+public abstract class TsvFile<T> extends AtlasResource<T> {
 
-    public TsvFile(Path parentDirectory, String template, String ... args) {
-        super(parentDirectory.resolve(MessageFormat.format(template, (Object []) args)));
+    public TsvFile(Path parentDirectory, String template, String... args) {
+        super(parentDirectory.resolve(MessageFormat.format(template, (Object[]) args)));
     }
 
     public static class ReadAsStream extends TsvFile<ObjectInputStream<String[]>> {
@@ -41,7 +41,7 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
         private static class TsvStreamReader implements ObjectInputStream<String[]> {
             private CSVReader tsvReader;
 
-            public TsvStreamReader(Reader reader) {
+            TsvStreamReader(Reader reader) {
                 this.tsvReader = new CSVReader(reader, '\t');
             }
 
@@ -76,17 +76,6 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
         }
     }
 
-    public static class Appendable extends TsvFile<TsvWriter> {
-        public Appendable(Path parentDirectory, String template, String... args) {
-            super(parentDirectory, template, args);
-        }
-
-        @Override
-        public TsvWriter get() {
-            return new FileTsvWriterBuilder().build(path, true);
-        }
-    }
-
     public static class Overwrite extends TsvFile<TsvWriter> {
         public Overwrite(Path parentDirectory, String template, String... args) {
             super(parentDirectory, template, args);
@@ -107,7 +96,10 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
         @Override
         public CSVReader get() {
             try {
-                return new CSVReader(new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(path)))), '\t');
+                return new CSVReader(
+                        new BufferedReader(
+                                new InputStreamReader(new GZIPInputStream(Files.newInputStream(path)))),
+                        '\t');
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }

@@ -37,7 +37,8 @@ public class SpeciesPropertiesTraderIT {
         assertThat(subject.get("Hordeum vulgare").getResourcesOfType("genome_browser"), hasSize(2));
     }
 
-    public void plantsHaveTwoGenomeBrowsers() throws Exception {
+    @Test
+    public void plantsHaveTwoGenomeBrowsers() {
         Collection<SpeciesProperties> allSpeciesProperties = subject.getAll();
 
         for (SpeciesProperties speciesProperties : allSpeciesProperties) {
@@ -48,14 +49,15 @@ public class SpeciesPropertiesTraderIT {
     }
 
     @Test
-    public void wbpsSpecies() throws Exception {
+    public void wbpsSpecies() {
         SpeciesProperties caenorhabditisElegans = subject.get("Caenorhabditis elegans");
         SpeciesProperties schistosomaMansoni = subject.get("Schistosoma mansoni");
 
         assertThat(caenorhabditisElegans.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
         assertThat(caenorhabditisElegans.getResourcesOfType("genome_browser"), hasSize(1));
         for (ImmutableMap<String, String> resource : caenorhabditisElegans.resources()) {
-            if (resource.containsKey("type") && SpeciesProperties.GENOME_BROWSER_TYPE.equalsIgnoreCase(resource.get("type"))) {
+            if (resource.containsKey("type") &&
+                    SpeciesProperties.GENOME_BROWSER_TYPE.equalsIgnoreCase(resource.get("type"))) {
                 assertThat(resource, hasEntry(is("url"), startsWith("http://parasite")));
             }
         }
@@ -63,7 +65,8 @@ public class SpeciesPropertiesTraderIT {
         assertThat(schistosomaMansoni.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
         assertThat(schistosomaMansoni.getResourcesOfType("genome_browser"), hasSize(1));
         for (ImmutableMap<String, String> resource : caenorhabditisElegans.resources()) {
-            if (resource.containsKey("type") && SpeciesProperties.GENOME_BROWSER_TYPE.equalsIgnoreCase(resource.get("type"))) {
+            if (resource.containsKey("type") &&
+                    SpeciesProperties.GENOME_BROWSER_TYPE.equalsIgnoreCase(resource.get("type"))) {
                 assertThat(resource, hasEntry(is("url"), startsWith("http://parasite")));
             }
         }

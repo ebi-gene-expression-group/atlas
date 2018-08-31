@@ -1,31 +1,21 @@
 package uk.ac.ebi.atlas.solr.cloud.fullanalytics;
 
 import org.apache.solr.client.solrj.SolrQuery;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferencesTest;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toSet;
 import static org.apache.solr.client.solrj.util.ClientUtils.escapeQueryChars;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExperimentRequestPreferencesSolrQueryFactoryTest {
-
+class ExperimentRequestPreferencesSolrQueryFactoryTest {
     private static final String E_MTAB_513 = "E-MTAB-513";
 
     @Test
@@ -48,7 +38,7 @@ public class ExperimentRequestPreferencesSolrQueryFactoryTest {
                         "*")
                 .hasFieldOrPropertyWithValue(
                         "rows",
-                        SolrQueryBuilder.MAX_ROWS);
+                        SolrQueryBuilder.DEFAULT_ROWS);
     }
 
     @Test
@@ -72,7 +62,7 @@ public class ExperimentRequestPreferencesSolrQueryFactoryTest {
                         "*")
                 .hasFieldOrPropertyWithValue(
                         "rows",
-                        SolrQueryBuilder.MAX_ROWS);
+                        SolrQueryBuilder.DEFAULT_ROWS);
     }
 
     @Test

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
-public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile>{
+public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile> {
 
     // This list may be iterated from a different thread than the index build thread, generating a
     // ConcurrentModificationException if we didn't use a thread safe implementation like CopyOnWriteArrayList
@@ -18,19 +18,20 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
     private long processedDiskSpace;
     private long totalTimeTaken;
 
-    public void completed(BioentityPropertyFile filePath, long timeTaken){
+    public void completed(BioentityPropertyFile filePath, long timeTaken) {
         processedDiskSpace += filePath.size();
         totalTimeTaken += timeTaken;
         processedFiles.add(new ProcessedFile(filePath, timeTaken));
     }
 
     int minutesToCompletion(long totalDiskSpace) {
-        double estimatedSecondsToCompletion = totalTimeTaken * (((double)(totalDiskSpace - processedDiskSpace)/processedDiskSpace));
-        return (int)estimatedSecondsToCompletion/60;
+        double estimatedSecondsToCompletion =
+                totalTimeTaken * (((double) (totalDiskSpace - processedDiskSpace) / processedDiskSpace));
+        return (int) estimatedSecondsToCompletion / 60;
     }
 
     int progress(long totalDiskSpace) {
-        return (int)(processedDiskSpace * 100 / totalDiskSpace);
+        return (int) (processedDiskSpace * 100 / totalDiskSpace);
     }
 
     @Override
@@ -44,22 +45,22 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
         processedFiles.clear();
     }
 
-    static class ProcessedFile{
+    static class ProcessedFile {
         private final BioentityPropertyFile filePath;
         private final long seconds;
 
-        ProcessedFile(BioentityPropertyFile filePath, long seconds){
+        ProcessedFile(BioentityPropertyFile filePath, long seconds) {
 
             this.filePath = filePath;
             this.seconds = seconds;
         }
 
-        public long getSize(){
+        public long getSize() {
             return filePath.size();
         }
 
         @Override
-        public String toString(){
+        public String toString() {
             return filePath + ", size: " + getSize() + ", time taken: " + seconds + " seconds";
         }
 

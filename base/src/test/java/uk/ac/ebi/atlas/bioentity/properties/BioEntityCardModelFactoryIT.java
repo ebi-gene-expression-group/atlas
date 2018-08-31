@@ -63,7 +63,7 @@ public class BioEntityCardModelFactoryIT {
                 BIOENTITY_PROPERTY_NAMES, "", propertyValuesByType);
 
         assertThat(propertyValuesByType.get(DESCRIPTION).iterator().next().contains("["), is(true));
-        assertThat(((String)bioentityCardModel.get("bioEntityDescription")).contains("["), is(false));
+        assertThat(((String) bioentityCardModel.get("bioEntityDescription")).contains("["), is(false));
     }
 
 }

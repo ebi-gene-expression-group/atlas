@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source;
 
+import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class SearchStreamBuilderIT {
     void testMinimalQuery() {
         SolrQueryBuilder<BioentitiesCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
         solrQueryBuilder
-                .setFieldList(BIOENTITY_IDENTIFIER, SPECIES, PROPERTY_NAME, PROPERTY_VALUE)
+                .setFieldList(ImmutableSet.of(BIOENTITY_IDENTIFIER, SPECIES, PROPERTY_NAME, PROPERTY_VALUE))
                 .sortBy(BIOENTITY_IDENTIFIER, ORDER.asc);
 
         try (TupleStreamer tupleStreamer =
@@ -57,7 +58,7 @@ class SearchStreamBuilderIT {
         SolrQueryBuilder<BioentitiesCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
         solrQueryBuilder
                 .addQueryFieldByTerm(SPECIES, "Mus_musculus")
-                .setFieldList(BIOENTITY_IDENTIFIER, SPECIES, PROPERTY_NAME, PROPERTY_VALUE)
+                .setFieldList(ImmutableSet.of(BIOENTITY_IDENTIFIER, SPECIES, PROPERTY_NAME, PROPERTY_VALUE))
                 .sortBy(BIOENTITY_IDENTIFIER, ORDER.asc);
 
         try (TupleStreamer tupleStreamer =
@@ -76,7 +77,7 @@ class SearchStreamBuilderIT {
         SolrQueryBuilder<BioentitiesCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
         solrQueryBuilder
                 .addQueryFieldByTerm(PROPERTY_VALUE, "Foobar")
-                .setFieldList(BIOENTITY_IDENTIFIER, SPECIES, PROPERTY_NAME, PROPERTY_VALUE)
+                .setFieldList(ImmutableSet.of(BIOENTITY_IDENTIFIER, SPECIES, PROPERTY_NAME, PROPERTY_VALUE))
                 .sortBy(BIOENTITY_IDENTIFIER, ORDER.asc);
 
         try (TupleStreamer tupleStreamer =

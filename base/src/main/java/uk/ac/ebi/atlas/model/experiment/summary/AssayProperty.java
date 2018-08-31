@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.model.experiment.summary;
 import com.google.common.base.MoreObjects;
 import com.google.gson.JsonObject;
 
+import java.util.Objects;
+
 public class AssayProperty implements Comparable<AssayProperty> {
     protected String propertyName;
     protected String testValue;
@@ -40,21 +42,27 @@ public class AssayProperty implements Comparable<AssayProperty> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         AssayProperty that = (AssayProperty) o;
 
-        if (propertyName != null ? !propertyName.equalsIgnoreCase(that.propertyName) : that.propertyName != null) return false;
+        if (propertyName != null ? !propertyName.equalsIgnoreCase(that.propertyName) : that.propertyName != null) {
+            return false;
+        }
         return testValue != null ? testValue.equalsIgnoreCase(that.testValue) : that.testValue == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = propertyName != null ? propertyName.toLowerCase().hashCode() : 0;
-        result = 31 * result + (testValue != null ? testValue.toLowerCase().hashCode() : 0);
-        return result;
+        return Objects.hash(
+                propertyName != null ? propertyName.toLowerCase().hashCode() : 0,
+                testValue != null ? testValue.toLowerCase().hashCode() : 0);
     }
 
     @Override
@@ -66,7 +74,7 @@ public class AssayProperty implements Comparable<AssayProperty> {
                 .toString();
     }
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject o = new JsonObject();
         o.addProperty("propertyName", propertyName);
         o.addProperty("testValue", testValue);

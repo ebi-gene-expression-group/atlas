@@ -32,7 +32,9 @@ public class MicroarrayExperimentDataPointStream implements ObjectInputStream<Mi
     private ObjectInputStream<? extends MicroarrayDifferentialAnalytics> currentInputStream;
 
     public MicroarrayExperimentDataPointStream(MicroarrayExperiment experiment,
-                                               ImmutableCollection<ObjectInputStream<? extends MicroarrayDifferentialAnalytics>> inputStreams,
+                                               ImmutableCollection<
+                                                       ObjectInputStream<? extends MicroarrayDifferentialAnalytics>>
+                                                       inputStreams,
                                                Multimap<String, String> conditionSearchTermsByContrastId,
                                                Map<String, Integer> numReplicatesByContrastId) {
         this.experiment = experiment;

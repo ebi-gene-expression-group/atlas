@@ -21,8 +21,7 @@ import java.util.function.Function;
 
 @Named
 public class OrganismPartGroupingService {
-
-    private final LazyReference<Multimap<String, ColumnGroup>> anatomicalSystemsMap ;
+    private final LazyReference<Multimap<String, ColumnGroup>> anatomicalSystemsMap;
     private final LazyReference<Multimap<String, ColumnGroup>> organsMap;
 
     @Inject
@@ -47,7 +46,9 @@ public class OrganismPartGroupingService {
         return getGrouping(ontologyTerms, term -> organsMap.get().get(term.accession()));
     }
 
-    private Map<ColumnGroup, Set<OntologyTerm>> getGrouping(Collection<OntologyTerm> ontologyTerms, Function<OntologyTerm, Collection<ColumnGroup>> columnGroups) {
+    private Map<ColumnGroup, Set<OntologyTerm>>
+    getGrouping(Collection<OntologyTerm> ontologyTerms,
+                Function<OntologyTerm, Collection<ColumnGroup>> columnGroups) {
 
         Map<ColumnGroup, Set<OntologyTerm>> groupings = new HashMap<>();
 
@@ -77,5 +78,4 @@ public class OrganismPartGroupingService {
             throw new RuntimeException(e);
         }
     }
-
 }

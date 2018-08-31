@@ -18,13 +18,20 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.UNKNOWN;
 
 public class RandomDataTestUtils {
+    protected RandomDataTestUtils() {
+        throw new UnsupportedOperationException();
+    }
+
+    private static final int ENSEMBLE_GENE_ID_NUM_LENGTH = 12;
+    private static final int ENA_SEQ_RUN_NUM_LENGTH = 7;
+
     public static String getRandomExperimentAccession() {
-        // n / 456,975,543,024 chance of clashing for n experiments in the test database, let’s roll!
+        // n / 456, 975, 543, 024 chance of clashing for n experiments in the test database, let’s roll!
         return "E-" + randomAlphabetic(4).toUpperCase() + "-" + randomNumeric(1, 6);
     }
 
     public static String getRandomEnsemblGeneId() {
-        return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(12);
+        return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(ENSEMBLE_GENE_ID_NUM_LENGTH);
     }
 
     public static List<String[]> getRandomClusters(int fromK, int toK, int numberOfCells) {
@@ -39,11 +46,9 @@ public class RandomDataTestUtils {
         // It’s a bit convoluted, but randomClustersLine will be invoked with true only once, the first iteration in
         // which thisClusterSelK becomes true
         boolean selKSet = false;
-        for (int k = fromK ; k <= toK ; k++) {
+        for (int k = fromK; k <= toK; k++) {
             boolean thisClusterSelK = ThreadLocalRandom.current().nextBoolean();
-
             clustersTsvBuilder.add(randomClustersLine(!selKSet && thisClusterSelK, k, numberOfCells));
-
             selKSet = selKSet || thisClusterSelK;
         }
 
@@ -59,7 +64,7 @@ public class RandomDataTestUtils {
     }
 
     private static String randomRnaSeqRunId() {
-        return "SRR" + randomNumeric(1, 7);
+        return "SRR" + randomNumeric(1, ENA_SEQ_RUN_NUM_LENGTH);
     }
 
     private static String[] randomClustersLine(boolean selK, int k, int n) {

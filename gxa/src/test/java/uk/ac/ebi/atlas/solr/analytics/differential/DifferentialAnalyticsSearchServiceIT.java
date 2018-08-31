@@ -22,21 +22,19 @@ import static org.junit.Assert.assertTrue;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class DifferentialAnalyticsSearchServiceIT {
-
-    static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
-
-    @Inject
-    SpeciesFactory speciesFactory;
+    private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 
     @Inject
-    DifferentialAnalyticsSearchService subject;
+    private SpeciesFactory speciesFactory;
+
+    @Inject
+    private DifferentialAnalyticsSearchService subject;
 
     private SemanticQuery query = SemanticQuery.create("zinc finger");
     private SemanticQuery condition = SemanticQuery.create("pish");
     private String species = "oryza sativa";
-
 
     @Test
     public void fetchDifferentialFacetsForSearch() {
@@ -58,7 +56,7 @@ public class DifferentialAnalyticsSearchServiceIT {
 
     @Test
     public void fetchDifferentialFacetsForQuery3() {
-        JsonObject result = subject.fetchFacets(query,condition, speciesFactory.create(species));
+        JsonObject result = subject.fetchFacets(query, condition, speciesFactory.create(species));
         assertAboutFacets(result);
     }
 
@@ -73,18 +71,18 @@ public class DifferentialAnalyticsSearchServiceIT {
         assertAboutResults(result);
     }
 
-    private void assertAboutFacets(JsonObject result){
+    private void assertAboutFacets(JsonObject result) {
         assertThat(result.entrySet().size(), greaterThan(0));
-        for(Map.Entry<String,?> e: result.entrySet()){
+        for (Map.Entry<String, ?> e: result.entrySet()) {
             assertThat(e.getKey(),
-                    isOneOf("kingdom", "species", "experimentType", "factors", "numReplicates","regulation"));
+                    isOneOf("kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"));
         }
     }
 
-    private void assertAboutResults(JsonObject result){
+    private void assertAboutResults(JsonObject result) {
         assertTrue(result.has("results"));
         assertThat(result.get("results").getAsJsonArray().size(), greaterThan(0));
-        for(JsonElement e: result.get("results").getAsJsonArray()){
+        for (JsonElement e: result.get("results").getAsJsonArray()) {
             assertTrue(e.getAsJsonObject().has("bioentityIdentifier"));
             assertTrue(e.getAsJsonObject().has("bioentityName"));
             assertTrue(e.getAsJsonObject().has("experimentAccession"));

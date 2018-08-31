@@ -38,8 +38,8 @@ public class TimingInterceptorTest {
     public void testPreHandle() {
         assertThat(subject.preHandle(requestWrapper, null, null)).isTrue();
 
-        StopWatch stopWatch = (StopWatch) requestWrapper.getAttribute(STOP_WATCH);
-        assertThat(stopWatch).isNotNull();
+        StopWatch localStopWatch = (StopWatch) requestWrapper.getAttribute(STOP_WATCH);
+        assertThat(localStopWatch).isNotNull();
     }
 
     @Test

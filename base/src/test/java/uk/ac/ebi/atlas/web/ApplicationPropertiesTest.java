@@ -28,8 +28,7 @@ public class ApplicationPropertiesTest {
     public void getUnknownSpeciesBaselineReferenceExperimentAccession() {
         Species unknownSpecies = new Species("foobar", SpeciesProperties.UNKNOWN);
 
-        assertThat(unknownSpecies.isUnknown(), is (true));
+        assertThat(unknownSpecies.isUnknown(), is(true));
         assertThat(ApplicationProperties.getBaselineReferenceExperimentAccession(unknownSpecies), is(nullValue()));
     }
-
 }

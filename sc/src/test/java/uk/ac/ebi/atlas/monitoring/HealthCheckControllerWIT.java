@@ -22,8 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
-public class HealthCheckControllerWIT {
+@ContextConfiguration(classes = WebConfig.class)
+class HealthCheckControllerWIT {
 
     @Autowired
     private WebApplicationContext wac;
@@ -31,12 +31,12 @@ public class HealthCheckControllerWIT {
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    public void requestReturnsDbAndSolrStatus() throws Exception {
+    void requestReturnsDbAndSolrStatus() throws Exception {
         mockMvc.perform(get("/json/health"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))

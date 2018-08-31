@@ -17,29 +17,31 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentOpsExecutionServiceTest {
+    private static final String ACCESSION = "E-EXAMPLE-1";
 
     @Mock
-    ExperimentCrud experimentCrudMock;
+    private ExperimentCrud experimentCrudMock;
 
     @Mock
-    BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
-    @Mock
-    AnalyticsIndexerManager analyticsIndexerManager;
-    @Mock
-    ExperimentTrader experimentTrader;
-    @Mock
-    ExperimentAttributesService experimentAttributesService;
+    private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
 
     @Mock
-    ExperimentDTO experimentDTO;
+    private AnalyticsIndexerManager analyticsIndexerManager;
 
-    String accession = "E-EXAMPLE-1";
+    @Mock
+    private ExperimentTrader experimentTrader;
 
-    ExperimentOpsExecutionService subject;
+    @Mock
+    private ExperimentAttributesService experimentAttributesService;
+
+    @Mock
+    private ExperimentDTO experimentDTO;
+
+    private ExperimentOpsExecutionService subject;
 
     @Before
-    public void setUp(){
-        when(experimentCrudMock.findExperiment(accession)).thenReturn(experimentDTO);
+    public void setUp() {
+        when(experimentCrudMock.findExperiment(ACCESSION)).thenReturn(experimentDTO);
         subject =
                 new ExpressionAtlasExperimentOpsExecutionService(
                         experimentCrudMock,
@@ -50,22 +52,20 @@ public class ExperimentOpsExecutionServiceTest {
     }
 
     @Test
-    public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception{
-        subject.attemptExecuteStatefulOp(accession, Op.UPDATE_DESIGN);
-        verify(experimentTrader).removeExperimentFromCache(accession);
+    public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
+        subject.attemptExecuteStatefulOp(ACCESSION, Op.UPDATE_DESIGN);
+        verify(experimentTrader).removeExperimentFromCache(ACCESSION);
     }
 
     @Test
     public void updateExperimentToPrivateShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
-        subject.attemptExecuteStatefulOp(accession, Op.UPDATE_PRIVATE);
-        verify(analyticsIndexerManager).deleteFromAnalyticsIndex(accession);
+        subject.attemptExecuteStatefulOp(ACCESSION, Op.UPDATE_PRIVATE);
+        verify(analyticsIndexerManager).deleteFromAnalyticsIndex(ACCESSION);
     }
 
     @Test
     public void deleteExperimentShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
-        subject.attemptExecuteStatefulOp(accession, Op.DELETE);
-        verify(analyticsIndexerManager).deleteFromAnalyticsIndex(accession);
+        subject.attemptExecuteStatefulOp(ACCESSION, Op.DELETE);
+        verify(analyticsIndexerManager).deleteFromAnalyticsIndex(ACCESSION);
     }
-
-
 }

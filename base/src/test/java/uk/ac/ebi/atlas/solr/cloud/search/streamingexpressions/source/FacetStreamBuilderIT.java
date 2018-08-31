@@ -22,10 +22,12 @@ import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.ASSAY_GROUP_ID;
 import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
@@ -96,7 +98,10 @@ class FacetStreamBuilderIT {
                                      .build())) {
             assertThat(filteredStreamer1.get().map(Tuple::getMap))
                     .extracting(BIOENTITY_IDENTIFIER.name())
-                    .containsExactlyInAnyOrder(filteredStreamer2.get().map(tuple -> tuple.getString(BIOENTITY_IDENTIFIER.name())).toArray());
+                    .containsExactlyInAnyOrder(
+                            filteredStreamer2.get()
+                                    .map(tuple -> tuple.getString(BIOENTITY_IDENTIFIER.name()))
+                                    .toArray());
         }
     }
 
@@ -125,7 +130,7 @@ class FacetStreamBuilderIT {
 
             List<Tuple> results = streamer.get().collect(toList());
 
-            for (int i = 0 ; i < results.size() - 1; i++) {
+            for (int i = 0; i < results.size() - 1; i++) {
                 assertThat(results.get(i).getLong("count(*)"))
                         .isLessThanOrEqualTo(results.get(i + 1).getLong("count(*)"));
             }
@@ -142,7 +147,7 @@ class FacetStreamBuilderIT {
 
             List<Tuple> results = streamer.get().collect(toList());
 
-            for (int i = 0 ; i < results.size() - 1; i++) {
+            for (int i = 0; i < results.size() - 1; i++) {
                 assertThat(results.get(i).getDouble("avg(abs(" + EXPRESSION_LEVEL.name() + "))"))
                         .isGreaterThanOrEqualTo(
                                 results.get(i + 1).getDouble(
@@ -153,7 +158,7 @@ class FacetStreamBuilderIT {
     }
 
     private static Stream<Arguments> solrQueryBuildersProvider() {
-        String[] assayGroups = IntStream.range(1, 16).boxed().map(i -> "g" + i.toString()).toArray(String[]::new);
+        Set<String> assayGroups = IntStream.range(1, 16).boxed().map(i -> "g" + i.toString()).collect(toSet());
 
         SolrQueryBuilder<AnalyticsCollectionProxy> hugeSolrQueryBuilder = new SolrQueryBuilder<>();
         hugeSolrQueryBuilder
@@ -185,5 +190,4 @@ class FacetStreamBuilderIT {
                 Arguments.of(bigSolrQueryBuilder, smallSolrQueryBuilder),
                 Arguments.of(smallSolrQueryBuilder, tinySolrQueryBuilder));
     }
-
 }

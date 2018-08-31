@@ -45,7 +45,7 @@ public class MicroarrayExperimentConfigurationIT {
     public void testGetContrasts() {
         List<Contrast> contrasts = subject.getContrasts();
         assertThat(contrasts.size(), greaterThan(0));
-        for(Contrast contrast: contrasts){
+        for (Contrast contrast: contrasts) {
             assertNotNull(contrast.getId());
             assertNotNull(contrast.getDisplayName());
             assertThat(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn(), is(not(empty())));

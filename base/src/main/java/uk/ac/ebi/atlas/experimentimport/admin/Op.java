@@ -16,11 +16,11 @@ public enum Op {
     UPDATE_PUBLIC("Set experiment as public in the database and update the design"),
     UPDATE_DESIGN("Assume the experiment is public, then update the design"),
     IMPORT("Parse and validate the configuration.xml file. Delete the experiment if already present, " +
-            "then use the configuration to load the analytics into database. Then update the design," +
+            "then use the configuration to load the analytics into database. Then update the design, " +
             " and add the experiment to database."),
     IMPORT_PUBLIC("Same as import but make experiment searchable and visible without an access key"),
-    DELETE("Delete the analytics from database, if public delete from conditions and analytics index, and remove the " +
-            "accession from experiment list in the database."),
+    DELETE("Delete the analytics from database, if public delete from conditions and analytics index, and remove" +
+            "the accession from experiment list in the database."),
     COEXPRESSION_IMPORT("Assume there is no coexpression data in the database. Then load coexpressions"),
     COEXPRESSION_UPDATE("Delete coexpressions from database and then load coexpressions"),
     COEXPRESSION_DELETE("Delete coexpressions from database"),
@@ -30,18 +30,19 @@ public enum Op {
     ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession"),
     CACHE_READ("Read the attributes of the experiment from cache, trying to load it if it is absent"),
     CACHE_REMOVE("Delete from cache if present"),
-    CHECK("Do the same checks that are done on experiment import - required files are present, their headers match configuration.xml, configuration.xml and condensed-sdrf match each other");
+    CHECK("Do the same checks that are done on experiment import - required files are present, their headers match " +
+            "configuration.xml, configuration.xml and condensed-sdrf match each other");
 
-    static ImmutableMap<String, ImmutableList<Op>> synonyms = ImmutableMap.of(
-            "LOAD_PUBLIC", ImmutableList.of(IMPORT_PUBLIC,COEXPRESSION_UPDATE,ANALYTICS_IMPORT),
-            "LOAD", ImmutableList.of(IMPORT,COEXPRESSION_UPDATE),
-            "DOUBLE_CHECK", ImmutableList.of(CACHE_REMOVE,CHECK,CACHE_READ)
+    static final ImmutableMap<String, ImmutableList<Op>> SYNONYMS = ImmutableMap.of(
+            "LOAD_PUBLIC", ImmutableList.of(IMPORT_PUBLIC, COEXPRESSION_UPDATE, ANALYTICS_IMPORT),
+            "LOAD", ImmutableList.of(IMPORT, COEXPRESSION_UPDATE),
+            "DOUBLE_CHECK", ImmutableList.of(CACHE_REMOVE, CHECK, CACHE_READ)
     );
 
-    static Map<String, String> JARGON_ELABORATED = ImmutableMap.of(
+    static final Map<String, String> JARGON_ELABORATED = ImmutableMap.of(
             "update the design", "Parse the SDRF file to get factors, characteristics per assay, and other " +
                     "information needed for the experiment design page, then write out the design file." +
-                    " For a public experiment," +
+                    " For a public experiment, " +
                     " update the conditions index with the ontology terms extracted from the design",
             "the analytics", "The experiment results, whose format varies per experiment type. e.g. for baseline " +
                     "experiments they are expression value per gene and assay",
@@ -71,7 +72,7 @@ public enum Op {
     private static List<Op> opsForUppercasedParameter(String parameter) throws IllegalArgumentException {
         List<Op> result = new ArrayList<>();
         for (String s : parameter.split(",")) {
-            List<Op> opsForShortcutName = synonyms.get(s);
+            List<Op> opsForShortcutName = SYNONYMS.get(s);
             if (opsForShortcutName == null || opsForShortcutName.isEmpty()) {
                 result.add(Op.valueOf(s));
             } else {

@@ -85,14 +85,15 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                                 .collect(Collectors.toList()))
                         .orElse(JsonNull.INSTANCE));
 
-        if(!experimentProfiles.isEmpty()){
+        if (!experimentProfiles.isEmpty()) {
             result.add("columnHeaders", constructColumnHeaders(dataColumns));
 
             result.add("columnGroupings", factorGroupingService.group(source, dataColumns));
 
             result.add(
                     "profiles",
-                    ExternallyViewableProfilesList.createForExperimentProfiles(geneQuery, experimentProfiles, dataColumns).asJson());
+                    ExternallyViewableProfilesList.createForExperimentProfiles(
+                            geneQuery, experimentProfiles, dataColumns).asJson());
         }
 
         model.addAttribute("species", species.getReferenceName());
@@ -101,23 +102,24 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         return GSON.toJson(result);
     }
 
-    private JsonArray constructColumnHeaders(List<FactorAcrossExperiments> dataColumnsToReturn){
+    private JsonArray constructColumnHeaders(List<FactorAcrossExperiments> dataColumnsToReturn) {
         JsonArray result = new JsonArray();
 
-        for(FactorAcrossExperiments dataColumnDescriptor: dataColumnsToReturn){
+        for (FactorAcrossExperiments dataColumnDescriptor: dataColumnsToReturn) {
             result.add(dataColumnDescriptor.toJson());
         }
 
         return result;
     }
 
-    //see also: similar method in ExperimentPageService
+    // See also: similar method in ExperimentPageService
     private JsonObject configAsJsonObject(Map<String, Object> model) {
         JsonObject config = new JsonObject();
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
         config.addProperty("species", get(model, "species"));
-        config.addProperty("columnType", get(model, "queryFactorName").toLowerCase()); //TODO this looks broken - never populated, and the frontend has to default to "Experimental Condition"
+        // TODO this looks broken - never populated, and the frontend has to default to "Experimental Condition"
+        config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
         config.addProperty("disclaimer", get(model, "disclaimer"));
         config.addProperty("expressionUnit", "");
         config.add("genomeBrowsers", new JsonArray());
@@ -131,7 +133,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             return defaultValue;
         }
     }
-    private String get(Map<String, Object> model, String key){
+    private String get(Map<String, Object> model, String key) {
         return getOrDefault(model, key, "");
     }
 }

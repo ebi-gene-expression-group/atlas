@@ -21,17 +21,27 @@ public class ScxaExperimentDtoResultSetExtractor extends ExperimentDTOResultSetE
         String accessKeyUUID = resultSet.getString("access_key");
         String title = StringUtils.isEmpty(resultSet.getString("title")) ? "" : resultSet.getString("title");
 
-        String pubMedIdsString = resultSet.getString("pubmed_Ids");
-        Set<String> pubMedIds = StringUtils.isBlank(pubMedIdsString) ?
+        String pubMedIdsString = resultSet.getString("pubmed_ids");
+
+        Set<String> pubMedIds = resultSet.wasNull() || StringUtils.isBlank(pubMedIdsString)?
                 new HashSet<>() :
                 Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));
 
         String doisString = resultSet.getString("dois");
-        Set<String> dois = StringUtils.isBlank(doisString) ?
+
+        Set<String> dois = resultSet.wasNull() || StringUtils.isBlank(doisString) ?
                 new HashSet<>() :
                 Sets.newHashSet(Splitter.on(", ").split(doisString));
 
         return new ExperimentDTO(
-                experimentAccession, experimentType, species, pubMedIds, dois, title, lastUpdate, isPrivate, accessKeyUUID);
+                experimentAccession,
+                experimentType,
+                species,
+                pubMedIds,
+                dois,
+                title,
+                lastUpdate,
+                isPrivate,
+                accessKeyUUID);
     }
 }

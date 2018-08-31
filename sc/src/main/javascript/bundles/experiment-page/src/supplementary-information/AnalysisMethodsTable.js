@@ -11,17 +11,17 @@ const AnalysisMethodsTable = ({data}) =>
       </tr>
     </thead>
     <tbody>
-    {
-      data.slice(1, data.length).map((row, index) =>
-        <tr key={index}>
-          {row.map((element, index) =>
+      {
+        data.slice(1, data.length).map((row, index) =>
+          <tr key={index}>
+            {row.map((element, index) =>
               <td key={index}>
                 <Linkify>{element}</Linkify>
               </td>
-          )}
-        </tr>
-      )
-    }
+            )}
+          </tr>
+        )
+      }
     </tbody>
   </table>
 

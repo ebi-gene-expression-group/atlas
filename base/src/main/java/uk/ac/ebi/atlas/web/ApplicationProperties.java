@@ -3,13 +3,15 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.species.Species;
 
-import javax.inject.Named;
 import java.util.Map;
 
-@Named
 public class ApplicationProperties {
-    private static final Map<String,String> REFERENCE_EXPERIMENTS =
-            ImmutableMap.<String,String>builder()
+    protected ApplicationProperties() {
+        throw new UnsupportedOperationException();
+    }
+
+    private static final Map<String, String> REFERENCE_EXPERIMENTS =
+            ImmutableMap.<String, String>builder()
                     .put("anolis carolinensis", "E-MTAB-3727")
                     .put("arabidopsis lyrata", "E-MTAB-5072")
                     .put("arabidopsis thaliana", "E-GEOD-30720")

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.solr.cloud.collections;
 
 import org.junit.jupiter.api.Test;
-import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,7 +9,8 @@ class SingleCellAnalyticsCollectionProxyTest {
 
     @Test
     void testCharacteristicFieldCreation() {
-        SingleCellAnalyticsSchemaField result = SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField("inferred_cell_type");
+        SingleCellAnalyticsSchemaField result =
+                SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField("inferred_cell_type");
 
         assertThat(result.displayName()).isEqualTo("Inferred cell type");
         assertThat(result.name()).isEqualTo("characteristic_inferred_cell_type");
@@ -26,7 +26,8 @@ class SingleCellAnalyticsCollectionProxyTest {
 
     @Test
     void validFactorFieldToDisplayName() {
-        assertThat(SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("factor_biopsy_site")).isEqualToIgnoringCase("Biopsy site");
+        assertThat(SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("factor_biopsy_site"))
+                .isEqualToIgnoringCase("Biopsy site");
     }
 
     @Test
@@ -36,7 +37,9 @@ class SingleCellAnalyticsCollectionProxyTest {
 
     @Test
     void validCharacteristicFieldToDisplayName() {
-        assertThat(SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("characteristic_inferred_cell_type")).isEqualToIgnoringCase("Inferred cell type");
+        assertThat(
+                SingleCellAnalyticsCollectionProxy.metadataFieldNameToDisplayName("characteristic_inferred_cell_type"))
+                .isEqualToIgnoringCase("Inferred cell type");
     }
 
     @Test
@@ -46,7 +49,8 @@ class SingleCellAnalyticsCollectionProxyTest {
 
     @Test
     void validAttributeNameToDisplayName() {
-        assertThat(SingleCellAnalyticsCollectionProxy.attributeNameToFieldName("FACS marker")).isEqualToIgnoringCase("facs_marker");
+        assertThat(SingleCellAnalyticsCollectionProxy.attributeNameToFieldName("FACS marker"))
+                .isEqualToIgnoringCase("facs_marker");
     }
 
     @Test

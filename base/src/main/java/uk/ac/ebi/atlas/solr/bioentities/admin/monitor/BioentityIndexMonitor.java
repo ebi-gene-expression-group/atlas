@@ -47,8 +47,8 @@ public class BioentityIndexMonitor {
 
     private final String bioentityPropertiesDirectory;
     private final IndexingProgress indexingProgress;
-    public Status status;
 
+    private Status status;
     private BioentityPropertyFile currentFile;
     private Exception failureReason;
     private Stopwatch totalTimeStopwatch;
@@ -62,7 +62,7 @@ public class BioentityIndexMonitor {
         this.indexingProgress = indexingProgress;
     }
 
-    public synchronized boolean start(){
+    public synchronized boolean start() {
         if (Status.INITIALIZED == status || Status.COMPLETED == status || Status.FAILED == status) {
             totalTimeStopwatch = Stopwatch.createStarted();
             indexingProgress.reset();
@@ -100,7 +100,7 @@ public class BioentityIndexMonitor {
 
         failureReason = e;
         status = Status.FAILED;
-        if (totalTimeStopwatch.isRunning()){
+        if (totalTimeStopwatch.isRunning()) {
             totalTimeStopwatch.stop();
         }
     }
@@ -113,10 +113,10 @@ public class BioentityIndexMonitor {
         INITIALIZED, STARTED, PROCESSING, IN_PROGRESS, COMPLETED, FAILED
     }
 
-    public String reportProgress(){
+    public String reportProgress() {
         long totalDiskSpace = FileUtils.sizeOf(Paths.get(bioentityPropertiesDirectory).toFile());
 
-        switch(status){
+        switch (status) {
             case PROCESSING:
             case IN_PROGRESS:
                 return MessageFormat.format(PROCESSING_STATUS_DESCRIPTION_TEMPLATE,
@@ -127,11 +127,11 @@ public class BioentityIndexMonitor {
                         currentFileStopwatch.elapsed(TimeUnit.SECONDS),
                         Joiner.on("\n").join(indexingProgress));
             case FAILED:
-                return status + ", reason:\n" + failureReason.getMessage()+"\n";
+                return status + ", reason:\n" + failureReason.getMessage() + "\n";
             case COMPLETED:
-                return status + ", time taken: " + totalTimeStopwatch.elapsed(TimeUnit.MINUTES)
-                              + ",\ncompleted files:\n"
-                              + Joiner.on("\n").join(indexingProgress)+"\n";
+                return status + ", time taken: " + totalTimeStopwatch.elapsed(TimeUnit.MINUTES) +
+                        ",\ncompleted files:\n" +
+                        Joiner.on("\n").join(indexingProgress) + "\n";
             default:
                 return status.toString();
         }

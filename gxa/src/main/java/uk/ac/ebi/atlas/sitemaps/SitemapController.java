@@ -17,19 +17,18 @@ import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.util.Collection;
 
-
 @Controller
 @Scope("request")
 public class SitemapController {
-
-    private SitemapWriter sitemapWriter = new SitemapWriter();
-
+    private final SitemapWriter sitemapWriter = new SitemapWriter();
     private final AnalyticsSearchService solr;
     private final SpeciesFactory speciesFactory;
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, SpeciesFactory speciesFactory, SpeciesPropertiesTrader speciesPropertiesTrader){
+    public SitemapController(AnalyticsSearchService solr,
+                             SpeciesFactory speciesFactory,
+                             SpeciesPropertiesTrader speciesPropertiesTrader) {
         this.solr = solr;
         this.speciesFactory = speciesFactory;
         this.speciesPropertiesTrader = speciesPropertiesTrader;
@@ -37,21 +36,17 @@ public class SitemapController {
 
 
     @RequestMapping(value = "/sitemap.xml")
-    public void mainSitemap(HttpServletResponse response)
-    throws ParserConfigurationException, IOException, XMLStreamException {
-
+    public void mainSitemap(HttpServletResponse response) throws IOException, XMLStreamException {
         response.setContentType(MediaType.TEXT_XML_VALUE);
-
         sitemapWriter.writeSitemapIndex(response.getOutputStream(), speciesPropertiesTrader.getAll());
-
     }
 
     @RequestMapping(value = "/species/{species}/sitemap.xml")
-    public void sitemapForSpecies(@PathVariable String species, HttpServletResponse response) throws
-            ParserConfigurationException, IOException, XMLStreamException {
+    public void sitemapForSpecies(@PathVariable String species,
+                                  HttpServletResponse response) throws IOException, XMLStreamException {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
-        Collection<String> various = ImmutableList.of("/experiments","/plant/experiments");
+        Collection<String> various = ImmutableList.of("/experiments", "/plant/experiments");
 
         sitemapWriter.writeGenes(
                 response.getOutputStream(), various,

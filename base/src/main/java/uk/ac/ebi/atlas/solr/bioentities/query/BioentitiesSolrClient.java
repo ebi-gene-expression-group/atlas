@@ -96,7 +96,7 @@ public class BioentitiesSolrClient {
                     BioentityPropertyName.getByName(document.getFieldValue("property_name").toString());
             String value = document.getFieldValue("property_value").toString();
 
-            if(!result.containsKey(key)){
+            if (!result.containsKey(key)) {
                 result.put(key, new HashSet<>());
             }
             result.get(key).add(value);

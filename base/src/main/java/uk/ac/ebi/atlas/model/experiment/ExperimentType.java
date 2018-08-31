@@ -10,9 +10,12 @@ public enum ExperimentType {
     RNASEQ_MRNA_BASELINE("rnaseq_mrna_baseline", "RNA-Seq mRNA baseline"),
     RNASEQ_MRNA_DIFFERENTIAL("rnaseq_mrna_differential", "RNA-Seq mRNA differential"),
     MICROARRAY_ANY("microarray parent type", "Microarray"),
-    MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential", "Microarray 1-colour mRNA"),
-    MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential", "Microarray 2-colour mRNA"),
-    MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential", "Microarray 1-colour miRNA"),
+    MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(
+            MICROARRAY_ANY, "microarray_1colour_mrna_differential", "Microarray 1-colour mRNA"),
+    MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(
+            MICROARRAY_ANY, "microarray_2colour_mrna_differential", "Microarray 2-colour mRNA"),
+    MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(
+            MICROARRAY_ANY, "microarray_1colour_microrna_differential", "Microarray 1-colour miRNA"),
     PROTEOMICS_BASELINE("proteomics_baseline", "Proteomics baseline"),
     SINGLE_CELL_RNASEQ_MRNA_BASELINE("scrnaseq_mrna_baseline", "Single-cell RNA-Seq mRNA baseline");
 
@@ -30,7 +33,7 @@ public enum ExperimentType {
         this.parent = parent;
     }
 
-    public boolean isSingleCell(){
+    public boolean isSingleCell() {
         return equals(SINGLE_CELL_RNASEQ_MRNA_BASELINE);
     }
 
@@ -67,10 +70,10 @@ public enum ExperimentType {
         return description;
     }
 
-    private static final Map<String,ExperimentType> TYPE_BY_DESCRIPTION = new HashMap<>();
+    private static final Map<String, ExperimentType> TYPE_BY_DESCRIPTION = new HashMap<>();
 
     static {
-        for(ExperimentType experimentType : EnumSet.allOf(ExperimentType.class)) {
+        for (ExperimentType experimentType : EnumSet.allOf(ExperimentType.class)) {
             TYPE_BY_DESCRIPTION.put(experimentType.getDescription(), experimentType);
         }
     }
@@ -80,13 +83,16 @@ public enum ExperimentType {
     }
 
     public static boolean containsBaseline(Set<String> experimentTypes) {
-        //return experimentTypes.contains(RNASEQ_MRNA_BASELINE.getDescription()) || experimentTypes.contains(PROTEOMICS_BASELINE.getDescription());
-        return experimentTypes.contains(RNASEQ_MRNA_BASELINE.name()) || experimentTypes.contains(PROTEOMICS_BASELINE.name());
+        return experimentTypes.contains(
+                RNASEQ_MRNA_BASELINE.name()) || experimentTypes.contains(PROTEOMICS_BASELINE.name());
     }
 
     public static boolean containsDifferential(Set<String> experimentTypes) {
-        //return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.getDescription());
-        return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.name());
+        return experimentTypes.contains(
+                RNASEQ_MRNA_DIFFERENTIAL.name()) ||
+                experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.name()) ||
+                experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.name()) ||
+                experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.name());
     }
 
     public boolean isRnaSeqBaseline() {

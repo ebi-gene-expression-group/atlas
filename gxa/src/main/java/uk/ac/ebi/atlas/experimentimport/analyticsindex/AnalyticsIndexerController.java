@@ -18,6 +18,10 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE;
+import static uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager.DEFAULT_THREADS;
+import static uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS;
+
 @Controller
 @Scope("request")
 @RequestMapping("/admin")
@@ -29,25 +33,27 @@ public class AnalyticsIndexerController {
     private AnalyticsIndexerMonitor analyticsIndexerMonitor;
 
     @Inject
-    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor) {
+    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager,
+                                      AnalyticsIndexerMonitor analyticsIndexerMonitor) {
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
     }
 
     @RequestMapping(value = "/analyticsIndex/buildIndex", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String analyticsIndexBuild(@RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
-                                      @RequestParam(value = "threads", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_THREADS) int numThreads,
-                                      @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE) int batchSize,
-                                      @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS) int timeout)
-    {
+    public String analyticsIndexBuild(
+            @RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
+            @RequestParam(value = "threads", required = false, defaultValue = DEFAULT_THREADS) int numThreads,
+            @RequestParam(value = "batchSize", required = false, defaultValue = DEFAULT_SOLR_BATCH_SIZE) int batchSize,
+            @RequestParam(value = "timeout", required = false, defaultValue = DEFAULT_TIMEOUT_IN_HOURS) int timeout) {
 
         try {
             if (!Strings.isNullOrEmpty(experimentType)) {
                 if (ExperimentType.get(experimentType) == null) {
                     throw new IllegalArgumentException("Unknown experiment type " + experimentType);
                 }
-                analyticsIndexerManager.indexPublicExperiments(ExperimentType.get(experimentType),numThreads, batchSize, timeout);
+                analyticsIndexerManager.indexPublicExperiments(
+                        ExperimentType.get(experimentType), numThreads, batchSize, timeout);
             } else {
                 analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize, timeout);
             }
@@ -67,7 +73,7 @@ public class AnalyticsIndexerController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String handleException(Exception e) throws IOException {
+    public String handleException(Exception e) {
         String lineSeparator = "<br>";
         LOGGER.error(e.getMessage(), e);
 
@@ -84,9 +90,8 @@ public class AnalyticsIndexerController {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
-    public String handleResourceNotFoundException(Exception e) throws IOException {
+    public String handleResourceNotFoundException(Exception e) {
         LOGGER.error(e.getMessage(), e);
         return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
-
 }

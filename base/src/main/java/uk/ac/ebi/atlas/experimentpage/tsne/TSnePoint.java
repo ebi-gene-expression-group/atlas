@@ -17,7 +17,7 @@ import java.util.Optional;
 public abstract class TSnePoint {
     // Just a bag of data to ease reading from the DB with JOINs and draw a boundary between the t-SNE service DAO
     @AutoValue
-    public static abstract class Dto {
+    public abstract static class Dto {
         public abstract double x();
         public abstract double y();
         public abstract double expressionLevel();
@@ -56,7 +56,7 @@ public abstract class TSnePoint {
     }
 
     public static TSnePoint create(double x, double y, String name, String metadata) {
-        return new AutoValue_TSnePoint(x, y, Optional.empty(),name, metadata);
+        return new AutoValue_TSnePoint(x, y, Optional.empty(), name, metadata);
     }
     public static GsonTypeAdapter getGsonTypeAdapter() {
         return GSON_TYPE_ADAPTER;

@@ -18,10 +18,10 @@ public class IsDifferentialExpressionAboveCutOff<Expr extends DifferentialExpres
     @Override
     public boolean test(Expr differentialExpression) {
 
-        if (Regulation.UP == regulation){
+        if (Regulation.UP == regulation) {
             return isOverExpressed(differentialExpression);
         }
-        if (Regulation.DOWN == regulation){
+        if (Regulation.DOWN == regulation) {
             return isUnderExpressed(differentialExpression);
         }
         return isUnderExpressed(differentialExpression) || isOverExpressed(differentialExpression);
@@ -32,13 +32,13 @@ public class IsDifferentialExpressionAboveCutOff<Expr extends DifferentialExpres
                 && differentialExpression.getAbsoluteFoldChange() > foldChangeCutOff;
     }
 
-    private boolean isUnderExpressed(Expr differentialExpression){
+    private boolean isUnderExpressed(Expr differentialExpression) {
         return differentialExpression.getPValue() < pValueCutOff && differentialExpression.isUnderExpressed()
                 && differentialExpression.getAbsoluteFoldChange() > foldChangeCutOff;
     }
 
 
-    public IsDifferentialExpressionAboveCutOff<Expr> setPValueCutoff(double pValueCutOff){
+    public IsDifferentialExpressionAboveCutOff<Expr> setPValueCutoff(double pValueCutOff) {
         this.pValueCutOff = pValueCutOff;
         return this;
     }
@@ -48,7 +48,7 @@ public class IsDifferentialExpressionAboveCutOff<Expr extends DifferentialExpres
         return this;
     }
 
-    public IsDifferentialExpressionAboveCutOff<Expr> setRegulation(Regulation regulation){
+    public IsDifferentialExpressionAboveCutOff<Expr> setRegulation(Regulation regulation) {
         this.regulation = regulation;
         return this;
     }

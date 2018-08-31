@@ -10,7 +10,8 @@ public class StringUtilTest {
 
     @Test
     public void splitAtLastSlash() {
-        assertThat(StringUtil.splitAtLastSlash(UBERON_2000098_URL)).isEqualTo(new String[]{"http://purl.obolibrary.org/obo/", "UBERON_2000098"});
+        assertThat(StringUtil.splitAtLastSlash(UBERON_2000098_URL))
+                .isEqualTo(new String[]{"http://purl.obolibrary.org/obo/", "UBERON_2000098"});
         assertThat(StringUtil.splitAtLastSlash("foobar")).isEqualTo(new String[]{"foobar"});
     }
 
@@ -25,10 +26,10 @@ public class StringUtilTest {
         String s;
         do {
             s = RandomStringUtils.random(20);
-        } while(!s.contains("\""));
+        } while (!s.contains("\""));
 
         String[] split = StringUtil.escapeDoubleQuotes(s).split("\"");
-        for (int i = 0 ; i < split.length - 1 ; i++) {
+        for (int i = 0; i < split.length - 1; i++) {
             assertThat(split[i]).endsWith("\\");
         }
     }

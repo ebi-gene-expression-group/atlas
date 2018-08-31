@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class DifferentialExperimentContrastLines implements Iterable<String[]> {
+    private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     private final LinkedHashSet<ImmutableList<String>> contrastDetails;
     private final LinkedHashSet<ImmutableList<String>> result = new LinkedHashSet<>();
@@ -36,26 +37,43 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
         return result;
     }
 
-    private void populateSamples(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
+    private void populateSamples(DifferentialExperiment experiment,
+                                 String assayAccession,
+                                 Contrast contrast,
+                                 String value) {
         for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
-            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "characteristic",
-                    sample.header(), sample.value(), joinURIs(sample.valueOntologyTerms()));
+            ImmutableList<String> line =
+                    ImmutableList.of(
+                            experiment.getAccession(),
+                            contrast.getId(),
+                            value,
+                            "characteristic",
+                            sample.header(),
+                            sample.value(),
+                            joinURIs(sample.valueOntologyTerms()));
             result.add(line);
         }
     }
 
-    private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
+    private void populateFactors(DifferentialExperiment experiment,
+                                 String assayAccession,
+                                 Contrast contrast, String value) {
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
-            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "factor",
-                    factor.getHeader(), factor.getValue(), joinURIs(factor.getValueOntologyTerms()));
+            ImmutableList<String> line =
+                    ImmutableList.of(
+                            experiment.getAccession(),
+                            contrast.getId(),
+                            value,
+                            "factor",
+                            factor.getHeader(),
+                            factor.getValue(),
+                            joinURIs(factor.getValueOntologyTerms()));
             result.add(line);
         }
 
     }
 
     private static String joinURIs(Set<OntologyTerm> ontologyTerms) {
-        final String ONTOLOGY_TERM_DELIMITER = " ";
-
         StringBuilder sb = new StringBuilder();
         for (OntologyTerm ontologyTerm : ontologyTerms) {
             sb.append(ontologyTerm.uri()).append(ONTOLOGY_TERM_DELIMITER);
@@ -66,7 +84,6 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
 
         return sb.toString();
     }
-
 
     @Override
     public Iterator<String[]> iterator() {
@@ -97,5 +114,4 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
             throw new UnsupportedOperationException();
         }
     }
-
 }

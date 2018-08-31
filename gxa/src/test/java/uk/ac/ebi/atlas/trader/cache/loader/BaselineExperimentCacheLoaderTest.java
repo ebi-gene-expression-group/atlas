@@ -7,9 +7,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -23,7 +23,6 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +39,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentCacheLoaderTest {
-
     private String experimentAccession = "E-MOCK-1";
 
     private ExperimentDTO dto =
@@ -55,7 +53,7 @@ public class BaselineExperimentCacheLoaderTest {
                     false,
                     "accessKeyUUID");
     @Mock
-    private ConfigurationTrader configurationTrader ;
+    private ConfigurationTrader configurationTrader;
     @Mock
     private SpeciesFactory speciesFactoryMock;
     @Mock
@@ -65,18 +63,21 @@ public class BaselineExperimentCacheLoaderTest {
 
     @Mock
     private ExperimentDesign experimentDesign;
-    @Spy
+
+    @Mock
+    private IdfParserOutput idfParserOutputMock;
+
     private static MockDataFileHub dataFileHub;
 
     private BaselineExperimentFactory subject;
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
         dataFileHub = MockDataFileHub.create();
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         AssayGroup assayGroup = mock(AssayGroup.class);
         when(assayGroup.getId()).thenReturn("assay group id 1");
 
@@ -84,15 +85,19 @@ public class BaselineExperimentCacheLoaderTest {
         dataFileHub.addTemporaryFile(MessageFormat.format("magetab/{0}/{0}.tsv", experimentAccession),
                 ImmutableSet.of("assay group id 1"));
 
-        subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock, dataFileHub);
+        subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
-        when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
+        when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession))
+                .thenReturn(baselineConfiguration);
         when(baselineConfiguration.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
 
-        when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
-                        SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of())));
-
+        when(speciesFactoryMock.create(dto.getSpecies()))
+                .thenReturn(
+                        new Species(
+                                "Homo sapiens",
+                                SpeciesProperties.create(
+                                        "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of())));
     }
 
     private void verifyCollaborators() {
@@ -107,22 +112,22 @@ public class BaselineExperimentCacheLoaderTest {
                 speciesFactoryMock);
     }
 
-    @Test(expected=IllegalStateException.class)
-    public void assayGroupsShouldBeNonEmpty() throws Exception{
+    @Test(expected = IllegalStateException.class)
+    public void assayGroupsShouldBeNonEmpty() {
         when(configuration.getAssayGroups()).thenReturn(ImmutableList.of());
-        subject.create(dto, "description from array express", experimentDesign);
+        subject.create(dto, experimentDesign, idfParserOutputMock);
     }
 
     @Test
-    public void useAllCollaborators() throws Exception {
-        subject.create(dto, "description from array express", experimentDesign);
+    public void useAllCollaborators() {
+        subject.create(dto, experimentDesign, idfParserOutputMock);
         verifyCollaborators();
         noMoreInteractionsWithCollaborators();
     }
 
     @Test
-    public void noAlternativeViewsForTypicalExperiment() throws Exception {
-        BaselineExperiment e = subject.create(dto, "description from array express", experimentDesign);
+    public void noAlternativeViewsForTypicalExperiment() {
+        BaselineExperiment e = subject.create(dto, experimentDesign, idfParserOutputMock);
 
         assertThat(e.alternativeViews(), hasSize(0));
         verifyCollaborators();
@@ -130,7 +135,7 @@ public class BaselineExperimentCacheLoaderTest {
     }
 
     @Test
-    public void alternativeViews() throws Exception {
+    public void alternativeViews() {
         String alternativeViewAccession = "E-MOCK-2";
         when(baselineConfiguration.getAlternativeViews()).thenReturn(ImmutableList.of(alternativeViewAccession));
         BaselineExperimentConfiguration alternativeViewBaselineConfiguration =
@@ -140,7 +145,7 @@ public class BaselineExperimentCacheLoaderTest {
         String s = "default query factor of other experiment";
         when(alternativeViewBaselineConfiguration.getDefaultQueryFactorType()).thenReturn(s);
 
-        BaselineExperiment e = subject.create(dto, "description from array express", experimentDesign);
+        BaselineExperiment e = subject.create(dto, experimentDesign, idfParserOutputMock);
 
         assertThat(e.alternativeViews(), hasSize(1));
         assertThat(e.alternativeViews().get(0).getLeft(), is(alternativeViewAccession));
@@ -151,6 +156,4 @@ public class BaselineExperimentCacheLoaderTest {
         verify(configurationTrader).getBaselineFactorsConfiguration(alternativeViewAccession);
         noMoreInteractionsWithCollaborators();
     }
-
-    
 }

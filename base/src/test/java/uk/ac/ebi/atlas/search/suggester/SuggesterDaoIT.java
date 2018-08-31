@@ -57,7 +57,8 @@ class SuggesterDaoIT {
         long numberOfHumanFilteredSuggestions =
                 subject.fetchBioentityProperties("aspm", 10, false, speciesUtils.getHuman()).count();
         long numberOfHumanAndMouseFilteredSuggestions =
-                subject.fetchBioentityProperties("aspm", 10, false, speciesUtils.getHuman(), speciesUtils.getMouse()).count();
+                subject.fetchBioentityProperties(
+                        "aspm", 10, false, speciesUtils.getHuman(), speciesUtils.getMouse()).count();
 
         assertThat(numberOfHumanAndMouseFilteredSuggestions)
                 .isGreaterThan(0)

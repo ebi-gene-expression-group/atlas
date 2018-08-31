@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 class AutocompleteControllerWIT {
     // TODO Get first chars of random genes/symbols/properties from analytics and see that they show up as suggestions
 
@@ -87,7 +87,9 @@ class AutocompleteControllerWIT {
         int suggestCount = ThreadLocalRandom.current().nextInt(1, 20);
 
         this.mockMvc
-                .perform(get("/json/suggestions").param("query", "ASP").param("suggestCount", Integer.toString(suggestCount)))
+                .perform(
+                        get("/json/suggestions")
+                                .param("query", "ASP").param("suggestCount", Integer.toString(suggestCount)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(allOf(greaterThan(0), lessThanOrEqualTo(suggestCount)))))

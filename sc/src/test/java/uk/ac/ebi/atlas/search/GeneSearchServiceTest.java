@@ -36,17 +36,20 @@ class GeneSearchServiceTest {
     private GeneSearchService subject;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         subject = new GeneSearchService(geneSearchDaoMock);
     }
 
     @Test
-    public void returnsCellIdsPerExperiment() {
+    void returnsCellIdsPerExperiment() {
         Map<String, List<String>> ensg00000104957Cells =
                     ImmutableMap.of(
-                            "E-MTAB-0000", ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
-                            "E-MTAB-0001", ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
-                            "E-MTAB-0002", ImmutableList.of("cell_id_9", "cell_id_10"));
+                            "E-MTAB-0000",
+                            ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
+                            "E-MTAB-0001",
+                            ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
+                            "E-MTAB-0002",
+                            ImmutableList.of("cell_id_9", "cell_id_10"));
 
         when(geneSearchDaoMock.fetchCellIds("ENSG00000104957")).thenReturn(ensg00000104957Cells);
 
@@ -125,7 +128,8 @@ class GeneSearchServiceTest {
         when(geneSearchDaoMock.fetchKAndClusterIds("ENSFOOBAR2")).thenReturn(ensfoobar2Profiles);
 
         assertThat(subject.getMarkerGeneProfile("ENSFOOBAR1", "ENSFOOBAR2"))
-                .containsAllEntriesOf(ImmutableMap.of("ENSFOOBAR1", ensfoobar1Profiles, "ENSFOOBAR2", ensfoobar2Profiles));
+                .containsAllEntriesOf(
+                        ImmutableMap.of("ENSFOOBAR1", ensfoobar1Profiles, "ENSFOOBAR2", ensfoobar2Profiles));
     }
 
     @Test

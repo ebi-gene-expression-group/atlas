@@ -18,7 +18,8 @@ public class RnaSeqDifferentialAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Inject
-    public void setAnalyticsInputStreamFactory(RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory) {
+    public void setAnalyticsInputStreamFactory(
+            RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory) {
         this.analyticsInputStreamFactory = analyticsInputStreamFactory;
     }
 

@@ -18,7 +18,8 @@ import java.util.Collection;
 @Scope("prototype")
 public class UniProtClient {
 
-    public static final String UNIPROT_URL = "http://www.ebi.uniprot.org/uniprot/?query=accession:{0}&format=tab&columns=id,database(reactome)";
+    public static final String UNIPROT_URL =
+            "http://www.ebi.uniprot.org/uniprot/?query=accession:{0}&format=tab&columns=id, database(reactome)";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UniProtClient.class);
 
@@ -29,7 +30,8 @@ public class UniProtClient {
         this.restTemplate = restTemplate;
     }
 
-    public Collection<String> fetchReactomeIds(String uniprotId) {//Wouldn't it be nice if the pipeline did this instead? :)
+    // Wouldn't it be nice if the pipeline did this instead? :)
+    public Collection<String> fetchReactomeIds(String uniprotId) {
         String url = MessageFormat.format(UNIPROT_URL, uniprotId);
 
         try {

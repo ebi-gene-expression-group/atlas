@@ -28,7 +28,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class BaselineAndDifferentialAnalyticsServiceIT {
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 
@@ -80,7 +80,7 @@ public class BaselineAndDifferentialAnalyticsServiceIT {
     }
 
     @Test
-    public void differentialAnalyticsSearchServiceHasTheRightReturnFormat(){
+    public void differentialAnalyticsSearchServiceHasTheRightReturnFormat() {
         JsonObject result =
                 differentialAnalyticsSearchService.fetchResults(SemanticQuery.create("GO:0008150"), EMPTY_QUERY);
         testDifferentialResultsAreInRightFormat(result);
@@ -119,11 +119,11 @@ public class BaselineAndDifferentialAnalyticsServiceIT {
 
             if (experimentType.isMicroarray()) {
                 for (String fieldName: fieldsNeededInMicroarrayDifferentialResults) {
-                    assertTrue("result has "+fieldName, jsonElement.getAsJsonObject().has(fieldName));
+                    assertTrue("result has " + fieldName, jsonElement.getAsJsonObject().has(fieldName));
                 }
             } else {
                 for (String fieldName: fieldsNeededInDifferentialResults) {
-                    assertTrue("result has "+fieldName, jsonElement.getAsJsonObject().has(fieldName));
+                    assertTrue("result has " + fieldName, jsonElement.getAsJsonObject().has(fieldName));
                 }
             }
         }

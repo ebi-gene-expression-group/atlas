@@ -2,12 +2,12 @@ package uk.ac.ebi.atlas.solr.cloud;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Named;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-@Named
+@Component
 public class SolrCloudCollectionProxyFactory {
     private final CloudSolrClient cloudSolrClient;
 
@@ -19,7 +19,10 @@ public class SolrCloudCollectionProxyFactory {
         try {
             Constructor<C> constructor = type.getConstructor(SolrClient.class);
             return constructor.newInstance(cloudSolrClient);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException |
+                InstantiationException |
+                IllegalAccessException |
+                InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

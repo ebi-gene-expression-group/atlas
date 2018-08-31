@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class StringArrayUtil {
+    protected StringArrayUtil() {
+        throw new UnsupportedOperationException();
+    }
 
     public static String[] filterBySubstring(String[] strings, String substring) {
         ArrayList<String> result = new ArrayList<>(strings.length);

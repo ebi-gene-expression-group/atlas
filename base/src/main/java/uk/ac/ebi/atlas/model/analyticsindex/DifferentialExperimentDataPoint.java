@@ -4,13 +4,13 @@ import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnaly
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
-public class DifferentialExperimentDataPoint extends ExperimentDataPoint{
+public class DifferentialExperimentDataPoint extends ExperimentDataPoint {
 
     public DifferentialExperimentDataPoint(DifferentialExperiment experiment,
                                            DifferentialAnalytics differentialAnalytics,
                                            String conditionSearch,
                                            int numReplicates) {
-        super(differentialAnalytics.getGeneId(), experiment,conditionSearch);
+        super(differentialAnalytics.getGeneId(), experiment, conditionSearch);
 
         propertyMap.put("factors", experiment.getExperimentDesign().getFactorHeaders());
         propertyMap.put("regulation", Regulation.valueOf(differentialAnalytics.getFoldChange()).toString());

@@ -43,7 +43,7 @@ implements CreatesProfileStream<D, E, T, O, P> {
 
     public GeneProfilesList<P> getAllMatchingProfiles(T experiment,
                                                       O streamOptions,
-                                                      Collection<String> keepGeneIds){
+                                                      Collection<String> keepGeneIds) {
         return new GeneProfilesList<>(ImmutableList.copyOf(
                 new IterableObjectInputStream<>(getProfiles(experiment,
                                                             streamOptions,
@@ -56,7 +56,7 @@ implements CreatesProfileStream<D, E, T, O, P> {
                       Collection<String> keepGeneIds,
                       Predicate<P> keepProfiles,
                       ProfilesWriter<P> profilesWriter) {
-        return profilesWriter.write(getProfiles(experiment, streamOptions,keepGeneIds, keepProfiles));
+        return profilesWriter.write(getProfiles(experiment, streamOptions, keepGeneIds, keepProfiles));
     }
 
     public int[] histogram(T experiment, O streamOptions, double[] cutoffBins) {
@@ -74,7 +74,7 @@ implements CreatesProfileStream<D, E, T, O, P> {
     }
 
     //java.util.Arrays.binarySearch0 modified to stop when key is between buckets, removed the NaN cases
-    private static int binarySearch0(double[] a , double key) {
+    private static int binarySearch0(double[] a, double key) {
         int low = 0;
         int high = a.length - 1;
 
@@ -82,16 +82,15 @@ implements CreatesProfileStream<D, E, T, O, P> {
             int mid = (low + high) >>> 1;
             double midVal = a[mid];
 
-            if (midVal < key){
+            if (midVal < key) {
                 low = mid + 1;
-            }
-            else if (midVal > key) {
+            } else if (midVal > key) {
                 high = mid;
             } else {
                 return mid;
             }
-
         }
+
         return low;
     }
 }

@@ -29,22 +29,20 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentSearchResultProducerTest {
-
     @Mock
-    ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTrader;
 
-    BaselineExperimentSearchResultProducer subject;
+    private BaselineExperimentSearchResultProducer subject;
 
-    String factorHeader = "type1";
-    String factorType = Factor.normalize(factorHeader);
-    String secondFactorHeader = "type2";
-    String secondFactorType = Factor.normalize(secondFactorHeader);
+    private String factorHeader = "type1";
+    private String factorType = Factor.normalize(factorHeader);
+    private String secondFactorHeader = "type2";
+    private String secondFactorType = Factor.normalize(secondFactorHeader);
 
-    BaselineExperiment singleFactorExperiment;
-    BaselineExperiment twoFactorExperimentWithThreeDifferentValuesForEachFactor;
+    private BaselineExperiment singleFactorExperiment;
+    private BaselineExperiment twoFactorExperimentWithThreeDifferentValuesForEachFactor;
 
-    BaselineExperiment twoFactorExperimentWithOverlappingFactors;
-    
+    private BaselineExperiment twoFactorExperimentWithOverlappingFactors;
 
     @Before
     public void setUp() {
@@ -126,7 +124,7 @@ public class BaselineExperimentSearchResultProducerTest {
     }
 
     @Test
-    public void twoDataPointsGiveThreeConditionsButLastOneIsEmpty(){
+    public void twoDataPointsGiveThreeConditionsButLastOneIsEmpty() {
         Map<String, Map<String, Double>> dataInSolr =
                 ImmutableMap.of(singleFactorExperiment.getAccession(), ImmutableMap.of("g1", 1.0, "g2", 2.0));
         Collection<BaselineExperimentProfile> result = subject.buildProfilesForExperiments(dataInSolr, factorType);
@@ -136,22 +134,21 @@ public class BaselineExperimentSearchResultProducerTest {
     }
 
     @Test
-    public void sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor() {
-        sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
+    public void sameDataPointsWhetherYouQueryByFirstOrSecondType() {
+        sameDataPointsWhetherYouQueryByFirstOrSecondType(
                 ImmutableMap.of("x1", 1.0, "x2", 2.0, "x3", 3.0));
 
-        sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
+        sameDataPointsWhetherYouQueryByFirstOrSecondType(
                 ImmutableMap.of("x1", 1.0, "x2", 2.0));
 
-        sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
+        sameDataPointsWhetherYouQueryByFirstOrSecondType(
                 ImmutableMap.of("x1", 1.0));
 
-        sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
+        sameDataPointsWhetherYouQueryByFirstOrSecondType(
                 ImmutableMap.of());
     }
 
-    private void sameDataPointsWhetherYouQueryByFirstOrSecondTypeForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
-            Map<String, Double> data) {
+    private void sameDataPointsWhetherYouQueryByFirstOrSecondType(Map<String, Double> data) {
         assertThat(
                 resultShape(twoFactorExperimentWithThreeDifferentValuesForEachFactor, factorType, data),
                 is(resultShape(twoFactorExperimentWithThreeDifferentValuesForEachFactor, secondFactorType, data))
@@ -170,7 +167,8 @@ public class BaselineExperimentSearchResultProducerTest {
                 ImmutableMap.of());
     }
 
-    private void oneDataPointPerRowForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(Map<String, Double> data) {
+    private void oneDataPointPerRowForTwoFactorExperimentWithThreeDifferentValuesForEachFactor(
+            Map<String, Double> data) {
         assertThat(
                 resultShape(twoFactorExperimentWithThreeDifferentValuesForEachFactor, factorType, data),
                 Matchers.is(Collections.nCopies(data.size(), 1L))
@@ -222,7 +220,7 @@ public class BaselineExperimentSearchResultProducerTest {
                 ImmutableList.of(1L));
     }
 
-    private List<Long> resultShape(BaselineExperiment experiment,String factorType, Map<String, Double> data) {
+    private List<Long> resultShape(BaselineExperiment experiment, String factorType, Map<String, Double> data) {
         Map<String, Map<String, Double>> dataInSolr = ImmutableMap.of(experiment.getAccession(), data);
 
         List<BaselineExperimentProfile> result = subject.buildProfilesForExperiments(dataInSolr, factorType);
@@ -233,8 +231,7 @@ public class BaselineExperimentSearchResultProducerTest {
     private void testDataHasShape(BaselineExperiment experiment,
                                   String factorType,
                                   Map<String, Double> data,
-                                  List<Long> shape){
+                                  List<Long> shape) {
         assertThat(resultShape(experiment, factorType, data), is(shape));
     }
-
 }

@@ -61,6 +61,7 @@ public class MatrixMarketReaderTest {
 
         try (MatrixMarketReader matrixMarketReader = new MatrixMarketReader(readerSpy)) {
             // Use matrixMarketReader here
+            matrixMarketReader.stream();
         }
 
         verify(readerSpy).close();
@@ -86,6 +87,7 @@ public class MatrixMarketReaderTest {
         assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(() -> {
             try (MatrixMarketReader matrixMarketReader = new MatrixMarketReader(readerSpy)) {
                 // Use matrixMarketReader here
+                matrixMarketReader.stream();
             }
         });
     }

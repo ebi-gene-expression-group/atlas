@@ -12,11 +12,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Collection;
 
@@ -24,9 +20,9 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
     private DataFileHub dataFileHub;
 
     //bizarre and I don't remember why I've put experimentAccession twice - Wojtek
-    private static final String urlBase = "experiments-content/{experimentAccession}/static/{experimentAccession}";
-    private static final String rDataUrl = urlBase + "-atlasExperimentSummary.Rdata";
-    private static final String heatmapUrl = urlBase + "-heatmap.pdf";
+    private static final String URL_BASE = "experiments-content/{experimentAccession}/static/{experimentAccession}";
+    private static final String R_DATA_URL = URL_BASE + "-atlasExperimentSummary.Rdata";
+    private static final String HEATMAP_URL = URL_BASE + "-heatmap.pdf";
 
     public StaticFilesDownload(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
@@ -46,7 +42,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
                                 .resolve(experiment.getAccession() + "-atlasExperimentSummary.Rdata");
         if (rData.toFile().exists()) {
             b.add(new ExternallyAvailableContent(
-                    rDataUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
+                    R_DATA_URL.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create(
                             "icon-Rdata",
                             "Summary of the expression results for this experiment ready to view in R")));
@@ -57,9 +53,9 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
                                   .resolve(experiment.getAccession() + "-heatmap.pdf");
         if (heatmap.toFile().exists()) {
             b.add(new ExternallyAvailableContent(
-                    heatmapUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
+                    HEATMAP_URL.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create(
-                            "icon-pdf",
+                            "icon-clustered-heatmap",
                             "Heatmap of aggregated expression data")));
         }
 
@@ -68,13 +64,13 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
 
     @Controller
     public static class Forwarder {
-        @RequestMapping(value = rDataUrl)
+        @RequestMapping(value = R_DATA_URL)
         public String downloadRdataURL(@PathVariable String experimentAccession) {
             String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
             return "forward:" + path;
         }
 
-        @RequestMapping(value = heatmapUrl)
+        @RequestMapping(value = HEATMAP_URL)
         public String downloadPdf(@PathVariable String experimentAccession) {
             String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
             return "forward:" + path;

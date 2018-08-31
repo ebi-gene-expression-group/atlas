@@ -38,8 +38,8 @@ public class AnalyticsIndexerMonitor {
         experimentAccessionsToFileSize = builder.build();
 
         progressTemplate = "%tF %tT " +
-                           "%s - %,d / " + String.format("%,d experiments",  experimentAccessionsToFileSize.size()) +
-                           " - %,d / " + String.format("%,d bytes", magetabFilesTotalSize) +
+                           "%s - %, d / " + String.format("%, d experiments",  experimentAccessionsToFileSize.size()) +
+                           " - %, d / " + String.format("%, d bytes", magetabFilesTotalSize) +
                            " - %.2f%%" +
                            "%n";
 
@@ -57,13 +57,12 @@ public class AnalyticsIndexerMonitor {
     public synchronized void update(@Nullable Object arg) {
         if (arg == null) {
             stringBuilder.append(String.format("--- Analytics index build finished %s --- %n", new Date()));
-        }
-        else if (arg instanceof TreeMultimap) {
+        } else if (arg instanceof TreeMultimap) {
             @SuppressWarnings("unchecked")
-            TreeMultimap<Long, String> descendingExperimentSizeToExperimentAccessions = (TreeMultimap<Long, String>) arg;
+            TreeMultimap<Long, String> descendingExperimentSizeToExperimentAccessions =
+                    (TreeMultimap<Long, String>) arg;
             initializeMonitor(descendingExperimentSizeToExperimentAccessions);
-        }
-        else if (arg instanceof String) {
+        } else if (arg instanceof String) {
             if (experimentAccessionsToFileSize.keySet().contains(arg)) {
                 processedMagetabFilesSize += experimentAccessionsToFileSize.get(arg);
                 processedExperimentsCount++;
@@ -73,7 +72,9 @@ public class AnalyticsIndexerMonitor {
                         progressTemplate,
                         date, date,
                         arg,
-                        processedExperimentsCount, processedMagetabFilesSize, (double) processedMagetabFilesSize / (double) magetabFilesTotalSize * 100));
+                        processedExperimentsCount,
+                        processedMagetabFilesSize,
+                        (double) processedMagetabFilesSize / (double) magetabFilesTotalSize * 100));
             } else {
                 Date date = new Date();
                 stringBuilder.append(String.format("%tF %tT %s%n", date, date, arg));

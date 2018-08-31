@@ -38,19 +38,12 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @Controller
 @Scope("request")
 public class OpenTargetsEvidenceController extends JsonExperimentController {
-
-    @InitBinder("preferences")
-    void initBinder(WebDataBinder binder) {
-        binder.addValidators(new DifferentialRequestPreferencesValidator());
-    }
-
     private final
-        EvidenceService<DifferentialExpression, DifferentialExperiment, RnaSeqRequestContext, RnaSeqProfile>
+    EvidenceService<DifferentialExpression, DifferentialExperiment, RnaSeqRequestContext, RnaSeqProfile>
             diffRnaSeqEvidenceService;
     private final
-        EvidenceService<MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile>
+    EvidenceService<MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile>
             diffMicroarrayEvidenceService;
-
 
     @Inject
     public OpenTargetsEvidenceController(ExperimentTrader experimentTrader,
@@ -59,12 +52,18 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
                                          DataFileHub dataFileHub,
                                          Environment props) {
         super(experimentTrader);
-        String resourcesVersion = props.getProperty("projectVersion");
+        // String resourcesVersion = props.getProperty("projectVersion");
+        String resourcesVersion = "prod.23";
 
         diffRnaSeqEvidenceService =
                 new EvidenceService<>(rnaSeqProfileStreamFactory, dataFileHub, resourcesVersion);
         diffMicroarrayEvidenceService =
                 new EvidenceService<>(microarrayProfileStreamFactory, dataFileHub, resourcesVersion);
+    }
+
+    @InitBinder("preferences")
+    void initBinder(WebDataBinder binder) {
+        binder.addValidators(new DifferentialRequestPreferencesValidator());
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
@@ -76,17 +75,20 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
             @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
-        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        MicroarrayExperiment experiment =
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         PrintWriter w = response.getWriter();
-        diffMicroarrayEvidenceService.evidenceForExperiment(experiment,contrast -> {
-            MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
-            requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
-            requestPreferences.setCutoff(pValueCutoff);
-            requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
-            requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
-            return new MicroarrayRequestContext(requestPreferences, experiment);
-        }, o -> w.println(GSON.toJson(o)));
-
+        diffMicroarrayEvidenceService.evidenceForExperiment(
+                experiment,
+                contrast -> {
+                    MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
+                    requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
+                    requestPreferences.setCutoff(pValueCutoff);
+                    requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
+                    requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
+                    return new MicroarrayRequestContext(requestPreferences, experiment);
+                },
+                o -> w.println(GSON.toJson(o)));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
@@ -98,15 +100,19 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
             @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        DifferentialExperiment experiment =
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         PrintWriter w = response.getWriter();
-        diffRnaSeqEvidenceService.evidenceForExperiment(experiment, contrast -> {
-            DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
-            requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
-            requestPreferences.setCutoff(pValueCutoff);
-            requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
-            requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
-            return new RnaSeqRequestContext(requestPreferences, experiment);
-        }, o-> w.println(GSON.toJson(o)));
+        diffRnaSeqEvidenceService.evidenceForExperiment(
+                experiment,
+                contrast -> {
+                    DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
+                    requestPreferences.setFoldChangeCutoff(logFoldChangeCutoff);
+                    requestPreferences.setCutoff(pValueCutoff);
+                    requestPreferences.setHeatmapMatrixSize(maxGenesPerContrast);
+                    requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
+                    return new RnaSeqRequestContext(requestPreferences, experiment);
+                },
+                o -> w.println(GSON.toJson(o)));
     }
 }

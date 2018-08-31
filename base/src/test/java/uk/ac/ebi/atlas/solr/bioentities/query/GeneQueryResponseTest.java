@@ -27,65 +27,65 @@ public class GeneQueryResponseTest {
     }
 
     @Test
-    public void addGeneIdsShouldAddTermsThatAreDifferent() throws Exception {
+    public void addGeneIdsShouldAddTermsThatAreDifferent() {
         subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G6"));
         assertThat(subject.getQueryTerms(), containsInAnyOrder("A QUERY TERM", "ANOTHER TERM"));
     }
 
     @Test
-    public void addGeneIdsShouldNotAddSameTerm() throws Exception {
+    public void addGeneIdsShouldNotAddSameTerm() {
         subject.addGeneIds(A_QUERY_TERM, Sets.newHashSet("G6"));
     }
 
     @Test
-    public void addGeneIdsShouldNotAddEmptySets() throws Exception {
+    public void addGeneIdsShouldNotAddEmptySets() {
         subject.addGeneIds(anotherQueryTerm, new HashSet<String>());
         assertThat(subject.getIds(anotherQueryTerm), is(empty()));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addGeneIdsShouldNotAllowForBlankTerms() throws Exception {
+    public void addGeneIdsShouldNotAllowForBlankTerms() {
         subject.addGeneIds("", Sets.newHashSet("G1", "G2"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addGeneIdsShouldNotAllowForNullTerms() throws Exception {
+    public void addGeneIdsShouldNotAllowForNullTerms() {
         subject.addGeneIds(null, Sets.newHashSet("G1", "G2"));
     }
 
     @Test
-    public void allGeneIdsShouldContainTheUnionOfGeneIdsFromAllGeneSets() throws Exception {
-        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1","G4"));
+    public void allGeneIdsShouldContainTheUnionOfGeneIdsFromAllGeneSets() {
+        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1", "G4"));
         assertThat(subject.getAllGeneIds(), containsInAnyOrder("G1", "G2", "G4"));
         assertThat(subject.getAllGeneIds().size(), is(3));
     }
 
     @Test
-    public void testIsEmpty() throws Exception {
+    public void testIsEmpty() {
         subject = new GeneQueryResponse();
         assertThat(subject.isEmpty(), is(true));
     }
 
     @Test
-    public void testIsNotEmpty() throws Exception {
+    public void testIsNotEmpty() {
         assertThat(subject.isEmpty(), is(false));
     }
 
     @Test
-    public void testGetQueryTerms() throws Exception {
+    public void testGetQueryTerms() {
         assertThat(subject.getQueryTerms(), containsInAnyOrder(A_QUERY_TERM));
-        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1","G4"));
+        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1", "G4"));
         assertThat(subject.getQueryTerms(), containsInAnyOrder(A_QUERY_TERM, ANOTHER_TERM));
     }
 
     @Test
-    public void containsEntryShouldReturnTrue() throws Exception {
+    public void containsEntryShouldReturnTrue() {
         assertThat(subject.containsEntry(A_QUERY_TERM, "G1"), is(true));
         assertThat(subject.containsEntry(A_QUERY_TERM, "G2"), is(true));
     }
 
     @Test
-    public void containsEntryShouldReturnFalse() throws Exception {
+    public void containsEntryShouldReturnFalse() {
         assertThat(subject.containsEntry(A_QUERY_TERM, "G3"), is(false));
         assertThat(subject.containsEntry(ANOTHER_TERM, "G1"), is(false));
         assertThat(subject.containsEntry(ANOTHER_TERM, "G3"), is(false));

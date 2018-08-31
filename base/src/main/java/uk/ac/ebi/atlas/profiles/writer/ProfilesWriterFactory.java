@@ -25,7 +25,7 @@ public abstract class ProfilesWriterFactory<D extends DescribesDataColumns,
         return new String[]{"Gene ID", "Gene Name"};
     }
 
-    protected Stream<String> labelsForColumn(R requestContext, D dataColumnDescriptor){
+    protected Stream<String> labelsForColumn(R requestContext, D dataColumnDescriptor) {
         return Stream.of(requestContext.displayNameForColumn(dataColumnDescriptor));
     }
 

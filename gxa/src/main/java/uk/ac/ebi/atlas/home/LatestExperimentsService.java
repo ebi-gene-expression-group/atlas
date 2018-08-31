@@ -19,24 +19,26 @@ public class LatestExperimentsService {
     private final ExperimentTrader experimentTrader;
     private final ImmutableSet<ExperimentType> experimentTypes;
 
-    private final LazyReference<ImmutableMap<String, Object>> latestExperimentsAttributes = new LazyReference<ImmutableMap<String, Object>>() {
-        @Override
-        protected ImmutableMap<String, Object> create() {
+    private final LazyReference<ImmutableMap<String, Object>> latestExperimentsAttributes =
+            new LazyReference<ImmutableMap<String, Object>>() {
+                @Override
+                    protected ImmutableMap<String, Object> create() {
 
-            long experimentCount = latestExperimentsDao.fetchPublicExperimentsCount(experimentTypes);
+                        long experimentCount = latestExperimentsDao.fetchPublicExperimentsCount(experimentTypes);
 
-            List<ExperimentInfo> latestExperimentInfo =
-                    latestExperimentsDao.fetchLatestExperimentAccessions(experimentTypes).stream()
-                            .map(experimentTrader::getPublicExperiment)
-                            .map(Experiment::buildExperimentInfo)
-                            .collect(Collectors.toList());
+                        List<ExperimentInfo> latestExperimentInfo =
+                                latestExperimentsDao.fetchLatestExperimentAccessions(experimentTypes).stream()
+                                        .map(experimentTrader::getPublicExperiment)
+                                        .map(Experiment::buildExperimentInfo)
+                                        .collect(Collectors.toList());
 
-            return ImmutableMap.of(
-                    "experimentCount", experimentCount,
-                    "formattedExperimentCount", NumberFormat.getNumberInstance(Locale.US).format(experimentCount),
-                    "latestExperiments", latestExperimentInfo);
-        }
-    };
+                        return ImmutableMap.of(
+                                "experimentCount", experimentCount,
+                                "formattedExperimentCount",
+                                NumberFormat.getNumberInstance(Locale.US).format(experimentCount),
+                                "latestExperiments", latestExperimentInfo);
+                    }
+                };
 
     public LatestExperimentsService(LatestExperimentsDao latestExperimentsDao,
                                     ExperimentTrader experimentTrader,

@@ -34,11 +34,13 @@ public class SolrCloudAdminProxyIT {
 
     @Test
     public void invalidCollectionName() {
-        assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("foo")));
+        assertThatExceptionOfType(RuntimeException.class)
+                .isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("foo")));
     }
 
     @Test
     public void invalidAlias() {
-        assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("bioentities"), "foo"));
+        assertThatExceptionOfType(RuntimeException.class)
+                .isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("bioentities"), "foo"));
     }
 }

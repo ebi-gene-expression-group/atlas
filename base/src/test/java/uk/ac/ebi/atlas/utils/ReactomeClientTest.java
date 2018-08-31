@@ -27,8 +27,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReactomeClientTest {
-
-    private static Set<String> SET_OF_45_STABLE_IDS = ImmutableSet.of(
+    private static final Set<String> SET_OF_45_STABLE_IDS = ImmutableSet.of(
             "R-HSA-15869", "R-HSA-37001", "R-HSA-43124", "R-HSA-48888", "R-HSA-49155",
             "R-HSA-49189", "R-HSA-49191", "R-HSA-49291", "R-HSA-49335", "R-HSA-49459",
             "R-HSA-49489", "R-HSA-49491", "R-HSA-49493", "R-HSA-49495", "R-HSA-49699",
@@ -40,9 +39,9 @@ public class ReactomeClientTest {
             "R-HSA-50825", "R-HSA-50845", "R-HSA-50847", "R-HSA-50849", "R-HSA-50851");
 
     @Mock
-    RestTemplate restTemplateMock;
+    private RestTemplate restTemplateMock;
 
-    ReactomeClient subject;
+    private ReactomeClient subject;
 
     @Before
     public void setUp() throws Exception {
@@ -58,7 +57,7 @@ public class ReactomeClientTest {
     public void skipUnfoundStableIds() {
         when(restTemplateMock.postForObject(eq(ReactomeClient.URL), anyString(), eq(String.class)))
                 .thenReturn("[" +
-                        "{\"stId\":\"R-FOO-111\", \"displayName\":\"Bar signal\"}," +
+                        "{\"stId\":\"R-FOO-111\", \"displayName\":\"Bar signal\"}, " +
                         "{\"stId\":\"R-FOO-333\", \"displayName\":\"Bar regulator\"}]");
 
         assertThat(
@@ -67,7 +66,7 @@ public class ReactomeClientTest {
     }
 
     @Test
-    public void returnEmptyIfSomethingGoesWrong() throws Exception {
+    public void returnEmptyIfSomethingGoesWrong() {
         when(restTemplateMock.postForObject(eq(ReactomeClient.URL), anyString(), eq(String.class)))
                 .thenThrow(new RestClientException("Timeout!"));
 
@@ -75,7 +74,7 @@ public class ReactomeClientTest {
     }
 
     @Test
-    public void returnEmptyIfInvalidResponse() throws Exception {
+    public void returnEmptyIfInvalidResponse() {
         when(restTemplateMock.postForObject(eq(ReactomeClient.URL), anyString(), eq(String.class)))
                 .thenReturn("[{\"stId\":\"R-FOO-111\", \"displayName\":\"Bar signal\"}");
 
@@ -83,22 +82,24 @@ public class ReactomeClientTest {
     }
 
     @Test
-    public void returnEmptyIfEmptyResponse() throws Exception {
+    public void returnEmptyIfEmptyResponse() {
         when(restTemplateMock.postForObject(eq(ReactomeClient.URL), anyString(), eq(String.class))).thenReturn("");
 
         assertThat(subject.getPathwayNames(ImmutableSet.of("R-FOO-123")).entrySet(), hasSize(0));
     }
 
     @Test
-    public void fetchPathways() throws Exception {
+    public void fetchPathways() {
         ImmutableSet<String> pathwayIds = ImmutableSet.of("R-FOO-111", "R-FOO-222", "R-FOO-333");
 
-        when(restTemplateMock.postForObject(eq(ReactomeClient.URL), eq(pathwayIds.stream().collect(Collectors.joining(","))), eq(String.class)))
+        when(restTemplateMock.postForObject(
+                eq(ReactomeClient.URL),
+                eq(pathwayIds.stream().collect(Collectors.joining(","))),
+                eq(String.class)))
                 .thenReturn("[" +
-                        "{\"stId\":\"R-FOO-111\", \"displayName\":\"Bar signal\"}," +
-                        "{\"stId\":\"R-FOO-222\", \"displayName\":\"Bar receptor\"}," +
-                        "{\"stId\":\"R-FOO-333\", \"displayName\":\"Bar regulator\"}]"
-                );
+                        "{\"stId\":\"R-FOO-111\", \"displayName\":\"Bar signal\"}, " +
+                        "{\"stId\":\"R-FOO-222\", \"displayName\":\"Bar receptor\"}, " +
+                        "{\"stId\":\"R-FOO-333\", \"displayName\":\"Bar regulator\"}]");
 
         Map<String, String> result = subject.getPathwayNames(pathwayIds);
 
@@ -109,7 +110,7 @@ public class ReactomeClientTest {
     }
 
     @Test
-    public void makesRequestsInBatchesOfQueryMaxSize() throws Exception {
+    public void makesRequestsInBatchesOfQueryMaxSize() {
         when(restTemplateMock.postForObject(eq(ReactomeClient.URL), anyString(), eq(String.class))).thenReturn("");
         subject.getPathwayNames(SET_OF_45_STABLE_IDS);
 
@@ -119,7 +120,7 @@ public class ReactomeClientTest {
         verify(restTemplateMock, times(numberOfCalls))
                 .postForObject(eq(ReactomeClient.URL), postData.capture(), eq(String.class));
 
-        for (int i = 0 ; i < numberOfCalls - 1 ; i++) {
+        for (int i = 0; i < numberOfCalls - 1; i++) {
             assertThat(postData.getAllValues().get(i).split(",").length, is(ReactomeClient.QUERY_MAX_SIZE));
         }
         assertThat(

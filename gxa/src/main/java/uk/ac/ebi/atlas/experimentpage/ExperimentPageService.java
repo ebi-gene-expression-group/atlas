@@ -131,7 +131,7 @@ public class ExperimentPageService {
                                String accessKey,
                                ExperimentPageRequestPreferences requestPreferences) {
         return callbackLinkWithRequestPreferences(
-                ExperimentDownloadController.url
+                ExperimentDownloadController.DOWNLOAD_URL_TEMPLATE
                         .replace("{experimentAccession}", experiment.getAccession())
                         .replace("{experimentType}", experiment.getType().getParent().name().toUpperCase()),
                 experiment.getType(),

@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
 
-    public static class SingleCellAnalyticsSchemaField extends SchemaField<SingleCellAnalyticsCollectionProxy> {
+    public static final class SingleCellAnalyticsSchemaField extends SchemaField<SingleCellAnalyticsCollectionProxy> {
         private String displayName;
 
         private SingleCellAnalyticsSchemaField(String fieldName, String displayName) {
@@ -22,46 +22,60 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
         }
     }
 
-    public static final SingleCellAnalyticsSchemaField CELL_ID = new SingleCellAnalyticsSchemaField("cell_id", "Cell ID");
-    public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_INFERRED_CELL_TYPE = new SingleCellAnalyticsSchemaField("characteristic_inferred_cell_type", "Inferred cell type");
-    public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_SPECIES = new SingleCellAnalyticsSchemaField("characteristic_organism", "Species");
-    public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_ORGANISM_PART = new SingleCellAnalyticsSchemaField("characteristic_organism_part", "Organism part");
-    public static final SingleCellAnalyticsSchemaField FACTORS = new SingleCellAnalyticsSchemaField("factors", "Factors");
-    public static final SingleCellAnalyticsSchemaField EXPERIMENT_ACCESSION = new SingleCellAnalyticsSchemaField("experiment_accession", "Experiment accession");
+    public static final SingleCellAnalyticsSchemaField CELL_ID =
+            new SingleCellAnalyticsSchemaField("cell_id", "Cell ID");
+    public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_INFERRED_CELL_TYPE =
+            new SingleCellAnalyticsSchemaField("characteristic_inferred_cell_type", "Inferred cell type");
+    public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_SPECIES =
+            new SingleCellAnalyticsSchemaField("characteristic_organism", "Species");
+    public static final SingleCellAnalyticsSchemaField CHARACTERISTIC_ORGANISM_PART =
+            new SingleCellAnalyticsSchemaField("characteristic_organism_part", "Organism part");
+    public static final SingleCellAnalyticsSchemaField FACTORS =
+            new SingleCellAnalyticsSchemaField("factors", "Factors");
+    public static final SingleCellAnalyticsSchemaField EXPERIMENT_ACCESSION =
+            new SingleCellAnalyticsSchemaField("experiment_accession", "Experiment accession");
 
     public SingleCellAnalyticsCollectionProxy(SolrClient solrClient) {
         // scxa-analytics is an alias that points at scxa-analytics-vX
         super(solrClient, "scxa-analytics");
     }
 
-    // Converts names of characteristics into SolrSchemaFields (e.g. cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type"))
-    public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField characteristicAsSchemaField(String characteristic) {
-        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("characteristic_%s", characteristic), metadataFieldNameToDisplayName(characteristic, "characteristic_"));
+    // Converts names of characteristics into SolrSchemaFields
+    // E.g. cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type")
+    public static SingleCellAnalyticsSchemaField characteristicAsSchemaField(String characteristic) {
+        return new SingleCellAnalyticsSchemaField(
+                String.format("characteristic_%s", characteristic),
+                metadataFieldNameToDisplayName(characteristic, "characteristic_"));
     }
 
-    // Converts names of factors into SolrSchemaFields (e.g. biopsy_site => new SingleCellAnalyticsSchemaField("factor_biopsy_site", "Biopsy site"))
-    public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField factorAsSchemaField(String factor) {
-        return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(String.format("factor_%s", factor), metadataFieldNameToDisplayName(factor, "characteristic_"));
+    // Converts names of factors into SolrSchemaFields
+    // E.g. biopsy_site => new SingleCellAnalyticsSchemaField("factor_biopsy_site", "Biopsy site")
+    public static SingleCellAnalyticsSchemaField factorAsSchemaField(String factor) {
+        return new SingleCellAnalyticsSchemaField(
+                String.format("factor_%s", factor),
+                metadataFieldNameToDisplayName(factor, "characteristic_"));
     }
 
-    // Converts strings representing metadata field names to SolrSchemaFields (e.g. characteristic_cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type"))
-    public static SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField metadataAsSchemaField(String metadata) {
+    // Converts strings representing metadata field names to SolrSchemaField
+    // E.g. characteristic_cell_type => new SingleCellAnalyticsSchemaField("characteristic_cell_type", "Cell type"))
+    public static SingleCellAnalyticsSchemaField metadataAsSchemaField(String metadata) {
         // The metadata fields are either characteristics or factors
         if (metadata.startsWith("characteristic")) {
-            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, metadataFieldNameToDisplayName(metadata, "characteristic_"));
-        }
-        else {
-            return new SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField(metadata, metadataFieldNameToDisplayName(metadata, "factor_"));
+            return new SingleCellAnalyticsSchemaField(
+                    metadata, metadataFieldNameToDisplayName(metadata, "characteristic_"));
+        } else {
+            return new SingleCellAnalyticsSchemaField(
+                    metadata, metadataFieldNameToDisplayName(metadata, "factor_"));
         }
     }
 
-    // Converts metadata Solr field names to human-friendly names (e.g. factor_biopsy_site => Biopsy site, characteristic_cell_type => Cell type)
+    // Converts metadata Solr field names to human-friendly names
+    // E.g. factor_biopsy_site => Biopsy site, characteristic_cell_type => Cell type)
     public static String metadataFieldNameToDisplayName(String metadataFieldName) {
         // The metadata fields are either characteristics or factors
         if (metadataFieldName.startsWith("characteristic")) {
             return metadataFieldNameToDisplayName(metadataFieldName, "characteristic_");
-        }
-        else {
+        } else {
             return metadataFieldNameToDisplayName(metadataFieldName, "factor_");
         }
     }
@@ -72,7 +86,8 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
         return StringUtils.capitalize(displayName);
     }
 
-    // Converts attribute strings from .idf file to Solr schema field names (e.g. FACS marker => facs_marker)
+    // Converts attribute strings from .idf file to Solr schema field names
+    // E.g. FACS marker => facs_marker)
     public static String attributeNameToFieldName(String attributeName) {
         return attributeName.trim().toLowerCase().replace(" ", "_");
     }
@@ -80,5 +95,4 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
     public QueryResponse query(SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder) {
         return query(solrQueryBuilder.build());
     }
-
 }

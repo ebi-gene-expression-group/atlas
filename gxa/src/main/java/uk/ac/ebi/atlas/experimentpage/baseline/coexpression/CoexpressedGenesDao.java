@@ -12,16 +12,17 @@ import static java.util.stream.Collectors.toList;
 @Named
 public class CoexpressedGenesDao {
     private final JdbcTemplate jdbcTemplate;
-    protected final static String CE_GENES_SQL_QUERY_TEMPLATE =
+    protected static final String CE_GENES_SQL_QUERY_TEMPLATE =
             "SELECT CE_IDENTIFIERS FROM RNASEQ_BSLN_CE_PROFILES WHERE EXPERIMENT=? AND IDENTIFIER=?";
 
-    public CoexpressedGenesDao(JdbcTemplate jdbcTemplate){
+    public CoexpressedGenesDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public ImmutableList<String> coexpressedGenesFor(String experiment, String identifier) {
         try {
-            String result = jdbcTemplate.queryForObject(CE_GENES_SQL_QUERY_TEMPLATE, String.class, experiment, identifier);
+            String result =
+                    jdbcTemplate.queryForObject(CE_GENES_SQL_QUERY_TEMPLATE, String.class, experiment, identifier);
 
             return ImmutableList.copyOf(
                     Stream.of(result.split(","))

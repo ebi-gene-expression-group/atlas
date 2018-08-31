@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.solr.cloud.collections;
 
+import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class Gene2ExperimentCollectionProxyIT {
         SolrQueryBuilder<Gene2ExperimentCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
         solrQueryBuilder
                 .sortBy(EXPERIMENT_ACCESSION, SolrQuery.ORDER.asc)
-                .setFieldList(EXPERIMENT_ACCESSION, BIOENTITY_IDENTIFIER);
+                .setFieldList(ImmutableSet.of(EXPERIMENT_ACCESSION, BIOENTITY_IDENTIFIER));
 
         try (TupleStreamer tupleStreamer =
                      TupleStreamer.of(

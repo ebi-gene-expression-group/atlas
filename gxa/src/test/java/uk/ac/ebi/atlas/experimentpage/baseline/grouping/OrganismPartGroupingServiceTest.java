@@ -12,7 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 public class OrganismPartGroupingServiceTest {
@@ -40,22 +42,33 @@ public class OrganismPartGroupingServiceTest {
     public void noDataGivesEmptyMapping() {
         setAnatomicalSystems("UBERON_0000060\tanatomical wall\tUBERON_0003688\tomentum");
         setOrgans("UBERON_0000020\tsense organ\tUBERON_0000004\tnose");
-        assertThat(subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create(""))).entrySet(), empty());
+
+        assertThat(
+                subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create(""))).entrySet(),
+                empty());
         assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create(""))).entrySet(), empty());
     }
 
     @Test
     public void readAnatomicalSystems() {
         setAnatomicalSystems("UBERON_0000060\tanatomical wall\tUBERON_0003688\tomentum");
-        assertThat(subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create(""))).entrySet(), empty());
-        assertThat(subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0003688", "omentum"))).entrySet(), not(empty()));
+
+        assertThat(
+                subject.getAnatomicalSystemsGrouping(ImmutableList.of(OntologyTerm.create(""))).entrySet(),
+                empty());
+        assertThat(
+                subject.getAnatomicalSystemsGrouping(
+                        ImmutableList.of(OntologyTerm.create("UBERON_0003688", "omentum"))).entrySet(),
+                not(empty()));
     }
 
     @Test
     public void readOrgans() {
         setOrgans("UBERON_0000020\tsense organ\tUBERON_0000004\tnose");
         assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create(""))).entrySet(), empty());
-        assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose"))).entrySet(), not(empty()));
+        assertThat(
+                subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose"))).entrySet(),
+                not(empty()));
     }
 
     @Test
@@ -63,16 +76,20 @@ public class OrganismPartGroupingServiceTest {
         setOrgans("#organ id \t organ name \t tissue id \t tissue name",
                 "UBERON_0000020\tsense organ\tUBERON_0000004\tnose");
         assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create(""))).entrySet(), empty());
-        assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose"))).entrySet(), not(empty()));
+        assertThat(
+                subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose"))).entrySet(),
+                not(empty()));
     }
 
 
     @Test
     public void storeValuesById() {
         setOrgans("UBERON_0000020\tsense organ\tUBERON_0000004\tnose");
-        assertThat(subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004"))).keySet(), is(
-                subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose"))).keySet()
-        ));
+        assertThat(
+                subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004"))).keySet(),
+                is(
+                        subject.getOrgansGrouping(ImmutableList.of(OntologyTerm.create("UBERON_0000004", "nose")))
+                                .keySet()));
     }
 
     private void setAnatomicalSystems(String... lines) {
@@ -94,5 +111,4 @@ public class OrganismPartGroupingServiceTest {
         }
 
     }
-
 }

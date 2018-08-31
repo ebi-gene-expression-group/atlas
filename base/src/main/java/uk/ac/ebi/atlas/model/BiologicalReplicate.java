@@ -14,7 +14,7 @@ public class BiologicalReplicate extends DescribesDataColumns {
         this.technicalReplicates = ImmutableSet.of(assay);
     }
 
-    public BiologicalReplicate(String id, Set<String> assays){
+    public BiologicalReplicate(String id, Set<String> assays) {
         super(id);
         Preconditions.checkArgument(
                 !assays.contains(id),

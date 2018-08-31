@@ -20,30 +20,38 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.concurrent.TimeUnit;
 
-public class DifferentialProfilesHeatMap<Expr extends DifferentialExpression,
-        E extends DifferentialExperiment, Prof extends DifferentialProfile<Expr, Prof>, R extends
-        DifferentialRequestContext<E, ? extends DifferentialRequestPreferences>> {
+public class
+DifferentialProfilesHeatMap<
+        X extends DifferentialExpression,
+        E extends DifferentialExperiment,
+        P extends DifferentialProfile<X, P>,
+        R extends DifferentialRequestContext<E, ? extends DifferentialRequestPreferences>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialProfilesHeatMap.class);
     private SolrQueryService solrQueryService;
-    private final ProfileStreamFactory<Contrast, Expr, E, R, Prof> profileStreamFactory;
+    private final ProfileStreamFactory<Contrast, X, E, R, P> profileStreamFactory;
 
-    public DifferentialProfilesHeatMap(ProfileStreamFactory<Contrast, Expr, E, R, Prof> profileStreamFactory, SolrQueryService solrQueryService) {
+    public DifferentialProfilesHeatMap(ProfileStreamFactory<Contrast, X, E, R, P> profileStreamFactory,
+                                       SolrQueryService solrQueryService) {
         this.profileStreamFactory = profileStreamFactory;
         this.solrQueryService = solrQueryService;
     }
 
-    public DifferentialProfilesList<Prof> fetch(R requestContext) {
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
-                (requestContext.getGeneQuery(), requestContext.getSpecies());
+    public DifferentialProfilesList<P> fetch(R requestContext) {
+        GeneQueryResponse geneQueryResponse =
+                solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DifferentialProfilesList<Prof> profiles = profileStreamFactory.select(requestContext.getExperiment(), requestContext,
-                geneQueryResponse.getAllGeneIds(), ProfileStreamFilter.create(requestContext),
-                new MinMaxProfileRanking<>(
-                        DifferentialProfileComparator.create(requestContext),
-                        new DifferentialProfilesListBuilder<>()));
+        DifferentialProfilesList<P> profiles =
+                profileStreamFactory.select(
+                        requestContext.getExperiment(),
+                        requestContext,
+                        geneQueryResponse.getAllGeneIds(),
+                        ProfileStreamFilter.create(requestContext),
+                        new MinMaxProfileRanking<>(
+                                DifferentialProfileComparator.create(requestContext),
+                                new DifferentialProfilesListBuilder<>()));
 
         stopwatch.stop();
 

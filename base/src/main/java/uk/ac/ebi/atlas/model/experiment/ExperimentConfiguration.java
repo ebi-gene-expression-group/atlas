@@ -47,7 +47,8 @@ public class ExperimentConfiguration {
         for (int i = 0; i < arrayDesigns.getLength(); i++) {
             Node currentArrayDesign = arrayDesigns.item(i);
             String arrayDesignAccession = currentArrayDesign.getFirstChild().getTextContent().trim();
-            parseContrastConfiguration("analytics[" + (i + 1) + "]/contrasts/contrast/@id", arrayDesignAccession, contrasts);
+            parseContrastConfiguration(
+                    "analytics[" + (i + 1) + "]/contrasts/contrast/@id", arrayDesignAccession, contrasts);
         }
 
         // in case no array designs (case of RNA-seq)
@@ -58,18 +59,20 @@ public class ExperimentConfiguration {
         return contrasts;
     }
 
-    public List<Contrast> getContrasts(){
+    public List<Contrast> getContrasts() {
         return getContrastAndAnnotationPairs().stream().map(Pair::getLeft).collect(Collectors.toList());
     }
 
-    private void parseContrastConfiguration(String query, String arrayDesignAccession, List<Pair<Contrast, Boolean>> contrasts) {
+    private void parseContrastConfiguration(String query,
+                                            String arrayDesignAccession,
+                                            List<Pair<Contrast, Boolean>> contrasts) {
         String[] ids = xmlReader.getStringArray(query);
         for (String id : ids) {
             contrasts.add(getContrastAndCttvPrimaryPair(id, arrayDesignAccession));
         }
     }
 
-    private Pair<Contrast,Boolean> getContrastAndCttvPrimaryPair(String id, String arrayDesignAccession) {
+    private Pair<Contrast, Boolean> getContrastAndCttvPrimaryPair(String id, String arrayDesignAccession) {
         Configuration configuration = xmlReader.configurationAt("analytics/contrasts/contrast[@id=\'" + id + "\']");
         String name = configuration.getString("name");
         String reference = configuration.getString("reference_assay_group");
@@ -80,12 +83,13 @@ public class ExperimentConfiguration {
         );
 
         return Pair.of(new Contrast(id, arrayDesignAccession, getAssayGroup(reference), getAssayGroup(test), name),
-                new Integer(1).equals(configuration.getInt("cttv_primary", -1)));
+                new Integer(1).equals(configuration.getInt("@cttv_primary", -1)));
     }
 
     private AssayGroup getAssayGroup(String id) {
         try {
-            XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group[@id='" + id + "']/assay");
+            XPathExpression expr =
+                    xpath.compile("/configuration/analytics/assay_groups/assay_group[@id='" + id + "']/assay");
 
             NodeList nl = (NodeList) expr.evaluate(xmlReader.getDocument(), XPathConstants.NODESET);
 
@@ -104,11 +108,11 @@ public class ExperimentConfiguration {
             }
 
             technicalReplicatesPerId.asMap().forEach((biologicalReplicateId, assays) ->
-               biologicalReplicates.add(assays.size() > 1
-                       ? new BiologicalReplicate(biologicalReplicateId, ImmutableSet.copyOf(assays))
-                       : new BiologicalReplicate(assays.iterator().next()))
-            );
-            return new AssayGroup(id,biologicalReplicates.build());
+               biologicalReplicates.add(assays.size() > 1 ?
+                       new BiologicalReplicate(biologicalReplicateId, ImmutableSet.copyOf(assays)) :
+                       new BiologicalReplicate(assays.iterator().next())));
+
+            return new AssayGroup(id, biologicalReplicates.build());
 
         } catch (XPathExpressionException e) {
             throw new IllegalArgumentException("Problem parsing configuration file.", e);
@@ -140,7 +144,10 @@ public class ExperimentConfiguration {
 
         ExperimentType experimentType = ExperimentType.get(type);
         if (experimentType == null) {
-            throw new IllegalArgumentException(String.format("Unknown %s attribute: \"%s\". Must be one of: [%s]", EXPERIMENT_TYPE, type, Joiner.on(", ").join(EnumSet.allOf(ExperimentType.class))));
+            throw new IllegalArgumentException(
+                    String.format(
+                            "Unknown %s attribute: \"%s\". Must be one of: [%s]",
+                            EXPERIMENT_TYPE, type, Joiner.on(", ").join(EnumSet.allOf(ExperimentType.class))));
         }
 
         return experimentType;

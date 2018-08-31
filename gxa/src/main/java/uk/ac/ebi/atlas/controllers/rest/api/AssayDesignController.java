@@ -13,19 +13,17 @@ import java.util.Map;
 @Controller
 @Scope("request")
 public class AssayDesignController {
-
-    private ArrayDesignDAO arrayDesignDAO;
+    private final ArrayDesignDAO arrayDesignDAO;
 
     @Inject
     public AssayDesignController(ArrayDesignDAO arrayDesignDAO) {
         this.arrayDesignDAO = arrayDesignDAO;
     }
 
-    @RequestMapping(value = "/api/arraydesigns.txt",produces="text/plain;charset=UTF-8")
+    @RequestMapping(value = "/api/arraydesigns.txt", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllArrayDesignsWithNames() {
-
-        Map<String,String> arrayDesigns = arrayDesignDAO.getArrayDesignMapNames();
+        Map<String, String> arrayDesigns = arrayDesignDAO.getArrayDesignMapNames();
 
         return Joiner
                 .on("\n")
@@ -33,5 +31,4 @@ public class AssayDesignController {
                 .join(arrayDesigns.entrySet());
 
     }
-
 }

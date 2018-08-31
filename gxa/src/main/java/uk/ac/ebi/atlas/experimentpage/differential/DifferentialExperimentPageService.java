@@ -16,29 +16,33 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
-import uk.ac.ebi.atlas.resource.AtlasResourceHub;
+import uk.ac.ebi.atlas.resource.ContrastImageTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.List;
 import java.util.Map;
 
-public class DifferentialExperimentPageService
-        <Expr extends DifferentialExpression, E extends DifferentialExperiment,
-                K extends DifferentialRequestPreferences,
-                P extends DifferentialProfile<Expr, P>, R extends DifferentialRequestContext<E, K>>
+public class
+DifferentialExperimentPageService<
+        X extends DifferentialExpression,
+        E extends DifferentialExperiment,
+        K extends DifferentialRequestPreferences,
+        P extends DifferentialProfile<X, P>,
+        R extends DifferentialRequestContext<E, K>>
+
         extends ExperimentPageService {
 
-    private final AtlasResourceHub atlasResourceHub;
+    private final ContrastImageTrader contrastImageTrader;
     private final DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory;
-    private final DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap;
+    private final DifferentialProfilesHeatMap<X, E, P, R> profilesHeatMap;
 
     public DifferentialExperimentPageService(
             DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory,
-            DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
-            AtlasResourceHub atlasResourceHub) {
+            DifferentialProfilesHeatMap<X, E, P, R> profilesHeatMap,
+            ContrastImageTrader contrastImageTrader) {
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
-        this.atlasResourceHub = atlasResourceHub;
+        this.contrastImageTrader = contrastImageTrader;
 
     }
 
@@ -50,7 +54,8 @@ public class DifferentialExperimentPageService
         DifferentialProfilesList<P> profiles = profilesHeatMap.fetch(requestContext);
 
         result.add("anatomogram", JsonNull.INSTANCE);
-        for (Map.Entry<String, JsonElement> e : payloadAttributes(experiment, accessKey, preferences, getTheOnlyId(profiles)).entrySet()) {
+        for (Map.Entry<String, JsonElement> e :
+                payloadAttributes(experiment, accessKey, preferences, getTheOnlyId(profiles)).entrySet()) {
             result.add(e.getKey(), e.getValue());
         }
 
@@ -66,7 +71,7 @@ public class DifferentialExperimentPageService
     private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment
             differentialExperiment) {
         JsonArray result = new JsonArray();
-        Map<String, JsonArray> contrastImages = atlasResourceHub.contrastImages(differentialExperiment);
+        Map<String, JsonArray> contrastImages = contrastImageTrader.contrastImages(differentialExperiment);
         for (Contrast contrast : contrasts) {
             JsonObject o = contrast.toJson();
             o.add("contrastSummary", new ContrastSummaryBuilder()

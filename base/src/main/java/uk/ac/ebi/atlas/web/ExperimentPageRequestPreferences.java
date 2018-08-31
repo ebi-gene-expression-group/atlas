@@ -26,7 +26,7 @@ public abstract class ExperimentPageRequestPreferences<U extends ExpressionUnit>
         }
     }
 
-    public Set<String> getSelectedColumnIds(){
+    public Set<String> getSelectedColumnIds() {
         return selectedColumnIds;
     }
 

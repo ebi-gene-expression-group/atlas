@@ -35,7 +35,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments,
         this.filterFactors = filterFactors;
     }
 
-    private final Set<FactorAcrossExperiments> conditionsCopy= new HashSet<>();
+    private final Set<FactorAcrossExperiments> conditionsCopy = new HashSet<>();
 
     public Set<FactorAcrossExperiments> getConditions() {
         return conditionsCopy;
@@ -58,14 +58,13 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments,
     }
 
     @Override
-    /*
-     * RNA-seq experiments should come before other types of baseline experiments;
-     * Within the same experiment type, the experiments with more conditions with expressions in them should come to the top.
-     * If the number of conditions with expression is the same, the sorting should be alphabetic - by the experiment display name.
-     */
+    //RNA-seq experiments should come before other types of baseline experiments ; within the same experiment type,
+    // the experiments with more conditions with expressions in them should come to the top. If the number of
+    // conditions with expression is the same, the sorting should be alphabetic - by the experiment display name.
     public int compareTo(@Nonnull BaselineExperimentProfile other) {
         return ComparisonChain.start()
-                .compareFalseFirst(other.experiment.getType().isRnaSeqBaseline(),this.experiment.getType().isRnaSeqBaseline())
+                .compareFalseFirst(
+                        other.experiment.getType().isRnaSeqBaseline(), this.experiment.getType().isRnaSeqBaseline())
                 .compare(other.getSpecificity(), this.getSpecificity())
                 .compare(other.getName(), this.getName())
                 .result();
@@ -126,7 +125,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments,
                 );
     }
 
-    public Pair<String, FactorGroup> getExperimentSlice(){
+    public Pair<String, FactorGroup> getExperimentSlice() {
         return Pair.of(experiment.getAccession(), filterFactors);
     }
 

@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class XmlReader {
-
     private XMLConfiguration xmlConfiguration;
 
     public XmlReader(XMLConfiguration xmlConfiguration) {
@@ -25,7 +24,7 @@ public class XmlReader {
         ImmutableMultimap.Builder<String, String> builder = ImmutableMultimap.builder();
 
         Iterator<String> iterator =  xmlConfiguration.getKeys();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             String key = iterator.next();
             List<String> values = xmlConfiguration.getList(String.class, key);
             builder.putAll(key, values);
@@ -43,15 +42,11 @@ public class XmlReader {
         return list == null ? new ArrayList<>() : list;
     }
 
-    public List<HierarchicalConfiguration<ImmutableNode>> configurationsAt(String key) {
-        return xmlConfiguration.configurationsAt(key);
-    }
-
-    public ImmutableMap<String, String> getMap(String xpathToRoot, String keyAttributeName, String valueAttributeName){
-        ImmutableMap.Builder<String,String> b = ImmutableMap.builder();
+    public ImmutableMap<String, String> getMap(String xpathToRoot, String keyAttributeName, String valueAttributeName) {
+        ImmutableMap.Builder<String, String> b = ImmutableMap.builder();
         List<HierarchicalConfiguration<ImmutableNode>> fields = xmlConfiguration.childConfigurationsAt(xpathToRoot);
         for (HierarchicalConfiguration sub : fields) {
-            b.put(sub.getString(keyAttributeName),sub.getString(valueAttributeName));
+            b.put(sub.getString(keyAttributeName), sub.getString(valueAttributeName));
         }
 
         return b.build();

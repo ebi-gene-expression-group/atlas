@@ -43,11 +43,11 @@
     <!-- CSS: implied media=all -->
     <!-- CSS concatenated and minified via ant build script-->
     <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all" />
 
     <!-- If you have a custom header image or colour -->
     <meta name="ebi:masthead-color" content="rgb(0,124,130)" />
-    <meta name="ebi:masthead-image" content="${pageContext.request.contextPath}/resources/images/dots_matrix_background.png" />
+    <meta name="ebi:masthead-image" content="${pageContext.request.contextPath}/resources/images/dots-matrix-background.png" />
 
     <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
     <!-- also inform ES so we can host your colour palette file -->
@@ -57,6 +57,7 @@
     <!-- Use this CSS file for any custom styling -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
     <!-- end CSS-->
+
 </head>
 
 <body>
@@ -81,14 +82,16 @@
 
 <tiles:insertAttribute name="global-footer"/>
 
-<!-- JavaScript -->
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+
 <!-- Don’t defer or async, these two need to be loaded before other bundles, which are effectively deferred -->
 <script src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/fetch-polyfill.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
 
 <!-- JavaScript -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/script.js"></script>
 
 <!-- The Foundation theme JavaScript -->
@@ -100,10 +103,6 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
 <!-- end CSS-->
-
-<!-- All JavaScript at the bottom, except for jQuery -->
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 
 <!-- Google Analytics details -->
 <script>

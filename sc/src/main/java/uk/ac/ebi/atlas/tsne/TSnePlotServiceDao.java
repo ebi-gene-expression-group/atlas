@@ -35,7 +35,10 @@ public class TSnePlotServiceDao {
                 SELECT_T_SNE_PLOT_WITH_EXPRESSION_STATEMENT,
                 namedParameters,
                 (rs, rowNum) -> TSnePoint.Dto.create(
-                        rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("expression_level"), rs.getString("cell_id")));
+                        rs.getDouble("x"),
+                        rs.getDouble("y"),
+                        rs.getDouble("expression_level"),
+                        rs.getString("cell_id")));
     }
 
     private static final String SELECT_T_SNE_PLOT_WITH_CLUSTERS_STATEMENT =
@@ -75,41 +78,15 @@ public class TSnePlotServiceDao {
                         rs.getDouble("x"), rs.getDouble("y"), rs.getString("cell_id")));
     }
 
-// At one point we decided that getting the data for both the clusters plot and the expression plot was a good idea
-// because we could get all the data with a single request. However, every time you changed the gene we ended up
-// executing this statement which contains two JOINs, incurring in an unnecessary performance penalty. I leave this
-// here as a historical curiosity (and because some amount of work went into it). As time passes and I feel less and
-// less attached to this code I won’t be sad if it disappears, like tears in the rain.
+    private static final String SELECT_DISTINCT_PERPLEXITIES_STATEMENT =
+            "SELECT DISTINCT perplexity FROM scxa_tsne WHERE experiment_accession=:experiment_accession";
+    public List<Integer> fetchPerplexities(String experimentAccession) {
+        Map<String, Object> namedParameters = ImmutableMap.of("experiment_accession", experimentAccession);
 
-//    private static final String SELECT_T_SNE_PLOT_WITH_EXPRESSION_AND_CLUSTERS =
-//            "SELECT tsne.cell_id, tsne.x, tsne.y, analytics.expression_level, clusters.cluster_id " +
-//            "FROM scxa_tsne AS tsne " +
-//
-//                "LEFT JOIN (SELECT * FROM scxa_analytics WHERE gene_id=:gene_id) AS analytics " +
-//                "ON analytics.cell_id=tsne.cell_id " +
-//
-//                "LEFT JOIN (SELECT * FROM scxa_cell_clusters WHERE k=:k) AS clusters " +
-//                "ON clusters.cell_id=tsne.cell_id AND clusters.experiment_accession=tsne.experiment_accession " +
-//
-//            "WHERE tsne.experiment_accession=:experiment_accession AND tsne.perplexity=:perplexity";
-//    @Transactional(readOnly = true)
-//    public List<TSnePoint.Dto> fetchTSnePlotWithExpressionAndClusters(String experimentAccession,
-//                                                                      int perplexity,
-//                                                                      String geneId, int k) {
-//        Map<String, Object> namedParameters =
-//                ImmutableMap.of(
-//                        "experiment_accession", experimentAccession,
-//                        "perplexity", perplexity,
-//                        "gene_id", geneId,
-//                        "k", k);
-//        return namedParameterJdbcTemplate.query(
-//                SELECT_T_SNE_PLOT_WITH_EXPRESSION_AND_CLUSTERS,
-//                namedParameters,
-//                (rs, rowNum) -> TSnePoint.Dto.create(
-//                        rs.getDouble("x"),
-//                        rs.getDouble("y"),
-//                        rs.getDouble("expression_level"),
-//                        rs.getInt("cluster_id"),
-//                        rs.getString("cell_id")));
-//    }
+        return namedParameterJdbcTemplate.queryForList(
+                SELECT_DISTINCT_PERPLEXITIES_STATEMENT,
+                namedParameters,
+                Integer.class
+        );
+    }
 }

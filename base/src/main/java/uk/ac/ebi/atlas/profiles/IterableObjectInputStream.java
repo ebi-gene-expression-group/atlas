@@ -10,7 +10,7 @@ import java.util.Iterator;
  Unsafe - does not close the underlying stream - unless you iterate until the end!
 
  Okay:
- for(T t = new IterableObjectInputStream<>(inputStream){
+ for (T t = new IterableObjectInputStream<>(inputStream) {
     doStuff(t);
  }
  Dangerous:

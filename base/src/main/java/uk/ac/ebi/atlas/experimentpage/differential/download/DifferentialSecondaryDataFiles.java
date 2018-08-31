@@ -32,7 +32,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
         private final DataFileHub dataFileHub;
 
         @Inject
-        public RnaSeq(DataFileHub dataFileHub){
+        public RnaSeq(DataFileHub dataFileHub) {
             this.dataFileHub = dataFileHub;
         }
 
@@ -46,12 +46,11 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 builder.add(new ExternallyAvailableContent(
                                 makeUri("analytics"),
                                 ExternallyAvailableContent.Description.create(
-                                        "icon-tsv", "All analytics for the experiment"),
+                                        "icon-analytics", "All analytics for this experiment"),
                                 streamFile(
                                         experiment.getAccession() + "-analytics.tsv",
                                         readFromStreamAndWriteTsv(
-                                                analytics,
-                                                AnalyticsDataHeaderBuilder.rnaSeq(experiment)))));
+                                                analytics, new AnalyticsDataHeaderBuilder(experiment)))));
             }
 
             AtlasResource<TsvStreamer> rawCounts =
@@ -60,9 +59,9 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 builder.add(new ExternallyAvailableContent(
                                 makeUri("raw-counts"),
                                 ExternallyAvailableContent.Description.create(
-                                        "icon-tsv", "All the raw counts for the experiment"),
+                                        "icon-raw-counts", "All raw counts for the experiment"),
                                 streamFile(
-                                        experiment.getAccession()+"-raw-counts.tsv",
+                                        experiment.getAccession() + "-raw-counts.tsv",
                                         readFromResourceAndWriteTsv(rawCounts, Function.identity()))));
             }
 
@@ -84,13 +83,13 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
             ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
 
             List<Pair<String, Function<Writer, Void>>> analytics = new ArrayList<>();
-            for(String arrayDesign: experiment.getArrayDesignAccessions()){
+            for (String arrayDesign: experiment.getArrayDesignAccessions()) {
                 AtlasResource<ObjectInputStream<String[]>> resource =
                         dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesign).analytics;
-                if(resource.exists()){
+                if (resource.exists()) {
                     analytics.add(Pair.of(
                             MessageFormat.format("{0}-{1}-analytics.tsv", experiment.getAccession(), arrayDesign),
-                            readFromStreamAndWriteTsv(resource, AnalyticsDataHeaderBuilder.microarray(experiment))));
+                            readFromStreamAndWriteTsv(resource, new AnalyticsDataHeaderBuilder(experiment))));
                 }
             }
 
@@ -98,15 +97,15 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 b.add(new ExternallyAvailableContent(
                         makeUri("analytics"),
                         ExternallyAvailableContent.Description.create(
-                                "icon-tsv", "All the analytics for this experiment"),
+                                "icon-analytics", "All analytics for this experiment"),
                         analytics.size() == 1 ?
                                 streamFile(analytics.get(0)) :
-                                streamFolder(experiment.getAccession()+"-analytics", analytics)
+                                streamFolder(experiment.getAccession() + "-analytics", analytics)
                 ));
             }
 
             List<Pair<String, Function<Writer, Void>>> logFoldChanges = new ArrayList<>();
-            for(String arrayDesign: experiment.getArrayDesignAccessions()){
+            for (String arrayDesign: experiment.getArrayDesignAccessions()) {
                 AtlasResource<TsvStreamer> resource =
                         dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesign)
                                 .logFoldChanges;
@@ -122,9 +121,9 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 b.add(new ExternallyAvailableContent(
                         makeUri("log-fold-changes"),
                         ExternallyAvailableContent.Description.create(
-                                "icon-tsv", "All the log fold changes for this experiment"),
+                                "icon-foldchange", "All log fold changes for this experiment"),
                         logFoldChanges.size() == 1 ?
-                                streamFile( logFoldChanges.get(0)) :
+                                streamFile(logFoldChanges.get(0)) :
                                 streamFolder(experiment.getAccession() + "-log-fold-changes", logFoldChanges)));
             }
 
@@ -148,10 +147,10 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 b.add(new ExternallyAvailableContent(
                         makeUri("normalized-expressions"),
                         ExternallyAvailableContent.Description.create(
-                                "icon-tsv",
-                                "All the normalized expressions for this experiment"),
+                                "icon-normalized-expressions",
+                                "All normalized expressions for this experiment"),
                         normalizedExpressions.size() == 1 ?
-                                streamFile( normalizedExpressions.get(0)) :
+                                streamFile(normalizedExpressions.get(0)) :
                                 streamFolder(
                                         experiment.getAccession() + "-normalized-expressions",
                                         normalizedExpressions)));

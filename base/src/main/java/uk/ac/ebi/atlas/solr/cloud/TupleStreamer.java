@@ -15,7 +15,7 @@ import java.util.stream.StreamSupport;
 // Due to the fact that tuple.EOF signals the end of the TupleStream we can’t use ObjectInputStream.
 // Remember: use with try-with-resources so that the underlying TupleStream is properly closed!
 
-public class TupleStreamer implements AutoCloseable, Supplier<Stream<Tuple>> {
+public final class TupleStreamer implements AutoCloseable, Supplier<Stream<Tuple>> {
     private final TupleStream tupleStream;
     private final Iterator<Tuple> iterator;
 
@@ -46,7 +46,7 @@ public class TupleStreamer implements AutoCloseable, Supplier<Stream<Tuple>> {
         }
     }
 
-    private class TupleStreamIterator implements Iterator<Tuple> {
+    private final class TupleStreamIterator implements Iterator<Tuple> {
         private Tuple bufferedTuple;
         private Tuple currentTuple;
 

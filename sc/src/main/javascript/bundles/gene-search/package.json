@@ -16,7 +16,7 @@
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-faceted-search": "^2.0.3",
-    "styled-components": "^3.3.3",
+    "styled-components": "^3.4.2",
     "urijs": "^1.19.1"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
     "file-loader": "^1.1.11",
     "image-webpack-loader": "^4.3.1",
     "linkifyjs": "^2.1.6",
-    "style-loader": "^0.21.0",
+    "style-loader": "^0.22.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4",
     "whatwg-fetch": "^2.0.4"
