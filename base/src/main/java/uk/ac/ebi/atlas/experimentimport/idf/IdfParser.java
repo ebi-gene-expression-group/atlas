@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.idf;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.Publication;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -9,12 +10,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.Collections.emptyList;
 
 @Named
 public class IdfParser {
@@ -62,35 +64,36 @@ public class IdfParser {
                  title =
                          getParsedOutputByKey(
                                  AE_EXPERIMENT_DISPLAY_NAME_ID,
-                                 getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList()))
+                                 getParsedOutputByKey(INVESTIGATION_TITLE_ID, emptyList()))
                                  .stream()
+                                 .filter(StringUtils::isNotBlank)
                                  .findFirst()
                                  .orElse("");
             } else {
-                title = getParsedOutputByKey(INVESTIGATION_TITLE_ID, Collections.emptyList())
+                title = getParsedOutputByKey(INVESTIGATION_TITLE_ID, emptyList())
                         .stream()
                         .findFirst()
                         .orElse("");
             }
 
-            String experimentDescription = getParsedOutputByKey(EXPERIMENT_DESCRIPTION_ID, Collections.emptyList())
+            String experimentDescription = getParsedOutputByKey(EXPERIMENT_DESCRIPTION_ID, emptyList())
                     .stream()
                     .findFirst()
                     .orElse("");
 
             List<Publication> publications = createListOfPublications(
-                    getParsedOutputByKey(PUBMED_ID, Collections.emptyList()),
-                    getParsedOutputByKey(PUBLICATION_TITLE_ID, Collections.emptyList()),
-                    getParsedOutputByKey(PUBLICATION_DOI_ID, Collections.emptyList()));
+                    getParsedOutputByKey(PUBMED_ID, emptyList()),
+                    getParsedOutputByKey(PUBLICATION_TITLE_ID, emptyList()),
+                    getParsedOutputByKey(PUBLICATION_DOI_ID, emptyList()));
 
-            int expectedClusters = NumberUtils.toInt(getParsedOutputByKey(EXPECTED_CLUSTERS_ID, Collections.emptyList())
+            int expectedClusters = NumberUtils.toInt(getParsedOutputByKey(EXPECTED_CLUSTERS_ID, emptyList())
                         .stream()
                         .findFirst()
                         .orElse(""),
                     0);
 
             List<String> metadataFieldsOfInterest =
-                    getParsedOutputByKey(ADDITIONAL_ATTRIBUTES_ID, Collections.emptyList());
+                    getParsedOutputByKey(ADDITIONAL_ATTRIBUTES_ID, emptyList());
 
             return new IdfParserOutput(
                     title,
@@ -124,7 +127,13 @@ public class IdfParser {
     }
 
     private List<String> getParsedOutputByKey(String key, List<String> outputIfEmpty) {
-        return parsedIdf.getOrDefault(key.toUpperCase(), outputIfEmpty);
+        List<String> values = parsedIdf.getOrDefault(key.toUpperCase(), emptyList());
+
+        if (values.isEmpty() || values.stream().allMatch(StringUtils::isBlank)) {
+            return outputIfEmpty;
+        }
+
+        return values;
     }
 
     private String getPublicationInformation(int index, List<String> list) {
