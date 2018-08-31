@@ -51,63 +51,7 @@
 
         <div class="row small-up-1 medium-up-2 large-up-3">
         <c:forEach items="${baselineExperimentAccessionsBySpecies.keySet()}" var="species">
-            <c:choose>
-                <c:when test="${species.startsWith('Arabidopsis')}">
-                    <c:set var="speciesIconCode" value="B"/>
-                </c:when>
-                <c:when test="${species.startsWith('Beta vulgaris')}">
-                    <c:set var="speciesIconCode" value="B"/>
-                </c:when>
-                <c:when test="${species == 'Brachypodium distachyon'}">
-                    <c:set var="speciesIconCode" value="%"/>
-                </c:when>
-                <c:when test="${species.startsWith('Brassica')}">
-                    <c:set var="speciesIconCode" value="B"/>
-                </c:when>
-                <c:when test="${species == 'Chlamydomonas reinhardtii'}">
-                    <c:set var="speciesIconCode" value="Y"/>
-                </c:when>
-                <c:when test="${species == 'Glycine max'}">
-                    <c:set var="speciesIconCode" value="^"/>
-                </c:when>
-                <c:when test="${species.startsWith('Hordeum vulgare')}">
-                    <c:set var="speciesIconCode" value="5"/>
-                </c:when>
-                <c:when test="${species.startsWith('Musa acuminata')}">
-                    <c:set var="speciesIconCode" value="P"/>
-                </c:when>
-                <c:when test="${species == 'Oryza sativa Japonica Group'}">
-                    <c:set var="speciesIconCode" value="6"/>
-                </c:when>
-                <c:when test="${species == 'Populus trichocarpa'}">
-                    <c:set var="speciesIconCode" value="P"/>
-                </c:when>
-                <c:when test="${species == 'Setaria italica'}">
-                    <c:set var="speciesIconCode" value="%"/>
-                </c:when>
-                <c:when test="${species == 'Solanum lycopersicum'}">
-                    <c:set var="speciesIconCode" value=")"/>
-                </c:when>
-                <c:when test="${species == 'Sorghum bicolor'}">
-                    <c:set var="speciesIconCode" value="P"/>
-                </c:when>
-                <c:when test="${species == 'Sus scrofa'}">
-                    <c:set var="speciesIconCode" value="p"/>
-                </c:when>
-                <c:when test="${species == 'Triticum aestivum'}">
-                    <c:set var="speciesIconCode" value="5"/>
-                </c:when>
-                <c:when test="${species == 'Vitis vinifera'}">
-                    <c:set var="speciesIconCode" value="O"/>
-                </c:when>
-                <c:when test="${species == 'Zea mays'}">
-                    <c:set var="speciesIconCode" value="c"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="speciesIconCode" value="❔"/>
-                    <c:set var="speciesColorCode" value="grey"/>
-                </c:otherwise>
-            </c:choose>
+            <%@ include file="baseline-plants-landing-page/species-icon-selector.jsp" %>
 
             <div class="column column-block species_item margin-top-xxlarge">
                 <h4>${species}</h4>
@@ -140,48 +84,7 @@
 
         <div class="row small-up-1 medium-up-2 large-up-3">
         <c:forEach items="${numDifferentialExperimentsBySpecies.keySet()}" var="species">
-            <c:choose>
-                <c:when test="${species == 'Arabidopsis thaliana'}">
-                    <c:set var="speciesIconCode" value="B"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Hordeum vulgare subsp. vulgare'}">
-                    <c:set var="speciesIconCode" value="5"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Hordeum vulgare'}">
-                    <c:set var="speciesIconCode" value="5"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Oryza sativa Japonica Group'}">
-                    <c:set var="speciesIconCode" value="6"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Oryza sativa Japonica group'}">
-                    <c:set var="speciesIconCode" value="6"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Oryza sativa Indica Group'}">
-                    <c:set var="speciesIconCode" value="6"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Oryza sativa'}">
-                    <c:set var="speciesIconCode" value="6"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Zea mays'}">
-                    <c:set var="speciesIconCode" value="c"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:when>
-                <c:when test="${species == 'Triticum aestivum'}">
-                    <c:set var="speciesIconCode" value="5"/>
-                    <c:set var="speciesColorCode" value="green"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="speciesIconCode" value="P"/>
-                    <c:set var="speciesColorCode" value="green" />
-                </c:otherwise>
-            </c:choose>
+            <%@ include file="baseline-plants-landing-page/species-icon-selector.jsp" %>
 
             <div class="column column-block species_item margin-top-xxlarge">
                 <h4>${species}</h4>
