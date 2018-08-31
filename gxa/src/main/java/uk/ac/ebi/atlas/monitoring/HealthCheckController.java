@@ -32,8 +32,8 @@ public final class HealthCheckController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getHealthStatusLegacy(){
         return GSON.toJson(ImmutableMap.of(
-                "Solr", healthCheckService.isSolrUp(Arrays.asList("analytics", "bioentities")) ? "UP" : "DOWN",
-                "DB", healthCheckService.isDatabaseUp(experimentDao) ? "UP" : "DOWN"
+                "DB", healthCheckService.isDatabaseUp(experimentDao) ? "UP" : "DOWN",
+                "Solr", healthCheckService.isSolrUp(Arrays.asList("analytics", "bioentities")) ? "UP" : "DOWN"
         ));
     }
 
