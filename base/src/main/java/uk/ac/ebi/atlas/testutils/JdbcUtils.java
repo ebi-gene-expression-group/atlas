@@ -27,6 +27,12 @@ public class JdbcUtils {
         return jdbcTemplate.queryForList("SELECT accession FROM public_experiment", String.class);
     }
 
+    public String fetchRandomArrayDesignAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT arraydesign FROM designelement_mapping TABLESAMPLE SYSTEM_ROWS(1)",
+                String.class);
+    }
+
     public List<String> getAllExpressionAtlasExperimentAccessions() {
         return jdbcTemplate.queryForList("SELECT accession FROM experiment", String.class);
     }
