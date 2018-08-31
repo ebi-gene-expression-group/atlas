@@ -135,7 +135,7 @@
     </c:when>
     <c:when test="${species == 'Sus scrofa'}">
         <c:set var="speciesIconCode" value="p"/>
-        <c:set var="speciesColorCode" value="green"/>
+        <c:set var="speciesColorCode" value="red"/>
     </c:when>
     <c:when test="${species == 'Triticum aestivum'}">
         <c:set var="speciesIconCode" value="5"/>
