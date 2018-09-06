@@ -29,6 +29,8 @@ public class TSnePlotService {
 
     public Set<TSnePoint> fetchTSnePlotWithExpression(String experimentAccession, int perplexity, String geneId) {
         return tSnePlotServiceDao.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId).stream()
+                //.filter(line -> Math.round(line.x())%2==0)
+                //.filter(line -> Math.round(line.y())%2==0)
                 .map(
                         pointDto ->
                                 TSnePoint.create(
@@ -37,7 +39,10 @@ public class TSnePlotService {
     }
 
     public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithClusters(String experimentAccession, int perplexity, int k) {
-        List<TSnePoint.Dto> points = tSnePlotServiceDao.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
+        List<TSnePoint.Dto> points = tSnePlotServiceDao.fetchTSnePlotWithClusters(experimentAccession, perplexity, k).stream()
+                                .filter(line -> Math.round(line.x())%2==0)
+                                .filter(line -> Math.round(line.y())%2==0)
+                                .collect(Collectors.toList());
 
         return points.stream()
                 .collect(groupingBy(TSnePoint.Dto::clusterId))
