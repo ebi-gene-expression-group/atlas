@@ -95,6 +95,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
             HttpServletRequest request) {
 
+        preferences.setCutoff(0.0);
         //different default - reference experiments always had FPKMs, no need to change this now
         if (!request.getParameterMap().containsKey("unit")) {
             preferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
