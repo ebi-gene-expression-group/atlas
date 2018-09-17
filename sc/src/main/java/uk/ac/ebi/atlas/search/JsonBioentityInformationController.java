@@ -40,7 +40,7 @@ public class JsonBioentityInformationController extends JsonExceptionHandlingCon
     }
 
     @RequestMapping(
-            value = "/json/bioentity_information/{geneId}",
+            value = "/json/bioentity_information/{geneId:.+}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getBioentityInformation(@PathVariable String geneId) {
