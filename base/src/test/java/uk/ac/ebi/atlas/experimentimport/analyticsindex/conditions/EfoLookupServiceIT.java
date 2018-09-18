@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.efo;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.EfoLookupService;
 
 import javax.inject.Inject;
 import java.util.Set;
