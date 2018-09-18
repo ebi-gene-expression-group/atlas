@@ -9,11 +9,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
-import uk.ac.ebi.atlas.testutils.MockAssayGroups;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
@@ -60,6 +61,11 @@ public class BaselineExperimentBuilderIT {
 
         experimentAttributesService = new ExperimentAttributesService(europePmcClient, idfParser);
 
+        List<AssayGroup> assayGroups =
+                ImmutableList.of(
+                        AssayGroupFactory.create("g1", "run1"),
+                        AssayGroupFactory.create("g2", "run2"));
+
         BaselineExperiment experiment = subject
                 .forSpecies(new Species(SPECIES_NAME, SPECIES_PROPERTIES))
                 .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
@@ -68,8 +74,8 @@ public class BaselineExperimentBuilderIT {
                 .withDisplayName(DISPLAY_NAME)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withDois(Sets.newHashSet(DOI))
-                .withExperimentDesign(MockExperiment.mockExperimentDesign(MockAssayGroups.create()))
-                .withAssayGroups(MockAssayGroups.create())
+                .withExperimentDesign(MockExperiment.mockExperimentDesign(assayGroups))
+                .withAssayGroups(assayGroups)
                 .withDataProviderURL(PROVIDER_URL)
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)
                 .withLastUpdate(new Date())

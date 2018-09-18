@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 
@@ -27,8 +28,8 @@ public class BaselineRequestContextTest {
     public void singleFactorExperimentHasSimpleLabels() {
         String defaultQueryFactorType = "defaultQueryFactorType";
 
-        AssayGroup ag1 = new AssayGroup("g1", "run11");
-        AssayGroup ag2 = new AssayGroup("g2", "run21");
+        AssayGroup ag1 = AssayGroupFactory.create("g1", "run11");
+        AssayGroup ag2 = AssayGroupFactory.create("g2", "run21");
         List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);
@@ -57,8 +58,8 @@ public class BaselineRequestContextTest {
         String defaultQueryFactorType = "defaultQueryFactorType";
         String otherType = "otherQueryFactorType";
 
-        AssayGroup ag1 = new AssayGroup("g1", "run11");
-        AssayGroup ag2 = new AssayGroup("g2", "run21");
+        AssayGroup ag1 = AssayGroupFactory.create("g1", "run11");
+        AssayGroup ag2 = AssayGroupFactory.create("g2", "run21");
         List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);
@@ -92,8 +93,8 @@ public class BaselineRequestContextTest {
         Collection<Factor> defaultFactorValues = ImmutableSet.of(new Factor(otherType, "defaultValueForOtherType"));
         List<String> prescribedOrderOfFilters = ImmutableList.of(defaultQueryFactorType, otherType);
 
-        AssayGroup ag1 = new AssayGroup("g1", "run11");
-        AssayGroup ag2 = new AssayGroup("g2", "run21");
+        AssayGroup ag1 = AssayGroupFactory.create("g1", "run11");
+        AssayGroup ag2 = AssayGroupFactory.create("g2", "run21");
         List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);
@@ -140,8 +141,8 @@ public class BaselineRequestContextTest {
         Collection<Factor> defaultFactorValues = ImmutableSet.of(new Factor(otherType, "defaultValueForOtherType"));
         List<String> prescribedOrderOfFilters = ImmutableList.of(defaultQueryFactorType, otherType);
 
-        AssayGroup ag1 = new AssayGroup("g1", "run11");
-        AssayGroup ag2 = new AssayGroup("g2", "run21");
+        AssayGroup ag1 = AssayGroupFactory.create("g1", "run11");
+        AssayGroup ag2 = AssayGroupFactory.create("g2", "run21");
         List<AssayGroup> assayGroups = ImmutableList.of(ag1, ag2);
 
         ExperimentDesign experimentDesign = mock(ExperimentDesign.class);

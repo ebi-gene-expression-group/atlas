@@ -56,12 +56,17 @@ public class MockExperiment {
             ImmutableList.of(
                     ArrayDesign.create("A-AFFY-44", "Affymetrix GeneChip Human Genome U133 Plus 2.0 [HG-U133_Plus_2]"),
                     ArrayDesign.create("A-GEOD-20277", "TaqMan® Array Human MicroRNA A+B Cards Set v3.0"));
+    private static final List<AssayGroup> ASSAY_GROUPS =
+            ImmutableList.of(
+                    AssayGroupFactory.create("g1", "run1"),
+                    AssayGroupFactory.create("g2", "run2"));
+
     private static final List<Contrast> CONTRASTS = ImmutableList.of(
             new Contrast(
                     "g1_g2",
                     ARRAY_DESIGN_ACCESSIONS.iterator().next(),
-                    MockAssayGroups.create().get(0),
-                    MockAssayGroups.create().get(1),
+                    ASSAY_GROUPS.get(0),
+                    ASSAY_GROUPS.get(1),
                     "contrast"));
 
     public static BaselineExperiment createBaselineExperiment() {
@@ -71,16 +76,16 @@ public class MockExperiment {
     public static BaselineExperiment createBaselineExperiment(String accession) {
         return createBaselineExperiment(
                 accession,
-                mockExperimentDesign(MockAssayGroups.create()),
-                MockAssayGroups.create(),
+                mockExperimentDesign(ASSAY_GROUPS),
+                ASSAY_GROUPS,
                 ExperimentDisplayDefaults.simpleDefaults());
     }
 
     public static BaselineExperiment createBaselineExperiment(List<String> pubmedIds, List<String> dois) {
         return createBaselineExperiment(
                 EXPERIMENT_ACCESSION,
-                mockExperimentDesign(MockAssayGroups.create()),
-                MockAssayGroups.create(),
+                mockExperimentDesign(ASSAY_GROUPS),
+                ASSAY_GROUPS,
                 ExperimentDisplayDefaults.simpleDefaults(),
                 pubmedIds,
                 dois);
@@ -169,7 +174,7 @@ public class MockExperiment {
                 CONTRASTS.stream().map(contrast1 -> Pair.of(contrast1, true)).collect(Collectors.toList()),
                 DESCRIPTION,
                 new Species(SPECIES_NAME, SPECIES_PROPERTIES),
-                mockExperimentDesign(MockAssayGroups.create()),
+                mockExperimentDesign(ASSAY_GROUPS),
                 Sets.newHashSet(PUBMEDID),
                 Sets.newHashSet(DOI),
                 ARRAY_DESIGNS);
@@ -185,7 +190,7 @@ public class MockExperiment {
                 new Species(SPECIES_NAME, SPECIES_PROPERTIES),
                 Sets.newHashSet(PUBMEDID),
                 Sets.newHashSet(DOI),
-                mockExperimentDesign(MockAssayGroups.create()));
+                mockExperimentDesign(ASSAY_GROUPS));
     }
 
     public static DifferentialExperiment createDifferentialExperiment(String accession, List<Contrast> contrasts) {

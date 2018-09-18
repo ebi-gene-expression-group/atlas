@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class ExperimentCrudTest {
 
     @Before
     public void setUp() {
-        AssayGroup assayGroup = new AssayGroup("g1", "run_1");
+        AssayGroup assayGroup = AssayGroupFactory.create("g1", "run_1");
         ExperimentDesign experimentDesign = new ExperimentDesign();
         experimentDesign.putSampleCharacteristic("run_1", "type", "value");
         experimentDesign.putFactor("run_1", "type", "value");
@@ -125,7 +126,7 @@ public class ExperimentCrudTest {
     @Test(expected = IllegalStateException.class)
     public void failImportOnValidationWhenExperimentDesignDoesNotMatchAssayGroups2() throws IOException {
         when(experimentConfigurationMock.getAssayGroups())
-                .thenReturn(ImmutableList.of(new AssayGroup("different assay", "different run")));
+                .thenReturn(ImmutableList.of(AssayGroupFactory.create("different assay", "different run")));
         subject.importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
