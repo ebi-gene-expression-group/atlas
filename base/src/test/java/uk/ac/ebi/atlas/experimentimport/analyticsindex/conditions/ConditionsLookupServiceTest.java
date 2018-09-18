@@ -1,225 +1,96 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.efo.EfoLookupService;
-import uk.ac.ebi.atlas.experimentimport.efo.EfoTreeNodesTrader;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.ContrastTestUtils;
-import uk.ac.ebi.atlas.testutils.MockAssayGroups;
-import uk.ac.ebi.atlas.testutils.MockExperiment;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.guava.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.testutils.MockExperiment.createDifferentialExperiment;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ConditionsLookupServiceTest {
-    private ConditionsLookupService subject;
-    private ExperimentDesign experimentDesignMock;
-    private String experimentAccession = "EXP-1";
-    private Contrast contrastMock;
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
+class ConditionsLookupServiceTest {
+    @Mock
+    private BaselineExperiment baselineExperimentMock;
 
     @Mock
-    private EfoLookupService efoLookupService;
+    private DifferentialExperiment differentialExperimentMock;
 
-    @Before
-    public void setup() {
+    @Mock
+    private ConditionsCollector conditionsCollector;
 
-        contrastMock = mock(Contrast.class);
-        given(contrastMock.getReferenceAssayGroup()).willReturn(new AssayGroup("g1", "Assay1", "Assay2"));
-        given(contrastMock.getTestAssayGroup()).willReturn(new AssayGroup("g2", "Assay3"));
-        given(contrastMock.getId()).willReturn("g1_g2");
+    private ConditionsLookupService subject;
 
-        experimentDesignMock = mock(ExperimentDesign.class);
-        HashMap<String, String> factors1 = Maps.newHashMap();
-        factors1.put("fn1", "fv1");
-        HashMap<String, String> factors2 = Maps.newHashMap();
-        factors2.put("fn2", "fv2");
-
-        HashMap<String, String> samples1 = Maps.newHashMap();
-        samples1.put("sn1", "sv1");
-        HashMap<String, String> samples2 = Maps.newHashMap();
-        samples2.put("sn2", "sv2");
-
-
-        given(experimentDesignMock.getFactorValues("Assay1")).willReturn(factors1);
-        given(experimentDesignMock.getFactorValues("Assay2")).willReturn(factors1);
-        given(experimentDesignMock.getFactorValues("Assay3")).willReturn(factors2);
-
-        given(experimentDesignMock.getSampleCharacteristicsValues("Assay1")).willReturn(samples1);
-        given(experimentDesignMock.getSampleCharacteristicsValues("Assay2")).willReturn(samples1);
-        given(experimentDesignMock.getSampleCharacteristicsValues("Assay3")).willReturn(samples2);
-
-        given(efoLookupService.getLabels(any())).willReturn(ImmutableSet.of());
-
-        subject = new ConditionsLookupService(efoLookupService);
+    @BeforeEach
+    void setUp() {
+        subject = new ConditionsLookupService(conditionsCollector);
     }
 
     @Test
-    public void buildDifferentialConditionProperties() {
-        when(efoLookupService.expandOntologyTerms(any()))
-                .thenReturn(ImmutableSetMultimap.of());
+    void whenAssayGroupsHaveNoConditionsResultIsEmpty() {
+        when(conditionsCollector.getConditions(any(BaselineExperiment.class)))
+                .thenReturn(Stream.empty());
 
-        Collection<DifferentialCondition> result =
-                subject.buildPropertiesForDifferentialExperiment(
-                        experimentAccession, experimentDesignMock, ImmutableSet.of(contrastMock));
-
-        assertThat(result.size(), is(2));
-        assertThat(
-                result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1"))),
-                is(true));
-        assertThat(
-                result.contains(new DifferentialCondition("EXP-1", "g2", "g1_g2", Sets.newHashSet("fv2", "sv2"))),
-                is(true));
+        assertThat(subject.conditionsPerDataColumnDescriptor(baselineExperimentMock))
+                .isEmpty();
     }
 
     @Test
-    public void buildDifferentialConditionPropertiesIncludingOntologyTerms() {
+    void whenContrastsHaveNoConditionsResultIsEmpty() {
+        when(conditionsCollector.getConditions(any(DifferentialExperiment.class)))
+                .thenReturn(Stream.empty());
 
-        when(efoLookupService.expandOntologyTerms(any())).thenReturn(
-                new ImmutableSetMultimap.Builder<String, String>()
-                        .putAll("Assay1", "obo", "efo")
-                        .build()
-        );
-        Collection<DifferentialCondition> result =
-                subject.buildPropertiesForDifferentialExperiment(
-                        experimentAccession, experimentDesignMock, ImmutableSet.of(contrastMock));
-
-        assertThat(result.size(), is(3));
-        assertThat(
-                result.contains(
-                        new DifferentialCondition(
-                                "EXP-1", "g1", "g1_g2",
-                                Sets.newHashSet("fv1", "sv1", "obo", "efo"))),
-                is(true));  //Assay1
-        assertThat(
-                result.contains(
-                        new DifferentialCondition(
-                                "EXP-1", "g1", "g1_g2",
-                                Sets.newHashSet("fv1", "sv1"))),
-                is(true));   //Assay2
-        assertThat(
-                result.contains(
-                        new DifferentialCondition(
-                                "EXP-1", "g2", "g1_g2",
-                                Sets.newHashSet("fv2", "sv2"))),
-                is(true));
-
-    }
-
-    private void testWithOneAssayGroup(BiConsumer<AssayGroup, ExperimentDesign> setup,
-                                       Collection<String> expectedConditions) {
-        EfoTreeNodesTrader m = mock(EfoTreeNodesTrader.class);
-        when(m.getTreeNodes()).thenReturn(ImmutableMap.of());
-
-        ExperimentDesign experimentDesign = new ExperimentDesign();
-        AssayGroup assayGroup = MockAssayGroups.create().iterator().next();
-        List<AssayGroup> assayGroups = ImmutableList.of(assayGroup);
-
-        setup.accept(assayGroup, experimentDesign);
-
-
-        assertThat(
-                new ConditionsLookupService(new EfoLookupService(m))
-                        .conditionsPerDataColumnDescriptor(MockExperiment.createBaselineExperiment(
-                                experimentDesign, assayGroups)),
-                is(ImmutableSetMultimap.builder().putAll(assayGroup.getId(), expectedConditions).build()));
-    }
-
-    private void testWithOneContrast(BiConsumer<Contrast, ExperimentDesign> setup,
-                                     Collection<String> expectedConditions) {
-        EfoTreeNodesTrader m = mock(EfoTreeNodesTrader.class);
-        when(m.getTreeNodes()).thenReturn(ImmutableMap.of());
-
-        ExperimentDesign experimentDesign = new ExperimentDesign();
-        Contrast contrast = ContrastTestUtils.get(1).iterator().next();
-        List<Contrast> contrasts = ImmutableList.of(contrast);
-
-        setup.accept(contrast, experimentDesign);
-
-        assertThat(
-                new ConditionsLookupService(new EfoLookupService(m))
-                        .conditionsPerDataColumnDescriptor(createDifferentialExperiment(
-                                "accession", contrasts, experimentDesign)),
-                is(ImmutableSetMultimap.builder().putAll(contrast.getId(), expectedConditions).build()));
+        assertThat(subject.conditionsPerDataColumnDescriptor(differentialExperimentMock))
+                .isEmpty();
     }
 
     @Test
-    public void nullCases() {
-        testWithOneAssayGroup((assayGroup, experimentDesign) -> {}, ImmutableSet.of());
-        testWithOneContrast((contrast, experimentDesign) -> {}, ImmutableSet.of());
+    void baselineConditions() {
+        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+
+        when(conditionsCollector.getConditions(any(BaselineExperiment.class)))
+                .thenReturn(Stream.of(
+                        new Condition(experimentAccession, "g1", ImmutableSet.of("val1", "val2")),
+                        new Condition(experimentAccession, "g2", ImmutableSet.of("val2", "val3")),
+                        new Condition(experimentAccession, "g3", ImmutableSet.of("val1", "val2", "val3"))));
+
+        assertThat(subject.conditionsPerDataColumnDescriptor(baselineExperimentMock))
+                .hasSameEntriesAs(
+                        ImmutableMultimap.<String, String>builder()
+                                .putAll("g1", "val1", "val2")
+                                .putAll("g2", "val2", "val3")
+                                .putAll("g3", "val1", "val2", "val3")
+                                .build());
     }
 
     @Test
-    public void factorValueAppearsAsCondition() {
-        testWithOneAssayGroup(
-                (assayGroup, experimentDesign) ->
-                        experimentDesign.putFactor(
-                                assayGroup.getFirstAssayAccession(),
-                                "factor header", "factor value"),
-                ImmutableSet.of("factor value"));
-    }
+    void differentialConditions() {
+        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
 
-    @Test
-    public void sampleCharacteristicAppearsAsCondition() {
-        testWithOneAssayGroup(
-                (assayGroup, experimentDesign) ->
-                        experimentDesign.putSampleCharacteristic(
-                                assayGroup.getFirstAssayAccession(),
-                                "sample characteristic header", "sample characteristic value"),
-                ImmutableSet.of("sample characteristic value"));
-    }
+        when(conditionsCollector.getConditions(any(DifferentialExperiment.class)))
+                .thenReturn(Stream.of(
+                        new DifferentialCondition(experimentAccession, "g1", "g2_g1", ImmutableSet.of("val1", "val2")),
+                        new DifferentialCondition(experimentAccession, "g2", "g2_g1", ImmutableSet.of("val3")),
+                        new DifferentialCondition(experimentAccession, "g1", "g3_g1", ImmutableSet.of("val1", "val2")),
+                        new DifferentialCondition(experimentAccession, "g3", "g3_g1", ImmutableSet.of("val4"))));
 
-    @Test
-    public void assayGroupFactorValueAppearsAsCondition() {
-        testWithOneContrast(
-                (contrast, experimentDesign) ->
-                        experimentDesign.putFactor(
-                                contrast.getReferenceAssayGroup().getFirstAssayAccession(),
-                                "factor header", "factor value"),
-                ImmutableSet.of("factor value"));
-        testWithOneContrast(
-                (contrast, experimentDesign) ->
-                        experimentDesign.putFactor(
-                                contrast.getTestAssayGroup().getFirstAssayAccession(),
-                                "factor header", "factor value"),
-                ImmutableSet.of("factor value"));
-    }
-
-    @Test
-    public void assayGroupSampleCharacteristicAppearsAsCondition() {
-        testWithOneContrast(
-                (contrast, experimentDesign) ->
-                        experimentDesign.putSampleCharacteristic(
-                                contrast.getReferenceAssayGroup().getFirstAssayAccession(),
-                                "sample characteristic header", "sample characteristic value"),
-                ImmutableSet.of("sample characteristic value"));
-        testWithOneContrast(
-                (contrast, experimentDesign) ->
-                        experimentDesign.putSampleCharacteristic(
-                                contrast.getTestAssayGroup().getFirstAssayAccession(),
-                                "sample characteristic header", "sample characteristic value"),
-                ImmutableSet.of("sample characteristic value"));
+        assertThat(subject.conditionsPerDataColumnDescriptor(differentialExperimentMock))
+                .hasSameEntriesAs(
+                        ImmutableMultimap.<String, String>builder()
+                                .putAll("g2_g1", "val1", "val2", "val3")
+                                .putAll("g3_g1", "val1", "val2", "val4")
+                                .build());
     }
 }

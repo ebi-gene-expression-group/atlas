@@ -35,6 +35,13 @@ public class RandomDataTestUtils {
         return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(ENSEMBLE_GENE_ID_NUM_LENGTH);
     }
 
+    public static String getRandomEfoAccession() {
+        // https://www.ebi.ac.uk/ols/ontologies/efo
+        // Version: 2.99
+        // Number of terms: 22023
+        return "EFO_" +  String.format("%07d", RNG.nextInt(1, 22023));
+    }
+
     public static List<String[]> getRandomClusters(int fromK, int toK, int numberOfCells) {
         ImmutableList.Builder<String[]> clustersTsvBuilder = ImmutableList.builder();
 
