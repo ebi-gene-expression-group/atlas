@@ -472,7 +472,15 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.8.0</version>
+            <version>3.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-guava</artifactId>
+            <!-- Use 2.x version if you rely on Java 7 / AssertJ Core 2.x -->
+            <version>3.1.0</version>
             <scope>test</scope>
         </dependency>
 
