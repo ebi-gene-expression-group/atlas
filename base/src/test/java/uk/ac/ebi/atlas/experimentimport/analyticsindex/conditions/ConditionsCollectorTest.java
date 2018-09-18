@@ -59,15 +59,11 @@ class ConditionsCollectorTest {
     @Mock
     private EfoLookupService efoLookupServiceMock;
 
-    private ImmutableSetMultimap<String, String> assayIdToOntologyTerms;
-
     private ImmutableSetMultimap<String, String> expandedOntologyTerms;
 
     private Map<String, Map<String, String>> factorValues;
 
     private Map<String, Map<String, String>> sampleCharacteristics;
-
-    private List<AssayGroup> assayGroups;
 
     private AssayGroup testAssayGroup;
 
@@ -75,12 +71,8 @@ class ConditionsCollectorTest {
 
     private ConditionsCollector subject;
 
-    private LegacyConditionsLookupService legacyConditionsLookupService;
-
     @BeforeEach
     void setUp() {
-        legacyConditionsLookupService = new LegacyConditionsLookupService(efoLookupServiceMock);
-
         subject = new ConditionsCollector(efoLookupServiceMock);
         when(baselineExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(differentialExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
@@ -98,14 +90,13 @@ class ConditionsCollectorTest {
                         .collect(toList());
 
         // Assign at most five random EFO terms to each assay
-        assayIdToOntologyTerms =
-                assayIds.stream()
-                        .collect(flatteningToImmutableSetMultimap(
-                                assayId -> assayId,
-                                __ -> IntStream.range(0, RNG.nextInt(1, 5))
-                                        .boxed()
-                                        .map(___ -> getRandomEfoAccession())
-                                        .distinct()));
+        ImmutableSetMultimap<String, String> assayIdToOntologyTerms = assayIds.stream()
+                .collect(flatteningToImmutableSetMultimap(
+                        assayId -> assayId,
+                        __ -> IntStream.range(0, RNG.nextInt(1, 5))
+                                .boxed()
+                                .map(___ -> getRandomEfoAccession())
+                                .distinct()));
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(assayIdToOntologyTerms);
 
         // Expand, in turn, each EFO term to at most another five
@@ -169,13 +160,12 @@ class ConditionsCollectorTest {
         // Distribute assays between assay groups
         Multimap<String, String> assayGroupToAssayIds = randomizedMultimapOf(assayGroupIds, assayIds);
 
-        assayGroups =
-                assayGroupToAssayIds.keySet().stream()
-                        .map(assayGroupId ->
-                                AssayGroupFactory.create(
-                                        assayGroupId,
-                                        assayGroupToAssayIds.get(assayGroupId).toArray(new String[0])))
-                        .collect(toList());
+        List<AssayGroup> assayGroups = assayGroupToAssayIds.keySet().stream()
+                .map(assayGroupId ->
+                        AssayGroupFactory.create(
+                                assayGroupId,
+                                assayGroupToAssayIds.get(assayGroupId).toArray(new String[0])))
+                .collect(toList());
 
         testAssayGroup = assayGroups.get(RNG.nextInt(0, assayGroups.size()));
         referenceAssayGroup = assayGroups.get(RNG.nextInt(0, assayGroups.size()));
@@ -188,18 +178,6 @@ class ConditionsCollectorTest {
 
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(assayGroups);
         when(differentialExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(contrast));
-    }
-
-    @Test
-    void baselineConditionsMatchLegacyService() {
-        assertThat(subject.getConditions(baselineExperimentMock))
-                .containsExactlyInAnyOrderElementsOf(legacyConditionsLookupService.buildPropertiesForBaselineExperiment(baselineExperimentMock.getAccession(), experimentDesignMock, assayGroups));
-    }
-
-    @Test
-    void differentialConditionsMatchLegacyService() {
-        assertThat(subject.getConditions(baselineExperimentMock))
-                .containsExactlyInAnyOrderElementsOf(legacyConditionsLookupService.buildPropertiesForBaselineExperiment(baselineExperimentMock.getAccession(), experimentDesignMock, assayGroups));
     }
 
     @Test
