@@ -82,6 +82,7 @@ public class DataFileHub {
             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
     protected static final String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "{0}/{0}.tsne_perp_{1}.tsv";
+    protected static final String SINGLE_CELL_MARKER_GENES_FILE_PATH_TEMPLATE = "{0}/{0}.marker_genes_{1}.tsv";
     protected static final String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.sdrf.txt";
     protected static final String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "{0}/{0}.clusters.tsv";
     protected static final String SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE = "{0}/{0}.software.tsv";
@@ -350,6 +351,7 @@ public class DataFileHub {
         public final AtlasResource<TsvStreamer> sdrf;
         public final AtlasResource<TsvStreamer> clustersTsv;
         public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
+        public final Map<Integer, AtlasResource<TsvStreamer>> markerGeneTsvs;
 
         SingleCellExperimentFiles(String experimentAccession) {
             experimentFiles = new ExperimentFiles(experimentAccession);
@@ -387,7 +389,7 @@ public class DataFileHub {
                             SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
-            tSnePlotTsvs = discoverAvailablePerplexitiesFromTSnePlotFiles(experimentAccession).stream()
+            tSnePlotTsvs = retrieveIntegersFromFileNames(experimentAccession, SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE).stream()
                     .collect(
                             Collectors.toMap(
                                     perplexity -> perplexity,
@@ -396,6 +398,16 @@ public class DataFileHub {
                                             SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE,
                                             experimentAccession,
                                             perplexity.toString())));
+
+            markerGeneTsvs = retrieveIntegersFromFileNames(experimentAccession, SINGLE_CELL_MARKER_GENES_FILE_PATH_TEMPLATE).stream()
+                    .collect(
+                            Collectors.toMap(
+                                    k -> k,
+                                    k -> new TsvFile.ReadOnly(
+                                            experimentsMageTabDirLocation,
+                                            SINGLE_CELL_MARKER_GENES_FILE_PATH_TEMPLATE,
+                                            experimentAccession,
+                                            k.toString())));
         }
 
 //        public AtlasResource<MatrixMarketReader> dataFile(ExpressionUnit.Absolute.Rna unit) {
@@ -407,28 +419,28 @@ public class DataFileHub {
 //            }
 //        }
 
-        private Set<Integer> discoverAvailablePerplexitiesFromTSnePlotFiles(String experimentAccession) {
+        // Retrieves k or perplexity values from single cell file names
+        private Set<Integer> retrieveIntegersFromFileNames(String experimentAccession, String filePathTemplate) {
             Path tSnePlotFilePathTemplate =
                     experimentsMageTabDirLocation.resolve(
-                            MessageFormat.format(
-                                    SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE, experimentAccession, "(\\d+)"));
+                            MessageFormat.format(filePathTemplate, experimentAccession, "(\\d+)"));
 
             Pattern tSnePlotTsvFileRegex = Pattern.compile(tSnePlotFilePathTemplate.getFileName().toString());
 
-            ImmutableSet.Builder<Integer> perplexityValues = ImmutableSet.builder();
+            ImmutableSet.Builder<Integer> integerValues = ImmutableSet.builder();
             try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(tSnePlotFilePathTemplate.getParent())) {
 
                 for (Path filePath : dirStream) {
                     Matcher matcher = tSnePlotTsvFileRegex.matcher(filePath.getFileName().toString());
                     if (matcher.matches()) {
-                        perplexityValues.add(Integer.parseInt(matcher.group(1)));
+                        integerValues.add(Integer.parseInt(matcher.group(1)));
                     }
                 }
 
             } catch (IOException e) {
                 // log warning, the set will be empty, the caller decides what to do
             }
-            return perplexityValues.build();
+            return integerValues.build();
         }
     }
 }
