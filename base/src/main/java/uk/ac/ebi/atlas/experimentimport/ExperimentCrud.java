@@ -5,8 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
@@ -40,7 +38,6 @@ public class ExperimentCrud {
 
     private final ExperimentDao experimentDao;
     private final ExperimentChecker experimentChecker;
-    private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
     private final IdfParser idfParser;
@@ -48,7 +45,6 @@ public class ExperimentCrud {
 
     public ExperimentCrud(ExperimentDao experimentDao,
                           ExperimentChecker experimentChecker,
-                          AnalyticsLoaderFactory analyticsLoaderFactory,
                           CondensedSdrfParser condensedSdrfParser,
                           IdfParser idfParser,
                           ExperimentDesignFileWriterService experimentDesignFileWriterService,
@@ -56,7 +52,6 @@ public class ExperimentCrud {
 
         this.experimentDao = experimentDao;
         this.experimentChecker = experimentChecker;
-        this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.condensedSdrfParser = condensedSdrfParser;
         this.idfParser = idfParser;
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
@@ -89,11 +84,6 @@ public class ExperimentCrud {
             deleteExperiment(experimentAccession);
         }
 
-        // We only insert in the DB differential and single cell experiments expressions
-        analyticsLoaderFactory
-                .getLoader(experimentConfiguration.getExperimentType())
-                .loadAnalytics(experimentAccession);
-
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
         experimentDao.addExperiment(experimentDTO, accessKeyUuid);
         updateWithNewExperimentDesign(condensedSdrfParserOutput.getExperimentDesign(), experimentDTO);
@@ -122,11 +112,6 @@ public class ExperimentCrud {
             deleteExperiment(experimentAccession);
         }
 
-        // We only insert in the DB differential and single cell experiments expressions
-        analyticsLoaderFactory
-                .getLoader(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE)
-                .loadAnalytics(experimentAccession);
-
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
         experimentDao.addExperiment(experimentDTO, accessKeyUuid);
 
@@ -147,9 +132,6 @@ public class ExperimentCrud {
     public void deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = findExperiment(experimentAccession);
         checkNotNull(experimentDTO, MessageFormat.format("Experiment not found: {0}", experimentAccession));
-
-        AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
-        analyticsLoader.deleteAnalytics(experimentAccession);
 
         experimentDao.deleteExperiment(experimentDTO.getExperimentAccession());
     }

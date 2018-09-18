@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -45,9 +44,6 @@ public class ExperimentCrudIT {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    private GxaAnalyticsLoaderFactory analyticsLoaderFactory;
-
-    @Inject
     private DataFileHub dataFileHub;
 
     @Inject
@@ -61,7 +57,7 @@ public class ExperimentCrudIT {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy, analyticsLoaderFactory);
+        subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy);
     }
 
     public static final String RNASEQ_BASELINE_ACCESSION = "TEST-RNASEQ-BASELINE";
