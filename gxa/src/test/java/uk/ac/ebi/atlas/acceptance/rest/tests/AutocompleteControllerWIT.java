@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.search.suggester.SuggesterService;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -84,15 +85,16 @@ class AutocompleteControllerWIT {
 
     @Test
     void limitNumberOfSuggestions() throws Exception {
-        int suggestCount = ThreadLocalRandom.current().nextInt(1, 20);
-
         this.mockMvc
-                .perform(
-                        get("/json/suggestions")
-                                .param("query", "ASP").param("suggestCount", Integer.toString(suggestCount)))
+                .perform(get("/json/suggestions").param("query", "ASP"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(allOf(greaterThan(0), lessThanOrEqualTo(suggestCount)))))
+                .andExpect(
+                        jsonPath(
+                                "$",
+                                hasSize(allOf(
+                                        greaterThan(0),
+                                        lessThanOrEqualTo(SuggesterService.DEFAULT_MAX_NUMBER_OF_SUGGESTIONS)))))
                 .andExpect(jsonPath("$..value", everyItem(containsStringIgnoringCase("<b>asp</b>"))))
                 .andExpect(jsonPath("$[0].category", is(oneOf("ensgene", "symbol"))));
     }
