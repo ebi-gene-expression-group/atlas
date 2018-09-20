@@ -1,0 +1,3 @@
+[submodule "base/src/test/resources/schemas"]
+	path = base/src/test/resources/schemas
+	url = https://github.com/ebi-gene-expression-group/atlas-schemas.git
