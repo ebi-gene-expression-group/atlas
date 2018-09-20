@@ -21,7 +21,7 @@ public class FeaturedSpeciesDao {
                     "(SELECT species, COUNT(species) AS count FROM scxa_experiment " +
                     "WHERE private=FALSE GROUP BY species ORDER BY count DESC) n";
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "txManager", readOnly = true)
     public List<String> fetchSpeciesSortedByExperimentCount() {
         return jdbcTemplate.queryForList(SELECT_DISTINCT_SPECIES_IN_PUBLIC_EXPERIMENTS, String.class);
     }

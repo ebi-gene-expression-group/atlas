@@ -44,7 +44,7 @@ public class GeneSearchDao {
             "SELECT experiment_accession, cell_id FROM scxa_analytics AS analytics " +
                     "JOIN scxa_experiment AS experiments ON analytics.experiment_accession = experiments.accession " +
                     "WHERE gene_id=:gene_id AND private=FALSE";
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "txManager", readOnly = true)
     public Map<String, List<String>> fetchCellIds(String geneId) {
         LOGGER.debug("Fetching cell IDs for {}", geneId);
 
@@ -75,7 +75,7 @@ public class GeneSearchDao {
             "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes AS markers " +
                     "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession " +
                     "WHERE gene_id=:gene_id AND marker_probability<=:threshold AND private=FALSE";
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "txManager", readOnly = true)
     public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(

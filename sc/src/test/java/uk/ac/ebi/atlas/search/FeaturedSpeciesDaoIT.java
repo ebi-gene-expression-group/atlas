@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Transactional
+@Transactional(transactionManager = "txManager")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {JdbcConfig.class})
 class FeaturedSpeciesDaoIT {
