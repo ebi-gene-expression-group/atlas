@@ -1,55 +1,91 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.configuration.TestConfig;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertNotNull;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_ANY;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class MicroarrayExperimentConfigurationIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class MicroarrayExperimentConfigurationIT {
+    @Inject
+    private DataSource dataSource;
+
+    @Inject
+    private JdbcUtils jdbcUtils;
+
     @Inject
     private Path dataFilesPath;
 
     private MicroarrayExperimentConfiguration subject;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    void beforeAllTests() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/arraydesign-fixture.sql"),
+                new ClassPathResource("fixtures/designelement_mapping-fixture.sql"),
+                new ClassPathResource("fixtures/experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @ParameterizedTest
+    @MethodSource("microArrayExperimentAccessionProvider")
+    void testGetArrayDesignNames(String experimentAccession) {
         subject =
-                new ConfigurationTrader(new DataFileHub(dataFilesPath.resolve("scxa")))
-                        .getMicroarrayExperimentConfiguration("E-GEOD-13316");
+                new ConfigurationTrader(new DataFileHub(dataFilesPath.resolve("gxa")))
+                        .getMicroarrayExperimentConfiguration(experimentAccession);
+
+        assertThat(subject.getArrayDesignAccessions())
+                .isNotEmpty();
     }
 
-    @Test
-    public void testGetArrayDesignNames() {
-        assertThat(subject.getArrayDesignAccessions().size(), greaterThan(0));
+    @ParameterizedTest
+    @MethodSource("microArrayExperimentAccessionProvider")
+    void testGetContrasts(String experimentAccession) {
+        subject =
+                new ConfigurationTrader(new DataFileHub(dataFilesPath.resolve("gxa")))
+                        .getMicroarrayExperimentConfiguration(experimentAccession);
+
+        assertThat(subject.getContrasts())
+                .isNotEmpty()
+                .allSatisfy(contrast -> assertThat(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn()).isNotEmpty())
+                .allSatisfy(contrast -> assertThat(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn()).isNotEmpty())
+                .extracting("id", "displayName")
+                .doesNotContainNull();
     }
 
-    @Test
-    public void testGetContrasts() {
-        List<Contrast> contrasts = subject.getContrasts();
-        assertThat(contrasts.size(), greaterThan(0));
-        for (Contrast contrast: contrasts) {
-            assertNotNull(contrast.getId());
-            assertNotNull(contrast.getDisplayName());
-            assertThat(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn(), is(not(empty())));
-            assertThat(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn(), is(not(empty())));
-        }
+    private Stream<String> microArrayExperimentAccessionProvider() {
+        List<ExperimentType> microarrayExperimentTypes =
+                Arrays.stream(ExperimentType.values())
+                        .filter(experimentType -> experimentType.getParent() == MICROARRAY_ANY)
+                        .collect(toList());
+
+        Collections.shuffle(microarrayExperimentTypes);
+
+        return Stream.of(jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(microarrayExperimentTypes.get(0)));
     }
 }
