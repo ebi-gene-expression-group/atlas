@@ -40,6 +40,7 @@ public class DataFileHub {
     protected static final String CONFIGURATION_FILE_PATH_TEMPLATE = "{0}/{0}-configuration.xml";
     static final String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "{0}/{0}-analysis-methods.tsv";
     protected static final String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.condensed-sdrf.tsv";
+    protected static final String SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.sdrf.txt";
     protected static final String IDF_FILE_PATH_TEMPLATE = "{0}/{0}.idf.txt";
 
     protected static final String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "{0}/{0}.tsv";
@@ -134,6 +135,7 @@ public class DataFileHub {
         public final AtlasResource<TsvStreamer> analysisMethods;
         public final AtlasResource<XmlReader> configuration;
         public final AtlasResource<TsvStreamer> condensedSdrf;
+        public final AtlasResource<TsvStreamer> sdrf;
         public final AtlasResource<TsvStreamer> idf;
         public final AtlasResource<Set<Path>> qcFolder;
         public final AtlasResource<TsvStreamer> experimentDesign;
@@ -151,6 +153,11 @@ public class DataFileHub {
             condensedSdrf =
                     new TsvFile.ReadOnly(
                             experimentsMageTabDirLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+
+            sdrf =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation, SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+
             idf =
                     new TsvFile.ReadOnly(
                             experimentsMageTabDirLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
