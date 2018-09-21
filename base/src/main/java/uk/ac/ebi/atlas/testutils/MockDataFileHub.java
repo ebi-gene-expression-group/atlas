@@ -138,6 +138,13 @@ public final class MockDataFileHub extends DataFileHub {
                 lines);
     }
 
+    public void addSdrfFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(
+                experimentsMageTabDirLocation.resolve(
+                        MessageFormat.format(SDRF_FILE_PATH_TEMPLATE, accession)),
+                lines);
+    }
+
     public void addIdfFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
                 experimentsMageTabDirLocation.resolve(
