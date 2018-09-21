@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.experimentimport.sdrf.SdrfParser;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,10 +35,12 @@ public class ExperimentDesignParser {
             Pattern.compile("\\s*Factor Value Ontology Term\\[(.*?)\\]\\s*");
 
     private final DataFileHub dataFileHub;
+    private final SdrfParser sdrfParser;
 
     @Inject
-    ExperimentDesignParser(DataFileHub dataFileHub) {
+    ExperimentDesignParser(DataFileHub dataFileHub, SdrfParser sdrfParser) {
         this.dataFileHub = dataFileHub;
+        this.sdrfParser = sdrfParser;
     }
 
     public ExperimentDesign parse(String experimentAccession) {
@@ -49,7 +53,14 @@ public class ExperimentDesignParser {
 
         try (TsvStreamer tsvStreamer = r.get()) {
             Iterator<String[]> lineIterator = tsvStreamer.get().iterator();
+
             ExperimentDesign experimentDesign = new ExperimentDesign();
+
+            if (dataFileHub.getExperimentFiles(experimentAccession).sdrf.exists()) {
+                Map<String, Set<String>> headers = sdrfParser.parseHeader(experimentAccession);
+                experimentDesign.setOrderedSampleHeaders(headers.get("characteristics"));
+                experimentDesign.setOrderedFactorHeaders(headers.get("factorvalue"));
+            }
 
             if (lineIterator.hasNext()) {
                 String[] headerLine = lineIterator.next();

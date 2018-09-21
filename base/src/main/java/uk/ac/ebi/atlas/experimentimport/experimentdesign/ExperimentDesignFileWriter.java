@@ -57,7 +57,7 @@ public class ExperimentDesignFileWriter {
         return headers.toArray(new String[0]);
     }
 
-    private List<String> toHeaders(SortedSet<String> propertyNames,
+    private List<String> toHeaders(Set<String> propertyNames,
                                    final String headerTemplate1,
                                    final String headerTemplate2) {
         List<String> headers = new ArrayList<>();

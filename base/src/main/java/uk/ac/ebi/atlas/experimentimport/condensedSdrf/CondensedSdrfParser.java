@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.experimentimport.sdrf.SdrfParser;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /*
@@ -47,19 +49,28 @@ public class CondensedSdrfParser {
     private static final String CHARACTERISTIC = "characteristic";
 
     private final DataFileHub dataFileHub;
+    private final SdrfParser sdrfParser;
     // TODO https://www.pivotaltracker.com/story/show/100371514
     // private final ValueAndUnitJoiner valueAndUnitJoiner;
 
     @Inject
-    public CondensedSdrfParser(DataFileHub dataFileHub) {
+    public CondensedSdrfParser(DataFileHub dataFileHub, SdrfParser sdrfParser) {
         this.dataFileHub = dataFileHub;
+        this.sdrfParser = sdrfParser;
         // this.valueAndUnitJoiner = valueAndUnitJoiner;
     }
 
     public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType)
             throws CondensedSdrfParserException {
-
         ExperimentDesign experimentDesign = new ExperimentDesign();
+
+        // Get sdrf headers if the file exists
+        if (dataFileHub.getExperimentFiles(experimentAccession).sdrf.exists()) {
+            Map<String, Set<String>> orderedHeaders = sdrfParser.parseHeader(experimentAccession);
+            experimentDesign.setOrderedSampleHeaders(orderedHeaders.get("characteristics"));
+            experimentDesign.setOrderedFactorHeaders(orderedHeaders.get("factorvalue"));
+        }
+
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
 
@@ -88,6 +99,7 @@ public class CondensedSdrfParser {
         String species = parseSpeciesFromCharacteristics(sampleCharacteristicsBuilder.build());
 
         addArraysToExperimentDesign(experimentDesign, assayRunToTsvLines);
+
 
         return new CondensedSdrfParserOutput(
                 experimentAccession,

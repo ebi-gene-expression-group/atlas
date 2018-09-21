@@ -1,23 +1,30 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.util.StringUtils;
+import uk.ac.ebi.atlas.experimentimport.sdrf.SdrfParser;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CondensedSdrfParserTest {
@@ -53,6 +60,9 @@ public class CondensedSdrfParserTest {
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String[] ASSAYS = {"ERR030872", "ERR030873", "ERR030874", "ERR030875"};
 
+    private static final String CHARACTERISTIC_HEADER_TYPE = "Characteristics";
+    private static final String FACTOR_HEADER_TYPE = "Factor Value";
+
     private static final String[][] E_MTAB_513_CONDENSED_SDRF_ARRAY = {
         {E_MTAB_513, "", ASSAYS[0], "characteristic", AGE, "60 year"},
         {E_MTAB_513, "", ASSAYS[0], "characteristic", ETHNIC_GROUP, CAUCASIAN, CAUCASIAN_EFO_URI},
@@ -79,6 +89,24 @@ public class CondensedSdrfParserTest {
         {E_MTAB_513, "", ASSAYS[3], "characteristic", SEX, MALE, MALE_ONTOLOGY_URI},
         {E_MTAB_513, "", ASSAYS[3], "factor", ORGANISM_PART, LEUKOCYTE, LEUKOCYTE_ONTOLOGY_URI}
     };
+
+    private static final String[][] E_MTAB_513_SDRF_HEADER_ARRAY = {{
+        createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, ORGANISM),
+        createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, AGE),
+        createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, SEX),
+        createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, ETHNIC_GROUP),
+        createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, ORGANISM_PART),
+        createSdrfHeaderString(FACTOR_HEADER_TYPE, ORGANISM_PART)}
+    };
+
+    private static final String[][] E_MTAB_513_SDRF_HEADER_MISSING_CHARACTERISTIC = {{
+            createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, ORGANISM),
+            createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, AGE),
+            createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, ETHNIC_GROUP),
+            createSdrfHeaderString(CHARACTERISTIC_HEADER_TYPE, ORGANISM_PART),
+            createSdrfHeaderString(FACTOR_HEADER_TYPE, ORGANISM_PART)}
+    };
+
 
     private static final String E_MEXP_1810 = "E-MEXP-1810";
     private static final String H_RIL_14_NON_DAUER_1 = "H_RIL-14 non-dauer 1";
@@ -115,6 +143,9 @@ public class CondensedSdrfParserTest {
 
     private static MockDataFileHub dataFileHub;
 
+    @Mock
+    private SdrfParser mockSdrfParser;
+
     private CondensedSdrfParser subject;
 
     @Rule
@@ -127,12 +158,18 @@ public class CondensedSdrfParserTest {
 
     @Before
     public void setUp() {
-        subject = new CondensedSdrfParser(dataFileHub);
+        subject = new CondensedSdrfParser(dataFileHub, mockSdrfParser);
     }
 
     @Test
     public void parse() {
         dataFileHub.addCondensedSdrfFile(E_MTAB_513, Arrays.asList(E_MTAB_513_CONDENSED_SDRF_ARRAY));
+        dataFileHub.addSdrfFile(E_MTAB_513, Arrays.asList(E_MTAB_513_SDRF_HEADER_ARRAY));
+
+        when(mockSdrfParser.parseHeader(E_MTAB_513)).thenReturn(ImmutableMap.of(
+                StringUtils.trimAllWhitespace(CHARACTERISTIC_HEADER_TYPE).toLowerCase(), new LinkedHashSet<>(Arrays.asList(ORGANISM, AGE, SEX, ETHNIC_GROUP, ORGANISM_PART)),
+                StringUtils.trimAllWhitespace(FACTOR_HEADER_TYPE).toLowerCase(), new LinkedHashSet<>(Collections.singletonList(ORGANISM_PART))
+        ));
 
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
         assertThat(
@@ -179,6 +216,12 @@ public class CondensedSdrfParserTest {
                 ImmutableList.copyOf(
                         Arrays.copyOfRange(
                                 E_MTAB_513_CONDENSED_SDRF_ARRAY, 0, E_MTAB_513_CONDENSED_SDRF_ARRAY.length - 1)));
+        dataFileHub.addSdrfFile(
+                E_MTAB_513, Arrays.asList(E_MTAB_513_SDRF_HEADER_MISSING_CHARACTERISTIC));
+
+        when(mockSdrfParser.parseHeader(E_MTAB_513)).thenReturn(ImmutableMap.of(
+                StringUtils.trimAllWhitespace(CHARACTERISTIC_HEADER_TYPE).toLowerCase(), new LinkedHashSet<>(Arrays.asList(ORGANISM, AGE, ETHNIC_GROUP, ORGANISM_PART)),
+                StringUtils.trimAllWhitespace(FACTOR_HEADER_TYPE).toLowerCase(), new LinkedHashSet<>(Collections.singletonList(ORGANISM_PART))));
 
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
 
@@ -246,5 +289,9 @@ public class CondensedSdrfParserTest {
                 ImmutableList.copyOf(NO_FACTOR_OR_CHARACTERISTIC_CONDENSED_SDRF_ARRAY));
 
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
+    }
+
+    private static String createSdrfHeaderString(String headerType, String headerValue) {
+        return headerType + " [" + headerValue + "]";
     }
 }
