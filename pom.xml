@@ -463,6 +463,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>java-hamcrest</artifactId>
             <version>2.0.0.0</version>
@@ -638,9 +645,6 @@
                 <build.environment>dev</build.environment>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
-                <jdbc.username>atlas3it</jdbc.username>
-                <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
                 <zk.host>lime.ebi.ac.uk</zk.host>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <!-- Must match any of the appenders defined in logback-test.xml -->
