@@ -24,9 +24,13 @@ public class SdrfParser {
         this.dataFileHub = dataFileHub;
     }
 
-    // Returns a map containing the header values for characteristics and factors
+    /**
+     * Returns a map containing the header values for characteristics and factors, maintaining the same order in
+     * which they appear in the sdrf file.
+     */
     public Map<String, Set<String>> parseHeader(String experimentAccession) {
         try (TsvStreamer sdrfStreamer = dataFileHub.getExperimentFiles(experimentAccession).sdrf.get()) {
+            // Headers of interest are of the form HeaderType[HeaderValue]
             Pattern pattern = Pattern.compile("(.*?)(\\[)(.*?)(].*)");
 
             Map<String, Set<String>> headers = new HashMap<>();
@@ -39,8 +43,10 @@ public class SdrfParser {
                     .forEach(header -> {
                         Matcher matcher = pattern.matcher(header);
                         if (matcher.matches()) {
-                            String headerType = StringUtils.trimAllWhitespace(matcher.group(1)).toLowerCase(); // is the header a characteristic or a factor value?
-                            String headerValue = matcher.group(3).trim().toLowerCase(); // what is the title of the header? e.g. organism, age, etc
+                            // The header is either a characteristic or a factor value
+                            String headerType = StringUtils.trimAllWhitespace(matcher.group(1)).toLowerCase();
+                            // The title of the header is a type of metadata, such as organism, age, etc
+                            String headerValue = matcher.group(3).trim().toLowerCase();
                             if (headers.containsKey(headerType)) {
                                 headers.get(headerType).add(headerValue);
                             } else {
