@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -27,6 +29,7 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_ANY;
 
+@Transactional(transactionManager = "txManager")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -46,9 +49,17 @@ class MicroarrayExperimentConfigurationIT {
     void beforeAllTests() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
-                new ClassPathResource("fixtures/arraydesign-fixture.sql"),
-                new ClassPathResource("fixtures/designelement_mapping-fixture.sql"),
-                new ClassPathResource("fixtures/experiment-fixture.sql"));
+                new ClassPathResource("fixtures/experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void afterAllTests() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
         populator.execute(dataSource);
     }
 
@@ -82,6 +93,7 @@ class MicroarrayExperimentConfigurationIT {
         List<ExperimentType> microarrayExperimentTypes =
                 Arrays.stream(ExperimentType.values())
                         .filter(experimentType -> experimentType.getParent() == MICROARRAY_ANY)
+                        .filter(experimentType -> experimentType != MICROARRAY_ANY)
                         .collect(toList());
 
         Collections.shuffle(microarrayExperimentTypes);

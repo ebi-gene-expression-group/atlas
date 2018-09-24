@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.idf;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +10,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
@@ -21,16 +21,15 @@ import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Transactional(transactionManager = "txManager")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IdfParserIT {
     @Inject
-    private Path dataFilesPath;
+    private DataSource dataSource;
 
     @Inject
-    private DataSource dataSource;
+    private Path dataFilesPath;
 
     @Inject
     private JdbcUtils jdbcUtils;
@@ -38,15 +37,24 @@ class IdfParserIT {
     @BeforeAll
     void beforeAllTests() {
         // Ideally we’d like to run the fixtures declaratively:
-        // @SqlConfig(dataSource = "embeddedDataSource", transactionManager = "embeddedTxMgr")
+        // @Transactional(transactionManager = "txManager")
         // @Sql({"/fixtures/experiment-fixture.sql", "/fixtures/scxa_experiment-fixture.sql"})
         //
-        // Unfortunately the scripts are not executed before the argument providers. With @BeforeAll they are.
+        // Unfortunately @Sql attaches to all @Test annotated methods, not @ParameterizedTest introduced in JUnit 5
 
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/experiment-fixture.sql"),
                 new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void afterAllTests() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
         populator.execute(dataSource);
     }
 

@@ -1,11 +1,17 @@
 package uk.ac.ebi.atlas.resource;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -13,15 +19,21 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional(transactionManager = "txManager")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DataFileHubIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataFileHubIT.class);
+
+    @Inject
+    private DataSource dataSource;
 
     @Inject
     private Path dataFilesPath;
@@ -30,6 +42,24 @@ class DataFileHubIT {
     private JdbcUtils jdbcUtils;
 
     private DataFileHub subject;
+
+    @BeforeAll
+    void beforeAllTests() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void afterAllTests() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
 
     @Test
     void testGetExperimentFiles() {
