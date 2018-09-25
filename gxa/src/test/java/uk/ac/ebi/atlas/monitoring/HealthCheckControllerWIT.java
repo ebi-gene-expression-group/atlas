@@ -36,15 +36,6 @@ class HealthCheckControllerWIT {
     }
 
     @Test
-    void requestReturnsDbAndSolrStatusLegacy() throws Exception {
-        mockMvc.perform(get("/json/dbsolr/status"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.Solr", is(oneOf("UP", "DOWN"))))
-                .andExpect(jsonPath("$.DB", is(oneOf("UP", "DOWN"))));
-    }
-
-    @Test
     void requestReturnsDbAndSolrStatus() throws Exception {
         mockMvc.perform(get("/json/health"))
                 .andExpect(status().isOk())
