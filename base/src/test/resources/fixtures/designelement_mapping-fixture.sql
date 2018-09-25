@@ -1,5 +1,4 @@
 --SELECT * FROM designelement_mapping TABLESAMPLE SYSTEM_ROWS(500)
-DELETE FROM designelement_mapping;
 INSERT INTO designelement_mapping (designelement, identifier, type, arraydesign) VALUES ('M80545_at', 'ENSRNOG00000018378', 'gene', 'A-AFFY-22');
 INSERT INTO designelement_mapping (designelement, identifier, type, arraydesign) VALUES ('M16406cds_s_at', 'ENSRNOG00000018385', 'gene', 'A-AFFY-22');
 INSERT INTO designelement_mapping (designelement, identifier, type, arraydesign) VALUES ('U63971_at', 'ENSRNOG00000018430', 'gene', 'A-AFFY-22');

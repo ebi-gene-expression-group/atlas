@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.arraydesign;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -43,7 +44,8 @@ class ArrayDesignDaoIT {
     private ArrayDesignDao subject;
 
     private static final String SELECT_IDENTIFIERS_WITH_DESIGNELEMENT_COUNT =
-            "SELECT identifier, COUNT(DISTINCT(designelement)) AS count FROM designelement_mapping GROUP BY identifier";
+            "SELECT identifier, COUNT(DISTINCT(designelement)) AS count " +
+            "FROM designelement_mapping GROUP BY identifier";
 
     @BeforeAll
     void beforeAllTests() {
@@ -51,6 +53,15 @@ class ArrayDesignDaoIT {
         populator.addScripts(
                 new ClassPathResource("fixtures/arraydesign-fixture.sql"),
                 new ClassPathResource("fixtures/designelement_mapping-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void afterAllTests() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/arraydesign-delete.sql"),
+                new ClassPathResource("fixtures/designelement_mapping-delete.sql"));
         populator.execute(dataSource);
     }
 

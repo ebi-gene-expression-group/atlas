@@ -1,4 +1,4 @@
-DELETE FROM arraydesign;
+--SELECT * FROM arraydesign
 INSERT INTO arraydesign (accession, name) VALUES ('A-AFFY-128', 'Affymetrix GeneChip Bovine Genome Array [Bovine]');
 INSERT INTO arraydesign (accession, name) VALUES ('A-AFFY-60', 'Affymetrix GeneChip C. elegans Genome Array [Celegans]');
 INSERT INTO arraydesign (accession, name) VALUES ('A-AFFY-149', 'Affymetrix GeneChip Canine Genome 2.0 Array [Canine_2]');
