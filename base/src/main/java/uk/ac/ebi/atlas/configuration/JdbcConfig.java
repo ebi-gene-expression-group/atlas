@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 @Configuration
-@Profile("default")
 @PropertySource("classpath:jdbc.properties")
 @EnableTransactionManagement
 public class JdbcConfig {
