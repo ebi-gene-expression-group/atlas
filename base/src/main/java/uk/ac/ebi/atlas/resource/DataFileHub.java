@@ -83,7 +83,6 @@ public class DataFileHub {
             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
     protected static final String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "{0}/{0}.tsne_perp_{1}.tsv";
-    protected static final String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.sdrf.txt";
     protected static final String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "{0}/{0}.clusters.tsv";
     protected static final String SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE = "{0}/{0}.software.tsv";
 
@@ -354,7 +353,6 @@ public class DataFileHub {
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
         public final AtlasResource<TsvStreamer> geneIdsTsv;
         public final AtlasResource<TsvStreamer> cellIdsTsv;
-        public final AtlasResource<TsvStreamer> sdrf;
         public final AtlasResource<TsvStreamer> clustersTsv;
         public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
 
@@ -364,11 +362,6 @@ public class DataFileHub {
             softwareUsed = new TsvFile.ReadOnly(
                     experimentsMageTabDirLocation,
                     SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE,
-                    experimentAccession);
-
-            sdrf = new TsvFile.ReadOnly(
-                    experimentsMageTabDirLocation,
-                    SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE,
                     experimentAccession);
 
             clustersTsv = new TsvFile.ReadOnly(
