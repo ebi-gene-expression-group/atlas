@@ -58,23 +58,10 @@ public class IdfParser {
                                             .collect(Collectors.toList()),
                                     (accumulatedValues, newValue) -> accumulatedValues));
 
-            String title;
-            // Experiments that are regularly updated in ArrayExpress
-            if (experimentAccession.startsWith("E-MTAB") || experimentAccession.startsWith("E-TABM")) {
-                 title =
-                         getParsedOutputByKey(
-                                 AE_EXPERIMENT_DISPLAY_NAME_ID,
-                                 getParsedOutputByKey(INVESTIGATION_TITLE_ID, emptyList()))
-                                 .stream()
-                                 .filter(StringUtils::isNotBlank)
-                                 .findFirst()
-                                 .orElse("");
-            } else {
-                title = getParsedOutputByKey(INVESTIGATION_TITLE_ID, emptyList())
-                        .stream()
-                        .findFirst()
-                        .orElse("");
-            }
+            String title = getParsedOutputByKey(AE_EXPERIMENT_DISPLAY_NAME_ID, getParsedOutputByKey(INVESTIGATION_TITLE_ID, emptyList()))
+                    .stream()
+                    .findFirst()
+                    .orElse("");
 
             String experimentDescription = getParsedOutputByKey(EXPERIMENT_DESCRIPTION_ID, emptyList())
                     .stream()
