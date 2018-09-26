@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.tsne;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.math.util.MathUtils;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.metadata.CellMetadataDao;
@@ -32,7 +33,10 @@ public class TSnePlotService {
                 .map(
                         pointDto ->
                                 TSnePoint.create(
-                                        pointDto.x(), pointDto.y(), pointDto.expressionLevel(), pointDto.name()))
+                                        MathUtils.round(pointDto.x(), 2),
+                                        MathUtils.round(pointDto.y(), 2),
+                                        pointDto.expressionLevel(),
+                                        pointDto.name()))
                 .collect(toSet());
     }
 
