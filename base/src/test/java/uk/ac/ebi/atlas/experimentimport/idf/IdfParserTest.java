@@ -134,28 +134,6 @@ class IdfParserTest {
     }
 
     @Test
-    void parseForTABMAccession() {
-        dataFileHub.addIdfFile("E-TABM-0001", Arrays.asList(IDF_TXT));
-
-        IdfParserOutput idfParserOutput = subject.parse("E-TABM-0001");
-
-        assertThat(idfParserOutput.getTitle()).isEqualTo(AE_DISPLAY_NAME);
-        assertThat(idfParserOutput.getPubmedIds()).containsOnlyElementsOf(PUBMED_IDS);
-        assertThat(idfParserOutput.getExpectedClusters()).isEqualTo(NumberUtils.toInt(EXPECTED_CLUSTERS));
-    }
-
-    @Test
-    void parseForNonMTABAccession() {
-        dataFileHub.addIdfFile("E-GEOD-0001", Arrays.asList(IDF_TXT));
-
-        IdfParserOutput idfParserOutput = subject.parse("E-GEOD-0001");
-
-        assertThat(idfParserOutput.getTitle()).isEqualTo(TITLE);
-        assertThat(idfParserOutput.getPubmedIds()).containsOnlyElementsOf(PUBMED_IDS);
-        assertThat(idfParserOutput.getExpectedClusters()).isEqualTo(NumberUtils.toInt(EXPECTED_CLUSTERS));
-    }
-
-    @Test
     void parseNothing() {
         dataFileHub.addIdfFile(E_MTAB_513, Collections.emptyList());
 
