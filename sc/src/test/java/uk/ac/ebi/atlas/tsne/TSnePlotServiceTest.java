@@ -141,8 +141,8 @@ class TSnePlotServiceTest {
                 .containsExactlyInAnyOrder(
                         randomPointDtos.stream()
                                 .map(dto -> TSnePoint.create(
-                                        MathUtils.round(dto.x(),2),
-                                        MathUtils.round(dto.y(),2),
+                                        MathUtils.round(dto.x(), 2),
+                                        MathUtils.round(dto.y(), 2),
                                         dto.expressionLevel(),
                                         dto.name()))
                                 .toArray(TSnePoint[]::new));

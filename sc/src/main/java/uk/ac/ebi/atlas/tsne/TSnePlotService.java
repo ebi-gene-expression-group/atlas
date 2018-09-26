@@ -33,8 +33,8 @@ public class TSnePlotService {
                 .map(
                         pointDto ->
                                 TSnePoint.create(
-                                        MathUtils.round(pointDto.x(),2),
-                                        MathUtils.round(pointDto.y(),2),
+                                        MathUtils.round(pointDto.x(), 2),
+                                        MathUtils.round(pointDto.y(), 2),
                                         pointDto.expressionLevel(),
                                         pointDto.name()))
                 .collect(toSet());
