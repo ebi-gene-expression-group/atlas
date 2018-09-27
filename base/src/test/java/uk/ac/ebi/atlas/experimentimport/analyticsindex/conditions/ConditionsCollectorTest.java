@@ -202,7 +202,6 @@ class ConditionsCollectorTest {
     @Test
     void differentialConditions() {
         assertThat(subject.getConditions(differentialExperimentMock))
-//                .isEqualTo(legacyConditionsLookupService.buildPropertiesForDifferentialExperiment(differentialExperimentMock.getAccession(), experimentDesignMock, ImmutableList.of(contrast)))
                 .flatExtracting("values")
                 .containsExactlyInAnyOrderElementsOf(
                         // We compare against a list since EFO terms or factor/sample values might occur more than once
