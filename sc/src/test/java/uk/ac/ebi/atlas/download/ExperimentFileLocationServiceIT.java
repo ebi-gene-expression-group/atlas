@@ -18,6 +18,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,6 +29,7 @@ class ExperimentFileLocationServiceIT {
     private static final String EXPERIMENT_DESIGN_FILE_NAME_TEMPLATE = "ExpDesign-{0}.tsv";
     private static final String SDRF_FILE_NAME_TEMPLATE = "{0}.sdrf.txt";
     private static final String CLUSTERS_FILE_NAME_TEMPLATE = "{0}.clusters.tsv";
+    private static final String MARKER_GENES_FILE_NAME_TEMPLATE = "{0}.marker_genes_{1}.tsv";
 
     private static final String MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE = "{0}.expression_tpm.mtx";
     private static final String MATRIX_MARKET_FILTERED_QUANTIFICATION_ROWS_FILE_NAME_TEMPLATE =
@@ -72,14 +74,30 @@ class ExperimentFileLocationServiceIT {
 
     @Test
     void existingFilteredQuantificationFiles() {
-        List<String> fileNameTemplates =
-                Arrays.asList(
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<String> expectedFileNames =
+                Stream.of(
                         MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE,
                         MATRIX_MARKET_FILTERED_QUANTIFICATION_ROWS_FILE_NAME_TEMPLATE,
-                        MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE);
+                        MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE)
+                        .map(template -> MessageFormat.format(template, experimentAccession))
+                        .collect(Collectors.toList());
 
-        existingArchiveFilesOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
-                ExperimentFileType.QUANTIFICATION_FILTERED, fileNameTemplates);
+        existingArchiveFilesOfType(experimentAccession,
+                ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames);
+    }
+
+    @Test
+    void existingMarkerGeneFiles() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<Integer> ks = jdbcTestUtils.fetchKsFromCellClusters(experimentAccession);
+
+        List<String> expectedFileNames = ks
+                .stream()
+                .map(k -> MessageFormat.format(MARKER_GENES_FILE_NAME_TEMPLATE, experimentAccession, k))
+                .collect(Collectors.toList());
+
+        existingArchiveFilesOfType(experimentAccession, ExperimentFileType.MARKER_GENES, expectedFileNames);
     }
 
     @Test
@@ -144,10 +162,10 @@ class ExperimentFileLocationServiceIT {
 
     private void existingArchiveFilesOfType(String experimentAccession,
                                             ExperimentFileType fileType,
-                                            List<String> fileNameTemplates) {
+                                            List<String> expectedFileNames) {
         List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
 
-        assertThat(paths).hasSameSizeAs(fileNameTemplates);
+        assertThat(paths).hasSameSizeAs(expectedFileNames);
 
         for (Path path : paths) {
             File file = path.toFile();
@@ -161,12 +179,6 @@ class ExperimentFileLocationServiceIT {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
-        assertThat(fileNames)
-                .containsAll(
-                        fileNameTemplates
-                                .stream()
-                                .map(template -> MessageFormat.format(template, experimentAccession))
-                                .collect(Collectors.toList())
-                );
+        assertThat(fileNames).containsAll(expectedFileNames);
     }
 }
