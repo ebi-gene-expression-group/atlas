@@ -64,17 +64,22 @@ public class JsonBaselineGeneInExperimentController extends JsonExperimentContro
 
         // Do we need to set cutoff to 0? TODO Test the endpoint...
         preferences.setCutoff(0.0);
-        GeneProfilesList<BaselineExpressionPerReplicateProfile> transcriptExpression =
-                baselineTranscriptProfileStreamFactory.getAllMatchingProfiles(
-                        experiment,
-                        requestContext,
-                        ImmutableSet.of(geneId));
 
-        if (!transcriptExpression.isEmpty()) {
-            result.add(
-                    "transcriptExpression",
-                    BaselineExperimentProfilesListSerializer.serialize(transcriptExpression, requestContext));
+        // If experiment is not GTEx TODO Fix transcripts so that GTEx doesn't have performance issues
+        if (!experimentAccession.equalsIgnoreCase("E-MTAB-5214")) {
+            GeneProfilesList<BaselineExpressionPerReplicateProfile> transcriptExpression =
+                    baselineTranscriptProfileStreamFactory.getAllMatchingProfiles(
+                            experiment,
+                            requestContext,
+                            ImmutableSet.of(geneId));
+
+            if (!transcriptExpression.isEmpty()) {
+                result.add(
+                        "transcriptExpression",
+                        BaselineExperimentProfilesListSerializer.serialize(transcriptExpression, requestContext));
+            }
         }
+
         if (!geneExpression.isEmpty()) {
             result.add(
                     "geneExpression",
