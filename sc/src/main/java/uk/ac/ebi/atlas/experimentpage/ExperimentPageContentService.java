@@ -83,9 +83,15 @@ public class ExperimentPageContentService {
         JsonArray result = new JsonArray();
 
         List<ExperimentFileType> metadataFiles =
-                Arrays.asList(ExperimentFileType.SDRF, ExperimentFileType.IDF, ExperimentFileType.EXPERIMENT_DESIGN);
+                Arrays.asList(
+                        ExperimentFileType.SDRF,
+                        ExperimentFileType.IDF,
+                        ExperimentFileType.EXPERIMENT_DESIGN);
         List<ExperimentFileType> resultFiles =
-                Arrays.asList(ExperimentFileType.CLUSTERING, ExperimentFileType.QUANTIFICATION_FILTERED);
+                Arrays.asList(
+                        ExperimentFileType.CLUSTERING,
+                        ExperimentFileType.QUANTIFICATION_FILTERED,
+                        ExperimentFileType.MARKER_GENES);
 
         result.add(getDownloadSection("Metadata files", metadataFiles, experimentAccession, accessKey));
         result.add(getDownloadSection("Result files", resultFiles, experimentAccession, accessKey));

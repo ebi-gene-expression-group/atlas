@@ -17,7 +17,9 @@ public enum ExperimentFileType {
     QUANTIFICATION_RAW(
             "quantification-raw", "Raw quantification files (MatrixMarket)", IconType.TSV, true),
     QUANTIFICATION_FILTERED(
-            "quantification-filtered", "Filtered quantification files (MatrixMarket)", IconType.TSV, true);
+            "quantification-filtered", "Filtered quantification files (MatrixMarket)", IconType.TSV, true),
+    MARKER_GENES(
+            "marker-genes", "Marker gene files (.tsv)", IconType.TSV, true);
 
     // IDs should be used when generating URLs
     private final String id;
