@@ -15,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
@@ -42,6 +43,9 @@ class GeneSearchDaoIT {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Inject
+    private IdfParser idfParser;
+
+    @Inject
     private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
 
     @Inject
@@ -51,7 +55,7 @@ class GeneSearchDaoIT {
 
     @BeforeEach
     public void setUp() {
-        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
+        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory, idfParser);
     }
 
     @ParameterizedTest
@@ -65,31 +69,30 @@ class GeneSearchDaoIT {
     @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
     @ValueSource(strings = {"ENSG00000000009"})
     void validGeneIdReturnsKAndClusterIds(String geneId) {
-        Map<String, Map<Integer, List<Integer>>> result = subject.fetchKAndClusterIds(geneId);
+        Map<String, Map<Integer, List<Integer>>> result = subject.preferredKAndExperiment(geneId);
 
         assertThat(result)
                 .containsKeys("E-GEOD-106540")
                 .doesNotContainKeys("E-ENAD-13", "E-ENAD-14", "E-EHCA-2", "E-GEOD-99058");
 
-        // Only marker genes with probablity < 0.05 are returned
+        // Only marker genes with minimum probablity is returned
         assertThat(result.get("E-GEOD-106540"))
                 .containsOnly(
-                        entry(3, singletonList(0)),
-                        entry(2, singletonList(1)));
+                        entry(3, singletonList(0)));
     }
 
     @ParameterizedTest
     @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
     @ValueSource(strings = {"ENSMUSG00000000006"})
     void searchForGeneOverProbabilityThresholdReturnsEmpty(String geneId) {
-        assertThat(subject.fetchKAndClusterIds(geneId))
+        assertThat(subject.preferredKAndExperiment(geneId))
                 .isEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"FOO"})
     void invalidGeneIdReturnsEmpty(String geneId) {
-        assertThat(subject.fetchKAndClusterIds(geneId))
+        assertThat(subject.preferredKAndExperiment(geneId))
                 .isEmpty();
     }
 
