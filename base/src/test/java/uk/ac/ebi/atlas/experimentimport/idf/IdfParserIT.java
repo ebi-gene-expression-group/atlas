@@ -35,7 +35,7 @@ class IdfParserIT {
     private JdbcUtils jdbcUtils;
 
     @BeforeAll
-    void beforeAllTests() {
+    void populateDatabaseTables() {
         // Ideally we’d like to run the fixtures declaratively:
         // @Transactional(transactionManager = "txManager")
         // @Sql({"/fixtures/experiment-fixture.sql", "/fixtures/scxa_experiment-fixture.sql"})
@@ -50,7 +50,7 @@ class IdfParserIT {
     }
 
     @AfterAll
-    void afterAllTests() {
+    void cleanDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/experiment-delete.sql"),

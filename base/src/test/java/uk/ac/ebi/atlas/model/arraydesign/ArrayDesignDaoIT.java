@@ -48,7 +48,7 @@ class ArrayDesignDaoIT {
             "FROM designelement_mapping GROUP BY identifier";
 
     @BeforeAll
-    void beforeAllTests() {
+    void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/arraydesign-fixture.sql"),
@@ -57,7 +57,7 @@ class ArrayDesignDaoIT {
     }
 
     @AfterAll
-    void afterAllTests() {
+    void cleanDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/arraydesign-delete.sql"),

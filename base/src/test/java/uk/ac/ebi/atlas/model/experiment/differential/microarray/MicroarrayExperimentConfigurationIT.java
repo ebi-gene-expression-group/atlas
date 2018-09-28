@@ -46,7 +46,7 @@ class MicroarrayExperimentConfigurationIT {
     private MicroarrayExperimentConfiguration subject;
 
     @BeforeAll
-    void beforeAllTests() {
+    void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/experiment-fixture.sql"),
@@ -55,7 +55,7 @@ class MicroarrayExperimentConfigurationIT {
     }
 
     @AfterAll
-    void afterAllTests() {
+    void cleanDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/experiment-delete.sql"),
