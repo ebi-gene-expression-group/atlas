@@ -43,7 +43,7 @@ public class GeneSearchService {
     public Map<String, Map<String, Map<Integer, List<Integer>>>> getMarkerGeneProfile(String... geneIds) {
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
-                geneId -> geneSearchDao.fetchKAndClusterIds(geneId));
+                geneId -> geneSearchDao.preferredKAndExperiment(geneId));
     }
 
     private <T> Map<String, T> fetchInParallel(Set<String> geneIds, Function<String, T> geneIdInfoProvider) {
