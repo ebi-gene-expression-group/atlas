@@ -35,6 +35,7 @@ public class SuggesterService {
                 .map(SUGGESTION_TO_MAP);
     }
 
+    // Like the above but highlights (in HTML bold <b>...</b>) the matched region of the suggestion
     public Stream<Map<String, String>> fetchPropertiesWithHighlighting(String query, String...  species) {
         Species[] speciesArray = Arrays.stream(species).map(speciesFactory::create).toArray(Species[]::new);
 
