@@ -96,6 +96,7 @@ public class ExperimentCrud {
 
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
         experimentDao.addExperiment(experimentDTO, accessKeyUuid);
+
         updateWithNewExperimentDesign(condensedSdrfParserOutput.getExperimentDesign(), experimentDTO);
 
         return accessKeyUuid;
@@ -199,16 +200,10 @@ public class ExperimentCrud {
     }
 
     private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO) {
-        updateWithNewExperimentDesign(
-                experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(), newDesign);
-
-    }
-
-    private void updateWithNewExperimentDesign(String accession, ExperimentType type,
-                                               ExperimentDesign experimentDesign) {
         try {
-            experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
-            LOGGER.info("updated design for experiment {}", accession);
+            experimentDesignFileWriterService.writeExperimentDesignFile(experimentDTO.getExperimentAccession(),
+                    experimentDTO.getExperimentType(), newDesign);
+            LOGGER.info("updated design for experiment {}", experimentDTO.getExperimentAccession());
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

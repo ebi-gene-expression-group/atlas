@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import uk.ac.ebi.atlas.experimentimport.sdrf.SdrfParser;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
@@ -103,6 +104,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
             new Factor(GENOTYPE, CYC);
 
     private static MockDataFileHub dataFileHub;
+    private SdrfParser sdrfParserMock;
 
     private ExperimentDesignParser subject;
 
@@ -116,7 +118,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
         dataFileHub.addExperimentDesignFile(EXPERIMENT_ACCESSION, DATA);
 
-        subject = new ExperimentDesignParser(dataFileHub);
+        subject = new ExperimentDesignParser(dataFileHub, sdrfParserMock);
     }
 
     @Test

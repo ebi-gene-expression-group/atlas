@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.sdrf.SdrfParser;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -47,6 +48,9 @@ public class ExperimentCrudTest {
 
     @Mock
     private CondensedSdrfParser condensedSdrfParserMock;
+
+    @Mock
+    private SdrfParser sdrfParserMock;
 
     @Mock
     private IdfParser idfParserMock;

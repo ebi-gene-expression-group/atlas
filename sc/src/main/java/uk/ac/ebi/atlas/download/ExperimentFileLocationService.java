@@ -32,7 +32,7 @@ public class ExperimentFileLocationService {
                         .getSingleCellExperimentFiles(experimentAccession)
                         .experimentFiles.experimentDesign.getPath();
             case SDRF:
-                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).sdrf.getPath();
+                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.sdrf.getPath();
             case IDF:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.idf.getPath();
             case CLUSTERING:

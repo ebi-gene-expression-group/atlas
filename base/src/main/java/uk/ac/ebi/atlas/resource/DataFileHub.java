@@ -40,6 +40,7 @@ public class DataFileHub {
     protected static final String CONFIGURATION_FILE_PATH_TEMPLATE = "{0}/{0}-configuration.xml";
     static final String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "{0}/{0}-analysis-methods.tsv";
     protected static final String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.condensed-sdrf.tsv";
+    protected static final String SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.sdrf.txt";
     protected static final String IDF_FILE_PATH_TEMPLATE = "{0}/{0}.idf.txt";
 
     protected static final String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "{0}/{0}.tsv";
@@ -83,10 +84,8 @@ public class DataFileHub {
 
     protected static final String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "{0}/{0}.tsne_perp_{1}.tsv";
     protected static final String SINGLE_CELL_MARKER_GENES_FILE_PATH_TEMPLATE = "{0}/{0}.marker_genes_{1}.tsv";
-    protected static final String SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE = "{0}/{0}.sdrf.txt";
     protected static final String SINGLE_CELL_CLUSTERS_FILE_PATH_TEMPLATE = "{0}/{0}.clusters.tsv";
     protected static final String SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE = "{0}/{0}.software.tsv";
-
 
     @Inject
     public DataFileHub(Path experimentsDirPath) {
@@ -135,6 +134,7 @@ public class DataFileHub {
         public final AtlasResource<TsvStreamer> analysisMethods;
         public final AtlasResource<XmlReader> configuration;
         public final AtlasResource<TsvStreamer> condensedSdrf;
+        public final AtlasResource<TsvStreamer> sdrf;
         public final AtlasResource<TsvStreamer> idf;
         public final AtlasResource<Set<Path>> qcFolder;
         public final AtlasResource<TsvStreamer> experimentDesign;
@@ -152,6 +152,11 @@ public class DataFileHub {
             condensedSdrf =
                     new TsvFile.ReadOnly(
                             experimentsMageTabDirLocation, CONDENSED_SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+
+            sdrf =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation, SDRF_FILE_PATH_TEMPLATE, experimentAccession);
+
             idf =
                     new TsvFile.ReadOnly(
                             experimentsMageTabDirLocation, IDF_FILE_PATH_TEMPLATE, experimentAccession);
@@ -348,7 +353,6 @@ public class DataFileHub {
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
         public final AtlasResource<TsvStreamer> geneIdsTsv;
         public final AtlasResource<TsvStreamer> cellIdsTsv;
-        public final AtlasResource<TsvStreamer> sdrf;
         public final AtlasResource<TsvStreamer> clustersTsv;
         public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
         public final Map<Integer, AtlasResource<TsvStreamer>> markerGeneTsvs;
@@ -359,11 +363,6 @@ public class DataFileHub {
             softwareUsed = new TsvFile.ReadOnly(
                     experimentsMageTabDirLocation,
                     SINGLE_CELL_SOFTWARE_USED_FILE_PATH_TEMPLATE,
-                    experimentAccession);
-
-            sdrf = new TsvFile.ReadOnly(
-                    experimentsMageTabDirLocation,
-                    SINGLE_CELL_SDRF_FILE_PATH_TEMPLATE,
                     experimentAccession);
 
             clustersTsv = new TsvFile.ReadOnly(
