@@ -17,10 +17,7 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -66,5 +63,22 @@ public class JsonGeneSearchControllerWIT {
                 .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
                 .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
                 .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes", "Species")));
+    }
+
+    @Test
+    public void jsonPayloadContainsFacetDescription() throws Exception {
+        String geneId = jdbcTestUtils.fetchRandomGene();
+
+        this.mockMvc.perform(get("/json/search/" + geneId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.results", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].element.experimentAccession", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].facets[0].group", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].description", isA(String.class)))
+                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes")));
     }
 }
