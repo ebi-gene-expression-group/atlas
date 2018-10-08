@@ -93,17 +93,21 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
      *          {
      *              group: "Cell type",
      *              value: "stem",
-     *              label: "Stem"
+     *              label: "Stem",
+     *              description: "Cell type tooltip"
      *          },
      *          {
      *              group: "Cell type",
      *              value: "enterocyte",
-     *              label: "Enterocyte
+     *              label: "Enterocyte",
+     *              description: "Cell type tooltip"
+     *
      *          },
      *          {
      *              group: "Organism part",
      *              value: "small intestine",
-     *              label: "Small intestine"
+     *              label: "Small intestine",
+     *              description: "Organism part tooltip"
      *          }
      *      ]
      */
@@ -124,8 +128,19 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         result.addProperty("group", group);
         result.addProperty("value", value);
         result.addProperty("label", StringUtils.capitalize(value));
+        result.addProperty("description",getTooltipText(group));
 
         return result;
+    }
+
+    private String getTooltipText(String group){
+        for (FacetsToTooltipMapping tooltip:
+                FacetsToTooltipMapping.values()) {
+            if(tooltip.name().equalsIgnoreCase(group)){
+                return tooltip.getTooltip();
+            }
+        }
+        return null;
     }
 
     // Converts list of map of k and cluster IDs into JSON objects
