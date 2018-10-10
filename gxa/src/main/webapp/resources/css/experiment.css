@@ -9,3 +9,11 @@ th.gxaHeatmapTableDesignElement {
 .tool-item {
     border: none !important;
 }
+
+/* Fix for Highcharts tooltip being cut off */
+#experiment-page .highcharts-container {
+    overflow: visible !important;
+}
+#experiment-page svg {
+    overflow: visible !important;
+}
