@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.search;
 
 public enum FacetsToTooltipMapping {
     INFERRED_CELL_TYPE("Inferred cell type","Submitter defined cell identity for a cell based on post-sequencing expression profile."),
-    SPECIES("Species","Tooltip for species"),
     MARKER_GENE("Marker genes","A gene that comprises part of the specific expression profile for that cluster."),
     ORGANISM_PART("Organism part","The tissue from which the sample is originally derived e.g lung.");
 
