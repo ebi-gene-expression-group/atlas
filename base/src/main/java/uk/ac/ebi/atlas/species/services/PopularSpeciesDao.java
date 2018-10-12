@@ -1,25 +1,33 @@
 package uk.ac.ebi.atlas.species.services;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.sql.ResultSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Named
 public class PopularSpeciesDao {
 
-    protected static final String SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY =
-            "SELECT species, type, COUNT(species) c " +
+    protected static final String SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK =
+            "SELECT experiment_organism.organism, experiment.type, " +
+            "count(experiment_organism.organism) AS c " +
             "FROM experiment " +
-            "WHERE private=FALSE GROUP BY type, species";
+            "LEFT OUTER JOIN  experiment_organism ON experiment_organism.experiment=experiment.accession " +
+            "WHERE private='F' GROUP BY experiment.type, experiment_organism.organism";
+
+    private static final String SELECT_SPECIES_WITH_EXPERIMENT_COUNT_SINGLE_CELL =
+            "SELECT species, COUNT(species) AS count FROM scxa_experiment "
+                    + "WHERE private=FALSE "
+                    + "GROUP BY species ";
 
     private final SpeciesFactory speciesFactory;
     private final JdbcTemplate jdbcTemplate;
@@ -30,43 +38,69 @@ public class PopularSpeciesDao {
         this.speciesFactory = speciesFactory;
     }
 
-    public ImmutableList<PopularSpeciesInfo> popularSpecies() {
-        List<Map<String, Object>> results =
-                jdbcTemplate.queryForList(SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY);
+    public ImmutableList<PopularSpeciesInfo> getBulkExperimentCountBySpecies() {
+        return jdbcTemplate.query(SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK, (ResultSet resultSet) -> {
+            Map<String, Pair<Long, Long>> result = new HashMap<>();
 
-        HashMap<String, Pair<Long, Long>> speciesToExperimentCounts = Maps.newHashMap();
-        for (Map<String, Object> resultRow : results) {
-            String species = speciesFactory.create((String) resultRow.get("species")).getReferenceName();
-            ExperimentType experimentType = ExperimentType.valueOf((String) resultRow.get("type"));
-            long experimentCount = (long) resultRow.get("c");
+            while (resultSet.next()) {
+                String species = speciesFactory.create(resultSet.getString("organism")).getReferenceName();
+                ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
+                long experimentCount = resultSet.getLong("c");
 
-            if (!speciesToExperimentCounts.containsKey(species)) {
-                speciesToExperimentCounts.put(species, Pair.of(0L, 0L));
+                if (experimentType.isBaseline()) {
+                    result.merge(
+                            species,
+                            Pair.of(experimentCount, 0L),
+                            (oldValue, newValue) -> Pair.of(
+                                    oldValue.getLeft() + newValue.getLeft(),
+                                    oldValue.getRight() + newValue.getRight()));
+                } else { //if (experimentType.isDifferential()) {
+                    result.merge(
+                            species,
+                            Pair.of(0L, experimentCount),
+                            (oldValue, newValue) -> Pair.of(
+                                    oldValue.getLeft() + newValue.getLeft(),
+                                    oldValue.getRight() + newValue.getRight()));
+                }
             }
 
-            Pair<Long, Long> experimentCounts = speciesToExperimentCounts.get(species);
-            if (experimentType.isBaseline()) {
-                speciesToExperimentCounts.put(
-                        species, Pair.of(experimentCounts.getLeft() + experimentCount, experimentCounts.getRight()));
-            } else { //if (experimentType.isDifferential()) {
-                speciesToExperimentCounts.put(
-                        species, Pair.of(experimentCounts.getLeft(), experimentCounts.getRight() + experimentCount));
-            }
-        }
-
-        ImmutableList.Builder<PopularSpeciesInfo> popularSpeciesInfoBuilder = ImmutableList.builder();
-        for (Map.Entry<String, Pair<Long, Long>> speciesToExperimentCount : speciesToExperimentCounts.entrySet()) {
-            String speciesName = speciesToExperimentCount.getKey();
-            String kingdom = speciesFactory.create(speciesName).getKingdom();
-            long baselineExperimentsCount = speciesToExperimentCount.getValue().getLeft();
-            long differentialExperimentsCount = speciesToExperimentCount.getValue().getRight();
-            popularSpeciesInfoBuilder.add(
-                    PopularSpeciesInfo.create(
-                            speciesName, kingdom, baselineExperimentsCount, differentialExperimentsCount)
-            );
-        }
-
-        return popularSpeciesInfoBuilder.build();
+            return result.entrySet().stream()
+                    .map(entry -> {
+                        String speciesName = entry.getKey();
+                        String kingdom = speciesFactory.create(speciesName).getKingdom();
+                        long baselineExperimentsCount = entry.getValue().getLeft();
+                        long differentialExperimentsCount = entry.getValue().getRight();
+                        return PopularSpeciesInfo.create(
+                                speciesName,
+                                kingdom,
+                                baselineExperimentsCount,
+                                differentialExperimentsCount);
+                    })
+                    .collect(ImmutableList.toImmutableList());
+        });
     }
 
+    @Transactional(readOnly = true)
+    public ImmutableList<PopularSpeciesInfo> getSingleCellExperimentCountBySpecies() {
+        return jdbcTemplate.query(SELECT_SPECIES_WITH_EXPERIMENT_COUNT_SINGLE_CELL, (ResultSet resultSet) -> {
+            Map<String, Long> result = new HashMap<>();
+            while (resultSet.next()) {
+                // Normalise species name
+                String species = speciesFactory.create(resultSet.getString("species")).getReferenceName();
+                long count = resultSet.getLong("count");
+
+                result.merge(species, count, Long::sum);
+            }
+
+            return result.entrySet().stream()
+                    .map(entry -> {
+                        Species species = speciesFactory.create(entry.getKey());
+                        return PopularSpeciesInfo.create(
+                                species.getReferenceName(),
+                                species.getKingdom(),
+                                entry.getValue());
+                    })
+                    .collect(ImmutableList.toImmutableList());
+        });
+    }
 }

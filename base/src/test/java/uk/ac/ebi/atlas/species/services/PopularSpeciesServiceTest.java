@@ -57,7 +57,7 @@ public class PopularSpeciesServiceTest {
             }
         }
 
-        when(popularSpeciesDaoMock.popularSpecies()).thenReturn(popularSpeciesBuilder.build());
+        when(popularSpeciesDaoMock.getBulkExperimentCountBySpecies()).thenReturn(popularSpeciesBuilder.build());
     }
 
     public void assertThatListIsSortedInDescendingOrder(List<PopularSpeciesInfo> list) {
