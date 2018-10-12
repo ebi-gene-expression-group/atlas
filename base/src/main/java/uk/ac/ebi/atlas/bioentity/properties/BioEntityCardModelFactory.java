@@ -126,7 +126,7 @@ public class BioEntityCardModelFactory {
     private String getBioEntityDescription(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
         String firstValueOfDescription =
                 propertyValuesByType.getOrDefault(DESCRIPTION, ImmutableSet.of("")).iterator().next();
-        return StringUtils.substringBefore(firstValueOfDescription, "[").trim();
+        return StringUtils.substringBefore(firstValueOfDescription, "[Source").trim();
     }
 
     private List<PropertyLink> createLinks(String identifier,
