@@ -17,7 +17,7 @@ import java.util.Map;
 @Named
 public class GxaPopularSpeciesDao extends PopularSpeciesDao {
 
-    private static final String SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK =
+    protected static final String SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK =
             "SELECT experiment_organism.organism, experiment.type, " +
             "count(experiment_organism.organism) AS c " +
             "FROM experiment " +
