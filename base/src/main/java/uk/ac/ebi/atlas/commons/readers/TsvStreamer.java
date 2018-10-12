@@ -35,7 +35,7 @@ public class TsvStreamer implements AutoCloseable, Supplier<Stream<String[]>> {
         }
     }
 
-    private static String[] splitByTabsAndTrimWrappingQuotes (String line) {
+    private static String[] splitByTabsAndTrimWrappingQuotes(String line) {
         return Stream
                 .of(line.split("\t", -1))
                 .map(TsvStreamer::trimDoubleQuotes)
@@ -50,9 +50,8 @@ public class TsvStreamer implements AutoCloseable, Supplier<Stream<String[]>> {
         return DUMMY;
     }
 
-    private final static TsvStreamer DUMMY = new DummyTsvStreamer();
-
-    private final static class DummyTsvStreamer extends TsvStreamer {
+    private static final TsvStreamer DUMMY = new DummyTsvStreamer();
+    private static final class DummyTsvStreamer extends TsvStreamer {
         private DummyTsvStreamer() {
             super(null);
         }

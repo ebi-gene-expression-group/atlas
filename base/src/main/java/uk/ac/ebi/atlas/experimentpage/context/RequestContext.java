@@ -27,7 +27,7 @@ public abstract class RequestContext
     protected final K requestPreferences;
     protected final E experiment;
 
-    public RequestContext(K requestPreferences, E experiment){
+    public RequestContext(K requestPreferences, E experiment) {
         this.requestPreferences = requestPreferences;
         this.experiment = experiment;
     }
@@ -44,11 +44,11 @@ public abstract class RequestContext
         return requestPreferences.getHeatmapMatrixSize();
     }
 
-    public List<D> getAllDataColumns(){
+    public List<D> getAllDataColumns() {
         return experiment.getDataColumnDescriptors();
     }
 
-    protected Stream<D> dataColumnsToBeReturned(){
+    protected Stream<D> dataColumnsToBeReturned() {
         final Collection<String> selectedIds = requestPreferences.getSelectedColumnIds();
 
         Predicate<D> keepColumns = selectedIds.isEmpty() ?
@@ -59,9 +59,12 @@ public abstract class RequestContext
     }
 
     public List<D> getDataColumnsToReturn() {
-        return experiment.getDisplayDefaults().preserveColumnOrder()
-                ? dataColumnsToBeReturned().collect(toList())
-                : dataColumnsToBeReturned().sorted(Comparator.comparing(this::displayNameForColumn)).collect(toList());
+        return experiment.getDisplayDefaults().preserveColumnOrder() ?
+                dataColumnsToBeReturned()
+                        .collect(toList()) :
+                dataColumnsToBeReturned()
+                        .sorted(Comparator.comparing(this::displayNameForColumn))
+                        .collect(toList());
     }
 
     public abstract String displayNameForColumn(D dataColumnDescriptor);

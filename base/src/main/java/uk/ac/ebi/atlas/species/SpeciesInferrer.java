@@ -58,8 +58,9 @@ public class SpeciesInferrer {
         if (conditionQuery.size() == 0 && speciesCandidatesBuilder.build().size() == 0) {
             for (SemanticQueryTerm geneQueryTerm : geneQuery) {
                 speciesCandidatesBuilder.addAll(
-                        bioentitiesSearchService.fetchSpecies(geneQueryTerm).stream().map(speciesCandidate ->
-                                speciesFactory.create(speciesCandidate).getReferenceName()).collect(Collectors.toSet()));
+                        bioentitiesSearchService.fetchSpecies(geneQueryTerm).stream()
+                                .map(speciesCandidate -> speciesFactory.create(speciesCandidate).getReferenceName())
+                                .collect(Collectors.toSet()));
             }
         }
 

@@ -2,9 +2,8 @@ package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -12,9 +11,11 @@ import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,28 +36,37 @@ import java.util.SortedSet;
  */
 public class ExperimentDesign implements Serializable {
 
-    private SortedSet<String> sampleHeaders = Sets.newTreeSet();
-    private SortedSet<String> factorHeaders = Sets.newTreeSet();
+    // Headers retrieved from the condensed sdrf file
+    private Set<String> sampleHeaders = new LinkedHashSet<>();
+    private Set<String> factorHeaders = new LinkedHashSet<>();
+
+    // Headers retrieved from the sdrf file, which maintain a curated order
+    private Set<String> orderedSampleHeaders;
+    private Set<String> orderedFactorHeaders;
 
     // assay, SampleCharacteristics
-    private Map<String, SampleCharacteristics> samples = Maps.newHashMap();
+    private Map<String, SampleCharacteristics> samples = new HashMap<>();
 
     // header, value
     private class SampleCharacteristics extends HashMap<String, SampleCharacteristic> { }
 
     // assay, factors
-    private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
-    private Map<String, String> arrayDesigns = Maps.newHashMap();
-    private List<String> assayHeaders = Lists.newArrayList();
+    private Map<String, FactorSet> factorSetMap = new HashMap<>();
+    private Map<String, String> arrayDesigns = new HashMap<>();
+    private List<String> assayHeaders = new ArrayList<>();
 
-
-    public void putSampleCharacteristic(String runOrAssay, String sampleCharacteristicHeader, String sampleCharacteristicValue) {
-        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleCharacteristicHeader, sampleCharacteristicValue);
+    public void putSampleCharacteristic(String runOrAssay,
+                                        String sampleCharacteristicHeader,
+                                        String sampleCharacteristicValue) {
+        SampleCharacteristic sampleCharacteristic =
+                SampleCharacteristic.create(sampleCharacteristicHeader, sampleCharacteristicValue);
         putSampleCharacteristic(runOrAssay, sampleCharacteristicHeader, sampleCharacteristic);
     }
 
 
-    public void putSampleCharacteristic(String runOrAssay, String sampleHeader, SampleCharacteristic sampleCharacteristic) {
+    public void putSampleCharacteristic(String runOrAssay,
+                                        String sampleHeader,
+                                        SampleCharacteristic sampleCharacteristic) {
         if (!samples.containsKey(runOrAssay)) {
             samples.put(runOrAssay, new SampleCharacteristics());
         }
@@ -70,9 +80,12 @@ public class ExperimentDesign implements Serializable {
     }
 
 
-    public void putFactor(String runOrAssay, String factorHeader, String factorValue, OntologyTerm ... factorOntologyTerms) {
+    public void putFactor(String runOrAssay,
+                          String factorHeader,
+                          String factorValue,
+                          OntologyTerm... factorOntologyTerms) {
         Factor factor = new Factor(factorHeader, factorValue, factorOntologyTerms);
-        if(!factorSetMap.containsKey(runOrAssay)){
+        if (!factorSetMap.containsKey(runOrAssay)) {
             factorSetMap.put(runOrAssay, new FactorSet());
         }
         factorSetMap.get(runOrAssay).add(factor);
@@ -94,20 +107,34 @@ public class ExperimentDesign implements Serializable {
         assayHeaders.add(assayHeader);
     }
 
+    public void setOrderedSampleHeaders(Set<String> orderedSampleHeaders) {
+        this.orderedSampleHeaders = orderedSampleHeaders;
+    }
+
+    public void setOrderedFactorHeaders(Set<String> orderedFactorHeaders) {
+        this.orderedFactorHeaders = orderedFactorHeaders;
+    }
 
     public List<String> getAssayHeaders() {
         return assayHeaders;
     }
 
-
-    public SortedSet<String> getSampleHeaders() {
-        return Collections.unmodifiableSortedSet(sampleHeaders);
+    public Set<String> getSampleHeaders() {
+        if (!CollectionUtils.isEmpty(orderedSampleHeaders)) {
+            return Collections.unmodifiableSet(orderedSampleHeaders);
+        } else {
+            return Collections.unmodifiableSet(sampleHeaders);
+        }
     }
 
 
     //NB: factor headers are not normalized (see Factor.normalize), unlike factor type !
-    public SortedSet<String> getFactorHeaders() {
-        return Collections.unmodifiableSortedSet(factorHeaders);
+    public Set<String> getFactorHeaders() {
+        if (!CollectionUtils.isEmpty(orderedFactorHeaders)) {
+            return Collections.unmodifiableSet(orderedFactorHeaders);
+        } else {
+            return Collections.unmodifiableSet(factorHeaders);
+        }
     }
 
 
@@ -190,19 +217,19 @@ public class ExperimentDesign implements Serializable {
     public Map<String, String> getFactorValues(String runOrAssay) {
         FactorSet factorSet = factorSetMap.get(runOrAssay);
 
-        if (factorSet == null){
+        if (factorSet == null) {
             return ImmutableMap.of();
         }
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-        for (Factor factor : factorSet){
+        for (Factor factor : factorSet) {
             builder.put(factor.getHeader(), factor.getValue());
         }
 
         return builder.build();
     }
 
-    public FactorSet getFactors(String runOrAssay){
-        if(factorSetMap.containsKey(runOrAssay)){
+    public FactorSet getFactors(String runOrAssay) {
+        if (factorSetMap.containsKey(runOrAssay)) {
             return factorSetMap.get(runOrAssay);
         }
         return null;
@@ -218,7 +245,7 @@ public class ExperimentDesign implements Serializable {
     // returns header, value
     public Map<String, String> getSampleCharacteristicsValues(String runOrAssay) {
         SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
-        if(sampleCharacteristics == null){
+        if (sampleCharacteristics == null) {
             return ImmutableMap.of();
         }
 
@@ -243,7 +270,7 @@ public class ExperimentDesign implements Serializable {
             Map<String, String> assaySamples = getSampleCharacteristicsValues(assayAccession);
 
             for (String sampleName : assaySamples.keySet()) {
-                if ("organism".equalsIgnoreCase(sampleName)){
+                if ("organism".equalsIgnoreCase(sampleName)) {
                     return assaySamples.get(sampleName);
                 }
             }

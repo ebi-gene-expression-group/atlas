@@ -6,8 +6,8 @@ import java.text.MessageFormat;
 public class ExtraInfoImage extends ExternalImage {
 
 
-    public ExtraInfoImage(String fileSystemTemplate,String externalLinkTemplate, String
-            experimentAccession){
+    public ExtraInfoImage(String fileSystemTemplate, String externalLinkTemplate, String
+            experimentAccession) {
         super(ResourceType.EXTRA_INFO, Paths.get(MessageFormat.format(fileSystemTemplate, experimentAccession)),
                 MessageFormat.format(externalLinkTemplate, experimentAccession));
     }

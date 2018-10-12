@@ -8,15 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 
 @Controller
-public class ExperimentsController extends HtmlExceptionHandlingController{
-
+public class ExperimentsController extends HtmlExceptionHandlingController {
     @RequestMapping(value = "/experiments", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getExperimentsListParameters(
-            @RequestParam(value = "experimentType", required = false) String experimentType,
-            @RequestParam(value = "kingdom", required = false) String kingdom,
-            @RequestParam(value = "organism", required = false) String organism,
-            @RequestParam(value = "experimentSet", required = false) String experimentSet,
-            Model model) {
+    public String
+    getExperimentsListParameters(@RequestParam(value = "experimentType", required = false) String experimentType,
+                                 @RequestParam(value = "kingdom", required = false) String kingdom,
+                                 @RequestParam(value = "organism", required = false) String organism,
+                                 @RequestParam(value = "experimentSet", required = false) String experimentSet,
+                                 Model model) {
 
         model.addAttribute("experimentType", experimentType);
         model.addAttribute("kingdom", kingdom);
@@ -27,5 +26,4 @@ public class ExperimentsController extends HtmlExceptionHandlingController{
 
         return "experiments";
     }
-
 }

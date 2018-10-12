@@ -12,8 +12,8 @@ import java.util.Map;
 
 @Named
 public class DifferentialFacetsReader {
-
-    private static final String[] FACET_FIELDS = {"kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"};
+    private static final String[] FACET_FIELDS =
+            {"kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"};
 
     public JsonObject generateFacetsTreeJson(String solrResponseAsJson) {
         JsonObject facets = new JsonObject();
@@ -39,7 +39,8 @@ public class DifferentialFacetsReader {
     }
 
     protected static class FacetFieldMapConverter {
-        private static final Map<String, String> FACET_FIELDS_MAP = new ImmutableSortedMap.Builder<String, String>(String.CASE_INSENSITIVE_ORDER)
+        private static final Map<String, String> FACET_FIELDS_MAP =
+                new ImmutableSortedMap.Builder<String, String>(String.CASE_INSENSITIVE_ORDER)
                 .put("rnaseq_mrna_baseline", "RNA-seq mRNA baseline")
                 .put("rnaseq_mrna_differential", "RNA-seq mRNA differential")
                 .put("proteomics_baseline", "proteomics baseline")
@@ -51,7 +52,7 @@ public class DifferentialFacetsReader {
                 .build();
 
         public static String get(String field) {
-            if(FACET_FIELDS_MAP.get(field) != null) {
+            if (FACET_FIELDS_MAP.get(field) != null) {
                 return FACET_FIELDS_MAP.get(field);
             } else {
                 return field.substring(0, 1).toUpperCase() + field.substring(1).toLowerCase();

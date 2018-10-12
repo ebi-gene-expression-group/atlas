@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.TupleStreamBuilder
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Collection;
 
 public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBuilder<T> {
     private final T collectionProxy;
@@ -27,18 +28,23 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
     private ImmutableSet.Builder<Metric> metricsBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<FieldComparator> sortsBuilder = ImmutableSet.builder();
 
-    @SafeVarargs
-    public FacetStreamBuilder(T collectionProxy, SchemaField<T>... bucketFields) {
+    public FacetStreamBuilder(T collectionProxy, Collection<SchemaField<T>> bucketFields) {
         this.collectionProxy = collectionProxy;
 
         buckets =
-                ImmutableSet.<SchemaField<T>>builder().add(bucketFields).build().stream()
+                ImmutableSet.copyOf(bucketFields).stream()
                         .map(SchemaField::name)
                         .map(Bucket::new)
                         .toArray(Bucket[]::new);
 
         solrQuery = new SolrQueryBuilder<T>().build();
     }
+
+    // Convenience constructor when using a single bucket
+    public FacetStreamBuilder(T collectionProxy, SchemaField<T> bucketField) {
+        this(collectionProxy, ImmutableSet.of(bucketField));
+    }
+
 
     public FacetStreamBuilder<T> sortByCountsAscending() {
         metricsBuilder.add(new CountMetric("*"));
@@ -79,7 +85,6 @@ public class FacetStreamBuilder<T extends CollectionProxy> extends TupleStreamBu
         int limit = Integer.MAX_VALUE;  // retrieve all, see https://issues.apache.org/jira/browse/SOLR-11836
 
         try {
-            // Will throw ClassCastException if SolrClient isn’t CloudSolrClient, beware in testing
             String zkHost = ((CloudSolrClient) collectionProxy.solrClient).getZkHost();
             String collectionNameOrAlias = collectionProxy.nameOrAlias;
             return new FacetStream(zkHost, collectionNameOrAlias, solrQuery, buckets, metrics, sorts, limit);

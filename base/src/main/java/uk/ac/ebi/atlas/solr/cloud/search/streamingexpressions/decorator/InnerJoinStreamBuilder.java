@@ -6,7 +6,6 @@ import org.apache.solr.client.solrj.io.eq.FieldEqualitor;
 import org.apache.solr.client.solrj.io.eq.StreamEqualitor;
 import org.apache.solr.client.solrj.io.stream.InnerJoinStream;
 import org.apache.solr.client.solrj.io.stream.TupleStream;
-import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.TupleStreamBuilder;
 
 import java.io.IOException;
@@ -15,14 +14,14 @@ import java.io.UncheckedIOException;
 // Implementation of innerJoin streaming expression:
 // https://lucene.apache.org/solr/guide/7_1/stream-decorator-reference.html#innerjoin
 // Uncomment commented out blocks if you need to support joins by multiple/different fields and add constructors.
-public class InnerJoinStreamBuilder<T extends CollectionProxy> extends TupleStreamBuilder<T> {
-    private final TupleStreamBuilder<T> tupleStreamBuilderLeft;
-    private final TupleStreamBuilder<T> tupleStreamBuilderRight;
+public class InnerJoinStreamBuilder extends TupleStreamBuilder {
+    private final TupleStreamBuilder tupleStreamBuilderLeft;
+    private final TupleStreamBuilder tupleStreamBuilderRight;
     private final ImmutableSet.Builder<Pair<String, String>> onFieldsBuilder = ImmutableSet.builder();
 
     // We don’t use SchemaField<T> because field names may have been renamed by a previous select clause
-    public InnerJoinStreamBuilder(TupleStreamBuilder<T> tupleStreamBuilderLeft,
-                                  TupleStreamBuilder<T> tupleStreamBuilderRight,
+    public InnerJoinStreamBuilder(TupleStreamBuilder tupleStreamBuilderLeft,
+                                  TupleStreamBuilder tupleStreamBuilderRight,
                                   String fieldName) {
         this.tupleStreamBuilderLeft = tupleStreamBuilderLeft;
         this.tupleStreamBuilderRight = tupleStreamBuilderRight;

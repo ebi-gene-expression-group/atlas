@@ -1,57 +1,82 @@
 package uk.ac.ebi.atlas.bioentity.go;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class GoPoTraderIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class GoPoTraderIT {
+    private static final ThreadLocalRandom RNG = ThreadLocalRandom.current();
 
-    private static final String GO_0000001 = "GO:0000001";
-    private static final OntologyTerm GO_0000001_TERM = OntologyTerm.create(GO_0000001, "mitochondrion inheritance", "", 6);
-    private static final String GO_2001317 = "GO:2001317";
-    private static final OntologyTerm GO_2001317_TERM = OntologyTerm.create(GO_2001317, "kojic acid biosynthetic process", "", 6);
-    private static final String PO_0000001 = "PO:0000001";
-    private static final OntologyTerm PO_0000001_TERM = OntologyTerm.create(PO_0000001, "embryo proper");
-    private static final String PO_0030087 = "PO:0030087";
-    private static final OntologyTerm PO_0030087_TERM = OntologyTerm.create(PO_0030087, "non-vascular leaf initial cell");
+    @Inject
+    private Path goPoFilePath;
 
     @Inject
     private GoPoTrader subject;
 
-    @Test
-    public void hasGO_0000001() throws Exception {
-        assertThat(subject.get(GO_0000001), is(Optional.of(GO_0000001_TERM)));
+    @ParameterizedTest
+    @MethodSource("randomGoOntologyTermAccessionProvider")
+    void canReadAnyGoTerm(OntologyTerm goTerm) {
+        assertThat(subject.get(goTerm.accession())).hasValue(goTerm);
+    }
+
+    @ParameterizedTest
+    @MethodSource("randomPoOntologyTermAccessionProvider")
+    void canReadAnyPoTerm(OntologyTerm poTerm) {
+        assertThat(subject.get(poTerm.accession())).hasValue(poTerm);
     }
 
     @Test
-    public void hasGO_2001317() throws Exception {
-        assertThat(subject.get(GO_2001317), is(Optional.of(GO_2001317_TERM)));
+    void returnEmptyIfTermNotfound() {
+        assertThat(subject.get("FO:OBAR")).isEmpty();
     }
 
-    @Test
-    public void hasPO_0000001() throws Exception {
-        assertThat(subject.get(PO_0000001), is(Optional.of(PO_0000001_TERM)));
+    private Stream<OntologyTerm> randomGoOntologyTermAccessionProvider() throws IOException {
+        return Stream.of(randomTermProvider("GO"));
     }
 
-    @Test
-    public void hasPO_0030087() throws Exception {
-        assertThat(subject.get(PO_0030087), is(Optional.of(PO_0030087_TERM)));
+    private Stream<OntologyTerm> randomPoOntologyTermAccessionProvider() throws IOException {
+        return Stream.of(randomTermProvider("PO"));
     }
 
-    @Test
-    public void returnEmptyIfTermNotfound() throws Exception {
-        assertThat(subject.get("FO:OBAR"), is(Optional.empty()));
+    private OntologyTerm randomTermProvider(String prefix) throws IOException {
+        long numLines = Files.lines(goPoFilePath).count();
+
+        String randomLine = "";
+        while (!randomLine.startsWith(prefix)) {
+            randomLine =
+                    Files.lines(goPoFilePath)
+                            .skip(RNG.nextLong(0, numLines))
+                            .findFirst()
+                            .orElseThrow(RuntimeException::new);
+        }
+
+        String[] explodedLine = randomLine.split("\t");
+
+        if (explodedLine.length == 3) {
+            return OntologyTerm.create(explodedLine[0], explodedLine[1], "", Integer.parseInt(explodedLine[2]));
+        } else if (explodedLine.length == 2) {
+            return OntologyTerm.create(explodedLine[0], explodedLine[1]);
+        }
+
+        throw new RuntimeException();
     }
 }

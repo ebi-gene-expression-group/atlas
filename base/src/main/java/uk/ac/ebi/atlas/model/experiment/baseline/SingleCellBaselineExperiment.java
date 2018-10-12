@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 
@@ -19,21 +18,22 @@ public class SingleCellBaselineExperiment extends Experiment<Cell> {
                                         Date lastUpdate,
                                         String displayName,
                                         String description,
-                                        String disclaimer,
+                                        // String disclaimer,
                                         Species species,
                                         Collection<String> pubMedIds,
                                         Collection<String> dois,
                                         ExperimentDesign experimentDesign,
-                                        List<String> dataProviderURL,
+                                        // List<String> dataProviderURL,
                                         List<String> dataProviderDescription,
                                         List<String> alternativeViews,
                                         List<String> alternativeViewDescriptions,
-                                        List<Cell> cells,
-                                        ExperimentDisplayDefaults experimentDisplayDefaults) {
+                                        List<Cell> cells
+                                        //ExperimentDisplayDefaults experimentDisplayDefaults
+                                        ) {
 
-        super(type, accession, lastUpdate, displayName, description, disclaimer, species,
-                pubMedIds, dois, experimentDesign, dataProviderURL, dataProviderDescription,
-                alternativeViews, alternativeViewDescriptions, cells, experimentDisplayDefaults);
+        super(type, accession, lastUpdate, displayName, description, null, species,
+                pubMedIds, dois, experimentDesign, null, dataProviderDescription,
+                alternativeViews, alternativeViewDescriptions, cells, null);
     }
 
     @Override

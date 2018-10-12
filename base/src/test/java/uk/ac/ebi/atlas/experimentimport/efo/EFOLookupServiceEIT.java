@@ -8,7 +8,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 
 import javax.inject.Inject;
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,35 +16,36 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class EFOLookupServiceEIT {
-
     private static final String BTO_0002690 = "BTO_0002690";
     private static final String GO_0023014 = "GO_0023014";
+
+    private static final int BTO_0002690_PARENTS = 2;
+    private static final int GO_0023014_PARENTS = 15;
+    private static final int COMMON_PARENTS = 1;
 
     @Inject
     private EFOLookupService subject;
 
     @Test
     public void allParents() {
-        assertThat(subject.getAllParents(ImmutableSet.of(BTO_0002690)).size(), is(2));
+        assertThat(subject.getAllParents(ImmutableSet.of(BTO_0002690)).size(), is(BTO_0002690_PARENTS));
     }
 
     @Test
     public void onlyIsARelationsAreIncluded() {
-        assertThat(subject.getAllParents(ImmutableSet.of(GO_0023014)).size(), is(15));
+        assertThat(subject.getAllParents(ImmutableSet.of(GO_0023014)).size(), is(GO_0023014_PARENTS));
     }
 
     @Test
     public void parentNodesAreUnique() {
-        Set<String> efoNodeIds = new HashSet<>();
-        efoNodeIds.add(GO_0023014);
-        efoNodeIds.add(BTO_0002690);
-
-        assertThat(subject.getAllParents(efoNodeIds).size(), is(16));
+        Set<String> efoNodeIds = ImmutableSet.of(GO_0023014, BTO_0002690);
+        assertThat(
+                subject.getAllParents(efoNodeIds).size(),
+                is(BTO_0002690_PARENTS + GO_0023014_PARENTS - COMMON_PARENTS));
     }
 
     @Test
     public void nonExistentIdsHaveNoParents() {
         assertThat(subject.getAllParents(ImmutableSet.of("Blah")).isEmpty(), is(true));
     }
-
 }

@@ -3,13 +3,13 @@ package uk.ac.ebi.atlas.trader;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.model.experiment.baseline.SingleCellBaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.trader.cache.loader.SingleCellRnaSeqBaselineExperimentFactory;
-import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,15 +21,14 @@ public class ScxaExperimentTrader extends ExperimentTrader {
 
     @Inject
     public ScxaExperimentTrader(ScxaExperimentDao experimentDao,
-                                SingleCellRnaSeqBaselineExperimentFactory
-                                              experimentFactory,
-                                ArrayExpressClient arrayExpressClient,
-                                ExperimentDesignParser experimentDesignParser) {
+                                SingleCellRnaSeqBaselineExperimentFactory experimentFactory,
+                                ExperimentDesignParser experimentDesignParser,
+                                IdfParser idfParser) {
         super(experimentDao);
         baselineExperimentsCache =
                 CacheBuilder.newBuilder().build(
                         new ExperimentsCacheLoader<>(
-                                arrayExpressClient, experimentDesignParser, experimentDao, experimentFactory));
+                                experimentDesignParser, experimentDao, experimentFactory, idfParser));
     }
 
     public Experiment<Cell> getPublicExperiment(String experimentAccession) {
@@ -49,7 +48,7 @@ public class ScxaExperimentTrader extends ExperimentTrader {
     }
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
-        if(experimentType.isSingleCell()) {
+        if (experimentType.isSingleCell()) {
             return getPublicExperiment(experimentAccession);
         } else {
             return null;

@@ -14,14 +14,13 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-/*
-I am used by db/scripts/export_atlas_cttv_json.pl
- */
+
+//I am used by db/scripts/export_atlas_cttv_json.pl
+
 @Controller
 @Scope("request")
 public class DifferentialExperimentContrastsTsvController {
@@ -44,8 +43,10 @@ public class DifferentialExperimentContrastsTsvController {
         DifferentialExperimentContrastLines diffExperimentContrastLines;
         DifferentialExperiment differentialExperiment;
 
-        Set<String> microArrayExpAccessions = new HashSet<>(experimentTrader.getMicroarrayExperimentAccessions());
-        Set<String> rnaSeqDiffExpAccessions = new HashSet<>(experimentTrader.getRnaSeqDifferentialExperimentAccessions());
+        Set<String> microArrayExpAccessions =
+                new HashSet<>(experimentTrader.getMicroarrayExperimentAccessions());
+        Set<String> rnaSeqDiffExpAccessions =
+                new HashSet<>(experimentTrader.getRnaSeqDifferentialExperimentAccessions());
 
         List<String> allExperimentsList = new ArrayList<>();
         allExperimentsList.addAll(microArrayExpAccessions);
@@ -53,25 +54,26 @@ public class DifferentialExperimentContrastsTsvController {
         response.setContentType("text/tab-separated-values");
         PrintWriter writer = response.getWriter();
 
-        for(String experimentAccession : allExperimentsList){
+        for (String experimentAccession : allExperimentsList) {
             try {
-                differentialExperiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+                differentialExperiment =
+                        (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
                 diffExperimentContrastLines = new DifferentialExperimentContrastLines(differentialExperiment);
                 extractLinesToTSVFormat(diffExperimentContrastLines, writer);
-            } catch (RuntimeException e){
-                LOGGER.error(MessageFormat.format("Failed when loading {0}, error: {1}", experimentAccession, e));
-                writer.write("Error while attempting to write "+experimentAccession+", file incomplete!!!");
+            } catch (RuntimeException e) {
+                LOGGER.error("Failed when loading {}, error: {}", experimentAccession, e);
+                writer.write("Error while attempting to write " + experimentAccession + ", file incomplete!!!");
                 break;
             }
         }
     }
 
-    private void extractLinesToTSVFormat(DifferentialExperimentContrastLines diffExperimentContrastLines,PrintWriter writer) throws IOException {
+    private void
+    extractLinesToTSVFormat(DifferentialExperimentContrastLines diffExperimentContrastLines, PrintWriter writer) {
 
         for (String[] line : diffExperimentContrastLines) {
             String lineTab = Joiner.on("\t").join(line);
             writer.write(lineTab + "\n");
         }
     }
-
 }

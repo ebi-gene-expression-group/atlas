@@ -24,14 +24,15 @@ public abstract class ExperimentTrader {
 
     public abstract void removeExperimentFromCache(String experimentAccession);
 
-    public abstract Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) throws ExecutionException;
+    public abstract Experiment getExperimentFromCache(String experimentAccession,
+                                                      ExperimentType experimentType) throws ExecutionException;
 
     public Set<Experiment> getPublicExperiments(ExperimentType... experimentTypes) {
         ImmutableSet.Builder<Experiment> b = ImmutableSet.builder();
-        for(String accession : getPublicExperimentAccessions(experimentTypes)) {
+        for (String accession : getPublicExperimentAccessions(experimentTypes)) {
             try {
                 b.add(getPublicExperiment(accession));
-            } catch (ResourceNotFoundException e) {/*Yum!*/}
+            } catch (ResourceNotFoundException e) { /*Yum!*/ }
         }
         return b.build();
     }

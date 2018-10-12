@@ -7,17 +7,16 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class HistogramAcrossGenes {
     private final int[] histogram;
-    private final double [] cutoffs;
+    private final double[] cutoffs;
 
-
-    public HistogramAcrossGenes(int[] histogram, double [] cutoffs){
+    public HistogramAcrossGenes(int[] histogram, double[] cutoffs) {
         Preconditions.checkArgument(histogram.length == cutoffs.length);
 
         this.histogram = histogram;
         this.cutoffs = cutoffs;
     }
 
-    public JsonObject asJson(){
+    public JsonObject asJson() {
         JsonObject result = new JsonObject();
 
         result.add("bins", GSON.toJsonTree(cutoffs).getAsJsonArray());

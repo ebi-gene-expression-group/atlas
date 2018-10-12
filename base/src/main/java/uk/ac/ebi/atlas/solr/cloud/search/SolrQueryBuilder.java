@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.solr.cloud.search;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import uk.ac.ebi.atlas.solr.cloud.CollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.SchemaField;
 
@@ -18,23 +20,30 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class SolrQueryBuilder<T extends CollectionProxy> {
     // Some magic Solr number, from the logs:
-    // ERROR (qtp511707818-76) [   ] o.a.s.s.HttpSolrCall null:java.lang.IllegalArgumentException: maxSize must be <= 2147483630; got: 2147483646
+    // ERROR (qtp511707818-76) [   ] o.a.s.s.HttpSolrCall null:java.lang.IllegalArgumentException:
+    // maxSize must be <= 2147483630; got: 2147483646
     public static final int SOLR_MAX_ROWS = 2147483630;
-    public static final int MAX_ROWS = 1000000;
+    public static final int DEFAULT_ROWS = 100000;
 
     private ImmutableSet.Builder<String> fqClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> qClausesBuilder = ImmutableSet.builder();
     private ImmutableSet.Builder<String> flBuilder = ImmutableSet.builder();
+    private ImmutableList.Builder<SortClause> sortBuilder = ImmutableList.builder();
 
-    // For now, the builder will only support a single facet with an unlimited number of subfacets. In the future this could be made for generic
+    // For now, the builder will only support a single facet with an unlimited number of subfacets
     private String facetField;
     private ImmutableSet.Builder<String> subFacetBuilder = ImmutableSet.builder();
 
-    private int rows = MAX_ROWS;
+    private int rows = DEFAULT_ROWS;
 
-    public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByTerm(U field, String... values) {
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByTerm(U field, Collection<String> values) {
         fqClausesBuilder.add(createOrBooleanQuery(field, values));
         return this;
+    }
+
+    // Convenience method when filtering by a single value
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByTerm(U field, String value) {
+        return addFilterFieldByTerm(field, ImmutableSet.of(value));
     }
 
     public <U extends SchemaField<T>> SolrQueryBuilder<T> addFilterFieldByRangeMin(U field, double min) {
@@ -54,36 +63,44 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         return this;
     }
 
-    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, String... values) {
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, Collection<String> values) {
         qClausesBuilder.add(createOrBooleanQuery(field, values));
         return this;
     }
 
-    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, Collection<String> values) {
-        return addQueryFieldByTerm(field, values.toArray(new String[0]));
+    // Convenience method when querying a single value
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> addQueryFieldByTerm(U field, String value) {
+        return addQueryFieldByTerm(field, ImmutableSet.of(value));
     }
 
-    @SafeVarargs
-    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFieldList(U... fields) {
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFieldList(Collection<U> fields) {
         for (SchemaField field : fields) {
             flBuilder.add(field.name());
         }
         return this;
     }
 
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFieldList(U field) {
+        return setFieldList(ImmutableSet.of(field));
+    }
+
+
     public final <U extends SchemaField<T>> SolrQueryBuilder<T> setFacetField(U field) {
         facetField = field.name();
         return this;
     }
 
-    @SafeVarargs
-    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setSubFacetList(U... fields) {
+    public final <U extends SchemaField<T>> SolrQueryBuilder<T> setSubFacetList(Collection<U> fields) {
         for (SchemaField field : fields) {
             subFacetBuilder.add(field.name());
         }
         return this;
     }
 
+    public <U extends SchemaField<T>> SolrQueryBuilder<T> sortBy(U field, SolrQuery.ORDER order) {
+        sortBuilder.add(new SortClause(field.name(), order));
+        return this;
+    }
 
     public SolrQueryBuilder<T> setRows(int rows) {
         this.rows = rows;
@@ -95,6 +112,7 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         ImmutableSet<String> qClauses = qClausesBuilder.build();
         ImmutableSet<String> fl = flBuilder.build();
         ImmutableSet<String> subFacets = subFacetBuilder.build();
+        ImmutableList<SortClause> sorts = sortBuilder.build();
 
         return new SolrQuery()
                 .addFilterQuery(fqClauses.toArray(new String[0]))
@@ -107,16 +125,17 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
                                 "*" :
                                 fl.stream().filter(StringUtils::isNotBlank).collect(joining(",")))
                 .setParam("json.facet", GSON.toJson(buildJsonFacetObject(facetField, subFacets)))
+                .setSorts(sorts)
                 .setRows(rows);
     }
 
     private JsonObject buildJsonFacetObject(String facetField, ImmutableSet<String> subFacets) {
         JsonObject result = new JsonObject();
 
-        if(facetField != null && !facetField.isEmpty()) {
+        if (facetField != null && !facetField.isEmpty()) {
             JsonObject facetObject = makeFacetObject(facetField, false);
 
-            if(!subFacets.isEmpty()) {
+            if (!subFacets.isEmpty()) {
                 JsonObject subFacetWrapper = new JsonObject();
 
                 subFacets.forEach(subFacetField ->
@@ -138,7 +157,7 @@ public class SolrQueryBuilder<T extends CollectionProxy> {
         facetObject.addProperty("type", "terms");
         facetObject.addProperty("field", fieldName);
 
-        if(hasLimit) {
+        if (hasLimit) {
             facetObject.addProperty("limit", -1);
         }
 

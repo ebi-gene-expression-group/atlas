@@ -9,7 +9,6 @@
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 <%--@elvariable id="alternativeViews" type="List<String>"--%>
 <%--@elvariable id="alternativeViewDescriptions" type="List<String>"--%>
-<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -21,14 +20,6 @@
             ${experimentDescription}
         </h3>
         <h5>${type}</h5>
-
-        <c:if test="${hasExtraInfo}">
-        <a id="extra-info"
-           href="${pageContext.request.contextPath}/external-resources/${experimentAccession}/extra-info.png">
-            <img alt="more information"
-                 src="${pageContext.request.contextPath}/resources/images/overview_button.png">
-        </a>
-        </c:if>
 
         <div id="experimentOrganisms">Organism:
             <span style="font-style:italic">${species}</span>
@@ -79,50 +70,47 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>
 <script>
-    (function ($, pubmedMinedBioentitiesModule) {
-        $(document).ready(function () {
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var $pubmedGeneQueries = $('.pubmed-genequery');
 
-            var $pubmedGeneQueries = $('.pubmed-genequery');
-            
-            $pubmedGeneQueries.click(function (event) {
-                var pubmedId = $(event.target).attr("data-pubmed-id");
+      $pubmedGeneQueries.click(function (event) {
+        var pubmedId = $(event.target).attr("data-pubmed-id");
 
-                pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (err, bioentities) {
+        pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (err, bioentities) {
 
-                    if (err) {
-                        throw new Error("Error fetching pubmed mined bioentities for id " + pubmedId + ": " + err.message);
-                    }
+          if (err) {
+            throw new Error("Error fetching pubmed mined bioentities for id " + pubmedId + ": " + err.message);
+          }
 
-                    if (!bioentities || bioentities.length === 0) {
-                        alert("No text-mined genes/proteins available in Europe PubMed Central for PMID " + pubmedId);
-                        console.warn("No pubmed mined bioentities for id " + pubmedId);
-                        return;
-                    }
+          if (!bioentities || bioentities.length === 0) {
+            alert("No text-mined genes/proteins available in Europe PubMed Central for PMID " + pubmedId);
+            console.warn("No pubmed mined bioentities for id " + pubmedId);
+            return;
+          }
 
-                    function replaceGeneQueryWithBioentities(url, bioentities) {
-                        var newGeneQuery = bioentities.map(function(e){
-                            return ({
-                                value: e
-                            });
-                        });
-
-                        if (url.indexOf("geneQuery") > -1) {
-                            return url.replace(/geneQuery=[^&]*/, "geneQuery=" + JSON.stringify(newGeneQuery));
-                        }
-
-                        return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery=" + JSON.stringify(newGeneQuery);
-
-                    }
-
-                    var experimentUrlForPubMedBioentities = replaceGeneQueryWithBioentities(document.URL, bioentities);
-                    window.open(encodeURI(experimentUrlForPubMedBioentities), '_blank');
-                });
-
+          function replaceGeneQueryWithBioentities(url, bioentities) {
+            var newGeneQuery = bioentities.map(function(e){
+              return ({
+                value: e
+              });
             });
 
+            if (url.indexOf("geneQuery") > -1) {
+              return url.replace(/geneQuery=[^&]*/, "geneQuery=" + JSON.stringify(newGeneQuery));
+            }
+
+            return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery=" + JSON.stringify(newGeneQuery);
+
+          }
+
+          var experimentUrlForPubMedBioentities = replaceGeneQueryWithBioentities(document.URL, bioentities);
+          window.open(encodeURI(experimentUrlForPubMedBioentities), '_blank');
         });
-    })(jQuery, pubmedMinedBioentitiesModule);
+
+      });
+
+  });
 </script>
 

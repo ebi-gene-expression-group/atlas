@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.species.Species;
 
-import static uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.asBioentitiesCollectionQuery;
 
 /**
  * This is a builder, keep always in mind that builders are potentially stateful.
@@ -23,14 +23,14 @@ public class BioentityIdentifierQueryBuilder {
     private StringBuilder queryStringBuilder = new StringBuilder();
     private String queryString;
 
-    public BioentityIdentifierQueryBuilder forTerm(SemanticQueryTerm term){
+    public BioentityIdentifierQueryBuilder forTerm(SemanticQueryTerm term) {
         this.queryString = asBioentitiesCollectionQuery(term);
         return this;
     }
 
-    public BioentityIdentifierQueryBuilder withSpecies(Species species){
+    public BioentityIdentifierQueryBuilder withSpecies(Species species) {
         // No need to lowercase the species field, it is of type lowercase in Solr
-        if (!species.isUnknown()){
+        if (!species.isUnknown()) {
             queryStringBuilder.append(" AND " + SPECIES_FIELD + ":\"").append(species.getEnsemblName()).append("\"");
         }
         return this;

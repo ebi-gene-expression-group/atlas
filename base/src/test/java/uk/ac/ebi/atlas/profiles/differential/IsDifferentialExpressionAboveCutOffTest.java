@@ -9,12 +9,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class IsDifferentialExpressionAboveCutOffTest {
+    private static final DifferentialExpression EXPRESSION_1 = new DifferentialExpression(0.05, 40.0);
+    private static final DifferentialExpression EXPRESSION_2 = new DifferentialExpression(0.00005, -40.0);
 
-    IsDifferentialExpressionAboveCutOff<DifferentialExpression> subject;
-
-    DifferentialExpression expression1 = new DifferentialExpression(0.05, 40.0);
-
-    DifferentialExpression expression2 = new DifferentialExpression(0.00005, -40.0);
+    private IsDifferentialExpressionAboveCutOff<DifferentialExpression> subject;
 
     @Before
     public void setUp() throws Exception {
@@ -24,37 +22,37 @@ public class IsDifferentialExpressionAboveCutOffTest {
     }
 
     @Test
-    public void testApply() throws Exception {
-        assertThat(subject.test(expression1), is(true));
-        assertThat(subject.test(expression2), is(true));
+    public void testApply() {
+        assertThat(subject.test(EXPRESSION_1), is(true));
+        assertThat(subject.test(EXPRESSION_2), is(true));
     }
 
     @Test
-    public void setPValueCutoff() throws Exception {
+    public void setPValueCutoff() {
         subject.setPValueCutoff(0.0001);
 
-        assertThat(subject.test(expression1), is(false));
-        assertThat(subject.test(expression2), is(true));
+        assertThat(subject.test(EXPRESSION_1), is(false));
+        assertThat(subject.test(EXPRESSION_2), is(true));
     }
 
     @Test
-    public void setFoldChangeCutoff() throws Exception {
+    public void setFoldChangeCutoff() {
         subject.setFoldChangeCutOff(50);
 
-        assertThat(subject.test(expression1), is(false));
-        assertThat(subject.test(expression2), is(false));
+        assertThat(subject.test(EXPRESSION_1), is(false));
+        assertThat(subject.test(EXPRESSION_2), is(false));
     }
 
     @Test
-    public void testSetRegulation() throws Exception {
+    public void testSetRegulation() {
         subject.setRegulation(Regulation.DOWN);
 
-        assertThat(subject.test(expression1), is(false));
-        assertThat(subject.test(expression2), is(true));
+        assertThat(subject.test(EXPRESSION_1), is(false));
+        assertThat(subject.test(EXPRESSION_2), is(true));
 
         subject.setRegulation(Regulation.UP);
 
-        assertThat(subject.test(expression1), is(true));
-        assertThat(subject.test(expression2), is(false));
+        assertThat(subject.test(EXPRESSION_1), is(true));
+        assertThat(subject.test(EXPRESSION_2), is(false));
     }
 }

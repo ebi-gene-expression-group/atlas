@@ -15,13 +15,14 @@ import uk.ac.ebi.atlas.configuration.WebConfig;
 
 import static org.hamcrest.Matchers.isA;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class JsonBuildVersionControllerWIT {
 
     @Autowired
@@ -41,6 +42,7 @@ public class JsonBuildVersionControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.bambooBuildVersion", isA(String.class)))
                 .andExpect(jsonPath("$.gitBranch", isA(String.class)))
-                .andExpect(jsonPath("$.gitCommitID", isA(String.class)));
+                .andExpect(jsonPath("$.gitCommitID", isA(String.class)))
+                .andExpect(jsonPath("$.tomcatHostname", isA(String.class)));
     }
 }

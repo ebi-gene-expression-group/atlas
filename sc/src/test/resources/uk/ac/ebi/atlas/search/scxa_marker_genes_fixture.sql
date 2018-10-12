@@ -11,7 +11,7 @@ INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, mar
 INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSMUSG00000000004', 'E-EHCA-2', 2, 1, 0.713809188461606);
 INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSMUSG00000000006', 'E-EHCA-2', 2, 0, 0.9389946765869577);
 INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSG00000000009', 'E-GEOD-106540', 3, 1, 0.9513068097103042);
-INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSG00000000009', 'E-GEOD-106540', 2, 1, 0.005187270347452921);
+INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSG00000000009', 'E-GEOD-106540', 2, 1, 0.004187270347452921);
 INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSG00000000008', 'E-GEOD-106540', 3, 2, 0.7030248978540528);
 INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSG00000000003', 'E-GEOD-106540', 2, 1, 0.6748241210309597);
 INSERT INTO scxa_marker_genes (gene_id, experiment_accession, k, cluster_id, marker_probability) VALUES ('ENSG00000000006', 'E-GEOD-106540', 3, 1, 0.9858188085220755);

@@ -37,9 +37,8 @@ import static org.junit.Assert.assertThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class SolrInputDocumentInputStreamIT {
-
     @Inject
     private ExperimentTrader experimentTrader;
 
@@ -71,19 +70,24 @@ public class SolrInputDocumentInputStreamIT {
         assertThatExperimentInformationIsTransformedIntoSolrInputDocuments("E-GEOD-22351");
     }
 
-    private void assertThatExperimentInformationIsTransformedIntoSolrInputDocuments(String accession) throws Exception {
+    private void
+    assertThatExperimentInformationIsTransformedIntoSolrInputDocuments(String accession) throws Exception {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
         Iterable<SolrInputDocument> result = getResults(experiment);
 
         int count = 0;
-        for(SolrInputDocument solrInputDocument : result) {
+        for (SolrInputDocument solrInputDocument : result) {
             count++;
 
             assertThat(solrInputDocument.size(), greaterThan(6));
-            assertThat(experiment.getType().name().toUpperCase(),
+            assertThat(
+                    experiment.getType().name().toUpperCase(),
                     is(solrInputDocument.getField("experiment_type").getValue()));
-            assertThat(experiment.getSpecies().getReferenceName(), is(solrInputDocument.getField("species").getValue()));
+            assertThat(
+                    experiment.getSpecies().getReferenceName(),
+                    is(solrInputDocument.getField("species").getValue()));
         }
+
         assertThat(count, is(greaterThan(100)));
     }
 
@@ -93,44 +97,47 @@ public class SolrInputDocumentInputStreamIT {
                 ImmutableList.copyOf(getResults(experimentTrader.getPublicExperiment("E-MTAB-513")));
 
         assertThatIdentifiersInGeneratedDocumentsMatchCurrentIndexContent("E-MTAB-513", results);
-        assertThatDocumentsReturnContent("E-MTAB-513",results);
+        assertThatDocumentsReturnContent("E-MTAB-513", results);
         assertThatSpeciesFieldIsEnsemblName("E-MTAB-513", results);
     }
 
-    private void assertThatIdentifiersInGeneratedDocumentsMatchCurrentIndexContent(String accession, Collection<SolrInputDocument> results){
+    private void
+    assertThatIdentifiersInGeneratedDocumentsMatchCurrentIndexContent(String accession,
+                                                                      Collection<SolrInputDocument> results) {
         Collection<String> identifiersForThatExperiment = AnalyticsSearchService.readBuckets(analyticsQueryClient
-                .queryBuilder().bioentityIdentifierFacets(-1)
-                .inExperiment
-                (accession).fetch());
+                .queryBuilder()
+                .bioentityIdentifierFacets(-1)
+                .inExperiment(accession)
+                .fetch());
 
         assertThat(identifiersForThatExperiment, not(empty()));
 
-        for(SolrInputDocument solrInputDocument: results) {
+        for (SolrInputDocument solrInputDocument: results) {
             String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
             assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier.toLowerCase()));
          }
-
     }
 
-    private void assertThatDocumentsReturnContent(String accession, Collection<SolrInputDocument> results){
-        Map<String,String> keywordFieldsPresent = new HashMap<>();
-        for(SolrInputDocument solrInputDocument: results) {
-            for(String fieldName: solrInputDocument.getFieldNames()) {
-                if(fieldName.startsWith("keyword_")){
+    private void assertThatDocumentsReturnContent(String accession, Collection<SolrInputDocument> results) {
+        Map<String, String> keywordFieldsPresent = new HashMap<>();
+        for (SolrInputDocument solrInputDocument: results) {
+            for (String fieldName: solrInputDocument.getFieldNames()) {
+                if (fieldName.startsWith("keyword_")) {
                     //we repeatedly put into the same fields but that's okay I just want one example value per field
-                    keywordFieldsPresent.put(fieldName.replace("keyword_",""), solrInputDocument.getFieldValue
-                            (fieldName).toString());
+                    keywordFieldsPresent.put(
+                            fieldName.replace("keyword_", ""), solrInputDocument.getFieldValue(fieldName).toString());
                 }
             }
         }
 
         //category searches e.g. symbol:PIM1
-        for(Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
-            assertThatIndexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue(), e.getKey())));
+        for (Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
+            assertThatIndexReturnsDataFor(
+                    accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue(), e.getKey())));
         }
 
         //identifier search searches e.g. symbol:PIM
-        for(Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
+        for (Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
             assertThatIndexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue())));
         }
 
@@ -138,7 +145,7 @@ public class SolrInputDocumentInputStreamIT {
 
     private void assertThatSpeciesFieldIsEnsemblName(String accession, Collection<SolrInputDocument> results) {
         Set<String> species = new HashSet<>();
-        for(SolrInputDocument solrInputDocument: results) {
+        for (SolrInputDocument solrInputDocument: results) {
             species.add(solrInputDocument.getField("species").getValue().toString());
         }
 
@@ -161,5 +168,4 @@ public class SolrInputDocumentInputStreamIT {
                 MessageFormat.format("Nothing in the index for {0} , {1}", accession, identifierSearch.description()),
                 identifiersForThatExperiment, not(empty()));
     }
-
 }

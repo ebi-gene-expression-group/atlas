@@ -19,7 +19,9 @@ public class DifferentialRequestPreferencesValidator implements Validator {
     public void validate(Object object, Errors errors) {
         ExperimentPageRequestPreferences requestPreferences = (ExperimentPageRequestPreferences) object;
         if (requestPreferences.getCutoff() < 0 || requestPreferences.getCutoff() > 1) {
-            errors.reject("cutoffOutOfRange", "Please select a False Discovery Rate cutoff that is between 0 and 1 (inclusive)");
+            errors.reject(
+                    "cutoffOutOfRange",
+                    "Please select a False Discovery Rate cutoff that is between 0 and 1 (inclusive)");
         }
     }
 }

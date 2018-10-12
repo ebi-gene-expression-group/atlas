@@ -49,9 +49,10 @@ public class BaselineTranscriptProfileStreamFactory extends
     }
 
     @Override
-    public ObjectInputStream<BaselineExpressionPerReplicateProfile> create(BaselineExperiment experiment,
-                                                                           BaselineRequestContext<ExpressionUnit.Absolute.Rna> options,
-                                                                           Collection<String> keepGeneIds) {
+    public ObjectInputStream<BaselineExpressionPerReplicateProfile>
+           create(BaselineExperiment experiment,
+                  BaselineRequestContext<ExpressionUnit.Absolute.Rna> options,
+                  Collection<String> keepGeneIds) {
         return profileStreamFactory.create(experiment, options, keepGeneIds);
     }
 
@@ -66,7 +67,7 @@ public class BaselineTranscriptProfileStreamFactory extends
 
         @Override
         protected Predicate<BaselineExpressionPerBiologicalReplicate> filterExpressions(
-                BaselineExperiment experiment, BaselineRequestContext<ExpressionUnit.Absolute.Rna> options) {
+                BaselineRequestContext<ExpressionUnit.Absolute.Rna> options) {
             // We don't want to do that for now.
             return x -> true;
         }

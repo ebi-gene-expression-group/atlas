@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.testutils;
 
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
+import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,19 +10,28 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
+import static uk.ac.ebi.atlas.solr.BioentityPropertyName.UNKNOWN;
 
 public class RandomDataTestUtils {
+    protected RandomDataTestUtils() {
+        throw new UnsupportedOperationException();
+    }
+
+    private static final int ENSEMBLE_GENE_ID_NUM_LENGTH = 12;
+    private static final int ENA_SEQ_RUN_NUM_LENGTH = 7;
+
     public static String getRandomExperimentAccession() {
-        // n / 456,975,543,024 chance of clashing for n experiments in the test database, let’s roll!
+        // n / 456, 975, 543, 024 chance of clashing for n experiments in the test database, let’s roll!
         return "E-" + randomAlphabetic(4).toUpperCase() + "-" + randomNumeric(1, 6);
     }
 
     public static String getRandomEnsemblGeneId() {
-        return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(12);
+        return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(ENSEMBLE_GENE_ID_NUM_LENGTH);
     }
 
     public static List<String[]> getRandomClusters(int fromK, int toK, int numberOfCells) {
@@ -36,11 +46,9 @@ public class RandomDataTestUtils {
         // It’s a bit convoluted, but randomClustersLine will be invoked with true only once, the first iteration in
         // which thisClusterSelK becomes true
         boolean selKSet = false;
-        for (int k = fromK ; k <= toK ; k++) {
+        for (int k = fromK; k <= toK; k++) {
             boolean thisClusterSelK = ThreadLocalRandom.current().nextBoolean();
-
             clustersTsvBuilder.add(randomClustersLine(!selKSet && thisClusterSelK, k, numberOfCells));
-
             selKSet = selKSet || thisClusterSelK;
         }
 
@@ -56,7 +64,7 @@ public class RandomDataTestUtils {
     }
 
     private static String randomRnaSeqRunId() {
-        return "SRR" + randomNumeric(1, 7);
+        return "SRR" + randomNumeric(1, ENA_SEQ_RUN_NUM_LENGTH);
     }
 
     private static String[] randomClustersLine(boolean selK, int k, int n) {
@@ -67,6 +75,17 @@ public class RandomDataTestUtils {
             clusterIds.add(Integer.toString(ThreadLocalRandom.current().nextInt(1, k + 1)));
         }
         return clusterIds.toArray(new String[0]);
+    }
+
+    public static Set<TSnePoint.Dto> randomTSnePointDtos(int n) {
+        Random random = ThreadLocalRandom.current();
+
+        Set<String> runIds = randomSingleCellRnaSeqRunIds(n);
+
+        return runIds
+                .stream()
+                .map(id -> TSnePoint.Dto.create(random.nextDouble(), random.nextDouble(), id))
+                .collect(Collectors.toSet());
     }
 
     public static Set<TSnePoint.Dto> randomTSnePointDtosWithExpression(int n) {
@@ -95,4 +114,16 @@ public class RandomDataTestUtils {
 
         return tSnePointDtos;
     }
+
+    public static BioentityPropertyName getRandomKnownBioentityPropertyName() {
+        BioentityPropertyName propertyName = UNKNOWN;
+        while (propertyName == UNKNOWN) {
+            propertyName =
+                    BioentityPropertyName.values()[
+                            ThreadLocalRandom.current().nextInt(0, BioentityPropertyName.values().length)];
+        }
+
+        return propertyName;
+    }
+
 }

@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
+import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
 
 import javax.inject.Inject;
 import java.io.UncheckedIOException;
@@ -27,8 +28,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
+@ContextConfiguration(classes = WebConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ContextConfiguration(classes = {WebConfig.class})
 public class TsnePlotSettingsServiceIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
@@ -39,11 +40,14 @@ public class TsnePlotSettingsServiceIT {
     @Inject
     private IdfParser idfParser;
 
+    @Inject
+    private TSnePlotServiceDao tSnePlotServiceDao;
+
     private TsnePlotSettingsService subject;
 
     @BeforeEach
     void setUp() {
-        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser);
+        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotServiceDao);
     }
 
 
@@ -63,7 +67,8 @@ public class TsnePlotSettingsServiceIT {
 
     @Test
     void getPerplexitiesForValidAccession() {
-        List<Integer> result = subject.getAvailablePerplexities(jdbcTestUtils.fetchRandomSingleCellExperimentAccession());
+        List<Integer> result =
+                subject.getAvailablePerplexities(jdbcTestUtils.fetchRandomSingleCellExperimentAccession());
 
         assertThat(result)
                 .isNotEmpty()
@@ -86,7 +91,7 @@ public class TsnePlotSettingsServiceIT {
         long fileDescriptorsOpenAfter = getOpenFileCount();
 
         assertThat(fileDescriptorsOpenAfter)
-                .isEqualTo(fileDescriptorsOpenBefore + 1);
+                .isEqualTo(fileDescriptorsOpenBefore);
     }
 
     // https://stackoverflow.com/questions/16360720/how-to-find-out-number-of-files-currently-open-by-java-application
@@ -94,9 +99,9 @@ public class TsnePlotSettingsServiceIT {
         OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();
         if (os instanceof UnixOperatingSystemMXBean) {
             return ((UnixOperatingSystemMXBean) os).getOpenFileDescriptorCount();
+        } else {
+            return -1;
         }
-
-        else return -1;
     }
 
     private Stream<String> randomSingleCellExperimentAccessionProvider() {

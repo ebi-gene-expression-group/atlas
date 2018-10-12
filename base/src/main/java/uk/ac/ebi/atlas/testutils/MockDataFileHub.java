@@ -10,7 +10,6 @@ import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,7 +20,7 @@ import java.util.stream.Stream;
 import static org.apache.commons.lang3.StringUtils.leftPad;
 
 // I belong in the test dir, but here I can be shared among different modules without the need of creating a test jar
-public class MockDataFileHub extends DataFileHub {
+public final class MockDataFileHub extends DataFileHub {
     private final Path basePath;
 
     private MockDataFileHub() throws IOException {
@@ -37,7 +36,7 @@ public class MockDataFileHub extends DataFileHub {
         try {
             return new MockDataFileHub();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -90,13 +89,17 @@ public class MockDataFileHub extends DataFileHub {
                 experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_GENE_IDS_FILE_PATH_TEMPLATE, accession)),
                 IntStream.range(0, geneIds.length).boxed()
-                        .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(geneIds.length).length()), geneIds[i]})
+                        .map(i -> new String[] {
+                                leftPad(Integer.toString(i + 1), Integer.toString(geneIds.length).length()),
+                                geneIds[i]})
                         .collect(Collectors.toList()));
         addTemporaryTsv(
                 experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE, accession)),
                 IntStream.range(0, cellIds.length).boxed()
-                        .map(i -> new String[] {leftPad(Integer.toString(i + 1), Integer.toString(cellIds.length).length()), cellIds[i]})
+                        .map(i -> new String[] {
+                                leftPad(Integer.toString(i + 1), Integer.toString(cellIds.length).length()),
+                                cellIds[i]})
                         .collect(Collectors.toList()));
     }
 
@@ -135,14 +138,28 @@ public class MockDataFileHub extends DataFileHub {
                 lines);
     }
 
-    public void addPercentileRanksFile(String accession, Collection<String[]> lines){
+    public void addSdrfFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(
+                experimentsMageTabDirLocation.resolve(
+                        MessageFormat.format(SDRF_FILE_PATH_TEMPLATE, accession)),
+                lines);
+    }
+
+    public void addIdfFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(
+                experimentsMageTabDirLocation.resolve(
+                        MessageFormat.format(IDF_FILE_PATH_TEMPLATE, accession)),
+                lines);
+    }
+
+    public void addPercentileRanksFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
                 experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, accession)),
                 lines);
     }
 
-    public void addRnaSeqAnalyticsFile(String accession, Collection<String[]> lines){
+    public void addRnaSeqAnalyticsFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(
                 experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, accession)),
@@ -163,7 +180,7 @@ public class MockDataFileHub extends DataFileHub {
                 lines);
     }
 
-    public void addConfigurationFile(String accession,Collection<String> lines){
+    public void addConfigurationFile(String accession, Collection<String> lines) {
         addTemporaryFile(
                 experimentsMageTabDirLocation.resolve(
                         MessageFormat.format(CONFIGURATION_FILE_PATH_TEMPLATE, accession)),

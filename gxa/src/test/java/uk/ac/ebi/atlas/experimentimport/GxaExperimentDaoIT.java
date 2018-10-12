@@ -27,9 +27,8 @@ import static org.junit.Assert.fail;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 public class GxaExperimentDaoIT {
-
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_GEOD_5614 = "E-GEOD-5614";
     private static final ExperimentType TYPE_BASELINE = ExperimentType.RNASEQ_MRNA_BASELINE;
@@ -39,9 +38,17 @@ public class GxaExperimentDaoIT {
     @Inject
     private GxaExperimentDao subject;
 
-    public UUID createSecret111(boolean isPrivate) {
+    private UUID createSecret111(boolean isPrivate) {
         UUID randomUUID = UUID.randomUUID();
-        ExperimentDTO mtab = ExperimentDTO.create(SECRET_111, TYPE_MICROARRAY, "cow", Sets.newHashSet("1"), Sets.newHashSet("doi"), "diff", isPrivate);
+        ExperimentDTO mtab =
+                ExperimentDTO.create(
+                        SECRET_111,
+                        TYPE_MICROARRAY,
+                        "cow",
+                        Sets.newHashSet("1"),
+                        Sets.newHashSet("doi"),
+                        "diff",
+                        isPrivate);
         subject.addExperiment(mtab, randomUUID);
         return randomUUID;
     }
@@ -59,7 +66,11 @@ public class GxaExperimentDaoIT {
     public void testFindExperiments() {
         List<ExperimentDTO> experimentDTOs = subject.getAllExperimentsAsAdmin();
         assertThat(experimentDTOs.size(), greaterThan(50));
-        assertThat(experimentDTOs, hasItem(ExperimentDTO.create(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""),Sets.newHashSet(""), "", false)));
+        assertThat(
+                experimentDTOs,
+                hasItem(
+                        ExperimentDTO.create(
+                                E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
     }
 
     @Test
@@ -124,7 +135,9 @@ public class GxaExperimentDaoIT {
     @Test
     public void forPublicExperimentsAccessKeyIsIgnored() {
         UUID id = createSecret111(false);
-        assertThat(subject.findExperiment(SECRET_111, id.toString()), is(subject.findExperiment(SECRET_111, "different id")));
+        assertThat(
+                subject.findExperiment(SECRET_111, id.toString()),
+                is(subject.findExperiment(SECRET_111, "different id")));
     }
 
     @Rule
@@ -133,7 +146,9 @@ public class GxaExperimentDaoIT {
     public void forPrivateExperimentsAccessKeyIsRequired() {
         UUID id = createSecret111(true);
 
-        assertThat(subject.findExperiment(SECRET_111, id.toString()), hasProperty("experimentAccession", is(SECRET_111)));
+        assertThat(
+                subject.findExperiment(SECRET_111, id.toString()),
+                hasProperty("experimentAccession", is(SECRET_111)));
 
         exception.expect(ResourceNotFoundException.class);
         subject.findExperiment(SECRET_111, "foobar");

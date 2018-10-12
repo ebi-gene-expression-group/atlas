@@ -23,8 +23,7 @@ public class TracksController extends HtmlExceptionHandlingController {
     @RequestMapping(value = "/experiments-content/{experimentAccession}/tracks/{trackFileName:.*}")
     public String forwardToTrackFile(@PathVariable String experimentAccession,
                                      @PathVariable String trackFileName,
-                                     @RequestParam(required = false, defaultValue = "") String accessKey)
-    throws IOException {
+                                     @RequestParam(required = false, defaultValue = "") String accessKey) {
         // We only want to check that if the experiment is private the correct accessKey has been provided, otherwise
         // the following will throw an exception
         experimentTrader.getExperiment(experimentAccession, accessKey);

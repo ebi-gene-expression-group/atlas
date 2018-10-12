@@ -8,8 +8,8 @@ import java.io.Writer;
 import java.util.List;
 
 public class TsvWriter extends CSVWriter {
-    // TODO Maybe we should consider to implement it as TsvWriter<ExperimentDesign>, TsvWriter<GeneProfiles>... and similar for the builders
-    public TsvWriter(Writer writer){
+    // TODO Maybe we should consider to implement it as TsvWriter<ExperimentDesign>, TsvWriter<GeneProfiles>...
+    public TsvWriter(Writer writer) {
         super(writer, '\t');
     }
 

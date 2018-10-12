@@ -2,19 +2,19 @@ package uk.ac.ebi.atlas.experimentimport;
 
 public class ExperimentLoad {
 
-    void makePublicExperimentPrivate(String accession){
+    void makePublicExperimentPrivate(String accession) {
 
     }
 
-    void makePrivateExperimentPublic(String accession){
+    void makePrivateExperimentPublic(String accession) {
 
     }
 
-    void readExperimentFromDiskIntoDatabase(String accession){
+    void readExperimentFromDiskIntoDatabase(String accession) {
 
     }
 
-    void updateDesignFile(String accession){
+    void updateDesignFile(String accession) {
 
     }
 

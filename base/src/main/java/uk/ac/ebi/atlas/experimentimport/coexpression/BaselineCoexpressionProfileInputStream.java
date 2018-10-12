@@ -15,14 +15,11 @@ import java.util.TreeSet;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class BaselineCoexpressionProfileInputStream implements ObjectInputStream<BaselineCoexpressionProfile> {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionProfileInputStream.class);
-
-    private final int maxCoexpressionProfileSize;
-
     private static final int GENE_ID_COLUMN_INDEX = 0;
 
     private final CSVReader csvReader;
+    private final int maxCoexpressionProfileSize;
     private final String[] geneIDsHeader;
     private final Queue<BaselineCoexpressionProfile> queue = new LinkedList<>();
     private int lineNumber = 0;
@@ -37,9 +34,9 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
         this.geneIDsHeader = readCsvLine();
         checkArgument(geneIDsHeader != null && geneIDsHeader.length > 1,
                 "Could not read in the first line- possibly a malformed or empty file");
-        checkArgument(geneIDsHeader[0].length() < 3 ,
+        checkArgument(geneIDsHeader[0].length() < 3,
                 "The top left corner value should be empty so that the file can have gene names in rows and headers " +
-                        "and a matrix shape. Instead found: "+geneIDsHeader[0]);
+                        "and a matrix shape. Instead found: " + geneIDsHeader[0]);
     }
 
     @Override
@@ -81,7 +78,7 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
         }
 
         return new BaselineCoexpressionProfile(
-                line[GENE_ID_COLUMN_INDEX], readCoexpressionProfileValues(line, lineNumber-1));
+                line[GENE_ID_COLUMN_INDEX], readCoexpressionProfileValues(line, lineNumber - 1));
     }
 
     private Iterable<BaselineCoexpression> readCoexpressionProfileValues(String[] line, int diagonalElementPosition) {

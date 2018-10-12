@@ -1,45 +1,42 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.gson.Gson;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.download.ExperimentFileLocationService;
 import uk.ac.ebi.atlas.download.ExperimentFileType;
-import uk.ac.ebi.atlas.model.Publication;
+import uk.ac.ebi.atlas.metadata.CellMetadataDao;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 @Component
 public class ExperimentPageContentService {
-
     private final ExperimentFileLocationService experimentFileLocationService;
     private final DataFileHub dataFileHub;
     private final TsnePlotSettingsService tsnePlotSettingsService;
-    private final EuropePmcClient europePmcClient;
-
-    private static final Gson gson = new Gson();
+    private final CellMetadataDao cellMetadataDao;
 
     public ExperimentPageContentService(ExperimentFileLocationService experimentFileLocationService,
                                         DataFileHub dataFileHub,
                                         TsnePlotSettingsService tsnePlotSettingsService,
-                                        EuropePmcClient europePmcClient) {
+                                        CellMetadataDao cellMetadataDao) {
         this.experimentFileLocationService = experimentFileLocationService;
         this.dataFileHub = dataFileHub;
         this.tsnePlotSettingsService = tsnePlotSettingsService;
-        this.europePmcClient = europePmcClient;
+        this.cellMetadataDao = cellMetadataDao;
     }
 
     public JsonObject getTsnePlotData(String experimentAccession) {
         JsonObject result = new JsonObject();
 
-        result.add("ks", gson.toJsonTree(tsnePlotSettingsService.getAvailableClusters(experimentAccession)));
+        result.add("ks", GSON.toJsonTree(tsnePlotSettingsService.getAvailableClusters(experimentAccession)));
 
         tsnePlotSettingsService.getExpectedClusters(experimentAccession)
                 .ifPresent(value -> result.addProperty("selectedK", value));
@@ -47,6 +44,14 @@ public class ExperimentPageContentService {
         JsonArray perplexityArray = new JsonArray();
         tsnePlotSettingsService.getAvailablePerplexities(experimentAccession).forEach(perplexityArray::add);
         result.add("perplexities", perplexityArray);
+
+        JsonArray metadataArray = new JsonArray();
+        cellMetadataDao.getMetadataFieldNames(experimentAccession)
+                .stream()
+                .map(x -> ImmutableMap.of("value", x.name(), "label", x.displayName()))
+                .forEach(x -> metadataArray.add(GSON.toJsonTree(x)));
+
+        result.add("metadata", metadataArray);
 
         JsonArray units = new JsonArray();
         units.add("TPM");
@@ -58,12 +63,17 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    public JsonObject getExperimentDesign(String experimentAccession, JsonObject experimentDesignTableAsJson, String accessKey) {
+    public JsonObject getExperimentDesign(String experimentAccession,
+                                          JsonObject experimentDesignTableAsJson,
+                                          String accessKey) {
         JsonObject result = new JsonObject();
 
         result.add("table", experimentDesignTableAsJson);
 
-        String fileUri = experimentFileLocationService.getFileUri(experimentAccession, ExperimentFileType.EXPERIMENT_DESIGN, accessKey).toString();
+        String fileUri =
+                experimentFileLocationService.getFileUri(
+                        experimentAccession, ExperimentFileType.EXPERIMENT_DESIGN, accessKey).toString();
+
         result.addProperty("downloadUrl", fileUri);
 
         return result;
@@ -72,8 +82,16 @@ public class ExperimentPageContentService {
     public JsonArray getDownloads(String experimentAccession, String accessKey) {
         JsonArray result = new JsonArray();
 
-        List<ExperimentFileType> metadataFiles = Arrays.asList(ExperimentFileType.SDRF, ExperimentFileType.IDF, ExperimentFileType.EXPERIMENT_DESIGN);
-        List<ExperimentFileType> resultFiles = Arrays.asList(ExperimentFileType.CLUSTERING, ExperimentFileType.QUANTIFICATION_FILTERED);
+        List<ExperimentFileType> metadataFiles =
+                Arrays.asList(
+                        ExperimentFileType.SDRF,
+                        ExperimentFileType.IDF,
+                        ExperimentFileType.EXPERIMENT_DESIGN);
+        List<ExperimentFileType> resultFiles =
+                Arrays.asList(
+                        ExperimentFileType.CLUSTERING,
+                        ExperimentFileType.QUANTIFICATION_FILTERED,
+                        ExperimentFileType.MARKER_GENES);
 
         result.add(getDownloadSection("Metadata files", metadataFiles, experimentAccession, accessKey));
         result.add(getDownloadSection("Result files", resultFiles, experimentAccession, accessKey));
@@ -86,23 +104,19 @@ public class ExperimentPageContentService {
 
         try (TsvStreamer tsvStreamer =
                      dataFileHub.getSingleCellExperimentFiles(experimentAccession).softwareUsed.get()) {
-                            result = gson.toJsonTree(tsvStreamer.get().collect(Collectors.toList())).getAsJsonArray();
-        };
+                            result = GSON.toJsonTree(tsvStreamer.get().collect(Collectors.toList())).getAsJsonArray();
+        }
 
         return result;
     }
 
-    public List<Publication> getPublications(List<String> identifiers) {
-        List<Publication> publications = new ArrayList<>();
-        for(String id : identifiers) {
-            europePmcClient.getPublicationByIdentifier(id).ifPresent(publications::add);
-        }
-
-        return publications;
-    }
-
-    private JsonObject getExperimentFile(ExperimentFileType experimentFileType, String experimentAccession, String accessKey) {
-        String url = experimentFileLocationService.getFileUri(experimentAccession, experimentFileType, accessKey).toString();
+    private JsonObject getExperimentFile(ExperimentFileType experimentFileType,
+                                         String experimentAccession,
+                                         String accessKey) {
+        String url =
+                experimentFileLocationService
+                        .getFileUri(experimentAccession, experimentFileType, accessKey)
+                        .toString();
 
         JsonObject result = new JsonObject();
 
@@ -114,7 +128,10 @@ public class ExperimentPageContentService {
         return result;
     }
 
-    private JsonObject getDownloadSection(String sectionName, List<ExperimentFileType> experimentFileTypes, String experimentAccession, String accessKey) {
+    private JsonObject getDownloadSection(String sectionName,
+                                          List<ExperimentFileType> experimentFileTypes,
+                                          String experimentAccession,
+                                          String accessKey) {
         JsonObject section = new JsonObject();
         section.addProperty("title", sectionName);
 
@@ -125,5 +142,4 @@ public class ExperimentPageContentService {
 
         return section;
     }
-
 }

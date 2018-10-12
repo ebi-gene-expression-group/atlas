@@ -29,7 +29,7 @@ public class ContrastSummaryController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/rest/contrast-summary",produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/rest/contrast-summary", produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTooltipContrastContent(@RequestParam(value = "experimentAccession") String experimentAccession,

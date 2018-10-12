@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,7 +33,9 @@ public class MicroarrayExperimentDataPointStream implements ObjectInputStream<Mi
     private ObjectInputStream<? extends MicroarrayDifferentialAnalytics> currentInputStream;
 
     public MicroarrayExperimentDataPointStream(MicroarrayExperiment experiment,
-                                               ImmutableCollection<ObjectInputStream<? extends MicroarrayDifferentialAnalytics>> inputStreams,
+                                               ImmutableCollection<
+                                                       ObjectInputStream<? extends MicroarrayDifferentialAnalytics>>
+                                                       inputStreams,
                                                Multimap<String, String> conditionSearchTermsByContrastId,
                                                Map<String, Integer> numReplicatesByContrastId) {
         this.experiment = experiment;

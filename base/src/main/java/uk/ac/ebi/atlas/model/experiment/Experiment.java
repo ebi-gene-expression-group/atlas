@@ -68,7 +68,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         this.alternativeViews = alternativeViews;
         this.alternativeViewDescriptions = alternativeViewDescriptions;
         ImmutableMap.Builder<String, DataColumnDescriptor> builder = ImmutableMap.builder();
-        for(DataColumnDescriptor dataColumnDescriptor: dataColumnDescriptors){
+        for (DataColumnDescriptor dataColumnDescriptor: dataColumnDescriptors) {
             builder.put(dataColumnDescriptor.getId(), dataColumnDescriptor);
         }
         this.dataColumnDescriptorsPerId = builder.build();
@@ -76,18 +76,18 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
 
     }
 
-    public List<DataColumnDescriptor> getDataColumnDescriptors(){
+    public List<DataColumnDescriptor> getDataColumnDescriptors() {
         return ImmutableList.<DataColumnDescriptor>builder().addAll(dataColumnDescriptorsPerId.values()).build();
     }
 
-    public DataColumnDescriptor getDataColumnDescriptor(String id){
+    public DataColumnDescriptor getDataColumnDescriptor(String id) {
         return dataColumnDescriptorsPerId.get(id);
     }
 
     public ExperimentType getType() {
         return type;
     }
-    
+
     public ExperimentDesign getExperimentDesign() {
         return experimentDesign;
     }
@@ -111,19 +111,19 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return accession;
     }
 
-    public Species getSpecies(){
+    public Species getSpecies() {
         return species;
     }
 
-    public String getDisclaimer(){
+    public String getDisclaimer() {
         return disclaimer;
     }
 
-    public Date getLastUpdate(){
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public List<String> getPubMedIds(){
+    public List<String> getPubMedIds() {
         return pubMedIds;
     }
 
@@ -147,11 +147,11 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return alternativeViewDescriptions;
     }
 
-    public List<Pair<String, String>> alternativeViews(){
+    public List<Pair<String, String>> alternativeViews() {
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
 
-        for(int i = 0 ; i < alternativeViews.size() ; i++) {
+        for (int i = 0; i < alternativeViews.size(); i++) {
             result.add(Pair.of(alternativeViews.get(i), alternativeViewDescriptions.get(i)));
         }
         return result;
@@ -165,7 +165,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
                         .collect(Collectors.toSet()));
     }
 
-    public ExperimentInfo buildExperimentInfo(){
+    public ExperimentInfo buildExperimentInfo() {
         ExperimentInfo experimentInfo = new ExperimentInfo();
         experimentInfo.setExperimentAccession(accession);
         experimentInfo.setLastUpdate(new SimpleDateFormat("dd-MM-yyyy").format(lastUpdate));
@@ -196,8 +196,12 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Experiment<?> that = (Experiment<?>) o;
         return com.google.common.base.Objects.equal(accession, that.accession);
     }

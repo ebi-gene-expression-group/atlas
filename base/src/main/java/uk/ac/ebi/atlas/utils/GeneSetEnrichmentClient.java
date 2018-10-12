@@ -28,9 +28,10 @@ public class GeneSetEnrichmentClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneSetEnrichmentClient.class);
 
     private final RestTemplate restTemplate;
-    static final String urlPattern = "https://www.ebi.ac.uk/fg/gsa/api/tsv/getOverlappingComparisons/{0}/{1}";
-    private static final String [] expectedHeader =("EXPERIMENT\tCOMPARISON_ID\tP-VALUE\tOBSERVED\tEXPECTED\t" +
-            "ADJUSTED P-VALUE\tEFFECT SIZE\tCOMPARISON_TITLE\tEXPERIMENT_URL").split("\t");
+    static final String GSA_URL_PATTERN = "https://www.ebi.ac.uk/fg/gsa/api/tsv/getOverlappingComparisons/{0}/{1}";
+    private static final String[] EXPECTED_HEADER =
+            ("EXPERIMENT\tCOMPARISON_ID\tP-VALUE\tOBSERVED\tEXPECTED\t" +
+             "ADJUSTED P-VALUE\tEFFECT SIZE\tCOMPARISON_TITLE\tEXPERIMENT_URL").split("\t");
 
     @Inject
     public GeneSetEnrichmentClient(RestTemplate restTemplate) {
@@ -38,9 +39,10 @@ public class GeneSetEnrichmentClient {
     }
 
     public Pair<Optional<Exception>, Optional<JsonArray>> fetchEnrichedGenes(String speciesName,
-                                                                          Collection<String> bioentityIdentifiers) {
+                                                                             Collection<String> bioentityIdentifiers) {
         try {
-            Pair<Optional<String>, Optional<JsonArray>> errorOrResponse = formatResponse(fetchResponse(speciesName, bioentityIdentifiers));
+            Pair<Optional<String>, Optional<JsonArray>> errorOrResponse =
+                    formatResponse(fetchResponse(speciesName, bioentityIdentifiers));
             return errorOrResponse.getLeft().isPresent() ?
                     Pair.of(errorOrResponse.getLeft().map(RuntimeException::new), Optional.empty()) :
                     Pair.of(Optional.empty(), errorOrResponse.getRight());
@@ -50,26 +52,26 @@ public class GeneSetEnrichmentClient {
         }
     }
 
-    //either error message or result
+    // Either error message or result
     private Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
-        if(lines.isEmpty()) {
+        if (lines.isEmpty()) {
             return Pair.of(Optional.of("Result empty!"),
                     Optional.empty());
-        }
-        else if (lines.size() == 1){
-            return Pair.of(Optional.of("Error: "+Joiner.on("\t").join(lines.get(0))),
+        } else if (lines.size() == 1) {
+            return Pair.of(
+                    Optional.of("Error: " + Joiner.on("\t").join(lines.get(0))),
                     Optional.empty());
-        }
-        else if(!Arrays.deepEquals(expectedHeader, lines.get(0))){
-            return Pair.of(Optional.of("Header not as expected: " + Joiner.on("\t").join(lines.get(0))),
+        } else if (!Arrays.deepEquals(EXPECTED_HEADER, lines.get(0))) {
+            return Pair.of(
+                    Optional.of("Header not as expected: " + Joiner.on("\t").join(lines.get(0))),
                     Optional.empty());
-        }
-        else if(!linesHaveCorrectDimensions(lines)){
-            return Pair.of(Optional.of("Data malformed, expected a matrix" ),
+        } else if (!linesHaveCorrectDimensions(lines)) {
+            return Pair.of(
+                    Optional.of("Data malformed, expected a matrix"),
                     Optional.empty());
-        }
-        else {
-            return Pair.of(Optional.empty(),
+        } else {
+            return Pair.of(
+                    Optional.empty(),
                     Optional.of(formatLines(lines.subList(1, lines.size()))));
         }
     }
@@ -78,7 +80,7 @@ public class GeneSetEnrichmentClient {
         try {
             String response = restTemplate.getForObject(
                     MessageFormat.format(
-                            urlPattern,
+                            GSA_URL_PATTERN,
                             speciesName,
                             Joiner.on(" ").join(bioentityIdentifiers)),
                     String.class);
@@ -89,13 +91,16 @@ public class GeneSetEnrichmentClient {
                 return tsvStreamer.get().collect(Collectors.toList());
             }
         } catch (RestClientException e) {
-            throw new NoStatisticalSignificanceException("No significant contrasts found. Try adding more than " + bioentityIdentifiers.size() + " gene identifiers.");
+            throw new NoStatisticalSignificanceException(
+                    String.format(
+                            "No significant contrasts found. Try adding more than %d gene identifiers.",
+                            bioentityIdentifiers.size()));
         }
     }
 
     private boolean linesHaveCorrectDimensions(List<String[]> lines) {
         for (String[] line : lines) {
-            if(line.length != expectedHeader.length && line.length +1 != expectedHeader.length) {
+            if (line.length != EXPECTED_HEADER.length && line.length + 1 != EXPECTED_HEADER.length) {
                 //missing COMPARISON_TITLE from data lines, we're working around it
                 return false;
             }
@@ -105,7 +110,7 @@ public class GeneSetEnrichmentClient {
 
     private JsonArray formatLines(List<String[]> lines) {
         JsonArray result = new JsonArray();
-        for (String [] line : lines) {
+        for (String[] line : lines) {
             result.add(formatLine(line));
         }
         return result;
@@ -122,12 +127,12 @@ public class GeneSetEnrichmentClient {
         result.addProperty("expected", Double.parseDouble(line[4]));
         result.addProperty("adjusted_p-value", Double.parseDouble(line[5]));
         // Handle NaN to produce valid JSON
-        if(Double.isNaN(parseOrNaN(line[6]))) {
+        if (Double.isNaN(parseOrNaN(line[6]))) {
             result.addProperty("effect_size", "NaN");
-        }
-        else {
+        } else {
             result.addProperty("effect_size", parseOrNaN(line[6]));
         }
+
         result.add("comparison_title", new JsonObject()); // enriched later
         result.addProperty("experiment", ""); // enriched later
 
@@ -136,10 +141,10 @@ public class GeneSetEnrichmentClient {
     }
 
     //Effect size is observed/expected, and R says 1/0 is Inf
-    private Double parseOrNaN(String s){
+    private Double parseOrNaN(String s) {
         try {
             return Double.parseDouble(s);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return Double.NaN;
         }
     }

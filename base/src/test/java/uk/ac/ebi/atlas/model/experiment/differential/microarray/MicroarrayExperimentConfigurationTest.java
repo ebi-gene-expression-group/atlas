@@ -29,7 +29,7 @@ public class MicroarrayExperimentConfigurationTest {
     }
 
     @Test
-    public void testGetArrayDesignNames() throws Exception {
+    public void testGetArrayDesignNames() {
         assertThat(subject.getArrayDesignAccessions(), hasItem(ARRAYDESIGN));
     }
 }

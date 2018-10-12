@@ -37,4 +37,7 @@ header .masthead {
     color: #fff;
 }
 
-/* end */
+li.tabs-title > a:focus {
+    outline: 0;
+    box-shadow: none;
+}

@@ -9,11 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
-public class OpLogEntry {
-
-    static Long UNFINISHED = (long) -1;
-
-    static String FAILED = "FAILED: ";
+public final class OpLogEntry {
+    private static final Long UNFINISHED = (long) -1;
+    private static final String FAILED = "FAILED: ";
 
     private final boolean failed;
     private final Op op;
@@ -21,9 +19,7 @@ public class OpLogEntry {
     private final Long finish;
     private final String message;
 
-
-
-    private OpLogEntry(boolean failed, Op op, Long start, Long finish, String message){
+    private OpLogEntry(boolean failed, Op op, Long start, Long finish, String message) {
         this.failed = failed;
         this.op = op;
         this.start = start;
@@ -31,26 +27,25 @@ public class OpLogEntry {
         this.message = message;
     }
 
-    private static long snapshotCurrentTime(){
+    private static long snapshotCurrentTime() {
         return System.currentTimeMillis();
     }
 
-    static OpLogEntry newlyStartedOp(Op op){
+    static OpLogEntry newlyStartedOp(Op op) {
         return new OpLogEntry(
                 false, op, snapshotCurrentTime(), UNFINISHED, ""
         );
     }
 
-    OpLogEntry toFailure(String text){
+    OpLogEntry toFailure(String text) {
         return failedOp(op, start, snapshotCurrentTime(), text);
     }
 
-
-    OpLogEntry toSuccess(){
+    OpLogEntry toSuccess() {
         return successfulOp(op, start, snapshotCurrentTime());
     }
 
-    static OpLogEntry failedOp(Op op, Long start, Long finish, String message){
+    static OpLogEntry failedOp(Op op, Long start, Long finish, String message) {
         return new OpLogEntry(
                 true,
                 op,
@@ -60,46 +55,43 @@ public class OpLogEntry {
         );
     }
 
-
-    static OpLogEntry successfulOp(Op op, Long start, Long finish){
+    static OpLogEntry successfulOp(Op op, Long start, Long finish) {
         return new OpLogEntry(
                 false, op, start, finish, ""
         );
     }
 
-    static OpLogEntry NULL(String message) {
+    static OpLogEntry nullOp(String message) {
         return new OpLogEntry(true, Op.LIST, 0L, 0L, message);
     }
 
-    public boolean isInProgress(){
+    public boolean isInProgress() {
         return finish.equals(UNFINISHED);
     }
 
-    public String statusMessage(){
+    public String statusMessage() {
         StringBuilder sb = new StringBuilder("Operation ");
         sb.append(op);
         sb.append(" started at ");
         sb.append(new DateTime(start).toString());
-        if(isInProgress()){
+        if (isInProgress()) {
             sb.append(" and not finished. ");
         } else {
             sb.append(" and ");
-            sb.append(failed? "failed" :"succeeded");
+            sb.append(failed ? "failed" : "succeeded");
             sb.append(" after ");
             sb.append(timeTakenInSeconds());
             sb.append(" seconds. ");
         }
-        if(StringUtils.isNotEmpty(message)){
+        if (StringUtils.isNotEmpty(message)) {
             sb.append(message);
         }
         return sb.toString();
     }
 
-
-
-    static OpLogEntry fromArray(String[] lines){
+    static OpLogEntry fromArray(String[] lines) {
         try {
-            Preconditions.checkArgument(lines.length >=3);
+            Preconditions.checkArgument(lines.length >= 3);
             return new OpLogEntry(
                     lines[0].startsWith(FAILED),
                     Op.valueOf(lines[0].replace(FAILED, "").trim()),
@@ -107,38 +99,36 @@ public class OpLogEntry {
                     Long.parseLong(lines[2]),
                     Joiner.on(" ").join(ArrayUtils.subarray(lines, 3, lines.length))
             );
-        } catch (IllegalArgumentException e){
-            return NULL("Invalid op log entry, could not read: "+ Joiner.on("\t").join(lines));
+        } catch (IllegalArgumentException e) {
+            return nullOp("Invalid op log entry, could not read: " + Joiner.on("\t").join(lines));
         }
     }
 
-    String[] toArray(){
+    String[] toArray() {
         return new String[] {
-                failed? FAILED+op.name() : op.name(),
+                failed ? FAILED + op.name() : op.name(),
                 start.toString(),
                 finish.toString(),
                 message
         };
     }
 
-    private int timeTakenInSeconds(){
-        return new Period((
-                finish.equals(UNFINISHED)
-                        ? System.currentTimeMillis()
-                        : finish)
-                - start).toStandardSeconds().getSeconds();
+    private int timeTakenInSeconds() {
+        return new Period((finish.equals(UNFINISHED) ? System.currentTimeMillis() : finish) - start)
+                .toStandardSeconds()
+                .getSeconds();
     }
 
-    JsonObject toJson(){
+    JsonObject toJson() {
         JsonObject result = new JsonObject();
-        result.addProperty("op",failed? FAILED+op.name() : op.name());
+        result.addProperty("op", failed ? FAILED + op.name() : op.name());
         result.addProperty("started", new DateTime(start).toString());
-        if(isInProgress()){
-            result.addProperty("in_progress",true);
+        if (isInProgress()) {
+            result.addProperty("in_progress", true);
         }
         result.addProperty("time_taken_seconds",
                 timeTakenInSeconds());
-        if(failed){
+        if (failed) {
             result.addProperty("error", message);
         }
         return result;
@@ -146,8 +136,14 @@ public class OpLogEntry {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
         OpLogEntry that = (OpLogEntry) o;
         return failed == that.failed &&
                 op == that.op &&
@@ -160,5 +156,4 @@ public class OpLogEntry {
     public int hashCode() {
         return Objects.hashCode(failed, op, start, finish, message);
     }
-
 }

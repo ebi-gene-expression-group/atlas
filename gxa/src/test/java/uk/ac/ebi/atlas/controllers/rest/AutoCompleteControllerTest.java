@@ -1,18 +1,13 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.solr.bioentities.query.SolrBioentitiesSuggesterService;
+import uk.ac.ebi.atlas.search.suggester.SuggesterDao;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.List;
 
@@ -28,7 +23,7 @@ public class AutoCompleteControllerTest {
     private static final String HOMO_SAPIENS = "Homo sapiens";
 
     @Mock
-    private SolrBioentitiesSuggesterService suggesterServiceMock;
+    private SuggesterDao suggesterDaoMock;
 
     private AutoCompleteController subject;
 
@@ -39,9 +34,9 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
-        when(suggesterServiceMock.fetchPropertySuggestions(QUERY_STRING, 15, "Homo sapiens")).thenReturn(suggestions);
+        when(suggesterDaoMock.fetchPropertySuggestions(QUERY_STRING, 15, "Homo sapiens")).thenReturn(suggestions);
 
-        subject = new AutoCompleteController(suggesterServiceMock);
+        subject = new AutoCompleteController(suggesterDaoMock);
     }
 
     @Test

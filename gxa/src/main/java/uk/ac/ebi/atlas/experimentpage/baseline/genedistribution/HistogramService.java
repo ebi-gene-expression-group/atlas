@@ -32,21 +32,22 @@ If you want to support drawing the charts for arbitrary columns of data
 
 The last part became harder because choices of filters and cutoffs now appear orthogonal in the UI
  */
-public class HistogramService<O extends ProfileStreamOptions<?>, T extends Experiment<?>> {
+public class HistogramService<O extends ProfileStreamOptions<?>, E extends Experiment<?>> {
 
     protected final ExperimentTrader experimentTrader;
     private final LoadingCache<HistogramCacheKey<O>, HistogramAcrossGenes> cache;
 
 
-    public HistogramService(final ProfileStreamFactory<?, ?, T, O, ?> profileStreamFactory,
-                            final ExperimentTrader experimentTrader, final double [] cutoffBins){
+    public HistogramService(final ProfileStreamFactory<?, ?, E, O, ?> profileStreamFactory,
+                            final ExperimentTrader experimentTrader,
+                            final double[] cutoffBins) {
         this.experimentTrader = experimentTrader;
         this.cache = CacheBuilder.newBuilder().build(new CacheLoader<HistogramCacheKey<O>, HistogramAcrossGenes>() {
             @Override
             public HistogramAcrossGenes load(@Nonnull HistogramCacheKey<O> cacheKey) {
                 return new HistogramAcrossGenes(
                         profileStreamFactory.histogram(
-                                (T) experimentTrader.getExperiment(cacheKey.accession(), cacheKey.accessKey()),
+                                (E) experimentTrader.getExperiment(cacheKey.accession(), cacheKey.accessKey()),
                                 cacheKey.streamOptions(),
                                 cutoffBins),
                         cutoffBins);
@@ -54,7 +55,7 @@ public class HistogramService<O extends ProfileStreamOptions<?>, T extends Exper
         });
     }
 
-    protected HistogramAcrossGenes get(String accession, String accessKey, O streamOptions){
+    protected HistogramAcrossGenes get(String accession, String accessKey, O streamOptions) {
         try {
             return cache.get(HistogramCacheKey.create(accession, accessKey, streamOptions));
         } catch (ExecutionException e) {
@@ -62,21 +63,18 @@ public class HistogramService<O extends ProfileStreamOptions<?>, T extends Exper
         }
     }
 
-    static class Baseline<U extends ExpressionUnit.Absolute, P extends BaselineRequestPreferences<U>>
+    static class
+    Baseline<U extends ExpressionUnit.Absolute, P extends BaselineRequestPreferences<U>>
             extends HistogramService<BaselineProfileStreamOptions<U>, BaselineExperiment> {
 
-        public Baseline(
-                ProfileStreamFactory<?,
-                                     ?,
-                                     BaselineExperiment,
-                                     BaselineProfileStreamOptions<U>,
-                                     ?> profileStreamFactory,
-                ExperimentTrader experimentTrader,
+        Baseline(ProfileStreamFactory<?, ?, BaselineExperiment, BaselineProfileStreamOptions<U>, ?>
+                         profileStreamFactory,
+                 ExperimentTrader experimentTrader,
                 double[] cutoffBins) {
             super(profileStreamFactory, experimentTrader, cutoffBins);
         }
 
-        public HistogramAcrossGenes get(String accession ,String accessKey, P preferences){
+        public HistogramAcrossGenes get(String accession, String accessKey, P preferences) {
             return get(
                     accession,
                     accessKey,
@@ -107,7 +105,7 @@ public class HistogramService<O extends ProfileStreamOptions<?>, T extends Exper
     }
 
     @AutoValue
-    public static abstract class HistogramCacheKey<O extends ProfileStreamOptions<?>> {
+    public abstract static class HistogramCacheKey<O extends ProfileStreamOptions<?>> {
         abstract String accession();
         abstract String accessKey();
         abstract O streamOptions();

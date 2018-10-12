@@ -15,9 +15,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ObjectInputStreamsTest {
-
     @Mock
-    ObjectInputStream<Integer> inputStreamMock;
+    private ObjectInputStream<Integer> inputStreamMock;
 
     private ObjectInputStream<Integer> oneTwoThreeNull() {
         return inputStreamMock;
@@ -30,7 +29,7 @@ public class ObjectInputStreamsTest {
     }
 
     @Test
-    public void alwaysTrue(){
+    public void alwaysTrue() {
         ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> true);
         assertThat(out.readNext(), is(1));
         assertThat(out.readNext(), is(2));
@@ -39,13 +38,13 @@ public class ObjectInputStreamsTest {
     }
 
     @Test
-    public void alwaysFalse(){
+    public void alwaysFalse() {
         ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> false);
         assertThat(out.readNext(), is(nullValue()));
     }
 
     @Test
-    public void keepOne(){
+    public void keepOne() {
         int toKeep = ThreadLocalRandom.current().nextInt(1, 4);
         ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), x -> x.equals(toKeep));
         assertThat(out.readNext(), is(toKeep));

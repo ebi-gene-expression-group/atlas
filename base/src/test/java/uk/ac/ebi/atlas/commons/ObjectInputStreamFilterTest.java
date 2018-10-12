@@ -35,7 +35,7 @@ public class ObjectInputStreamFilterTest {
 
     @Before
     public void initSubject() {
-        subject = new ObjectInputStreamFilter<Object>(inputStreamMock){
+        subject = new ObjectInputStreamFilter<Object>(inputStreamMock) {
 
             @Override
             protected Predicate<Object> getAcceptanceCriteria() {

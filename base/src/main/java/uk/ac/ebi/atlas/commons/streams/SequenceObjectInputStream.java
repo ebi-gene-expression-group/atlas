@@ -36,9 +36,12 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
 
         if (enumeration.hasMoreElements()) {
             in = enumeration.nextElement();
-            if (in == null)
+            if (in == null) {
                 throw new NullPointerException();
-        } else in = null;
+            }
+        } else {
+            in = null;
+        }
 
     }
 

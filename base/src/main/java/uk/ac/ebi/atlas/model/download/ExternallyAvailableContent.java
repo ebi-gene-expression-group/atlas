@@ -15,13 +15,9 @@ import java.util.Collection;
 import java.util.function.Function;
 
 public class ExternallyAvailableContent {
-
     public final URI uri;
-
     public final Description description;
-
     public final Function<HttpServletResponse, Void> stream;
-
 
     public ExternallyAvailableContent(URI uri, Description description, Function<HttpServletResponse, Void> stream) {
         this.uri = uri;
@@ -34,15 +30,18 @@ public class ExternallyAvailableContent {
         this.description = description;
         this.stream = response -> {
             throw new NotImplementedException(MessageFormat.format(
-                    "This content doesn't stream. This shouldn't be reachable as {0} is a redirect.", redirect)
-            );
+                    "This content doesn't stream. This shouldn't be reachable as {0} is a redirect.", redirect));
         };
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ExternallyAvailableContent that = (ExternallyAvailableContent) o;
         return Objects.equal(uri, that.uri);
     }
@@ -54,20 +53,11 @@ public class ExternallyAvailableContent {
 
     @AutoValue
     public abstract static class Description {
-        /*
-        Where in the resources tab this should go? Optional because usually the content list is not further split into sections
-         */
+        // Where in the resources tab this should go?
         public abstract String group();
-        /*
-        how to render?
-         for images where we have icons it would be icon/ma
-        for links: link
-        */
+        // How to render? For images where we have icons it would be icon/ma, For links: link
         public abstract String type();
-
-        /*
-        the text that goes next to icon or on link
-         */
+        // The text that goes next to icon or on link
         public abstract String description();
 
         public static Description create(String type, String description) {
@@ -87,24 +77,20 @@ public class ExternallyAvailableContent {
         }
     }
 
-
-    public static abstract class Supplier<E extends Experiment> {
-        /*
-        Tell the user what resources are available for this experiment
-         */
+    public abstract static class Supplier<E extends Experiment> {
+        // Tell the user what resources are available for this experiment
         public abstract Collection<ExternallyAvailableContent> get(E experiment);
-
         public abstract ContentType contentType();
 
-        /*
-        If o1.equals(o2) then o1.base() should equal o2.base()
-        Needs to finish with the slash!
-        */
+        // If o1.equals(o2) then o1.base() should equal o2.base(); needs to finish with the slash!
         protected URI base() {
             String[] xs = this.getClass().getCanonicalName().split("\\.");
 
-            String uniqueEnoughButShortName = xs.length >1 ? xs[xs.length-2]+"."+xs[xs.length-1] : xs[xs.length-1];
-            return URI.create(uniqueEnoughButShortName+"/");
+            String uniqueEnoughButShortName =
+                    xs.length > 1 ?
+                            xs[xs.length - 2] + "." + xs[xs.length - 1] :
+                            xs[xs.length - 1];
+            return URI.create(uniqueEnoughButShortName + "/");
         }
 
         protected Collection<String> reservedUris() {
@@ -119,21 +105,17 @@ public class ExternallyAvailableContent {
             return base().resolve(id);
         }
 
-        public final boolean comesFromThisSupplier(URI uri){
+        public final boolean comesFromThisSupplier(URI uri) {
             return uri.resolve(".").equals(base()) || matchesReservedUri(uri);
         }
 
-        /*
-        The user wants a specific resource - give him that
-        Subclasses could override this method for efficiency
-        */
-        public ExternallyAvailableContent get(E experiment, final URI uri){
+        // The user wants a specific resource - give him that. Subclasses could override this method for efficiency
+        public ExternallyAvailableContent get(E experiment, final URI uri) {
             return get(experiment).stream()
                     .filter(externallyAvailableContent ->
                             externallyAvailableContent.uri.equals(uri) || matchesReservedUri(uri))
                     .findFirst()
-                    .orElseGet(() -> { throw new ResourceNotFoundException(uri.toString());
-            });
+                    .orElseThrow(() -> new ResourceNotFoundException(uri.toString()));
         }
     }
 

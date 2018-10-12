@@ -59,7 +59,7 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
     }
 
     @Inject
-    public void setBioentityPropertyDao(BioEntityPropertyDao bioentityPropertyDao){
+    public void setBioentityPropertyDao(BioEntityPropertyDao bioentityPropertyDao) {
         this.bioentityPropertyDao = bioentityPropertyDao;
     }
 
@@ -94,8 +94,11 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
 
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         if (hasBaselineResults) {
-            model.addAttribute("jsonFacets", gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch
-                    (SemanticQuery.create(identifier), species)));
+            model.addAttribute(
+                    "jsonFacets",
+                    gson.toJson(
+                            baselineAnalyticsSearchService.findFacetsForTreeSearch(
+                                    SemanticQuery.create(identifier), species)));
         }
 
         model.addAllAttributes(pageDescriptionAttributes(identifier, species, entityName));

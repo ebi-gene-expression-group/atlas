@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.idf;
 import uk.ac.ebi.atlas.model.Publication;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,10 @@ public class IdfParserOutput {
     }
 
     public Set<String> getPubmedIds() {
-        return publications.stream().map(Publication::getPubmedId).collect(Collectors.toSet());
+        return publications.stream()
+                .map(Publication::getPubmedId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
     }
 
     public List<String> getMetadataFieldsOfInterest() {
@@ -51,6 +55,10 @@ public class IdfParserOutput {
     }
 
     public Set<String> getDois() {
-        return publications.stream().map(Publication::getDoi).collect(Collectors.toSet());
+        return publications
+                .stream()
+                .map(Publication::getDoi)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
     }
 }

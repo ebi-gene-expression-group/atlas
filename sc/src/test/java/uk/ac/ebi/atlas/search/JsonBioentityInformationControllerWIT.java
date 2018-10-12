@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
+import uk.ac.ebi.atlas.testutils.SolrUtils;
 
 import javax.inject.Inject;
 
@@ -27,27 +28,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
-public class JsonBioentityInformationControllerWIT {
+@ContextConfiguration(classes = WebConfig.class)
+class JsonBioentityInformationControllerWIT {
     @Inject
     private JdbcUtils jdbcTestUtils;
+    @Inject
+    private SolrUtils solrUtils;
 
     @Autowired
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
 
+    private static final String urlTemplate = "/json/bioentity_information/{geneId}";
+
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    public void payloadIsValidJson() throws Exception {
+    void payloadIsValidJson() throws Exception {
         String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc
-                .perform(get("/json/bioentity_information/" + geneId))
+                .perform(get(urlTemplate, geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[0].type", isA(String.class)))
@@ -59,18 +64,30 @@ public class JsonBioentityInformationControllerWIT {
     }
 
     @Test
-    public void geneNotFound() throws Exception {
+    public void geneIdsContainingDotIsNotTruncated() throws Exception {
+        String geneId = solrUtils.fetchRandomGeneOfSpecies("Arabidopsis_lyrata"); // has gene IDs containing dots
+
+        if(!geneId.isEmpty()) {
+            this.mockMvc
+                    .perform(get(urlTemplate, geneId))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+        }
+    }
+
+    @Test
+    void geneNotFound() throws Exception {
         this.mockMvc
-                .perform(get("/json/bioentity_information/unknown"))
+                .perform(get(urlTemplate, "unknown"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void payloadContainsExpressionAtlasLink() throws Exception{
+    void payloadContainsExpressionAtlasLink() throws Exception {
         String geneId = jdbcTestUtils.fetchRandomGene();
 
         this.mockMvc
-                .perform(get("/json/bioentity_information/" + geneId))
+                .perform(get(urlTemplate, geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[-1:].type", contains("expression_atlas")))

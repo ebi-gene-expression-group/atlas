@@ -32,7 +32,7 @@ public class DatabaseQuery<T> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "query: " + getQuery() + ", params: " + params;
     }
 }

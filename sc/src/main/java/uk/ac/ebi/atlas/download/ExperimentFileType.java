@@ -5,14 +5,21 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import java.util.Arrays;
 
 public enum ExperimentFileType {
-
     // Could include icon name (similar to Description class in ExternallyAvailableContent)
-    EXPERIMENT_DESIGN ("experiment-design", "Experiment design file (.tsv)", IconType.EXPERIMENT_DESIGN, false),
-    SDRF("sdrf", "SDRF file (.txt)", IconType.TSV, false),
-    IDF("idf", "IDF file (.txt)", IconType.TSV, false),
-    CLUSTERING("cluster", "Clustering file (.tsv)", IconType.TSV, false),
-    QUANTIFICATION_RAW("quantification-raw", "Raw quantification files (MatrixMarket)", IconType.TSV, true),
-    QUANTIFICATION_FILTERED("quantification-filtered", "Filtered quantification files (MatrixMarket)", IconType.TSV, true);
+    EXPERIMENT_DESIGN(
+            "experiment-design", "Experiment design file (.tsv)", IconType.EXPERIMENT_DESIGN, false),
+    SDRF(
+            "sdrf", "SDRF file (.txt)", IconType.TSV, false),
+    IDF(
+            "idf", "IDF file (.txt)", IconType.TSV, false),
+    CLUSTERING(
+            "cluster", "Clustering file (.tsv)", IconType.TSV, false),
+    QUANTIFICATION_RAW(
+            "quantification-raw", "Raw quantification files (MatrixMarket)", IconType.TSV, true),
+    QUANTIFICATION_FILTERED(
+            "quantification-filtered", "Filtered quantification files (MatrixMarket)", IconType.TSV, true),
+    MARKER_GENES(
+            "marker-genes", "Marker gene files (.tsv)", IconType.TSV, true);
 
     // IDs should be used when generating URLs
     private final String id;
@@ -48,6 +55,7 @@ public enum ExperimentFileType {
         return Arrays.stream(ExperimentFileType.values())
                 .filter(value -> value.id.equalsIgnoreCase(id))
                 .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("No experiment file type with ID " + id + " was found"));
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("No experiment file type with ID " + id + " was found"));
     }
 }

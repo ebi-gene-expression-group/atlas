@@ -29,7 +29,7 @@ public class BaselineExperimentSearchResultProducer {
         return trimAndSort(profilesForExpressions(expressionsPerColumnPerExperiment, factorType));
     }
 
-    private BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
+    private BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles) {
         BaselineExperimentProfilesList result =
                 profiles.stream()
                         .filter(profile -> !profile.hasAllExpressionsEqualZero())
@@ -43,7 +43,7 @@ public class BaselineExperimentSearchResultProducer {
             Map<String, Map<String, Double>> expressionsPerColumnPerExperiment, final String factorType) {
         BaselineExperimentProfilesList resultRows = new BaselineExperimentProfilesList();
 
-        for(Map.Entry<String, Map<String, Double>> e: expressionsPerColumnPerExperiment.entrySet()) {
+        for (Map.Entry<String, Map<String, Double>> e: expressionsPerColumnPerExperiment.entrySet()) {
             final BaselineExperiment experiment =
                     (BaselineExperiment) experimentTrader.getPublicExperiment(e.getKey());
             Map<String, Double> assayGroupIdAndExpression = e.getValue();
@@ -65,9 +65,9 @@ public class BaselineExperimentSearchResultProducer {
                 }
             }).collect(Collectors.toSet());
 
-            for(final FactorGroup factorGroup: factorGroups){
+            for (final FactorGroup factorGroup: factorGroups) {
                 BaselineExperimentProfile baselineExperimentProfile =
-                        new BaselineExperimentProfile(experiment,factorGroup);
+                        new BaselineExperimentProfile(experiment, factorGroup);
 
                 for (AssayGroup assayGroup :
                         experiment.getDataColumnDescriptors().stream()

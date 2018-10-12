@@ -44,7 +44,7 @@ class ExperimentCard extends React.Component {
       descriptionShown: truncate(this.props.longDescription)
     }
 
-    this.setExpanded = this._setExpanded.bind(this);
+    this.setExpanded = this._setExpanded.bind(this)
   }
 
   _setExpanded() {
@@ -59,11 +59,11 @@ class ExperimentCard extends React.Component {
     const {expanded, descriptionShown} = this.state
 
     const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
-      return <li><a href={markerGene.url}>View marker gene in clusters {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
+      return <li key={`marker-gene`}><a href={markerGene.url}>View marker gene in clusters {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a></li>
     })
     return (
       <ExperimentCardDiv>
-      <span className={"label"}>
+        <span className={`label`}>
           {lastUpdated} | <i>{species}</i>
         </span>
         <h5>

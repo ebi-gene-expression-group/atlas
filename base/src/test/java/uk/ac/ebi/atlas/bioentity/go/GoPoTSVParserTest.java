@@ -14,15 +14,14 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 
-
 @RunWith(MockitoJUnitRunner.class)
 public class GoPoTSVParserTest {
-    private final static String GO_0000001 = "GO:0000001";
-    private final static String MITOCHONDRION_INHERITANCE = "mitochondrion inheritance";
-    private final static int DEPTH_6 = 6;
+    private static final String GO_0000001 = "GO:0000001";
+    private static final String MITOCHONDRION_INHERITANCE = "mitochondrion inheritance";
+    private static final int DEPTH_6 = 6;
 
-    private final static String PO_0000001 = "PO:0000001";
-    private final static String EMBRYO_PROPER = "embryo proper";
+    private static final String PO_0000001 = "PO:0000001";
+    private static final String EMBRYO_PROPER = "embryo proper";
 
     private GoPoTSVParser subject;
 
@@ -38,7 +37,7 @@ public class GoPoTSVParserTest {
     public void parseLineWithDepthField() throws Exception {
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {
-                        GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6)})
+                        GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6)})
                 .willReturn(null);
 
         Map<String, OntologyTerm> map = subject.parse();
@@ -52,11 +51,11 @@ public class GoPoTSVParserTest {
     public void duplicatesGetMinimumDepth() throws Exception {
         given(tsvReaderMock.readNext())
                 .willReturn(new String[]
-                        {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6 + 1)})
+                        {GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6 + 1)})
                 .willReturn(new String[]
-                        {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6)})
+                        {GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6)})
                 .willReturn(new String[]
-                        {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6 + 2)})
+                        {GO_0000001, MITOCHONDRION_INHERITANCE, Integer.toString(DEPTH_6 + 2)})
                 .willReturn(null);
 
         Map<String, OntologyTerm> map = subject.parse();

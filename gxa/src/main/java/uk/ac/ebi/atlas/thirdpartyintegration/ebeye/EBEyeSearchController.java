@@ -14,13 +14,12 @@ import java.util.List;
 @Controller
 @Scope("request")
 public class EBEyeSearchController {
-
-    private ExperimentDescriptionXMLFormatter experimentDescriptionXMLFormatter;
-
-    private ExperimentDescriptionDAO experimentDescriptionDAO;
+    private final ExperimentDescriptionXMLFormatter experimentDescriptionXMLFormatter;
+    private final ExperimentDescriptionDAO experimentDescriptionDAO;
 
     @Inject
-    public EBEyeSearchController(ExperimentDescriptionDAO experimentDescriptionDAO, ExperimentDescriptionXMLFormatter experimentDescriptionXMLFormatter) {
+    public EBEyeSearchController(ExperimentDescriptionDAO experimentDescriptionDAO,
+                                 ExperimentDescriptionXMLFormatter experimentDescriptionXMLFormatter) {
         this.experimentDescriptionDAO = experimentDescriptionDAO;
         this.experimentDescriptionXMLFormatter = experimentDescriptionXMLFormatter;
     }
@@ -31,7 +30,8 @@ public class EBEyeSearchController {
 
         response.setContentType("application/xml");
 
-        List<ExperimentDescription> experimentDescriptions = experimentDescriptionDAO.selectAllPublicExperimentDescriptions();
+        List<ExperimentDescription> experimentDescriptions =
+                experimentDescriptionDAO.selectAllPublicExperimentDescriptions();
 
         writer.write(experimentDescriptionXMLFormatter.formatHeader(experimentDescriptions.size(), new Date()));
 
@@ -40,7 +40,5 @@ public class EBEyeSearchController {
         }
 
         writer.write(experimentDescriptionXMLFormatter.formatFooter());
-
     }
-
 }

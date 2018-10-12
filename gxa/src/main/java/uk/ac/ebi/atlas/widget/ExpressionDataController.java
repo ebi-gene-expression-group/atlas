@@ -28,7 +28,7 @@ public final class ExpressionDataController extends JsonExceptionHandlingControl
     @RequestMapping(value = "/json/expressionData",
                     method = RequestMethod.GET,
                     produces = "application/json;charset=UTF-8")
-    public String hasTissueExpressionWithRequestParameter(@RequestParam(value = "geneId") String geneId ) {
+    public String hasTissueExpressionWithRequestParameter(@RequestParam(value = "geneId") String geneId) {
         return GSON.toJson(ImmutableMap.of(geneId, hasBaselineTissueExpression(geneId)));
     }
 

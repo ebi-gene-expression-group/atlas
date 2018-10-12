@@ -18,21 +18,26 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AnatomogramFactory {
-
-    public static final String factorTypeWithAnatomogram = "ORGANISM_PART";
+    public static final String FACTOR_TYPE_WITH_ANATOMOGRAM = "ORGANISM_PART";
 
     public Optional<JsonElement> get(String queryFactorType, Species species, Iterable<OntologyTerm> ontologyTerms) {
-        if (factorTypeWithAnatomogram.equalsIgnoreCase(queryFactorType)) {
+        if (FACTOR_TYPE_WITH_ANATOMOGRAM.equalsIgnoreCase(queryFactorType)) {
             return Optional.of(getAnatomogramProperties(species, ontologyTerms));
         } else {
             return Optional.empty();
         }
     }
 
-    public Optional<JsonElement> get(List<AssayGroup> selectedDataColumns, final BaselineExperiment baselineExperiment) {
+    public Optional<JsonElement> get(List<AssayGroup> selectedDataColumns,
+                                     final BaselineExperiment baselineExperiment) {
         Set<String> s =
                 selectedDataColumns.stream()
-                        .map(assayGroup -> safeFactorValue(baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram)))
+                        .map(
+                                assayGroup ->
+                                        safeFactorValue(
+                                                baselineExperiment
+                                                        .getFactors(assayGroup)
+                                                        .factorOfType(FACTOR_TYPE_WITH_ANATOMOGRAM)))
                         .filter(Optional::isPresent)
                         .map(Optional::get)
                         .collect(Collectors.toSet());
@@ -41,7 +46,12 @@ public class AnatomogramFactory {
                     getAnatomogramProperties(
                             baselineExperiment.getSpecies(),
                             selectedDataColumns.stream()
-                                    .flatMap(assayGroup -> baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram).getValueOntologyTerms().stream())
+                                    .flatMap(
+                                            assayGroup ->
+                                                    baselineExperiment
+                                                            .getFactors(assayGroup)
+                                                            .factorOfType(FACTOR_TYPE_WITH_ANATOMOGRAM)
+                                                            .getValueOntologyTerms().stream())
                                     .collect(Collectors.toList())));
         } else {
             return Optional.empty();

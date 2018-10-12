@@ -28,7 +28,7 @@ public class MicroarrayExpression extends DifferentialExpression {
     }
 
     @Override
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject result = super.toJson();
         result.addProperty("tStat", tstatistic);
         return result;

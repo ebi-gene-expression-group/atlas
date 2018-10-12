@@ -4,9 +4,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 
 public class RnaSeqProfile extends DifferentialProfile<DifferentialExpression, RnaSeqProfile> {
-    private RnaSeqProfile(){
-        super();
-    }
     public RnaSeqProfile(String geneId, String geneName) {
         super(geneId, geneName);
     }
@@ -15,5 +12,4 @@ public class RnaSeqProfile extends DifferentialProfile<DifferentialExpression, R
     protected RnaSeqProfile createEmptyCopy() {
         return new RnaSeqProfile(getId(), getName());
     }
-
 }

@@ -10,7 +10,8 @@ import javax.inject.Named;
 @Named
 public class RnaSeqBaselineExperimentsCache extends ExperimentsCache<BaselineExperiment> {
     @Inject
-    public RnaSeqBaselineExperimentsCache(@Qualifier("rnaSeqBaselineExperimentsLoadingCache") LoadingCache<String, BaselineExperiment> experiments) {
+    public RnaSeqBaselineExperimentsCache(
+            @Qualifier("rnaSeqBaselineExperimentsLoadingCache") LoadingCache<String, BaselineExperiment> experiments) {
         super(experiments);
     }
 }

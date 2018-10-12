@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
-public class DummyTupleStreamBuilder<T extends CollectionProxy> extends TupleStreamBuilder<T> {
+public final class DummyTupleStreamBuilder<T extends CollectionProxy> extends TupleStreamBuilder<T> {
     private final Collection<Tuple> tuples;
     private final String sortFieldName;
     private final boolean ascendingSort;
@@ -35,7 +35,7 @@ public class DummyTupleStreamBuilder<T extends CollectionProxy> extends TupleStr
         return new DummyTupleStream(tuples, sortFieldName, ascendingSort);
     }
 
-    private final static class DummyTupleStream extends TupleStream {
+    private static final class DummyTupleStream extends TupleStream {
         private List<Tuple> data;
         private Iterator<Tuple> dataIterator;
         private final String sortFieldName;

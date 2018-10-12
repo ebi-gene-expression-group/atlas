@@ -13,7 +13,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -49,14 +48,14 @@ public class ExperimentDesignTest {
     private static final OntologyTerm SAMPLE_ONTOLOGY_TERM2 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID2, "", "");
 
 
-    public ExperimentDesign subject;
+    private ExperimentDesign subject;
 
-    public static ExperimentDesign mockExperimentDesign(List<AssayGroup> assayGroups){
+    public static ExperimentDesign mockExperimentDesign(List<AssayGroup> assayGroups) {
         ExperimentDesign experimentDesign = new ExperimentDesign();
-        for(AssayGroup assayGroup: assayGroups){
+        for (AssayGroup assayGroup: assayGroups) {
             String value1 = RandomStringUtils.random(5);
             String value2 = RandomStringUtils.random(5);
-            for(String assay: assayGroup.assaysAnalyzedForThisDataColumn()){
+            for (String assay: assayGroup.assaysAnalyzedForThisDataColumn()) {
                 experimentDesign.putFactor(assay, "type1", value1);
                 experimentDesign.putFactor(assay, "type2", value2);
             }
@@ -65,7 +64,7 @@ public class ExperimentDesignTest {
     }
 
     @Test
-    public void loadMultipleFactorSet(){
+    public void loadMultipleFactorSet() {
         subject = new ExperimentDesign();
         subject.putFactor(ASSAY1, FACTOR_HEADER2, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
         subject.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE, FACTOR_ONTOLOGY_TERM1);
@@ -83,10 +82,15 @@ public class ExperimentDesignTest {
 
         assertThat(subject.getFactorValue(ASSAY1, FACTOR_HEADER), is(FACTOR_VALUE));
 
-        SetMultimap<String, String> allOntologyTermIdsByAssayAccession = subject.getAllOntologyTermIdsByAssayAccession();
+        SetMultimap<String, String> allOntologyTermIdsByAssayAccession =
+                subject.getAllOntologyTermIdsByAssayAccession();
         assertThat(allOntologyTermIdsByAssayAccession.keys().elementSet(), containsInAnyOrder(ASSAY1, ASSAY2));
-        assertThat(allOntologyTermIdsByAssayAccession.get(ASSAY1), containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID1, FACTOR_ONTOLOGY_TERM_ID2));
-        assertThat(allOntologyTermIdsByAssayAccession.get(ASSAY2), containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID1, FACTOR_ONTOLOGY_TERM_ID2, FACTOR_ONTOLOGY_TERM_ID3));
+        assertThat(
+                allOntologyTermIdsByAssayAccession.get(ASSAY1),
+                containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID1, FACTOR_ONTOLOGY_TERM_ID2));
+        assertThat(
+                allOntologyTermIdsByAssayAccession.get(ASSAY2),
+                containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID1, FACTOR_ONTOLOGY_TERM_ID2, FACTOR_ONTOLOGY_TERM_ID3));
 
     }
 
@@ -94,8 +98,10 @@ public class ExperimentDesignTest {
     public void allOntologyTermIdsByAssayAccession() {
         subject = new ExperimentDesign();
 
-        SampleCharacteristic sampleCharacteristic1 = SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE1, SAMPLE_ONTOLOGY_TERM1);
-        SampleCharacteristic sampleCharacteristic2 = SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_TERM2);
+        SampleCharacteristic sampleCharacteristic1 =
+                SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE1, SAMPLE_ONTOLOGY_TERM1);
+        SampleCharacteristic sampleCharacteristic2 =
+                SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_TERM2);
 
         subject.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, sampleCharacteristic1);
         subject.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE, FACTOR_ONTOLOGY_TERM1);
@@ -103,15 +109,20 @@ public class ExperimentDesignTest {
         subject.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, sampleCharacteristic2);
         subject.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
-        ImmutableSetMultimap<String, String> allOntologyTermIdsByAssayAccession = subject.getAllOntologyTermIdsByAssayAccession();
+        ImmutableSetMultimap<String, String> allOntologyTermIdsByAssayAccession =
+                subject.getAllOntologyTermIdsByAssayAccession();
         assertThat(allOntologyTermIdsByAssayAccession.keys().elementSet(), containsInAnyOrder(ASSAY1, ASSAY2));
-        assertThat(allOntologyTermIdsByAssayAccession.get(ASSAY1), containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID1, SAMPLE_ONTOLOGY_ID1));
-        assertThat(allOntologyTermIdsByAssayAccession.get(ASSAY2), containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID2, SAMPLE_ONTOLOGY_ID2));
+        assertThat(
+                allOntologyTermIdsByAssayAccession.get(ASSAY1),
+                containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID1, SAMPLE_ONTOLOGY_ID1));
+        assertThat(
+                allOntologyTermIdsByAssayAccession.get(ASSAY2),
+                containsInAnyOrder(FACTOR_ONTOLOGY_TERM_ID2, SAMPLE_ONTOLOGY_ID2));
 
     }
 
     @Test
-    public void loadFactorValueFromAssayAndHeader(){
+    public void loadFactorValueFromAssayAndHeader() {
         subject = new ExperimentDesign();
         subject.putFactor(ASSAY1, FACTOR_HEADER2, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
         subject.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE, FACTOR_ONTOLOGY_TERM1);
@@ -120,7 +131,5 @@ public class ExperimentDesignTest {
         subject.putFactor(ASSAY2, FACTOR_HEADER2, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
         assertEquals(subject.getFactorValue(ASSAY1, FACTOR_HEADER), FACTOR_VALUE);
-
     }
-
 }

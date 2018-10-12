@@ -96,6 +96,7 @@ public class ExperimentCrud {
 
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
         experimentDao.addExperiment(experimentDTO, accessKeyUuid);
+
         updateWithNewExperimentDesign(condensedSdrfParserOutput.getExperimentDesign(), experimentDTO);
 
         return accessKeyUuid;
@@ -162,11 +163,11 @@ public class ExperimentCrud {
         return experimentDao.getAllExperimentsAsAdmin();
     }
 
-    public void makeExperimentPrivate(String experimentAccession) throws IOException {
+    public void makeExperimentPrivate(String experimentAccession) {
         setExperimentPrivacyStatus(experimentAccession, true);
     }
 
-    public void makeExperimentPublic(String experimentAccession) throws IOException {
+    public void makeExperimentPublic(String experimentAccession) {
         setExperimentPrivacyStatus(experimentAccession, false);
     }
 
@@ -174,7 +175,9 @@ public class ExperimentCrud {
         ExperimentDesign newDesign = loadAndValidateFiles(experimentAccession).getRight().getExperimentDesign();
         experimentDao.setExperimentPrivacyStatus(experimentAccession, newPrivacyStatus);
         ExperimentDTO experimentDTO = experimentDao.getExperimentAsAdmin(experimentAccession);
-        Preconditions.checkState(newPrivacyStatus == experimentDTO.isPrivate(), "Failed to change experiment status in the db! (?)");
+        Preconditions.checkState(
+                newPrivacyStatus == experimentDTO.isPrivate(),
+                "Failed to change experiment status in the db! (?)");
 
         updateWithNewExperimentDesign(newDesign, experimentDTO);
     }
@@ -196,16 +199,11 @@ public class ExperimentCrud {
                 experimentDao.getExperimentAsAdmin(experimentAccession));
     }
 
-    private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO){
-        updateWithNewExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(), newDesign);
-
-    }
-
-    private void updateWithNewExperimentDesign(String accession, ExperimentType type,
-                                               ExperimentDesign experimentDesign) {
+    private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO) {
         try {
-            experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
-            LOGGER.info("updated design for experiment {}", accession);
+            experimentDesignFileWriterService.writeExperimentDesignFile(experimentDTO.getExperimentAccession(),
+                    experimentDTO.getExperimentType(), newDesign);
+            LOGGER.info("updated design for experiment {}", experimentDTO.getExperimentAccession());
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.tsne;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.experimentpage.baseline.tsne.TSnePoint;
 
 import java.util.Optional;
 
@@ -25,6 +24,5 @@ public class TSnePointTest {
         TSnePoint tSnePointWithExpression = TSnePoint.create(0.0, 0.0, 1.0, "A");
         assertThat(GSON.fromJson(GSON.toJson(tSnePointWithExpression), autoValuedInstance.getClass()))
                 .isEqualTo(tSnePointWithExpression);
-
     }
 }

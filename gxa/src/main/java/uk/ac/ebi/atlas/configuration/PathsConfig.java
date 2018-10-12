@@ -4,23 +4,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Configuration
 public class PathsConfig {
-    private final String dataFilesLocation;
+    private Path dataFilesPath;
 
-    public PathsConfig(BasePathsConfig basePathsConfig) {
-        this.dataFilesLocation = basePathsConfig.dataFilesLocation;
+    public PathsConfig(Path dataFilesPath) {
+        this.dataFilesPath = dataFilesPath;
     }
 
     @Bean
     public Path anatomicalSystemsFilePath() {
-        return Paths.get(dataFilesLocation, "ontology", "anatomical_systems.txt");
+        return dataFilesPath.resolve("ontology").resolve("anatomical_systems.txt");
     }
 
     @Bean
     public Path organsFilePath() {
-        return Paths.get(dataFilesLocation, "ontology", "organs.txt");
+        return dataFilesPath.resolve("ontology").resolve("organs.txt");
     }
 }

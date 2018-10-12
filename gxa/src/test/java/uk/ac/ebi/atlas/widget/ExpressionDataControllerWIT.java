@@ -24,7 +24,7 @@ import static uk.ac.ebi.atlas.widget.BaselineAndDifferentialAnalyticsServiceIT.N
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = WebConfig.class)
 class ExpressionDataControllerWIT {
     @Autowired
     private WebApplicationContext wac;

@@ -5,25 +5,44 @@
         <h3>How to search in Single Cell Expression Atlas</h3>
         <p>
             Here you can use the <b>Gene search box</b> to search whether a gene comprises part of a cell type
-            expression profile. You may seach its gene ID via its gene symbol or name (e.g. <i>APOA2</i>); UniProt
-            protein ID (e.g. <i>O14777</i>) or GO molecular function ID/gene function (e.g. <i>regulation of gene
-            expression</i>). Clicking on any of the examples below will show you the result of that search.
+            expression profile. You may search its gene ID via its gene symbol or name (e.g. <i>APOA2</i>). A
+            dropdown box will appear showing related gene symbols and species-specific results to choose from.
         </p>
         <p>
             You can also specify which species (e.g. <i>Mus musculus</i>) you are interested in. Use the <b>Species
             drop down</b> to specify your organism of interest. Once your selection is made, searching for a gene ID
             will restrict suggestions to the specified species.
         </p>
+
         <p>
             <img src="resources/images/help/home_search.png" alt="Single Cell Expression Atlas home page search">
         </p>
 
+        <h3> Search Results</h3>
+        <p>
+            Once you have selected the gene symbol of interest click <b>Search</b> and this will load a new page of
+            all experiments where your selected gene is expressed.
+        </p>
+
+        <p>
+            Search results can be filtered using the selection criteria along the left hand side of the search results page.
+            Selecting a filter criteria will remove all non-applicable experiments from the search results. For example: selecting
+            <b>Species: Homo sapiens</b> will show only human experiments, similar to searching only on the human specific gene symbol in
+            the Home page Search bar. Additionally, you can select experiments where a gene is expressed only in a particular <b>Organism part</b>
+            or <b>Inferred cell type</b> by selecting these from the relevant drop-down menus.
+        </p>
+
+        <p>
+            <img src="resources/images/help/search_results_page.png" alt="Single Cell Expression Atlas home page search results">
+        </p>
         <h3>Latest Experiments</h3>
         <p>
             This is a list of the latest five experiments added to the Single Cell Expression Atlas, their title and
-            upoad date. You can click on the <b>Results</b> link or the experiment title to jump directly to the
-            results page for that dataset. The number on the left corresponds to the number of cells analysed in that
-            experiment (after passing QC checks and has raw data available).
+            upload date. You can click on the <b>Results</b> link or the experiment title to jump directly to the
+            results page for that dataset. The number of assays is related to the number of sequencing runs. This is not
+            equivalent to the number of cells as some cells do not pass sequencing file quality checks or you can have multiple
+            sequencing runs or libraries generated from the same cell (technical replicates).
+
         </p>
 
         <p>
@@ -86,20 +105,29 @@
         <h5>t-SNE plot with clusters</h5>
         <p>
             <a href="https://lvdmaaten.github.io/tsne/">t-SNE plots</a> are a useful way of visualising highly complex
-            data in a 2D space. Although the size and distance between clusters are not very informative, manipulating
+            data in a 2D space. Although the size and distance between clusters is not very informative, manipulating
             the t-SNE perplexity value allows you to re-display the data in different ways.
         </p>
 
         <p>
             The number of clusters (<i>k</i> value) shows the output of the
             <a href="https://www.sanger.ac.uk/science/tools/single-cell-consensus-clustering-sc3">Single-cell Consensus
-            Clustering analysis (SC3 algorithm)</a>. The SC3 algorithm groups cell clusters based on similar expression
+                Clustering analysis (SC3 algorithm)</a>. The SC3 algorithm groups cell clusters based on similar expression
             profiles. This also colours the data to allow easier visualisation of different sub-populations within a
             dataset.
         </p>
 
         <p>
-            <img src="resources/images/help/tsne_sc3.png" alt="t-SNE plot">
+            <b>New Feature (01.08.2018):</b> It is now possible to colour the clusters by metadata! The colour legend for each
+            group of cells is displayed along the bottom of the t-sne plot.
+
+            The metadata used to colour the clusters is derived from different experimental groups described by the authors. This is displayed in the
+            <b>Experiment Design</b> tab along the top of the results page.
+
+        </p>
+
+        <p>
+            <img src="resources/images/help/tsne_colour_by_metadata.png" alt="t-SNE plot">
         </p>
 
         <p>
@@ -120,7 +148,7 @@
             logic for the selected default values. Perplexity value is chosen somewhat randomly, to be in the middle of
             the range. For the <i>k</i> value, we have a multi-step process: it will preferably be the expected
             clusters value determined by a member of the curation team. If not, it will be the “optimal” value as
-            chosen by the SC3 algortihm output. If that is also not available, then it will just be the first value in
+            chosen by the SC3 algorithm output. If that is also not available, then it will just be the first value in
             the list.
         </p>
 
@@ -141,7 +169,7 @@
         </ol>
 
         <p>
-            <img src="resources/images/help/tsne_sc3.png" alt="Gene expression plot">
+            <img src="resources/images/help/tsne_gene_expression.png" alt="Gene expression plot">
         </p>
 
         <h4>Experiment Design tab</h4>
@@ -206,7 +234,7 @@
                         Clustering file – output of SC3 analysis for clustering of filtered cells for the different
                         <i>k</i> values
                         <a href="https://www.sanger.ac.uk/science/tools/single-cell-consensus-clustering-sc3">(Single-cell
-                        Consensus Clustering – SC3)</a>
+                            Consensus Clustering – SC3)</a>
                     </li>
                     <li>
                         Filtered quantification file – provides the measured gene expression in TPMs for each filtered
@@ -219,7 +247,7 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function(event) {
-        document.getElementById("local-nav-help").className += ' active';
-    });
+  document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById("local-nav-help").className += ' active';
+  });
 </script>

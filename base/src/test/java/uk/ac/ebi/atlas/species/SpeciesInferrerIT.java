@@ -20,14 +20,17 @@ public class SpeciesInferrerIT {
     private static final String ARABIDOPSIS_THALIANA = "arabidopsis thaliana";
 
     private static final SemanticQueryTerm HUMAN_REACTOME_TERM = SemanticQueryTerm.create("R-HSA-597592", "pathwayid");
-    private static final SemanticQueryTerm PLANT_REACTOME_TERM = SemanticQueryTerm.create("R-ATH-191273", "pathwayid");
+    private static final SemanticQueryTerm PLANT_REACTOME_TERM = SemanticQueryTerm.create("R-ATH-2744343", "pathwayid");
     private static final SemanticQueryTerm LEAF_TERM = SemanticQueryTerm.create("leaf");
 
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
     private static final SemanticQuery PLANT_CONDITION_QUERY = SemanticQuery.create(LEAF_TERM);
     private static final SemanticQuery HUMAN_GENE_QUERY = SemanticQuery.create(HUMAN_REACTOME_TERM);
     private static final SemanticQuery PLANT_GENE_QUERY = SemanticQuery.create(PLANT_REACTOME_TERM);
-    private static final SemanticQuery MIXED_SPECIES_GENE_QUERY = SemanticQuery.create(SemanticQueryTerm.create("OS01G0101700", "ensgene"), SemanticQueryTerm.create("ENSMUSG00000002055", "ensgene"));
+    private static final SemanticQuery MIXED_SPECIES_GENE_QUERY =
+            SemanticQuery.create(
+                    SemanticQueryTerm.create("OS01G0101700", "ensgene"),
+                    SemanticQueryTerm.create("ENSMUSG00000002055", "ensgene"));
 
     @Inject
     private SpeciesInferrer subject;

@@ -22,9 +22,9 @@ public class EFOTreeNodesTrader {
             EFOLoader efoLoader = new EFOLoader();
             LOGGER.debug("Loading {}...", EFO_OWL_FILE_URL);
             URL efoOwlFileUrl = new URL(EFO_OWL_FILE_URL);
-            Map<String, EFONode> urlToEFONode = efoLoader.load(efoOwlFileUrl.openStream()).getMap();
+            Map<String, EFONode> urlToEFONodeResult = efoLoader.load(efoOwlFileUrl.openStream()).getMap();
             LOGGER.debug("Loading finished");
-            return urlToEFONode;
+            return urlToEFONodeResult;
         }
     };
 

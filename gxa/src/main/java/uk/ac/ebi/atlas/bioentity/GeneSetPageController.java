@@ -48,11 +48,11 @@ public class GeneSetPageController extends BioentityPageController {
         Species species = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(identifier));
 
         return super.showBioentityPage(identifier, species.getName(), identifier, model, experimentTypes,
-                GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier,species.isPlant()));
+                GeneSetPropertyService.ALL, geneSetPropertyService.propertyValuesByType(identifier, species.isPlant()));
     }
 
     @Override
-    protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName){
+    protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName) {
         String speciesString = matchesReactomeID(identifier) ? species.getName() : "";
         String s = "Expression summary for " + (StringUtils.isEmpty(entityName) ? identifier : entityName) +
                 (StringUtils.isNotBlank(speciesString) ?
@@ -60,7 +60,7 @@ public class GeneSetPageController extends BioentityPageController {
         return ImmutableMap.of(
                 "mainTitle", s,
                 "pageDescription", s,
-                "pageKeywords", "geneset," + identifier
+                "pageKeywords", "geneset, " + identifier
         );
     }
 

@@ -16,16 +16,16 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnalyticsDataHeaderBuilderTest {
-
     @Mock
     private DifferentialExperiment experimentMock;
 
     private AnalyticsDataHeaderBuilder subject;
 
-    private final static String[] HEADER = {"Gene ID", "Gene Name", "c1.p-value", "c1.t-stat", "c2.p-value", "c2.t-stat"};
+    private static final String[] HEADER =
+            {"Gene ID", "Gene Name", "c1.p-value", "c1.t-stat", "c2.p-value", "c2.t-stat"};
 
     @Before
-    public void initSubject() throws Exception {
+    public void initSubject() {
         Contrast contrastMock1 = mock(Contrast.class);
         Contrast contrastMock2 = mock(Contrast.class);
 
@@ -35,19 +35,21 @@ public class AnalyticsDataHeaderBuilderTest {
         when(experimentMock.getDataColumnDescriptor("c1")).thenReturn(contrastMock1);
         when(experimentMock.getDataColumnDescriptor("c2")).thenReturn(contrastMock2);
 
-        subject = AnalyticsDataHeaderBuilder.rnaSeq(experimentMock);
+        subject = new AnalyticsDataHeaderBuilder(experimentMock);
     }
 
     @Test
-    public void testBuildHeader() throws Exception {
+    public void testBuildHeader() {
         String[] newHeader = subject.apply(HEADER);
-        assertThat(newHeader, is(new String[]{"Gene ID"
-                , "Gene Name"
-        , "contrast1.p-value", "contrast1.t-stat", "contrast2.p-value", "contrast2.t-stat"}));
+        assertThat(
+                newHeader,
+                is(new String[] {
+                        "Gene ID", "Gene Name",
+                        "contrast1.p-value", "contrast1.t-stat", "contrast2.p-value", "contrast2.t-stat"}));
     }
 
     @Test
-    public void testReplaceContrastIdWithName() throws Exception {
+    public void testReplaceContrastIdWithName() {
         String columnName = subject.replaceContrastIdWithName("c1.p-value");
         assertThat(columnName, is("contrast1.p-value"));
     }

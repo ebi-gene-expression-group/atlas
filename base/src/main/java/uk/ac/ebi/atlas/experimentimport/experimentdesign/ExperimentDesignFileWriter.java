@@ -20,18 +20,18 @@ import java.util.stream.Collectors;
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 
 public class ExperimentDesignFileWriter {
-
     private static final String ONTOLOGY_TERM_DELIMITER = " ";
-
-    private static final String SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE = "Sample Characteristic[{0}]";
-    private static final String SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE = "Sample Characteristic Ontology Term[{0}]";
+    private static final String SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE =
+            "Sample Characteristic[{0}]";
+    private static final String SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE =
+            "Sample Characteristic Ontology Term[{0}]";
     private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Value[{0}]";
     private static final String FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE = "Factor Value Ontology Term[{0}]";
 
-    private TsvWriter tsvWriter;
-    private ExperimentType experimentType;
+    private final TsvWriter tsvWriter;
+    private final ExperimentType experimentType;
 
-    public ExperimentDesignFileWriter(TsvWriter tsvWriter, ExperimentType experimentType){
+    public ExperimentDesignFileWriter(TsvWriter tsvWriter, ExperimentType experimentType) {
         this.tsvWriter = tsvWriter;
         this.experimentType = experimentType;
     }
@@ -43,25 +43,33 @@ public class ExperimentDesignFileWriter {
         tsvWriter.close();
     }
 
-    String[] buildColumnHeaders(ExperimentType experimentType, ExperimentDesign experimentDesign) {
-        List<String> headers = Lists.newArrayList(getCommonColumnHeaders(experimentType));
-        headers.addAll(toHeaders(experimentDesign.getSampleHeaders(), SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE, SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE));
-        headers.addAll(toHeaders(experimentDesign.getFactorHeaders(), FACTOR_NAME_HEADER_TEMPLATE, FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE));
+    String[] buildColumnHeaders(ExperimentType type, ExperimentDesign experimentDesign) {
+        List<String> headers = Lists.newArrayList(getCommonColumnHeaders(type));
+        headers.addAll(
+                toHeaders(
+                        experimentDesign.getSampleHeaders(),
+                        SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE,
+                        SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE));
+        headers.addAll(toHeaders(
+                experimentDesign.getFactorHeaders(),
+                FACTOR_NAME_HEADER_TEMPLATE, FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE));
 
-        return headers.toArray(new String[headers.size()]);
+        return headers.toArray(new String[0]);
     }
 
-    private List<String> toHeaders(SortedSet<String> propertyNames, final String headerTemplate1, final String headerTemplate2) {
+    private List<String> toHeaders(Set<String> propertyNames,
+                                   final String headerTemplate1,
+                                   final String headerTemplate2) {
         List<String> headers = new ArrayList<>();
-        for (String propertyName: propertyNames){
+        for (String propertyName: propertyNames) {
             headers.add(MessageFormat.format(headerTemplate1, propertyName));
             headers.add(MessageFormat.format(headerTemplate2, propertyName));
         }
         return headers;
     }
 
-    private List<String> getCommonColumnHeaders(ExperimentType experimentType){
-        switch(experimentType.getParent()){
+    private List<String> getCommonColumnHeaders(ExperimentType type) {
+        switch (type.getParent()) {
             case MICROARRAY_ANY:
                 return Lists.newArrayList("Assay", "Array");
             case RNASEQ_MRNA_BASELINE:
@@ -69,15 +77,18 @@ public class ExperimentDesignFileWriter {
             case PROTEOMICS_BASELINE:
                 return Lists.newArrayList("Run");
             case SINGLE_CELL_RNASEQ_MRNA_BASELINE:
-                return Lists.newArrayList("Cell");
+                return Lists.newArrayList("Assay ");
             default:
-                throw new IllegalArgumentException("Invalid parent type: " + experimentType.getParent());
+                throw new IllegalArgumentException("Invalid parent type: " + type.getParent());
         }
     }
 
     List<String[]> asTableOntologyTermsData(ExperimentDesign experimentDesign) {
         List<String[]> tableData = Lists.newArrayList();
-        tableData.addAll(experimentDesign.getAllRunOrAssay().stream().map(runOrAssay -> composeTableRowWithOntologyTerms(experimentDesign, runOrAssay)).collect(Collectors.toList()));
+        tableData.addAll(
+                experimentDesign.getAllRunOrAssay().stream()
+                        .map(runOrAssay -> composeTableRowWithOntologyTerms(experimentDesign, runOrAssay))
+                        .collect(Collectors.toList()));
         return tableData;
     }
 
@@ -90,7 +101,8 @@ public class ExperimentDesignFileWriter {
         }
 
         for (String sampleHeader : experimentDesign.getSampleHeaders()) {
-            SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic(runOrAssay, sampleHeader);
+            SampleCharacteristic sampleCharacteristic =
+                    experimentDesign.getSampleCharacteristic(runOrAssay, sampleHeader);
             addSampleCharacteristicValue(row, sampleCharacteristic);
             addSampleCharacteristicOntologyTerm(row, sampleCharacteristic);
         }
@@ -110,7 +122,9 @@ public class ExperimentDesignFileWriter {
     }
 
     private void addFactorValueOntologyTerm(List<String> row, Factor factor) {
-        String factorValueOntologyTermId = (factor == null || factor.getValueOntologyTerms().isEmpty()) ? null : joinURIs(factor.getValueOntologyTerms());
+        String factorValueOntologyTermId = (factor == null || factor.getValueOntologyTerms().isEmpty()) ?
+                null :
+                joinURIs(factor.getValueOntologyTerms());
         row.add(factorValueOntologyTermId);
     }
 
@@ -120,7 +134,9 @@ public class ExperimentDesignFileWriter {
     }
 
     private void addSampleCharacteristicOntologyTerm(List<String> row, SampleCharacteristic sampleCharacteristic) {
-        String ontologyTermId = (sampleCharacteristic == null || sampleCharacteristic.valueOntologyTerms().isEmpty()) ? null : joinURIs(sampleCharacteristic.valueOntologyTerms());
+        String ontologyTermId = (sampleCharacteristic == null || sampleCharacteristic.valueOntologyTerms().isEmpty()) ?
+                null :
+                joinURIs(sampleCharacteristic.valueOntologyTerms());
         row.add(ontologyTermId);
     }
 

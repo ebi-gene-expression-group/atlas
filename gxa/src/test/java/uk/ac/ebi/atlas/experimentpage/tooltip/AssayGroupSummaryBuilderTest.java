@@ -12,7 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class AssayGroupSummaryBuilderTest {
-
     private static final String ASSAY1 = "ASSAY1";
     private static final String FACTOR_HEADER = "factor header";
     private static final String FACTOR_VALUE = "factor value";
@@ -27,7 +26,7 @@ public class AssayGroupSummaryBuilderTest {
     private static final String SAMPLE_VALUE2 = "sample value 2";
 
     @Test
-    public void build(){
+    public void build() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE);
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER2, FACTOR_VALUE2);
@@ -49,5 +48,4 @@ public class AssayGroupSummaryBuilderTest {
                 new AssayProperty(FACTOR_HEADER2, FACTOR_VALUE2, ContrastPropertyType.FACTOR),
                 new AssayProperty(SAMPLE_HEADER, SAMPLE_VALUE2, ContrastPropertyType.SAMPLE)));
     }
-
 }

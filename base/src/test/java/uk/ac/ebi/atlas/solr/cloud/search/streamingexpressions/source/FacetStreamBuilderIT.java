@@ -16,26 +16,28 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.ASSAY_GROUP_ID;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
-import static uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy.EXPRESSION_LEVEL;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.ASSAY_GROUP_ID;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.EXPRESSION_LEVEL;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class FacetStreamBuilderIT {
-    public static final String E_MTAB_513 = "E-MTAB-513";
+class FacetStreamBuilderIT {
+    private static final String E_MTAB_513 = "E-MTAB-513";
 
     @Inject
     private SolrCloudCollectionProxyFactory collectionProxyFactory;
@@ -44,7 +46,7 @@ public class FacetStreamBuilderIT {
 
     @BeforeEach
     void setUp() {
-        analyticsCollectionProxy = collectionProxyFactory.createAnalyticsCollectionProxy();
+        analyticsCollectionProxy = collectionProxyFactory.create(AnalyticsCollectionProxy.class);
     }
 
     // TODO Maybe check correctness against AnalyticsCollectionProxy by querying the collection
@@ -96,7 +98,10 @@ public class FacetStreamBuilderIT {
                                      .build())) {
             assertThat(filteredStreamer1.get().map(Tuple::getMap))
                     .extracting(BIOENTITY_IDENTIFIER.name())
-                    .containsExactlyInAnyOrder(filteredStreamer2.get().map(tuple -> tuple.getString(BIOENTITY_IDENTIFIER.name())).toArray());
+                    .containsExactlyInAnyOrder(
+                            filteredStreamer2.get()
+                                    .map(tuple -> tuple.getString(BIOENTITY_IDENTIFIER.name()))
+                                    .toArray());
         }
     }
 
@@ -125,7 +130,7 @@ public class FacetStreamBuilderIT {
 
             List<Tuple> results = streamer.get().collect(toList());
 
-            for (int i = 0 ; i < results.size() - 1; i++) {
+            for (int i = 0; i < results.size() - 1; i++) {
                 assertThat(results.get(i).getLong("count(*)"))
                         .isLessThanOrEqualTo(results.get(i + 1).getLong("count(*)"));
             }
@@ -142,7 +147,7 @@ public class FacetStreamBuilderIT {
 
             List<Tuple> results = streamer.get().collect(toList());
 
-            for (int i = 0 ; i < results.size() - 1; i++) {
+            for (int i = 0; i < results.size() - 1; i++) {
                 assertThat(results.get(i).getDouble("avg(abs(" + EXPRESSION_LEVEL.name() + "))"))
                         .isGreaterThanOrEqualTo(
                                 results.get(i + 1).getDouble(
@@ -153,7 +158,7 @@ public class FacetStreamBuilderIT {
     }
 
     private static Stream<Arguments> solrQueryBuildersProvider() {
-        String[] assayGroups = IntStream.range(1, 16).boxed().map(i -> "g" + i.toString()).toArray(String[]::new);
+        Set<String> assayGroups = IntStream.range(1, 16).boxed().map(i -> "g" + i.toString()).collect(toSet());
 
         SolrQueryBuilder<AnalyticsCollectionProxy> hugeSolrQueryBuilder = new SolrQueryBuilder<>();
         hugeSolrQueryBuilder
@@ -185,5 +190,4 @@ public class FacetStreamBuilderIT {
                 Arguments.of(bigSolrQueryBuilder, smallSolrQueryBuilder),
                 Arguments.of(smallSolrQueryBuilder, tinySolrQueryBuilder));
     }
-
 }

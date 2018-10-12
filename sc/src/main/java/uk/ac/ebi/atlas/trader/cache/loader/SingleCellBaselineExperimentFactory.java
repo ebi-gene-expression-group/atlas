@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
@@ -22,8 +23,9 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
     }
 
     @Override
-    public SingleCellBaselineExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
-                                     ExperimentDesign experimentDesign) {
+    public SingleCellBaselineExperiment create(ExperimentDTO experimentDTO,
+                                               ExperimentDesign experimentDesign,
+                                               IdfParserOutput idfParserOutput) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -32,7 +34,7 @@ public abstract class SingleCellBaselineExperimentFactory implements ExperimentF
                 .forSpecies(speciesFactory.create(experimentDTO.getSpecies()))
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
-                .withDescription(experimentDescription)
+                .withDescription(idfParserOutput.getTitle())
                 .withPubMedIds(experimentDTO.getPubmedIds())
                 .withDois(experimentDTO.getDois())
                 .withCells(experimentDesign.getAllRunOrAssay().stream().map(Cell::new).collect(Collectors.toList()))

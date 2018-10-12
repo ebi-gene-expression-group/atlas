@@ -1,88 +1,93 @@
 package uk.ac.ebi.atlas.solr.analytics.query;
 
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.Option;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.configuration.TestConfig;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
+import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class AnalyticsQueryClientIT {
-
-    @Value("classpath:/solr/conf")
-    Resource solrConf;
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class AnalyticsQueryClientIT {
     @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json")
-    Resource baselineFacetsQueryJSON;
+    private Resource baselineFacetsQueryJSON;
 
     @Value("classpath:/solr-queries/differential.facets.query.json")
-    Resource differentialFacetsQueryJSON;
+    private Resource differentialFacetsQueryJSON;
 
     @Value("classpath:/solr-queries/experimentType.query.json")
-    Resource experimentTypesQueryJson;
+    private Resource experimentTypesQueryJson;
 
     @Value("classpath:/solr-queries/bioentityIdentifier.query.json")
-    Resource bioentityIdentifiersQueryJson;
+    private Resource bioentityIdentifiersQueryJson;
 
     @Mock
     private RestTemplate restTemplate;
 
+    @Inject
+    private AnalyticsQueryClient goodSubject;
+
     private AnalyticsQueryClient subject;
 
-    @Before
-    public void setUp(){
+    @BeforeEach
+    void setUp() {
         subject = new TestableAnalyticsQueryClient(restTemplate, null, baselineFacetsQueryJSON,
-                differentialFacetsQueryJSON,experimentTypesQueryJson,bioentityIdentifiersQueryJson);
+                differentialFacetsQueryJSON, experimentTypesQueryJson, bioentityIdentifiersQueryJson);
     }
 
     @Test
-    public void queryWithCategory() {
+    void queryWithCategory() {
 
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
-                .queryIdentifierSearch(SemanticQuery.create(SemanticQueryTerm.create("GO:1234567","go")))
+                .queryIdentifierSearch(SemanticQuery.create(SemanticQueryTerm.create("GO:1234567", "go")))
                 .inExperiment("E-MTAB-513")
                 .fetch();
 
-        assertThat(queryMade, containsString("keyword_go"));
-        assertThat(queryMade, containsString("\"GO:1234567\""));
-        assertThat(queryMade, containsString("E-MTAB-513"));
+        assertThat(queryMade).contains("keyword_go");
+        assertThat(queryMade).contains("\"GO:1234567\"");
+        assertThat(queryMade).contains("E-MTAB-513");
     }
 
     @Test
-    public void queryWithNoCategoryButObviouslyAnEnsemblIdDoesABioentityIdentifierQuery() {
+    void queryWithNoCategoryButObviouslyAnEnsemblIdDoesABioentityIdentifierQuery() {
 
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
                 .queryIdentifierSearch(SemanticQuery.create(SemanticQueryTerm.create("ENSG00000006432")))
                 .fetch();
 
-        assertThat(queryMade, containsString("ENSG00000006432"));
-        assertThat(queryMade, not(containsString("keyword_")));
-        //assertThat(queryMade, not(containsString("identifier_search")));
-        assertThat(queryMade, containsString("bioentity_identifier"));
+        assertThat(queryMade).contains("ENSG00000006432");
+        assertThat(queryMade).doesNotContain("keyword_");
+        //assertThat(queryMade).doesNotContain("identifier_search");
+        assertThat(queryMade).contains("bioentity_identifier");
 
     }
 
     @Test
-    public void speciesComeInQuoted() {
+    void speciesComeInQuoted() {
 
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
@@ -90,11 +95,11 @@ public class AnalyticsQueryClientIT {
                 .inExperiment("E-MTAB-513")
                 .fetch();
 
-        assertThat(queryMade, containsString("\"oryza sativa\""));
+        assertThat(queryMade).contains("\"oryza sativa\"");
     }
 
     @Test
-    public void weGuessThatZincFingerCanNotBeAKeyword() {
+    void weGuessThatZincFingerCanNotBeAKeyword() {
 
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
@@ -102,20 +107,20 @@ public class AnalyticsQueryClientIT {
                 .inExperiment("E-MTAB-513")
                 .fetch();
 
-        assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, containsString("identifier_search"));
-        assertThat(queryMade, containsString("zinc finger"));
-        assertThat(queryMade, containsString("E-MTAB-513"));
+        assertThat(queryMade).doesNotContain("keyword_");
+        assertThat(queryMade).contains("identifier_search");
+        assertThat(queryMade).contains("zinc finger");
+        assertThat(queryMade).contains("E-MTAB-513");
     }
 
     @Test
-    public void defaultQueryIsTheSolrDefault(){
+    void defaultQueryIsTheSolrDefault() {
         String queryMade = subject.queryBuilder().fetch();
-        assertThat(queryMade, containsString("q=*:*"));
+        assertThat(queryMade).contains("q=*:*");
     }
 
     @Test
-    public void omitEmptyConditionQuery(){
+    void omitEmptyConditionQuery() {
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
                 .queryIdentifierSearch(SemanticQuery.create("zinc finger"))
@@ -123,48 +128,75 @@ public class AnalyticsQueryClientIT {
                 .inExperiment("E-MTAB-513")
                 .fetch();
 
-        assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, containsString("identifier_search"));
-        assertThat(queryMade, containsString("zinc finger"));
-        assertThat(queryMade, containsString("E-MTAB-513"));
+        assertThat(queryMade).doesNotContain("keyword_");
+        assertThat(queryMade).contains("identifier_search");
+        assertThat(queryMade).contains("zinc finger");
+        assertThat(queryMade).contains("E-MTAB-513");
 
-        assertThat(queryMade, not(containsString("conditionsSearch")));
+        assertThat(queryMade).doesNotContain("conditionsSearch");
     }
 
     @Test
-    public void bothConditionQueryAndIdentifierSearchMakeItIntoTheQueryString(){
+    void bothConditionQueryAndIdentifierSearchMakeItIntoTheQueryString() {
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
                 .queryIdentifierSearch(SemanticQuery.create("zinc finger"))
                 .queryConditionsSearch(SemanticQuery.create("liver"))
                 .fetch();
 
-        assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, containsString("identifier_search"));
-        assertThat(queryMade, containsString("zinc finger"));
+        assertThat(queryMade).doesNotContain("keyword_");
+        assertThat(queryMade).contains("identifier_search");
+        assertThat(queryMade).contains("zinc finger");
 
-        assertThat(queryMade, containsString("conditions_search"));
-        assertThat(queryMade, containsString("liver"));
+        assertThat(queryMade).contains("conditions_search");
+        assertThat(queryMade).contains("liver");
     }
 
     @Test
-    public void queryConditionSearchOrIdentifierSearchIncludesTheQueryStringTwiceForQueriesWithNoCategory(){
+    void queryConditionSearchOrIdentifierSearchIncludesTheQueryStringTwiceForQueriesWithNoCategory() {
         String queryMade = subject.queryBuilder()
                 .bioentityIdentifierFacets(-1)
                 .queryIdentifierOrConditionsSearch(SemanticQuery.create("tasty pancake"))
                 .fetch();
 
-        assertThat(queryMade, not(containsString("keyword_"))); //two words so this is not a keyword
-        assertThat(queryMade, containsString("identifier_search"));
-        assertThat(queryMade, containsString("conditions_search"));
-        assertThat(queryMade.split("tasty pancake").length, greaterThan(2));
+        assertThat(queryMade).doesNotContain("keyword_"); //two words so this is not a keyword
+        assertThat(queryMade).contains("identifier_search");
+        assertThat(queryMade).contains("conditions_search");
+        assertThat(queryMade.split("tasty pancake").length).isGreaterThan(2);
+    }
+    
+    @Test
+    void baselineFacetsOnlyReturnsBaselineExperiments() {
+        String queryResponse = goodSubject.queryBuilder()
+                .baselineFacets()
+                .queryIdentifierOrConditionsSearch(SemanticQuery.create("lung"))
+                .fetch();
+
+        List<String> experimentTypes =
+                JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS))
+                        .parse(queryResponse)
+                        .read("$.facets.experimentType.buckets[*].val");
+
+        // If we want to go to an extra level of correctness we can get the experiment type from the DB, but if the
+        // type isn’t right in Solr our problems are going to be bigger than this test
+        assertThat(experimentTypes)
+                .isNotEmpty()
+                .allMatch(type -> ExperimentType.get(type).isBaseline());
     }
 
-
     class TestableAnalyticsQueryClient extends AnalyticsQueryClient {
-
-        public TestableAnalyticsQueryClient(RestTemplate restTemplate, String solrBaseUrl, Resource baselineFacetsQueryJSON, Resource differentialFacetsQueryJSON,Resource experimentTypesQueryJson, Resource bioentityIdentifiersQueryJson) {
-            super(restTemplate, solrBaseUrl, baselineFacetsQueryJSON, differentialFacetsQueryJSON, experimentTypesQueryJson, bioentityIdentifiersQueryJson);
+        TestableAnalyticsQueryClient(RestTemplate restTemplate,
+                                     String solrBaseUrl,
+                                     Resource baselineFacetsQueryJSON,
+                                     Resource differentialFacetsQueryJSON,
+                                     Resource experimentTypesQueryJson,
+                                     Resource bioentityIdentifiersQueryJson) {
+            super(restTemplate,
+                  solrBaseUrl,
+                  baselineFacetsQueryJSON,
+                  differentialFacetsQueryJSON,
+                  experimentTypesQueryJson,
+                  bioentityIdentifiersQueryJson);
         }
 
         @Override
@@ -177,10 +209,8 @@ public class AnalyticsQueryClientIT {
         }
 
         @Override
-        protected boolean responseNonEmpty(String jsonFromSolr){
+        protected boolean responseNonEmpty(String jsonFromSolr) {
             return true;
         }
-
     }
-
 }

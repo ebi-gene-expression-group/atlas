@@ -14,25 +14,27 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public abstract class DifferentialProfileStreamFactory<Expr extends DifferentialExpression,
-        E extends DifferentialExperiment, T extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr, Prof>>
-        extends CreatesProfilesFromTsvFiles<Contrast, Expr, E, T, Prof> {
+public abstract class DifferentialProfileStreamFactory<
+        X extends DifferentialExpression,
+        E extends DifferentialExperiment,
+        T extends DifferentialProfileStreamOptions,
+        P extends Profile<Contrast, X, P>> extends CreatesProfilesFromTsvFiles<Contrast, X, E, T, P> {
     protected DifferentialProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
     }
 
     @Override
-    protected Predicate<Expr> filterExpressions(E experiment, T options) {
-        IsDifferentialExpressionAboveCutOff<Expr> expressionFilter = new IsDifferentialExpressionAboveCutOff<>();
+    protected Predicate<X> filterExpressions(T options) {
+        IsDifferentialExpressionAboveCutOff<X> expressionFilter = new IsDifferentialExpressionAboveCutOff<>();
         expressionFilter.setPValueCutoff(options.getPValueCutoff());
         expressionFilter.setFoldChangeCutOff(options.getFoldChangeCutoff());
         expressionFilter.setRegulation(options.getRegulation());
         return expressionFilter;
     }
 
-    private Map<Integer, Contrast> lookUpIndices(String [] header, E experiment){
+    private Map<Integer, Contrast> lookUpIndices(String[] header, E experiment) {
         ImmutableMap.Builder<Integer, Contrast> b = ImmutableMap.builder();
-        for(int i = 0; i < header.length ; i++){
+        for (int i = 0; i < header.length; i++) {
             String columnHeader = header[i];
             if (columnHeader.endsWith(".p-value")) {
                 if (experiment.getDataColumnDescriptor(StringUtils.substringBefore(columnHeader, ".")) != null) {
@@ -43,9 +45,12 @@ public abstract class DifferentialProfileStreamFactory<Expr extends Differential
         return b.build();
     }
 
-    protected abstract class DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex extends GoThroughTsvLineAndPickUpExpressionsByIndex {
+    protected abstract class DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex
+                             extends GoThroughTsvLineAndPickUpExpressionsByIndex {
 
-        protected DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(String [] header, E experiment, Predicate<Expr> filterExpressions) {
+        protected DifferentialGoThroughTsvLineAndPickUpExpressionsByIndex(String[] header,
+                                                                          E experiment,
+                                                                          Predicate<X> filterExpressions) {
             super(lookUpIndices(header, experiment), filterExpressions);
         }
 
@@ -59,13 +64,13 @@ public abstract class DifferentialProfileStreamFactory<Expr extends Differential
             return Double.parseDouble(value);
         }
 
-        private boolean notADouble(@Nullable String value){
+        private boolean notADouble(@Nullable String value) {
             return value == null || "NA".equalsIgnoreCase(value);
         }
 
-        protected boolean notAllDoubles(String ... values){
-            for(String value: values){
-                if(notADouble(value)){
+        protected boolean notAllDoubles(String... values) {
+            for (String value: values) {
+                if (notADouble(value)) {
                     return true;
                 }
             }

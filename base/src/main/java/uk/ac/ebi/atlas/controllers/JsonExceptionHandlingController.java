@@ -32,7 +32,7 @@ public abstract class JsonExceptionHandlingController {
         return GSON.toJson(jsonError(isBlank(e.getMessage()) ? "Unknown error" : e.getMessage()));
     }
 
-    private JsonObject jsonError(String message){
+    private JsonObject jsonError(String message) {
         JsonObject result = new JsonObject();
         result.addProperty("error", message);
         return result;

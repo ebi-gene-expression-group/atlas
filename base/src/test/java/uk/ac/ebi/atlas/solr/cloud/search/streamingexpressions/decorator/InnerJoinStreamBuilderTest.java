@@ -25,12 +25,12 @@ class InnerJoinStreamBuilderTest {
         }
     }
 
-    private final static String SORT_FIELD = "id";
-    private final static String STREAM_A_FIELD = "fieldA";
-    private final static String STREAM_B_FIELD = "fieldB";
-    private final static String STREAM_C_FIELD = "fieldC";
-    private final static String STREAM_D_FIELD = "fieldD";
-    
+    private static final String SORT_FIELD = "id";
+    private static final String STREAM_A_FIELD = "fieldA";
+    private static final String STREAM_B_FIELD = "fieldB";
+    private static final String STREAM_C_FIELD = "fieldC";
+    private static final String STREAM_D_FIELD = "fieldD";
+
     private List<Map<String, String>> streamA = ImmutableList.of(
             ImmutableMap.of(SORT_FIELD, "a", STREAM_A_FIELD, "x"),
             ImmutableMap.of(SORT_FIELD, "b", STREAM_A_FIELD, "y"),
@@ -137,14 +137,14 @@ class InnerJoinStreamBuilderTest {
     }
 
     // A way to make assertions with try-with-resources
-    private static <T extends CollectionProxy> void assertAboutInnerJoinStreamBuilder(
-            TupleStreamBuilder<T> tupleStreamBuilder1,
-            TupleStreamBuilder<T> tupleStreamBuilder2,
+    private static void assertAboutInnerJoinStreamBuilder(
+            TupleStreamBuilder tupleStreamBuilder1,
+            TupleStreamBuilder tupleStreamBuilder2,
             Consumer<TupleStreamer> assertionOverTupleStreamer) {
 
         try (TupleStreamer tupleStreamer =
                      TupleStreamer.of(
-                             new InnerJoinStreamBuilder<>(tupleStreamBuilder1, tupleStreamBuilder2, SORT_FIELD)
+                             new InnerJoinStreamBuilder(tupleStreamBuilder1, tupleStreamBuilder2, SORT_FIELD)
                                      .build())) {
             assertionOverTupleStreamer.accept(tupleStreamer);
         }

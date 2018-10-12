@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.velocity.util.StringUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Set;
 import java.util.SortedSet;
@@ -15,19 +16,16 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Factor implements Comparable<Factor> {
-
     private String header;
     private String type;
     private String value;
     private Set<OntologyTerm> valueOntologyTerms;
 
-    public Factor() {}
-
     public Factor(String header, String value) {
         this(header, value, new OntologyTerm[0]);
     }
 
-    public Factor(String header, String value, OntologyTerm ... valueOntologyTerms) {
+    public Factor(String header, String value, OntologyTerm... valueOntologyTerms) {
         this.header = header;
         this.type = normalize(checkNotNull(header));
         this.value = checkNotNull(value);
@@ -97,7 +95,7 @@ public class Factor implements Comparable<Factor> {
     }
 
     @Override
-    public int compareTo(Factor factor) {
+    public int compareTo(@Nonnull Factor factor) {
         int factorCompare = type.compareTo(factor.type);
         if (factorCompare != 0) {
             return factorCompare;
@@ -106,8 +104,9 @@ public class Factor implements Comparable<Factor> {
     }
 
     public static SortedSet<String> getValues(Set<Factor> factors) {
-        SortedSet<String> result = factors.stream().map(Factor::getValue).collect(Collectors.toCollection(TreeSet::new));
-        return result;
+        return factors.stream()
+                .map(Factor::getValue)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     public Set<OntologyTerm> getValueOntologyTerms() {

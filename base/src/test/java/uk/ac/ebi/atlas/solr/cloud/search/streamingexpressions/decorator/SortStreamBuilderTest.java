@@ -73,7 +73,7 @@ class SortStreamBuilderTest {
             Consumer<TupleStreamer> assertionOverTupleStreamer) {
 
         try (TupleStreamer tupleStreamer =
-                     TupleStreamer.of(new SortStreamBuilder<>(tupleStreamBuilder1, fieldName).build())) {
+                     TupleStreamer.of(new SortStreamBuilder(tupleStreamBuilder1, fieldName).build())) {
             assertionOverTupleStreamer.accept(tupleStreamer);
         }
 

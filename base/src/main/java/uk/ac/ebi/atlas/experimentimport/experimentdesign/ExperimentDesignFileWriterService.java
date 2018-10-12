@@ -14,7 +14,7 @@ public class ExperimentDesignFileWriterService {
     private final DataFileHub dataFileHub;
 
     @Inject
-    public ExperimentDesignFileWriterService(DataFileHub dataFileHub){
+    public ExperimentDesignFileWriterService(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
     }
 

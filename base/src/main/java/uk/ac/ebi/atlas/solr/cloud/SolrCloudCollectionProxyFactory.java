@@ -1,10 +1,11 @@
 package uk.ac.ebi.atlas.solr.cloud;
 
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.atlas.solr.cloud.bioentities.BioentitiesCollectionProxy;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.AnalyticsCollectionProxy;
-import uk.ac.ebi.atlas.solr.cloud.fullanalytics.SingleCellAnalyticsCollectionProxy;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 @Component
 public class SolrCloudCollectionProxyFactory {
@@ -14,15 +15,15 @@ public class SolrCloudCollectionProxyFactory {
         this.cloudSolrClient = cloudSolrClient;
     }
 
-    public AnalyticsCollectionProxy createAnalyticsCollectionProxy() {
-        return new AnalyticsCollectionProxy(cloudSolrClient);
-    }
-
-    public BioentitiesCollectionProxy createBioentitiesCollectionProxy() {
-        return new BioentitiesCollectionProxy(cloudSolrClient);
-    }
-
-    public SingleCellAnalyticsCollectionProxy createSingleCellAnalyticsCollectionProxy() {
-        return new SingleCellAnalyticsCollectionProxy(cloudSolrClient);
+    public <C extends CollectionProxy> C create(Class<C> type) {
+        try {
+            Constructor<C> constructor = type.getConstructor(SolrClient.class);
+            return constructor.newInstance(cloudSolrClient);
+        } catch (NoSuchMethodException |
+                InstantiationException |
+                IllegalAccessException |
+                InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

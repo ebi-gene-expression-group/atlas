@@ -39,10 +39,9 @@ public class ExperimentInfoListService {
      *  This is a wrapper class used via Gson to produce the right JSON input for DataTables.
      */
     static class ExperimentInfoWrapper {
-
         private List<ExperimentInfo> aaData;
 
-        public ExperimentInfoWrapper(List<ExperimentInfo> list) {
+        ExperimentInfoWrapper(List<ExperimentInfo> list) {
             this.aaData = list;
         }
 
@@ -56,7 +55,10 @@ public class ExperimentInfoListService {
     public List<ExperimentInfo> listPublicExperiments() {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
         for (ExperimentType experimentType : experimentTypes) {
-            experimentInfos.addAll(experimentTrader.getPublicExperiments(experimentType).stream().map(Experiment::buildExperimentInfo).collect(Collectors.toList()));
+            experimentInfos.addAll(
+                    experimentTrader.getPublicExperiments(experimentType).stream()
+                            .map(Experiment::buildExperimentInfo)
+                            .collect(Collectors.toList()));
         }
         return experimentInfos;
     }
