@@ -39,7 +39,6 @@ public class PopularSpeciesServiceTest {
     @Mock
     private PopularSpeciesDao popularSpeciesDaoMock;
 
-    @InjectMocks
     private PopularSpeciesService subject;
 
     @Before
@@ -57,7 +56,9 @@ public class PopularSpeciesServiceTest {
             }
         }
 
-        when(popularSpeciesDaoMock.getBulkExperimentCountBySpecies()).thenReturn(popularSpeciesBuilder.build());
+        when(popularSpeciesDaoMock.getExperimentCountBySpecies()).thenReturn(popularSpeciesBuilder.build());
+
+        subject = new PopularSpeciesService(popularSpeciesDaoMock);
     }
 
     public void assertThatListIsSortedInDescendingOrder(List<PopularSpeciesInfo> list) {
