@@ -651,10 +651,11 @@
             <properties>
                 <build.environment>dev</build.environment>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
-                <data.files.location>/nfs/production/microarray/atlas/atlas-core-test-data</data.files.location>
+                <data.files.location>/nfs/ma/home-atlas-it/atlas-test-data</data.files.location>
                 <zk.host>lime.ebi.ac.uk</zk.host>
                 <zk.port>2182</zk.port>
                 <solr.host>lime.ebi.ac.uk</solr.host>
+                <solr.port>8985</solr.port>
                 <!-- Must match any of the appenders defined in logback-test.xml -->
                 <test.logs>FILE</test.logs>
             </properties>
