@@ -16,12 +16,7 @@ import javax.servlet.ServletContext;
 @ComponentScan(basePackages = "uk.ac.ebi.atlas",
                includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, value = TestJdbcConfig.class),
                excludeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, value = JdbcConfig.class))
-public class TestConfig implements WebApplicationInitializer {
-    @Override
-    public void onStartup(ServletContext servletContext) {
-        servletContext.setInitParameter("spring.profiles.active", "test");
-    }
-
+public class TestConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
