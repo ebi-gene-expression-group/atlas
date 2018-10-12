@@ -14,7 +14,7 @@ public class PopularSpeciesService {
     private final LazyReference<List<PopularSpeciesInfo>> sortedList = new LazyReference<List<PopularSpeciesInfo>>() {
         @Override
         protected List<PopularSpeciesInfo> create() {
-            return popularSpeciesDao.popularSpecies().stream()
+            return popularSpeciesDao.getBulkExperimentCountBySpecies().stream()
                     .sorted(PopularSpeciesInfo.BY_SIZE_DESCENDING)
                     .collect(Collectors.toList());
         }

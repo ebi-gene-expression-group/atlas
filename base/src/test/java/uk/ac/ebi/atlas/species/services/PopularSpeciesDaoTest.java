@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.species.services.PopularSpeciesDao.SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY;
+import static uk.ac.ebi.atlas.species.services.PopularSpeciesDao.SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PopularSpeciesDaoTest {
@@ -97,7 +97,7 @@ public class PopularSpeciesDaoTest {
 
         expectedValues = speciesToExperimentCountBuilder.build();
 
-        when(jdbcTemplateMock.queryForList(SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY))
+        when(jdbcTemplateMock.queryForList(SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK))
                 .thenReturn(resultsBuilder.build().asList());
         subject = new PopularSpeciesDao(jdbcTemplateMock, speciesFactoryMock);
     }
@@ -105,10 +105,10 @@ public class PopularSpeciesDaoTest {
     @Test
     public void popularSpecies() {
         assertThat(
-                subject.popularSpecies(),
+                subject.getBulkExperimentCountBySpecies(),
                 hasSize(ANIMAL_SPECIES_NAMES.size() + PLANT_SPECIES_NAMES.size() + FUNGI_SPECIES_NAMES.size()));
 
-        for (PopularSpeciesInfo popularSpeciesInfo : subject.popularSpecies()) {
+        for (PopularSpeciesInfo popularSpeciesInfo : subject.getBulkExperimentCountBySpecies()) {
             assertThat(
                     popularSpeciesInfo.baselineExperiments(),
                     is((long) expectedValues.get(popularSpeciesInfo.species()).getLeft()));
