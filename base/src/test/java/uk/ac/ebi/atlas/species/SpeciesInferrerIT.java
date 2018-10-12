@@ -20,7 +20,7 @@ public class SpeciesInferrerIT {
     private static final String ARABIDOPSIS_THALIANA = "arabidopsis thaliana";
 
     private static final SemanticQueryTerm HUMAN_REACTOME_TERM = SemanticQueryTerm.create("R-HSA-597592", "pathwayid");
-    private static final SemanticQueryTerm PLANT_REACTOME_TERM = SemanticQueryTerm.create("R-ATH-191273", "pathwayid");
+    private static final SemanticQueryTerm PLANT_REACTOME_TERM = SemanticQueryTerm.create("R-ZMA-8933811", "pathwayid");
     private static final SemanticQueryTerm LEAF_TERM = SemanticQueryTerm.create("leaf");
 
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
