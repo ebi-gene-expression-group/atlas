@@ -178,7 +178,8 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                         ImmutableMap.of(
                                 "group", entry.getKey(),
                                 "value", entry.getValue(),
-                                "label", StringUtils.capitalize(entry.getValue())))
+                                "label", StringUtils.capitalize(entry.getValue()),
+                                "description", getTooltipText(entry.getKey())))
                 .collect(toList());
     }
 
@@ -189,7 +190,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 return tooltip.getTooltip();
             }
         }
-        return null;
+        return "";
     }
 
     private Map<String, Object> getExperimentInformation(String experimentAccession, String geneId) {
