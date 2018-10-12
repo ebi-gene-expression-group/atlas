@@ -25,14 +25,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/*
- * Responsible for:
- * - Database:
- *     - gxa: the experiments table, and the deprecated expression values tables)
- *     - scxa: tables scxa_experiments, scxa_analytics, scxa_tsne_plot_*; TODO scxa_marker_gene
- * - design files on disk
- */
-
+// Inserts experiment in (scxa_)experiment table and writes the experiment design file to expdesign/
 public class ExperimentCrud {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCrud.class);
 
@@ -58,7 +51,7 @@ public class ExperimentCrud {
         this.configurationTrader = configurationTrader;
     }
 
-    public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
+    public UUID importExperiment(String experimentAccession, boolean isPrivate) {
         checkNotNull(experimentAccession);
 
         Pair<ExperimentConfiguration, CondensedSdrfParserOutput> files = loadAndValidateFiles(experimentAccession);
@@ -91,7 +84,7 @@ public class ExperimentCrud {
         return accessKeyUuid;
     }
 
-    public UUID importSingleCellExperiment(String experimentAccession, boolean isPrivate) throws IOException {
+    public UUID importSingleCellExperiment(String experimentAccession, boolean isPrivate) {
         checkNotNull(experimentAccession);
 
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
@@ -101,12 +94,12 @@ public class ExperimentCrud {
 
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
-        ExperimentDTO experimentDTO = ExperimentDTO.create(
-                condensedSdrfParserOutput,
-                idfParserOutput,
-                condensedSdrfParserOutput.getSpecies(),
-                isPrivate
-        );
+        ExperimentDTO experimentDTO =
+                ExperimentDTO.create(
+                        condensedSdrfParserOutput,
+                        idfParserOutput,
+                        condensedSdrfParserOutput.getSpecies(),
+                        isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);
