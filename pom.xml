@@ -618,7 +618,9 @@
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>YxyR9PKvOAtY</jdbc.password>
                 <zk.host>lime</zk.host>
+                <zk.port>2181</zk.port>
                 <solr.host>lime</solr.host>
+                <solr.port>8983</solr.port>
                 <!-- Must match any of the appenders defined in logback-test.xml -->
                 <test.logs>STDOUT</test.logs>
             </properties>
@@ -632,8 +634,13 @@
                 <jdbc.url>jdbc:postgresql:gxpatlasloc</jdbc.url>
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>atlas3dev</jdbc.password>
+                <!-- If you’re running a Beowu^W k8s cluster with minikube, the host of ZK and Solr will be given by
+                     the command `minikube ip`. The ports will be defined in your services solr-external and
+                     zk-external (if you’re using the config files in our repo) -->
                 <zk.host>localhost</zk.host>
+                <zk.port>2181</zk.port>
                 <solr.host>localhost</solr.host>
+                <solr.port>8983</solr.port>
                 <!-- Must match any of the appenders defined in logback-test.xml -->
                 <test.logs>STDOUT</test.logs>
             </properties>
@@ -646,6 +653,7 @@
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/production/microarray/atlas/atlas-core-test-data</data.files.location>
                 <zk.host>lime.ebi.ac.uk</zk.host>
+                <zk.port>2182</zk.port>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <!-- Must match any of the appenders defined in logback-test.xml -->
                 <test.logs>FILE</test.logs>
