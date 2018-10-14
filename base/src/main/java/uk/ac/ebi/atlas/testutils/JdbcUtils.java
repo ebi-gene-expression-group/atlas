@@ -51,7 +51,7 @@ public class JdbcUtils {
 
     public String fetchRandomExpressionAtlasExperimentAccession(ExperimentType experimentType) {
         return jdbcTemplate.queryForObject(
-                "SELECT accession FROM experiment WHERE type=? ORDER BY RANDOM() LIMIT 1",
+                "SELECT accession FROM experiment WHERE type=? AND private=FALSE ORDER BY RANDOM() LIMIT 1",
                 String.class,
                 experimentType.name());
     }
