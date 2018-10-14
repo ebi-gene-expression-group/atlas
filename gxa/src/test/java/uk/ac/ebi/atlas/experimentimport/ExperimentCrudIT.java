@@ -12,9 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -30,8 +29,12 @@ import static org.mockito.Mockito.verify;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 public class ExperimentCrudIT {
+    private static final String RNASEQ_BASELINE_ACCESSION = "E-ERAD-475";
+    private static final String RNASEQ_DIFFERENTIAL = "E-MTAB-5633";
+    private static final String PROTEOMICS_BASELINE_ACCESSION = "E-PROT-1";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -60,17 +63,11 @@ public class ExperimentCrudIT {
         subject = experimentCrudFactory.create(experimentDao, experimentCheckerSpy);
     }
 
-    public static final String RNASEQ_BASELINE_ACCESSION = "TEST-RNASEQ-BASELINE";
-
     @After
     public void tryCleanUp() {
         tryDelete(RNASEQ_BASELINE_ACCESSION);
-        tryDelete("TEST-RNASEQ-DIFFERENTIAL");
-        tryDelete("TEST-MICROARRAY-1COLOUR-MRNA-DIFFERENTIAL");
-        tryDelete("TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL");
-        tryDelete("TEST-MICROARRAY-1COLOUR-MICRORNA-DIFFERENTIAL");
-        tryDelete("TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL");
-        tryDelete("TEST-PROTEOMICS-BASELINE");
+        tryDelete(RNASEQ_DIFFERENTIAL);
+        tryDelete(PROTEOMICS_BASELINE_ACCESSION);
     }
 
     private boolean tryDelete(String accession) {
@@ -90,45 +87,20 @@ public class ExperimentCrudIT {
 
     @Test
     public void importReloadDeleteRnaSeqBaselineExperiment() throws IOException {
-        testImportNewImportExistingAndDelete(RNASEQ_BASELINE_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
+        testImportNewImportExistingAndDelete(RNASEQ_BASELINE_ACCESSION);
         verify(experimentCheckerSpy, times(2)).checkRnaSeqBaselineFiles(RNASEQ_BASELINE_ACCESSION);
     }
 
     @Test
     public void importReloadDeleteRnaSeqDifferentialExperiment() throws IOException {
-        testImportNewImportExistingAndDelete(
-                "TEST-RNASEQ-DIFFERENTIAL",
-                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
-    }
-
-    @Test
-    public void importReloadDeleteMicroarray1ColourMRnaDifferentialExperiment() throws IOException {
-        testImportNewImportExistingAndDelete(
-                "TEST-MICROARRAY-1COLOUR-MRNA-DIFFERENTIAL",
-                ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
-    }
-
-    @Test
-    public void importReloadDeleteMicroarray2ColourMRnaDifferentialExperiment() throws IOException {
-        testImportNewImportExistingAndDelete(
-                "TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL",
-                ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
-    }
-
-    @Test
-    public void importReloadDeleteMicroarray1ColourMicroRnaDifferentialExperiment() throws IOException {
-        testImportNewImportExistingAndDelete(
-                "TEST-MICROARRAY-1COLOUR-MICRORNA-DIFFERENTIAL",
-                ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
+        testImportNewImportExistingAndDelete(RNASEQ_DIFFERENTIAL);
     }
 
     @Test
     public void importReloadDeleteProteomicsBaselineExperiment() throws IOException {
-        testImportNewImportExistingAndDelete(
-                "TEST-PROTEOMICS-BASELINE",
-                ExperimentType.PROTEOMICS_BASELINE);
+        testImportNewImportExistingAndDelete(PROTEOMICS_BASELINE_ACCESSION);
 
-        verify(experimentCheckerSpy, times(2)).checkProteomicsBaselineFiles("TEST-PROTEOMICS-BASELINE");
+        verify(experimentCheckerSpy, times(2)).checkProteomicsBaselineFiles(PROTEOMICS_BASELINE_ACCESSION);
     }
 
     @Test
@@ -141,59 +113,39 @@ public class ExperimentCrudIT {
     }
 
     private void
-    testImportNewImportExistingAndDelete(String experimentAccession,
-                                         ExperimentType experimentType) throws IOException {
-        importNewExperimentInsertsDB(experimentAccession, experimentType);
-        importExistingExperimentUpdatesDB(experimentAccession, experimentType);
-        deleteExperimentDeletesDB(experimentAccession, experimentType);
+    testImportNewImportExistingAndDelete(String experimentAccession) throws IOException {
+        importNewExperimentInsertsDB(experimentAccession);
+        importExistingExperimentUpdatesDB(experimentAccession);
+        deleteExperimentDeletesDB(experimentAccession);
     }
 
     private void
-    importNewExperimentInsertsDB(String experimentAccession, ExperimentType experimentType) throws IOException {
+    importNewExperimentInsertsDB(String experimentAccession) throws IOException {
         assumeThat(experimentCount(experimentAccession), is(0));
-        assumeThat(expressionsCount(experimentAccession, experimentType), is(0));
         assumeThat(dataFileHub.getExperimentFiles(experimentAccession).configuration.exists(), is(true));
 
         subject.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
-        if (experimentType.isDifferential()) {
-            assertThat(expressionsCount(experimentAccession, experimentType), is(1));
-        }
     }
 
     private void
-    importExistingExperimentUpdatesDB(String experimentAccession, ExperimentType experimentType) throws IOException {
+    importExistingExperimentUpdatesDB(String experimentAccession) throws IOException {
         ExperimentDTO originalExperimentDTO = subject.findExperiment(experimentAccession);
         subject.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
-
-        if (experimentType.isDifferential()) {
-            assertThat(expressionsCount(experimentAccession, experimentType), is(1));
-        }
 
         ExperimentDTO newExperimentDTO = subject.findExperiment(experimentAccession);
         assertThat(originalExperimentDTO.getAccessKey(), is(newExperimentDTO.getAccessKey()));
     }
 
-    private void deleteExperimentDeletesDB(String experimentAccession, ExperimentType experimentType) {
+    private void deleteExperimentDeletesDB(String experimentAccession) {
         subject.deleteExperiment(experimentAccession);
         assertThat(experimentCount(experimentAccession), is(0));
-        assertThat(expressionsCount(experimentAccession, experimentType), is(0));
     }
 
     private int experimentCount(String accession) {
         return jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM experiment WHERE accession = ?", Integer.class, accession);
-    }
-
-    private int expressionsCount(String accession, ExperimentType experimentType) {
-        if (experimentType.isMicroarray()) {
-            return jdbcTemplate.queryForObject(
-                    "SELECT COUNT(*) from microarray_diff_analytics WHERE experiment = ?", Integer.class, accession);
-        } else { //if (experimentType.isDifferential()) {
-            return jdbcTemplate.queryForObject(
-                    "SELECT COUNT(*) from rnaseq_diff_analytics WHERE experiment = ?", Integer.class, accession);
-        }
     }
 
 }
