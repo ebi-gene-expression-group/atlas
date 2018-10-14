@@ -4,3 +4,6 @@
 [submodule "gxa/src/test/resources/schemas"]
 	path = gxa/src/test/resources/schemas
 	url = https://github.com/ebi-gene-expression-group/atlas-schemas.git
+[submodule "sc/src/test/resources/schemas"]
+	path = sc/src/test/resources/schemas
+	url = https://github.com/ebi-gene-expression-group/atlas-schemas.git

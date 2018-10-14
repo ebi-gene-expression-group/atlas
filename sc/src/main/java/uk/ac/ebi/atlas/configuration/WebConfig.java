@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@ComponentScan(basePackages = "uk.ac.ebi.atlas")
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
     private final AdminInterceptor adminInterceptor;
