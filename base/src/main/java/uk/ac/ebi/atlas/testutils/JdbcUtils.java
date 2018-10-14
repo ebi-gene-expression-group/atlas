@@ -98,6 +98,16 @@ public class JdbcUtils {
                 experimentAccession);
     }
 
+    public int fetchRandomPerplexityFromExperimentTSne(String experimentAccession, String geneId) {
+        return jdbcTemplate.queryForObject(
+                "SELECT perplexity FROM scxa_tsne AS tsne " +
+                    "LEFT JOIN scxa_analytics AS analytics " +
+                    "ON analytics.experiment_accession=tsne.experiment_accession AND analytics.cell_id=tsne.cell_id " +
+                "WHERE tsne.experiment_accession=? AND analytics.gene_id=? ORDER BY RANDOM() LIMIT 1",
+                Integer.class,
+                experimentAccession, geneId);
+    }
+
     public int fetchRandomKFromCellClusters(String experimentAccession) {
         return jdbcTemplate.queryForObject(
                 "SELECT k FROM scxa_cell_clusters WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",

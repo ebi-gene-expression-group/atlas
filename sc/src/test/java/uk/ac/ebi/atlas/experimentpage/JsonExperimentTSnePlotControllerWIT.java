@@ -1,22 +1,26 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
-import java.util.concurrent.ThreadLocalRandom;
+import javax.sql.DataSource;
 
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThan;
@@ -31,9 +35,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JsonExperimentTSnePlotControllerWIT {
+    @Inject
+    private DataSource dataSource;
+
     @Inject
     private JdbcUtils jdbcTestUtils;
 
@@ -41,6 +48,28 @@ class JsonExperimentTSnePlotControllerWIT {
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_tsne-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_cell_clusters-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_tsne-delete.sql"),
+                new ClassPathResource("fixtures/scxa_cell_clusters-delete.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-delete.sql"));
+        populator.execute(dataSource);
+    }
 
     @BeforeEach
     void setUp() {
@@ -50,8 +79,11 @@ class JsonExperimentTSnePlotControllerWIT {
     @Test
     void validJsonForExpressedGeneId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
         String geneId = jdbcTestUtils.fetchRandomGeneFromSingleCellExperiment(experimentAccession);
+        // If our fixtures contained full experiments we could use any random perplexity with
+        // fetchRandomPerplexityFromExperimentTSne(experimentAccession), but since we have a subset of all the rows, we
+        // need to restrict this value to the perplexities actually available for the particular gene we choose.
+        int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession, geneId);
 
         this.mockMvc
                 .perform(get(
@@ -103,8 +135,8 @@ class JsonExperimentTSnePlotControllerWIT {
     @Test
     void validJsonForValidK() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-        int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
         int k = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
+        int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
         this.mockMvc
                 .perform(get(
@@ -112,10 +144,11 @@ class JsonExperimentTSnePlotControllerWIT {
                         "/clusters/k/" + k))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.series", hasSize(k)))
-                .andExpect(
-                        jsonPath("$.series[" + Integer.toString(ThreadLocalRandom.current().nextInt(0, k)) + "].data")
-                                .isNotEmpty());
+                // With full experiments this test could be even better:
+                // .andExpect(jsonPath("$.series", hasSize(k)))
+                // .andExpect(jsonPath("$.series[" + Integer.toString(RNG.nextInt(0, k)) + "].data").isNotEmpty());
+                .andExpect(jsonPath("$.series", hasSize(greaterThan(0))))
+                .andExpect(jsonPath("$.series[0].data").isNotEmpty());
     }
 
     @Test
