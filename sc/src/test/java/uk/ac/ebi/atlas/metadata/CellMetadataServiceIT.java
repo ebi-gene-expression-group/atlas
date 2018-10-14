@@ -1,19 +1,24 @@
 package uk.ac.ebi.atlas.metadata;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import java.util.stream.Collectors;
 
@@ -21,9 +26,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
+@ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ContextConfiguration(classes = WebConfig.class)
 class CellMetadataServiceIT {
+    // Ideally we would retrieve a random experiment accession, but not all experiments have the inferred cell
+    // type characteristic
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
+    private static final String EXPERIMENT_WITHOUT_METADATA_ACCESSION = "E-GEOD-99058";
+
+    @Inject
+    private DataSource dataSource;
     @Inject
     private IdfParser idfParser;
     @Inject
@@ -33,6 +45,24 @@ class CellMetadataServiceIT {
 
     private CellMetadataService subject;
 
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-delete.sql"));
+        populator.execute(dataSource);
+    }
+
     @BeforeEach
     void setUp() {
         this.subject = new CellMetadataService(idfParser, cellMetadataDao);
@@ -40,12 +70,10 @@ class CellMetadataServiceIT {
 
     @Test
     void existingInferredCellType() {
-        // Ideally we would retrieve a random experiment accession, but not all experiments have the inferred cell
-        // type characteristic
-        String cellId = jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-14");
+        String cellId = jdbcUtils.fetchRandomCellFromExperiment(EXPERIMENT_ACCESSION);
         assertThat(
                 subject.getInferredCellType(
-                        "E-ENAD-14",
+                        EXPERIMENT_ACCESSION,
                         cellId))
                 .isPresent();
     }
@@ -57,7 +85,7 @@ class CellMetadataServiceIT {
 
     @Test
     void inferredCellTypeForInvalidCellId() {
-        assertThat(subject.getInferredCellType("E-ENAD-14", "FOO")).isNotPresent();
+        assertThat(subject.getInferredCellType(EXPERIMENT_ACCESSION, "FOO")).isNotPresent();
     }
 
     @ParameterizedTest
@@ -92,15 +120,15 @@ class CellMetadataServiceIT {
         // files in the IDF file
         assertThat(
                 subject.getIdfFileAttributes(
-                        "E-ENAD-14",
-                        jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-14")))
+                        EXPERIMENT_ACCESSION,
+                        jdbcUtils.fetchRandomCellFromExperiment(EXPERIMENT_ACCESSION)))
                 .isNotEmpty()
                 .containsOnlyKeys("characteristic_individual");
     }
 
     @Test
     void experimentWithoutMetadataFieldsInIdf() {
-        String experimentAccession = "E-GEOD-99058";    // Empty Comment[EAAdditionalAttributes] in IDF file
+        String experimentAccession = EXPERIMENT_WITHOUT_METADATA_ACCESSION;    // Empty Comment[EAAdditionalAttributes] in IDF file
 
         assertThat(
                 subject.getIdfFileAttributes(
