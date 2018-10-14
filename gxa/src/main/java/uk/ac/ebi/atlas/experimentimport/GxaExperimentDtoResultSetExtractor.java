@@ -17,7 +17,7 @@ public class GxaExperimentDtoResultSetExtractor extends ExperimentDTOResultSetEx
         ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
         String species = resultSet.getString("species");
         Date lastUpdate = resultSet.getTimestamp("last_update");
-        boolean isPrivate = "T".equals(resultSet.getString("private"));
+        boolean isPrivate = resultSet.getBoolean("private");
         String accessKeyUUID = resultSet.getString("access_key");
         String title = StringUtils.isEmpty(resultSet.getString("title")) ? "" : resultSet.getString("title");
 
