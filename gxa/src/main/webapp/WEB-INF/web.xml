@@ -36,7 +36,7 @@
              and fully-qualified @Configuration classes -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>uk.ac.ebi.atlas.configuration.WebConfig</param-value>
+            <param-value>uk.ac.ebi.atlas.configuration.AppConfig</param-value>
         </init-param>
         <!-- Uncomment if you want a slower start-up time but a faster first-page load -->
         <!--<load-on-startup>1</load-on-startup>-->
