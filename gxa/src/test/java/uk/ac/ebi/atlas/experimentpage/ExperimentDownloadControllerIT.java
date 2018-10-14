@@ -3,13 +3,18 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -25,6 +30,7 @@ import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,14 +43,15 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
-public class ExperimentDownloadControllerIT {
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class ExperimentDownloadControllerIT {
     private static final int GENE_NAME_INDEX = 1;
 
     @Inject
-    private ExperimentDownloadController subject;
+    private DataSource dataSource;
 
     @Inject
     private ExpressionAtlasExperimentTrader experimentTrader;
@@ -52,8 +59,25 @@ public class ExperimentDownloadControllerIT {
     @Inject
     private DataFileHub dataFileHub;
 
+    @Inject
+    private ExperimentDownloadController subject;
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/small-experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
+
     @Test
-    public void testSomeMicroarrayExperiments() {
+    void testSomeMicroarrayExperiments() {
         Set<String> rnaSeqExperiments = experimentTrader.getMicroarrayExperimentAccessions();
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
@@ -205,7 +229,7 @@ public class ExperimentDownloadControllerIT {
     }
 
     @Test
-    public void testSomeRnaSeqExperiments() throws Exception {
+    void testSomeRnaSeqExperiments() throws Exception {
         Set<String> rnaSeqExperiments = experimentTrader.getRnaSeqDifferentialExperimentAccessions();
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
 
@@ -215,13 +239,9 @@ public class ExperimentDownloadControllerIT {
                     experimentTrader.getPublicExperiment(accession);
 
             defaultParametersHeader(differentialExperiment);
-
             weHaveSomeResults(differentialExperiment);
-
             upDownRegulationWorks(differentialExperiment);
-
             noDataWithVeryStrictPValueCutoff(differentialExperiment);
-
             noDataWithVeryLargeFoldChangeCutoff(differentialExperiment);
         }
     }
@@ -301,11 +321,11 @@ public class ExperimentDownloadControllerIT {
     }
 
     private void noDataWithVeryStrictPValueCutoff(DifferentialExperiment experiment) throws Exception {
-        //Sometimes the pValue is actually 0.0 due to rounding errors and then what can you do e.g. in E-GEOD-59612,
-        // not in test datasets though
+        // Sometimes the pValue is actually 0.0 due to rounding errors e.g. E-MTAB-5633 ENSMUSG00000056569
+        // It‘s strictly above cutoff, see IsDifferentialExpressionAboveCutOff
         MockHttpServletResponse response = new MockHttpServletResponse();
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
-        requestPreferences.setCutoff(1e-100);
+        requestPreferences.setCutoff(0.0);
         subject.rnaSeqDifferentialExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
 
         assertThat(headersAndBody(response).getRight(), hasSize(1));
@@ -334,7 +354,7 @@ public class ExperimentDownloadControllerIT {
     }
 
     @Test
-    public void testSomeRnaSeqBaselineExperiments() throws Exception {
+    void testSomeRnaSeqBaselineExperiments() throws Exception {
         Set<String> rnaSeqExperiments =
                 experimentTrader.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
         assertThat(rnaSeqExperiments, hasSize(greaterThan(0)));
@@ -346,9 +366,7 @@ public class ExperimentDownloadControllerIT {
                         experimentTrader.getPublicExperiment(accession);
 
                 defaultParametersHeaderRnaSeqBaseline(experiment, unit);
-
                 weHaveSomeResultsRnaSeqBaseline(experiment, unit);
-
                 noDataWithVeryLargeCutoffRnaSeqBaseline(experiment, unit);
             }
         }
@@ -415,7 +433,7 @@ public class ExperimentDownloadControllerIT {
     }
 
     @Test
-    public void testSomeProteomicsBaselineExperiments() throws Exception {
+    void testSomeProteomicsBaselineExperiments() throws Exception {
         Set<String> experimentAccessions =
                 experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
         assertThat(experimentAccessions, hasSize(greaterThan(0)));
