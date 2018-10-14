@@ -11,7 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.testutils.SolrUtils;
 
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 public class JsonBioentityInformationControllerWIT {
     @Autowired
     private WebApplicationContext wac;
@@ -43,7 +43,7 @@ public class JsonBioentityInformationControllerWIT {
 
     @Test
     public void payloadIsValidJson() throws Exception {
-        String geneId = solrUtils.fetchRandomGeneFromAnalytics();
+        String geneId = solrUtils.fetchRandomGeneIdFromAnalytics();
 
         this.mockMvc
                 .perform(get("/json/bioentity_information/" + geneId))

@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.analytics.baseline.BaselineAnalyticsSearchService;
@@ -28,7 +28,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 public class BaselineAndDifferentialAnalyticsServiceIT {
     private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
 
