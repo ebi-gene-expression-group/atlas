@@ -50,6 +50,18 @@ public class JdbcUtils {
                 experimentType.name());
     }
 
+    public List<String> fetchSpeciesForSingleCellExperiments() {
+        return jdbcTemplate.queryForList(
+                "SELECT DISTINCT species FROM scxa_experiment",
+                String.class);
+    }
+
+    public String fetchRandomSpeciesForSingleCellExperiments() {
+        return jdbcTemplate.queryForObject(
+                "SELECT species FROM scxa_experiment ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
     public String fetchRandomGene() {
         return jdbcTemplate.queryForObject(
                 "SELECT gene_id FROM scxa_analytics TABLESAMPLE SYSTEM_ROWS(1)",
