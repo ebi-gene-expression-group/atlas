@@ -30,6 +30,5 @@ public class SolrConfig {
     public CloudSolrClient cloudSolrClient(@Value("${zk.host}") String zkHost,
                                            @Value("${zk.port}") String zkPort) {
         return new CloudSolrClient.Builder().withZkHost(zkHost + ":" + zkPort).build();
-//        return SOLR_CLIENT_CACHE.getCloudSolrClient(zkHost);
     }
 }
