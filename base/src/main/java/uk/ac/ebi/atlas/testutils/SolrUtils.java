@@ -16,25 +16,9 @@ public class SolrUtils {
     private static final ThreadLocalRandom RNG = ThreadLocalRandom.current();
 
     private AnalyticsCollectionProxy analyticsCollectionProxy;
-    // private BioentitiesCollectionProxy bioentitiesCollectionProxy;
 
     public SolrUtils(SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         analyticsCollectionProxy = solrCloudCollectionProxyFactory.create(AnalyticsCollectionProxy.class);
-        // bioentitiesCollectionProxy = solrCloudCollectionProxyFactory.create(BioentitiesCollectionProxy.class);
-    }
-
-    public String fetchRandomGeneIdFromAnalytics() {
-        SolrQueryBuilder<AnalyticsCollectionProxy> queryBuilder = new SolrQueryBuilder<>();
-        queryBuilder
-                .setFieldList(AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER)
-                .setRows(MAX_ROWS);
-
-        return analyticsCollectionProxy
-                .query(queryBuilder)
-                .getResults()
-                .get(RNG.nextInt(MAX_ROWS))
-                .getFieldValue("bioentity_identifier")
-                .toString();
     }
 
     public String fetchRandomGeneIdFromAnalytics(AnalyticsSchemaField field, String term) {
