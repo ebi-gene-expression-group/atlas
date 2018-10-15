@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.home;
+package uk.ac.ebi.atlas.model.card;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -9,36 +9,28 @@ import java.util.Optional;
 
 public class CardModelAdapter {
 
+    public static JsonObject serialize(CardModel cardModel) {
+        JsonObject result = new JsonObject();
+        result.addProperty("iconType", cardModel.iconType());
+        result.addProperty("iconSrc", cardModel.iconSrc());
+
+        cardModel.iconDescription().ifPresent(
+                description -> result.addProperty("iconDescription", cardModel.iconDescription().get()));
+
+        if (getContent(cardModel.content()).size() != 0) {
+            result.add("content", getContent(cardModel.content()));
+        }
+
+        return result;
+    }
+
     public static JsonArray serialize(List<CardModel> cards) {
         JsonArray result = new JsonArray();
 
-        cards.forEach(card -> {
-             result.add(getIconObject(
-                     card.iconType(),
-                     card.iconSrc(),
-                     card.iconDescription(),
-                     card.content()));
-        });
+        cards.forEach(card -> result.add(serialize(card)));
 
         return result;
     }
-
-    private static JsonObject getIconObject(
-            String iconType,
-            String iconSrc,
-            Optional<String> iconDescription,
-            List<Pair<String, Optional<String>>> content) {
-        JsonObject result = new JsonObject();
-        result.addProperty("iconType", iconType);
-        result.addProperty("iconSrc", iconSrc);
-
-        iconDescription.ifPresent(description -> result.addProperty("iconDescription", description));
-
-        result.add("content", getContent(content));
-
-        return result;
-    }
-
 
     private static JsonArray getContent(List<Pair<String, Optional<String>>> textAndUrls) {
         JsonArray content = new JsonArray();

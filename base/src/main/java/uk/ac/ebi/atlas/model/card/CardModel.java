@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.home;
+package uk.ac.ebi.atlas.model.card;
 
 import com.google.auto.value.AutoValue;
 import org.apache.commons.lang3.tuple.Pair;
