@@ -10,11 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
-
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,8 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = WebConfig.class)
 class CellMetadataServiceIT {
     @Inject
-    private IdfParser idfParser;
-    @Inject
     private CellMetadataDao cellMetadataDao;
     @Inject
     private JdbcUtils jdbcUtils;
@@ -35,7 +31,7 @@ class CellMetadataServiceIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new CellMetadataService(idfParser, cellMetadataDao);
+        this.subject = new CellMetadataService(cellMetadataDao);
     }
 
     @Test
@@ -84,35 +80,6 @@ class CellMetadataServiceIT {
     @Test
     void metadataForInvalidExperiment() {
         assertThat(subject.getMetadata("FOO", "FOO")).isEmpty();
-    }
-
-    @Test
-    void experimentWithMetadataFieldsInIdf() {
-        // Ideally we would retrieve a random experiment accession, but not all experiments have curated metadata
-        // files in the IDF file
-        assertThat(
-                subject.getIdfFileAttributes(
-                        "E-ENAD-14",
-                        jdbcUtils.fetchRandomCellFromExperiment("E-ENAD-14")))
-                .isNotEmpty()
-                .containsOnlyKeys("characteristic_individual");
-    }
-
-    @Test
-    void experimentWithoutMetadataFieldsInIdf() {
-        String experimentAccession = "E-GEOD-99058";    // Empty Comment[EAAdditionalAttributes] in IDF file
-
-        assertThat(
-                subject.getIdfFileAttributes(
-                        experimentAccession,
-                        jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
-                .isEmpty();
-
-        assertThat(
-                subject.getFactors(
-                        experimentAccession,
-                        jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
-                .isEmpty();
     }
 
     private Iterable<String> experimentsWithMetadataProvider() {

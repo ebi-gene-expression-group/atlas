@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
@@ -22,6 +23,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,12 +39,14 @@ class CellMetadataDaoIT {
     private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
     @Inject
     private JdbcUtils jdbcUtils;
+    @Inject
+    private IdfParser idfParser;
 
     private CellMetadataDao subject;
 
     @BeforeEach
     void setUp() {
-        this.subject = new CellMetadataDao(solrCloudCollectionProxyFactory);
+        this.subject = new CellMetadataDao(solrCloudCollectionProxyFactory, idfParser);
     }
 
     @ParameterizedTest
@@ -139,6 +143,18 @@ class CellMetadataDaoIT {
                 .isEmpty();
     }
 
+    @ParameterizedTest
+    @MethodSource("experimentsWithAdditionalAttributesProvider")
+    void validExperimentIdHasAdditionalAttributes(String experimentAccession) {
+        assertThat(subject.getAdditionalAttributesFieldNames(experimentAccession)).isNotEmpty();
+    }
+
+    @ParameterizedTest
+    @MethodSource("experimentsWithoutAdditionalAttributesProvider")
+    void invalidExperimentAccessionHasNoAdditionalAttributes(String experimentAccession) {
+        assertThat(subject.getAdditionalAttributesFieldNames(experimentAccession)).isEmpty();
+    }
+
     private Stream<String> experimentsWithMetadataProvider() {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
@@ -151,6 +167,19 @@ class CellMetadataDaoIT {
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession ->
-                        !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"));
+                        !accession.equalsIgnoreCase("E-GEOD-99058")
+                                && !accession.equalsIgnoreCase("E-ENAD-13"));
+    }
+
+    private Stream<String> experimentsWithAdditionalAttributesProvider() {
+        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+                .stream()
+                .filter(accession -> !idfParser.parse(accession).getMetadataFieldsOfInterest().isEmpty());
+    }
+
+    private Stream<String> experimentsWithoutAdditionalAttributesProvider() {
+        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+                .stream()
+                .filter(accession -> idfParser.parse(accession).getMetadataFieldsOfInterest().isEmpty());
     }
 }
