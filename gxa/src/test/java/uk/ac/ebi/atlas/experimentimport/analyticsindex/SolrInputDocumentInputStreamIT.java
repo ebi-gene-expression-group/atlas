@@ -111,7 +111,7 @@ class SolrInputDocumentInputStreamIT {
                     is(solrInputDocument.getField("species").getValue()));
         }
 
-        assertThat(count, is(greaterThan(100)));
+        assertThat(count, is(greaterThan(0)));
     }
 
     @ParameterizedTest
