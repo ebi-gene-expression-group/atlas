@@ -57,7 +57,7 @@ class ExperimentCheckerIT {
 
     @ParameterizedTest
     @MethodSource("experimentAccesionWithTypeProvider")
-    void testCheckBaseline(String experimentAccession, ExperimentType experimentType) {
+    void checkAllFiles(String experimentAccession, ExperimentType experimentType) {
         // Maybe we can do something better other than ensuring that ExperimentChecker doesn’t throw :/
         subject.checkAllFiles(experimentAccession, experimentType);
     }
