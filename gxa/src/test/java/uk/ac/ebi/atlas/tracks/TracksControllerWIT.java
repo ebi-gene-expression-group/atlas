@@ -65,15 +65,13 @@ class TracksControllerWIT {
     @Test
     void getTrackFile() throws Exception {
         this.mockMvc.perform(get(BASELINE_URL_TEMPLATE.format(new Object[] {"E-MTAB-5423", "g391"})))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
     }
 
     @Test
     void getTrackOfUnknownExperiment() throws Exception {
         this.mockMvc.perform(get(BASELINE_URL_TEMPLATE.format(new Object[] {"E-FOO-BAR", "g1"})))
-                .andExpect(status().isNotFound())
-                .andReturn();
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -84,23 +82,20 @@ class TracksControllerWIT {
                         .andReturn();
 
         this.mockMvc.perform(get(result.getResponse().getForwardedUrl()))
-                .andExpect(status().isNotFound())
-                .andReturn();
+                .andExpect(status().isNotFound());
     }
 
     @Test
     void getTrackPrivateExperimentWithoutAcessKey() throws Exception {
         this.mockMvc.perform(get(DIFFERENTIAL_URL_TEMPLATE.format(new Object[] {"E-MTAB-4106", "g5_g3"})))
-                .andExpect(status().isNotFound())
-                .andReturn();
+                .andExpect(status().isNotFound());
     }
 
     @Test
     void getTrackPrivateExperimentWitIncorrectAcessKey() throws Exception {
         this.mockMvc.perform(
                 get(DIFFERENTIAL_URL_TEMPLATE.format(new Object[] {"E-MTAB-4106", "g5_g3"}) + "?accessKey=foo-bar"))
-                .andExpect(status().isNotFound())
-                .andReturn();
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -108,7 +103,6 @@ class TracksControllerWIT {
         this.mockMvc.perform(
                 get(DIFFERENTIAL_URL_TEMPLATE.format(
                         new Object[] {"E-MTAB-4106", "g5_g3"}) + "?accessKey=1483a23f-4853-4583-b10c-5ab333bf522f"))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
     }
 }
