@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
@@ -27,7 +27,7 @@ import static org.junit.Assume.assumeThat;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 public class ScxaExperimentDaoIT {
     private static final String SC_ACCESSION = "TEST-SC";
     private static final UUID RANDOM_UUID = UUID.randomUUID();
