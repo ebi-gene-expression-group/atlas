@@ -12,14 +12,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.util.StringUtils;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -41,6 +45,10 @@ class CellMetadataDaoIT {
     private JdbcUtils jdbcUtils;
     @Inject
     private IdfParser idfParser;
+    @Inject
+    private DataFileHub dataFileHub;
+
+    private static final String IDF_ADDITIONAL_ATTRIBUTES_ID = "Comment[EAAdditionalAttributes]".toUpperCase();
 
     private CellMetadataDao subject;
 
@@ -174,12 +182,28 @@ class CellMetadataDaoIT {
     private Stream<String> experimentsWithAdditionalAttributesProvider() {
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> !idfParser.parse(accession).getMetadataFieldsOfInterest().isEmpty());
+                .filter(accession -> hasAdditionalAttributesInIdf(accession));
     }
 
     private Stream<String> experimentsWithoutAdditionalAttributesProvider() {
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> idfParser.parse(accession).getMetadataFieldsOfInterest().isEmpty());
+                .filter(accession -> !hasAdditionalAttributesInIdf(accession));
+    }
+
+    private boolean hasAdditionalAttributesInIdf(String experimentAccession) {
+        try (TsvStreamer idfStreamer = dataFileHub.getExperimentFiles(experimentAccession).idf.get()) {
+            Optional<List<String>> additionalAttributesLine = idfStreamer
+                    .get()
+                    .filter(line -> StringUtils.trimAllWhitespace(line[0]).equalsIgnoreCase(IDF_ADDITIONAL_ATTRIBUTES_ID))
+                    .map(line -> Arrays.stream(line)
+                            .skip(1)
+                            .filter(item -> !item.isEmpty())
+                            .collect(Collectors.toList()))
+                    .filter(x -> !x.isEmpty())
+                    .findFirst();
+
+            return additionalAttributesLine.isPresent();
+        }
     }
 }
