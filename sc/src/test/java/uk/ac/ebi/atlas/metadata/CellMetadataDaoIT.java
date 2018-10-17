@@ -49,7 +49,7 @@ class CellMetadataDaoIT {
     private DataFileHub dataFileHub;
 
     private static final String IDF_ADDITIONAL_ATTRIBUTES_ID = "Comment[EAAdditionalAttributes]".toUpperCase();
-
+    
     private CellMetadataDao subject;
 
     @BeforeEach
