@@ -13,9 +13,12 @@ import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import java.io.UncheckedIOException;
+import java.nio.file.NoSuchFileException;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -79,7 +82,9 @@ class CellMetadataServiceIT {
 
     @Test
     void metadataForInvalidExperiment() {
-        assertThat(subject.getMetadata("FOO", "FOO")).isEmpty();
+        assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(
+                () -> subject.getMetadata("FOO", "FOO"))
+                .withCauseInstanceOf(NoSuchFileException.class);;
     }
 
     private Iterable<String> experimentsWithMetadataProvider() {
