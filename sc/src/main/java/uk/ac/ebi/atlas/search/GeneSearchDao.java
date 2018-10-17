@@ -114,23 +114,22 @@ public class GeneSearchDao {
     private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
             "SELECT experiment_accession, k, marker_probability, cluster_id FROM scxa_marker_genes AS markers " +
                     "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession " +
-                    //"WHERE gene_id=:gene_id AND marker_probability<=:threshold AND private=FALSE " +
                     "WHERE private=FALSE AND (marker_probability IN (SELECT MIN(marker_probability) "+
                                                                     "FROM scxa_marker_genes " +
                                                                     "WHERE gene_id=:gene_id " +
                                                                     "GROUP BY experiment_accession) " +
                                                 "AND experiment_accession= :experiment_accession " +
                                                 "AND marker_probability<=:threshold) " +
-                    "OR ((experiment_accession, k) IN ((:experiment_accession, :experiment_and_K)) " +
+                    "OR ((experiment_accession, k) IN ((:experiment_accession, :preferred_K)) " +
                         "AND marker_probability<=:threshold AND gene_id=:gene_id)";
     @Transactional(readOnly = true)
-    public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId, String experiment_accession, Integer experimentAndK) {
+    public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId, String experimentAccession, Integer preferredK) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId,
                         "threshold", MARKER_GENE_P_VALUE_THRESHOLD,
-                        "experiment_and_K", experimentAndK,
-                        "experiment_accession", experiment_accession);
+                        "preferred_K", preferredK,
+                        "experiment_accession", experimentAccession);
 
         return namedParameterJdbcTemplate.query(
                 SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT,
@@ -139,18 +138,17 @@ public class GeneSearchDao {
                     Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
                     while (resultSet.next()) {
-                        String experimentAccession = resultSet.getString("experiment_accession");
+                        String experimentAccessionString = resultSet.getString("experiment_accession");
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
-                        Float marker_probability = resultSet.getFloat("marker_probability");
 
                         Map<Integer, List<Integer>> kAndClusterIds =
-                                result.getOrDefault(experimentAccession, new HashMap<>());
+                                result.getOrDefault(experimentAccessionString, new HashMap<>());
                         List<Integer> clusterIds = kAndClusterIds.getOrDefault(k, new ArrayList<>());
                         clusterIds.add(clusterId);
 
                         kAndClusterIds.put(k, clusterIds);
-                        result.put(experimentAccession, kAndClusterIds);
+                        result.put(experimentAccessionString, kAndClusterIds);
                     }
 
                     return result;
