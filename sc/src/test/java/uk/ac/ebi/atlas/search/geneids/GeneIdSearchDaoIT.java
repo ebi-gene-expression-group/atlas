@@ -57,7 +57,6 @@ class GeneIdSearchDaoIT {
     void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
-//                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
                 new ClassPathResource("fixtures/scxa_analytics-fixture.sql"));
 //                new ClassPathResource("fixtures/scxa_marker_genes-fixture.sql"));
         populator.execute(dataSource);
