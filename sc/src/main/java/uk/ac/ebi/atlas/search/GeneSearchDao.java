@@ -113,12 +113,10 @@ public class GeneSearchDao {
     //we probably need to order and limit the searching result based on marker_propability
     private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
             "SELECT experiment_accession, k, marker_probability, cluster_id FROM scxa_marker_genes AS markers " +
-                    "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession " +
-                    "WHERE private=FALSE AND (marker_probability IN (SELECT MIN(marker_probability) "+
+                    "WHERE (marker_probability IN (SELECT MIN(marker_probability) "+
                                                                     "FROM scxa_marker_genes " +
                                                                     "WHERE gene_id=:gene_id " +
                                                                     "GROUP BY experiment_accession) " +
-                                                "AND experiment_accession= :experiment_accession " +
                                                 "AND marker_probability<=:threshold) " +
                     "OR ((experiment_accession, k) IN ((:experiment_accession, :preferred_K)) " +
                         "AND marker_probability<=:threshold AND gene_id=:gene_id)";
