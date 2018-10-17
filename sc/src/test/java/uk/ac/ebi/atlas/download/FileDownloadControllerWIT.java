@@ -1,19 +1,26 @@
 package uk.ac.ebi.atlas.download;
 
 import com.google.common.net.HttpHeaders;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.text.MessageFormat;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -24,18 +31,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FileDownloadControllerWIT {
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-106540";
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
     private static final String EXPERIMENT_DESIGN_FILE_NAME = "ExpDesign-{0}.tsv";
     private static final String ARCHIVE_NAME = "{0}-{1}-files.zip";
     private static final String FILE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download";
     private static final String ARCHIVE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download/zip";
 
+    @Inject
+    private DataSource dataSource;
+
     @Autowired
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
 
     @BeforeEach
     void setUp() {

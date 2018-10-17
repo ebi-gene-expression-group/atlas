@@ -15,7 +15,7 @@
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>Single Cell Atlas</name>
+    <name>Single Cell Expression Atlas</name>
     <url>https://www.ebi.ac.uk/gxa/sc/</url>
 
     <build>
@@ -88,8 +88,8 @@
     <dependencies>
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
-            <artifactId>atlas-base</artifactId>
-            <version>5.0</version>
+            <artifactId>atlas-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

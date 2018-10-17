@@ -1,16 +1,22 @@
 package uk.ac.ebi.atlas.download;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.io.File;
 import java.net.URI;
 import java.nio.file.Path;
@@ -23,7 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ExperimentFileLocationServiceIT {
     private static final String EXPERIMENT_DESIGN_FILE_NAME_TEMPLATE = "ExpDesign-{0}.tsv";
     private static final String SDRF_FILE_NAME_TEMPLATE = "{0}.sdrf.txt";
@@ -40,12 +47,29 @@ class ExperimentFileLocationServiceIT {
             "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
 
     @Inject
+    private DataSource dataSource;
+
+    @Inject
     private JdbcUtils jdbcTestUtils;
 
     @Inject
     private DataFileHub dataFileHub;
 
     private ExperimentFileLocationService subject;
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
 
     @BeforeEach
     void setUp() {
