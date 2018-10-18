@@ -136,7 +136,7 @@ public class GeneSearchDao {
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
 
-                        Map<Integer, List<Integer>> kAndClusterIds = result.get(experimentAccessionString);
+                        Map<Integer, List<Integer>> kAndClusterIds = result.getOrDefault(experimentAccessionString, new HashMap<>());
                         List<Integer> clusterIds = kAndClusterIds.getOrDefault(k, new ArrayList<>());
                         clusterIds.add(clusterId);
 
