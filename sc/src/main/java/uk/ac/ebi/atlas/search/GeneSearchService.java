@@ -76,8 +76,12 @@ public class GeneSearchService {
         for (String experimentAccession : experimentAccessions) {
             Optional<Integer> optional = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
             if (optional.isPresent()) {
+
                 Integer value = optional.get();
-                result.put(experimentAccession, geneSearchDao.fetchPreferredKAndMinPAndClusterIds(geneId, experimentAccession, value));
+                Map<Integer, List<Integer>> preferredKAndMinP = geneSearchDao.fetchPreferredKAndMinPAndClusterIds(geneId, experimentAccession, value);
+                if(!preferredKAndMinP.isEmpty()){
+                    result.put(experimentAccession, preferredKAndMinP);
+                }
             }
         }
         return result;
