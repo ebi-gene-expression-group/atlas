@@ -83,7 +83,7 @@ class JsonGeneSearchControllerWIT {
     public void jsonPayloadContainsFacetDescription() throws Exception {
         String geneId = jdbcTestUtils.fetchRandomGene();
 
-        this.mockMvc.perform(get("/json/search/" + geneId))
+        this.mockMvc.perform(get("/json/search").param("ensgene", geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.results", hasSize(greaterThanOrEqualTo(1))))
@@ -93,6 +93,6 @@ class JsonGeneSearchControllerWIT {
                 .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
                 .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
                 .andExpect(jsonPath("$.results[0].facets[0].description", isA(String.class)))
-                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes")));
+                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes", "Species")));
     }
 }

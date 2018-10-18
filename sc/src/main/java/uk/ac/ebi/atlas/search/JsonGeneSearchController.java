@@ -22,12 +22,11 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
+import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
@@ -137,7 +136,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
                             Map<String, Object> experimentAttributes =
                                     getExperimentInformation(experimentAccession, geneId);
-                            List<Map<String, String>> facets =
+                            List<Map<String, Object>> facets =
                                     unfoldFacets(geneSearchService.getFacets(cellIds)
                                             .getOrDefault(experimentAccession, ImmutableMap.of()));
 
@@ -147,7 +146,8 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                                         ImmutableMap.of(
                                                 "group", "Marker genes",
                                                 "value", "experiments with marker genes",
-                                                "label", "Experiments with marker genes"));
+                                                "label", "Experiments with marker genes",
+                                                "description","A gene that comprises part of the specific expression profile for that cluster."));
                                 experimentAttributes.put(
                                         "markerGenes",
                                         convertMarkerGeneModel(
@@ -172,25 +172,33 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                 .collect(toList());
     }
 
-    private List<Map<String, String>> unfoldFacets(Map<String, List<String>> model) {
-        return unfoldListMultimap(model).stream()
-                .map(entry ->
-                        ImmutableMap.of(
-                                "group", entry.getKey(),
-                                "value", entry.getValue(),
-                                "label", StringUtils.capitalize(entry.getValue()),
-                                "description", getTooltipText(entry.getKey())))
-                .collect(toList());
+    private List<Map<String, Object>> unfoldFacets(Map<String, List<String>> model) {
+
+        List<SimpleEntry<String, String>> unlfoldModel = unfoldListMultimap(model);
+        List<Map<String, Object>> results = new ArrayList<>();
+
+        for (Map.Entry entry:
+             unlfoldModel) {
+            ImmutableMap.Builder<String, Object> map = ImmutableMap.<String, Object>builder();
+            map.put("group", entry.getKey());
+            map.put("value", entry.getKey());
+            map.put("label", StringUtils.capitalize(entry.getValue().toString()));
+            if(!isNullOrEmpty(getTooltipText(entry.getKey().toString()))){
+                map.put("description", getTooltipText(entry.getKey().toString()));
+            }
+            results.add(map.build());
+        }
+        return results;
     }
 
     private String getTooltipText(String group){
         for (FacetsToTooltipMapping tooltip:
                 FacetsToTooltipMapping.values()) {
             if(tooltip.getTitle().equalsIgnoreCase(group)){
-                return tooltip.getTooltip();
+               return tooltip.getTooltip();
             }
         }
-        return "";
+        return null;
     }
 
     private Map<String, Object> getExperimentInformation(String experimentAccession, String geneId) {
