@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
 import java.io.IOException;
@@ -33,11 +34,13 @@ class GeneSearchServiceTest {
     @Mock
     private GeneSearchDao geneSearchDaoMock;
 
+    private TsnePlotSettingsService tsnePlotSettingsService;
+
     private GeneSearchService subject;
 
     @BeforeEach
     void setUp() {
-        subject = new GeneSearchService(geneSearchDaoMock);
+        subject = new GeneSearchService(geneSearchDaoMock, tsnePlotSettingsService);
     }
 
     @Test
