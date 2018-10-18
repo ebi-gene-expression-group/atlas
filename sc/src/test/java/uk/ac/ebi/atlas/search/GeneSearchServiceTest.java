@@ -93,7 +93,7 @@ class GeneSearchServiceTest {
                                 10, ImmutableList.of(1, 5, 8),
                                 12, ImmutableList.of(12)));
 
-        when(geneSearchDaoMock.preferredKAndExperiment("ENSG00000104952")).thenReturn(ensg00000104957Profiles);
+        when(geneSearchDaoMock.preferredK("ENSG00000104952")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
 
         Map<String, Map<String, Map<Integer, List<Integer>>>> result =
                 subject.getMarkerGeneProfile("ENSG00000104952");
@@ -127,8 +127,8 @@ class GeneSearchServiceTest {
                                 4, ImmutableList.of(1, 2, 3)));
 
 
-        when(geneSearchDaoMock.preferredKAndExperiment("ENSFOOBAR1")).thenReturn(ensfoobar1Profiles);
-        when(geneSearchDaoMock.preferredKAndExperiment("ENSFOOBAR2")).thenReturn(ensfoobar2Profiles);
+        when(geneSearchDaoMock.preferredK("ENSFOOBAR1")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
+        when(geneSearchDaoMock.preferredK("ENSFOOBAR2")).thenReturn(ImmutableList.of("E-MTAB-0002", "E-MTAB-0003"));
 
         assertThat(subject.getMarkerGeneProfile("ENSFOOBAR1", "ENSFOOBAR2"))
                 .containsAllEntriesOf(

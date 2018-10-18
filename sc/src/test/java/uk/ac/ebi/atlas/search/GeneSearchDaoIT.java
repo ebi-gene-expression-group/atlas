@@ -70,30 +70,25 @@ class GeneSearchDaoIT {
     @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
     @ValueSource(strings = {"ENSG00000000009"})
     void validGeneIdReturnsKAndClusterIds(String geneId) {
-        Map<String, Map<Integer, List<Integer>>> result = subject.preferredKAndExperiment(geneId);
+        List<String> result = subject.preferredK(geneId);
 
         assertThat(result)
-                .containsKeys("E-GEOD-106540")
-                .doesNotContainKeys("E-ENAD-13", "E-ENAD-14", "E-EHCA-2", "E-GEOD-99058");
-
-        // Only marker genes with minimum probablity is returned
-        assertThat(result.get("E-GEOD-106540"))
-                .containsOnly(
-                        entry(3, singletonList(0)));
+                .contains("E-GEOD-106540")
+                .doesNotContain("E-ENAD-13", "E-ENAD-14", "E-EHCA-2", "E-GEOD-99058");
     }
 
     @ParameterizedTest
     @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
     @ValueSource(strings = {"ENSMUSG00000000006"})
     void searchForGeneOverProbabilityThresholdReturnsEmpty(String geneId) {
-        assertThat(subject.preferredKAndExperiment(geneId))
+        assertThat(subject.preferredK(geneId))
                 .isEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"FOO"})
     void invalidGeneIdReturnsEmpty(String geneId) {
-        assertThat(subject.preferredKAndExperiment(geneId))
+        assertThat(subject.preferredK(geneId))
                 .isEmpty();
     }
 
