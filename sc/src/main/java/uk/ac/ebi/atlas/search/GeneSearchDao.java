@@ -71,21 +71,22 @@ public class GeneSearchDao {
         );
     }
 
-    private static final String SELECT_PREFFERED_K_STATEMENT =
+    private static final String SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID =
             "SELECT experiment_accession FROM scxa_marker_genes AS markers "+
             "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession "+
             "WHERE private=FALSE AND gene_id=:gene_id "+
             "GROUP BY experiment_accession";
-
-    public Map<String, Map<Integer, List<Integer>>> preferredKAndExperiment (String geneId) {
+    @Transactional(readOnly = true)
+    public Map<String, Map<Integer, List<Integer>>>  preferredKAndExperiment (String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId);
 
         return namedParameterJdbcTemplate.query(
-                SELECT_PREFFERED_K_STATEMENT,
+                SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID,
                 namedParameters,
                 (ResultSet resultSet)->{
+
                     Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
                     while(resultSet.next()){
@@ -93,13 +94,33 @@ public class GeneSearchDao {
                         Optional<Integer> optional = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
                         if (optional.isPresent()) {
                             Integer value = optional.get();
-                            result.putAll(fetchPreferredKAndMinPAndClusterIds(geneId, experimentAccession, value));
+                            result.put(experimentAccession, fetchPreferredKAndMinPAndClusterIds(geneId, experimentAccession, value));
                         }
                     }
                     return result;
                 }
         );
     }
+
+    public List<String> preferredK (String geneId) {
+        Map<String, Object> namedParameters =
+                ImmutableMap.of(
+                        "gene_id", geneId);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID,
+                namedParameters,
+                (ResultSet resultSet)->{
+                    List<String> result = new ArrayList<>();
+                    while(resultSet.next()){
+                        String experimentAccession = resultSet.getString("experiment_accession");
+                        result.add(experimentAccession);
+                    }
+                    return result;
+                }
+        );
+    }
+
 
     //In marker gene dataset files, one and only one clusterID for each preferred cluster K value,
     //which is supposed to have the lowest marker_probability,
@@ -117,7 +138,7 @@ public class GeneSearchDao {
                     "OR ((experiment_accession, k) IN ((:experiment_accession, :preferred_K)) " +
                         "AND marker_probability<=:threshold AND gene_id=:gene_id)";
     @Transactional(readOnly = true)
-    public Map<String, Map<Integer, List<Integer>>> fetchPreferredKAndMinPAndClusterIds(String geneId, String experimentAccession, Integer preferredK) {
+    public  Map<Integer, List<Integer>> fetchPreferredKAndMinPAndClusterIds(String geneId, String experimentAccession, Integer preferredK) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId,
@@ -129,20 +150,16 @@ public class GeneSearchDao {
                 SELECT_PREFERREDK_AND_MINP_CLUSTER_ID_FOR_GENE_STATEMENT,
                 namedParameters,
                 (ResultSet resultSet) -> {
-                    Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
+                    Map<Integer, List<Integer>> result = new HashMap<>();
 
                     while (resultSet.next()) {
-                        String experimentAccessionString = resultSet.getString("experiment_accession");
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
-
-                        Map<Integer, List<Integer>> kAndClusterIds = result.getOrDefault(experimentAccessionString, new HashMap<>());
-                        List<Integer> clusterIds = kAndClusterIds.getOrDefault(k, new ArrayList<>());
+                        List<Integer> clusterIds = result.getOrDefault(k, new ArrayList<>());
                         clusterIds.add(clusterId);
-
-                        kAndClusterIds.put(k, clusterIds);
-                        result.put(experimentAccessionString, kAndClusterIds);
+                        result.put(k, clusterIds);
                     }
+
                     return result;
                 }
         );
