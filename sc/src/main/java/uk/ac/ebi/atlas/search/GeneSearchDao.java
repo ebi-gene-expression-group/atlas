@@ -2,25 +2,21 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
+import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
@@ -33,16 +29,16 @@ public class GeneSearchDao {
     private static final double MARKER_GENE_P_VALUE_THRESHOLD = 0.005;
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final TsnePlotSettingsService tsnePlotSettingsService;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
-    private IdfParser idfParser;
 
     public GeneSearchDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
                          SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory,
-                         IdfParser idfParser) {
+                         TsnePlotSettingsService tsnePlotSettingsService) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.singleCellAnalyticsCollectionProxy =
                 solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
-        this.idfParser = idfParser;
+        this.tsnePlotSettingsService = tsnePlotSettingsService;
     }
 
     private static final String SELECT_CELL_IDS_FOR_GENE_STATEMENT =
@@ -70,7 +66,6 @@ public class GeneSearchDao {
                         cellIds.add(cellId);
                         result.put(experimentAccession, cellIds);
                     }
-
                     return result;
                 }
         );
@@ -79,7 +74,7 @@ public class GeneSearchDao {
     private static final String SELECT_PREFFERED_K_STATEMENT =
             "SELECT experiment_accession FROM scxa_marker_genes AS markers "+
             "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession "+
-            "WHERE gene_id=:gene_id "+
+            "WHERE private=FALSE AND gene_id=:gene_id "+
             "GROUP BY experiment_accession";
 
     public Map<String, Map<Integer, List<Integer>>> preferredKAndExperiment (String geneId) {
@@ -91,17 +86,17 @@ public class GeneSearchDao {
                 SELECT_PREFFERED_K_STATEMENT,
                 namedParameters,
                 (ResultSet resultSet)->{
-                    Map<String, Map<Integer, List<Integer>>>  result = new HashMap<>();
+                    Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
                     while(resultSet.next()){
                         String experimentAccession = resultSet.getString("experiment_accession");
-                        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
-                        Integer preferredK = idfParserOutput.getExpectedClusters();
-                        result.putAll(fetchKAndClusterIds(geneId, experimentAccession, preferredK));
+                        Optional<Integer> optional = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
+                        if (optional.isPresent()) {
+                            Integer value = optional.get();
+                            result.putAll(fetchPreferredKAndMinPAndClusterIds(geneId, experimentAccession, value));
+                        }
                     }
-
                     return result;
-
                 }
         );
     }
@@ -111,17 +106,18 @@ public class GeneSearchDao {
     //so we get one pair from searching (experiment_accesion, k).
     //If dataset has changed, i.e. there are multiple gene clusterID in one preferred cluster K file,
     //we probably need to order and limit the searching result based on marker_propability
-    private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
+    private static final String SELECT_PREFERREDK_AND_MINP_CLUSTER_ID_FOR_GENE_STATEMENT =
             "SELECT experiment_accession, k, marker_probability, cluster_id FROM scxa_marker_genes AS markers " +
                     "WHERE (marker_probability IN (SELECT MIN(marker_probability) "+
                                                                     "FROM scxa_marker_genes " +
                                                                     "WHERE gene_id=:gene_id " +
                                                                     "GROUP BY experiment_accession) " +
+                                                "AND experiment_accession= :experiment_accession " +
                                                 "AND marker_probability<=:threshold) " +
                     "OR ((experiment_accession, k) IN ((:experiment_accession, :preferred_K)) " +
                         "AND marker_probability<=:threshold AND gene_id=:gene_id)";
     @Transactional(readOnly = true)
-    public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId, String experimentAccession, Integer preferredK) {
+    public Map<String, Map<Integer, List<Integer>>> fetchPreferredKAndMinPAndClusterIds(String geneId, String experimentAccession, Integer preferredK) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId,
@@ -130,7 +126,7 @@ public class GeneSearchDao {
                         "experiment_accession", experimentAccession);
 
         return namedParameterJdbcTemplate.query(
-                SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT,
+                SELECT_PREFERREDK_AND_MINP_CLUSTER_ID_FOR_GENE_STATEMENT,
                 namedParameters,
                 (ResultSet resultSet) -> {
                     Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
@@ -140,15 +136,13 @@ public class GeneSearchDao {
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
 
-                        Map<Integer, List<Integer>> kAndClusterIds =
-                                result.getOrDefault(experimentAccessionString, new HashMap<>());
+                        Map<Integer, List<Integer>> kAndClusterIds = result.get(experimentAccessionString);
                         List<Integer> clusterIds = kAndClusterIds.getOrDefault(k, new ArrayList<>());
                         clusterIds.add(clusterId);
 
                         kAndClusterIds.put(k, clusterIds);
                         result.put(experimentAccessionString, kAndClusterIds);
                     }
-
                     return result;
                 }
         );
