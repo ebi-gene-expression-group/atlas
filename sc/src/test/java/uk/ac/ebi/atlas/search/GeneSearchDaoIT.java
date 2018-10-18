@@ -16,6 +16,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
@@ -43,7 +44,7 @@ class GeneSearchDaoIT {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Inject
-    private IdfParser idfParser;
+    private TsnePlotSettingsService tsnePlotSettingsService;
 
     @Inject
     private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
@@ -55,7 +56,7 @@ class GeneSearchDaoIT {
 
     @BeforeEach
     public void setUp() {
-        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory, idfParser);
+        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory, tsnePlotSettingsService);
     }
 
     @ParameterizedTest
