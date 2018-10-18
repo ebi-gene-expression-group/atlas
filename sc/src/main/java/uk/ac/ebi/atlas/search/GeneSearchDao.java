@@ -77,31 +77,6 @@ public class GeneSearchDao {
             "WHERE private=FALSE AND gene_id=:gene_id "+
             "GROUP BY experiment_accession";
     @Transactional(readOnly = true)
-    public Map<String, Map<Integer, List<Integer>>>  preferredKAndExperiment (String geneId) {
-        Map<String, Object> namedParameters =
-                ImmutableMap.of(
-                        "gene_id", geneId);
-
-        return namedParameterJdbcTemplate.query(
-                SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID,
-                namedParameters,
-                (ResultSet resultSet)->{
-
-                    Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
-
-                    while(resultSet.next()){
-                        String experimentAccession = resultSet.getString("experiment_accession");
-                        Optional<Integer> optional = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
-                        if (optional.isPresent()) {
-                            Integer value = optional.get();
-                            result.put(experimentAccession, fetchPreferredKAndMinPAndClusterIds(geneId, experimentAccession, value));
-                        }
-                    }
-                    return result;
-                }
-        );
-    }
-
     public List<String> preferredK (String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
