@@ -1,11 +1,14 @@
 package uk.ac.ebi.atlas.search;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -75,6 +78,35 @@ class GeneSearchDaoIT {
     void invalidGeneIdReturnsEmpty(String geneId) {
         assertThat(subject.experimentAccessionsForGeneId(geneId))
                 .isEmpty();
+    }
+
+    @ParameterizedTest
+    @Sql("scxa_marker_genes_fixture.sql")
+    @CsvSource({"'ENSG00000000009', 'E-GEOD-106540', 5"})
+    void validExperimentAccessionReturnsClusterIDsWithPreferredKAndMinP(String geneId, String experimentAccession, Integer preferredK){
+        Map<Integer, List<Integer>> result = subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId, experimentAccession, preferredK);
+
+        assertThat(result)
+                .isNotEmpty()
+                .containsAllEntriesOf(
+                        ImmutableMap.of(
+                                5, ImmutableList.of(1),
+                                3, ImmutableList.of(0))
+                );
+    }
+
+    @ParameterizedTest
+    @Sql("scxa_marker_genes_fixture.sql")
+    @CsvSource({"'ENSG00000000009', 'E-GEOD-106540', 3"})
+    void validExperimentAccessionReturnsOnlyOneClusterIDWithBothPreferredKAndMinP(String geneId, String experimentAccession, Integer preferredK){
+        Map<Integer, List<Integer>> result = subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId, experimentAccession, preferredK);
+
+        assertThat(result)
+                .isNotEmpty()
+                .containsAllEntriesOf(
+                        ImmutableMap.of(
+                                3, ImmutableList.of(0))
+                );
     }
 
     @ParameterizedTest
