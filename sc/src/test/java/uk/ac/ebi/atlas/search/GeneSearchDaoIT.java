@@ -15,8 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.WebConfig;
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
-import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
@@ -27,9 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.data.MapEntry.entry;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_ORGANISM_PART;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_SPECIES;
@@ -44,9 +40,6 @@ class GeneSearchDaoIT {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Inject
-    private TsnePlotSettingsService tsnePlotSettingsService;
-
-    @Inject
     private SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory;
 
     @Inject
@@ -56,7 +49,7 @@ class GeneSearchDaoIT {
 
     @BeforeEach
     public void setUp() {
-        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory, tsnePlotSettingsService);
+        subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
     }
 
     @ParameterizedTest
@@ -69,8 +62,8 @@ class GeneSearchDaoIT {
     @ParameterizedTest
     @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
     @ValueSource(strings = {"ENSG00000000009"})
-    void validGeneIdReturnsKAndClusterIds(String geneId) {
-        List<String> result = subject.preferredK(geneId);
+    void validGeneIdReturnsExperimentAccessions(String geneId) {
+        List<String> result = subject.experimentAccessionsForGeneId(geneId);
 
         assertThat(result)
                 .contains("E-GEOD-106540")
@@ -78,17 +71,9 @@ class GeneSearchDaoIT {
     }
 
     @ParameterizedTest
-    @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
-    @ValueSource(strings = {"ENSMUSG00000000006"})
-    void searchForGeneOverProbabilityThresholdReturnsEmpty(String geneId) {
-        assertThat(subject.preferredK(geneId))
-                .isEmpty();
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {"FOO"})
     void invalidGeneIdReturnsEmpty(String geneId) {
-        assertThat(subject.preferredK(geneId))
+        assertThat(subject.experimentAccessionsForGeneId(geneId))
                 .isEmpty();
     }
 

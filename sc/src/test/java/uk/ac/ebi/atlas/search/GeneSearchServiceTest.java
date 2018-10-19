@@ -9,15 +9,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import uk.ac.ebi.atlas.experimentimport.admin.Op;
 import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,13 +37,14 @@ class GeneSearchServiceTest {
     @Mock
     private GeneSearchDao geneSearchDaoMock;
 
-    private TsnePlotSettingsService tsnePlotSettingsService;
+    @Mock
+    private TsnePlotSettingsService tsnePlotSettingsServiceMock;
 
     private GeneSearchService subject;
 
     @BeforeEach
     void setUp() {
-        subject = new GeneSearchService(geneSearchDaoMock, tsnePlotSettingsService);
+        subject = new GeneSearchService(geneSearchDaoMock, tsnePlotSettingsServiceMock);
     }
 
     @Test
@@ -93,7 +97,17 @@ class GeneSearchServiceTest {
                                 10, ImmutableList.of(1, 5, 8),
                                 12, ImmutableList.of(12)));
 
-        when(geneSearchDaoMock.preferredK("ENSG00000104952")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
+
+        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0000")).thenReturn(Optional.of(5));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0001")).thenReturn(Optional.of(10));
+
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSG00000104952","E-MTAB-0000", 5))
+                .thenReturn(ImmutableMap.of(5, ImmutableList.of(1)));
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSG00000104952","E-MTAB-0001", 10))
+                .thenReturn(ImmutableMap.of(10, ImmutableList.of(1)));
+
+        when(geneSearchDaoMock.experimentAccessionsForGeneId("ENSG00000104952")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
+
 
         Map<String, Map<String, Map<Integer, List<Integer>>>> result =
                 subject.getMarkerGeneProfile("ENSG00000104952");
@@ -101,7 +115,15 @@ class GeneSearchServiceTest {
         assertThat(result)
                 .isNotEmpty()
                 .containsOnlyKeys("ENSG00000104952")
-                .containsAllEntriesOf(ImmutableMap.of("ENSG00000104952", ensg00000104957Profiles));
+                .containsAllEntriesOf(ImmutableMap.of("ENSG00000104952",
+                        ImmutableMap.of(
+                            "E-MTAB-0000",
+                            ImmutableMap.of(
+                                    5, ImmutableList.of(1)),
+                            "E-MTAB-0001",
+                            ImmutableMap.of(
+                                    10, ImmutableList.of(1))))
+                );
     }
 
     @Test
@@ -126,13 +148,47 @@ class GeneSearchServiceTest {
                         ImmutableMap.of(
                                 4, ImmutableList.of(1, 2, 3)));
 
+        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0000")).thenReturn(Optional.of(5));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0001")).thenReturn(Optional.of(10));
 
-        when(geneSearchDaoMock.preferredK("ENSFOOBAR1")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
-        when(geneSearchDaoMock.preferredK("ENSFOOBAR2")).thenReturn(ImmutableList.of("E-MTAB-0002", "E-MTAB-0003"));
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR1","E-MTAB-0000", 5))
+                .thenReturn(ImmutableMap.of(5, ImmutableList.of(1)));
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR1","E-MTAB-0001", 10))
+                .thenReturn(ImmutableMap.of(10, ImmutableList.of(1)));
+
+        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0002")).thenReturn(Optional.of(2));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0003")).thenReturn(Optional.of(4));
+
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR2","E-MTAB-0002", 2))
+                .thenReturn(ImmutableMap.of(2, ImmutableList.of(1)));
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR2","E-MTAB-0003", 4))
+                .thenReturn(ImmutableMap.of(4, ImmutableList.of(1)));
+
+
+        when(geneSearchDaoMock.experimentAccessionsForGeneId("ENSFOOBAR1")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
+        when(geneSearchDaoMock.experimentAccessionsForGeneId("ENSFOOBAR2")).thenReturn(ImmutableList.of("E-MTAB-0002", "E-MTAB-0003"));
 
         assertThat(subject.getMarkerGeneProfile("ENSFOOBAR1", "ENSFOOBAR2"))
                 .containsAllEntriesOf(
-                        ImmutableMap.of("ENSFOOBAR1", ensfoobar1Profiles, "ENSFOOBAR2", ensfoobar2Profiles));
+                        ImmutableMap.of(
+                                "ENSFOOBAR1",
+                                ImmutableMap.of(
+                                        "E-MTAB-0000",
+                                        ImmutableMap.of(
+                                                5, ImmutableList.of(1)),
+                                        "E-MTAB-0001",
+                                        ImmutableMap.of(
+                                                10, ImmutableList.of(1))),
+                                "ENSFOOBAR2",
+                                ImmutableMap.of(
+                                        "E-MTAB-0002",
+                                        ImmutableMap.of(
+                                                2, ImmutableList.of(1)),
+                                        "E-MTAB-0003",
+                                        ImmutableMap.of(
+                                                4, ImmutableList.of(1)))
+                        )
+                );
     }
 
     @Test
