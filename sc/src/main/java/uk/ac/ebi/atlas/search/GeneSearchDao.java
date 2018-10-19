@@ -2,14 +2,12 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonObject;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
@@ -29,16 +27,13 @@ public class GeneSearchDao {
     private static final double MARKER_GENE_P_VALUE_THRESHOLD = 0.005;
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final TsnePlotSettingsService tsnePlotSettingsService;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
 
     public GeneSearchDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                         SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory,
-                         TsnePlotSettingsService tsnePlotSettingsService) {
+                         SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.singleCellAnalyticsCollectionProxy =
                 solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
-        this.tsnePlotSettingsService = tsnePlotSettingsService;
     }
 
     private static final String SELECT_CELL_IDS_FOR_GENE_STATEMENT =
@@ -77,7 +72,7 @@ public class GeneSearchDao {
             "WHERE private=FALSE AND gene_id=:gene_id "+
             "GROUP BY experiment_accession";
     @Transactional(readOnly = true)
-    public List<String> preferredK (String geneId) {
+    public List<String> experimentAccessionsForGeneId (String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId);
@@ -113,7 +108,7 @@ public class GeneSearchDao {
                     "OR ((experiment_accession, k) IN ((:experiment_accession, :preferred_K)) " +
                         "AND marker_probability<=:threshold AND gene_id=:gene_id)";
     @Transactional(readOnly = true)
-    public  Map<Integer, List<Integer>> fetchPreferredKAndMinPAndClusterIds(String geneId, String experimentAccession, Integer preferredK) {
+    public  Map<Integer, List<Integer>> fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(String geneId, String experimentAccession, Integer preferredK) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId,

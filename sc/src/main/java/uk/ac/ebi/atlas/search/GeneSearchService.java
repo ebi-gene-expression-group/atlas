@@ -5,8 +5,11 @@ import com.google.common.collect.ImmutableSet;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 
-import java.sql.ResultSet;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Function;
@@ -19,7 +22,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollecti
 @Component
 public class GeneSearchService {
     private GeneSearchDao geneSearchDao;
-    private final TsnePlotSettingsService tsnePlotSettingsService;
+    private TsnePlotSettingsService tsnePlotSettingsService;
 
     public GeneSearchService(GeneSearchDao geneSearchDao, TsnePlotSettingsService tsnePlotSettingsService) {
         this.geneSearchDao = geneSearchDao;
@@ -46,7 +49,7 @@ public class GeneSearchService {
 
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
-                geneId -> fetchPreferredKAndMinP(geneSearchDao.preferredK(geneId), geneId));
+                geneId -> fetchClusterIDWithPreferredKAndMinPForGeneID(geneSearchDao.experimentAccessionsForGeneId(geneId), geneId));
     }
 
     private <T> Map<String, T> fetchInParallel(Set<String> geneIds, Function<String, T> geneIdInfoProvider) {
@@ -70,17 +73,16 @@ public class GeneSearchService {
         }
     }
 
-    private  Map<String, Map<Integer, List<Integer>>> fetchPreferredKAndMinP (List<String> experimentAccessions, String geneId){
+    public  Map<String, Map<Integer, List<Integer>>> fetchClusterIDWithPreferredKAndMinPForGeneID (List<String> experimentAccessions, String geneId){
         Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
         for (String experimentAccession : experimentAccessions) {
-            Optional<Integer> optional = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
-            if (optional.isPresent()) {
-
-                Integer value = optional.get();
-                Map<Integer, List<Integer>> preferredKAndMinP = geneSearchDao.fetchPreferredKAndMinPAndClusterIds(geneId, experimentAccession, value);
-                if(!preferredKAndMinP.isEmpty()){
-                    result.put(experimentAccession, preferredKAndMinP);
+            Optional<Integer> preferredK = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
+            if (preferredK.isPresent()) {
+                Map<Integer, List<Integer>> clusterIDWithPreferredKAndMinP = geneSearchDao.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession
+                        (geneId, experimentAccession, preferredK.get());
+                if(!clusterIDWithPreferredKAndMinP.isEmpty()){
+                    result.put(experimentAccession, clusterIDWithPreferredKAndMinP);
                 }
             }
         }
