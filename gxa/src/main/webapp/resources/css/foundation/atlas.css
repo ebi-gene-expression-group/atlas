@@ -94,8 +94,8 @@ a.clear {
 /** End Foundation **/
 
 .combo:hover, #publication-list .media-object:hover, #tools .media-object:hover  {
-    background-color: aliceblue;
-    border-radius: 6px;
+    background-color: #eaeaea;
+    border-radius: 0;
 }
 
 .combo a {
@@ -104,6 +104,11 @@ a.clear {
 
 .combo h5.species {
     color: unset;
+}
+
+#by-species .combo {
+    margin-bottom: 0;
+    padding-bottom: 25px;
 }
 
 p.experiments {
@@ -146,7 +151,7 @@ a.baseline {
     list-style: none;
     font-size: smaller;
 }
-.experiment-list-latest .list-project-l ul li {padding: 1.5em 0.5em; border-radius:6px;}
+.experiment-list-latest .list-project-l ul li {padding: 1.5em 0.5em; border-radius:0;}
 .experiment-list-latest .list-project-l ul li span {
     margin-right: 0.5em;
     margin-bottom: 0;

@@ -31,6 +31,12 @@ hr {
     border-bottom: 1px solid lightgrey;
 }
 
+/* Most popular species box */
+.combo:hover {
+    background-color: #eaeaea;
+    border-radius: 0;
+}
+
 /* Override EBI VF styles for components that use React-Select */
 #search-results-list input, #experiment-page input, #search-form input {
     height: unset;
