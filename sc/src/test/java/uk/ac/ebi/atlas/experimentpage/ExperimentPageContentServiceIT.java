@@ -169,7 +169,6 @@ class ExperimentPageContentServiceIT {
         // Not all experiments have metadata, see E-GEOD-99058
         if (result.has("metadata")) {
             assertThat(result.get("metadata").getAsJsonArray())
-                    .isNotEmpty()
                     .doesNotHaveDuplicates();
         }
 
