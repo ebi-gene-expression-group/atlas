@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.Collection;
@@ -21,9 +22,9 @@ import static org.junit.Assert.assertThat;
 import static uk.ac.ebi.atlas.testutils.MockExperiment.createDifferentialExperiment;
 
 public class ProfileStreamFilterTest {
-    private static final AssayGroup G1 = new AssayGroup("g1", "assay_1");
-    private static final AssayGroup G2 = new AssayGroup("g2", "assay_2");
-    private static final AssayGroup G3 = new AssayGroup("g3", "assay_3");
+    private static final AssayGroup G1 = AssayGroupFactory.create("g1", "assay_1");
+    private static final AssayGroup G2 = AssayGroupFactory.create("g2", "assay_2");
+    private static final AssayGroup G3 = AssayGroupFactory.create("g3", "assay_3");
 
     private static final Contrast G1_G2 = new Contrast("g1_g2", null, G1, G2, "contrast 1");
     private static final Contrast G1_G3 = new Contrast("g1_g3", null, G1, G3, "contrast 2");

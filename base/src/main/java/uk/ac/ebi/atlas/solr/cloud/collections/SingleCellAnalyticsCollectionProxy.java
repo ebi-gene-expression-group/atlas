@@ -93,6 +93,6 @@ public class SingleCellAnalyticsCollectionProxy extends CollectionProxy {
     }
 
     public QueryResponse query(SolrQueryBuilder<SingleCellAnalyticsCollectionProxy> solrQueryBuilder) {
-        return query(solrQueryBuilder.build());
+        return rawQuery(solrQueryBuilder.build());
     }
 }

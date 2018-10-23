@@ -18,21 +18,21 @@ import java.util.Collections;
 import java.util.function.Predicate;
 
 public abstract class ProfileStreamFactory<D extends DescribesDataColumns,
-                                           E extends Expression,
-                                           T extends Experiment<D>,
+                                           X extends Expression,
+                                           E extends Experiment<D>,
                                            O extends ProfileStreamOptions<D>,
-                                           P extends Profile<D, E, P>>
+                                           P extends Profile<D, X, P>>
 
-implements CreatesProfileStream<D, E, T, O, P> {
+implements CreatesProfileStream<D, X, E, O, P> {
 
-    private ObjectInputStream<P> getProfiles(T experiment,
+    private ObjectInputStream<P> getProfiles(E experiment,
                                              O streamOptions,
                                              Collection<String> keepGeneIds,
                                              Predicate<P> keepProfiles) {
         return ObjectInputStreams.filter(create(experiment, streamOptions, keepGeneIds), keepProfiles);
     }
 
-    public <L extends GeneProfilesList<P>> L select(T experiment,
+    public <L extends GeneProfilesList<P>> L select(E experiment,
                                                     O streamOptions,
                                                     Collection<String> keepGeneIds,
                                                     Predicate<P> keepProfiles,
@@ -41,7 +41,7 @@ implements CreatesProfileStream<D, E, T, O, P> {
                 streamOptions.getHeatmapMatrixSize());
     }
 
-    public GeneProfilesList<P> getAllMatchingProfiles(T experiment,
+    public GeneProfilesList<P> getAllMatchingProfiles(E experiment,
                                                       O streamOptions,
                                                       Collection<String> keepGeneIds) {
         return new GeneProfilesList<>(ImmutableList.copyOf(
@@ -51,7 +51,7 @@ implements CreatesProfileStream<D, E, T, O, P> {
                                                             profile -> true))));
     }
 
-    public long write(T experiment,
+    public long write(E experiment,
                       O streamOptions,
                       Collection<String> keepGeneIds,
                       Predicate<P> keepProfiles,
@@ -59,7 +59,7 @@ implements CreatesProfileStream<D, E, T, O, P> {
         return profilesWriter.write(getProfiles(experiment, streamOptions, keepGeneIds, keepProfiles));
     }
 
-    public int[] histogram(T experiment, O streamOptions, double[] cutoffBins) {
+    public int[] histogram(E experiment, O streamOptions, double[] cutoffBins) {
         int[] result = new int[cutoffBins.length];
 
         for (P prof : new IterableObjectInputStream<>(

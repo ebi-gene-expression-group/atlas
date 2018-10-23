@@ -62,6 +62,6 @@ public class BioentitiesCollectionProxy extends CollectionProxy {
     }
 
     public QueryResponse query(SolrQueryBuilder<BioentitiesCollectionProxy> solrQueryBuilder) {
-        return query(solrQueryBuilder.build());
+        return rawQuery(solrQueryBuilder.build());
     }
 }

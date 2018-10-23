@@ -1,14 +1,19 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
@@ -18,25 +23,31 @@ import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.solr.bioentities.query.SolrQueryService;
-import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
-import java.util.Collection;
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
-public class RnaSeqProfilesHeatMapIT {
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class RnaSeqProfilesHeatMapIT {
     @Inject
-    private ExpressionAtlasExperimentTrader experimentTrader;
+    private DataSource dataSource;
+
+    @Inject
+    private JdbcUtils jdbcUtils;
 
     @Inject
     private RnaSeqDiffExperimentsCache experimentsCache;
@@ -53,8 +64,22 @@ public class RnaSeqProfilesHeatMapIT {
     DifferentialProfilesHeatMap<DifferentialExpression, DifferentialExperiment, RnaSeqProfile, RnaSeqRequestContext>
             subject;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
+
+    @BeforeEach
+    void setUp() {
         requestPreferences = new DifferentialRequestPreferences();
         subject = new DifferentialProfilesHeatMap<>(rnaSeqProfileStreamFactory, solrQueryService);
     }
@@ -72,18 +97,9 @@ public class RnaSeqProfilesHeatMapIT {
         return new RnaSeqRequestContext(requestPreferences, experiment);
     }
 
-    @Test
-    public void testSomeExperiments() {
-        Collection<String> accessions =
-                Lists.newArrayList(experimentTrader.getRnaSeqDifferentialExperimentAccessions()).subList(0, 10);
-
-        for (String accession: accessions) {
-            setUp();
-            testExperiment(accession);
-        }
-    }
-
-    private void testExperiment(String accession) {
+    @ParameterizedTest
+    @MethodSource("rnaSeqDifferentialExperimentAccessionProvider")
+    void testExperiment(String accession) {
         testDefaultParameters(accession);
         testNotSpecific(accession);
         testUpAndDownRegulated(accession);
@@ -162,5 +178,9 @@ public class RnaSeqProfilesHeatMapIT {
             builder.add(profile.getName());
         }
         return builder.build();
+    }
+
+    private Stream<String> rnaSeqDifferentialExperimentAccessionProvider() {
+        return Stream.of(jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(RNASEQ_MRNA_DIFFERENTIAL));
     }
 }

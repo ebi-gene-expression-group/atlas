@@ -1,14 +1,19 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
@@ -23,6 +28,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import java.util.Collections;
 import java.util.Date;
@@ -37,14 +43,18 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = TestConfig.class)
 @WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebConfig.class)
-public class ProteomicsBaselineExperimentsCacheLoaderIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class ProteomicsBaselineExperimentsCacheLoaderIT {
     private static final String E_PROT_1 = "E-PROT-1";
     private static final String DEVELOPMENTAL_STAGE = "developmental stage";
     private static final String ORGANISM_PART = "organism part";
     private static final String ORGANISM = "organism";
+
+    @Inject
+    private DataSource dataSource;
 
     @Inject
     private ProteomicsBaselineExperimentFactory proteomicsBaselineExperimentFactory;
@@ -60,8 +70,22 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
 
     private ExperimentsCacheLoader<BaselineExperiment> subject;
 
-    @Before
-    public void mockOutDatabaseAndArrayExpress() {
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
+
+    @BeforeEach
+    void mockOutDatabaseAndArrayExpress() {
         MockitoAnnotations.initMocks(this);
 
         ExperimentDTO experimentDTO = new ExperimentDTO(
@@ -82,7 +106,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void correctSpeciesReadFromDatabase() {
+    void correctSpeciesReadFromDatabase() {
         //given
         BaselineExperiment experiment = subject.load(E_PROT_1);
         //then
@@ -92,7 +116,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() {
+    void experimentShouldOnlyContainRunsFromDataFile() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         assertThat(experiment.getAnalysedAssays(), containsInAnyOrder(
@@ -109,7 +133,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() {
+    void experimentShouldContainAssayGroups() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         Set<String> allAssayGroupIds = new HashSet<>();
@@ -123,7 +147,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentalFactors() {
+    void experimentalFactors() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         FactorGroup adultAdrenal =
@@ -138,7 +162,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentDesign() {
+    void experimentDesign() {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
@@ -161,7 +185,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         assertThat(sampleCharacteristic.value(), is("ovary"));
         assertThat(
                 sampleCharacteristic.valueOntologyTerms().iterator().next().uri(),
-                is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+                is("http://purl.obolibrary.org/obo/UBERON_0000992"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(DEVELOPMENTAL_STAGE));

@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,10 +26,10 @@ public class BaselineProfileTest {
     private static final String GENE_ID = "geneId_1";
     private static final String GENE_NAME = "geneName_1";
 
-    private AssayGroup g1 = new AssayGroup("g1", "run11", "run12", "run13");
-    private AssayGroup g2 = new AssayGroup("g2", "run21");
-    private AssayGroup g3 = new AssayGroup("g3", "run31", "run32");
-    private AssayGroup g4 = new AssayGroup("g4", "g41");
+    private AssayGroup g1 = AssayGroupFactory.create("g1", "run11", "run12", "run13");
+    private AssayGroup g2 = AssayGroupFactory.create("g2", "run21");
+    private AssayGroup g3 = AssayGroupFactory.create("g3", "run31", "run32");
+    private AssayGroup g4 = AssayGroupFactory.create("g4", "g41");
 
     private BaselineExpression expression1 = new BaselineExpression(2.2);
     private BaselineExpression expression2 = new BaselineExpression(3D);

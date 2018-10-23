@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrudFactory;
 import uk.ac.ebi.atlas.experimentimport.ExpressionAtlasExperimentChecker;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
-import uk.ac.ebi.atlas.experimentimport.analytics.GxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
@@ -24,7 +23,6 @@ public class ExpressionAtlasExperimentAdminController extends ExperimentAdminCon
                                                     ExperimentCrudFactory experimentCrudFactory,
                                                     GxaExperimentDao experimentDao,
                                                     ExpressionAtlasExperimentChecker experimentChecker,
-                                                    GxaAnalyticsLoaderFactory analyticsLoaderFactory,
                                                     BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                                     AnalyticsIndexerManager analyticsIndexerManager,
                                                     ExperimentTrader experimentTrader,
@@ -33,7 +31,7 @@ public class ExpressionAtlasExperimentAdminController extends ExperimentAdminCon
                 new ExperimentOps(
                         new ExperimentOpLogWriter(dataFileHub),
                         new ExpressionAtlasExperimentOpsExecutionService(
-                                experimentCrudFactory.create(experimentDao, experimentChecker, analyticsLoaderFactory),
+                                experimentCrudFactory.create(experimentDao, experimentChecker),
                                 baselineCoexpressionProfileLoader,
                                 analyticsIndexerManager,
                                 experimentTrader,

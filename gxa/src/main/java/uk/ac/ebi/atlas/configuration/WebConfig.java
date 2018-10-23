@@ -23,7 +23,6 @@ import uk.ac.ebi.atlas.web.interceptors.TimingInterceptor;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@ComponentScan(basePackages = "uk.ac.ebi.atlas")
 @EnableWebMvc
 @ControllerAdvice
 public class WebConfig extends WebMvcConfigurerAdapter {

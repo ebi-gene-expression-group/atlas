@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ public class BaselineExperimentTest {
     private static final String RUN_ACCESSION2 = "run2";
 
     private static final List<AssayGroup> ASSAY_GROUPS = ImmutableList.of(
-            new AssayGroup("g1", RUN_ACCESSION1),
-            new AssayGroup("g2", RUN_ACCESSION2));
+            AssayGroupFactory.create("g1", RUN_ACCESSION1),
+            AssayGroupFactory.create("g2", RUN_ACCESSION2));
 
     @Test
     public void testGetExperimentRunAccessions() {
@@ -33,7 +34,7 @@ public class BaselineExperimentTest {
         int num = (int) Math.round(Math.random() * 10000);
         List<AssayGroup> assayGroups = new ArrayList<>(num);
         for (int i = 0; i < num; i++) {
-            assayGroups.add(new AssayGroup("id_" + i, "assay_" + i));
+            assayGroups.add(AssayGroupFactory.create("id_" + i, "assay_" + i));
         }
 
         assertThat(MockExperiment.createBaselineExperiment(assayGroups).getDataColumnDescriptors())

@@ -1,22 +1,27 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.sun.management.UnixOperatingSystemMXBean;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.io.UncheckedIOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
@@ -28,9 +33,12 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TsnePlotSettingsServiceIT {
+class TsnePlotSettingsServiceIT {
+    @Inject
+    private DataSource dataSource;
+
     @Inject
     private JdbcUtils jdbcTestUtils;
 
@@ -45,11 +53,32 @@ public class TsnePlotSettingsServiceIT {
 
     private TsnePlotSettingsService subject;
 
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_tsne-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_cell_clusters-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_tsne-delete.sql"),
+                new ClassPathResource("fixtures/scxa_cell_clusters-delete.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-delete.sql"));
+        populator.execute(dataSource);
+    }
+
     @BeforeEach
     void setUp() {
         this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotServiceDao);
     }
-
 
     @Test
     void getClustersForValidAccession() {

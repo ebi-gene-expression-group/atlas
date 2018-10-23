@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
@@ -31,8 +32,8 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
     @Mock
     private BaselineExperiment baselineExperiment;
 
-    private AssayGroup assayGroup = new AssayGroup("g1", "r1");
-    private AssayGroup secondAssayGroup = new AssayGroup("g2", "r2");
+    private AssayGroup assayGroup = AssayGroupFactory.create("g1", "r1");
+    private AssayGroup secondAssayGroup = AssayGroupFactory.create("g2", "r2");
 
     private MockDataFileHub dataFileHub;
 

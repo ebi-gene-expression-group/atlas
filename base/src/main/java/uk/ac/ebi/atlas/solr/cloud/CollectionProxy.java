@@ -30,7 +30,7 @@ public abstract class CollectionProxy {
         this.nameOrAlias = nameOrAlias;
     }
 
-    protected QueryResponse query(SolrQuery solrQuery) {
+    public QueryResponse rawQuery(SolrQuery solrQuery) {
         try {
             // Change maybe to: return new QueryRequest()
             return solrClient.query(nameOrAlias, solrQuery, SolrRequest.METHOD.POST);

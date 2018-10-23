@@ -9,7 +9,10 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import static org.hamcrest.Matchers.is;
@@ -23,12 +26,14 @@ public class EvidenceServiceTest {
     private MockDataFileHub mockDataFileHub;
 
     @Mock
-    private DifferentialProfileStreamFactory differentialProfileStreamFactory;
+    private DifferentialProfileStreamFactory
+            <DifferentialExpression, DifferentialExperiment, DifferentialProfileStreamOptions, RnaSeqProfile>
+            differentialProfileStreamFactory;
 
-    private AssayGroup referenceAssay1 = new AssayGroup("g1", "assay1");
-    private AssayGroup testAssay1 = new AssayGroup("g2", "assay2");
-    private AssayGroup referenceAssay2 = new AssayGroup("g3", "assay3");
-    private AssayGroup testAssay2 = new AssayGroup("g4", "assay41", "assay42");
+    private AssayGroup referenceAssay1 = AssayGroupFactory.create("g1", "assay1");
+    private AssayGroup testAssay1 = AssayGroupFactory.create("g2", "assay2");
+    private AssayGroup referenceAssay2 = AssayGroupFactory.create("g3", "assay3");
+    private AssayGroup testAssay2 = AssayGroupFactory.create("g4", "assay41", "assay42");
 
     private Contrast c1 = new Contrast("g1_g2", null, referenceAssay1, testAssay1, "first contrast");
     private Contrast c2 = new Contrast("g3_g4", null, referenceAssay2, testAssay2, "second contrast");

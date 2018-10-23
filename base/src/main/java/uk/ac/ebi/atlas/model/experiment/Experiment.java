@@ -27,8 +27,7 @@ import java.util.stream.Collectors;
  * The displayName is a bit confusing - it's used for baseline landing page and I think only there.
  * There's also a title which is fetched from ArrayExpress or (as fallback) from the IDF file.
 */
-public abstract class Experiment<DataColumnDescriptor extends DescribesDataColumns> implements Serializable {
-
+public abstract class Experiment<D extends DescribesDataColumns> implements Serializable {
     private ExperimentType type;
     protected ExperimentDesign experimentDesign;
     private Species species;
@@ -43,14 +42,14 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     private List<String> dataProviderDescription;
     private List<String> alternativeViews;
     private List<String> alternativeViewDescriptions;
-    private final ImmutableMap<String, DataColumnDescriptor> dataColumnDescriptorsPerId;
+    private final ImmutableMap<String, D> dataColumnDescriptorsPerId;
     private final ExperimentDisplayDefaults experimentDisplayDefaults;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
                       String disclaimer, Species species, Collection<String> pubMedIds, Collection<String> dois,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
-                      List<String> alternativeViewDescriptions, List<DataColumnDescriptor> dataColumnDescriptors,
+                      List<String> alternativeViewDescriptions, List<D> dataColumnDescriptors,
                       ExperimentDisplayDefaults experimentDisplayDefaults) {
 
         this.type = type;
@@ -67,8 +66,8 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         this.dataProviderDescription = dataProviderDescription;
         this.alternativeViews = alternativeViews;
         this.alternativeViewDescriptions = alternativeViewDescriptions;
-        ImmutableMap.Builder<String, DataColumnDescriptor> builder = ImmutableMap.builder();
-        for (DataColumnDescriptor dataColumnDescriptor: dataColumnDescriptors) {
+        ImmutableMap.Builder<String, D> builder = ImmutableMap.builder();
+        for (D dataColumnDescriptor: dataColumnDescriptors) {
             builder.put(dataColumnDescriptor.getId(), dataColumnDescriptor);
         }
         this.dataColumnDescriptorsPerId = builder.build();
@@ -76,11 +75,11 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
 
     }
 
-    public List<DataColumnDescriptor> getDataColumnDescriptors() {
-        return ImmutableList.<DataColumnDescriptor>builder().addAll(dataColumnDescriptorsPerId.values()).build();
+    public List<D> getDataColumnDescriptors() {
+        return ImmutableList.<D>builder().addAll(dataColumnDescriptorsPerId.values()).build();
     }
 
-    public DataColumnDescriptor getDataColumnDescriptor(String id) {
+    public D getDataColumnDescriptor(String id) {
         return dataColumnDescriptorsPerId.get(id);
     }
 
@@ -214,5 +213,4 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     protected abstract JsonObject propertiesForAssay(String runOrAssay);
 
     public abstract JsonArray groupingsForHeatmap();
-
 }

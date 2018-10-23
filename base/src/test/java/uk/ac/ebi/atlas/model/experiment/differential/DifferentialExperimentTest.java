@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTest;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -25,10 +26,10 @@ public class DifferentialExperimentTest {
     private static final String PUBMEDID = "PUBMEDID";
     private static final String DOI = "100.100/doi";
 
-    private AssayGroup referenceAssay1 = new AssayGroup("g1", "assay1");
-    private AssayGroup testAssay1 = new AssayGroup("g2", "assay2");
-    private AssayGroup referenceAssay2 = new AssayGroup("g3", "assay3");
-    private AssayGroup testAssay2 = new AssayGroup("g4", "assay41", "assay42");
+    private AssayGroup referenceAssay1 = AssayGroupFactory.create("g1", "assay1");
+    private AssayGroup testAssay1 = AssayGroupFactory.create("g2", "assay2");
+    private AssayGroup referenceAssay2 = AssayGroupFactory.create("g3", "assay3");
+    private AssayGroup testAssay2 = AssayGroupFactory.create("g4", "assay41", "assay42");
 
     private Contrast c1 = new Contrast("g1_g2", null, referenceAssay1, testAssay1, "first contrast");
     private Contrast c2 = new Contrast("g3_g4", null, referenceAssay2, testAssay2, "second contrast");

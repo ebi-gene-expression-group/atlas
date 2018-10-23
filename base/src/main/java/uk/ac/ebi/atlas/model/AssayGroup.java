@@ -11,13 +11,7 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class AssayGroup extends DescribesDataColumns {
-
     private final Set<BiologicalReplicate> biologicalReplicates;
-
-    //convenience constructor for tests
-    public AssayGroup(String id, String... assayAccessions) {
-        this(id, Arrays.stream(assayAccessions).map(BiologicalReplicate::new).collect(Collectors.toSet()));
-    }
 
     public AssayGroup(String id, Set<BiologicalReplicate> biologicalReplicates) {
         super(id);

@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 
 import static org.mockito.Mockito.when;
 
@@ -23,7 +24,7 @@ public class ExperimentFilesCrossValidatorTest {
     @Mock
     private ExperimentDesign experimentDesign;
 
-    private static final AssayGroup ASSAY_GROUP = new AssayGroup("g1", "r1", "r2");
+    private static final AssayGroup ASSAY_GROUP = AssayGroupFactory.create("g1", "r1", "r2");
 
     @Before
     public void setUp() {

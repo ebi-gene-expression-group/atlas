@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.collect.ImmutableSet;
