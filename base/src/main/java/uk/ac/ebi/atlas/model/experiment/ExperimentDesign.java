@@ -2,9 +2,8 @@ package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -12,9 +11,11 @@ import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,20 +40,25 @@ import static java.util.stream.StreamSupport.stream;
  *
  */
 public class ExperimentDesign implements Serializable {
-    private SortedSet<String> sampleHeaders = Sets.newTreeSet();
-    private SortedSet<String> factorHeaders = Sets.newTreeSet();
+
+    // Headers retrieved from the condensed sdrf file
+    private Set<String> sampleHeaders = new LinkedHashSet<>();
+    private Set<String> factorHeaders = new LinkedHashSet<>();
+
+    // Headers retrieved from the sdrf file, which maintain a curated order
+    private Set<String> orderedSampleHeaders;
+    private Set<String> orderedFactorHeaders;
 
     // assay, SampleCharacteristics
-    private Map<String, SampleCharacteristics> samples = Maps.newHashMap();
+    private Map<String, SampleCharacteristics> samples = new HashMap<>();
 
     // header, value
     private class SampleCharacteristics extends HashMap<String, SampleCharacteristic> { }
 
     // assay, factors
-    private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
-    private Map<String, String> arrayDesigns = Maps.newHashMap();
-    private List<String> assayHeaders = Lists.newArrayList();
-
+    private Map<String, FactorSet> factorSetMap = new HashMap<>();
+    private Map<String, String> arrayDesigns = new HashMap<>();
+    private List<String> assayHeaders = new ArrayList<>();
 
     public void putSampleCharacteristic(String runOrAssay,
                                         String sampleCharacteristicHeader,
@@ -100,17 +106,34 @@ public class ExperimentDesign implements Serializable {
         assayHeaders.add(assayHeader);
     }
 
+    public void setOrderedSampleHeaders(Set<String> orderedSampleHeaders) {
+        this.orderedSampleHeaders = orderedSampleHeaders;
+    }
+
+    public void setOrderedFactorHeaders(Set<String> orderedFactorHeaders) {
+        this.orderedFactorHeaders = orderedFactorHeaders;
+    }
+
     public List<String> getAssayHeaders() {
         return assayHeaders;
     }
 
-    public SortedSet<String> getSampleHeaders() {
-        return Collections.unmodifiableSortedSet(sampleHeaders);
+    public Set<String> getSampleHeaders() {
+        if (!CollectionUtils.isEmpty(orderedSampleHeaders)) {
+            return Collections.unmodifiableSet(orderedSampleHeaders);
+        } else {
+            return Collections.unmodifiableSet(sampleHeaders);
+        }
     }
 
-    // NB: factor headers are not normalized (see Factor.normalize), unlike factor type!
-    public SortedSet<String> getFactorHeaders() {
-        return Collections.unmodifiableSortedSet(factorHeaders);
+
+    //NB: factor headers are not normalized (see Factor.normalize), unlike factor type !
+    public Set<String> getFactorHeaders() {
+        if (!CollectionUtils.isEmpty(orderedFactorHeaders)) {
+            return Collections.unmodifiableSet(orderedFactorHeaders);
+        } else {
+            return Collections.unmodifiableSet(factorHeaders);
+        }
     }
 
     public @Nullable String getSampleCharacteristicValue(String runOrAssay, String sampleHeader) {

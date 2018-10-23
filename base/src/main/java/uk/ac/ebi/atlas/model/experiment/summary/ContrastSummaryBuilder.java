@@ -7,8 +7,10 @@ import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -65,7 +67,7 @@ public class ContrastSummaryBuilder {
         }
 
         // array design row should be sorted within samples category
-        SortedSet<String> sampleHeaders = Sets.newTreeSet(experimentDesign.getSampleHeaders());
+        List<String> sampleHeaders = new ArrayList<>(experimentDesign.getSampleHeaders());
         sampleHeaders.add(ARRAY_DESIGN);
         for (String sampleHeader : sampleHeaders) {
             ContrastProperty property =

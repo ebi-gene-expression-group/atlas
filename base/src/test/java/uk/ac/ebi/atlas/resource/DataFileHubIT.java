@@ -116,6 +116,14 @@ class DataFileHubIT {
         assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs.values());
     }
 
+    @Test
+    void findsMarkerGeneFiles() {
+        String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
+        DataFileHub subject = dataFileHubFactory.getScxaDataFileHub();
+        LOGGER.info("Test marker gene files for experiment {}", experimentAccession);
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).markerGeneTsvs.values());
+    }
+
     private void assertAtlasResourceExists(AtlasResource<?> resource) {
         assertThat(resource.exists()).isTrue();
     }

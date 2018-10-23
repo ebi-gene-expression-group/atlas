@@ -15,14 +15,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import java.io.UncheckedIOException;
+import java.nio.file.NoSuchFileException;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -65,7 +69,7 @@ class CellMetadataServiceIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new CellMetadataService(idfParser, cellMetadataDao);
+        this.subject = new CellMetadataService(cellMetadataDao);
     }
 
     @Test
@@ -111,7 +115,9 @@ class CellMetadataServiceIT {
 
     @Test
     void metadataForInvalidExperiment() {
-        assertThat(subject.getMetadata("FOO", "FOO")).isEmpty();
+        assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(
+                () -> subject.getMetadata("FOO", "FOO"))
+                .withCauseInstanceOf(NoSuchFileException.class);;
     }
 
     @Test
@@ -141,6 +147,9 @@ class CellMetadataServiceIT {
                         experimentAccession,
                         jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
                 .isEmpty();
+        assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(
+                () -> subject.getMetadata("FOO", "FOO"))
+                .withCauseInstanceOf(NoSuchFileException.class);;
     }
 
     private Iterable<String> experimentsWithMetadataProvider() {

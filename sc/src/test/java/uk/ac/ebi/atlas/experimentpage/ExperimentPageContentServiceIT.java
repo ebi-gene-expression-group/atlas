@@ -166,6 +166,13 @@ class ExperimentPageContentServiceIT {
         assertThat(result.has("perplexities")).isTrue();
         assertThat(result.get("perplexities").getAsJsonArray()).isNotEmpty();
 
+        // Not all experiments have metadata, see E-GEOD-99058
+        if (result.has("metadata")) {
+            assertThat(result.get("metadata").getAsJsonArray())
+                    .isNotEmpty()
+                    .doesNotHaveDuplicates();
+        }
+
         assertThat(result.has("units")).isTrue();
         assertThat(result.get("units").getAsJsonArray()).isNotEmpty();
     }

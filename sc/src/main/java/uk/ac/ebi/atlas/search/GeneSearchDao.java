@@ -28,7 +28,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollecti
 @Component
 public class GeneSearchDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchDao.class);
-    private static final double MARKER_GENE_P_VALUE_THRESHOLD = 0.05;
+    private static final double MARKER_GENE_P_VALUE_THRESHOLD = 0.005;
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;

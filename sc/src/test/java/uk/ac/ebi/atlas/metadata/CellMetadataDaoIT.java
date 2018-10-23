@@ -16,6 +16,11 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.util.StringUtils;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
+import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
@@ -23,10 +28,12 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +53,12 @@ class CellMetadataDaoIT {
 
     @Inject
     private JdbcUtils jdbcUtils;
+    @Inject
+    private IdfParser idfParser;
+    @Inject
+    private DataFileHub dataFileHub;
+
+    private static final String IDF_ADDITIONAL_ATTRIBUTES_ID = "Comment[EAAdditionalAttributes]".toUpperCase();
 
     private CellMetadataDao subject;
 
@@ -69,7 +82,7 @@ class CellMetadataDaoIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new CellMetadataDao(solrCloudCollectionProxyFactory);
+        this.subject = new CellMetadataDao(solrCloudCollectionProxyFactory, idfParser);
     }
 
     @ParameterizedTest
@@ -166,6 +179,18 @@ class CellMetadataDaoIT {
                 .isEmpty();
     }
 
+    @ParameterizedTest
+    @MethodSource("experimentsWithAdditionalAttributesProvider")
+    void validExperimentIdHasAdditionalAttributes(String experimentAccession) {
+        assertThat(subject.getAdditionalAttributesFieldNames(experimentAccession)).isNotEmpty();
+    }
+
+    @ParameterizedTest
+    @MethodSource("experimentsWithoutAdditionalAttributesProvider")
+    void invalidExperimentAccessionHasNoAdditionalAttributes(String experimentAccession) {
+        assertThat(subject.getAdditionalAttributesFieldNames(experimentAccession)).isEmpty();
+    }
+
     private Stream<String> experimentsWithMetadataProvider() {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
@@ -178,6 +203,35 @@ class CellMetadataDaoIT {
         return jdbcUtils.getPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession ->
-                        !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"));
+                        !accession.equalsIgnoreCase("E-GEOD-99058")
+                                && !accession.equalsIgnoreCase("E-ENAD-13"));
+    }
+
+    private Stream<String> experimentsWithAdditionalAttributesProvider() {
+        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+                .stream()
+                .filter(accession -> hasAdditionalAttributesInIdf(accession));
+    }
+
+    private Stream<String> experimentsWithoutAdditionalAttributesProvider() {
+        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+                .stream()
+                .filter(accession -> !hasAdditionalAttributesInIdf(accession));
+    }
+
+    private boolean hasAdditionalAttributesInIdf(String experimentAccession) {
+        try (TsvStreamer idfStreamer = dataFileHub.getExperimentFiles(experimentAccession).idf.get()) {
+            Optional<List<String>> additionalAttributesLine = idfStreamer
+                    .get()
+                    .filter(line -> StringUtils.trimAllWhitespace(line[0]).equalsIgnoreCase(IDF_ADDITIONAL_ATTRIBUTES_ID))
+                    .map(line -> Arrays.stream(line)
+                            .skip(1)
+                            .filter(item -> !item.isEmpty())
+                            .collect(Collectors.toList()))
+                    .filter(x -> !x.isEmpty())
+                    .findFirst();
+
+            return additionalAttributesLine.isPresent();
+        }
     }
 }

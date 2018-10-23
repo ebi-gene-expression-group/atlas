@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
@@ -46,9 +47,11 @@ public class ExperimentPageContentService {
         result.add("perplexities", perplexityArray);
 
         JsonArray metadataArray = new JsonArray();
-        cellMetadataDao.getMetadataFieldNames(experimentAccession)
-                .stream()
+        Stream.concat(
+                cellMetadataDao.getMetadataFieldNames(experimentAccession).stream(),
+                cellMetadataDao.getAdditionalAttributesFieldNames(experimentAccession).stream())
                 .map(x -> ImmutableMap.of("value", x.name(), "label", x.displayName()))
+                .collect(Collectors.toSet())
                 .forEach(x -> metadataArray.add(GSON.toJsonTree(x)));
 
         result.add("metadata", metadataArray);
@@ -83,9 +86,15 @@ public class ExperimentPageContentService {
         JsonArray result = new JsonArray();
 
         List<ExperimentFileType> metadataFiles =
-                Arrays.asList(ExperimentFileType.SDRF, ExperimentFileType.IDF, ExperimentFileType.EXPERIMENT_DESIGN);
+                Arrays.asList(
+                        ExperimentFileType.SDRF,
+                        ExperimentFileType.IDF,
+                        ExperimentFileType.EXPERIMENT_DESIGN);
         List<ExperimentFileType> resultFiles =
-                Arrays.asList(ExperimentFileType.CLUSTERING, ExperimentFileType.QUANTIFICATION_FILTERED);
+                Arrays.asList(
+                        ExperimentFileType.CLUSTERING,
+                        ExperimentFileType.QUANTIFICATION_FILTERED,
+                        ExperimentFileType.MARKER_GENES);
 
         result.add(getDownloadSection("Metadata files", metadataFiles, experimentAccession, accessKey));
         result.add(getDownloadSection("Result files", resultFiles, experimentAccession, accessKey));

@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
@@ -19,6 +21,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -26,14 +29,19 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollecti
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.EXPERIMENT_ACCESSION;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.FACTORS;
+import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.attributeNameToFieldName;
+import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.characteristicAsSchemaField;
 
 @Component
 public class CellMetadataDao {
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
+    private IdfParser idfParser;
 
-    public CellMetadataDao(SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory) {
+    public CellMetadataDao(SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory,
+                           IdfParser idfParser) {
         this.singleCellAnalyticsCollectionProxy =
                 solrCloudCollectionProxyFactory.create(SingleCellAnalyticsCollectionProxy.class);
+        this.idfParser = idfParser;
     }
 
     // Retrieves a list of metadata fields available in Solr for a particular experiment. This includes all factor
@@ -59,6 +67,20 @@ public class CellMetadataDao {
         return metadataFields;
     }
 
+    // Retrieves a list of additional attributes (i.e. characteristics of interest) from the experiment idf file
+    public List<SingleCellAnalyticsSchemaField> getAdditionalAttributesFieldNames(String experimentAccession) {
+        IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
+
+        if (idfParserOutput.getMetadataFieldsOfInterest().isEmpty()) {
+            return emptyList();
+        }
+
+        return idfParserOutput.getMetadataFieldsOfInterest()
+                .stream()
+                .map(attribute -> characteristicAsSchemaField(attributeNameToFieldName(attribute)))
+                .collect(toList());
+    }
+
     // Retrieves all the available factors stored in the Solr scxa-analytics collection for a particular cell
     public List<SingleCellAnalyticsSchemaField> getFactorFieldNames(String experimentAccession, String cellId) {
 
@@ -73,8 +95,7 @@ public class CellMetadataDao {
     }
 
     // Returns Solr query results for a list of multi-value fields of interest
-    public ImmutableMap<String, Collection<Object>>
-    getQueryResultForMultiValueFields(String experimentAccession,
+    public ImmutableMap<String, Collection<Object>> getQueryResultForMultiValueFields(String experimentAccession,
                                       Optional<String> cellId,
                                       Collection<SingleCellAnalyticsSchemaField> fieldsOfInterest) {
         if (fieldsOfInterest.isEmpty()) {

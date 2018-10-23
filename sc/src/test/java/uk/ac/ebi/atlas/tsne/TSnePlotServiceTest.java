@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.tsne;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.math.util.MathUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -139,7 +140,11 @@ class TSnePlotServiceTest {
         assertThat(results)
                 .containsExactlyInAnyOrder(
                         randomPointDtos.stream()
-                                .map(dto -> TSnePoint.create(dto.x(), dto.y(), dto.expressionLevel(), dto.name()))
+                                .map(dto -> TSnePoint.create(
+                                        MathUtils.round(dto.x(), 2),
+                                        MathUtils.round(dto.y(), 2),
+                                        dto.expressionLevel(),
+                                        dto.name()))
                                 .toArray(TSnePoint[]::new));
     }
 }

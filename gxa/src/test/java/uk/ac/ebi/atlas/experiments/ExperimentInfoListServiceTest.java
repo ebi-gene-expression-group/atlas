@@ -28,9 +28,11 @@ import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -130,7 +132,7 @@ public class ExperimentInfoListServiceTest {
         }).when(experimentTraderMock).getPublicExperiments(any());
 
         //call real method on big method, small one takes from this map
-        when(experimentDesignMock.getFactorHeaders()).thenReturn(Sets.newTreeSet(Sets.newHashSet(FACTOR_NAME)));
+        when(experimentDesignMock.getFactorHeaders()).thenReturn(new LinkedHashSet<>(Collections.singletonList(FACTOR_NAME)));
 
         subject = new ExperimentInfoListService(experimentTraderMock, ImmutableList.of(baselineExperiment.getType(),
                 differentialExperiment.getType(), microarrayExperiment.getType()));

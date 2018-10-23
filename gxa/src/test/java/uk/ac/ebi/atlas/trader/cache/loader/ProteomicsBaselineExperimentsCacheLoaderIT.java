@@ -168,7 +168,7 @@ class ProteomicsBaselineExperimentsCacheLoaderIT {
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 
         assertThat(experimentDesign.getFactorHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM_PART));
-        assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
+        assertThat(experimentDesign.getSampleHeaders(), contains(ORGANISM, DEVELOPMENTAL_STAGE, ORGANISM_PART));
 
         Iterator<SampleCharacteristic> sampleCharacteristicIterator =
                 experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
