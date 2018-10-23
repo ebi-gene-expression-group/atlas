@@ -70,6 +70,6 @@ public class SolrUtils {
     }
 
     private SolrDocument getRandomSolrDocument(SolrDocumentList solrDocumentList) {
-        return solrDocumentList.get(toIntExact(RNG.nextLong(solrDocumentList.getNumFound())));
+        return solrDocumentList.get(RNG.nextInt(solrDocumentList.size()));
     }
 }
