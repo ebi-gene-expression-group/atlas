@@ -14,8 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.TestConfig;
-import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
-import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
@@ -40,8 +38,7 @@ class CellMetadataServiceIT {
 
     @Inject
     private DataSource dataSource;
-    @Inject
-    private IdfParser idfParser;
+
     @Inject
     private CellMetadataDao cellMetadataDao;
     @Inject
@@ -115,38 +112,6 @@ class CellMetadataServiceIT {
 
     @Test
     void metadataForInvalidExperiment() {
-        assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(
-                () -> subject.getMetadata("FOO", "FOO"))
-                .withCauseInstanceOf(NoSuchFileException.class);;
-    }
-
-    @Test
-    void experimentWithMetadataFieldsInIdf() {
-        // Ideally we would retrieve a random experiment accession, but not all experiments have curated metadata
-        // files in the IDF file
-        assertThat(
-                subject.getIdfFileAttributes(
-                        EXPERIMENT_ACCESSION,
-                        jdbcUtils.fetchRandomCellFromExperiment(EXPERIMENT_ACCESSION)))
-                .isNotEmpty()
-                .containsOnlyKeys("characteristic_individual");
-    }
-
-    @Test
-    void experimentWithoutMetadataFieldsInIdf() {
-        String experimentAccession = EXPERIMENT_WITHOUT_METADATA_ACCESSION;    // Empty Comment[EAAdditionalAttributes] in IDF file
-
-        assertThat(
-                subject.getIdfFileAttributes(
-                        experimentAccession,
-                        jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
-                .isEmpty();
-
-        assertThat(
-                subject.getFactors(
-                        experimentAccession,
-                        jdbcUtils.fetchRandomCellFromExperiment(experimentAccession)))
-                .isEmpty();
         assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(
                 () -> subject.getMetadata("FOO", "FOO"))
                 .withCauseInstanceOf(NoSuchFileException.class);;

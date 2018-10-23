@@ -119,7 +119,7 @@ class DataFileHubIT {
     @Test
     void findsMarkerGeneFiles() {
         String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
-        DataFileHub subject = dataFileHubFactory.getScxaDataFileHub();
+        DataFileHub subject = new DataFileHub(dataFilesPath.resolve("scxa"));
         LOGGER.info("Test marker gene files for experiment {}", experimentAccession);
         assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).markerGeneTsvs.values());
     }
