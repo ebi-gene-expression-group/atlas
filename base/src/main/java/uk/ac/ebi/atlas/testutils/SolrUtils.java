@@ -21,6 +21,20 @@ public class SolrUtils {
         analyticsCollectionProxy = solrCloudCollectionProxyFactory.create(AnalyticsCollectionProxy.class);
     }
 
+    public String fetchRandomGeneIdFromAnalytics() {
+        SolrQueryBuilder<AnalyticsCollectionProxy> queryBuilder = new SolrQueryBuilder<>();
+        queryBuilder
+                .setFieldList(AnalyticsCollectionProxy.BIOENTITY_IDENTIFIER)
+                .setRows(MAX_ROWS);
+
+        return analyticsCollectionProxy
+                .query(queryBuilder)
+                .getResults()
+                .get(RNG.nextInt(MAX_ROWS))
+                .getFieldValue("bioentity_identifier")
+                .toString();
+    }
+
     public String fetchRandomGeneIdFromAnalytics(AnalyticsSchemaField field, String term) {
         SolrQueryBuilder<AnalyticsCollectionProxy> queryBuilder = new SolrQueryBuilder<>();
         queryBuilder
