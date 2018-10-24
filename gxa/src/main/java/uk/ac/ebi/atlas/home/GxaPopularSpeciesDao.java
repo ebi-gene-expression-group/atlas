@@ -5,8 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesDao;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesInfo;
 
 import javax.inject.Inject;
 import javax.inject.Named;

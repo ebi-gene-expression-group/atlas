@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.species.services;
+package uk.ac.ebi.atlas.home;
 
 import com.google.common.collect.ImmutableList;
 import org.springframework.jdbc.core.JdbcTemplate;

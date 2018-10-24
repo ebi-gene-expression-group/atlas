@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.home.PopularSpeciesDao;
+import uk.ac.ebi.atlas.home.PopularSpeciesInfo;
+import uk.ac.ebi.atlas.home.PopularSpeciesService;
 
 import java.util.Iterator;
 import java.util.List;

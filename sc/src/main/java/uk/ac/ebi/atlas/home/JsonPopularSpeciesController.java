@@ -8,8 +8,6 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.model.card.CardModel;
 import uk.ac.ebi.atlas.model.card.CardModelAdapter;
 import uk.ac.ebi.atlas.model.card.CardModelFactory;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesInfo;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesService;
 
 import javax.inject.Inject;
 import java.util.List;
