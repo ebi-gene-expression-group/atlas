@@ -15,18 +15,20 @@ public class SolrConfig {
     public static final SolrClientCache SOLR_CLIENT_CACHE = new SolrClientCache();
 
     @Bean
-    public SolrClient solrClientBioentities(@Value("${solr.host}") String solrHost) {
-        return new HttpSolrClient.Builder("http://" + solrHost + ":8983/solr/bioentities").build();
+    public SolrClient solrClientBioentities(@Value("${solr.host}") String solrHost,
+                                            @Value("${solr.port}") String solrPort) {
+        return new HttpSolrClient.Builder("http://" + solrHost + ":" + solrPort + "/solr/bioentities").build();
     }
 
     @Bean
-    public SolrClient solrClientAnalytics(@Value("${solr.host}") String solrHost) {
-        return new HttpSolrClient.Builder("http://" + solrHost + ":8983/solr/analytics").build();
+    public SolrClient solrClientAnalytics(@Value("${solr.host}") String solrHost,
+                                          @Value("${solr.port}") String solrPort) {
+        return new HttpSolrClient.Builder("http://" + solrHost + ":" + solrPort + "/solr/analytics").build();
     }
 
     @Bean
-    public CloudSolrClient cloudSolrClient(@Value("${zk.host}") String zkHost) {
-        return new CloudSolrClient.Builder().withZkHost(zkHost + ":2181").build();
-//        return SOLR_CLIENT_CACHE.getCloudSolrClient(zkHost);
+    public CloudSolrClient cloudSolrClient(@Value("${zk.host}") String zkHost,
+                                           @Value("${zk.port}") String zkPort) {
+        return new CloudSolrClient.Builder().withZkHost(zkHost + ":" + zkPort).build();
     }
 }

@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Iterables;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -45,7 +45,7 @@ public class Condition {
         final Condition other = (Condition) obj;
         return Objects.equals(this.experimentAccession, other.experimentAccession) &&
                Objects.equals(this.assayGroupId, other.assayGroupId) &&
-               Iterables.elementsEqual(this.values, other.values);
+               CollectionUtils.isEqualCollection(this.values, other.values);
     }
 
     @Override

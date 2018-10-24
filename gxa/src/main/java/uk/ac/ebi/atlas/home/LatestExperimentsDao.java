@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 public class LatestExperimentsDao {
     static final int LIMIT = 8;
     private static final String SELECT_PUBLIC_ACCESSIONS =
-            "SELECT accession FROM experiment WHERE private='F' ";
+            "SELECT accession FROM experiment WHERE private=FALSE ";
     private static final String IN_DESCENDING_ORDER_BY_DATE =
             " ORDER BY last_update DESC LIMIT " + Integer.toString(LIMIT);
     private static final String EXPERIMENT_COUNT =
-            "SELECT COUNT(*) FROM experiment WHERE private='F' ";
+            "SELECT COUNT(*) FROM experiment WHERE private=FALSE ";
 
     private final JdbcTemplate jdbcTemplate;
 

@@ -40,7 +40,7 @@ public class CollectionProxyTest {
                 .thenThrow(new IOException());
 
         assertThatExceptionOfType(UncheckedIOException.class)
-                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
+                .isThrownBy(() -> subject.rawQuery(new SolrQuery("*:*")));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class CollectionProxyTest {
                 .thenThrow(new SolrServerException(""));
 
         assertThatExceptionOfType(UncheckedIOException.class)
-                .isThrownBy(() -> subject.query(new SolrQuery("*:*")));
+                .isThrownBy(() -> subject.rawQuery(new SolrQuery("*:*")));
     }
 
     @Test

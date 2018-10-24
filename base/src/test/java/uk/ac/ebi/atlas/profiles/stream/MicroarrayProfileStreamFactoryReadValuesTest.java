@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.ArrayDesign;
+import uk.ac.ebi.atlas.model.arraydesign.ArrayDesign;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import java.util.function.Function;
@@ -23,9 +24,9 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayProfileStreamFactoryReadValuesTest {
-    private static final AssayGroup G1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
-    private static final AssayGroup G2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
-    private static final AssayGroup G3 = new AssayGroup("g3", "run_31", "run_32");
+    private static final AssayGroup G1 = AssayGroupFactory.create("g1", "run_11", "run_12", "run_13");
+    private static final AssayGroup G2 = AssayGroupFactory.create("g2", "run_21", "run_22", "run_23", "run_24");
+    private static final AssayGroup G3 = AssayGroupFactory.create("g3", "run_31", "run_32");
 
     private static final Contrast G1_G2 = new Contrast("g1_g2", "", G1, G2, "first contrast");
     private static final Contrast G1_G3 = new Contrast("g1_g3", "", G1, G3, "second contrast");

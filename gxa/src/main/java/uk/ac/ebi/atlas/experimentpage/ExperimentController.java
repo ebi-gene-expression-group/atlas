@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.json.JsonBaselineExperimentController;
-import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
-import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
+import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQcFiles;
+import uk.ac.ebi.atlas.experimentpage.qc.QcReportController;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -162,13 +162,13 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                             pairsToArrayOfObjects(
                                     "name",
                                     "url",
-                                    new MicroarrayQCFiles(
+                                    new MicroarrayQcFiles(
                                             dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
                                             .getArrayDesignsThatHaveQcReports().stream()
                                                 .map(arrayDesign ->
                                                         Pair.of(
                                                                 "QC for array design " + arrayDesign,
-                                                                QCReportController.getQcReportUrl(
+                                                                QcReportController.getQcReportUrl(
                                                                         experiment.getAccession(),
                                                                         arrayDesign,
                                                                         accessKey)))

@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -50,7 +51,9 @@ public class BaselineExperimentSearchResultProducerTest {
 
         List<AssayGroup> singleFactorExperimentAssayGroups =
                 ImmutableList.of(
-                        new AssayGroup("g1", "run11"), new AssayGroup("g2", "run21"), new AssayGroup("g3", "run31"));
+                        AssayGroupFactory.create("g1", "run11"),
+                        AssayGroupFactory.create("g2", "run21"),
+                        AssayGroupFactory.create("g3", "run31"));
         ExperimentDesign singleFactorExperimentExperimentDesign = new ExperimentDesign();
         singleFactorExperimentExperimentDesign.putFactor("run11", factorHeader, "value1");
         singleFactorExperimentExperimentDesign.putFactor("run21", factorHeader, "value2");
@@ -64,7 +67,9 @@ public class BaselineExperimentSearchResultProducerTest {
 
         List<AssayGroup> twoFactorExperimentAllDifferentValuesAssayGroups =
                 ImmutableList.of(
-                        new AssayGroup("x1", "R11"), new AssayGroup("x2", "R21"), new AssayGroup("x3", "R31"));
+                        AssayGroupFactory.create("x1", "R11"),
+                        AssayGroupFactory.create("x2", "R21"),
+                        AssayGroupFactory.create("x3", "R31"));
         ExperimentDesign twoFactorExperimentAllDifferentValuesExperimentDesign = new ExperimentDesign();
         twoFactorExperimentAllDifferentValuesExperimentDesign.putFactor("R11", factorHeader, "value1");
         twoFactorExperimentAllDifferentValuesExperimentDesign.putFactor("R21", factorHeader, "value2");
@@ -87,8 +92,10 @@ public class BaselineExperimentSearchResultProducerTest {
 
         List<AssayGroup> twoFactorExperimentWithOverlappingFactorsAssayGroups =
                 ImmutableList.of(
-                        new AssayGroup("a1", "r1"), new AssayGroup("a2", "r2"), new AssayGroup("a3", "r3"),
-                        new AssayGroup("a4", "r4"));
+                        AssayGroupFactory.create("a1", "r1"),
+                        AssayGroupFactory.create("a2", "r2"),
+                        AssayGroupFactory.create("a3", "r3"),
+                        AssayGroupFactory.create("a4", "r4"));
         ExperimentDesign twoFactorExperimentWithOverlappingFactorsExperimentDesign = new ExperimentDesign();
         twoFactorExperimentWithOverlappingFactorsExperimentDesign.putFactor("r1", factorHeader, "aa");
         twoFactorExperimentWithOverlappingFactorsExperimentDesign.putFactor("r2", factorHeader, "aa");

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ public class ContrastTestUtils {
                     new Contrast(
                             "contrast_" + i,
                             "",
-                            new AssayGroup(
+                            AssayGroupFactory.create(
                                     "reference_" + i,
                                     StringUtils.repeat("run", " ", RandomUtils.nextInt(1, 10)).split(" " + "")),
-                            new AssayGroup(
+                            AssayGroupFactory.create(
                                     "test_" + i,
                                     StringUtils.repeat("run", " ", RandomUtils.nextInt(1, 10)).split(" ")),
                                     "contrast name " + i));

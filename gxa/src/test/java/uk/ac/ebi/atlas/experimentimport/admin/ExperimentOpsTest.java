@@ -242,7 +242,7 @@ public class ExperimentOpsTest {
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled1() throws Exception {
-        doThrow(new IOException("The files are bad!"))
+        doThrow(new UncheckedIOException(new IOException("The files are bad!")))
                 .when(experimentCrudMock)
                 .importExperiment(ACCESSION, false);
 

@@ -20,7 +20,7 @@ public class SolrCloudCollectionProxyFactoryIT {
 
     @Test
     public void createAnalyticsCollectionProxy() {
-        assertThat(subject.create(AnalyticsCollectionProxy.class).query(new SolrQuery("*:*")).getResults().size())
+        assertThat(subject.create(AnalyticsCollectionProxy.class).rawQuery(new SolrQuery("*:*")).getResults().size())
                 .isGreaterThan(0);
     }
 }

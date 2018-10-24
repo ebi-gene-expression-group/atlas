@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.experiment.summary.ContrastProperty;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastPropertyType;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummary;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 
 import java.util.Iterator;
 
@@ -29,8 +30,8 @@ public class ContrastSummaryBuilderTest {
     private static final String EXPERIMENT_DESCRIPTION = "experiment description";
     private static final String CONTRAST_ID = "contrast id";
     private static final String ARRAY_DESIGN_ACCESSION = "array design accession";
-    private static final AssayGroup REF_ASSAY_GROUP = new AssayGroup("ref_id", REF_ASSAY);
-    private static final AssayGroup TEST_ASSAY_GROUP = new AssayGroup("test_id", TEST_ASSAY);
+    private static final AssayGroup REF_ASSAY_GROUP = AssayGroupFactory.create("ref_id", REF_ASSAY);
+    private static final AssayGroup TEST_ASSAY_GROUP = AssayGroupFactory.create("test_id", TEST_ASSAY);
     private static final String CONTRAST_NAME = "contrast description";
     private static final Contrast CONTRAST =
             new Contrast(CONTRAST_ID, ARRAY_DESIGN_ACCESSION, REF_ASSAY_GROUP, TEST_ASSAY_GROUP, CONTRAST_NAME);

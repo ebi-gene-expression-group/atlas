@@ -1,32 +1,36 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.google.common.collect.ImmutableMap;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
+import uk.ac.ebi.atlas.testutils.SolrUtils;
 
 import javax.inject.Inject;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties.BIOENTITY_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.DESCRIPTION;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.SYMBOL;
+import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.IDENTIFIER_SEARCH;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class BioEntityCardModelFactoryIT {
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class BioEntityCardModelFactoryIT {
     @Inject
-    private BioEntityCardModelFactory subject;
+    private SolrUtils solrUtils;
 
     @Inject
     private SpeciesFactory speciesFactory;
@@ -34,36 +38,47 @@ public class BioEntityCardModelFactoryIT {
     @Inject
     private BioEntityPropertyDao bioentityPropertyDao;
 
-    @Test
-    public void useIdForTitleIfNoNameIsAvailable() {
-        String identifier = "OS07G0213600";
+    @Inject
+    private BioEntityCardModelFactory subject;
+
+    @ParameterizedTest
+    @MethodSource("geneIdWithoutSymbolProvider")
+    void useIdAsTitleIfNoNameIsAvailable(String geneId) {
         String name =
-                bioentityPropertyDao.fetchPropertyValuesForGeneId(identifier, SYMBOL).stream().collect(joining("/"));
+                bioentityPropertyDao.fetchPropertyValuesForGeneId(geneId, SYMBOL).stream().collect(joining("/"));
 
         Map<BioentityPropertyName, Set<String>> propertyValuesByType =
-                bioentityPropertyDao.fetchGenePageProperties(identifier);
+                bioentityPropertyDao.fetchGenePageProperties(geneId);
 
         Map<String, Object> bioentityCardModel = subject.modelAttributes(
-                identifier, speciesFactory.create("oryza sativa"),
-                BIOENTITY_PROPERTY_NAMES, name, propertyValuesByType);
+                geneId, speciesFactory.create("Crocubot"), BIOENTITY_PROPERTY_NAMES, name, propertyValuesByType);
 
-        assertThat(bioentityCardModel, hasEntry("entityBriefName", "OS07G0213600"));
-        assertThat(bioentityCardModel, hasEntry("entityFullName", "OS07G0213600"));
+        assertThat(bioentityCardModel)
+            .containsAllEntriesOf(
+                    ImmutableMap.of(
+                            "entityBriefName", geneId,
+                            "entityFullName", geneId));
     }
 
-    @Test
-    public void descriptionIsCleanedUp() {
-        String identifier = "BRADI5G11000";
-
+    @ParameterizedTest
+    @MethodSource("geneIdProviderWithSourceInDescriptionProvider")
+    void descriptionIsCleanedUp(String geneId) {
         Map<BioentityPropertyName, Set<String>> propertyValuesByType =
-                bioentityPropertyDao.fetchGenePageProperties(identifier);
+                bioentityPropertyDao.fetchGenePageProperties(geneId);
 
         Map<String, Object> bioentityCardModel = subject.modelAttributes(
-                identifier, speciesFactory.create("brachypodium distachyon"),
+                geneId, speciesFactory.create("Crocubot"),
                 BIOENTITY_PROPERTY_NAMES, "", propertyValuesByType);
 
-        assertThat(propertyValuesByType.get(DESCRIPTION).iterator().next().contains("["), is(true));
-        assertThat(((String) bioentityCardModel.get("bioEntityDescription")).contains("["), is(false));
+        assertThat(propertyValuesByType.get(DESCRIPTION).iterator().next()).contains("[");
+        assertThat(((String) bioentityCardModel.get("bioEntityDescription"))).doesNotContain("[");
     }
 
+    private Stream<String> geneIdWithoutSymbolProvider() {
+        return Stream.of(solrUtils.fetchRandomGeneWithoutSymbolFromAnalytics());
+    }
+
+    private Stream<String> geneIdProviderWithSourceInDescriptionProvider() {
+        return Stream.of(solrUtils.fetchRandomGeneIdFromAnalytics(IDENTIFIER_SEARCH, "[Source:"));
+    }
 }

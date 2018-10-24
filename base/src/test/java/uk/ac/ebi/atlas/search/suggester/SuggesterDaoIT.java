@@ -21,8 +21,11 @@ class SuggesterDaoIT {
     private SuggesterDao subject;
 
     @Test
-    void mapsSuggestionsToMapOfTermAndCategory() {
+    void suggestionsCanBeFetched() {
         assertThat(subject.fetchBioentityProperties("asp", 10, false))
+                .isNotEmpty();
+
+        assertThat(subject.fetchBioentityIdentifiers("asp", 10))
                 .isNotEmpty();
     }
 

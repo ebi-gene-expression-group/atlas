@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummary;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayProperty;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastPropertyType;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -20,7 +21,7 @@ public class AssayGroupSummaryBuilderTest {
     private static final String FACTOR_HEADER2 = "factor header 2";
     private static final String FACTOR_VALUE2 = "factor value 2";
 
-    private static final AssayGroup ASSAY_GROUP = new AssayGroup("id", ASSAY1, ASSAY2);
+    private static final AssayGroup ASSAY_GROUP = AssayGroupFactory.create("id", ASSAY1, ASSAY2);
     private static final String SAMPLE_HEADER = "sample header";
     private static final String SAMPLE_VALUE1 = "sample value 2";
     private static final String SAMPLE_VALUE2 = "sample value 2";

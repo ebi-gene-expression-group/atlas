@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
@@ -19,8 +20,8 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProteomicsBaselineProfileStreamFactoryTest {
-    private static final AssayGroup G1 = new AssayGroup("g1", "r1");
-    private static final AssayGroup G2 = new AssayGroup("g2", "r2");
+    private static final AssayGroup G1 = AssayGroupFactory.create("g1", "r1");
+    private static final AssayGroup G2 = AssayGroupFactory.create("g2", "r2");
 
 
     private static final BaselineExperiment BASELINE_EXPERIMENT =

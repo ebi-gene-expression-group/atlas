@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
@@ -18,6 +16,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
@@ -71,9 +70,6 @@ public class ExperimentCrudTest {
     private ExperimentChecker experimentChecker;
 
     @Mock
-    private AnalyticsLoaderFactory analyticsLoaderFactoryMock;
-
-    @Mock
     private ConfigurationTrader configurationTrader;
 
     private ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
@@ -82,7 +78,7 @@ public class ExperimentCrudTest {
 
     @Before
     public void setUp() {
-        AssayGroup assayGroup = new AssayGroup("g1", "run_1");
+        AssayGroup assayGroup = AssayGroupFactory.create("g1", "run_1");
         ExperimentDesign experimentDesign = new ExperimentDesign();
         experimentDesign.putSampleCharacteristic("run_1", "type", "value");
         experimentDesign.putFactor("run_1", "type", "value");
@@ -94,9 +90,6 @@ public class ExperimentCrudTest {
         when(experimentConfigurationMock.getAssayGroups()).thenReturn(ImmutableList.of(assayGroup));
 
         when(experimentDaoMock.getExperimentAsAdmin(anyString())).thenReturn(experimentDTOMock);
-
-        when(analyticsLoaderFactoryMock.getLoader(experimentType)).thenReturn(new AnalyticsLoader() {
-        });
 
         given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(experimentDTOMock.getExperimentType()).willReturn(experimentType);
@@ -117,7 +110,7 @@ public class ExperimentCrudTest {
                 new ExperimentCrudFactory(
                         condensedSdrfParserMock, idfParserMock, experimentDesignFileWriterService, configurationTrader);
 
-        subject = experimentCrudFactory.create(experimentDaoMock, experimentChecker, analyticsLoaderFactoryMock);
+        subject = experimentCrudFactory.create(experimentDaoMock, experimentChecker);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -129,12 +122,12 @@ public class ExperimentCrudTest {
     @Test(expected = IllegalStateException.class)
     public void failImportOnValidationWhenExperimentDesignDoesNotMatchAssayGroups2() throws IOException {
         when(experimentConfigurationMock.getAssayGroups())
-                .thenReturn(ImmutableList.of(new AssayGroup("different assay", "different run")));
+                .thenReturn(ImmutableList.of(AssayGroupFactory.create("different assay", "different run")));
         subject.importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
-    public void updateExperimentToPrivateShouldDelegateToDAO() throws IOException {
+    public void updateExperimentToPrivateShouldDelegateToDAO() {
         ExperimentDTO privateMock = mock(ExperimentDTO.class);
         when(privateMock.isPrivate()).thenReturn(true);
         given(experimentDaoMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(privateMock);
@@ -144,7 +137,7 @@ public class ExperimentCrudTest {
     }
 
     @Test
-    public void updateExperimentToPublicShouldDelegateToDAO() throws IOException {
+    public void updateExperimentToPublicShouldDelegateToDAO() {
         ExperimentDTO publicMock = mock(ExperimentDTO.class);
         when(publicMock.isPrivate()).thenReturn(false);
         given(experimentDaoMock.getExperimentAsAdmin(EXPERIMENT_ACCESSION)).willReturn(publicMock);

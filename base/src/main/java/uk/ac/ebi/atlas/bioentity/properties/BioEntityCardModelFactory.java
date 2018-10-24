@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
+import uk.ac.ebi.atlas.model.arraydesign.ArrayDesignDao;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 
@@ -34,12 +34,12 @@ public class BioEntityCardModelFactory {
     // These are displayed in the header, so we don’t show them in the card table
     private static final ImmutableList<BioentityPropertyName> SKIP_PROPERTIES = ImmutableList.of(DESCRIPTION, SYMBOL);
 
-    private final ArrayDesignDAO arrayDesignDao;
+    private final ArrayDesignDao arrayDesignDao;
     private final BioEntityPropertyService bioEntityPropertyService;
 
     @Inject
     public BioEntityCardModelFactory(BioEntityPropertyService bioEntityPropertyService,
-                                     ArrayDesignDAO arrayDesignDao) {
+                                     ArrayDesignDao arrayDesignDao) {
         this.arrayDesignDao = arrayDesignDao;
         this.bioEntityPropertyService = bioEntityPropertyService;
     }
@@ -126,7 +126,7 @@ public class BioEntityCardModelFactory {
     private String getBioEntityDescription(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
         String firstValueOfDescription =
                 propertyValuesByType.getOrDefault(DESCRIPTION, ImmutableSet.of("")).iterator().next();
-        return StringUtils.substringBefore(firstValueOfDescription, "[").trim();
+        return StringUtils.substringBefore(firstValueOfDescription, "[Source").trim();
     }
 
     private List<PropertyLink> createLinks(String identifier,

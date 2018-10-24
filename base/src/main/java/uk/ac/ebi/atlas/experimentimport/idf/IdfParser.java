@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.idf;
 
-import com.google.common.base.Strings;
 import org.apache.commons.lang.math.NumberUtils;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.model.Publication;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
+import static org.springframework.util.StringUtils.trimAllWhitespace;
 
 @Named
 public class IdfParser {
@@ -33,8 +33,8 @@ public class IdfParser {
     private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, EXPERIMENT_DESCRIPTION_ID, PUBMED_ID,
             PUBLICATION_TITLE_ID, PUBLICATION_DOI_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID,
             ADDITIONAL_ATTRIBUTES_ID)
-                .map(IdfParser::convertIdfFieldNameToKey)
-                .collect(Collectors.toSet());
+            .map(IdfParser::convertIdfFieldNameToKey)
+            .collect(Collectors.toSet());
 
     private DataFileHub dataFileHub;
 
@@ -48,17 +48,20 @@ public class IdfParser {
     public IdfParserOutput parse(String experimentAccession) {
         try (TsvStreamer idfStreamer = dataFileHub.getExperimentFiles(experimentAccession).idf.get()) {
             parsedIdf = idfStreamer.get()
-                            .filter(line -> line.length > 1)
-                            .filter(line -> LINE_IDS.contains(convertIdfFieldNameToKey(line[0])))
-                            .collect(Collectors.toMap(
-                                    line -> convertIdfFieldNameToKey(line[0]),
-                                    line -> Arrays.stream(line)
-                                            .skip(1)
-                                            .filter(item -> !item.isEmpty())
-                                            .collect(Collectors.toList()),
-                                    (accumulatedValues, newValue) -> accumulatedValues));
+                    .filter(line -> line.length > 1)
+                    .filter(line -> LINE_IDS.contains(convertIdfFieldNameToKey(line[0])))
+                    .collect(Collectors.toMap(
+                            line -> convertIdfFieldNameToKey(line[0]),
+                            line -> Arrays.stream(line)
+                                    .skip(1)
+                                    .filter(item -> !item.isEmpty())
+                                    .collect(Collectors.toList()),
+                            (accumulatedValues, newValue) -> accumulatedValues));
 
-            String title = getParsedOutputByKey(AE_EXPERIMENT_DISPLAY_NAME_ID, getParsedOutputByKey(INVESTIGATION_TITLE_ID, emptyList()))
+            String title =
+                    getParsedOutputByKey(
+                            AE_EXPERIMENT_DISPLAY_NAME_ID,
+                            getParsedOutputByKey(INVESTIGATION_TITLE_ID, emptyList()))
                     .stream()
                     .findFirst()
                     .orElse("");
@@ -74,9 +77,9 @@ public class IdfParser {
                     getParsedOutputByKey(PUBLICATION_DOI_ID, emptyList()));
 
             int expectedClusters = NumberUtils.toInt(getParsedOutputByKey(EXPECTED_CLUSTERS_ID, emptyList())
-                        .stream()
-                        .findFirst()
-                        .orElse(""),
+                            .stream()
+                            .findFirst()
+                            .orElse(""),
                     0);
 
             List<String> metadataFieldsOfInterest =
@@ -116,7 +119,7 @@ public class IdfParser {
     private List<String> getParsedOutputByKey(String key, List<String> outputIfEmpty) {
         List<String> values = parsedIdf.getOrDefault(convertIdfFieldNameToKey(key), emptyList());
 
-        if (values.isEmpty() || values.stream().allMatch(org.apache.commons.lang.StringUtils::isBlank)) {
+        if (values.isEmpty() || values.stream().allMatch(StringUtils::isBlank)) {
             return outputIfEmpty;
         }
 
@@ -128,6 +131,6 @@ public class IdfParser {
     }
 
     private static String convertIdfFieldNameToKey(String idfField) {
-        return StringUtils.trimAllWhitespace(idfField).toUpperCase();
+        return trimAllWhitespace(idfField).toUpperCase();
     }
 }

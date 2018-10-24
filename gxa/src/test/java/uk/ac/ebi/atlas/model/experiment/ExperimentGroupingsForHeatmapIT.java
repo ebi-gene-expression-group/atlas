@@ -2,45 +2,69 @@ package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
-public class ExperimentGroupingsForHeatmapIT {
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class ExperimentGroupingsForHeatmapIT {
+    private static final int NUMBER_OF_EXPERIMENTS_TO_TEST = 5;
+
+    @Inject
+    private DataSource dataSource;
+
+    @Inject
+    private JdbcUtils jdbcUtils;
+
     @Inject
     private ExperimentTrader experimentTrader;
 
-    @Test
-    public void testSomeGoodExperiments() {
-        outputInFineFormatForExperiment("E-MTAB-513");
-        outputInFineFormatForExperiment("E-MTAB-2706");
-        outputInFineFormatForExperiment("E-GEOD-54705");
-        outputInFineFormatForExperiment("E-MTAB-4260");
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-fixture.sql"));
+        populator.execute(dataSource);
     }
 
-    /*
-    For differential experiments, a few groupings repeat and we might need something else for them.
-     */
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
 
-    private void outputInFineFormatForExperiment(String accession) {
+    @ParameterizedTest
+    @MethodSource("baselineExperimentAccessionsProvider")
+    void outputInFineFormatForExperiment(String accession) {
         Experiment<DescribesDataColumns> experiment = experimentTrader.getPublicExperiment(accession);
 
         List<String> allDescriptorIds = experiment.getDataColumnDescriptors().stream()
@@ -63,5 +87,15 @@ public class ExperimentGroupingsForHeatmapIT {
                 }
             }
         }
+    }
+
+    private Iterable<String> baselineExperimentAccessionsProvider() {
+        Set<String> baselineExperimentAccessions = new HashSet<>(NUMBER_OF_EXPERIMENTS_TO_TEST);
+
+        while (baselineExperimentAccessions.size() < NUMBER_OF_EXPERIMENTS_TO_TEST) {
+            baselineExperimentAccessions.add(jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(RNASEQ_MRNA_BASELINE));
+        }
+
+        return baselineExperimentAccessions;
     }
 }

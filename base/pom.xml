@@ -10,12 +10,11 @@
         <version>4.0</version>
     </parent>
 
-    <artifactId>atlas-base</artifactId>
-    <version>5.0</version>
+    <artifactId>atlas-core</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Atlas base</name>
-    <url>https://www.ebi.ac.uk/gxa/</url>
+    <name>Atlas Core</name>
 
     <build>
         <plugins>

@@ -1,14 +1,19 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.GxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
@@ -17,6 +22,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;
 import java.util.Collections;
@@ -28,12 +34,14 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebConfig.class)
-public class BaselineExperimentsCacheLoaderIT {
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class BaselineExperimentsCacheLoaderIT {
+    private static final String E_MTAB_3827_ACCESSION = "E-MTAB-3827";
 
-    private String accession = "E-MTAB-513";
-
+    @Inject
+    private DataSource dataSource;
     @Inject
     private RnaSeqBaselineExperimentFactory rnaSeqBaselineExperimentFactory;
 
@@ -48,18 +56,32 @@ public class BaselineExperimentsCacheLoaderIT {
 
     private ExperimentsCacheLoader<BaselineExperiment> subject;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
+
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         ExperimentDTO experimentDTO = new ExperimentDTO(
-                accession, ExperimentType.RNASEQ_MRNA_BASELINE,
+                E_MTAB_3827_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE,
                 "Homo sapiens",
                 Collections.emptySet(),
                 Collections.emptySet(),
                 "title", new Date(),
                 false,
                 UUID.randomUUID().toString());
-        when(expressionAtlasExperimentDao.getExperimentAsAdmin(accession)).thenReturn(experimentDTO);
+        when(expressionAtlasExperimentDao.getExperimentAsAdmin(E_MTAB_3827_ACCESSION)).thenReturn(experimentDTO);
 
         subject =
                 new ExperimentsCacheLoader<>(
@@ -68,32 +90,30 @@ public class BaselineExperimentsCacheLoaderIT {
 
 
     @Test
-    public void correctSpeciesReadFromDatabase() {
-        BaselineExperiment experiment = subject.load(accession);
+    void correctSpeciesReadFromDatabase() {
+        BaselineExperiment experiment = subject.load(E_MTAB_3827_ACCESSION);
         String species = experiment.getSpecies().getName();
         assertThat(species).isEqualTo("Homo sapiens");
     }
 
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() {
-        BaselineExperiment experiment = subject.load(accession);
+    void experimentShouldOnlyContainRunsFromDataFile() {
+        BaselineExperiment experiment = subject.load(E_MTAB_3827_ACCESSION);
 
         assertThat(experiment.getAnalysedAssays())
-                .containsExactlyInAnyOrder(
-                        "ERR030872", "ERR030873", "ERR030874", "ERR030875", "ERR030876", "ERR030877", "ERR030878",
-                        "ERR030879", "ERR030880", "ERR030881", "ERR030882", "ERR030883", "ERR030884", "ERR030885",
-                        "ERR030886", "ERR030887");
+                .contains("ERR232403", "ERR232404", "ERR855840", "ERR353365", "ERR244134")
+                .hasSize(66);
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() {
-        BaselineExperiment experiment = subject.load(accession);
-        assertThat(experiment.getDataColumnDescriptors()).hasSize(16);
+    void experimentShouldContainAssayGroups() {
+        BaselineExperiment experiment = subject.load(E_MTAB_3827_ACCESSION);
+        assertThat(experiment.getDataColumnDescriptors()).hasSize(27);
     }
 
     @Test
-    public void loadNonExistentExperimentThrowsWrappedFileNotFoundException() {
+    void loadNonExistentExperimentThrowsWrappedFileNotFoundException() {
         assertThatExceptionOfType(UncheckedIOException.class)
                 .isThrownBy(() -> subject.load("FOOBAR"))
                 .withCauseInstanceOf(FileNotFoundException.class);

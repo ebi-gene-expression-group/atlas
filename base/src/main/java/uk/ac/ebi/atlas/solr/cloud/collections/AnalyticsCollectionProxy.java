@@ -100,7 +100,7 @@ public class AnalyticsCollectionProxy extends CollectionProxy {
     }
 
     public QueryResponse query(SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder) {
-        return query(solrQueryBuilder.build());
+        return rawQuery(solrQueryBuilder.build());
     }
 
     public FieldStatsInfo fieldStats(SchemaField<AnalyticsCollectionProxy> field, SolrQuery solrQuery) {
