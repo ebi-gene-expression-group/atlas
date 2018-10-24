@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SpeciesItem from './SpeciesItem.jsx';
 
@@ -18,12 +19,12 @@ const BrowseBySpecies = props =>
 };
 
 BrowseBySpecies.propTypes = {
-    atlasUrl: React.PropTypes.string.isRequired,
-    speciesInfoList: React.PropTypes.arrayOf(React.PropTypes.shape({
-        species: React.PropTypes.string.isRequired,
-        totalExperiments: React.PropTypes.number.isRequired,
-        baselineExperiments: React.PropTypes.number.isRequired,
-        differentialExperiments: React.PropTypes.number.isRequired
+    atlasUrl: PropTypes.string.isRequired,
+    speciesInfoList: PropTypes.arrayOf(PropTypes.shape({
+        species: PropTypes.string.isRequired,
+        totalExperiments: PropTypes.number.isRequired,
+        baselineExperiments: PropTypes.number.isRequired,
+        differentialExperiments: PropTypes.number.isRequired
     })).isRequired,
 };
 

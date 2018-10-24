@@ -75,7 +75,7 @@ const DifferentialResultsRow = (props) =>
 
 DifferentialResultsRow.propTypes = {
   ...differentialResultRowDataPropTypes,
-  atlasUrl: React.PropTypes.string.isRequired
+  atlasUrl: PropTypes.string.isRequired
 }
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import URI from 'urijs';
 import EbiSpeciesIcon  from 'react-ebi-species';
 
@@ -38,11 +39,11 @@ const SpeciesItem = props =>
 };
 
 SpeciesItem.propTypes = {
-    atlasUrl: React.PropTypes.string.isRequired,
-    species: React.PropTypes.string.isRequired,
-    totalExperiments: React.PropTypes.number.isRequired,
-    baselineExperiments: React.PropTypes.number.isRequired,
-    differentialExperiments: React.PropTypes.number.isRequired,
+    atlasUrl: PropTypes.string.isRequired,
+    species: PropTypes.string.isRequired,
+    totalExperiments: PropTypes.number.isRequired,
+    baselineExperiments: PropTypes.number.isRequired,
+    differentialExperiments: PropTypes.number.isRequired,
 };
 
 export default SpeciesItem;

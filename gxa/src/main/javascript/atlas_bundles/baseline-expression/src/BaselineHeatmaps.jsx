@@ -47,7 +47,7 @@ BaselineHeatmaps.propTypes = {
      [{"species":"Homo sapiens", "factor":"CELL_LINE"}, {"species":"Mus musculus", "factor":"ORGANISM_PART"}]
      */
     showAnatomograms: PropTypes.bool.isRequired,
-    heatmaps: PropTypes.arrayOf(React.PropTypes.shape({
+    heatmaps: PropTypes.arrayOf(PropTypes.shape({
         species: PropTypes.string.isRequired,
         factor: PropTypes.shape({
             name: PropTypes.string.isRequired,
