@@ -18,8 +18,8 @@
   "dependencies": {
     "expression-atlas-heatmap-highcharts": "^4.4.4",
     "prop-types": "^15.6.2",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -31,7 +31,7 @@
     "file-loader": "^2.0.0",
     "image-webpack-loader": "^4.1.0",
     "imports-loader": "^0.8.0",
-    "style-loader": "^0.23.0",
+    "style-loader": "^0.23.1",
     "webpack": "^4.0.1",
     "webpack-dev-server": "^3.1.0"
   }
