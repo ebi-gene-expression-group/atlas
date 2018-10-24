@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom'
 
-import DifferentialRouterLoader from './DifferentialRouterLoader'
+import DifferentialRouterLoader from './src/DifferentialRouterLoader'
 
 const render = (props, target) => {
   ReactDOM.render(
