@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import BaselineHeatmapWidget from './BaselineHeatmapWidget.jsx'
 
-import AtlasFeedback from 'expression-atlas-feedback'
-
 class BaselineHeatmaps extends React.Component {
 
     render() {
@@ -21,13 +19,6 @@ class BaselineHeatmaps extends React.Component {
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery} />
                 )}
-                <AtlasFeedback
-                  collectionCallback = {
-                    typeof window.ga === `function` ?
-                      (score, comment) => { window.ga('send','event','BaselineHeatmaps', 'feedback', comment, score) } :
-                      () => {}
-                  }
-                />
             </div>
         );
     }

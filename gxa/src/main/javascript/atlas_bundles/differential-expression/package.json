@@ -15,7 +15,6 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "expression-atlas-feedback": "../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz",
     "expression-atlas-number-format": "^2.1.0",
     "prop-types": "^15.6.2",
     "react": "^15.6.1",

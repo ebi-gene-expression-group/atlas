@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import URI from 'urijs'
 
-import AtlasFeedback from 'expression-atlas-feedback'
 import EbiSpeciesIcon  from 'react-ebi-species'
 import DisplayLevelsButton from './DisplayLevelsButton'
 import DifferentialDownloadButton from './DifferentialDownloadButton'
@@ -139,14 +138,6 @@ class DifferentialResults extends React.Component {
                                       {...diffResult} />) }
             </tbody>
           </table>
-          <div className={`margin-top-medium`}>
-            <AtlasFeedback
-              collectionCallback = {
-                typeof window.ga === `function` ?
-                  (score, comment) => { window.ga('send','event','DifferentialHeatmaps', 'feedback', comment, score) } :
-                  () => {}
-              } />
-          </div>
         </div>
       </div>
     )
