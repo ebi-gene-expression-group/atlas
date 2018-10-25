@@ -21,7 +21,9 @@ public class JsonLatestExperimentController extends JsonExceptionHandlingControl
         this.latestExperimentsService = new LatestExperimentsService(latestExperimentsDao, experimentTrader);
     }
 
-    @GetMapping(value = "/json/experiments/latestExperiments")
+    @GetMapping(
+            value = "/json/experiments/latestExperiments",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getLatestExperiments(){
         return latestExperimentsService.fetchLatestExperimentsJSON();
     }
