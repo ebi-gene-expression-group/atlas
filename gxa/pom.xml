@@ -7,7 +7,7 @@
     <parent>
         <artifactId>atlas</artifactId>
         <groupId>uk.ac.ebi.atlas</groupId>
-        <version>4.0</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>gxa</artifactId>
