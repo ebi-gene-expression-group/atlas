@@ -22,10 +22,10 @@ const ContrastInfoPropertyRow = ({testValue, referenceValue, contrastPropertyTyp
 }
 
 ContrastInfoPropertyRow.propTypes = {
-  contrastPropertyType: React.PropTypes.string,
-  propertyName: React.PropTypes.string.isRequired,
-  referenceValue: React.PropTypes.string.isRequired,
-  testValue: React.PropTypes.string.isRequired
+  contrastPropertyType: PropTypes.string,
+  propertyName: PropTypes.string.isRequired,
+  referenceValue: PropTypes.string.isRequired,
+  testValue: PropTypes.string.isRequired
 }
 
 const ContrastInfo = ({experimentDescription, contrastDescription, testReplicates, referenceReplicates, properties}) =>
@@ -51,7 +51,7 @@ ContrastInfo.proptypes = {
   contrastDescription: PropTypes.string,
   testReplicates: PropTypes.number,
   referenceReplicates: PropTypes.number,
-  properties: PropTypes.arrayOf(React.PropTypes.shape(
+  properties: PropTypes.arrayOf(PropTypes.shape(
     ContrastInfoPropertyRow.propTypes
   ))
 }
