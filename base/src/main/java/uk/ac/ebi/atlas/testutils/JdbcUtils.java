@@ -49,6 +49,12 @@ public class JdbcUtils {
                 String.class);
     }
 
+    public String fetchRandomPublicExpressionAtlasExperimentAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment WHERE private=FALSE ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
     public String fetchRandomExpressionAtlasExperimentAccession(ExperimentType experimentType) {
         return jdbcTemplate.queryForObject(
                 "SELECT accession FROM experiment WHERE type=? AND private=FALSE ORDER BY RANDOM() LIMIT 1",
