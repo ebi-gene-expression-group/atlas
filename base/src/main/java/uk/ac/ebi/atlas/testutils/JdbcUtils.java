@@ -15,16 +15,12 @@ public class JdbcUtils {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<String> getPublicSingleCellExperimentAccessions() {
+    public List<String> fetchPublicSingleCellExperimentAccessions() {
         return jdbcTemplate.queryForList("SELECT accession FROM scxa_public_experiment", String.class);
     }
 
-    public List<String> getAllSingleCellExperimentAccessions() {
+    public List<String> fetchAllSingleCellExperimentAccessions() {
         return jdbcTemplate.queryForList("SELECT accession FROM scxa_experiment", String.class);
-    }
-
-    public List<String> getPublicExpressionAtlasExperimentAccessions() {
-        return jdbcTemplate.queryForList("SELECT accession FROM public_experiment", String.class);
     }
 
     public String fetchRandomArrayDesignAccession() {
