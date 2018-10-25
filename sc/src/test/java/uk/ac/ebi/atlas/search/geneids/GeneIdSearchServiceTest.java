@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.SPECIES_OVERRIDE_PROPERTY_NAMES;
-import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomKnownBioentityPropertyName;
+import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomKnownBioentityPropertyName;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -71,9 +71,9 @@ class GeneIdSearchServiceTest {
 
     @Test
     void multiSpeciesCategoriesHonourSpecies() {
-        BioentityPropertyName propertyName = getRandomKnownBioentityPropertyName();
+        BioentityPropertyName propertyName = generateRandomKnownBioentityPropertyName();
         while (SPECIES_OVERRIDE_PROPERTY_NAMES.contains(propertyName)) {
-            propertyName = getRandomKnownBioentityPropertyName();
+            propertyName = generateRandomKnownBioentityPropertyName();
         }
 
         subject.search(GeneQuery.create("foobar", propertyName, HUMAN));
@@ -89,9 +89,9 @@ class GeneIdSearchServiceTest {
 
     @Test
     void ifAtLeastOneIdMatchesWeGetNonEmptyOptional() {
-        BioentityPropertyName randomIdPropertyName = getRandomKnownBioentityPropertyName();
+        BioentityPropertyName randomIdPropertyName = generateRandomKnownBioentityPropertyName();
         while (!SPECIES_OVERRIDE_PROPERTY_NAMES.contains(randomIdPropertyName)) {
-            randomIdPropertyName = getRandomKnownBioentityPropertyName();
+            randomIdPropertyName = generateRandomKnownBioentityPropertyName();
         }
 
         ID_PROPERTY_NAMES.forEach(propertyName -> {
@@ -114,9 +114,9 @@ class GeneIdSearchServiceTest {
 
     @Test
     void resultsOfFirstIdThatMatchesAreReturned() {
-        BioentityPropertyName randomIdPropertyName = getRandomKnownBioentityPropertyName();
+        BioentityPropertyName randomIdPropertyName = generateRandomKnownBioentityPropertyName();
         while (!ID_PROPERTY_NAMES.contains(randomIdPropertyName)) {
-            randomIdPropertyName = getRandomKnownBioentityPropertyName();
+            randomIdPropertyName = generateRandomKnownBioentityPropertyName();
         }
 
         ImmutableList<BioentityPropertyName> idPropertyNamesBefore =

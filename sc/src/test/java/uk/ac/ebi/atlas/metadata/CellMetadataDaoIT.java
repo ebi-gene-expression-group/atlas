@@ -18,7 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.StringUtils;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
-import uk.ac.ebi.atlas.configuration.WebConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.configuration.TestConfig;
@@ -93,7 +92,7 @@ class CellMetadataDaoIT {
 
     @Test
     void invalidExperimentAccessionHasNoMetadata() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
 
         assertThat(subject.getMetadataFieldNames(experimentAccession)).isEmpty();
     }
@@ -142,7 +141,7 @@ class CellMetadataDaoIT {
 
     @Test
     void invalidCellIdAndExperimentAccessionHasNoFactorFields() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         String cellId = "FOO";
 
         assertThat(subject.getFactorFieldNames(experimentAccession, cellId)).isEmpty();
