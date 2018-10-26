@@ -26,29 +26,29 @@ public class RandomDataTestUtils {
     private static final int ENSEMBLE_GENE_ID_NUM_LENGTH = 12;
     private static final int ENA_SEQ_RUN_NUM_LENGTH = 7;
 
-    public static String getRandomExperimentAccession() {
+    public static String generateRandomExperimentAccession() {
         // n / 456, 975, 543, 024 chance of clashing for n experiments in the test database, let’s roll!
         return "E-" + randomAlphabetic(4).toUpperCase() + "-" + randomNumeric(1, 6);
     }
 
-    public static String getRandomEnsemblGeneId() {
+    public static String generateRandomEnsemblGeneId() {
         return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(ENSEMBLE_GENE_ID_NUM_LENGTH);
     }
 
-    public static String getRandomEfoAccession() {
+    public static String generateRandomEfoAccession() {
         // https://www.ebi.ac.uk/ols/ontologies/efo
         // Version: 2.99
         // Number of terms: 22023
         return "EFO_" +  String.format("%07d", RNG.nextInt(1, 22023));
     }
 
-    public static List<String[]> getRandomClusters(int fromK, int toK, int numberOfCells) {
+    public static List<String[]> generateRandomClusters(int fromK, int toK, int numberOfCells) {
         ImmutableList.Builder<String[]> clustersTsvBuilder = ImmutableList.builder();
 
         clustersTsvBuilder.add(
                 Stream.concat(
                         Stream.of("sel.K", "K"),
-                        randomSingleCellRnaSeqRunIds(numberOfCells).stream())
+                        generateRandomSingleCellRnaSeqRunIds(numberOfCells).stream())
                 .toArray(String[]::new));
 
         // It’s a bit convoluted, but randomClustersLine will be invoked with true only once, the first iteration in
@@ -63,15 +63,15 @@ public class RandomDataTestUtils {
         return clustersTsvBuilder.build();
     }
 
-    private static Set<String> randomSingleCellRnaSeqRunIds(int n) {
+    private static Set<String> generateRandomSingleCellRnaSeqRunIds(int n) {
         Set<String> runIds = new HashSet<>(n);
         while (runIds.size() < n) {
-            runIds.add(randomRnaSeqRunId());
+            runIds.add(generateRandomRnaSeqRunId());
         }
         return runIds;
     }
 
-    public static String randomRnaSeqRunId() {
+    public static String generateRandomRnaSeqRunId() {
         return "SRR" + randomNumeric(1, ENA_SEQ_RUN_NUM_LENGTH);
     }
 
@@ -85,8 +85,8 @@ public class RandomDataTestUtils {
         return clusterIds.toArray(new String[0]);
     }
 
-    public static Set<TSnePoint.Dto> randomTSnePointDtos(int n) {
-        Set<String> runIds = randomSingleCellRnaSeqRunIds(n);
+    public static Set<TSnePoint.Dto> generateRandomTSnePointDtos(int n) {
+        Set<String> runIds = generateRandomSingleCellRnaSeqRunIds(n);
 
         return runIds
                 .stream()
@@ -94,18 +94,18 @@ public class RandomDataTestUtils {
                 .collect(Collectors.toSet());
     }
 
-    public static Set<TSnePoint.Dto> randomTSnePointDtosWithExpression(int n) {
+    public static Set<TSnePoint.Dto> generateRandomTSnePointDtosWithExpression(int n) {
         Set<TSnePoint.Dto> tSnePointDtos = new HashSet<>(n);
         while (tSnePointDtos.size() < n) {
             tSnePointDtos.add(
                     TSnePoint.Dto.create(
-                            RNG.nextDouble(), RNG.nextDouble(), RNG.nextDouble(), randomRnaSeqRunId()));
+                            RNG.nextDouble(), RNG.nextDouble(), RNG.nextDouble(), generateRandomRnaSeqRunId()));
         }
 
         return tSnePointDtos;
     }
 
-    public static Set<TSnePoint.Dto> randomTSnePointDtosWithClusters(int n, int k) {
+    public static Set<TSnePoint.Dto> generateRandomTSnePointDtosWithClusters(int n, int k) {
         Set<TSnePoint.Dto> tSnePointDtos = new HashSet<>(n);
         while (tSnePointDtos.size() < n) {
             tSnePointDtos.add(
@@ -113,13 +113,13 @@ public class RandomDataTestUtils {
                             RNG.nextDouble(),
                             RNG.nextDouble(),
                             RNG.nextInt(1, k + 1),
-                            randomRnaSeqRunId()));
+                            generateRandomRnaSeqRunId()));
         }
 
         return tSnePointDtos;
     }
 
-    public static BioentityPropertyName getRandomKnownBioentityPropertyName() {
+    public static BioentityPropertyName generateRandomKnownBioentityPropertyName() {
         BioentityPropertyName propertyName = UNKNOWN;
         while (propertyName == UNKNOWN) {
             propertyName =

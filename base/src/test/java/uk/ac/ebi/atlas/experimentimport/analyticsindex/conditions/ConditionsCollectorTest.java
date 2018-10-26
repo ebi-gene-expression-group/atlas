@@ -38,9 +38,9 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomEfoAccession;
-import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomExperimentAccession;
-import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.randomRnaSeqRunId;
+import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomEfoAccession;
+import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomExperimentAccession;
+import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomRnaSeqRunId;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -77,7 +77,7 @@ class ConditionsCollectorTest {
         when(baselineExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(differentialExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
 
-        String experimentAccession = getRandomExperimentAccession();
+        String experimentAccession = generateRandomExperimentAccession();
         when(differentialExperimentMock.getAccession()).thenReturn(experimentAccession);
         when(baselineExperimentMock.getAccession()).thenReturn(experimentAccession);
 
@@ -85,7 +85,7 @@ class ConditionsCollectorTest {
         List<String> assayIds =
                 IntStream.range(0, 50)
                         .boxed()
-                        .map(__ -> randomRnaSeqRunId())
+                        .map(__ -> generateRandomRnaSeqRunId())
                         .distinct()
                         .collect(toList());
 
@@ -95,7 +95,7 @@ class ConditionsCollectorTest {
                         assayId -> assayId,
                         __ -> IntStream.range(0, RNG.nextInt(1, 5))
                                 .boxed()
-                                .map(___ -> getRandomEfoAccession())
+                                .map(___ -> generateRandomEfoAccession())
                                 .distinct()));
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(assayIdToOntologyTerms);
 
@@ -109,7 +109,7 @@ class ConditionsCollectorTest {
                                                 Stream.of(entry.getValue()),
                                                 IntStream.range(0, RNG.nextInt(1, 5))
                                                         .boxed()
-                                                        .map(__ -> getRandomEfoAccession()))
+                                                        .map(__ -> generateRandomEfoAccession()))
                                         .distinct()));
         when(efoLookupServiceMock.expandOntologyTerms(assayIdToOntologyTerms)).thenReturn(expandedOntologyTerms);
 

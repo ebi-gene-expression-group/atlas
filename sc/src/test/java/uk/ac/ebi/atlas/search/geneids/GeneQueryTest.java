@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.getRandomKnownBioentityPropertyName;
+import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomKnownBioentityPropertyName;
 
 class GeneQueryTest {
     private static final Species HOMO_SAPIENS =
@@ -28,10 +28,10 @@ class GeneQueryTest {
     @MethodSource("blankStringProvider")
     void valueFieldIsMandatory(String queryTerm) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> GeneQuery.create(queryTerm, getRandomKnownBioentityPropertyName(), HOMO_SAPIENS))
+                .isThrownBy(() -> GeneQuery.create(queryTerm, generateRandomKnownBioentityPropertyName(), HOMO_SAPIENS))
                 .withMessage("Query term cannot be blank");
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> GeneQuery.create(queryTerm, getRandomKnownBioentityPropertyName()))
+                .isThrownBy(() -> GeneQuery.create(queryTerm, generateRandomKnownBioentityPropertyName()))
                 .withMessage("Query term cannot be blank");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> GeneQuery.create(queryTerm, HOMO_SAPIENS))
@@ -47,7 +47,7 @@ class GeneQueryTest {
                 .hasFieldOrPropertyWithValue("category", Optional.empty())
                 .hasFieldOrPropertyWithValue("species", Optional.empty());
 
-        BioentityPropertyName randomKnownPropertyName = getRandomKnownBioentityPropertyName();
+        BioentityPropertyName randomKnownPropertyName = generateRandomKnownBioentityPropertyName();
         assertThat(GeneQuery.create("foobar", randomKnownPropertyName))
                 .hasFieldOrPropertyWithValue("category", Optional.of(randomKnownPropertyName))
                 .hasFieldOrPropertyWithValue("species", Optional.empty());

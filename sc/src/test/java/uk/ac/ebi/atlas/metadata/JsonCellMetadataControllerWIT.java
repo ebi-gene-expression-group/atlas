@@ -110,7 +110,7 @@ class JsonCellMetadataControllerWIT {
 
     private Iterable<String> experimentsWithMetadataProvider() {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
-        return jdbcTestUtils.getPublicSingleCellExperimentAccessions()
+        return jdbcTestUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"))
                 .collect(Collectors.toSet());
