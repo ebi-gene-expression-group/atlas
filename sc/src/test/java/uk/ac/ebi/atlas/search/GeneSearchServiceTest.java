@@ -12,6 +12,7 @@ import org.mockito.quality.Strictness;
 import uk.ac.ebi.atlas.experimentimport.admin.Op;
 import uk.ac.ebi.atlas.experimentpage.TsnePlotSettingsService;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
+import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -49,78 +50,84 @@ class GeneSearchServiceTest {
 
     @Test
     void returnsCellIdsPerExperiment() {
+        String experimentAccession1 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession2 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession3 = RandomDataTestUtils.getRandomExperimentAccession();
+        String geneID = RandomDataTestUtils.getRandomEnsemblGeneId();
+
         Map<String, List<String>> ensg00000104957Cells =
                     ImmutableMap.of(
-                            "E-MTAB-0000",
+                            experimentAccession1,
                             ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
-                            "E-MTAB-0001",
+                            experimentAccession2,
                             ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
-                            "E-MTAB-0002",
+                            experimentAccession3 ,
                             ImmutableList.of("cell_id_9", "cell_id_10"));
 
-        when(geneSearchDaoMock.fetchCellIds("ENSG00000104957")).thenReturn(ensg00000104957Cells);
+        when(geneSearchDaoMock.fetchCellIds(geneID)).thenReturn(ensg00000104957Cells);
 
-        Map<String, Map<String, List<String>>> result = subject.getCellIdsInExperiments("ENSG00000104957");
+        Map<String, Map<String, List<String>>> result = subject.getCellIdsInExperiments(geneID);
 
         assertThat(result)
-                .containsOnlyKeys("ENSG00000104957")
-                .containsAllEntriesOf(ImmutableMap.of("ENSG00000104957", ensg00000104957Cells));
+                .containsOnlyKeys(geneID)
+                .containsAllEntriesOf(ImmutableMap.of(geneID, ensg00000104957Cells));
     }
 
     @Test
     void cellIdsPerExperimentForMultipleGeneIds() {
+        String experimentAccession1 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession2 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession3 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession4 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession5 = RandomDataTestUtils.getRandomExperimentAccession();
+        String geneID1 = RandomDataTestUtils.getRandomEnsemblGeneId();
+        String geneID2 = RandomDataTestUtils.getRandomEnsemblGeneId();
+
         Map<String, List<String>> ensfoobar1Cells = ImmutableMap.of(
-                "E-MTAB-0000", ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
-                "E-MTAB-0001", ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
-                "E-MTAB-0002", ImmutableList.of("cell_id_9", "cell_id_10"));
+                experimentAccession1, ImmutableList.of("cell_id_1", "cell_id_2", "cell_id_3", "cell_id_4", "cell_id_5"),
+                experimentAccession2, ImmutableList.of("cell_id_6", "cell_id_7", "cell_id_8"),
+                experimentAccession3, ImmutableList.of("cell_id_9", "cell_id_10"));
 
         Map<String, List<String>> ensfoobar2Cells = ImmutableMap.of(
-                "E-MTAB-0003", ImmutableList.of("cell_id_11", "cell_id_12", "cell_id_13"),
-                "E-MTAB-0004", ImmutableList.of("cell_id_14", "cell_id_15"));
+                experimentAccession4, ImmutableList.of("cell_id_11", "cell_id_12", "cell_id_13"),
+                experimentAccession5, ImmutableList.of("cell_id_14", "cell_id_15"));
 
-        when(geneSearchDaoMock.fetchCellIds("ENSFOOBAR1")).thenReturn(ensfoobar1Cells);
-        when(geneSearchDaoMock.fetchCellIds("ENSFOOBAR2")).thenReturn(ensfoobar2Cells);
+        when(geneSearchDaoMock.fetchCellIds(geneID1)).thenReturn(ensfoobar1Cells);
+        when(geneSearchDaoMock.fetchCellIds(geneID2)).thenReturn(ensfoobar2Cells);
 
-        assertThat(subject.getCellIdsInExperiments("ENSFOOBAR1", "ENSFOOBAR2"))
-                .containsAllEntriesOf(ImmutableMap.of("ENSFOOBAR1", ensfoobar1Cells, "ENSFOOBAR2", ensfoobar2Cells));
+        assertThat(subject.getCellIdsInExperiments(geneID1, geneID2))
+                .containsAllEntriesOf(ImmutableMap.of(geneID1, ensfoobar1Cells, geneID2, ensfoobar2Cells));
     }
 
     @Test
     void markerGeneProfilesForOneGeneId() {
-        Map<String, Map<Integer, List<Integer>>> ensg00000104957Profiles =
-                ImmutableMap.of(
-                        "E-MTAB-0000",
-                        ImmutableMap.of(
-                                5, ImmutableList.of(1, 3)),
-                        "E-MTAB-0001",
-                        ImmutableMap.of(
-                                10, ImmutableList.of(1, 5, 8),
-                                12, ImmutableList.of(12)));
+        String experimentAccession1 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession2 = RandomDataTestUtils.getRandomExperimentAccession();
+        String geneID = RandomDataTestUtils.getRandomEnsemblGeneId();
 
+        when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession1)).thenReturn(Optional.of(5));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession2)).thenReturn(Optional.of(10));
 
-        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0000")).thenReturn(Optional.of(5));
-        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0001")).thenReturn(Optional.of(10));
-
-        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSG00000104952","E-MTAB-0000", 5))
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID, experimentAccession1, 5))
                 .thenReturn(ImmutableMap.of(5, ImmutableList.of(1)));
-        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSG00000104952","E-MTAB-0001", 10))
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID, experimentAccession2, 10))
                 .thenReturn(ImmutableMap.of(10, ImmutableList.of(1)));
 
-        when(geneSearchDaoMock.experimentAccessionsForGeneId("ENSG00000104952")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
+        when(geneSearchDaoMock.experimentAccessionsForGeneId(geneID)).thenReturn(ImmutableList.of(experimentAccession1, experimentAccession2));
 
 
         Map<String, Map<String, Map<Integer, List<Integer>>>> result =
-                subject.getMarkerGeneProfile("ENSG00000104952");
+                subject.getMarkerGeneProfile(geneID);
 
         assertThat(result)
                 .isNotEmpty()
-                .containsOnlyKeys("ENSG00000104952")
-                .containsAllEntriesOf(ImmutableMap.of("ENSG00000104952",
+                .containsOnlyKeys(geneID)
+                .containsAllEntriesOf(ImmutableMap.of(geneID,
                         ImmutableMap.of(
-                            "E-MTAB-0000",
+                                experimentAccession1,
                             ImmutableMap.of(
                                     5, ImmutableList.of(1)),
-                            "E-MTAB-0001",
+                                experimentAccession2,
                             ImmutableMap.of(
                                     10, ImmutableList.of(1))))
                 );
@@ -128,63 +135,50 @@ class GeneSearchServiceTest {
 
     @Test
     void markerGeneProfilesForMultipleGeneIds() {
-        Map<String, Map<Integer, List<Integer>>> ensfoobar1Profiles =
-                ImmutableMap.of(
-                        "E-MTAB-0000",
-                        ImmutableMap.of(
-                                5, ImmutableList.of(1, 3)),
-                        "E-MTAB-0001",
-                        ImmutableMap.of(
-                                10, ImmutableList.of(1, 5, 8),
-                                12, ImmutableList.of(12)));
+        String experimentAccession1 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession2 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession3 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession4 = RandomDataTestUtils.getRandomExperimentAccession();
+        String geneID1 = RandomDataTestUtils.getRandomEnsemblGeneId();
+        String geneID2 = RandomDataTestUtils.getRandomEnsemblGeneId();
 
-        Map<String, Map<Integer, List<Integer>>> ensfoobar2Profiles =
-                ImmutableMap.of(
-                        "E-MTAB-0002",
-                        ImmutableMap.of(
-                                2, ImmutableList.of(1),
-                                6, ImmutableList.of(5, 6)),
-                        "E-MTAB-0003",
-                        ImmutableMap.of(
-                                4, ImmutableList.of(1, 2, 3)));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession1)).thenReturn(Optional.of(5));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession2)).thenReturn(Optional.of(10));
 
-        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0000")).thenReturn(Optional.of(5));
-        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0001")).thenReturn(Optional.of(10));
-
-        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR1","E-MTAB-0000", 5))
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID1, experimentAccession1, 5))
                 .thenReturn(ImmutableMap.of(5, ImmutableList.of(1)));
-        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR1","E-MTAB-0001", 10))
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID1, experimentAccession2, 10))
                 .thenReturn(ImmutableMap.of(10, ImmutableList.of(1)));
 
-        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0002")).thenReturn(Optional.of(2));
-        when(tsnePlotSettingsServiceMock.getExpectedClusters("E-MTAB-0003")).thenReturn(Optional.of(4));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession3)).thenReturn(Optional.of(2));
+        when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession4)).thenReturn(Optional.of(4));
 
-        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR2","E-MTAB-0002", 2))
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID2, experimentAccession3, 2))
                 .thenReturn(ImmutableMap.of(2, ImmutableList.of(1)));
-        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession("ENSFOOBAR2","E-MTAB-0003", 4))
+        when(geneSearchDaoMock.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID2, experimentAccession4, 4))
                 .thenReturn(ImmutableMap.of(4, ImmutableList.of(1)));
 
 
-        when(geneSearchDaoMock.experimentAccessionsForGeneId("ENSFOOBAR1")).thenReturn(ImmutableList.of("E-MTAB-0000", "E-MTAB-0001"));
-        when(geneSearchDaoMock.experimentAccessionsForGeneId("ENSFOOBAR2")).thenReturn(ImmutableList.of("E-MTAB-0002", "E-MTAB-0003"));
+        when(geneSearchDaoMock.experimentAccessionsForGeneId(geneID1)).thenReturn(ImmutableList.of(experimentAccession1, experimentAccession2));
+        when(geneSearchDaoMock.experimentAccessionsForGeneId(geneID2)).thenReturn(ImmutableList.of(experimentAccession3, experimentAccession4));
 
-        assertThat(subject.getMarkerGeneProfile("ENSFOOBAR1", "ENSFOOBAR2"))
+        assertThat(subject.getMarkerGeneProfile(geneID1, geneID2))
                 .containsAllEntriesOf(
                         ImmutableMap.of(
-                                "ENSFOOBAR1",
+                                geneID1,
                                 ImmutableMap.of(
-                                        "E-MTAB-0000",
+                                        experimentAccession1,
                                         ImmutableMap.of(
                                                 5, ImmutableList.of(1)),
-                                        "E-MTAB-0001",
+                                        experimentAccession2,
                                         ImmutableMap.of(
                                                 10, ImmutableList.of(1))),
-                                "ENSFOOBAR2",
+                                geneID2,
                                 ImmutableMap.of(
-                                        "E-MTAB-0002",
+                                        experimentAccession3,
                                         ImmutableMap.of(
                                                 2, ImmutableList.of(1)),
-                                        "E-MTAB-0003",
+                                        experimentAccession4,
                                         ImmutableMap.of(
                                                 4, ImmutableList.of(1)))
                         )
@@ -193,12 +187,15 @@ class GeneSearchServiceTest {
 
     @Test
     void returnsFacets() {
+        String experimentAccession1 = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession2 = RandomDataTestUtils.getRandomExperimentAccession();
+
         when(geneSearchDaoMock.getFacets(anyList(), any(SingleCellAnalyticsSchemaField.class)))
                 .thenReturn(ImmutableMap.of(
-                        "E-MTAB-0000", ImmutableMap.of(
+                        experimentAccession1, ImmutableMap.of(
                                 "inferred_cell_type", Arrays.asList("neuron", "stem cell"),
                                 "species", Collections.singletonList("homo sapiens")),
-                        "E-MTAB-0001", ImmutableMap.of(
+                        experimentAccession2, ImmutableMap.of(
                                 "inferred_cell_type", Arrays.asList("immune cell", "liver cell", "stem cell"),
                                 "organism_part", Collections.singletonList("liver"),
                                 "species", Arrays.asList("homo sapiens", "mus musculus"))
@@ -208,10 +205,10 @@ class GeneSearchServiceTest {
 
         assertThat(result)
                 .isNotEmpty()
-                .containsOnlyKeys("E-MTAB-0000", "E-MTAB-0001");
+                .containsOnlyKeys(experimentAccession1, experimentAccession2);
 
-        assertThat(result.get("E-MTAB-0000")).containsKeys("species");
-        assertThat(result.get("E-MTAB-0001")).containsKeys("species");
+        assertThat(result.get(experimentAccession1)).containsKeys("species");
+        assertThat(result.get(experimentAccession2)).containsKeys("species");
     }
 
     @Test
