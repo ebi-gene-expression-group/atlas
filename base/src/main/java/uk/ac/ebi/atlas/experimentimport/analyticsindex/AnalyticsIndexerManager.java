@@ -83,7 +83,13 @@ public class AnalyticsIndexerManager {
 
         ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch =
                 bioentityPropertiesDao.getMap(bioentityIdentifiersReader
-                        .getBioentityIdsFromExperiments(ExperimentType.values()));
+                        .getBioentityIdsFromExperiments(
+                                RNASEQ_MRNA_BASELINE,
+                                PROTEOMICS_BASELINE,
+                                RNASEQ_MRNA_DIFFERENTIAL,
+                                MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                                MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                                MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL));
         analyticsIndexerMonitor.update(
                 "Extracted " + bioentityIdToIdentifierSearch.size() + " bioentityIds from experiments");
 
