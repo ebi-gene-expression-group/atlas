@@ -28,8 +28,9 @@
     <!-- Use this CSS file for any custom styling -->
     <!--<link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">-->
 
-    <script src="/gxa/sc/vendorCommons.bundle.js"></script>
-    <script src="/gxa/sc/experimentPage.bundle.js"></script>
+    <script src="../../../../dist/vendors.bundle.js"></script>
+    <script src="../../../../dist/experimentPage.bundle.js"></script>
+    <script src="../../../../dist/experimentPageDemo.bundle.js"></script>
 </head>
 
 <body>
@@ -67,7 +68,7 @@
         type: 'experiment-design',
         name: 'Experiment Design',
         props: {
-          downloadUrl: 'experiment/E-EHCA-2/download?fileType=experiment-design&accessKey=',
+          downloadUrl: 'experiment/E-MTAB-5061/download?fileType=experiment-design&accessKey=',
           table: {
             headers: [
               {
@@ -188,7 +189,7 @@
             props: {
               data: [
                 ['Analysis Step', 'Method'],
-                ['Pipeline', 'Please see <a href=\"https://www.ebi.ac.uk/arrayexpress/experiments/E-EHCA-2\">https://www.ebi.ac.uk/arrayexpress/experiments/E-EHCA-2</a> for more information.'],
+                ['Pipeline', 'Please see <a href=\"https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-5061\">https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-5061</a> for more information.'],
                 ['Step 1', 'This is a description of step 1 of the analysis'],
                 ['Step 2', 'This is a description of step 2 of the analysis']]
             }
@@ -199,14 +200,14 @@
               data: [{
                 group: '',
                 type: 'icon-ae',
-                description: 'ArrayExpress: experiment E-EHCA-2',
-                url: 'https://www.ebi.ac.uk/arrayexpress/experiments/E-EHCA-2'
+                description: 'ArrayExpress: experiment E-MTAB-5061',
+                url: 'https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-5061'
               },
                 {
                   group: '',
                   type: 'icon-ae',
                   description: 'Dummy Link',
-                  url: 'https://www.ebi.ac.uk/arrayexpress/experiments/E-EHCA-2'
+                  url: 'https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-5061'
                 }]
             }
           }]
@@ -223,13 +224,13 @@
                 {
                   description: 'SDRF file',
                   type: 'icon-tsv',
-                  url: 'experiment/E-EHCA-2/download?fileType=sdrf&accessKey=',
+                  url: 'experiment/E-MTAB-5061/download?fileType=sdrf&accessKey=',
                   isDownload: true
                 },
                 {
                   description: 'IDF file',
                   type: 'icon-tsv',
-                  url: 'experiment/E-EHCA-2/download?fileType=idf&accessKey=',
+                  url: 'experiment/E-MTAB-5061/download?fileType=idf&accessKey=',
                   isDownload: true
                 }
               ]
@@ -240,7 +241,7 @@
                 {
                   description: 'The clustering file',
                   type: 'icon-tsv',
-                  url: 'experiment/E-EHCA-2/download?fileType=clustering&accessKey=',
+                  url: 'experiment/E-MTAB-5061/download?fileType=clustering&accessKey=',
                   isDownload: true
                 }
               ]
@@ -250,10 +251,10 @@
       }
     ]
 
-    experimentPage.render({
+    experimentPageDemo.render({
         atlasUrl: 'http://localhost:8080/gxa/sc/',
         content: {
-          experimentAccession: 'E-EHCA-2',
+          experimentAccession: 'E-MTAB-5061',
           experimentType: 'SINGLE_CELL_RNASEQ_MRNA_BASELINE',
           species: 'Homo sapiens',
           tabs: tabs
