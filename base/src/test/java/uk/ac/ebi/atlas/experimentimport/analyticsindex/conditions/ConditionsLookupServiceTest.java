@@ -58,7 +58,7 @@ class ConditionsLookupServiceTest {
 
     @Test
     void baselineConditions() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
 
         when(conditionsCollector.getConditions(any(BaselineExperiment.class)))
                 .thenReturn(Stream.of(
@@ -77,7 +77,7 @@ class ConditionsLookupServiceTest {
 
     @Test
     void differentialConditions() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
 
         when(conditionsCollector.getConditions(any(DifferentialExperiment.class)))
                 .thenReturn(Stream.of(

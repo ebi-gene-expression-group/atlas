@@ -49,7 +49,7 @@ public class MockExperiment {
     private static final List<String> PROVIDER_DESCRIPTION =
             Arrays.asList("Baseline experiment data provider", "Another baseline experiment data provider");
     private static final String EXPERIMENT_ACCESSION =
-            RandomDataTestUtils.getRandomExperimentAccession();
+            RandomDataTestUtils.generateRandomExperimentAccession();
     private static final ImmutableSet<String> ARRAY_DESIGN_ACCESSIONS =
             ImmutableSet.of("A-AFFY-44", "A-GEOD-20277");
     private static final List<ArrayDesign> ARRAY_DESIGNS =

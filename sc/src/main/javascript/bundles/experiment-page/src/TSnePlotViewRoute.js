@@ -38,7 +38,7 @@ const TSnePlotViewRoute = (props) => {
         experimentAccession={experimentAccession}
         ks={ks}
         metadata={metadata}
-        selectedColourBy={search.k || search.metadata || props.selectedK || props.ks[0].toString()}
+        selectedColourBy={search.k || search.metadata || props.selectedK.toString() || props.ks[0].toString()}
         selectedColourByCategory={search.colourBy || `clusters`} // Is the plot coloured by clusters or metadata
         highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
         perplexities={perplexitiesOrdered}

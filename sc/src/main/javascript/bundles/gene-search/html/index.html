@@ -18,18 +18,18 @@
 </div>
 </body>
 
-<script src="vendorCommons.bundle.js"></script>
-<script src="geneSearch.bundle.js"></script>
+<script src="../dist/vendors.bundle.js"></script>
+<script src="../dist/geneSearch.bundle.js"></script>
+<script src="../dist/geneSearchDemo.bundle.js"></script>
 
-<!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/scxa/ -- Remember the trailing slash! -->
 <script>
-  geneSearch.render({
-    atlasUrl: 'http://localhost:8080/scxa/',
+  geneSearchDemo.render({
+    atlasUrl: 'http://localhost:8080/gxa/sc/',
     noResultsMessage: 'No results found',
     resultsMessage: 'Results found:',
-    // resource: 'json/search/ENSMMUG00000039038' // non-existent
-    // resource: 'json/search/ENSG00000000003' // with marker genes
-    resource: 'json/search/ENSMUSG00000000339' // without marker genes
+    // resource: 'json/search/?q=ENSMMUG00000039038' // non-existent
+    resource: 'json/search/?q=ENSG00000000003' // with marker genes
+    // resource: 'json/search/?q=ENSMUSG00000000339' // without marker genes
   }, 'target')
 </script>
 

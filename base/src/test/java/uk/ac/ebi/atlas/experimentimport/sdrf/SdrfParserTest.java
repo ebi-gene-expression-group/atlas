@@ -39,7 +39,7 @@ public class SdrfParserTest {
 
     @Test
     void parseHeaderWithCharacteristicsAndFactors() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
 
         dataFileHub.addSdrfFile(experimentAccession, Arrays.asList(SDRF_TXT_MIXED_SPACING));
 
@@ -58,7 +58,7 @@ public class SdrfParserTest {
 
     @Test
     void parseHeaderWithCharacteristicsOnly() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
 
         dataFileHub.addSdrfFile(experimentAccession, Arrays.asList(SDRF_TXT_NO_FACTORS));
 

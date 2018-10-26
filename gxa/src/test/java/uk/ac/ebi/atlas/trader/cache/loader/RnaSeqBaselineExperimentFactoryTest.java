@@ -73,7 +73,7 @@ class RnaSeqBaselineExperimentFactoryTest {
 
     @Test
     void idfTitleOverridesDatabaseTitle() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         when(configurationTraderMock.getExperimentConfiguration(experimentAccession))
                 .thenReturn(configurationMock);
         when(configurationTraderMock.getBaselineFactorsConfiguration(experimentAccession))
