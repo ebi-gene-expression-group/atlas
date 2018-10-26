@@ -15,7 +15,7 @@ class IdfParserTest {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
 
-    private static final String TITLE =
+    private static final String INVESTIGATION_TITLE =
             "RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)";
     private static final String AE_DISPLAY_NAME =
             "Study investigating RNA-Seq of human individual tissues and mixture of 16 tissues";
@@ -31,7 +31,7 @@ class IdfParserTest {
             {"individual", "genotype", "FACS marker"};
 
     private static final String[][] IDF_TXT = {
-            {"Investigation Title", TITLE},
+            {"Investigation Title", INVESTIGATION_TITLE},
             {"Comment[AEExperimentDisplayName]", AE_DISPLAY_NAME},
             {"PubMed ID", PUBMED_IDS_ARRAY[0], PUBMED_IDS_ARRAY[1], PUBMED_IDS_ARRAY[2]},
             {"Publication Title", PUBLICATIONS_ARRAY[0], PUBLICATIONS_ARRAY[1], PUBLICATIONS_ARRAY[2]},
@@ -42,8 +42,19 @@ class IdfParserTest {
             }
     };
 
+    private static final String[][] IDF_TXT_WHITESPACES_IN_COMMENTS = {
+            {"Investigation Title", INVESTIGATION_TITLE},
+            {"Comment [AEExperimentDisplayName]", AE_DISPLAY_NAME},
+            {"Comment [EAExpectedClusters]", EXPECTED_CLUSTERS},
+    };
+
+    private static final String[][] IDF_TXT_SPACES_IN_FIELD_VALUES = {
+            {"Investigation Title", INVESTIGATION_TITLE},
+            {"Comment [AEExperimentDisplayName]", "     "},
+    };
+
     private static final String[][] IDF_TXT_MIXED_CASE = {
-            {"INVESTIGATION TITLE   ", TITLE},
+            {"INVESTIGATION INVESTIGATION_TITLE   ", INVESTIGATION_TITLE},
             {" comment[AEExperimentDisplayName]", AE_DISPLAY_NAME},
             {"PubMed id", PUBMED_IDS_ARRAY[0], PUBMED_IDS_ARRAY[1], PUBMED_IDS_ARRAY[2]},
             {"publication title", PUBLICATIONS_ARRAY[0], PUBLICATIONS_ARRAY[1], PUBLICATIONS_ARRAY[2]},
@@ -51,20 +62,20 @@ class IdfParserTest {
     };
 
     private static final String[][] IDF_TXT_DUPLICATE_FIELDS = {
-            {"Investigation Title", TITLE},
+            {"Investigation Title", INVESTIGATION_TITLE},
             {"Comment[AEExperimentDisplayName]", AE_DISPLAY_NAME},
             {"Comment[AEExperimentDisplayName]", "Foobar"},
             {"PubMed ID", PUBMED_IDS_ARRAY[0], PUBMED_IDS_ARRAY[1], PUBMED_IDS_ARRAY[2]},
             {"Publication Title", PUBLICATIONS_ARRAY[0], PUBLICATIONS_ARRAY[1], PUBLICATIONS_ARRAY[2]},
             {"Comment[EAExpectedClusters]", EXPECTED_CLUSTERS},
             {
-                    "Comment[EAAdditionalAttributes]",
-                    ADDITIONAL_ATTRIBUTES[0], ADDITIONAL_ATTRIBUTES[1], ADDITIONAL_ATTRIBUTES[2]
+                "Comment[EAAdditionalAttributes]",
+                ADDITIONAL_ATTRIBUTES[0], ADDITIONAL_ATTRIBUTES[1], ADDITIONAL_ATTRIBUTES[2]
             }
     };
 
     private static final String[][] IDF_TXT_EMPTY_DISPLAY_NAME = {
-            {"Investigation Title", TITLE},
+            {"Investigation Title", INVESTIGATION_TITLE},
             {"Comment[AEExperimentDisplayName]", ""}
     };
 
@@ -119,7 +130,7 @@ class IdfParserTest {
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
-        assertThat(idfParserOutput.getTitle()).isEqualTo(TITLE);
+        assertThat(idfParserOutput.getTitle()).isEqualTo(INVESTIGATION_TITLE);
         assertThat(idfParserOutput.getPubmedIds()).containsOnlyElementsOf(PUBMED_IDS);
     }
 
@@ -159,6 +170,25 @@ class IdfParserTest {
 
         IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
 
-        assertThat(idfParserOutput.getTitle()).isEqualTo(TITLE);
+        assertThat(idfParserOutput.getTitle()).isEqualTo(INVESTIGATION_TITLE);
+    }
+
+    @Test
+    void parsesCommentsWithWhitespaces() {
+        dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT_WHITESPACES_IN_COMMENTS));
+
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
+
+        assertThat(idfParserOutput.getTitle()).isEqualTo(AE_DISPLAY_NAME);
+        assertThat(idfParserOutput.getExpectedClusters()).isEqualTo(NumberUtils.toInt(EXPECTED_CLUSTERS));
+    }
+
+    @Test
+    void ignoresFieldsWithEmptyValuesMadeUpOfWhitespaces() {
+        dataFileHub.addIdfFile(E_MTAB_513, Arrays.asList(IDF_TXT_SPACES_IN_FIELD_VALUES));
+
+        IdfParserOutput idfParserOutput = subject.parse(E_MTAB_513);
+
+        assertThat(idfParserOutput.getTitle()).isEqualTo(INVESTIGATION_TITLE);
     }
 }

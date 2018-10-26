@@ -1,11 +1,17 @@
 package uk.ac.ebi.atlas.resource;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -13,23 +19,51 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
+import java.nio.file.Path;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional(transactionManager = "txManager")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DataFileHubIT {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataFileHubIT.class);
 
     @Inject
-    private DataFileHubFactory dataFileHubFactory;
+    private DataSource dataSource;
+
+    @Inject
+    private Path dataFilesPath;
+
     @Inject
     private JdbcUtils jdbcUtils;
 
+    private DataFileHub subject;
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
+
     @Test
     void testGetExperimentFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession = jdbcUtils.fetchRandomExpressionAtlasExperimentAccession();
         LOGGER.info("Test experiment files for experiment {}", experimentAccession);
 
@@ -40,7 +74,7 @@ class DataFileHubIT {
 
     @Test
     void testGetBaselineFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession =
                 jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_BASELINE);
         LOGGER.info("Test baseline experiment files for experiment {}", experimentAccession);
@@ -55,7 +89,7 @@ class DataFileHubIT {
 
     @Test
     void testGetProteomicsBaselineFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession =
                 jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.PROTEOMICS_BASELINE);
         LOGGER.info("Test proteomics baseline experiment files for experiment {}", experimentAccession);
@@ -65,7 +99,7 @@ class DataFileHubIT {
 
     @Test
     void testGetDifferentialExperimentFiles() {
-        DataFileHub subject = dataFileHubFactory.getGxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("gxa"));
         String experimentAccession =
                 jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
         LOGGER.info("Test differential experiment files for experiment {}", experimentAccession);
@@ -77,9 +111,17 @@ class DataFileHubIT {
     @Test
     void findsTSnePlotFiles() {
         String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
-        DataFileHub subject = dataFileHubFactory.getScxaDataFileHub();
+        subject = new DataFileHub(dataFilesPath.resolve("scxa"));
         LOGGER.info("Test tsne plot files for experiment {}", experimentAccession);
         assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs.values());
+    }
+
+    @Test
+    void findsMarkerGeneFiles() {
+        String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
+        DataFileHub subject = new DataFileHub(dataFilesPath.resolve("scxa"));
+        LOGGER.info("Test marker gene files for experiment {}", experimentAccession);
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).markerGeneTsvs.values());
     }
 
     private void assertAtlasResourceExists(AtlasResource<?> resource) {

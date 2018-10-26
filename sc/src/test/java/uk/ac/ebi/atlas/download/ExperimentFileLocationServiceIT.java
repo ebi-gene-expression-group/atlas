@@ -1,16 +1,22 @@
 package uk.ac.ebi.atlas.download;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.io.File;
 import java.net.URI;
 import java.nio.file.Path;
@@ -18,16 +24,19 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ExperimentFileLocationServiceIT {
     private static final String EXPERIMENT_DESIGN_FILE_NAME_TEMPLATE = "ExpDesign-{0}.tsv";
     private static final String SDRF_FILE_NAME_TEMPLATE = "{0}.sdrf.txt";
     private static final String CLUSTERS_FILE_NAME_TEMPLATE = "{0}.clusters.tsv";
+    private static final String MARKER_GENES_FILE_NAME_TEMPLATE = "{0}.marker_genes_{1}.tsv";
 
     private static final String MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE = "{0}.expression_tpm.mtx";
     private static final String MATRIX_MARKET_FILTERED_QUANTIFICATION_ROWS_FILE_NAME_TEMPLATE =
@@ -40,12 +49,35 @@ class ExperimentFileLocationServiceIT {
             "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
 
     @Inject
+    private DataSource dataSource;
+
+    @Inject
     private JdbcUtils jdbcTestUtils;
 
     @Inject
     private DataFileHub dataFileHub;
 
     private ExperimentFileLocationService subject;
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_marker_genes-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_cell_clusters-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_marker_genes-delete.sql"),
+                new ClassPathResource("fixtures/scxa_cell_clusters-delete.sql"));
+        populator.execute(dataSource);
+    }
 
     @BeforeEach
     void setUp() {
@@ -72,14 +104,30 @@ class ExperimentFileLocationServiceIT {
 
     @Test
     void existingFilteredQuantificationFiles() {
-        List<String> fileNameTemplates =
-                Arrays.asList(
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<String> expectedFileNames =
+                Stream.of(
                         MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE,
                         MATRIX_MARKET_FILTERED_QUANTIFICATION_ROWS_FILE_NAME_TEMPLATE,
-                        MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE);
+                        MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE)
+                        .map(template -> MessageFormat.format(template, experimentAccession))
+                        .collect(Collectors.toList());
 
-        existingArchiveFilesOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
-                ExperimentFileType.QUANTIFICATION_FILTERED, fileNameTemplates);
+        existingArchiveFilesOfType(experimentAccession,
+                ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames);
+    }
+
+    @Test
+    void existingMarkerGeneFiles() {
+        String experimentAccession = "E-MTAB-5061"; //jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<Integer> ks = jdbcTestUtils.fetchKsFromCellClusters(experimentAccession);
+
+        List<String> expectedFileNames = ks
+                .stream()
+                .map(k -> MessageFormat.format(MARKER_GENES_FILE_NAME_TEMPLATE, experimentAccession, k))
+                .collect(Collectors.toList());
+
+        existingArchiveFilesOfType(experimentAccession, ExperimentFileType.MARKER_GENES, expectedFileNames);
     }
 
     @Test
@@ -144,10 +192,11 @@ class ExperimentFileLocationServiceIT {
 
     private void existingArchiveFilesOfType(String experimentAccession,
                                             ExperimentFileType fileType,
-                                            List<String> fileNameTemplates) {
+                                            List<String> expectedFileNames) {
         List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
 
-        assertThat(paths).hasSameSizeAs(fileNameTemplates);
+        // Some paths, e.g. marker genes, might not be all in the DB
+        assertThat(paths.size()).isGreaterThanOrEqualTo(expectedFileNames.size());
 
         for (Path path : paths) {
             File file = path.toFile();
@@ -161,12 +210,8 @@ class ExperimentFileLocationServiceIT {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
-        assertThat(fileNames)
-                .containsAll(
-                        fileNameTemplates
-                                .stream()
-                                .map(template -> MessageFormat.format(template, experimentAccession))
-                                .collect(Collectors.toList())
-                );
+        assertThat(expectedFileNames)
+                .isNotEmpty()
+                .containsAnyElementsOf(fileNames);
     }
 }

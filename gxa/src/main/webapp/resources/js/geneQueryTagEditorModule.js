@@ -34,8 +34,8 @@ var geneQueryTagEditorModule = (function($) {
                         success: function(data) {
                             var category_data = $.map(data, function (obj) {
                                 return {
-                                    label: obj.value,
-                                    value: obj.value,
+                                    label: obj.term,
+                                    value: obj.term,
                                     category: obj.category
                                 };
                             });

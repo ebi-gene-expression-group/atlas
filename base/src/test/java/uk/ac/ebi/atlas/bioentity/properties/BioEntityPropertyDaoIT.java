@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
@@ -52,7 +53,7 @@ public class BioEntityPropertyDaoIT {
                 is(greaterThan(MIN_NUMBER_OF_GO_TERMS)));
         assertThat(
                 properties.get(BioentityPropertyName.INTERPRO),
-                containsInAnyOrder("IPR000601", "IPR022409", "IPR013783"));
+                hasItems("IPR000601", "IPR022409", "IPR013783"));
         assertThat(
                 properties.get(BioentityPropertyName.ENSFAMILY_DESCRIPTION),
                 containsInAnyOrder("PRECURSOR"));
@@ -68,9 +69,6 @@ public class BioEntityPropertyDaoIT {
         assertThat(
                 properties.get(BioentityPropertyName.MGI_ID),
                 containsInAnyOrder("MGI:1934765"));
-        assertThat(
-                properties.get(BioentityPropertyName.MGI_DESCRIPTION),
-                containsInAnyOrder("glycoprotein (transmembrane) nmb"));
         assertThat(
                 properties.get(BioentityPropertyName.GENE_BIOTYPE),
                 containsInAnyOrder("protein_coding"));

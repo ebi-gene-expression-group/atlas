@@ -45,3 +45,8 @@ hr {
 #experiment-page svg {
     overflow: visible !important;
 }
+
+/* Match margin set by React-Select components */
+#experiment-page .gene-search-container {
+    margin-bottom: 1rem;
+}

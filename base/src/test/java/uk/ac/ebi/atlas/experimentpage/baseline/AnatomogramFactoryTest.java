@@ -5,6 +5,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.util.List;
@@ -17,10 +18,10 @@ public class AnatomogramFactoryTest {
     @Test
     public void anatomogramShowsUpWhenThereAreOrganismParts() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
-        AssayGroup g1 = new AssayGroup("g1", "r1");
-        AssayGroup g2 = new AssayGroup("g2", "r2");
-        AssayGroup g3 = new AssayGroup("g3", "r3");
-        AssayGroup g4 = new AssayGroup("g4", "r4");
+        AssayGroup g1 = AssayGroupFactory.create("g1", "r1");
+        AssayGroup g2 = AssayGroupFactory.create("g2", "r2");
+        AssayGroup g3 = AssayGroupFactory.create("g3", "r3");
+        AssayGroup g4 = AssayGroupFactory.create("g4", "r4");
         List<AssayGroup> assayGroups = ImmutableList.of(g1, g2, g3, g4);
 
         experimentDesign.putFactor("r1", AnatomogramFactory.FACTOR_TYPE_WITH_ANATOMOGRAM, "liver");

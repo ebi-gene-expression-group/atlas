@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
 import static org.hamcrest.Matchers.contains;
@@ -95,7 +96,7 @@ public class ExperimentDesignFileTest {
 
         when(baselineExperiment.getAccession()).thenReturn("E-FOOBAR");
         when(baselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(
-                new AssayGroup(
+                AssayGroupFactory.create(
                         "g1", "assay1", "assay2", "assay3"),
                 new AssayGroup(
                         "g2", ImmutableSet.of(new BiologicalReplicate("t1", ImmutableSet.of("assay4", "assay5"))))));

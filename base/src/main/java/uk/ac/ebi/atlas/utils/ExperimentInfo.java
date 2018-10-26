@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -28,7 +29,7 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
     private int numberOfContrasts;
     private String species;
     private String kingdom;
-    private SortedSet<String> experimentalFactors = Sets.newTreeSet();
+    private List<String> experimentalFactors = new ArrayList<>();
     private List<String> arrayDesigns = ImmutableList.of();
     private List<String> arrayDesignNames = ImmutableList.of();
 
@@ -88,12 +89,12 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
         this.kingdom = kingdom;
     }
 
-    public SortedSet<String> getExperimentalFactors() {
+    public List<String> getExperimentalFactors() {
         return experimentalFactors;
     }
 
     public void setExperimentalFactors(Set<String> experimentalFactors) {
-        this.experimentalFactors = Sets.newTreeSet(experimentalFactors);
+        this.experimentalFactors = new ArrayList<>(experimentalFactors);
     }
 
     public List<String> getArrayDesigns() {

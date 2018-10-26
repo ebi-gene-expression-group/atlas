@@ -7,9 +7,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration;
-import uk.ac.ebi.atlas.resource.DataFileHubFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
+
+import java.nio.file.Path;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
@@ -18,13 +20,13 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(classes = TestConfig.class)
 public class ConfigurationTraderIT {
     @Inject
-    private DataFileHubFactory dataFileHubFactory;
+    private Path dataFilesPath;
 
     private ConfigurationTrader subject;
 
     @Before
     public void setUp() {
-        subject = new ConfigurationTrader(dataFileHubFactory.getGxaDataFileHub());
+        subject = new ConfigurationTrader(new DataFileHub(dataFilesPath.resolve("gxa")));
     }
 
     @Test

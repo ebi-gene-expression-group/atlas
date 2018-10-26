@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import java.util.Collection;
 import java.util.Objects;
 
@@ -33,8 +35,8 @@ public class DifferentialCondition extends Condition {
         }
         final DifferentialCondition other = (DifferentialCondition) obj;
         return Objects.equals(this.getExperimentAccession(), other.getExperimentAccession()) &&
-                Objects.equals(this.getAssayGroupId(), other.getAssayGroupId()) &&
-                Objects.equals(this.contrastId, other.contrastId) &&
-                Objects.equals(this.getValues(), other.getValues());
+               Objects.equals(this.getAssayGroupId(), other.getAssayGroupId()) &&
+               Objects.equals(this.contrastId, other.contrastId) &&
+               CollectionUtils.isEqualCollection(this.getValues(), other.getValues());
     }
 }

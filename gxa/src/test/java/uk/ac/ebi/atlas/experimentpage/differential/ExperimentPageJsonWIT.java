@@ -2,22 +2,30 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,14 +33,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ExperimentPageJsonWIT {
+    @Inject
+    private DataSource dataSource;
+
+    @Inject
+    private JdbcUtils jdbcUtils;
+
     @Autowired
     private WebApplicationContext wac;
+
     private MockMvc mockMvc;
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
 
     @BeforeEach
     void setUp() {
@@ -69,12 +105,18 @@ class ExperimentPageJsonWIT {
         assertThat(jsonObject.get("columnGroupings").getAsJsonArray()).isEmpty();
     }
 
-    private static Stream<Arguments> experimentAccesionWithTypeProvider() {
+    private Stream<Arguments> experimentAccesionWithTypeProvider() {
         return Stream.of(
-                Arguments.of("E-MTAB-513", ExperimentType.RNASEQ_MRNA_BASELINE),
-                Arguments.of("E-MTAB-3028", ExperimentType.RNASEQ_MRNA_BASELINE),
-                Arguments.of("E-PROT-1", ExperimentType.PROTEOMICS_BASELINE),
-                Arguments.of("E-GEOD-54705", ExperimentType.RNASEQ_MRNA_DIFFERENTIAL),
-                Arguments.of("E-GEOD-57907", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
+                RNASEQ_MRNA_BASELINE,
+                PROTEOMICS_BASELINE,
+                RNASEQ_MRNA_DIFFERENTIAL,
+                MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)
+                .map(
+                        experimentType ->
+                                Arguments.of(
+                                        jdbcUtils.fetchRandomExpressionAtlasExperimentAccession(experimentType),
+                                        experimentType));
     }
 }

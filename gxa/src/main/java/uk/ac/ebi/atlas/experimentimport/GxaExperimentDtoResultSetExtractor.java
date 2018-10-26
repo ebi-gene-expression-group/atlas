@@ -15,13 +15,13 @@ public class GxaExperimentDtoResultSetExtractor extends ExperimentDTOResultSetEx
     @Override
     protected ExperimentDTO createExperimentDTO(ResultSet resultSet, String experimentAccession) throws SQLException {
         ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
-        String species = resultSet.getString("organism");
+        String species = resultSet.getString("species");
         Date lastUpdate = resultSet.getTimestamp("last_update");
-        boolean isPrivate = "T".equals(resultSet.getString("private"));
+        boolean isPrivate = resultSet.getBoolean("private");
         String accessKeyUUID = resultSet.getString("access_key");
         String title = StringUtils.isEmpty(resultSet.getString("title")) ? "" : resultSet.getString("title");
 
-        String pubMedIdsString = resultSet.getString("pubmed_Ids");
+        String pubMedIdsString = resultSet.getString("pubmed_ids");
         Set<String> pubMedIds = StringUtils.isBlank(pubMedIdsString) ?
                 new HashSet<>() :
                 Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));

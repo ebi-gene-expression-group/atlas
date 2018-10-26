@@ -14,7 +14,11 @@ import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy
 import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
 
 import java.sql.ResultSet;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
@@ -40,7 +44,7 @@ public class GeneSearchDao {
             "SELECT experiment_accession, cell_id FROM scxa_analytics AS analytics " +
                     "JOIN scxa_experiment AS experiments ON analytics.experiment_accession = experiments.accession " +
                     "WHERE gene_id=:gene_id AND private=FALSE";
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "txManager", readOnly = true)
     public Map<String, List<String>> fetchCellIds(String geneId) {
         LOGGER.debug("Fetching cell IDs for {}", geneId);
 

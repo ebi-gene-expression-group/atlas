@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.model.ArrayDesign;
+import uk.ac.ebi.atlas.model.arraydesign.ArrayDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;

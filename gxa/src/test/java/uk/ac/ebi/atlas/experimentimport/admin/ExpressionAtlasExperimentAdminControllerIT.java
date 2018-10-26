@@ -25,7 +25,7 @@
 //
 //@WebAppConfiguration
 //@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = WebConfig.class)
+//@ContextConfiguration(classes = TestConfig.class)
 //public class ExpressionAtlasExperimentAdminControllerIT {
 //
 //    @Inject

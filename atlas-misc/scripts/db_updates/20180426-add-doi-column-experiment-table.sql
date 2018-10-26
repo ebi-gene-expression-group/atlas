@@ -1,2 +1,0 @@
-ALTER TABLE experiment
-    ADD COLUMN dois VARCHAR(255);

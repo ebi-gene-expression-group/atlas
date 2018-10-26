@@ -49,12 +49,12 @@ class TSnePlotServiceTest {
     @Test
     @DisplayName("Points retrieved by the DAO class are assigned the right cluster")
     void testFetchPlotWithClusters() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         int[] perplexities = new int[] {1, 5, 10, 15, 20};
         int perplexity = perplexities[ThreadLocalRandom.current().nextInt(0, perplexities.length)];
         int k = ThreadLocalRandom.current().nextInt(5, 20);
 
-        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.randomTSnePointDtosWithClusters(NUMBER_OF_CELLS, k);
+        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtosWithClusters(NUMBER_OF_CELLS, k);
         when(tSnePlotServiceDaoMock.fetchTSnePlotWithClusters(experimentAccession, perplexity, k))
                 .thenReturn(ImmutableList.copyOf(randomPointDtos));
 
@@ -86,13 +86,13 @@ class TSnePlotServiceTest {
     @Test
     @DisplayName("Points retrieved by the DAO class are correctly grouped according to metadata values")
     void testFetchPlotWithMetadata() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         int[] perplexities = new int[] {1, 5, 10, 15, 20};
         int perplexity = perplexities[ThreadLocalRandom.current().nextInt(0, perplexities.length)];
         String metadataCategory = "characteristic_inferred_cell_type";
         List<String> metadataValues = Arrays.asList("neuron", "stem cell", "B cell");
 
-        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.randomTSnePointDtos(NUMBER_OF_CELLS);
+        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtos(NUMBER_OF_CELLS);
         when(tSnePlotServiceDaoMock.fetchTSnePlotForPerplexity(experimentAccession, perplexity))
                 .thenReturn(ImmutableList.copyOf(randomPointDtos));
 
@@ -126,12 +126,12 @@ class TSnePlotServiceTest {
     @Test
     @DisplayName("Points DTOs retrieved by the DAO class are correctly transformed to their non-DTO counterparts")
     void testFetchPlotWithExpressionLevels() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         int[] perplexities = new int[] {1, 5, 10, 15, 20};
         int perplexity = perplexities[ThreadLocalRandom.current().nextInt(0, perplexities.length)];
-        String geneId = RandomDataTestUtils.getRandomEnsemblGeneId();
+        String geneId = RandomDataTestUtils.generateRandomEnsemblGeneId();
 
-        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.randomTSnePointDtosWithExpression(NUMBER_OF_CELLS);
+        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtosWithExpression(NUMBER_OF_CELLS);
         when(tSnePlotServiceDaoMock.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId))
                 .thenReturn(ImmutableList.copyOf(randomPointDtos));
 

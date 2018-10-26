@@ -7,16 +7,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.search.suggester.SuggesterDao;
+import uk.ac.ebi.atlas.search.suggester.SuggesterService;
 
+import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
 @Scope("request")
 public class AutoCompleteController extends JsonExceptionHandlingController {
-    private final SuggesterDao suggesterDao;
+    private final SuggesterService suggesterService;
 
-    public AutoCompleteController(SuggesterDao suggesterDao) {
-        this.suggesterDao = suggesterDao;
+    public AutoCompleteController(SuggesterService suggesterService) {
+        this.suggesterService = suggesterService;
     }
 
     @RequestMapping(value = "/json/suggestions",
@@ -24,8 +26,8 @@ public class AutoCompleteController extends JsonExceptionHandlingController {
                     produces = "application/json;charset=UTF-8")
     public String fetchTopSuggestions(
             @RequestParam(value = "query") String query,
-            @RequestParam(value = "species", required = false, defaultValue = "") String species,
-            @RequestParam(value = "suggestCount", required = false, defaultValue = "15") int suggestCount) {
-        return GSON.toJson(suggesterDao.fetchPropertySuggestions(query, suggestCount, species.split(",")));
+            @RequestParam(value = "species", required = false, defaultValue = "") String species) {
+        return GSON.toJson(
+                suggesterService.fetchPropertiesWithHighlighting(query, species.split(",")).collect(toList()));
     }
 }

@@ -8,15 +8,12 @@ import java.text.MessageFormat;
 
 public class DifferentialExpression implements Expression {
     private static final double SMALLEST_P_VALUE_ALLOWED = 1E-125;
-    public static final double WEAKEST_LEVEL = 0;
 
     private double pValue;
     private double foldChange;
 
-
-    // If pValue is smaller than minim allowed value, treat it as 0D. This checks this condition when reading
-    //  from the tsv file
-
+    // If adjusted p-value is smaller than the minimum allowed value, treat it as 0D. This condition is checked when
+    // reading from the TSV file
     public DifferentialExpression(double pValue, double foldChange) {
         this.pValue = (pValue < SMALLEST_P_VALUE_ALLOWED) ? 0D : pValue;
         this.foldChange = foldChange;

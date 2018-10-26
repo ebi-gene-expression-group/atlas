@@ -1,0 +1,1 @@
+DELETE FROM scxa_cell_clusters;

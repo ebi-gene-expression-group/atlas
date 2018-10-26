@@ -37,7 +37,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.AnalyticsCollectionProxy.EX
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
 class FacetStreamBuilderIT {
-    private static final String E_MTAB_513 = "E-MTAB-513";
+    private static final String E_MTAB_2770 = "E-MTAB-2770";
 
     @Inject
     private SolrCloudCollectionProxyFactory collectionProxyFactory;
@@ -109,7 +109,7 @@ class FacetStreamBuilderIT {
     void includeAverage() {
         // We need to specify a baseline experiment, otherwise avg(abs(expression_level)) will be 0
         SolrQueryBuilder<AnalyticsCollectionProxy> solrQueryBuilder = new SolrQueryBuilder<>();
-        solrQueryBuilder.addFilterFieldByTerm(EXPERIMENT_ACCESSION, E_MTAB_513);
+        solrQueryBuilder.addFilterFieldByTerm(EXPERIMENT_ACCESSION, E_MTAB_2770);
         try (TupleStreamer filteredByExperimentStreamer =
                      TupleStreamer.of(new FacetStreamBuilder<>(analyticsCollectionProxy, BIOENTITY_IDENTIFIER)
                             .withQuery(solrQueryBuilder.build())
@@ -182,7 +182,7 @@ class FacetStreamBuilderIT {
                 .addFilterFieldByTerm(ASSAY_GROUP_ID, assayGroups)
                 .addFilterFieldByRangeMin(EXPRESSION_LEVEL, 10.0)
                 .addFilterFieldByRangeMinMax(EXPRESSION_LEVEL, 300.0, 600.0)
-                .addQueryFieldByTerm(EXPERIMENT_ACCESSION, E_MTAB_513);
+                .addQueryFieldByTerm(EXPERIMENT_ACCESSION, E_MTAB_2770);
 
 
         return Stream.of(

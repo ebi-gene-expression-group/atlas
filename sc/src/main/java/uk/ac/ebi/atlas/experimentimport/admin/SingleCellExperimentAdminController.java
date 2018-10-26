@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrudFactory;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.experimentimport.SingleCellExperimentChecker;
-import uk.ac.ebi.atlas.experimentimport.analytics.ScxaAnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -22,16 +21,14 @@ public class SingleCellExperimentAdminController extends ExperimentAdminControll
                                                ExperimentCrudFactory experimentCrudFactory,
                                                ScxaExperimentDao experimentDao,
                                                SingleCellExperimentChecker experimentChecker,
-                                               ScxaAnalyticsLoaderFactory analyticsLoaderFactory,
                                                ExperimentTrader experimentTrader,
                                                ExperimentAttributesService experimentAttributesService) {
         super(
                 new ExperimentOps(
                         new ExperimentOpLogWriter(dataFileHub),
                         new SingleCellOpsExecutionService(
-                                experimentCrudFactory.create(experimentDao, experimentChecker, analyticsLoaderFactory),
+                                experimentCrudFactory.create(experimentDao, experimentChecker),
                                 experimentTrader,
-                                analyticsLoaderFactory,
                                 experimentAttributesService)));
     }
 }

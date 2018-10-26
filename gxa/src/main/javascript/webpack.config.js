@@ -3,16 +3,10 @@ var path = require('path');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackShellPlugin = require('webpack-shell-plugin');
 
-const baselineDeps = [ 'expression-atlas-feedback', 'expression-atlas-heatmap-highcharts', 'prop-types', 'react',
-  'react-dom']
-
+const baselineDeps = ['expression-atlas-heatmap-highcharts', 'prop-types', 'react', 'react-dom']
 const bioentityInfoDeps = ['react', 'react-dom']
-
 const browseByDeps = ['react', 'react-dom', 'react-ebi-species', 'urijs']
-
-const differentialDeps = [ 'expression-atlas-feedback',  'expression-atlas-number-format',  'jquery',
-  'jquery-ui-bundle', 'prop-types', 'react', 'react-dom', 'react-ebi-species', 'urijs']
-
+const differentialDeps = ['expression-atlas-number-format',  'jquery', 'jquery-ui-bundle', 'prop-types', 'react', 'react-dom', 'react-ebi-species', 'urijs']
 const heatmapDeps = ['expression-atlas-heatmap-highcharts']
 const experimentPageDeps = ['expression-atlas-experiment-page']
 

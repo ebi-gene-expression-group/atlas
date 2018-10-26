@@ -17,11 +17,9 @@ import java.util.Map;
 public class PopularSpeciesDao {
 
     protected static final String SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY =
-            "SELECT experiment_organism.organism, experiment.type, " +
-            "count(experiment_organism.organism) AS c " +
+            "SELECT species, type, COUNT(species) c " +
             "FROM experiment " +
-            "LEFT OUTER JOIN  experiment_organism ON experiment_organism.experiment=experiment.accession " +
-            "WHERE private='F' GROUP BY experiment.type, experiment_organism.organism";
+            "WHERE private=FALSE GROUP BY type, species";
 
     private final SpeciesFactory speciesFactory;
     private final JdbcTemplate jdbcTemplate;
@@ -37,8 +35,8 @@ public class PopularSpeciesDao {
                 jdbcTemplate.queryForList(SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY);
 
         HashMap<String, Pair<Long, Long>> speciesToExperimentCounts = Maps.newHashMap();
-        for (Map<String, Object> resultRow: results) {
-            String species = (String) resultRow.get("organism");
+        for (Map<String, Object> resultRow : results) {
+            String species = speciesFactory.create((String) resultRow.get("species")).getReferenceName();
             ExperimentType experimentType = ExperimentType.valueOf((String) resultRow.get("type"));
             long experimentCount = (long) resultRow.get("c");
 

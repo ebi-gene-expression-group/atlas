@@ -38,8 +38,8 @@ public class BioentitiesSolrClient {
         try {
             QueryResponse queryResponse = solrClient.query(solrQuery);
 
-            LOGGER.debug("<query> Solr query: {}", solrQuery.toString());
-            LOGGER.debug(
+            LOGGER.trace("<query> Solr query: {}", solrQuery.toString());
+            LOGGER.trace(
                     "<query> Solr query time: {} ms, status code: {}",
                     queryResponse.getStatus(), queryResponse.getQTime());
 

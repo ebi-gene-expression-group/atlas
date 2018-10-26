@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
@@ -28,12 +27,10 @@ public class ExperimentCrudFactory {
     }
 
     public ExperimentCrud create(ExperimentDao experimentDao,
-                                 ExperimentChecker experimentChecker,
-                                 AnalyticsLoaderFactory analyticsLoaderFactory) {
+                                 ExperimentChecker experimentChecker) {
         return new ExperimentCrud(
                 experimentDao,
                 experimentChecker,
-                analyticsLoaderFactory,
                 condensedSdrfParser,
                 idfParser,
                 experimentDesignFileWriterService,

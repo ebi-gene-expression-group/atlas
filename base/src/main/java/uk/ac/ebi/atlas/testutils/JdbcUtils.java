@@ -15,16 +15,18 @@ public class JdbcUtils {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<String> getPublicSingleCellExperimentAccessions() {
+    public List<String> fetchPublicSingleCellExperimentAccessions() {
         return jdbcTemplate.queryForList("SELECT accession FROM scxa_public_experiment", String.class);
     }
 
-    public List<String> getAllSingleCellExperimentAccessions() {
+    public List<String> fetchAllSingleCellExperimentAccessions() {
         return jdbcTemplate.queryForList("SELECT accession FROM scxa_experiment", String.class);
     }
 
-    public List<String> getPublicExpressionAtlasExperimentAccessions() {
-        return jdbcTemplate.queryForList("SELECT accession FROM public_experiment", String.class);
+    public String fetchRandomArrayDesignAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT arraydesign FROM designelement_mapping ORDER BY RANDOM() LIMIT 1",
+                String.class);
     }
 
     public List<String> getAllExpressionAtlasExperimentAccessions() {
@@ -33,26 +35,32 @@ public class JdbcUtils {
 
     public String fetchRandomSingleCellExperimentAccession() {
         return jdbcTemplate.queryForObject(
-                "SELECT accession FROM scxa_experiment TABLESAMPLE SYSTEM_ROWS(1)",
+                "SELECT accession FROM scxa_experiment ORDER BY RANDOM() LIMIT 1",
                 String.class);
     }
 
     public String fetchRandomExpressionAtlasExperimentAccession() {
         return jdbcTemplate.queryForObject(
-                "SELECT accession FROM experiment TABLESAMPLE SYSTEM_ROWS(1)",
+                "SELECT accession FROM experiment ORDER BY RANDOM() LIMIT 1",
+                String.class);
+    }
+
+    public String fetchRandomPublicExpressionAtlasExperimentAccession() {
+        return jdbcTemplate.queryForObject(
+                "SELECT accession FROM experiment WHERE private=FALSE ORDER BY RANDOM() LIMIT 1",
                 String.class);
     }
 
     public String fetchRandomExpressionAtlasExperimentAccession(ExperimentType experimentType) {
         return jdbcTemplate.queryForObject(
-                "SELECT accession FROM experiment WHERE type=? ORDER BY RANDOM() LIMIT 1",
+                "SELECT accession FROM experiment WHERE type=? AND private=FALSE ORDER BY RANDOM() LIMIT 1",
                 String.class,
                 experimentType.name());
     }
 
     public String fetchRandomGene() {
         return jdbcTemplate.queryForObject(
-                "SELECT gene_id FROM scxa_analytics TABLESAMPLE SYSTEM_ROWS(1)",
+                "SELECT gene_id FROM scxa_analytics ORDER BY RANDOM() LIMIT 1",
                 String.class);
     }
 
@@ -90,6 +98,16 @@ public class JdbcUtils {
                 "SELECT perplexity FROM scxa_tsne WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
                 Integer.class,
                 experimentAccession);
+    }
+
+    public int fetchRandomPerplexityFromExperimentTSne(String experimentAccession, String geneId) {
+        return jdbcTemplate.queryForObject(
+                "SELECT perplexity FROM scxa_tsne AS tsne " +
+                    "LEFT JOIN scxa_analytics AS analytics " +
+                    "ON analytics.experiment_accession=tsne.experiment_accession AND analytics.cell_id=tsne.cell_id " +
+                "WHERE tsne.experiment_accession=? AND analytics.gene_id=? ORDER BY RANDOM() LIMIT 1",
+                Integer.class,
+                experimentAccession, geneId);
     }
 
     public int fetchRandomKFromCellClusters(String experimentAccession) {

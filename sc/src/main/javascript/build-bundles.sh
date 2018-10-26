@@ -18,13 +18,13 @@ do
     pushd . > /dev/null
     echo "Upgrading $dir:"
     cd $dir
-    # Upgrade everything but React and Webpack to their latest versions
-    ncu -x react,react-dom,prop-types,webpack,webpack-dev-server -a
+    # Upgrade everything but React, Webpack and Babel to their latest versions
+    ncu -x react,react-dom,prop-types,webpack,webpack-dev-server,babel,babel-core,babel-loader -a
     npm install
     popd > /dev/null
 done
 
-# Upgrade everything but React and Webpack to their latest versions
-ncu -x react,react-dom,prop-types,webpack,webpack-dev-server -a
+# Upgrade everything but React, Webpack and Babel to their latest versions
+ncu -x react,react-dom,prop-types,webpack,webpack-dev-server,babel,babel-core,babel-loader -a
 npm install
 npm run $1

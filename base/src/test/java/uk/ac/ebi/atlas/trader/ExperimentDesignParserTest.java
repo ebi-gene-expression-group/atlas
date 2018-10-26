@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentimport.sdrf.SdrfParser;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 
@@ -70,6 +72,9 @@ public class ExperimentDesignParserTest {
 
     private static MockDataFileHub dataFileHub;
 
+    @Mock
+    private SdrfParser mockSdrfParser;
+
     private ExperimentDesignParser subject;
 
     @BeforeClass
@@ -80,7 +85,7 @@ public class ExperimentDesignParserTest {
     @Before
     public void setUp() {
         dataFileHub.addExperimentDesignFile(EXPERIMENT_ACCESSION, DATA);
-        subject = new ExperimentDesignParser(dataFileHub);
+        subject = new ExperimentDesignParser(dataFileHub, mockSdrfParser);
     }
 
     @Test

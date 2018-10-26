@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 
 public class BiologicalReplicate extends DescribesDataColumns {
-
     private final Set<String> technicalReplicates;
 
     public BiologicalReplicate(String assay) {
@@ -36,5 +35,4 @@ public class BiologicalReplicate extends DescribesDataColumns {
     public Set<BiologicalReplicate> biologicalReplicatesForThisDataColumn() {
         return ImmutableSet.of(this);
     }
-
 }

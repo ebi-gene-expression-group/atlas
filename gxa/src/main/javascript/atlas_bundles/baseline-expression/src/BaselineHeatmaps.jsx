@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import BaselineHeatmapWidget from './BaselineHeatmapWidget.jsx'
 
-import AtlasFeedback from 'expression-atlas-feedback'
-
 class BaselineHeatmaps extends React.Component {
 
     render() {
@@ -21,13 +19,6 @@ class BaselineHeatmaps extends React.Component {
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery} />
                 )}
-                <AtlasFeedback
-                  collectionCallback = {
-                    typeof window.ga === `function` ?
-                      (score, comment) => { window.ga('send','event','BaselineHeatmaps', 'feedback', comment, score) } :
-                      () => {}
-                  }
-                />
             </div>
         );
     }
@@ -47,7 +38,7 @@ BaselineHeatmaps.propTypes = {
      [{"species":"Homo sapiens", "factor":"CELL_LINE"}, {"species":"Mus musculus", "factor":"ORGANISM_PART"}]
      */
     showAnatomograms: PropTypes.bool.isRequired,
-    heatmaps: PropTypes.arrayOf(React.PropTypes.shape({
+    heatmaps: PropTypes.arrayOf(PropTypes.shape({
         species: PropTypes.string.isRequired,
         factor: PropTypes.shape({
             name: PropTypes.string.isRequired,

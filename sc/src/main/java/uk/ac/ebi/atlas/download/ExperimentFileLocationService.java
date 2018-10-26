@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.download;
 
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.net.URI;
@@ -8,6 +9,7 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ExperimentFileLocationService {
@@ -30,7 +32,7 @@ public class ExperimentFileLocationService {
                         .getSingleCellExperimentFiles(experimentAccession)
                         .experimentFiles.experimentDesign.getPath();
             case SDRF:
-                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).sdrf.getPath();
+                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.sdrf.getPath();
             case IDF:
                 return dataFileHub.getSingleCellExperimentFiles(experimentAccession).experimentFiles.idf.getPath();
             case CLUSTERING:
@@ -48,6 +50,12 @@ public class ExperimentFileLocationService {
                                 dataFileHub.getSingleCellExperimentFiles(experimentAccession).tpmsMatrix.getPath(),
                                 dataFileHub.getSingleCellExperimentFiles(experimentAccession).cellIdsTsv.getPath(),
                                 dataFileHub.getSingleCellExperimentFiles(experimentAccession).geneIdsTsv.getPath());
+            case MARKER_GENES:
+                return dataFileHub.getSingleCellExperimentFiles(experimentAccession).markerGeneTsvs
+                        .values()
+                        .stream()
+                        .map(AtlasResource::getPath)
+                        .collect(Collectors.toList());
             default:
                 return null;
         }

@@ -53,8 +53,15 @@ class AnalyticsQueryClientIT {
 
     @BeforeEach
     void setUp() {
-        subject = new TestableAnalyticsQueryClient(restTemplate, null, baselineFacetsQueryJSON,
-                differentialFacetsQueryJSON, experimentTypesQueryJson, bioentityIdentifiersQueryJson);
+        subject =
+                new TestableAnalyticsQueryClient(
+                        restTemplate,
+                        null,
+                        null,
+                        baselineFacetsQueryJSON,
+                        differentialFacetsQueryJSON,
+                        experimentTypesQueryJson,
+                        bioentityIdentifiersQueryJson);
     }
 
     @Test
@@ -187,12 +194,14 @@ class AnalyticsQueryClientIT {
     class TestableAnalyticsQueryClient extends AnalyticsQueryClient {
         TestableAnalyticsQueryClient(RestTemplate restTemplate,
                                      String solrBaseUrl,
+                                     String solrPort,
                                      Resource baselineFacetsQueryJSON,
                                      Resource differentialFacetsQueryJSON,
                                      Resource experimentTypesQueryJson,
                                      Resource bioentityIdentifiersQueryJson) {
             super(restTemplate,
                   solrBaseUrl,
+                  solrPort,
                   baselineFacetsQueryJSON,
                   differentialFacetsQueryJSON,
                   experimentTypesQueryJson,
