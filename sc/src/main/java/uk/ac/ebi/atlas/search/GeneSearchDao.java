@@ -65,48 +65,81 @@ public class GeneSearchDao {
                         cellIds.add(cellId);
                         result.put(experimentAccession, cellIds);
                     }
-
                     return result;
                 }
         );
     }
 
-    private static final String SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT =
-            "SELECT experiment_accession, k, cluster_id FROM scxa_marker_genes AS markers " +
-                    "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession " +
-                    "WHERE gene_id=:gene_id AND marker_probability<=:threshold AND private=FALSE";
-    @Transactional(transactionManager = "txManager", readOnly = true)
-    public Map<String, Map<Integer, List<Integer>>> fetchKAndClusterIds(String geneId) {
+    private static final String SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID =
+            "SELECT experiment_accession FROM scxa_marker_genes AS markers "+
+            "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession "+
+            "WHERE private=FALSE AND gene_id=:gene_id "+
+            "GROUP BY experiment_accession";
+    @Transactional(readOnly = true)
+    public List<String> experimentAccessionsForGeneId (String geneId) {
+        Map<String, Object> namedParameters =
+                ImmutableMap.of(
+                        "gene_id", geneId);
+
+        return namedParameterJdbcTemplate.query(
+                SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID,
+                namedParameters,
+                (ResultSet resultSet)->{
+                    List<String> result = new ArrayList<>();
+                    while(resultSet.next()){
+                        String experimentAccession = resultSet.getString("experiment_accession");
+                        result.add(experimentAccession);
+                    }
+                    return result;
+                }
+        );
+    }
+
+
+    //In marker gene dataset files, one and only one clusterID for each preferred cluster K value,
+    //which is supposed to have the lowest marker_probability,
+    //so we get one pair from searching (experiment_accesion, k).
+    //If dataset has changed, i.e. there are multiple gene clusterID in one preferred cluster K file,
+    //we probably need to order and limit the searching result based on marker_propability
+    private static final String SELECT_PREFERREDK_AND_MINP_CLUSTER_ID_FOR_GENE_STATEMENT =
+            "SELECT experiment_accession, k, marker_probability, cluster_id FROM scxa_marker_genes AS markers " +
+                    "WHERE (marker_probability IN (SELECT MIN(marker_probability) "+
+                                                                    "FROM scxa_marker_genes " +
+                                                                    "WHERE gene_id = :gene_id " +
+                                                                    "GROUP BY experiment_accession) " +
+                                                "AND experiment_accession = :experiment_accession " +
+                                                "AND marker_probability <= :threshold) " +
+                    "OR ((experiment_accession, k) IN ((:experiment_accession, :preferred_K)) " +
+                        "AND marker_probability <= :threshold AND gene_id = :gene_id)";
+    @Transactional(readOnly = true)
+    public  Map<Integer, List<Integer>> fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
+            String geneId, String experimentAccession, Integer preferredK) {
+
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId,
-                        "threshold", MARKER_GENE_P_VALUE_THRESHOLD);
+                        "threshold", MARKER_GENE_P_VALUE_THRESHOLD,
+                        "preferred_K", preferredK,
+                        "experiment_accession", experimentAccession);
 
         return namedParameterJdbcTemplate.query(
-                SELECT_K_AND_CLUSTER_ID_FOR_GENE_STATEMENT,
+                SELECT_PREFERREDK_AND_MINP_CLUSTER_ID_FOR_GENE_STATEMENT,
                 namedParameters,
                 (ResultSet resultSet) -> {
-                    Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
+                    Map<Integer, List<Integer>> result = new HashMap<>();
 
                     while (resultSet.next()) {
-                        String experimentAccession = resultSet.getString("experiment_accession");
                         Integer k = resultSet.getInt("k");
                         Integer clusterId = resultSet.getInt("cluster_id");
-
-                        Map<Integer, List<Integer>> kAndClusterIds =
-                                result.getOrDefault(experimentAccession, new HashMap<>());
-                        List<Integer> clusterIds = kAndClusterIds.getOrDefault(k, new ArrayList<>());
+                        List<Integer> clusterIds = result.getOrDefault(k, new ArrayList<>());
                         clusterIds.add(clusterId);
-
-                        kAndClusterIds.put(k, clusterIds);
-                        result.put(experimentAccession, kAndClusterIds);
+                        result.put(k, clusterIds);
                     }
 
                     return result;
                 }
         );
     }
-
 
     // Returns inferred cell types and organism parts for each experiment accession
     public Map<String, Map<String, List<String>>>
