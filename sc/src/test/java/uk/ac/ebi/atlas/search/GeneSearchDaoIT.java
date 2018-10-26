@@ -17,10 +17,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
@@ -90,14 +88,12 @@ class GeneSearchDaoIT {
     }
 
     @ParameterizedTest
-    @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
-    @ValueSource(strings = {"ENSG00000000009"})
+    @ValueSource(strings = {"ENSMUSG00000063415"})
     void validGeneIdReturnsExperimentAccessions(String geneId) {
         List<String> result = subject.experimentAccessionsForGeneId(geneId);
 
         assertThat(result)
-                .contains("E-GEOD-106540")
-                .doesNotContain("E-ENAD-13", "E-ENAD-14", "E-EHCA-2", "E-GEOD-99058");
+                .containsOnly("E-GEOD-99058");
     }
 
     @ParameterizedTest
@@ -108,32 +104,36 @@ class GeneSearchDaoIT {
     }
 
     @ParameterizedTest
-    @Sql("scxa_marker_genes_fixture.sql")
-    @CsvSource({"'ENSG00000000009', 'E-GEOD-106540', 5"})
-    void validExperimentAccessionReturnsClusterIDsWithPreferredKAndMinP(String geneId, String experimentAccession, Integer preferredK){
-        Map<Integer, List<Integer>> result = subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId, experimentAccession, preferredK);
+    @CsvSource({"'ENSMUSG00000063415', 'E-GEOD-99058', 7"})
+    void validExperimentAccessionReturnsClusterIDsWithPreferredKAndMinP(String geneId,
+                                                                        String experimentAccession,
+                                                                        Integer preferredK){
+        Map<Integer, List<Integer>> result =
+                subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
+                        geneId, experimentAccession, preferredK);
 
         assertThat(result)
                 .isNotEmpty()
                 .containsAllEntriesOf(
                         ImmutableMap.of(
-                                5, ImmutableList.of(1),
-                                3, ImmutableList.of(0))
-                );
+                                7, ImmutableList.of(1),
+                                11, ImmutableList.of(1)));
     }
 
     @ParameterizedTest
-    @Sql("scxa_marker_genes_fixture.sql")
-    @CsvSource({"'ENSG00000000009', 'E-GEOD-106540', 3"})
-    void validExperimentAccessionReturnsOnlyOneClusterIDWithBothPreferredKAndMinP(String geneId, String experimentAccession, Integer preferredK){
-        Map<Integer, List<Integer>> result = subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId, experimentAccession, preferredK);
+    @CsvSource({"'ENSMUSG00000063415', 'E-GEOD-99058', 7"})
+    void validExperimentAccessionReturnsOnlyOneClusterIDWithBothPreferredKAndMinP(String geneId,
+                                                                                  String experimentAccession,
+                                                                                  Integer preferredK){
+        Map<Integer, List<Integer>> result =
+                subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
+                        geneId, experimentAccession, preferredK);
 
         assertThat(result)
                 .isNotEmpty()
                 .containsAllEntriesOf(
                         ImmutableMap.of(
-                                3, ImmutableList.of(0))
-                );
+                                11, ImmutableList.of(1)));
     }
 
     @ParameterizedTest
