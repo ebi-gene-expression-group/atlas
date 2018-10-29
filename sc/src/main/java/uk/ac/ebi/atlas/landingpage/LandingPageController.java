@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.landingpage;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

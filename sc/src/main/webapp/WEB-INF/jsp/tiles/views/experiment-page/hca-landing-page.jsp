@@ -5,17 +5,25 @@
   Time: 09:14
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div className="row">
-    <div className="small-12 columns">
-        <h3>Human Cell Atlas Experiments</h3>
+<%--@elvariable id="endpoint" type="String"--%>
+<%--@elvariable id="geneQueryTerm" type="String"--%>
+<%--@elvariable id="geneQueryCategory" type="String"--%>
+<%--@elvariable id="species" type="String"--%>
 
-        <div className="row">
-            <div className="small-1 column">
-                <p><img src={`assets/img/HCA-logo.jpg`}/></p>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
+
+        <div class="row column margin-bottom-large expanded">
+            <div class="media-object">
+                <div class="media-object-section top hide-for-small-only">
+            <div class="thumbnail">
+                <img alt="Human Cell Atlas" style="max-width: 275px"
+                        src="${pageContext.request.contextPath}/resources/images/logos/human_cell_atlas.png"/>
             </div>
-
-            <div className="small-11 columns">
+                </div>
+            <div class="media-object-section top">
+                <h3>Human Cell Atlas Experiments</h3>
                 <p>
                     Thanks to funding from the <a href="https://www.humancellatlas.org/">HCA</a> project,
                     Expression Atlas contains <b>791</b>
@@ -37,7 +45,48 @@
                     shoots, what genes are upregulated in plants treated by X?'
                 </p>
             </div>
+            </div>
         </div>
+
+
+
+<div class="row column expanded">
+    <div class="row column expanded">
+        <h3>Search results</h3>
     </div>
 
+    <div class="row column expanded margin-bottom-large">
+        <div id="search-form"></div>
+    </div>
+
+    <div id="search-results-list"></div>
 </div>
+
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearch.bundle.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearchForm.bundle.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        geneSearchForm.render({
+            atlasUrl: '${pageContext.request.contextPath}/',
+            wrapperClassName: 'row expanded',
+            actionEndpoint: 'search',
+            autocompleteClassName: 'small-12 medium-8 columns',
+            suggesterEndpoint: 'json/suggestions/gene_ids',
+            enableSpeciesSelect: true,
+            speciesEndpoint: 'json/suggestions/species',
+            speciesSelectClassName: 'small-12 medium-4 columns',
+            defaultSpecies: '${species}',
+            defaultValue: {
+                term: '${geneQueryTerm}',
+                category: '${geneQueryCategory}',
+            }
+        }, 'search-form');
+
+        geneSearch.render({
+            atlasUrl: '${pageContext.request.contextPath}/',
+            resource: '${endpoint}',
+            noResultsMessage: '${geneQueryTerm} is not expressed in any experiment. Try searching for a different gene.',
+            resultsMessage: '${geneQueryTerm} is expressed in:'
+        }, 'search-results-list');
+    });
+</script>

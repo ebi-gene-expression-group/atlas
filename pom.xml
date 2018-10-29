@@ -598,7 +598,7 @@
             <id>dev</id>
             <properties>
                 <build.environment>dev</build.environment>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <data.files.location>${user.home}/ATLAS3.TEST.bak/integration-test-data</data.files.location>
                 <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</jdbc.url>
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>YxyR9PKvOAtY</jdbc.password>

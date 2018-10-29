@@ -8,8 +8,10 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,6 +30,9 @@ public class ScxaExperimentDao extends ExperimentDao {
     private static final String SELECT_PUBLIC_EXPERIMENTS = "SELECT accession FROM scxa_public_experiment";
     private static final String SELECT_ALL_EXPERIMENTS_AS_ADMIN = "SELECT * FROM scxa_experiment";
     private static final String COUNT_EXPERIMENTS = "SELECT COUNT(*) FROM scxa_experiment";
+
+    private static final String SELECT_EXPERIMENT_BY_GROUP_ACCESSION =
+            "SELECT accession FROM scxa_experiment WHERE accession LIKE ?";
     // Update
     private static final String UPDATE_EXPERIMENT = "UPDATE scxa_experiment SET private=? WHERE accession=?";
     // Delete
@@ -68,6 +73,14 @@ public class ScxaExperimentDao extends ExperimentDao {
                         experimentAccession,
                         accessKey),
                 experimentAccession);
+    }
+
+    public HashSet<String> getExperimentByGroupAccession(String experimentAccessionLike){
+        return Sets.newHashSet(jdbcTemplate.queryForList(
+                        SELECT_EXPERIMENT_BY_GROUP_ACCESSION,
+                        String.class,
+                        new String[] {experimentAccessionLike + "%"})
+        );
     }
 
     @Override
