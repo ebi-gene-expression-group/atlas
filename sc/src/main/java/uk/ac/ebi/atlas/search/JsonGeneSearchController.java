@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
+import uk.ac.ebi.atlas.home.ExperimentInfoService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.search.geneids.GeneIdSearchService;
@@ -41,17 +42,20 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     private final GeneSearchService geneSearchService;
     private final ScxaExperimentTrader experimentTrader;
     private final ExperimentAttributesService experimentAttributesService;
+    private final ExperimentInfoService experimentInfoService;
 
     public JsonGeneSearchController(GeneIdSearchService geneIdSearchService,
                                     SpeciesFactory speciesFactory,
                                     GeneSearchService geneSearchService,
                                     ScxaExperimentTrader experimentTrader,
-                                    ExperimentAttributesService experimentAttributesService) {
+                                    ExperimentAttributesService experimentAttributesService,
+                                    ExperimentInfoService experimentInfoService) {
         this.geneIdSearchService = geneIdSearchService;
         this.speciesFactory = speciesFactory;
         this.geneSearchService = geneSearchService;
         this.experimentTrader = experimentTrader;
         this.experimentAttributesService = experimentAttributesService;
+        this.experimentInfoService = experimentInfoService;
     }
 
     @RequestMapping(value = "/json/search",
@@ -140,6 +144,8 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                             List<Map<String, String>> facets =
                                     unfoldFacets(geneSearchService.getFacets(cellIds)
                                             .getOrDefault(experimentAccession, ImmutableMap.of()));
+                            ImmutableMap<String, Object>  specificExperimentInfo = experimentInfoService.fetchSpecificExperimentsAttributes(experimentAccession);
+                            experimentAttributes.putAll(specificExperimentInfo);
 
                             if (markerGeneFacets.containsKey(geneId) &&
                                 markerGeneFacets.get(geneId).containsKey(experimentAccession)) {
