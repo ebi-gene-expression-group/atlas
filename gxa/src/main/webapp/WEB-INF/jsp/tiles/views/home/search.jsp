@@ -27,12 +27,12 @@
                     </div>
                 </div>
                 <div class="small-12 medium-4 large-2 columns">
-                    <label>Organism</label>
-                    <form:select id="organism" name="organism" path="organismPath">
+                    <label>Species</label>
+                    <form:select id="species" name="species" path="speciesPath">
                         <form:options items="${topSixByExperimentCount}"/>
                         <form:option value="${separator}" disabled="true"/>
                         <form:option value="" label="Any" selected="true"/>
-                        <form:options items="${organisms}" />
+                        <form:options items="${species}" />
                     </form:select>
                 </div>
                 <div id="sample-properties-section" class="small-12 medium-4 large-5 columns">
@@ -52,9 +52,6 @@
             <div class="row expanded margin-top-large">
                 <div class="small-12 columns">
                     <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
-
-                    <%--<label for="file-upload" class="button">Upload file</label>--%>
-                    <%--<input type="file" id="file-upload" class="show-for-sr">--%>
 
                     <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
                 </div>

@@ -65,14 +65,14 @@ public class HomeController {
         model.addAttribute(
                 "separator", RANDOM.nextDouble() < EASTER_EGG_PROBABILITY ? BEST_SEPARATOR : NORMAL_SEPARATOR);
 
-        ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, String> speciesSelectBuilder = ImmutableMap.builder();
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
-            organismSelectBuilder.put(
+            speciesSelectBuilder.put(
                     speciesProperties.referenceName(), StringUtils.capitalize(speciesProperties.referenceName()));
         }
 
-        model.addAttribute("organisms", organismSelectBuilder.build());
-        model.addAttribute("organismPath", ""); // Required by Spring form tag
+        model.addAttribute("species", speciesSelectBuilder.build());
+        model.addAttribute("speciesPath", ""); // Required by Spring form tag
 
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
 
@@ -85,7 +85,7 @@ public class HomeController {
         model.addAttribute(
                 "fungiList", GSON.toJson(popularSpeciesService.getPopularSpecies("fungi", FEATURED_SPECIES)));
 
-        model.addAttribute("organismPath", ""); // Required by Spring form tag
+        model.addAttribute("speciesPath", ""); // Required by Spring form tag
 
         return "home";
     }

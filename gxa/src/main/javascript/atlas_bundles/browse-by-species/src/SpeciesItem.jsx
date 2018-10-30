@@ -4,7 +4,7 @@ import EbiSpeciesIcon  from 'react-ebi-species';
 
 const SpeciesItem = props =>
 {
-    const allExperimentsUrl = URI(props.atlasUrl).segment(`experiments`).addSearch({ organism: props.species });
+    const allExperimentsUrl = URI(props.atlasUrl).segment(`experiments`).addSearch({ species: props.species });
     const differentialExperimentsUrl = URI(allExperimentsUrl).addSearch({ experimentType: `differential` });
     const baselineExperimentsUrl = URI(allExperimentsUrl).addSearch({ experimentType: `baseline` });
 
