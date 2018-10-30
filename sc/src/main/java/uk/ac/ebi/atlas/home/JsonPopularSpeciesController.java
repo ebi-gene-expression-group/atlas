@@ -25,7 +25,7 @@ public class JsonPopularSpeciesController extends JsonExceptionHandlingControlle
     }
 
     @GetMapping(
-            value = "/json/experiments/popularSpecies",
+            value = "/json/experiments/popular-species",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getPopularExperimentsByKingdom(
             @RequestParam Optional<String> kingdom,

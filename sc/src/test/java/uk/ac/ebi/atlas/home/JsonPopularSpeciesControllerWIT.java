@@ -76,7 +76,7 @@ public class JsonPopularSpeciesControllerWIT {
 
     @Test
     void returnsAtLeastOnePopularSpecies() throws Exception {
-        mockMvc.perform(get("/json/experiments/popularSpecies"))
+        mockMvc.perform(get("/json/experiments/popular-species"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
