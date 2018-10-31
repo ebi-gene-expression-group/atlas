@@ -30,7 +30,6 @@ public class ScxaExperimentDao extends ExperimentDao {
     private static final String SELECT_PUBLIC_EXPERIMENTS = "SELECT accession FROM scxa_public_experiment";
     private static final String SELECT_ALL_EXPERIMENTS_AS_ADMIN = "SELECT * FROM scxa_experiment";
     private static final String COUNT_EXPERIMENTS = "SELECT COUNT(*) FROM scxa_experiment";
-
     private static final String SELECT_EXPERIMENT_BY_GROUP_ACCESSION =
             "SELECT accession FROM scxa_experiment WHERE accession LIKE ?";
     // Update
