@@ -12,7 +12,8 @@
 
         <div className="row">
             <div className="small-1 column">
-                <p><img src={`assets/img/HCA-logo.jpg`}/></p>
+                <img  alt="Human Cell Atlas" style="max-width: 275px"
+                         src="${pageContext.request.contextPath}/resources/images/logos/human_cell_atlas.png"/>
             </div>
 
             <div className="small-11 columns">
