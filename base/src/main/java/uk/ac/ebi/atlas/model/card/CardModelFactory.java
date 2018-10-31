@@ -29,6 +29,7 @@ public class CardModelFactory {
         Map<String, String> imageSrc = new HashMap<>();
         imageSrc.put("E-EHCA", "https://www.ebi.ac.uk/gxa/sc/resources/images/logos/human_cell_atlas.png");
         imageSrc.put("E-GEOD", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
+        imageSrc.put("E-ENAD", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
         return CardModel.create(
                 "experiments",
                 imageSrc.get(experimentAccession.substring(0,6)),
