@@ -57,7 +57,6 @@ public class LandingCardController  extends HtmlExceptionHandlingController {
         List<Experiment<Cell>> allExperiment = allLikeExperiment.stream()
                 .map(likeExperiment -> experimentTrader.getExperiment(likeExperiment, accessKey))
                 .collect(Collectors.toList());
-        //model.addAllAttributes(experimentAttributesService.getAttributes(experiment));
 
         List<Map<String, Object>> attributes = allExperiment.stream()
                 .map(experiment -> experimentAttributesService.getAttributes(experiment))
