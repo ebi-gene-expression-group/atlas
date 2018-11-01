@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.model.experiment.baseline.Cell;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
+import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
 
 import javax.inject.Inject;
 
@@ -25,15 +26,18 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private final DataFileHub dataFileHub;
     private final ExperimentPageContentService experimentPageContentService;
     private final ExperimentAttributesService experimentAttributesService;
+    private final TSnePlotServiceDao tSnePlotServiceDao;
 
     @Inject
     public ExperimentController(ScxaExperimentTrader experimentTrader, DataFileHub dataFileHub,
                                 ExperimentPageContentService experimentPageContentService,
-                                ExperimentAttributesService experimentAttributesService) {
+                                ExperimentAttributesService experimentAttributesService,
+                                TSnePlotServiceDao tSnePlotServiceDao) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
         this.experimentPageContentService = experimentPageContentService;
         this.experimentAttributesService = experimentAttributesService;
+        this.tSnePlotServiceDao = tSnePlotServiceDao;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"},
@@ -44,8 +48,8 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         Experiment<Cell> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         model.addAllAttributes(experimentAttributesService.getAttributes(experiment));
-
         model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
+        model.addAttribute("numberOfCells", tSnePlotServiceDao.fetchCellNumberByExperimentAccession(experimentAccession));
 
         return "experiment-page";
     }
