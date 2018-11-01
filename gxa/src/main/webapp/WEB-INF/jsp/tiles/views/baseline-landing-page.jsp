@@ -14,9 +14,9 @@
 
         <p>
             These datasets show baseline gene expression for many different tissues and cell types from a wide range of
-            species,from human and mouse to Arabidopsis and maize. In Expression Atlas, "baseline" expression is the
-            expression level ofeach gene in normal, untreated conditions. All baseline experiments are either RNA-seq
-            or proteomics data. Each experiment is manuallycurated to a high standard, and RNA expression levels are
+            species, from human and mouse to Arabidopsis and maize. In Expression Atlas, "baseline" expression is the
+            expression level of each gene in normal, untreated conditions. All baseline experiments are either RNA-seq
+            or proteomics data. Each experiment is manually curated to a high standard, and RNA expression levels are
             calculated using the <a href="https://github.com/nunofonseca/irap">iRAP</a> pipeline.
         </p>
 
