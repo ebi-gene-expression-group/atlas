@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.Publication;
@@ -9,7 +10,9 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,10 +26,13 @@ public class ExperimentAttributesService {
 
     private EuropePmcClient europePmcClient;
     private IdfParser idfParser;
+    private final ExperimentTrader experimentTrader;
 
-    public ExperimentAttributesService(EuropePmcClient europePmcClient, IdfParser idfParser) {
+    public ExperimentAttributesService(EuropePmcClient europePmcClient, IdfParser idfParser,
+                                       ExperimentTrader experimentTrader) {
         this.europePmcClient = europePmcClient;
         this.idfParser = idfParser;
+        this.experimentTrader = experimentTrader;
     }
 
     public Map<String, Object> getAttributes(Experiment<?> experiment) {
@@ -88,4 +94,16 @@ public class ExperimentAttributesService {
 
         return publications;
     }
+
+    private final ImmutableMap<String, Object> experimentsAttributesByAccession (String accession)
+    {
+        ExperimentInfo fetchExperimentsInfo = (experimentTrader.getPublicExperiment(accession)).buildExperimentInfo();
+        return ImmutableMap.of(
+                "specificExperimentInfo", fetchExperimentsInfo);
+    }
+
+    public ImmutableMap<String, Object> fetchSpecificExperimentsAttributes(String accession) {
+        return experimentsAttributesByAccession(accession);
+    }
+
 }

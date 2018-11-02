@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
-import uk.ac.ebi.atlas.search.ExperimentInfoService;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
@@ -42,20 +41,17 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     private final GeneSearchService geneSearchService;
     private final ScxaExperimentTrader experimentTrader;
     private final ExperimentAttributesService experimentAttributesService;
-    private final ExperimentInfoService experimentInfoService;
 
     public JsonGeneSearchController(GeneIdSearchService geneIdSearchService,
                                     SpeciesFactory speciesFactory,
                                     GeneSearchService geneSearchService,
                                     ScxaExperimentTrader experimentTrader,
-                                    ExperimentAttributesService experimentAttributesService,
-                                    ExperimentInfoService experimentInfoService) {
+                                    ExperimentAttributesService experimentAttributesService) {
         this.geneIdSearchService = geneIdSearchService;
         this.speciesFactory = speciesFactory;
         this.geneSearchService = geneSearchService;
         this.experimentTrader = experimentTrader;
         this.experimentAttributesService = experimentAttributesService;
-        this.experimentInfoService = experimentInfoService;
     }
 
     @RequestMapping(value = "/json/search",
@@ -144,7 +140,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                             List<Map<String, String>> facets =
                                     unfoldFacets(geneSearchService.getFacets(cellIds)
                                             .getOrDefault(experimentAccession, ImmutableMap.of()));
-                            ImmutableMap<String, Object>  specificExperimentInfo = experimentInfoService.fetchSpecificExperimentsAttributes(experimentAccession);
+                            ImmutableMap<String, Object>  specificExperimentInfo = experimentAttributesService.fetchSpecificExperimentsAttributes(experimentAccession);
                             experimentAttributes.putAll(specificExperimentInfo);
 
                             if (markerGeneFacets.containsKey(geneId) &&
