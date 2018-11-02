@@ -103,6 +103,13 @@ class TSnePlotServiceDaoIT {
                 .doesNotHaveDuplicates();
     }
 
+    @ParameterizedTest
+    @MethodSource("randomExperimentAccessionProvider")
+    void testNumberOfCellsByExperimentAccession(String experimentAccession) {
+        assertThat(subject.fetchCellNumberByExperimentAccession(experimentAccession))
+                .isInstanceOfAny(Integer.class);
+    }
+
     private static final String SELECT_CELL_IDS_STATEMENT =
             "SELECT DISTINCT(cell_id) FROM scxa_analytics WHERE experiment_accession=?";
     private List<String> fetchCellIds(String experimentAccession) {
