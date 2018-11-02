@@ -55,6 +55,8 @@ public class JsonPopularSpeciesControllerWIT {
 
     private MockMvc mockMvc;
 
+    private static final String ENDPOINT_URL = "/json/experiments/popular-species";
+
     @BeforeAll
     void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
@@ -76,7 +78,7 @@ public class JsonPopularSpeciesControllerWIT {
 
     @Test
     void returnsAtLeastOnePopularSpecies() throws Exception {
-        mockMvc.perform(get("/json/experiments/popular-species"))
+        mockMvc.perform(get(ENDPOINT_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
@@ -93,7 +95,7 @@ public class JsonPopularSpeciesControllerWIT {
         List<String> species = jdbcTestUtils.fetchSpeciesForSingleCellExperiments();
         int numberOfPopularSpecies = ThreadLocalRandom.current().nextInt(1, species.size());
 
-        mockMvc.perform(get("/json/experiments/popularSpecies").param("limit", String.valueOf(numberOfPopularSpecies)))
+        mockMvc.perform(get(ENDPOINT_URL).param("limit", String.valueOf(numberOfPopularSpecies)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(lessThanOrEqualTo(numberOfPopularSpecies))));
     }
@@ -103,7 +105,7 @@ public class JsonPopularSpeciesControllerWIT {
         Species randomSpecies = speciesFactory.create(jdbcTestUtils.fetchRandomSpeciesForSingleCellExperiments());
 
         MvcResult mvcResult = mockMvc
-                .perform(get("/json/experiments/popularSpecies")
+                .perform(get(ENDPOINT_URL)
                         .param("kingdom", randomSpecies.getKingdom()))
                 .andReturn();
 
@@ -117,7 +119,7 @@ public class JsonPopularSpeciesControllerWIT {
 
     @Test
     void returnsEmptyForUnknownKingdom() throws Exception {
-        mockMvc.perform(get("/json/experiments/popularSpecies").param("kingdom", "foo"))
+        mockMvc.perform(get(ENDPOINT_URL).param("kingdom", "foo"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(0)));
