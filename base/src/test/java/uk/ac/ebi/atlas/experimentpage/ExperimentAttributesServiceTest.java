@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableMap;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -9,11 +11,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.Publication;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import java.util.Arrays;
@@ -25,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomExperimentAccession;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentAttributesServiceTest {
@@ -43,9 +48,27 @@ public class ExperimentAttributesServiceTest {
     private EuropePmcClient europePmcClientMock;
     @Mock
     private IdfParser idfParser;
+    @Mock
+    private ExperimentTrader experimentTrader;
 
     @InjectMocks
     private ExperimentAttributesService subject;
+
+
+    @Test
+    public void returnsCellIdsPerExperiment() {
+
+        String experimentAccession = generateRandomExperimentAccession();
+
+        Experiment experimentRandom = MockExperiment.createBaselineExperiment();
+
+        when(experimentTrader.getPublicExperiment(experimentAccession)).thenReturn(experimentRandom);
+
+        ImmutableMap<String, Object> result = subject.fetchSpecificExperimentsAttributes(experimentAccession);
+
+        assertThat(result)
+                .containsOnlyKeys("specificExperimentInfo");
+    }
 
     @Test
     public void getAttributesForBaselineExperimentWithNoPublications() {

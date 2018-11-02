@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import javax.inject.Inject;
@@ -54,12 +55,13 @@ public class BaselineExperimentBuilderIT {
 
     private BaselineExperimentBuilder subject = new BaselineExperimentBuilder();
     private ExperimentAttributesService experimentAttributesService;
+    private ExperimentTrader experimentTrader;
 
     @Test
     public void testCreateSingleCell() {
         IdfParser idfParser = new IdfParser(new DataFileHub(dataFilesPath.resolve("scxa")));
 
-        experimentAttributesService = new ExperimentAttributesService(europePmcClient, idfParser);
+        experimentAttributesService = new ExperimentAttributesService(europePmcClient, idfParser, experimentTrader);
 
         List<AssayGroup> assayGroups =
                 ImmutableList.of(
