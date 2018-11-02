@@ -52,7 +52,7 @@ public class JdbcUtils {
 
     public String fetchRandomGene() {
         return jdbcTemplate.queryForObject(
-                "SELECT gene_id FROM scxa_analytics TABLESAMPLE SYSTEM_ROWS(1)",
+                "SELECT gene_id FROM scxa_analytics TABLESAMPLE SYSTEM_ROWS(1) LIMIT 1",
                 String.class);
     }
 

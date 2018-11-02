@@ -180,17 +180,17 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         List<SimpleEntry<String, String>> unfoldedModel = unfoldListMultimap(model);
         List<Map<String, String>> results = new ArrayList<>();
 
-        for (Map.Entry entry : unfoldedModel) {
-            ImmutableMap<String, String> map = new ImmutableMap.Builder<String, String>()
-                                                .put("group", entry.getKey().toString())
-                                                .put("value", entry.getKey().toString())
-                                                .put("label", StringUtils.capitalize(entry.getValue().toString()))
-                                                .build();
-            if(!isNullOrEmpty(getTooltipText(entry.getKey().toString()))) {
-                map.put("description", getTooltipText(entry.getKey().toString()));
+        for (Map.Entry<String, String> entry : unfoldedModel) {
+            ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.<String, String>builder()
+                    .put("group", entry.getKey())
+                    .put("value", entry.getKey())
+                    .put("label", StringUtils.capitalize(entry.getValue()));
+
+            if(!isNullOrEmpty(getTooltipText(entry.getKey()))) {
+                mapBuilder.put("description", getTooltipText(entry.getKey()));
             }
 
-            results.add(map);
+            results.add(mapBuilder.build());
         }
         return results;
     }
