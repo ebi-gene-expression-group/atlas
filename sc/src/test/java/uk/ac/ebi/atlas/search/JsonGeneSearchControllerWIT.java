@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,10 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import java.util.List;
+import java.util.Map;
+
+import static java.util.Collections.shuffle;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -103,5 +108,11 @@ class JsonGeneSearchControllerWIT {
                 .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
                 .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
                 .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes", "Species")));
+    }
+
+    @Test
+    void speciesParamCanAppearBeforeGeneQuery() throws Exception {
+        this.mockMvc.perform(get("/json/search").param("species", "homo sapiens").param("symbol", "aspm"))
+                .andExpect(status().isOk());
     }
 }
