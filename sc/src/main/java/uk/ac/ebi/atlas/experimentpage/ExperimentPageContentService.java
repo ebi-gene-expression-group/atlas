@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
@@ -46,9 +47,11 @@ public class ExperimentPageContentService {
         result.add("perplexities", perplexityArray);
 
         JsonArray metadataArray = new JsonArray();
-        cellMetadataDao.getMetadataFieldNames(experimentAccession)
-                .stream()
+        Stream.concat(
+                cellMetadataDao.getMetadataFieldNames(experimentAccession).stream(),
+                cellMetadataDao.getAdditionalAttributesFieldNames(experimentAccession).stream())
                 .map(x -> ImmutableMap.of("value", x.name(), "label", x.displayName()))
+                .collect(Collectors.toSet())
                 .forEach(x -> metadataArray.add(GSON.toJsonTree(x)));
 
         result.add("metadata", metadataArray);

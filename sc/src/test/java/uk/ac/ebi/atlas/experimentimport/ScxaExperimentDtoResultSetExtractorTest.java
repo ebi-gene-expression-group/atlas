@@ -35,7 +35,7 @@ public class ScxaExperimentDtoResultSetExtractorTest {
 
     @Test
     void createsValidExperimentDTO() throws SQLException {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         createMockResultSet(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
                 "Homo sapiens",
                 "123",
@@ -60,7 +60,7 @@ public class ScxaExperimentDtoResultSetExtractorTest {
 
     @Test
     void createsExperimentDTOWithEmptyFields() throws SQLException {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         createMockResultSet(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
                 "Homo sapiens",
                 "",
@@ -80,7 +80,7 @@ public class ScxaExperimentDtoResultSetExtractorTest {
 
     @Test
     void createsExperimentDTOWithNullFields() throws SQLException {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         createMockResultSet(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE,
                 "Homo sapiens",
                 "",

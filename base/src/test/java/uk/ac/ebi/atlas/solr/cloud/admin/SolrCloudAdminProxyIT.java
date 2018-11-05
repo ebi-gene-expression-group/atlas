@@ -17,29 +17,33 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class SolrCloudAdminProxyIT {
+class SolrCloudAdminProxyIT {
 
     @Inject
     private SolrCloudAdminProxy subject;
 
     @Test
-    public void validCollectionNamesWithoutAliases() throws IOException, SolrServerException {
+    void validCollectionNamesWithoutAliases() throws IOException, SolrServerException {
         assertThat(subject.areCollectionsUp(Arrays.asList("bioentities", "analytics"))).isTrue();
     }
 
     @Test
-    public void validCollectionNamesWithAliases() throws IOException, SolrServerException {
-        assertThat(subject.areCollectionsUp(Arrays.asList("bioentities", "analytics"), "scxa-analytics")).isTrue();
+    void validCollectionNamesWithAliases() throws IOException, SolrServerException {
+        assertThat(
+                subject.areCollectionsUp(
+                        Arrays.asList("bioentities", "analytics"),
+                        "scxa-analytics", "scxa-gene2experiment"))
+                .isTrue();
     }
 
     @Test
-    public void invalidCollectionName() {
+    void invalidCollectionName() {
         assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("foo")));
     }
 
     @Test
-    public void invalidAlias() {
+    void invalidAlias() {
         assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> subject.areCollectionsUp(Collections.singletonList("bioentities"), "foo"));
     }

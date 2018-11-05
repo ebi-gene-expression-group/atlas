@@ -11,13 +11,13 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
@@ -60,7 +60,7 @@ class DifferentialExperimentFactoryTest {
 
         when(baselineConfigurationMock.disclaimer()).thenReturn("");
 
-        when(configurationMock.getAssayGroups()).thenReturn(ImmutableList.of(new AssayGroup("Assay X", "X1")));
+        when(configurationMock.getAssayGroups()).thenReturn(ImmutableList.of(AssayGroupFactory.create("Assay X", "X1")));
 
         when(baselineConfigurationMock.getDefaultFilterFactors()).thenReturn(ImmutableSet.of());
         when(baselineConfigurationMock.getDefaultQueryFactorType()).thenReturn("SOME_FACTOR");
@@ -73,7 +73,7 @@ class DifferentialExperimentFactoryTest {
 
     @Test
     void idfTitleOverridesDatabaseTitle() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         when(configurationTraderMock.getExperimentConfiguration(experimentAccession))
                 .thenReturn(configurationMock);
         when(configurationTraderMock.getBaselineFactorsConfiguration(experimentAccession))

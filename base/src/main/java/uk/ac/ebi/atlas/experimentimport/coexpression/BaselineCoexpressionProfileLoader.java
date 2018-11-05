@@ -28,7 +28,7 @@ public class BaselineCoexpressionProfileLoader {
         this.dataFileHub = dataFileHub;
     }
 
-    @Transactional
+    @Transactional(transactionManager = "txManager")
     public int loadBaselineCoexpressionsProfile(String experimentAccession) {
         AtlasResource<CSVReader> coexpressions =
                 dataFileHub.getBaselineExperimentFiles(experimentAccession).coexpressions;
@@ -47,7 +47,7 @@ public class BaselineCoexpressionProfileLoader {
         return 0;
     }
 
-    @Transactional
+    @Transactional(transactionManager = "txManager")
     public int deleteCoexpressionsProfile(String accession) {
         return baselineCoexpressionProfileDao.deleteCoexpressionsProfile(accession);
     }

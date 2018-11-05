@@ -19,7 +19,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>uk.ac.ebi.atlas.configuration.WebConfig</param-value>
+            <param-value>uk.ac.ebi.atlas.configuration.AppConfig</param-value>
         </init-param>
         <!-- Uncomment if you want a slower start-up time but a faster first-page load -->
         <!--<load-on-startup>1</load-on-startup>-->
@@ -48,7 +48,7 @@
 
     <filter>
         <filter-name>cors-headers</filter-name>
-        <filter-class>uk.ac.ebi.atlas.filters.CORSHeaders</filter-class>
+        <filter-class>uk.ac.ebi.atlas.filters.CorsHeaders</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>cors-headers</filter-name>

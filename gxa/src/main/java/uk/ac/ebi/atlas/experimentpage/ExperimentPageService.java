@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 public class ExperimentPageService {
@@ -51,7 +53,8 @@ public class ExperimentPageService {
                 callbackLink(
                         MessageFormat.format("experiments/{0}", experiment.getAccession()),
                         accessKey,
-                        Pair.of("geneQuery", requestPreferences.getGeneQuery().toUrlEncodedJson())).toString());
+                        singletonList(Pair.of("geneQuery", requestPreferences.getGeneQuery().toUrlEncodedJson())))
+                        .toString());
 
         /*
         Fix me maybe if you're working on genome browsers anyway?
@@ -65,7 +68,9 @@ public class ExperimentPageService {
                 callbackLink(
                         GenomeBrowserController.REDIRECT_URL_TEMPLATE.replace(
                                 "{experimentAccession}", experiment.getAccession()),
-                        accessKey).toString());
+                        accessKey,
+                        emptyList())
+                        .toString());
         urls.addProperty("download", experimentDownloadLink(experiment, accessKey, requestPreferences).toString());
         if (experiment.getType().isRnaSeqBaseline()) {
             theOnlyGeneInResults.ifPresent(
@@ -88,7 +93,7 @@ public class ExperimentPageService {
         return experimentDescription;
     }
 
-    private URI callbackLink(String urlBase, String accessKey, Pair<String, String>... params) {
+    private URI callbackLink(String urlBase, String accessKey, List<Pair<String, String>> params) {
         try {
             URIBuilder builder = new URIBuilder(urlBase);
             for (Pair<String, String> p : params) {

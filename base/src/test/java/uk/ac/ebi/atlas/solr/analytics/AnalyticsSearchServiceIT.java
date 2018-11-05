@@ -32,7 +32,7 @@ public class AnalyticsSearchServiceIT {
     private AnalyticsSearchService subject;
 
     private SemanticQuery query = SemanticQuery.create("zinc finger");
-    private SemanticQuery condition = SemanticQuery.create("pish");
+    private SemanticQuery condition = SemanticQuery.create("watering");
     private Species species;
 
     @Before
@@ -93,7 +93,7 @@ public class AnalyticsSearchServiceIT {
     @Test
     public void speciesOfEmptyQuery() {
         ImmutableList<String> speciesList = subject.findSpecies(SemanticQuery.create(), SemanticQuery.create());
-        assertThat(speciesList.size(), is(greaterThan(25)));  // Number of species present in analytics index is now 27
+        assertThat(speciesList.size(), is(greaterThan(0)));
     }
 
     @Test

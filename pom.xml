@@ -4,7 +4,7 @@
 
     <groupId>uk.ac.ebi.atlas</groupId>
     <artifactId>atlas</artifactId>
-    <version>4.0</version>
+    <version>1.0</version>
 
     <name>Atlas</name>
     <url>https://www.ebi.ac.uk/gxa/</url>
@@ -463,6 +463,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>java-hamcrest</artifactId>
             <version>2.0.0.0</version>
@@ -472,7 +479,15 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.8.0</version>
+            <version>3.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-guava</artifactId>
+            <!-- Use 2.x version if you rely on Java 7 / AssertJ Core 2.x -->
+            <version>3.1.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -599,26 +614,16 @@
             <properties>
                 <build.environment>dev</build.environment>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</jdbc.url>
-                <jdbc.username>atlas3dev</jdbc.username>
-                <jdbc.password>YxyR9PKvOAtY</jdbc.password>
-                <zk.host>lime</zk.host>
-                <solr.host>lime</solr.host>
-                <!-- Must match any of the appenders defined in logback-test.xml -->
-                <test.logs>STDOUT</test.logs>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>dev.local</id>
-            <properties>
-                <build.environment>dev</build.environment>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <jdbc.url>jdbc:postgresql:gxpatlasloc</jdbc.url>
                 <jdbc.username>atlas3dev</jdbc.username>
                 <jdbc.password>atlas3dev</jdbc.password>
+                <!-- If you’re running a Beowu^W k8s cluster with minikube, the host of ZK and Solr will be given by
+                     the command `minikube ip`. The ports will be defined in your services solr-external and
+                     zk-external (if you’re using the config files in our repo) -->
                 <zk.host>localhost</zk.host>
+                <zk.port>2181</zk.port>
                 <solr.host>localhost</solr.host>
+                <solr.port>8983</solr.port>
                 <!-- Must match any of the appenders defined in logback-test.xml -->
                 <test.logs>STDOUT</test.logs>
             </properties>
@@ -629,12 +634,11 @@
             <properties>
                 <build.environment>dev</build.environment>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
-                <jdbc.username>atlas3it</jdbc.username>
-                <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
+                <data.files.location>/nfs/ma/home/atlas-it/atlas-test-data</data.files.location>
                 <zk.host>lime.ebi.ac.uk</zk.host>
+                <zk.port>2181</zk.port>
                 <solr.host>lime.ebi.ac.uk</solr.host>
+                <solr.port>8983</solr.port>
                 <!-- Must match any of the appenders defined in logback-test.xml -->
                 <test.logs>FILE</test.logs>
             </properties>

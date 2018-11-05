@@ -7,6 +7,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertThat;
 public class BaselineProfileStreamFactoryTest {
     private MockDataFileHub mockDataFileHub;
     private BaselineExperiment baselineExperiment =
-            MockExperiment.createBaselineExperiment(ImmutableList.of(new AssayGroup("g1", "r1")));
+            MockExperiment.createBaselineExperiment(ImmutableList.of(AssayGroupFactory.create("g1", "r1")));
 
     private RnaSeqBaselineProfileStreamFactory subject;
 

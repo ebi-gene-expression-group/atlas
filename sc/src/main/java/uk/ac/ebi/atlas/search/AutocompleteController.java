@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.search.suggester.SolrSuggestionReactSelectAdapter;
-import uk.ac.ebi.atlas.search.suggester.SuggesterDao;
 import uk.ac.ebi.atlas.search.suggester.SuggesterService;
 
+import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
@@ -23,7 +23,6 @@ public class AutocompleteController extends JsonExceptionHandlingController {
     protected static final int FEATURED_SPECIES = 0;
 
     private final SuggesterService suggesterService;
-    private final SuggesterDao suggesterDao;
     private final FeaturedSpeciesService featuredSpeciesService;
 
     private final LazyReference<String> speciesSelectJson = new LazyReference<String>() {
@@ -34,10 +33,8 @@ public class AutocompleteController extends JsonExceptionHandlingController {
     };
 
     public AutocompleteController(SuggesterService suggesterService,
-                                  SuggesterDao suggesterDao,
                                   FeaturedSpeciesService featuredSpeciesService) {
         this.suggesterService = suggesterService;
-        this.suggesterDao = suggesterDao;
         this.featuredSpeciesService = featuredSpeciesService;
     }
 
@@ -47,9 +44,9 @@ public class AutocompleteController extends JsonExceptionHandlingController {
     @ResponseStatus(HttpStatus.OK)
     public String fetchTopSuggestions(
             @RequestParam(value = "query") String query,
-            @RequestParam(value = "species", required = false, defaultValue = "") String species,
-            @RequestParam(value = "suggestCount", required = false, defaultValue = "20") int suggestCount) {
-        return GSON.toJson(suggesterDao.fetchBioentitySuggestions(query, suggestCount, species.split(",")));
+            @RequestParam(value = "species", required = false, defaultValue = "") String species) {
+        return GSON.toJson(
+                suggesterService.fetchIdentifiers(query, species.split(",")).collect(toList()));
     }
 
     // If needed we can have request parameters to determine the format of the reply (for react-select or not) and
@@ -63,7 +60,7 @@ public class AutocompleteController extends JsonExceptionHandlingController {
             @RequestParam(value = "species", required = false, defaultValue = "") String species) {
         return GSON.toJson(
                 SolrSuggestionReactSelectAdapter.serialize(
-                        suggesterService.fetchGroupedIdSuggestions(query, species.split(","))));
+                        suggesterService.fetchPropertiesWithoutHighlighting(query, species.split(","))));
     }
 
     @RequestMapping(value = "/json/suggestions/species",

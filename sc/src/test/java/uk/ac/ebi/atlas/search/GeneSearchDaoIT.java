@@ -1,43 +1,49 @@
 package uk.ac.ebi.atlas.search;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.data.MapEntry.entry;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_ORGANISM_PART;
 import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_SPECIES;
 
-@Transactional
-@WebAppConfiguration
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = WebConfig.class)
+@WebAppConfiguration
+@ContextConfiguration(classes = TestConfig.class)
 @TestInstance(Lifecycle.PER_CLASS)
 class GeneSearchDaoIT {
+    @Inject
+    private DataSource dataSource;
+
     @Inject
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -49,8 +55,28 @@ class GeneSearchDaoIT {
 
     private GeneSearchDao subject;
 
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_marker_genes-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(
+                new ClassPathResource("fixtures/scxa_experiment-delete.sql"),
+                new ClassPathResource("fixtures/scxa_analytics-delete.sql"),
+                new ClassPathResource("fixtures/scxa_marker_genes-delete.sql"));
+        populator.execute(dataSource);
+    }
+
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         subject = new GeneSearchDao(namedParameterJdbcTemplate, solrCloudCollectionProxyFactory);
     }
 
@@ -62,35 +88,52 @@ class GeneSearchDaoIT {
     }
 
     @ParameterizedTest
-    @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
-    @ValueSource(strings = {"ENSG00000000009"})
-    void validGeneIdReturnsKAndClusterIds(String geneId) {
-        Map<String, Map<Integer, List<Integer>>> result = subject.fetchKAndClusterIds(geneId);
+    @ValueSource(strings = {"ENSMUSG00000063415"})
+    void validGeneIdReturnsExperimentAccessions(String geneId) {
+        List<String> result = subject.experimentAccessionsForGeneId(geneId);
 
         assertThat(result)
-                .containsKeys("E-GEOD-106540")
-                .doesNotContainKeys("E-ENAD-13", "E-ENAD-14", "E-EHCA-2", "E-GEOD-99058");
-
-        // Only marker genes with probablity < 0.05 are returned
-        assertThat(result.get("E-GEOD-106540"))
-                .containsOnly(
-                        entry(3, singletonList(0)),
-                        entry(2, singletonList(1)));
-    }
-
-    @ParameterizedTest
-    @Sql({"scxa_experiment_fixture.sql", "scxa_marker_genes_fixture.sql"})
-    @ValueSource(strings = {"ENSMUSG00000000006"})
-    void searchForGeneOverProbabilityThresholdReturnsEmpty(String geneId) {
-        assertThat(subject.fetchKAndClusterIds(geneId))
-                .isEmpty();
+                .containsOnly("E-GEOD-99058");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"FOO"})
     void invalidGeneIdReturnsEmpty(String geneId) {
-        assertThat(subject.fetchKAndClusterIds(geneId))
+        assertThat(subject.experimentAccessionsForGeneId(geneId))
                 .isEmpty();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"'ENSMUSG00000063415', 'E-GEOD-99058', 7"})
+    void validExperimentAccessionReturnsClusterIDsWithPreferredKAndMinP(String geneId,
+                                                                        String experimentAccession,
+                                                                        Integer preferredK){
+        Map<Integer, List<Integer>> result =
+                subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
+                        geneId, experimentAccession, preferredK);
+
+        assertThat(result)
+                .isNotEmpty()
+                .containsAllEntriesOf(
+                        ImmutableMap.of(
+                                7, ImmutableList.of(1),
+                                11, ImmutableList.of(1)));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"'ENSMUSG00000063415', 'E-GEOD-99058', 7"})
+    void validExperimentAccessionReturnsOnlyOneClusterIDWithBothPreferredKAndMinP(String geneId,
+                                                                                  String experimentAccession,
+                                                                                  Integer preferredK){
+        Map<Integer, List<Integer>> result =
+                subject.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
+                        geneId, experimentAccession, preferredK);
+
+        assertThat(result)
+                .isNotEmpty()
+                .containsAllEntriesOf(
+                        ImmutableMap.of(
+                                11, ImmutableList.of(1)));
     }
 
     @ParameterizedTest

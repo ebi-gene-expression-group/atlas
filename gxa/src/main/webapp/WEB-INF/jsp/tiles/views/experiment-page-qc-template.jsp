@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="uk.ac.ebi.atlas.experimentpage.qc.QCReportUtil" %>
+<%@ page import="uk.ac.ebi.atlas.experimentpage.qc.QcReportUtil" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -31,7 +31,7 @@
         <%
             // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
             // see http://stackoverflow.com/questions/17218609/jsp-exception-when-i-try-to-import-static-file
-            QCReportUtil.printContent(request, pageContext.getOut());
+            QcReportUtil.printContent(request, pageContext.getOut());
         %>
     </div>
 </div>

@@ -11,6 +11,6 @@
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "scxa-gene-search-form": "^0.3.0"
+    "scxa-gene-search-form": "^1.0.0"
   }
 }

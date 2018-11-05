@@ -9,13 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.ArrayDesign;
+import uk.ac.ebi.atlas.model.arraydesign.ArrayDesign;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 
 import java.util.Date;
 import java.util.List;
@@ -43,8 +44,8 @@ public class MicroarrayExperimentTest {
     private static final String PUBMEDID = "PUBMEDID";
     private static final String DOI = "100.100/doi";
 
-    private static final AssayGroup G1 = new AssayGroup("id", "assay 1", "assay 2");
-    private static final AssayGroup G2 = new AssayGroup("test", "assay 1");
+    private static final AssayGroup G1 = AssayGroupFactory.create("id", "assay 1", "assay 2");
+    private static final AssayGroup G2 = AssayGroupFactory.create("test", "assay 1");
     private static final Contrast CONTRAST =
             new Contrast("g1_g2", ARRAY_DESIGN_ACCESSIONS.iterator().next(), G1, G2, "contrast");
 

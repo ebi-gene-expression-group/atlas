@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 
 import java.net.URI;
@@ -85,9 +86,9 @@ public class ExternallyViewableProfilesListTest {
         };
 
 
-        AssayGroup g1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
-        AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
-        AssayGroup g3 = new AssayGroup("g3", "run_31", "run_32");
+        AssayGroup g1 = AssayGroupFactory.create("g1", "run_11", "run_12", "run_13");
+        AssayGroup g2 = AssayGroupFactory.create("g2", "run_21", "run_22", "run_23", "run_24");
+        AssayGroup g3 = AssayGroupFactory.create("g3", "run_31", "run_32");
 
         Contrast g1g2 = new Contrast("g1_g2", "", g1, g2, "first contrast");
         Contrast g1g3 = new Contrast("g1_g3", "", g1, g3, "second contrast");

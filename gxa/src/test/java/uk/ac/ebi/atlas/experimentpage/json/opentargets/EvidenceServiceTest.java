@@ -9,8 +9,12 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
+import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -18,22 +22,25 @@ import static org.junit.Assert.assertThat;
 import static uk.ac.ebi.atlas.testutils.MockExperiment.createDifferentialExperiment;
 
 public class EvidenceServiceTest {
-    private static final String E_GEOD_59612 = "E-GEOD-59612";
+    private static final String EXPERIMENT_ACCESSION = RandomDataTestUtils.generateRandomExperimentAccession();
 
     private MockDataFileHub mockDataFileHub;
 
     @Mock
-    private DifferentialProfileStreamFactory differentialProfileStreamFactory;
+    private DifferentialProfileStreamFactory
+            <DifferentialExpression, DifferentialExperiment, DifferentialProfileStreamOptions, RnaSeqProfile>
+            differentialProfileStreamFactory;
 
-    private AssayGroup referenceAssay1 = new AssayGroup("g1", "assay1");
-    private AssayGroup testAssay1 = new AssayGroup("g2", "assay2");
-    private AssayGroup referenceAssay2 = new AssayGroup("g3", "assay3");
-    private AssayGroup testAssay2 = new AssayGroup("g4", "assay41", "assay42");
+    private AssayGroup referenceAssay1 = AssayGroupFactory.create("g1", "assay1");
+    private AssayGroup testAssay1 = AssayGroupFactory.create("g2", "assay2");
+    private AssayGroup referenceAssay2 = AssayGroupFactory.create("g3", "assay3");
+    private AssayGroup testAssay2 = AssayGroupFactory.create("g4", "assay41", "assay42");
 
     private Contrast c1 = new Contrast("g1_g2", null, referenceAssay1, testAssay1, "first contrast");
     private Contrast c2 = new Contrast("g3_g4", null, referenceAssay2, testAssay2, "second contrast");
 
-    private DifferentialExperiment experiment = createDifferentialExperiment(E_GEOD_59612, ImmutableList.of(c1, c2));
+    private DifferentialExperiment experiment =
+            createDifferentialExperiment(EXPERIMENT_ACCESSION, ImmutableList.of(c1, c2));
 
     private EvidenceService<DifferentialExpression, DifferentialExperiment, ?, ?> subject;
 
@@ -46,7 +53,7 @@ public class EvidenceServiceTest {
 
     @Test
     public void testGetPercentileRanks() {
-        mockDataFileHub.addPercentileRanksFile(E_GEOD_59612, ImmutableList.of(
+        mockDataFileHub.addPercentileRanksFile(EXPERIMENT_ACCESSION, ImmutableList.of(
                 "GeneId g1_g2 g3_g4".split(" "),
                 "ENSG00000000003 89 97".split(" "),
                 "ENSG00000000005 56 53".split(" ")));
@@ -56,7 +63,7 @@ public class EvidenceServiceTest {
 
     @Test
     public void understandNaAsLackOfValue() {
-        mockDataFileHub.addPercentileRanksFile(E_GEOD_59612, ImmutableList.of(
+        mockDataFileHub.addPercentileRanksFile(EXPERIMENT_ACCESSION, ImmutableList.of(
                 "GeneId g1_g2 g3_g4".split(" "),
                 "ENSG00000000003 89 NA".split(" ")));
 

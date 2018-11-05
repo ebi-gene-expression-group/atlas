@@ -24,7 +24,7 @@ public class TSnePlotServiceDao {
                 "(SELECT * FROM scxa_analytics WHERE gene_id=:gene_id) AS analytics " +
                 "ON analytics.cell_id=tsne.cell_id AND analytics.experiment_accession=tsne.experiment_accession " +
             "WHERE tsne.experiment_accession=:experiment_accession AND tsne.perplexity=:perplexity";
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "txManager", readOnly = true)
     public List<TSnePoint.Dto> fetchTSnePlotWithExpression(String experimentAccession, int perplexity, String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
@@ -48,7 +48,7 @@ public class TSnePlotServiceDao {
                 "(SELECT * FROM scxa_cell_clusters WHERE k=:k) AS clusters " +
                 "ON clusters.cell_id=tsne.cell_id AND clusters.experiment_accession=tsne.experiment_accession " +
             "WHERE tsne.experiment_accession=:experiment_accession AND tsne.perplexity=:perplexity";
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "txManager", readOnly = true)
     public List<TSnePoint.Dto> fetchTSnePlotWithClusters(String experimentAccession, int perplexity, int k) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(

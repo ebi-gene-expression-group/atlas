@@ -5,8 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
@@ -27,20 +25,12 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/*
- * Responsible for:
- * - Database:
- *     - gxa: the experiments table, and the deprecated expression values tables)
- *     - scxa: tables scxa_experiments, scxa_analytics, scxa_tsne_plot_*; TODO scxa_marker_gene
- * - design files on disk
- */
-
+// Inserts experiment in (scxa_)experiment table and writes the experiment design file to expdesign/
 public class ExperimentCrud {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCrud.class);
 
     private final ExperimentDao experimentDao;
     private final ExperimentChecker experimentChecker;
-    private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
     private final IdfParser idfParser;
@@ -48,7 +38,6 @@ public class ExperimentCrud {
 
     public ExperimentCrud(ExperimentDao experimentDao,
                           ExperimentChecker experimentChecker,
-                          AnalyticsLoaderFactory analyticsLoaderFactory,
                           CondensedSdrfParser condensedSdrfParser,
                           IdfParser idfParser,
                           ExperimentDesignFileWriterService experimentDesignFileWriterService,
@@ -56,14 +45,13 @@ public class ExperimentCrud {
 
         this.experimentDao = experimentDao;
         this.experimentChecker = experimentChecker;
-        this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.condensedSdrfParser = condensedSdrfParser;
         this.idfParser = idfParser;
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.configurationTrader = configurationTrader;
     }
 
-    public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
+    public UUID importExperiment(String experimentAccession, boolean isPrivate) {
         checkNotNull(experimentAccession);
 
         Pair<ExperimentConfiguration, CondensedSdrfParserOutput> files = loadAndValidateFiles(experimentAccession);
@@ -89,11 +77,6 @@ public class ExperimentCrud {
             deleteExperiment(experimentAccession);
         }
 
-        // We only insert in the DB differential and single cell experiments expressions
-        analyticsLoaderFactory
-                .getLoader(experimentConfiguration.getExperimentType())
-                .loadAnalytics(experimentAccession);
-
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
         experimentDao.addExperiment(experimentDTO, accessKeyUuid);
 
@@ -102,7 +85,7 @@ public class ExperimentCrud {
         return accessKeyUuid;
     }
 
-    public UUID importSingleCellExperiment(String experimentAccession, boolean isPrivate) throws IOException {
+    public UUID importSingleCellExperiment(String experimentAccession, boolean isPrivate) {
         checkNotNull(experimentAccession);
 
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
@@ -112,21 +95,16 @@ public class ExperimentCrud {
 
         IdfParserOutput idfParserOutput = idfParser.parse(experimentAccession);
 
-        ExperimentDTO experimentDTO = ExperimentDTO.create(
-                condensedSdrfParserOutput,
-                idfParserOutput,
-                condensedSdrfParserOutput.getSpecies(),
-                isPrivate
-        );
+        ExperimentDTO experimentDTO =
+                ExperimentDTO.create(
+                        condensedSdrfParserOutput,
+                        idfParserOutput,
+                        condensedSdrfParserOutput.getSpecies(),
+                        isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);
         }
-
-        // We only insert in the DB differential and single cell experiments expressions
-        analyticsLoaderFactory
-                .getLoader(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE)
-                .loadAnalytics(experimentAccession);
 
         UUID accessKeyUuid = accessKey.map(UUID::fromString).orElseGet(UUID::randomUUID);
         experimentDao.addExperiment(experimentDTO, accessKeyUuid);
@@ -148,9 +126,6 @@ public class ExperimentCrud {
     public void deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = findExperiment(experimentAccession);
         checkNotNull(experimentDTO, MessageFormat.format("Experiment not found: {0}", experimentAccession));
-
-        AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
-        analyticsLoader.deleteAnalytics(experimentAccession);
 
         experimentDao.deleteExperiment(experimentDTO.getExperimentAccession());
     }

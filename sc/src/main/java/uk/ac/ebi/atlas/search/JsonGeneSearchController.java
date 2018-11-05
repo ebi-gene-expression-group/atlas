@@ -62,18 +62,19 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     public String search(@RequestParam MultiValueMap<String, String> requestParams) {
         Optional<Species> species = Optional.ofNullable(requestParams.getFirst("species")).map(speciesFactory::create);
 
-        Stream<String> validQueryFields =
-                Stream.concat(Stream.of("q"), ID_PROPERTY_NAMES.stream().map(BioentityPropertyName::name));
+        List<String> validQueryFields =
+                ImmutableList.<String>builder()
+                        .add("q")
+                        .addAll(ID_PROPERTY_NAMES.stream().map(propertyName -> propertyName.name).collect(toList()))
+                        .build();
 
         // We support currently only one query term; in the unlikely case that somebody fabricates a URL with more than
         // one we’ll build the query with the first match. Remember that in order to support multiple terms we’ll
         // likely need to change GeneQuery and use internally a SemanticQuery
         String category =
                 requestParams.keySet().stream()
-                        .filter(
-                                actualField ->
-                                        validQueryFields.anyMatch(
-                                                validField -> validField.equalsIgnoreCase(actualField)))
+                        // We rely on "q" and BioentityPropertyName::name’s being lower case
+                        .filter(actualField -> validQueryFields.contains(actualField.toLowerCase()))
                         .findFirst()
                         .orElseThrow(() -> new RuntimeException("Error parsing query"));
 

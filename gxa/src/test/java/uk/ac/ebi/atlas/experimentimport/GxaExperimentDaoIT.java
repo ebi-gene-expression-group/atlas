@@ -1,38 +1,31 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.collect.Sets;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL;
 
+@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebConfig.class)
-public class GxaExperimentDaoIT {
-    private static final String E_MTAB_513 = "E-MTAB-513";
-    private static final String E_GEOD_5614 = "E-GEOD-5614";
-    private static final ExperimentType TYPE_BASELINE = ExperimentType.RNASEQ_MRNA_BASELINE;
-    private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
+@ContextConfiguration(classes = TestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class GxaExperimentDaoIT {
+    private static final ExperimentType TYPE_MICROARRAY = MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL;
     private static final String SECRET_111 = "Secret_111";
 
     @Inject
@@ -53,8 +46,7 @@ public class GxaExperimentDaoIT {
         return randomUUID;
     }
 
-    @Before
-    public void deleteSecret111() {
+    private void deleteSecret111() {
         try {
             subject.deleteExperiment(SECRET_111);
         } catch (Exception e) {
@@ -62,113 +54,97 @@ public class GxaExperimentDaoIT {
         }
     }
 
-    @Test
-    public void testFindExperiments() {
-        List<ExperimentDTO> experimentDTOs = subject.getAllExperimentsAsAdmin();
-        assertThat(experimentDTOs.size(), greaterThan(50));
-        assertThat(
-                experimentDTOs,
-                hasItem(
-                        ExperimentDTO.create(
-                                E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
+    @AfterEach
+    void tearDown() {
+        deleteSecret111();
     }
 
     @Test
-    public void testFindExperimentByType() {
-        Set<String> experimentAccessions = subject.findPublicExperimentAccessions(TYPE_BASELINE);
-        assertThat(experimentAccessions, hasItem(E_MTAB_513));
-        experimentAccessions = subject.findPublicExperimentAccessions(TYPE_MICROARRAY);
-        assertThat(experimentAccessions, hasItem(E_GEOD_5614));
-
+    void testFindExperimentByType() {
+        createSecret111(false);
+        Set<String> experimentAccessions = subject.findPublicExperimentAccessions(TYPE_MICROARRAY);
+        assertThat(experimentAccessions).contains(SECRET_111);
     }
 
     @Test
-    public void findExperimentShouldSucceed() {
-        ExperimentDTO experimentDTO = subject.findExperiment(E_MTAB_513, "");
-        assertThat(experimentDTO.getExperimentAccession(), is(E_MTAB_513));
-        assertThat(experimentDTO.getExperimentType(), is(TYPE_BASELINE));
-    }
-
-    @Test(expected = ResourceNotFoundException.class)
-    public void findExperimentShouldFailForUnknownExperiment() {
-        subject.findExperiment("UNKNOWN", "");
+    void findExperimentShouldFailForUnknownExperiment() {
+        assertThatExceptionOfType(ResourceNotFoundException.class)
+                .isThrownBy(() -> subject.findExperiment("UNKNOWN", ""));
     }
 
     @Test
-    public void testAddExperiment() {
+    void testAddExperiment() {
         int size = subject.getAllExperimentsAsAdmin().size();
         createSecret111(false);
-        assertThat(subject.getAllExperimentsAsAdmin().size(), is(size + 1));
+        assertThat(subject.getAllExperimentsAsAdmin().size()).isEqualTo(size + 1);
         subject.deleteExperiment(SECRET_111);
-        assertThat(subject.getAllExperimentsAsAdmin().size(), is(size));
+        assertThat(subject.getAllExperimentsAsAdmin().size()).isEqualTo(size);
     }
 
     @Test
-    public void testDeleteExperiment() {
+    void testDeleteExperiment() {
         createSecret111(false);
         int size = subject.getAllExperimentsAsAdmin().size();
         deleteSecret111();
-        assertThat(subject.getAllExperimentsAsAdmin().size(), is(size - 1));
+        assertThat(subject.getAllExperimentsAsAdmin().size()).isEqualTo(size - 1);
     }
 
     @Test
-    public void updateExperimentShouldChangePrivateState() {
+    void updateExperimentShouldChangePrivateState() {
         createSecret111(false);
         subject.setExperimentPrivacyStatus(SECRET_111, true);
-        assertThat(subject.getExperimentAsAdmin(SECRET_111).isPrivate(), is(true));
+        assertThat(subject.getExperimentAsAdmin(SECRET_111).isPrivate()).isTrue();
         subject.setExperimentPrivacyStatus(SECRET_111, false);
-        assertThat(subject.getExperimentAsAdmin(SECRET_111).isPrivate(), is(false));
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void cannotCreateExperimentTwice() {
-        createSecret111(false);
-        createSecret111(false);
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void cannotCreateExperimentTwice2() {
-        createSecret111(false);
-        createSecret111(true);
+        assertThat(subject.getExperimentAsAdmin(SECRET_111).isPrivate()).isFalse();
     }
 
     @Test
-    public void forPublicExperimentsAccessKeyIsIgnored() {
+    void cannotCreateExperimentTwice() {
+        assertThatExceptionOfType(RuntimeException.class)
+                .isThrownBy(() -> {
+                    createSecret111(false);
+                    createSecret111(false);
+                });
+    }
+
+    @Test
+    void cannotCreateExperimentTwice2() {
+        assertThatExceptionOfType(RuntimeException.class)
+                .isThrownBy(() -> {
+                    createSecret111(false);
+                    createSecret111(true);
+                });
+    }
+
+    @Test
+    void forPublicExperimentsAccessKeyIsIgnored() {
         UUID id = createSecret111(false);
-        assertThat(
-                subject.findExperiment(SECRET_111, id.toString()),
-                is(subject.findExperiment(SECRET_111, "different id")));
+        assertThat(subject.findExperiment(SECRET_111, id.toString()))
+                .isEqualTo(subject.findExperiment(SECRET_111, "different id"));
     }
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
     @Test
-    public void forPrivateExperimentsAccessKeyIsRequired() {
+    void forPrivateExperimentsAccessKeyIsRequired() {
         UUID id = createSecret111(true);
 
-        assertThat(
-                subject.findExperiment(SECRET_111, id.toString()),
-                hasProperty("experimentAccession", is(SECRET_111)));
+        assertThat(subject.findExperiment(SECRET_111, id.toString()))
+                .hasFieldOrPropertyWithValue("experimentAccession", SECRET_111);
 
-        exception.expect(ResourceNotFoundException.class);
-        subject.findExperiment(SECRET_111, "foobar");
+        assertThatExceptionOfType(ResourceNotFoundException.class)
+                .isThrownBy(() -> subject.findExperiment(SECRET_111, "foobar"));
     }
 
     @Test
-    public void youCanGetPrivateExperimentIfYouAreAdmin() {
+    void youCanGetPrivateExperimentIfYouAreAdmin() {
         createSecret111(true);
-        try {
-            subject.getExperimentAsAdmin(SECRET_111);
-        } catch (Exception e) {
-            fail();
-        }
+        subject.getExperimentAsAdmin(SECRET_111);
     }
 
     @Test
-    public void countExperiments() {
+    void countExperiments() {
         createSecret111(true);
         int count = subject.countExperiments();
         deleteSecret111();
-        assertThat(subject.countExperiments(), is(count - 1));
+        assertThat(subject.countExperiments()).isEqualTo(count - 1);
     }
 }

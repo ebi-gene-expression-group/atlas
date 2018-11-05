@@ -22,7 +22,7 @@ public class InterProTrader {
     public InterProTrader(Path interProFilePath) {
         try (TsvStreamer tsvStreamer =
                      new TsvStreamer(Files.newBufferedReader(interProFilePath, StandardCharsets.UTF_8))) {
-            accessionToTerm = InterProTSVParser.parse(tsvStreamer);
+            accessionToTerm = InterProTsvParser.parse(tsvStreamer);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
