@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import FetchLoader from 'react-faceted-search'
-import ExperimentCard from './ExperimentCard'
+import ExperimentCard from './src/ExperimentCard'
 
 const render = (options, mountNodeId) => {
   ReactDOM.render(
@@ -17,4 +17,4 @@ const render = (options, mountNodeId) => {
   )
 }
 
-export {render}
+export { render }

@@ -1,12 +1,12 @@
 const path = require(`path`)
 const CleanWebpackPlugin = require(`clean-webpack-plugin`)
 
-const commonPublicPath = '/dist/'
+const commonPublicPath = `/dist/`
+const vendorsBundleName = `vendors`
 
 module.exports = {
   entry: {
-    geneSearchDemo: ['whatwg-fetch', 'babel-polyfill', './src/index.js'],
-    // dependencies: ['prop-types', 'react', 'react-dom', 'urijs']
+    geneSearchDemo: [`whatwg-fetch`, `@babel/polyfill`, `./index.js`],
   },
 
   output: {
@@ -15,20 +15,24 @@ module.exports = {
     publicPath: commonPublicPath
   },
 
+  resolve: {
+    alias: {
+      "react": path.resolve(`./node_modules/react`),
+      "react-dom": path.resolve(`./node_modules/react-dom`),
+      "styled-components": path.resolve(`./node_modules/styled-components`)
+    },
+  },
+
   optimization: {
+    runtimeChunk: {
+      name: vendorsBundleName
+    },
     splitChunks: {
-      chunks: 'all',
-      minSize: 1,
       cacheGroups: {
-        geneSearch: {
-          test: /[\\/]src[\\/]/,
-          name: 'geneSearch',
-          priority: -20
-        },
-        vendors: {
+        commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          priority: -10
+          name: vendorsBundleName,
+          chunks: 'all'
         }
       }
     }
@@ -43,14 +47,14 @@ module.exports = {
       {
         test: /\.js$/i,
         exclude: /node_modules\//,
-        use: 'babel-loader'
+        use: `babel-loader`
       }
     ]
   },
 
   devServer: {
     port: 9000,
-    contentBase: path.resolve(__dirname, 'html'),
+    contentBase: path.resolve(__dirname, `html`),
     publicPath: commonPublicPath
   }
 }
