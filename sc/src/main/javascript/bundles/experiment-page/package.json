@@ -1,6 +1,6 @@
 {
   "name": "experiment-page",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -14,11 +14,12 @@
   "license": "Apache-2.0",
   "dependencies": {
     "expression-atlas-experiment-page-tsne-plot": "^3.3.0",
+    "linkifyjs": "^2.1.7",
     "lodash": "^4.17.11",
     "pluralize": "^7.0.0",
-    "prop-types": "^15.6.1",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
@@ -27,22 +28,19 @@
     "urijs": "^1.19.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
-    "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
-    "image-webpack-loader": "^4.4.0",
-    "linkifyjs": "^2.1.7",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.22.0",
+    "image-webpack-loader": "^4.5.0",
+    "webpack": "^4.25.0",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9",
+    "webpack-dev-server": "^3.1.10",
     "whatwg-fetch": "^3.0.0"
   }
 }

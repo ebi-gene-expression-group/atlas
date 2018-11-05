@@ -1,13 +1,17 @@
 const path = require(`path`)
 const CleanWebpackPlugin = require(`clean-webpack-plugin`)
 
-const commonPublicPath = '/dist/'
+const commonPublicPath = `/dist/`
+const vendorsBundleName = `vendors`
 
 module.exports = {
   entry: {
-    experimentPageDemo: [`whatwg-fetch`, `babel-polyfill`, `./src/index.js`],
-    // dependencies: [`prop-types`, `react`, `react-dom`, `react-router-dom`]
+    experimentPageDemo: [`whatwg-fetch`, `babel-polyfill`, `./src/index.js`]
   },
+
+  plugins: [
+    new CleanWebpackPlugin([`dist`])
+  ],
 
   output: {
     library: `[name]`,
@@ -15,28 +19,28 @@ module.exports = {
     publicPath: commonPublicPath
   },
 
+  resolve: {
+    alias: {
+      "react": path.resolve(`./node_modules/react`),
+      "react-dom": path.resolve(`./node_modules/react-dom`),
+      "styled-components": path.resolve(`./node_modules/styled-components`)
+    },
+  },
+
   optimization: {
+    runtimeChunk: {
+      name: vendorsBundleName
+    },
     splitChunks: {
-      chunks: 'all',
-      minSize: 1,
       cacheGroups: {
-        experimentPage: {
-          test: /[\\/]src[\\/]/,
-          name: 'experimentPage',
-          priority: -20
-        },
-        vendors: {
+        commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          priority: -10
+          name: vendorsBundleName,
+          chunks: 'all'
         }
       }
     }
   },
-
-  plugins: [
-    new CleanWebpackPlugin([`dist`])
-  ],
 
   module: {
     rules: [
@@ -86,7 +90,9 @@ module.exports = {
 
   devServer: {
     port: 9000,
-    contentBase: path.resolve(__dirname, 'gxa/sc/experiments/E-MTAB-5061'),
-    publicPath: commonPublicPath
+    contentBase: path.resolve(__dirname, `html`),
+    publicPath: commonPublicPath,
+    // Go to http://localhost:9000/gxa/sc/experiments/E-MTAB-5061 to avoid basename warning in the console
+    historyApiFallback: true
   }
 }
