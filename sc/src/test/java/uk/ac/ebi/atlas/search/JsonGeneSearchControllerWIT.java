@@ -111,6 +111,23 @@ class JsonGeneSearchControllerWIT {
     }
 
     @Test
+    public void jsonPayloadContainsFacetDescription() throws Exception {
+        String geneId = jdbcTestUtils.fetchRandomGene();
+
+        this.mockMvc.perform(get("/json/search").param("ensgene", geneId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.results", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].element.experimentAccession", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].facets[0].group", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].description", isA(String.class)))
+                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes", "Species")));
+    }
+      
+    @Test
     void speciesParamCanAppearBeforeGeneQuery() throws Exception {
         this.mockMvc.perform(get("/json/search").param("species", "homo sapiens").param("symbol", "aspm"))
                 .andExpect(status().isOk());

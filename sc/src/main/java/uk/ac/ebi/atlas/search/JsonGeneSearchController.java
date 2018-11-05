@@ -23,11 +23,13 @@ import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
@@ -148,7 +150,8 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                                         ImmutableMap.of(
                                                 "group", "Marker genes",
                                                 "value", "experiments with marker genes",
-                                                "label", "Experiments with marker genes"));
+                                                "label", "Experiments with marker genes",
+                                                "description", FacetsToTooltipMapping.MARKER_GENE.getTooltip()));
                                 experimentAttributes.put(
                                         "markerGenes",
                                         convertMarkerGeneModel(
@@ -174,13 +177,32 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     }
 
     private List<Map<String, String>> unfoldFacets(Map<String, List<String>> model) {
-        return unfoldListMultimap(model).stream()
-                .map(entry ->
-                        ImmutableMap.of(
-                                "group", entry.getKey(),
-                                "value", entry.getValue(),
-                                "label", StringUtils.capitalize(entry.getValue())))
-                .collect(toList());
+
+        List<SimpleEntry<String, String>> unfoldedModel = unfoldListMultimap(model);
+        List<Map<String, String>> results = new ArrayList<>();
+
+        for (Map.Entry<String, String> entry : unfoldedModel) {
+            ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.<String, String>builder()
+                    .put("group", entry.getKey())
+                    .put("value", entry.getKey())
+                    .put("label", StringUtils.capitalize(entry.getValue()));
+
+            if(!isNullOrEmpty(getTooltipText(entry.getKey()))) {
+                mapBuilder.put("description", getTooltipText(entry.getKey()));
+            }
+
+            results.add(mapBuilder.build());
+        }
+        return results;
+    }
+
+    private String getTooltipText(String group) {
+        for (FacetsToTooltipMapping tooltip : FacetsToTooltipMapping.values()) {
+            if(tooltip.getTitle().equalsIgnoreCase(group)) {
+               return tooltip.getTooltip();
+            }
+        }
+        return null;
     }
 
     private Map<String, Object> getExperimentInformation(String experimentAccession, String geneId) {
