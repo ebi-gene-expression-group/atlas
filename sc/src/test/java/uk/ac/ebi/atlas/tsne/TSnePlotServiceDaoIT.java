@@ -13,11 +13,16 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.configuration.TestConfig;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,6 +39,9 @@ class TSnePlotServiceDaoIT {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
+    private Path dataFilesPath;
+
+    @Inject
     private JdbcUtils jdbcTestUtils;
 
     @Inject
@@ -44,7 +52,7 @@ class TSnePlotServiceDaoIT {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
-                new ClassPathResource("fixtures/scxa_tsne-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_tsne-full.sql"),
                 new ClassPathResource("fixtures/scxa_cell_clusters-fixture.sql"),
                 new ClassPathResource("fixtures/scxa_analytics-fixture.sql"));
         populator.execute(dataSource);
@@ -106,8 +114,14 @@ class TSnePlotServiceDaoIT {
     @ParameterizedTest
     @MethodSource("randomExperimentAccessionProvider")
     void testNumberOfCellsByExperimentAccession(String experimentAccession) {
-        assertThat(subject.fetchCellNumberByExperimentAccession(experimentAccession))
-                .isInstanceOfAny(Integer.class);
+        Map<Integer, AtlasResource<TsvStreamer>> resource = new DataFileHub(dataFilesPath.resolve("scxa"))
+                .getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs;
+        Map.Entry<Integer, AtlasResource<TsvStreamer>> firstFile = resource.entrySet().iterator().next();
+        Stream<String[]> fileContent = firstFile.getValue().get().get();
+        Integer fileContentLines = Math.toIntExact(fileContent.count());
+        Integer numberOfcells = subject.fetchCellNumberByExperimentAccession(experimentAccession);
+        assertThat(numberOfcells)
+                .isEqualTo(fileContentLines-1);
     }
 
     private static final String SELECT_CELL_IDS_STATEMENT =
