@@ -11,10 +11,9 @@ const render = (options, mountNodeId) => {
       experimentAccession={options.content.experimentAccession}
       accessKey={options.content.accessKey}
       species={options.content.species}
-      tabs={options.content.tabs}
-    />,
+      tabs={options.content.tabs} />,
     document.getElementById(mountNodeId)
   )
 }
 
-export {ExperimentPageRouter as default, render}
+export { ExperimentPageRouter as default, render }
