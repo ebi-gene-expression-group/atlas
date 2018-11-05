@@ -195,7 +195,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         return results;
     }
 
-    private String getTooltipText(String group){
+    private String getTooltipText(String group) {
         for (FacetsToTooltipMapping tooltip : FacetsToTooltipMapping.values()) {
             if(tooltip.getTitle().equalsIgnoreCase(group)) {
                return tooltip.getTooltip();
