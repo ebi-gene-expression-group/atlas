@@ -41,22 +41,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        // exclude: /node_modules\//,
-        use: [
-          {loader: 'style-loader'},
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.less$/i,
-        use: [`style-loader`, `css-loader`, `less-loader`]
+        test: /\.js$/i,
+        exclude: /node_modules\//,
+        use: `babel-loader`
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
@@ -93,11 +80,6 @@ module.exports = {
       {
         test: /\.svg$/i,
         use: `file-loader`
-      },
-      {
-        test: /\.js$/i,
-        exclude: /node_modules\//,
-        use: `babel-loader`
       }
     ]
   },
