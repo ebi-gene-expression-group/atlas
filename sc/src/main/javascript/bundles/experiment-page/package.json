@@ -2,10 +2,7 @@
   "name": "experiment-page",
   "version": "2.0.0",
   "description": "",
-  "main": "lib/index.js",
-  "scripts": {
-    "dev": "webpack-dev-server -d"
-  },
+  "main": "index.js",
   "author": "Expression Atlas developers <atlas-developers@ebi.ac.uk>",
   "collaborators": [
     "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
@@ -33,7 +30,6 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
     "file-loader": "^2.0.0",
