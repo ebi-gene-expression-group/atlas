@@ -2,14 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import FetchLoader from 'react-faceted-search'
-import ExperimentCard from './ExperimentCard'
+import ExperimentTableCard from './ExperimentTableCard'
 
 const render = (options, mountNodeId) => {
   ReactDOM.render(
     <FetchLoader
       host={options.atlasUrl}
       resource={options.resource}
-      ResultElementClass={ExperimentCard}
+      ResultElementClass={ExperimentTableCard}
       noResultsMessage={options.noResultsMessage}
       resultsMessage={options.resultsMessage}
     />,
