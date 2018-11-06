@@ -1,20 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import FetchLoader from 'react-faceted-search'
-import ExperimentCard from './src/ExperimentCard'
+import GeneSearchRouter from './src/GeneSearchRouter'
 
 const render = (options, mountNodeId) => {
-  ReactDOM.render(
-    <FetchLoader
-      host={options.atlasUrl}
-      resource={options.resource}
-      ResultElementClass={ExperimentCard}
-      noResultsMessage={options.noResultsMessage}
-      resultsMessage={options.resultsMessage}
-    />,
-    document.getElementById(mountNodeId)
-  )
+  ReactDOM.render(<GeneSearchRouter {...options} />,  document.getElementById(mountNodeId))
 }
 
 export { render }

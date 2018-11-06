@@ -15,7 +15,9 @@
     "prop-types": "^15.6.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "react-faceted-search": "^2.1.0-beta",
+    "react-faceted-search": "^2.2.0-beta",
+    "react-router-dom": "^4.3.1",
+    "scxa-gene-search-form": "^1.1.1-beta",
     "styled-components": "^4.0.3",
     "urijs": "^1.19.1"
   },
