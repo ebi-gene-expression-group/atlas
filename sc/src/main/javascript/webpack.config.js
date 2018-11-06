@@ -39,7 +39,8 @@ module.exports = {
       "urijs": path.resolve(`./node_modules/urijs`),
       "lodash": path.resolve(`./node_modules/lodash`),
       "react-select": path.resolve(`./node_modules/react-select`),
-      "expression-atlas-autocomplete": path.resolve(`./node_modules/expression-atlas-autocomplete`)
+      "expression-atlas-autocomplete": path.resolve(`./node_modules/expression-atlas-autocomplete`),
+      "scxa-gene-search-form": path.resolve(`./node_modules/scxa-gene-search-form`)
     }
   },
 
