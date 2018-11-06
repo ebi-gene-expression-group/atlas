@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.collect.ImmutableMap;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,6 +18,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -49,25 +49,26 @@ public class ExperimentAttributesServiceTest {
     @Mock
     private IdfParser idfParser;
     @Mock
-    private ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTraderMock;
 
     @InjectMocks
     private ExperimentAttributesService subject;
 
 
     @Test
-    public void returnsCellIdsPerExperiment() {
+    public void returnExperimentInformationByAccession() {
 
         String experimentAccession = generateRandomExperimentAccession();
+        Experiment experimentRandom = MockExperiment.createBaselineExperiment(experimentAccession);
 
-        Experiment experimentRandom = MockExperiment.createBaselineExperiment();
+        when(experimentTraderMock.getPublicExperiment(experimentAccession)).thenReturn(experimentRandom);
 
-        when(experimentTrader.getPublicExperiment(experimentAccession)).thenReturn(experimentRandom);
-
-        ImmutableMap<String, Object> result = subject.fetchSpecificExperimentsAttributes(experimentAccession);
-
+        ImmutableMap<String, ExperimentInfo> result = subject.fetchSpecificExperimentsAttributes(experimentAccession);
         assertThat(result)
-                .containsOnlyKeys("specificExperimentInfo");
+                .extracting("specificExperimentInfo")
+                .extracting("numberOfAssays", "experimentalFactors")
+                .isNotNull();
+
     }
 
     @Test
