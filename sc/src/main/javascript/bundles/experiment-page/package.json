@@ -22,6 +22,7 @@
     "react-table": "^6.8.6",
     "sc-atlas-bioentity-information": "^1.7.0",
     "styled-components": "^4.0.3",
+    "scxa-marker-gene-heatmap": "file:../../../../../../../scxa-marker-gene-heatmap/scxa-marker-gene-heatmap-0.0.1.tgz",
     "urijs": "^1.19.1"
   },
   "devDependencies": {

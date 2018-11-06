@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import URI from 'urijs'
 
+import HeatmapView from 'scxa-marker-gene-heatmap'
 import TSnePlotView from 'expression-atlas-experiment-page-tsne-plot'
 import BioentityInformation from 'sc-atlas-bioentity-information'
 
@@ -30,6 +31,21 @@ const TSnePlotViewRoute = (props) => {
 
   return (
     <div className={`margin-top-large`}>
+      <HeatmapView
+        host={atlasUrl}
+        resource={`json/experiments/${experimentAccession}/marker-genes/${search.markerGeneK || preferredK}`}
+        wrapperClassName={`row expanded`}
+        ks={ks}
+        selectedK={search.markerGeneK || preferredK}
+        onSelectK={
+          (k) => {
+            const query = new URLSearchParams(history.location.search)
+            query.set(`markerGeneK`, k)
+            resetHighlightClusters(query)
+            updateUrlWithParams(query)
+          }
+        }/>
+
       <TSnePlotView
         atlasUrl={atlasUrl}
         suggesterEndpoint={suggesterEndpoint}
