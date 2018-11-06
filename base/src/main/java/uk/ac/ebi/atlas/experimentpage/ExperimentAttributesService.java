@@ -95,14 +95,14 @@ public class ExperimentAttributesService {
         return publications;
     }
 
-    private final ImmutableMap<String, ExperimentInfo> experimentsAttributesByAccession (String accession)
+    private final ImmutableMap<String, Object> experimentsAttributesByAccession (String accession)
     {
         ExperimentInfo fetchExperimentsInfo = (experimentTrader.getPublicExperiment(accession)).buildExperimentInfo();
         return ImmutableMap.of(
                 "specificExperimentInfo", fetchExperimentsInfo);
     }
 
-    public ImmutableMap<String, ExperimentInfo> fetchSpecificExperimentsAttributes(String accession) {
+    public ImmutableMap<String, Object> fetchSpecificExperimentsAttributes(String accession) {
         return experimentsAttributesByAccession(accession);
     }
 

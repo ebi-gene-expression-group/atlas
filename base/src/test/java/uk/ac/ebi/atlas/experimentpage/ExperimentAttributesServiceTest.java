@@ -63,7 +63,7 @@ public class ExperimentAttributesServiceTest {
 
         when(experimentTraderMock.getPublicExperiment(experimentAccession)).thenReturn(experimentRandom);
 
-        ImmutableMap<String, ExperimentInfo> result = subject.fetchSpecificExperimentsAttributes(experimentAccession);
+        ImmutableMap<String, Object> result = subject.fetchSpecificExperimentsAttributes(experimentAccession);
         assertThat(result)
                 .extracting("specificExperimentInfo")
                 .extracting("numberOfAssays", "experimentalFactors")
