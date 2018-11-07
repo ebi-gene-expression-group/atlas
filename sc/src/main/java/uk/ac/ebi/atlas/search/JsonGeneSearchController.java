@@ -27,10 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.ImmutableList.toImmutableList;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
@@ -164,8 +164,14 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
                         })).collect(toImmutableList());
 
+        String matchingGeneIds = "";
+        if (geneIds.get().size() == 1 && !geneIds.get().iterator().next().equals(geneQuery.queryTerm())) {
+            matchingGeneIds = "(" + geneIds.get().stream().collect(joining(", ")) + ")";
+        }
+
         return GSON.toJson(
                 ImmutableMap.of(
+                        "matchingGeneId", matchingGeneIds,
                         "results", results,
                         "checkboxFacetGroups", ImmutableList.of("Marker genes", "Species")));
     }

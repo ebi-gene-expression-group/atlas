@@ -6,7 +6,7 @@ const vendorsBundleName = `vendors`
 
 module.exports = {
   entry: {
-    geneSearchDemo: [`whatwg-fetch`, `@babel/polyfill`, `./index.js`],
+    searchRouter: [`whatwg-fetch`, `@babel/polyfill`, `./index.js`],
   },
 
   output: {
@@ -55,6 +55,7 @@ module.exports = {
   devServer: {
     port: 9000,
     contentBase: path.resolve(__dirname, `html`),
-    publicPath: commonPublicPath
+    publicPath: commonPublicPath,
+    historyApiFallback: true
   }
 }
