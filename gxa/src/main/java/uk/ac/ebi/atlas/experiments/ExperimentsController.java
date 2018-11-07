@@ -13,13 +13,13 @@ public class ExperimentsController extends HtmlExceptionHandlingController {
     public String getExperimentsListParameters(
             @RequestParam(value = "experimentType", required = false) String experimentType,
             @RequestParam(value = "kingdom", required = false) String kingdom,
-            @RequestParam(value = "organism", required = false) String organism,
+            @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "experimentSet", required = false) String experimentSet,
             Model model) {
 
         model.addAttribute("experimentType", experimentType);
         model.addAttribute("kingdom", kingdom);
-        model.addAttribute("organism", organism);
+        model.addAttribute("species", species);
         model.addAttribute("experimentSet", experimentSet);
 
         model.addAttribute("mainTitle", "Experiments ");

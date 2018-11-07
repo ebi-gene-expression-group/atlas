@@ -1,45 +1,44 @@
-package uk.ac.ebi.atlas.species.services;
+package uk.ac.ebi.atlas.home;
 
 import com.atlassian.util.concurrent.LazyReference;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Named
 public class PopularSpeciesService {
 
-    private final PopularSpeciesDao popularSpeciesDao;
-    private final LazyReference<List<PopularSpeciesInfo>> sortedList = new LazyReference<List<PopularSpeciesInfo>>() {
+    protected final PopularSpeciesDao popularSpeciesDao;
+    private final LazyReference<List<PopularSpeciesInfo>> popularSpeciesInfos = new LazyReference<List<PopularSpeciesInfo>>() {
         @Override
         protected List<PopularSpeciesInfo> create() {
-            return popularSpeciesDao.popularSpecies().stream()
+            return popularSpeciesDao.getExperimentCountBySpecies().stream()
                     .sorted(PopularSpeciesInfo.BY_SIZE_DESCENDING)
                     .collect(Collectors.toList());
         }
     };
 
-    @Inject
     public PopularSpeciesService(PopularSpeciesDao popularSpeciesDao) {
         this.popularSpeciesDao = popularSpeciesDao;
     }
 
     public List<PopularSpeciesInfo> getPopularSpecies() {
-        return sortedList.get();
+        return popularSpeciesInfos.get();
     }
 
     public List<PopularSpeciesInfo> getPopularSpecies(int howMany) {
-        return sortedList.get().subList(0, Math.min(sortedList.get().size(), howMany));
+        return getSublist(popularSpeciesInfos.get(), howMany);
     }
 
     public List<PopularSpeciesInfo> getPopularSpecies(final String kingdom, int howMany) {
         List<PopularSpeciesInfo> filteredList =
-                sortedList.get().stream()
+                popularSpeciesInfos.get().stream()
                         .filter(speciesInfo -> kingdom.equalsIgnoreCase(speciesInfo.kingdom()))
                         .collect(Collectors.toList());
 
-        return filteredList.subList(0, Math.min(filteredList.size(), howMany));
+        return getSublist(filteredList, howMany);
     }
 
+    private List<PopularSpeciesInfo> getSublist(List<PopularSpeciesInfo> list, int length) {
+        return list.subList(0, Math.min(list.size(), length));
+    }
 }

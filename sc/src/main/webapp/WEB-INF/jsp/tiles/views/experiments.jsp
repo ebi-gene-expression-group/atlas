@@ -47,7 +47,7 @@
                     <th><input type="hidden" class="search_init"></th>
                     <th><input type="hidden" class="search_init"></th>
                     <th rowspan="1" colspan="1">
-                        <input id="gxaExperimentsTableOrganismInput" type="text" class="search_init" value="Search" name="search_organisms">
+                        <input id="gxaExperimentsTableSpeciesInput" type="text" class="search_init" value="Search" name="search_species">
                     </th>
                     <th rowspan="1" colspan="1">
                         <input id="gxaExperimentsTableFactorsInput" type="text" class="search_init" value="Search" name="search_factors">
@@ -68,6 +68,6 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         document.getElementById("local-nav-experiments").className += ' active';
-        experimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}", "${experimentSet}", "${pageContext.request.contextPath}");
+        experimentsPageModule.init("${experimentType}", "${kingdom}", "${species}", "${experimentSet}", "${pageContext.request.contextPath}");
     });
 </script>

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.species.services;
+package uk.ac.ebi.atlas.home;
 
 import com.google.auto.value.AutoValue;
 
@@ -12,7 +12,7 @@ public abstract class PopularSpeciesInfo {
     public abstract long baselineExperiments();
     public abstract long differentialExperiments();
 
-    static PopularSpeciesInfo create(String species,
+    public static PopularSpeciesInfo create(String species,
                                      String kingdom,
                                      long baselineExperiments,
                                      long differentialExperiments) {
@@ -24,6 +24,18 @@ public abstract class PopularSpeciesInfo {
                 differentialExperiments);
     }
 
-    static final Comparator<PopularSpeciesInfo> BY_SIZE_DESCENDING =
+    // Suitable for single cell experiment types, which are neither baseline, nor differential
+    public static PopularSpeciesInfo create(String species,
+                                     String kingdom,
+                                     long totalExperiments) {
+        return new AutoValue_PopularSpeciesInfo(
+                species,
+                kingdom,
+                totalExperiments,
+                0,
+                0);
+    }
+
+    public static final Comparator<PopularSpeciesInfo> BY_SIZE_DESCENDING =
             (o1, o2) -> -Long.compare(o1.totalExperiments(), o2.totalExperiments());
 }
