@@ -47,12 +47,13 @@ class TSnePlotServiceDaoIT {
     @Inject
     private TSnePlotServiceDao subject;
 
+    public ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+
     @BeforeAll
     void populateDatabaseTables() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScripts(
+        populator.setScripts(
                 new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
-                new ClassPathResource("fixtures/scxa_tsne-full.sql"),
+                new ClassPathResource("fixtures/scxa_tsne-fixture.sql"),
                 new ClassPathResource("fixtures/scxa_cell_clusters-fixture.sql"),
                 new ClassPathResource("fixtures/scxa_analytics-fixture.sql"));
         populator.execute(dataSource);
@@ -60,8 +61,7 @@ class TSnePlotServiceDaoIT {
 
     @AfterAll
     void cleanDatabaseTables() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScripts(
+        populator.setScripts(
                 new ClassPathResource("fixtures/scxa_experiment-delete.sql"),
                 new ClassPathResource("fixtures/scxa_tsne-delete.sql"),
                 new ClassPathResource("fixtures/scxa_cell_clusters-delete.sql"),
@@ -114,6 +114,9 @@ class TSnePlotServiceDaoIT {
     @ParameterizedTest
     @MethodSource("randomExperimentAccessionProvider")
     void testNumberOfCellsByExperimentAccession(String experimentAccession) {
+        cleanDatabaseTables();
+        populator.setScripts(new ClassPathResource("fixtures/scxa_tsne-full.sql"));
+        populator.execute(dataSource);
         Map<Integer, AtlasResource<TsvStreamer>> resource = new DataFileHub(dataFilesPath.resolve("scxa"))
                 .getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs;
         Map.Entry<Integer, AtlasResource<TsvStreamer>> firstFile = resource.entrySet().iterator().next();
@@ -122,6 +125,8 @@ class TSnePlotServiceDaoIT {
         Integer numberOfcells = subject.fetchCellNumberByExperimentAccession(experimentAccession);
         assertThat(numberOfcells)
                 .isEqualTo(fileContentLines-1);
+        cleanDatabaseTables();
+        populateDatabaseTables();
     }
 
     private static final String SELECT_CELL_IDS_STATEMENT =
