@@ -4,22 +4,12 @@
 <%--@elvariable id="species" type="String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <div class="row column expanded">
-    <div class="row column expanded">
-        <h3>Search results</h3>
-    </div>
-
-    <div class="row column expanded margin-bottom-large">
-        <div id="search-form"></div>
-    </div>
-
-    <div id="search-results-list"></div>
+    <div id="gene-search"></div>
 </div>
 
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearch.bundle.js"></script>
-<script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearchForm.bundle.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
     geneSearchForm.render({
@@ -40,9 +30,7 @@
 
     geneSearch.render({
       atlasUrl: '${pageContext.request.contextPath}/',
-      resource: '${endpoint}',
-      noResultsMessage: '${geneQueryTerm} is not expressed in any experiment. Try searching for a different gene.',
-      resultsMessage: '${geneQueryTerm} is expressed in:'
-    }, 'search-results-list');
+      basename: '${pageContext.request.contextPath}',
+    }, 'gene-search');
   });
 </script>
