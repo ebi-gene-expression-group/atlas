@@ -58,7 +58,7 @@ const GeneSearch = ({atlasUrl, history}) => {
           }
           ResultElementClass={ExperimentCard}
           noResultsMessageFormatter={(data) => `${geneQuery.term} is not expressed in any experiment: ${data.reason}`}
-          resultsMessageFormatter={(data) => `${geneQuery.term} ${data.matchingGeneIds} is expressed in:`} />
+          resultsMessageFormatter={(data) => `${geneQuery.term} ${data.matchingGeneId} is expressed in:`} />
       }
     </div>
   )
