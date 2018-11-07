@@ -102,7 +102,7 @@ public class CardModelAdapterTest {
     }
 
     private CardModel getRandomCardModel(boolean hasDescription, int numberOfContentItems, boolean contentHasUrls) {
-        String iconType = randomAlphanumeric(5);
+        CardIconType iconType = CardIconType.values()[RANDOM.nextInt(CardIconType.values().length)];
         String iconSrc = randomAlphanumeric(10);
 
         List<Pair<String, Optional<String>>> content = new ArrayList<>();

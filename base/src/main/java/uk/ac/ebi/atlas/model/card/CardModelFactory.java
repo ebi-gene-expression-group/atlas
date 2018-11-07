@@ -13,7 +13,7 @@ public class CardModelFactory {
     public static CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
 
         return CardModel.create(
-                "species",
+                CardIconType.SPECIES,
                 popularSpeciesInfo.species(),
                 StringUtils.capitalize(popularSpeciesInfo.species()),
                 Collections.singletonList(
