@@ -10,8 +10,8 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "expression-atlas-experiment-page-tsne-plot": "^3.3.0",
     "linkifyjs": "^2.1.7",
+    "expression-atlas-experiment-page-tsne-plot": "file:../../../../../../../scxa-experiment-page-tsne-plot-view/expression-atlas-experiment-page-tsne-plot-3.3.0.tgz",
     "lodash": "^4.17.11",
     "pluralize": "^7.0.0",
     "prop-types": "^15.6.2",

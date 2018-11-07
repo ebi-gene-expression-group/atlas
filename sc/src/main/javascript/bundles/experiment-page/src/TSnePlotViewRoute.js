@@ -41,6 +41,11 @@ const TSnePlotViewRoute = (props) => {
           (k) => {
             const query = new URLSearchParams(history.location.search)
             query.set(`markerGeneK`, k)
+            // If tsne plot is coloured by k
+            if(!query.has(`metadata`)) {
+              query.set(`k`, k)
+              query.set(`colourBy`, `clusters`)
+            }
             resetHighlightClusters(query)
             updateUrlWithParams(query)
           }
@@ -84,6 +89,7 @@ const TSnePlotViewRoute = (props) => {
             query.set(`colourBy`, colourByCategory)
             if(colourByCategory === `clusters`) {
               query.set(`k`, colourByValue)
+              query.set(`markerGeneK`, colourByValue)
               query.delete(`metadata`)
             }
             else if(colourByCategory === `metadata`) {
