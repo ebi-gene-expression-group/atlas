@@ -1,38 +1,21 @@
 {
-  "name": "expression-atlas-baseline-expression",
-  "version": "1.0.0",
-  "description": "Baseline expression component",
   "main": "index.js",
-  "scripts": {
-    "full-build": "rm -rf node_modules/ && npm install && webpack --devtool source-map",
-    "dev": "npm install && webpack-dev-server --watch --hot --inline --devtool source-map"
-  },
-  "author": "Expression Atlas developers <atlas-developers@ebi.ac.uk>",
-  "collaborators": [
-    "Elisabet Barrera <barrera@ebi.ac.uk>",
-    "Wojciech Bażant <wbazant@ebi.ac.uk>",
-    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
-  ],
-  "license": "Apache-2.0",
-  "private": true,
   "dependencies": {
-    "expression-atlas-heatmap-highcharts": "^4.4.4",
+    "expression-atlas-heatmap-highcharts": "^5.0.0-beta",
     "prop-types": "^15.6.2",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "clean-webpack-plugin": "^0.1.18",
-    "css-loader": "^1.0.0",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^0.1.19",
     "file-loader": "^2.0.0",
-    "image-webpack-loader": "^4.1.0",
-    "imports-loader": "^0.8.0",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.0.1",
-    "webpack-dev-server": "^3.1.0"
+    "image-webpack-loader": "^4.5.0",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   }
 }

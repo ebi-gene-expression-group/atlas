@@ -33,24 +33,24 @@
     </div>
 </body>
 
-<script src="../dist/vendorCommons.bundle.js"></script>
-<script src="../dist/baselineExpression.bundle.js"></script>
+<script src="/dist/vendors.bundle.js"></script>
+<script src="/dist/baselineExpression.bundle.js"></script>
 
 <script>
     var facetsData = {
         "homo sapiens":
-                [{"name":"ORGANISM_PART","value":"Organism part"},
-                 {"name":"CELL_LINE","value":"Cell line"}],
+                [{name: 'ORGANISM_PART', value: 'Organism part'},
+                 {name: 'CELL_LINE', value: 'Cell line'}],
         "caenorhabditis elegans":
-                [{"name":"DEVELOPMENTAL_STAGE","value":"Developmental stage"}],
+                [{name: 'DEVELOPMENTAL_STAGE', value: 'Developmental stage'}],
         "mus musculus":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
+                [{name: 'ORGANISM_PART', value: 'Organism part'}],
         "rattus norvegicus":
-                [{"name":"ORGANISM_PART","value":"Organism part"}]
+                [{name: 'ORGANISM_PART', value: 'Organism part'}]
     };
 
     baselineExpression.render({
-        atlasUrl: 'https://localhost:8443/gxa/',
+        atlasUrl: 'http://localhost:8080/gxa/',
         target: 'atlas-content',
         facetsTreeData: facetsData,
         geneQuery: '[{"value":"GO:0008150"}]',
