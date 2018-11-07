@@ -12,22 +12,7 @@
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearch.bundle.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
-    geneSearchForm.render({
-      atlasUrl: '${pageContext.request.contextPath}/',
-      wrapperClassName: 'row expanded',
-      actionEndpoint: 'search',
-      autocompleteClassName: 'small-12 medium-8 columns',
-      suggesterEndpoint: 'json/suggestions/gene_ids',
-      enableSpeciesSelect: true,
-      speciesEndpoint: 'json/suggestions/species',
-      speciesSelectClassName: 'small-12 medium-4 columns',
-      defaultSpecies: '${species}',
-      defaultValue: {
-        term: '${geneQueryTerm}',
-        category: '${geneQueryCategory}',
-      }
-    }, 'search-form');
-
+    document.getElementById("local-nav-search").className += ' active';
     geneSearch.render({
       atlasUrl: '${pageContext.request.contextPath}/',
       basename: '${pageContext.request.contextPath}',
