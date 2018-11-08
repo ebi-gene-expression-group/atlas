@@ -1,97 +1,61 @@
-const webpack = require('webpack');
-const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const path = require(`path`)
+const CleanWebpackPlugin = require(`clean-webpack-plugin`)
 
-config = {
-    entry: {
-        geneSearch: ['whatwg-fetch', 'babel-polyfill', './src/index.js'],
-        dependencies: ['prop-types', 'react', 'react-dom', 'urijs']
+const commonPublicPath = `/dist/`
+const vendorsBundleName = `vendors`
+
+module.exports = {
+  entry: {
+    searchRouter: [`whatwg-fetch`, `@babel/polyfill`, `./index.js`],
+  },
+
+  output: {
+    library: `[name]`,
+    filename: `[name].bundle.js`,
+    publicPath: commonPublicPath
+  },
+
+  resolve: {
+    alias: {
+      "react": path.resolve(`./node_modules/react`),
+      "react-dom": path.resolve(`./node_modules/react-dom`),
+      "styled-components": path.resolve(`./node_modules/styled-components`)
     },
+  },
 
-    output: {
-        library: '[name]',
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js',
-        publicPath: '/html/'
+  optimization: {
+    runtimeChunk: {
+      name: vendorsBundleName
     },
-
-    plugins: [
-        new CleanWebpackPlugin(['dist'], {verbose: true, dry: false}),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'dependencies',
-            filename: 'vendorCommons.bundle.js',
-            minChunks: Infinity     // Explicit definition-based split, see dependencies entry
-        })
-    ],
-
-    module: {
-        rules: [
-            {
-                test: /\.css$/i,
-                use: [ 'style-loader', 'css-loader' ]
-            },
-            {
-                test: /\.less$/i,
-                use: [ 'style-loader', 'css-loader', 'less-loader' ]
-            },
-            {
-                test: /\.(jpe?g|png|gif)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            query: {
-                                name: '[hash].[ext]',
-                                hash: 'sha512',
-                                digest: 'hex'
-                            }
-                        }
-                    },
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            query: {
-                                bypassOnDebug: true,
-                                mozjpeg: {
-                                    progressive: true,
-                                },
-                                gifsicle: {
-                                    interlaced: true,
-                                },
-                                optipng: {
-                                    optimizationLevel: 7,
-                                }
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.svg$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            query: {
-                                name: '[hash].[ext]',
-                                hash: 'sha512',
-                                digest: 'hex'
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.js$/i,
-                exclude: /node_modules\//,
-                use: 'babel-loader'
-            }
-        ]
-    },
-
-    devServer: {
-        port: 9000
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: vendorsBundleName,
+          chunks: 'all'
+        }
+      }
     }
-};
+  },
 
-module.exports = config
+  plugins: [
+    new CleanWebpackPlugin([`dist`])
+  ],
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/i,
+        exclude: /node_modules\//,
+        use: `babel-loader`
+      }
+    ]
+  },
+
+  devServer: {
+    port: 9000,
+    contentBase: path.resolve(__dirname, `html`),
+    publicPath: commonPublicPath,
+    historyApiFallback: true
+  }
+}

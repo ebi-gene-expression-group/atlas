@@ -38,7 +38,7 @@ hr {
 }
 
 /* Override EBI VF styles for components that use React-Select */
-#search-results-list input, #experiment-page input, #search-form input {
+#gene-search input, #experiment-page input, #search-form input {
     height: unset;
     box-shadow: none;
     margin: 0;
@@ -50,4 +50,9 @@ hr {
 }
 #experiment-page svg {
     overflow: visible !important;
+}
+
+/* Match margin set by React-Select components */
+#experiment-page .gene-search-container {
+    margin-bottom: 1rem;
 }

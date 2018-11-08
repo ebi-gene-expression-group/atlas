@@ -92,7 +92,7 @@ class CellMetadataDaoIT {
 
     @Test
     void invalidExperimentAccessionHasNoMetadata() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
 
         assertThat(subject.getMetadataFieldNames(experimentAccession)).isEmpty();
     }
@@ -141,7 +141,7 @@ class CellMetadataDaoIT {
 
     @Test
     void invalidCellIdAndExperimentAccessionHasNoFactorFields() {
-        String experimentAccession = RandomDataTestUtils.getRandomExperimentAccession();
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
         String cellId = "FOO";
 
         assertThat(subject.getFactorFieldNames(experimentAccession, cellId)).isEmpty();
@@ -192,14 +192,14 @@ class CellMetadataDaoIT {
 
     private Stream<String> experimentsWithMetadataProvider() {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
-        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+        return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"));
     }
 
     private Stream<String> experimentsWithFactorsProvider() {
         // E-GEOD-99058 and E-ENAD-13 do not have any factors
-        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+        return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession ->
                         !accession.equalsIgnoreCase("E-GEOD-99058")
@@ -207,13 +207,13 @@ class CellMetadataDaoIT {
     }
 
     private Stream<String> experimentsWithAdditionalAttributesProvider() {
-        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+        return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession -> hasAdditionalAttributesInIdf(accession));
     }
 
     private Stream<String> experimentsWithoutAdditionalAttributesProvider() {
-        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+        return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession -> !hasAdditionalAttributesInIdf(accession));
     }

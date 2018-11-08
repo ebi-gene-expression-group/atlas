@@ -2,35 +2,36 @@
 <html lang="en">
 <head>
     <title>Demo</title>
-
     <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all" />
+    <!-- <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all"> -->
 
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+    <style type="text/css">
+        #target input {
+            height: unset;
+            box-shadow: none;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
-<div id="wrapper" class="row expanded">
-    <div id="content" class="small-12 columns">
-        <div id="target">
-        </div>
-    </div>
+<p>Note: ENSG00000230835 is a known gene ID without any expression</p>
+<div class="row column">
+    <div id="target"></div>
 </div>
 </body>
 
-<script src="vendorCommons.bundle.js"></script>
-<script src="geneSearch.bundle.js"></script>
+<script src="/dist/vendors.bundle.js"></script>
+<script src="/dist/searchRouter.bundle.js"></script>
 
-<!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/scxa/ -- Remember the trailing slash! -->
+<!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa_sc/ -- Remember the trailing slash! -->
 <script>
-  geneSearch.render({
-    atlasUrl: 'http://localhost:8080/scxa/',
-    noResultsMessage: 'No results found',
-    resultsMessage: 'Results found:',
-    // resource: 'json/search/ENSMMUG00000039038' // non-existent
-    // resource: 'json/search/ENSG00000000003' // with marker genes
-    resource: 'json/search/ENSMUSG00000000339' // without marker genes
-  }, 'target')
+  const options = {
+    atlasUrl: 'http://localhost:8080/gxa/sc/',
+    basename: '/'
+  };
+  searchRouter.render(options, 'target');
 </script>
 
 </html>

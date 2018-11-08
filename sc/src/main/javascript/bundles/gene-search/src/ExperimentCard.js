@@ -59,7 +59,7 @@ class ExperimentCard extends React.Component {
     const {expanded, descriptionShown} = this.state
 
     const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
-      return <li key={`marker-gene`}><a href={markerGene.url}>View marker gene in clusters {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a></li>
+      return <li key={`marker-gene-${markerGene.k}`}><a href={markerGene.url}>View marker gene in clusters {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a></li>
     })
     return (
       <ExperimentCardDiv>

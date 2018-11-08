@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {BrowserRouter, Route, Redirect, Switch, NavLink, withRouter} from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Switch, NavLink, withRouter } from 'react-router-dom'
 
 import URI from 'urijs'
 
@@ -22,7 +22,6 @@ const TabCommonPropTypes = {
   accessKey: PropTypes.string,
   resourcesUrl: PropTypes.string
 }
-
 
 // What component each tab type should render, coupled to ExperimentController.java
 const tabTypeComponent = {
@@ -80,7 +79,6 @@ RedirectWithSearchAndHash.propTypes = {
 
 const RedirectWithLocation = withRouter(RedirectWithSearchAndHash)
 
-
 const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, species, accessKey, tabs}) => {
   const tabCommonProps = {
     atlasUrl,
@@ -91,23 +89,35 @@ const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, spec
   }
 
   return (
-    <BrowserRouter basename={URI(`experiments/${experimentAccession}`, URI(atlasUrl).path()).toString()}>
+    <BrowserRouter
+      basename={URI(`experiments/${experimentAccession}`, URI(atlasUrl).path()).toString()}>
       <div>
-        <Route path={`/`}
-          render={ (routeProps) => <TopRibbon tabNames={tabs.map((tab) => tab.name)} routeProps={routeProps}/> }
-        />
+        <Route
+          path={`/`}
+          render={
+            (routeProps) =>
+              <TopRibbon
+                tabNames={tabs.map((tab) => tab.name)}
+                routeProps={routeProps} />
+          } />
         <Switch>
           {
             tabs.map((tab) =>
-              <Route key={tab.name}
+              <Route
+                key={tab.name}
                 path={`/${tab.name}`}
-                render={ (routeProps) => <TabContent type={tab.type} tabProps={tab.props} commonProps={tabCommonProps} routeProps={routeProps}/> }
-              />
+                render={
+                  (routeProps) =>
+                    <TabContent
+                      type={tab.type}
+                      tabProps={tab.props}
+                      commonProps={tabCommonProps}
+                      routeProps={routeProps} />
+                } />
             )
           }
           <RedirectWithLocation pathname={`/${tabs[0].name}`} />
         </Switch>
-
       </div>
     </BrowserRouter>
   )

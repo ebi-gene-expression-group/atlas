@@ -11,13 +11,13 @@ public class CardModelAdapter {
 
     public static JsonObject serialize(CardModel cardModel) {
         JsonObject result = new JsonObject();
-        result.addProperty("iconType", cardModel.iconType());
+        result.addProperty("iconType", cardModel.iconType().name().toLowerCase());
         result.addProperty("iconSrc", cardModel.iconSrc());
 
         cardModel.iconDescription().ifPresent(
                 description -> result.addProperty("iconDescription", cardModel.iconDescription().get()));
 
-        if (getContent(cardModel.content()).size() != 0) {
+        if (cardModel.content().size() != 0) {
             result.add("content", getContent(cardModel.content()));
         }
 

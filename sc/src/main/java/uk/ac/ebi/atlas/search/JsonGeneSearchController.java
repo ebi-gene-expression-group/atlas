@@ -23,12 +23,14 @@ import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.ImmutableList.toImmutableList;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.ID_PROPERTY_NAMES;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
@@ -60,18 +62,19 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     public String search(@RequestParam MultiValueMap<String, String> requestParams) {
         Optional<Species> species = Optional.ofNullable(requestParams.getFirst("species")).map(speciesFactory::create);
 
-        Stream<String> validQueryFields =
-                Stream.concat(Stream.of("q"), ID_PROPERTY_NAMES.stream().map(BioentityPropertyName::name));
+        List<String> validQueryFields =
+                ImmutableList.<String>builder()
+                        .add("q")
+                        .addAll(ID_PROPERTY_NAMES.stream().map(propertyName -> propertyName.name).collect(toList()))
+                        .build();
 
         // We support currently only one query term; in the unlikely case that somebody fabricates a URL with more than
         // one we’ll build the query with the first match. Remember that in order to support multiple terms we’ll
         // likely need to change GeneQuery and use internally a SemanticQuery
         String category =
                 requestParams.keySet().stream()
-                        .filter(
-                                actualField ->
-                                        validQueryFields.anyMatch(
-                                                validField -> validField.equalsIgnoreCase(actualField)))
+                        // We rely on "q" and BioentityPropertyName::name’s being lower case
+                        .filter(actualField -> validQueryFields.contains(actualField.toLowerCase()))
                         .findFirst()
                         .orElseThrow(() -> new RuntimeException("Error parsing query"));
 
@@ -147,7 +150,8 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                                         ImmutableMap.of(
                                                 "group", "Marker genes",
                                                 "value", "experiments with marker genes",
-                                                "label", "Experiments with marker genes"));
+                                                "label", "Experiments with marker genes",
+                                                "description", FacetsToTooltipMapping.MARKER_GENE.getTooltip()));
                                 experimentAttributes.put(
                                         "markerGenes",
                                         convertMarkerGeneModel(
@@ -160,8 +164,14 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
                         })).collect(toImmutableList());
 
+        String matchingGeneIds = "";
+        if (geneIds.get().size() == 1 && !geneIds.get().iterator().next().equals(geneQuery.queryTerm())) {
+            matchingGeneIds = "(" + geneIds.get().stream().collect(joining(", ")) + ")";
+        }
+
         return GSON.toJson(
                 ImmutableMap.of(
+                        "matchingGeneId", matchingGeneIds,
                         "results", results,
                         "checkboxFacetGroups", ImmutableList.of("Marker genes", "Species")));
     }
@@ -173,13 +183,32 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
     }
 
     private List<Map<String, String>> unfoldFacets(Map<String, List<String>> model) {
-        return unfoldListMultimap(model).stream()
-                .map(entry ->
-                        ImmutableMap.of(
-                                "group", entry.getKey(),
-                                "value", entry.getValue(),
-                                "label", StringUtils.capitalize(entry.getValue())))
-                .collect(toList());
+
+        List<SimpleEntry<String, String>> unfoldedModel = unfoldListMultimap(model);
+        List<Map<String, String>> results = new ArrayList<>();
+
+        for (Map.Entry<String, String> entry : unfoldedModel) {
+            ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.<String, String>builder()
+                    .put("group", entry.getKey())
+                    .put("value", entry.getKey())
+                    .put("label", StringUtils.capitalize(entry.getValue()));
+
+            if(!isNullOrEmpty(getTooltipText(entry.getKey()))) {
+                mapBuilder.put("description", getTooltipText(entry.getKey()));
+            }
+
+            results.add(mapBuilder.build());
+        }
+        return results;
+    }
+
+    private String getTooltipText(String group) {
+        for (FacetsToTooltipMapping tooltip : FacetsToTooltipMapping.values()) {
+            if(tooltip.getTitle().equalsIgnoreCase(group)) {
+               return tooltip.getTooltip();
+            }
+        }
+        return null;
     }
 
     private Map<String, Object> getExperimentInformation(String experimentAccession, String geneId) {

@@ -12,10 +12,11 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "ajv": "^6.5.3",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-ebi-species": "^1.2.5",
+    "ajv": "^6.5.4",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-ebi-species": "^2.0.0-beta",
     "urijs": "^1.19.1"
   },
   "devDependencies": {

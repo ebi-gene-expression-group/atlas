@@ -107,10 +107,8 @@ EvidenceService<
                             contrast,
                             yield);
                 }
-
             }
         }
-
     }
 
     private boolean shouldSkip(E experiment) {
@@ -363,14 +361,15 @@ EvidenceService<
     }
 
     private String activity(boolean isCttvPrimary, X expression) {
-        return MessageFormat.format(
-                "http://identifiers.org/cttv.activity/{0}",
-                isCttvPrimary ?
-                        expression.getFoldChange() > 0 ?
-                                "increased_transcript_level" :
-                                "decreased_transcript_level" :
-                        "unknown"
-        );
+        if (isCttvPrimary) {
+            if (expression.getFoldChange() > 0) {
+                return "http://purl.obolibrary.org/obo/SO_0001542";
+            } else if (expression.getFoldChange() < 0) {
+                return "http://purl.obolibrary.org/obo/SO_0001541";
+            }
+        }
+
+        return "http://identifiers.org/cttv.activity/unknown";
     }
 
     private JsonObject target(String ensemblGeneId, boolean isCttvPrimary, X expression) {

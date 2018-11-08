@@ -16,7 +16,7 @@ DifferentialFacetsTree.propTypes = {
   facets: PropTypes.arrayOf(PropTypes.shape(
     facetDataPropTypes
   )).isRequired,
-  setChecked: React.PropTypes.func.isRequired
+  setChecked: PropTypes.func.isRequired
 }
 
 
@@ -42,7 +42,7 @@ const Facet = ({facetName, facetItems, setChecked}) =>
 
 Facet.propTypes = {
   ...facetDataPropTypes,
-  setChecked: React.PropTypes.func.isRequired
+  setChecked: PropTypes.func.isRequired
 }
 
 
@@ -54,7 +54,7 @@ const FacetItem = ({name, value, checked, disabled, setChecked}) =>
 
 FacetItem.propTypes = {
   ...facetItemDataPropTypes,
-  setChecked: React.PropTypes.func.isRequired,
+  setChecked: PropTypes.func.isRequired,
 }
 
 

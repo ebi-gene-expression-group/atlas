@@ -2,7 +2,7 @@
   "name": "gene-search",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server -d"
   },
@@ -12,29 +12,26 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "prop-types": "^15.6.1",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1",
-    "react-faceted-search": "^2.0.3",
-    "styled-components": "^3.4.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-faceted-search": "^2.2.1-beta",
+    "react-router-dom": "^4.3.1",
+    "scxa-gene-search-form": "^1.1.1-beta",
+    "styled-components": "^4.0.3",
     "urijs": "^1.19.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.5",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
-    "css-loader": "^1.0.0",
-    "file-loader": "^1.1.11",
-    "image-webpack-loader": "^4.3.1",
-    "linkifyjs": "^2.1.6",
-    "style-loader": "^0.22.1",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4",
-    "whatwg-fetch": "^2.0.4"
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "whatwg-fetch": "^3.0.0"
   }
 }

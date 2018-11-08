@@ -77,7 +77,7 @@ public class ExperimentDesignFileWriter {
             case PROTEOMICS_BASELINE:
                 return Lists.newArrayList("Run");
             case SINGLE_CELL_RNASEQ_MRNA_BASELINE:
-                return Lists.newArrayList("Assay ");
+                return Lists.newArrayList("Assay");
             default:
                 throw new IllegalArgumentException("Invalid parent type: " + type.getParent());
         }

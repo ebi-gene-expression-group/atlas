@@ -19,12 +19,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
 
 public class AnalyticsIndexerManager {
     // String because Spring won’t let us use anything but strings in controller defaults
-    protected static final String DEFAULT_THREADS = "8";
+    protected static final String DEFAULT_THREADS = "4";
     protected static final String DEFAULT_SOLR_BATCH_SIZE = "32768";
-    protected static final String DEFAULT_TIMEOUT_IN_HOURS = "24";
+    protected static final String DEFAULT_TIMEOUT_IN_HOURS = "72";
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerManager.class);
     private static final int LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
@@ -77,7 +83,13 @@ public class AnalyticsIndexerManager {
 
         ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch =
                 bioentityPropertiesDao.getMap(bioentityIdentifiersReader
-                        .getBioentityIdsFromExperiments(ExperimentType.values()));
+                        .getBioentityIdsFromExperiments(
+                                RNASEQ_MRNA_BASELINE,
+                                PROTEOMICS_BASELINE,
+                                RNASEQ_MRNA_DIFFERENTIAL,
+                                MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                                MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                                MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL));
         analyticsIndexerMonitor.update(
                 "Extracted " + bioentityIdToIdentifierSearch.size() + " bioentityIds from experiments");
 

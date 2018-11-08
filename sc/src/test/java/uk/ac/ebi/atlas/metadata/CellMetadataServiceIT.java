@@ -119,7 +119,7 @@ class CellMetadataServiceIT {
 
     private Iterable<String> experimentsWithMetadataProvider() {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
-        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+        return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"))
                 .collect(Collectors.toSet());
@@ -127,7 +127,7 @@ class CellMetadataServiceIT {
 
     private Iterable<String> experimentsWithFactorsProvider() {
         // E-GEOD-99058 and E-ENAD-13 do not have any factors
-        return jdbcUtils.getPublicSingleCellExperimentAccessions()
+        return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession ->
                         !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"))

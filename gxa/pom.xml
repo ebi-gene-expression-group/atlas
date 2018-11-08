@@ -7,11 +7,11 @@
     <parent>
         <artifactId>atlas</artifactId>
         <groupId>uk.ac.ebi.atlas</groupId>
-        <version>4.0</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>gxa</artifactId>
-    <version>28.0.1</version>
+    <version>29.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Expression Atlas</name>
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
             <artifactId>atlas-core</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.1</version>
         </dependency>
 
         <!-- For URL rewrite (see WEB-INF/web.xml) -->

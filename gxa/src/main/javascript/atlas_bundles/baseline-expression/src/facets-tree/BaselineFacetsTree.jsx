@@ -43,9 +43,9 @@ BaselineFacetsTree.propTypes = {
          }
      ]
      */
-    facets: PropTypes.arrayOf(React.PropTypes.shape({
+    facets: PropTypes.arrayOf(PropTypes.shape({
         facetName: PropTypes.string.isRequired,
-        facetItems: PropTypes.arrayOf(React.PropTypes.shape({
+        facetItems: PropTypes.arrayOf(PropTypes.shape({
             name: PropTypes.string.isRequired,
             value: PropTypes.string.isRequired,
             checked: PropTypes.bool.isRequired

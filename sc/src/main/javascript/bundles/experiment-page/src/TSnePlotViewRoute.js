@@ -26,6 +26,8 @@ const TSnePlotViewRoute = (props) => {
   // Sort perplexities in ascending order
   const perplexitiesOrdered = perplexities.sort((a, b) => a - b)
 
+  const preferredK = props.selectedK ? props.selectedK.toString() : props.ks[0].toString()
+
   return (
     <div className={`margin-top-large`}>
       <TSnePlotView
@@ -38,7 +40,7 @@ const TSnePlotViewRoute = (props) => {
         experimentAccession={experimentAccession}
         ks={ks}
         metadata={metadata}
-        selectedColourBy={search.k || search.metadata || props.selectedK || props.ks[0].toString()}
+        selectedColourBy={search.k || search.metadata || preferredK }
         selectedColourByCategory={search.colourBy || `clusters`} // Is the plot coloured by clusters or metadata
         highlightClusters={search.clusterId ? JSON.parse(search.clusterId) : []}
         perplexities={perplexitiesOrdered}
