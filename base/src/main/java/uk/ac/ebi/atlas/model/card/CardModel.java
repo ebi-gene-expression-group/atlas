@@ -10,7 +10,7 @@ import java.util.Optional;
 public abstract class CardModel {
     public abstract CardIconType iconType();
     public abstract String iconSrc();
-    public abstract Optional<String> iconDescription();
+    public abstract Optional<Pair<String, Optional<String>>> description();
     public abstract List<Pair<String, Optional<String>>> content();
 
     public static CardModel create(CardIconType iconType,
@@ -26,12 +26,12 @@ public abstract class CardModel {
 
     public static CardModel create(CardIconType iconType,
                                    String iconSrc,
-                                   String iconDescription,
+                                   Pair<String, Optional<String>> description,
                                    List<Pair<String, Optional<String>>> content) {
         return new AutoValue_CardModel(
                 iconType,
                 iconSrc,
-                Optional.of(iconDescription),
+                Optional.of(description),
                 content
         );
     }
