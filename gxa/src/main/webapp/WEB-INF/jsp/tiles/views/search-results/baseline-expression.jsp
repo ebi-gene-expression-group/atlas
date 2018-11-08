@@ -20,14 +20,14 @@
         var baselineFacetsData = ${jsonFacets};
         // Running within $(document).ready() ensures that the heatmap stretches to the tab container width
         $(function() {
-            expressionAtlasBaselineExpression.render({
+            expressionAtlasBaselineExpression.render(
+              {
                 atlasUrl: "${pageContext.request.contextPath}/",
-                target: 'gxaBaselineTab',
                 facetsTreeData: baselineFacetsData,
                 geneQuery: "${geneQuery}",
                 conditionQuery: "${conditionQuery}",
                 species: "${species}"
-            });
+              }, 'gxaBaselineTab');
         });
         </c:if>
     })

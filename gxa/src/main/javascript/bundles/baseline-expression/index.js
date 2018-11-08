@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom'
 import BaselineRouter from './src/BaselineRouter'
 
 const render = ({ atlasUrl = `https://www.ebi.ac.uk/gxa`,
-                  target = `gxaBaselineTab`,
                   facetsTreeData,
                   geneQuery,
                   conditionQuery,
-                  species }) => {
+                  species },
+                target) => {
   ReactDOM.render(
     <BaselineRouter
       atlasUrl={atlasUrl}
