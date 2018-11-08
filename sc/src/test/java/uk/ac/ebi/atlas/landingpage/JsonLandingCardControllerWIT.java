@@ -91,6 +91,6 @@ class JsonLandingCardControllerWIT {
     }
 
     private Iterable<String> publicExperimentsProvider() {
-        return jdbcUtils.getPublicSingleCellExperimentAccessions();
+        return jdbcUtils.fetchPublicSingleCellExperimentAccessions();
     }
 }
