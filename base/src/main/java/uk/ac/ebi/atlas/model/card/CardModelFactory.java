@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.home.PopularSpeciesInfo;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public class CardModelFactory {
                 .toUriString();
     }
 
-    public static CardModel createLandingPageCard(Map<String, Object> landingPageCardInfo) {
+    public static CardModel createLandingPageCard(Map<String, Object> landingPageCardInfo, List<Pair<String, Optional<String>>> content) {
         String experimentAccession = String.valueOf(landingPageCardInfo.get("experimentAccession"));
         Map<String, String> imageSrc = new HashMap<>();
         imageSrc.put("E-EHCA", "https://goo.gl/images/xf7STU");
@@ -43,18 +44,9 @@ public class CardModelFactory {
         return CardModel.create(
                 CardIconType.IMAGE,
                 imageSrc.get(experimentAccession.substring(0,6)),
-                experimentAccession,
-                Collections.singletonList(
-                        Pair.of(String.valueOf(landingPageCardInfo.get("experimentDescription")),
-                                Optional.of(getExperimentPageUrlByAccession(experimentAccession))))
+                String.valueOf(landingPageCardInfo.get("type")),
+                content
         );
     }
 
-    private static String getExperimentPageUrlByAccession(String accession) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/experiments/{accession}")
-                .buildAndExpand(accession)
-                .encode()
-                .toUriString();
-    }
 }
