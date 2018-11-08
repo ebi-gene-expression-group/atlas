@@ -26,6 +26,7 @@ const MarkerDiv = styled.div`
   font-size: 15px
 `
 
+
 const TitleDiv = styled.p`
   width: 40%;
   text-align: center;
@@ -40,7 +41,7 @@ const VariableDiv = styled.div`
 const CountDiv = styled.div`
   width: 10%;
   text-align: center;
-  font-size: 40px;
+  font-size: 20px;
 `
 
 class ExperimentTableCard extends React.Component {
@@ -68,7 +69,7 @@ class ExperimentTableCard extends React.Component {
                             </ul>
                         </MarkerDiv> :
                         <MarkerDiv>
-                            <span data-tooltip title="No expressed marker genes">&#10006;</span>
+                            <span style={{fontSize: `30px`}} data-tooltip title="No expressed marker genes">&#10006;</span>
                         </MarkerDiv>
                     }
 

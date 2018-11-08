@@ -4,13 +4,13 @@ import EbiSpeciesIcon from 'react-ebi-species'
 
 const SpeciesIconCard = ({iconSrc, description}) => {
     return (
-        <div className={`column column-block text-center combo card`} style={{marginBottom:0, paddingBottom: `25px`}}>
-      <span className={`species-icon`} style={{fontSize: `600%`}}>
+        <div className={`column column-block text-center combo card`} style={{marginBottom:0, paddingBottom: `5px`}}>
+      <span className={`species-icon`} style={{fontSize: `300%`}}>
         <EbiSpeciesIcon species={iconSrc}/>
       </span>
 
             {
-                description && <h5 className="species-name">{description}</h5>
+                description && <h6 className="species-name">{description}</h6>
             }
         </div>
     )
