@@ -15,13 +15,13 @@ public class CardModelFactory {
     public static CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
 
         return CardModel.create(
-                "species",
+                CardIconType.SPECIES,
                 popularSpeciesInfo.species(),
                 StringUtils.capitalize(popularSpeciesInfo.species()),
                 Collections.singletonList(
                         Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
                                 Optional.of(getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))))
-                );
+        );
     }
 
     private static String getExperimentsFilteredBySpeciesUrl(String species) {
@@ -36,12 +36,12 @@ public class CardModelFactory {
     public static CardModel createLandingPageCard(Map<String, Object> landingPageCardInfo) {
         String experimentAccession = String.valueOf(landingPageCardInfo.get("experimentAccession"));
         Map<String, String> imageSrc = new HashMap<>();
-        imageSrc.put("E-EHCA", "https://www.ebi.ac.uk/gxa/sc/resources/images/logos/human_cell_atlas.png");
+        imageSrc.put("E-EHCA", "https://goo.gl/images/xf7STU");
         imageSrc.put("E-GEOD", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
         imageSrc.put("E-ENAD", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
         imageSrc.put("E-MTAB", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
         return CardModel.create(
-                "experiments",
+                CardIconType.IMAGE,
                 imageSrc.get(experimentAccession.substring(0,6)),
                 experimentAccession,
                 Collections.singletonList(
