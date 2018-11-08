@@ -1,17 +1,6 @@
 {
-  "name": "expression-atlas-bioentity-information",
-  "version": "1.0.0",
-  "description": "Bioentity information tab",
   "main": "index.js",
-  "author": "Expression Atlas developers <atlas-developers@ebi.ac.uk>",
-  "collaborators": [
-    "Elisabet Barrera <barrera@ebi.ac.uk>",
-    "Wojciech Bażant <wbazant@ebi.ac.uk>",
-    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
-  ],
-  "license": "Apache-2.0",
-  "private": true,
   "dependencies": {
-    "sc-atlas-bioentity-information": "^1.5.1"
+    "sc-atlas-bioentity-information": "^1.7.2"
   }
 }

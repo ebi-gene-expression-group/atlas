@@ -1,3 +1,3 @@
-import {render} from 'sc-atlas-bioentity-information'
+import { render } from 'sc-atlas-bioentity-information'
 
-export {render}
+export { render }
