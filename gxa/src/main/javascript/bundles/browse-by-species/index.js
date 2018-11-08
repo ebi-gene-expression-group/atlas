@@ -1,3 +1,13 @@
-import render from './src/browseBySpeciesRenderer.jsx';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-export {render};
+import BrowseBySpecies from './src/BrowseBySpecies'
+
+const render = (options, target) => {
+  ReactDOM.render(
+    <BrowseBySpecies {...options} />,
+    document.getElementById(target)
+  )
+}
+
+export { render }
