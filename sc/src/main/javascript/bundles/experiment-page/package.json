@@ -10,8 +10,8 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "linkifyjs": "^2.1.7",
     "expression-atlas-experiment-page-tsne-plot": "file:../../../../../../../scxa-experiment-page-tsne-plot-view/expression-atlas-experiment-page-tsne-plot-3.3.0.tgz",
+    "linkifyjs": "^2.1.7",
     "lodash": "^4.17.11",
     "pluralize": "^7.0.0",
     "prop-types": "^15.6.2",
@@ -21,8 +21,8 @@
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
     "sc-atlas-bioentity-information": "^1.7.0",
-    "styled-components": "^4.0.3",
     "scxa-marker-gene-heatmap": "file:../../../../../../../scxa-marker-gene-heatmap/scxa-marker-gene-heatmap-0.0.1.tgz",
+    "styled-components": "^4.0.3",
     "urijs": "^1.19.1"
   },
   "devDependencies": {
