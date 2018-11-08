@@ -5,8 +5,9 @@ import DifferentialRouterLoader from './src/DifferentialRouterLoader'
 
 const render = (props, target) => {
   ReactDOM.render(
-    <DifferentialRouterLoader {...props} />, document.getElementById(target)
+    <DifferentialRouterLoader {...props} />,
+    document.getElementById(target)
   )
 }
 
-export {render}
+export { render }

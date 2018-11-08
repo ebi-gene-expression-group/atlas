@@ -1,21 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
-import './gxaGradient.css'
+const DifferentialLegendLevel = styled.div`
+  display: table-cell;
+  width: 10%;
+  white-space: nowrap;
+  font-size: x-small;
+  vertical-align: middle;
+  text-align: right;
+`
 
-const LegendRow = ({lowValueColour, highValueColour, lowExpressionLevel, highExpressionLevel}) => {
-  const spanStyle = {
-    backgroundImage: `linear-gradient(to right, ${lowValueColour}, ${highValueColour})`
-  }
+const DifferentialGradientContainer = styled.div`
+  display: table-cell;
+  width: 80%;
+`
 
-  return (
-    <div style={{display: `table-row`}}>
-      <div className={`gxaDiffLegendLevelCell`}>{lowExpressionLevel}</div>
-      <div className={`gxaDiffLegendGradientCell`}><span className={`gxaDiffLegendGradient`} style={spanStyle}/></div>
-      <div className={`gxaDiffLegendLevelCell`}>{highExpressionLevel}</div>
-    </div>
-  )
-}
+const DifferentialGradientSpan = styled.span`
+  vertical-align: middle;
+  height: 15px;
+  width: 100%;
+  display: block;
+  background-image: linear-gradient(to right, ${props => props.lowValueColour}, ${props => props.highValueColour});
+`
+
+const LegendRow = ({lowValueColour, highValueColour, lowExpressionLevel, highExpressionLevel}) =>
+  <div style={{display: `table-row`}}>
+    <DifferentialLegendLevel>{lowExpressionLevel}</DifferentialLegendLevel>
+    <DifferentialGradientContainer>
+      <DifferentialGradientSpan lowValueColour={lowValueColour} highValueColour={highValueColour}/>
+    </DifferentialGradientContainer>
+    <DifferentialLegendLevel>{highExpressionLevel}</DifferentialLegendLevel>
+  </div>
+
 
 LegendRow.propTypes = {
   lowValueColour: PropTypes.string.isRequired,

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import URI from 'urijs'
 
@@ -11,7 +12,13 @@ import Legend from './legend/LegendDifferential'
 
 import ContrastTooltipLoader from './tooltip/ContrastTooltipLoader'
 
-import './DifferentialResults.css'
+const Header = styled.th`
+  text-align: center;
+`
+
+const Data = styled.td`
+  text-align: center;
+`
 
 const differentialResultRowDataPropTypes = {
   species: PropTypes.string.isRequired,
@@ -34,42 +41,44 @@ const differentialResultRowDataPropTypes = {
 
 const DifferentialResultsRow = (props) =>
   <tr>
-    <DifferentialFoldChangeCell foldChange={props.foldChange}
-                                pValue={props.pValue}
-                                tStat={props.tStatistics}
-                                displayLevels={props.displayLevels}
-                                colour={props.colour}
-                                id={props.id}/>
-    <td>
+    <DifferentialFoldChangeCell
+      foldChange={props.foldChange}
+      pValue={props.pValue}
+      tStat={props.tStatistics}
+      displayLevels={props.displayLevels}
+      colour={props.colour}
+      id={props.id}/>
+    <Data style={{fontSize: `3rem`}}>
       <EbiSpeciesIcon species={props.species}/>
-    </td>
-    <td>
+    </Data>
+    <Data>
       <a href={URI(`genes/${props.bioentityIdentifier}`, props.atlasUrl).toString()}>
         {props.bioentityName || props.bioentityIdentifier}
       </a>
-    </td>
-    <td data-tip
+    </Data>
+    <Data data-tip
         data-for={`${props.id}_contrast`}>
       <a href={URI(props.uri, props.atlasUrl)}>
         {props.comparison}
       </a>
-      <ContrastTooltipLoader id={`${props.id}_contrast`}
-                             atlasUrl={props.atlasUrl}
-                             tooltipUrl={`rest/contrast-summary`}
-                             tooltipUrlParams={{
-                               experimentAccession: props.experimentAccession,
-                               contrastId: props.contrastId,
-                               accessKey: props.accessKey
-                             }} />
-    </td>
-    <td className={`gxaExperimentalVariable`}>
+      <ContrastTooltipLoader
+        id={`${props.id}_contrast`}
+        atlasUrl={props.atlasUrl}
+        tooltipUrl={`rest/contrast-summary`}
+        tooltipUrlParams={{
+          experimentAccession: props.experimentAccession,
+          contrastId: props.contrastId,
+          accessKey: props.accessKey
+        }} />
+    </Data>
+    <Data>
       {props.factors ? props.factors.toString().replace(/,/g, `, `) : ``}
-    </td>
-    <td>
+    </Data>
+    <Data>
       <a href={URI(`experiments/${props.experimentAccession}`, props.atlasUrl).toString()}>
         {props.experimentName}
       </a>
-    </td>
+    </Data>
   </tr>
 
 DifferentialResultsRow.propTypes = {
@@ -122,12 +131,12 @@ class DifferentialResults extends React.Component {
           <table className={`gxaDifferentialResultsTable`}>
             <thead>
             <tr>
-              <th style={{width: `10%`}}>Log<sub>2</sub>-fold change</th>
-              <th style={{width: `5%`}}>Species</th>
-              <th style={{width: `5%`}}>Gene name</th>
-              <th style={{width: `30%`}}>Comparison</th>
-              <th style={{width: `15%`}}>Experimental variables</th>
-              <th style={{width: `35%`}}>Experiment name</th>
+              <Header style={{width: `10%`}}>Log<sub>2</sub>-fold change</Header>
+              <Header style={{width: `5%`}}>Species</Header>
+              <Header style={{width: `5%`}}>Gene name</Header>
+              <Header style={{width: `30%`}}>Comparison</Header>
+              <Header style={{width: `15%`}}>Experimental variables</Header>
+              <Header style={{width: `35%`}}>Experiment name</Header>
             </tr>
             </thead>
             <tbody>

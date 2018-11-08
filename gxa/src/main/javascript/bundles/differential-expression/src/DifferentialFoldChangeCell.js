@@ -1,28 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
 
-import './DifferentialFoldChangeCell.css'
 import DifferentialFoldChangeCellInfo from './tooltip/DifferentialFoldChangeCellInfo'
 
+const DifferentialCellTd = styled.td`
+  background-color: white;
+  white-space: nowrap;
+  font-size: x-large;
+  border: ${props => props.displayLevels ? `3px solid` : `none`} ${props => props.colour};
+  background: ${props => props.displayLevels ? `none` : props.colour}
+`
 
 const DifferentialCell = ({colour, foldChange, pValue, tStat, displayLevels, id}) => {
   const tooltipId = `${id}_foldchange`
-  const tdStyle = {
-    border: `4px solid ${colour}`,
-    background: displayLevels ? `none` : colour,
-  }
+
   return (
-    <td data-tip data-for={tooltipId} className={`gxaDifferentialCell`} style={tdStyle}>
-      <div className={displayLevels ? `` : `hidden`}>
+    <DifferentialCellTd colour={colour} displayLevels={displayLevels} data-tip data-for={tooltipId}>
+      <div className={displayLevels ? `` : `hidden`} style={{textAlign: `center`}}>
         {foldChange}
       </div>
-      <ReactTooltip id={tooltipId} type={`light`} className={`gxaDifferentialResultsTooltip`}>
-        <DifferentialFoldChangeCellInfo pValue={pValue}
-                                        tStatistic={tStat}
-                                        foldChange={foldChange} />
+      <ReactTooltip id={tooltipId} type={`light`} className={`foobar`}>
+        <DifferentialFoldChangeCellInfo
+          pValue={pValue}
+          tStatistic={tStat}
+          foldChange={foldChange} />
       </ReactTooltip>
-    </td>
+    </DifferentialCellTd>
   )
 }
 
@@ -34,3 +39,4 @@ DifferentialCell.propTypes = {
 }
 
 export default DifferentialCell
+

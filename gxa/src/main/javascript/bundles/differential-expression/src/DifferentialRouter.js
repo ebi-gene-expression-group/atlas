@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import ReactTooltipStyleClass from './tooltip/ReactTooltipStyleClass'
 import Results from './DifferentialResults'
 import Facets from './facets-tree/DifferentialFacetsTree'
 import UrlManager from './urlManager'
@@ -141,6 +142,7 @@ class DifferentialRouter extends React.Component {
                     setChecked = {this._setChecked} /> }
         </div>
         <div className={`small-12 large-9 columns`}>
+          <ReactTooltipStyleClass />
           { this.props.results && this.props.results.length &&
             <Results results = {filteredResults}
                      atlasUrl = {this.props.atlasUrl}

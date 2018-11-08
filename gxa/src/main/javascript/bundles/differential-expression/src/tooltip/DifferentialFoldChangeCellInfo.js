@@ -1,27 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import ScientificNotationNumber from 'expression-atlas-number-format'
 
-import './DifferentialResultsTooltip.css'
+const BorderLessTable = styled.table`
+  border-collapse: collapse;
+  margin: 0;
+`
+
+const Header = styled.th`
+  border-bottom: 1px solid lightgrey !important;
+  background-color: floralwhite;
+`
+
+const Data = styled.td`
+  border: 1px solid lightgrey;
+`
 
 const DifferentialFoldChangeCellInfo = ({pValue, tStat, foldChange}) =>
-  <table>
+  <BorderLessTable>
     <thead>
       <tr>
-        {pValue && <th>Adjusted <em>p</em>-value</th>}
-        {tStat && <th><em>t</em>-statistic</th>}
-        <th>Log<sub>2</sub>-fold change</th>
+        {pValue && <Header>Adjusted <em>p</em>-value</Header>}
+        {tStat && <Header><em>t</em>-statistic</Header>}
+        <Header>Log<sub>2</sub>-fold change</Header>
       </tr>
     </thead>
     <tbody>
       <tr>
-        {pValue && <td><ScientificNotationNumber value={pValue}/></td>}
-        {tStat && <td>{Math.floor(tStat * 1e4) / 1e4}</td>}
-        <td>{foldChange}</td>
+        {pValue && <Data><ScientificNotationNumber value={pValue}/></Data>}
+        {tStat && <Data>{Math.floor(tStat * 1e4) / 1e4}</Data>}
+        <Data>{foldChange}</Data>
       </tr>
     </tbody>
-  </table>
+  </BorderLessTable>
 
 DifferentialFoldChangeCellInfo.propTypes = {
   foldChange: PropTypes.number.isRequired,
@@ -30,3 +43,5 @@ DifferentialFoldChangeCellInfo.propTypes = {
 }
 
 export default DifferentialFoldChangeCellInfo
+
+

@@ -6,29 +6,34 @@ import ReactTooltip from 'react-tooltip'
 import URI from 'urijs'
 
 import ContrastInfo from './ContrastInfo'
-import './DifferentialResultsTooltip.css'
 
-class TooltipLoader extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+const tooltipStyles = {
+  padding: `2px !important`,
+  boxShadow: `0 0 1em darkgrey`,
+  maxWidth: `500px`,
+  fontSize: `x-small`,
+  opacity: `0.98 !important`
+}
 
-  render() {
-    const { tooltipFetch, id } = this.props
-
-    if (tooltipFetch.pending) {
-      return <ReactTooltip id={id} type={`light`} className={`gxaDifferentialResultsTooltip`}>
-               <span>Loading...</span>
-             </ReactTooltip>
-    } else if (tooltipFetch.rejected) {
-      return <ReactTooltip id={id} type={`light`} className={`gxaDifferentialResultsTooltip`}>
-               <span>Error retrieving tooltip data: {tooltipFetch.reason}</span>
-             </ReactTooltip>
-    } else if (tooltipFetch.fulfilled) {
-      return <ReactTooltip id={id} type={`light`} className={`gxaDifferentialResultsTooltip`}>
-               <ContrastInfo {...tooltipFetch.value}/>
-             </ReactTooltip>
-    }
+const TooltipLoader = ({tooltipFetch, id}) => {
+  if (tooltipFetch.pending) {
+    return (
+      <ReactTooltip id={id} type={`light`} className={`foobar`}>
+        <span>Loading...</span>
+      </ReactTooltip>
+    )
+  } else if (tooltipFetch.rejected) {
+    return (
+      <ReactTooltip id={id} type={`light`} className={`foobar`}>
+        <span>Error retrieving tooltip data: {tooltipFetch.reason}</span>
+      </ReactTooltip>
+    )
+  } else if (tooltipFetch.fulfilled) {
+    return (
+      <ReactTooltip id={id} type={`light`} className={`foobar`}>
+        <ContrastInfo {...tooltipFetch.value}/>
+      </ReactTooltip>
+    )
   }
 }
 
