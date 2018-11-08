@@ -35894,7 +35894,7 @@ var _templateObject = _taggedTemplateLiteral(['\n  height: 100%;\n  width: 100%;
     _templateObject3 = _taggedTemplateLiteral(['\n  width: 15%;\n  text-align: center;\n  font-size: 15px\n'], ['\n  width: 15%;\n  text-align: center;\n  font-size: 15px\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  width: 40%;\n  text-align: center;\n  font-size: 15px\n'], ['\n  width: 40%;\n  text-align: center;\n  font-size: 15px\n']),
     _templateObject5 = _taggedTemplateLiteral(['\n  width: 20%;\n  text-align: center;\n'], ['\n  width: 20%;\n  text-align: center;\n']),
-    _templateObject6 = _taggedTemplateLiteral(['\n  width: 10%;\n  text-align: center;\n  font-size: 40px;\n'], ['\n  width: 10%;\n  text-align: center;\n  font-size: 40px;\n']);
+    _templateObject6 = _taggedTemplateLiteral(['\n  width: 10%;\n  text-align: center;\n  font-size: 20px;\n'], ['\n  width: 10%;\n  text-align: center;\n  font-size: 20px;\n']);
 
 var _react = __webpack_require__(/*! react */ 0);
 
@@ -35993,7 +35993,7 @@ var ExperimentTableCard = function (_React$Component) {
                         null,
                         _react2.default.createElement(
                             'span',
-                            { 'data-tooltip': true, title: 'No expressed marker genes' },
+                            { style: { fontSize: '30px' }, 'data-tooltip': true, title: 'No expressed marker genes' },
                             '\u2716'
                         )
                     ),
@@ -36089,14 +36089,14 @@ var SpeciesIconCard = function SpeciesIconCard(_ref) {
 
     return _react2.default.createElement(
         'div',
-        { className: 'column column-block text-center combo card', style: { marginBottom: 0, paddingBottom: '25px' } },
+        { className: 'column column-block text-center combo card', style: { marginBottom: 0, paddingBottom: '5px' } },
         _react2.default.createElement(
             'span',
-            { className: 'species-icon', style: { fontSize: '600%' } },
+            { className: 'species-icon', style: { fontSize: '300%' } },
             _react2.default.createElement(_reactEbiSpecies2.default, { species: iconSrc })
         ),
         description && _react2.default.createElement(
-            'h5',
+            'h6',
             { className: 'species-name' },
             description
         )
