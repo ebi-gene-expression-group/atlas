@@ -48,6 +48,8 @@ public class JsonMarkerGenesController extends JsonExperimentController {
                 .distinct()
                 .collect(Collectors.toList());
 
+        Map<String, String> symbolsForGeneIds = markerGenesDao.getSymbolsForGeneIds(uniqueGeneIds);
+
         Map<String, Integer> geneIdIndices = uniqueGeneIds
                 .stream()
                 .collect(Collectors.toMap(x -> x, uniqueGeneIds::indexOf));
@@ -58,7 +60,7 @@ public class JsonMarkerGenesController extends JsonExperimentController {
                     Map<String, Object> heatmapCell = new HashMap<>();
                     heatmapCell.put("x", markerGene.clusterId());
                     heatmapCell.put("y", geneIdIndices.get(markerGene.geneId()));
-                    heatmapCell.put("name", markerGene.geneId());
+                    heatmapCell.put("name", symbolsForGeneIds.get(markerGene.geneId()));
                     heatmapCell.put("value", markerGene.medianExpression());
                     heatmapCell.put("clusterIdWhereMarker", markerGene.clusterIdWhereMarker());
                     heatmapCell.put("pValue", markerGene.pValue());

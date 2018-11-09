@@ -1,22 +1,39 @@
 package uk.ac.ebi.atlas.markergenes;
 
 import com.google.common.collect.ImmutableMap;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.atlas.solr.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
+import uk.ac.ebi.atlas.solr.cloud.TupleStreamer;
+import uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy;
+import uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder;
+import uk.ac.ebi.atlas.solr.cloud.search.streamingexpressions.source.SearchStreamBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.BIOENTITY_IDENTIFIER;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_NAME;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
+import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.SOLR_MAX_ROWS;
 
 @Component
 public class MarkerGenesDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkerGenesDao.class);
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final BioentitiesCollectionProxy bioentitiesCollectionProxy;
 
-    public MarkerGenesDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public MarkerGenesDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                          SolrCloudCollectionProxyFactory collectionProxyFactory) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        bioentitiesCollectionProxy = collectionProxyFactory.create(BioentitiesCollectionProxy.class);
     }
 
     private static final String SELECT_MARKER_GENES_WITH_AVERAGES_PER_CLUSTER =
@@ -40,5 +57,26 @@ public class MarkerGenesDao {
                             resultSet.getDouble("median_expression"),
                             resultSet.getDouble("mean_expression")
                 ));
+    }
+
+    public Map<String, String> getSymbolsForGeneIds(List<String> geneIds) {
+        SolrQueryBuilder<BioentitiesCollectionProxy> bioentitiesQueryBuilder =
+                new SolrQueryBuilder<BioentitiesCollectionProxy>()
+                        .addQueryFieldByTerm(BIOENTITY_IDENTIFIER, geneIds)
+                        .addQueryFieldByTerm(PROPERTY_NAME, BioentityPropertyName.SYMBOL.name())
+                        .setFieldList(Arrays.asList(BIOENTITY_IDENTIFIER, PROPERTY_VALUE))
+                        .sortBy(BIOENTITY_IDENTIFIER, SolrQuery.ORDER.asc)
+                        .setRows(SOLR_MAX_ROWS);
+
+        SearchStreamBuilder<BioentitiesCollectionProxy> bioentitiesSearchBuilder =
+                new SearchStreamBuilder<>(bioentitiesCollectionProxy, bioentitiesQueryBuilder);
+
+        try (TupleStreamer tupleStreamer = TupleStreamer.of(bioentitiesSearchBuilder.build())) {
+            return tupleStreamer
+                    .get()
+                    .collect(Collectors.toMap(
+                            tuple -> tuple.getString("bioentity_identifier"),
+                            tuple -> tuple.getString("property_value")));
+        }
     }
 }
