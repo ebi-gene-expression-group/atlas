@@ -44,9 +44,18 @@ public class CardModelFactory {
         return CardModel.create(
                 CardIconType.IMAGE,
                 imageSrc.get(experimentAccession.substring(0,6)),
-                String.valueOf(landingPageCardInfo.get("type")),
+                experimentAccession.substring(2,6),
                 content
         );
     }
 
+    public static CardModel createLandingPageSpeciesCard(Map<String, Object> landingPageCardInfo,
+                                                         String species, List<Pair<String, Optional<String>>> content) {
+        return CardModel.create(
+                CardIconType.IMAGESPECIES,
+                species.toLowerCase(),
+                species,
+                content
+        );
+    }
 }

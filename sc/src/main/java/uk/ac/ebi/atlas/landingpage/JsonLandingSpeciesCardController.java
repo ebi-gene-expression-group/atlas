@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentimport.ScxaExperimentDao;
 import uk.ac.ebi.atlas.experimentpage.ExperimentAttributesService;
+
 import uk.ac.ebi.atlas.model.card.CardModel;
 import uk.ac.ebi.atlas.model.card.CardModelAdapter;
 import uk.ac.ebi.atlas.model.card.CardModelFactory;
@@ -46,6 +47,7 @@ public class JsonLandingSpeciesCardController extends HtmlExceptionHandlingContr
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String showExperimentPage(@PathVariable String species,
                                      @RequestParam(defaultValue = "") String accessKey) {
+
         Set<String> allSpeciesExperiment = scxaExperimentDao.getExperimentBySpecies(species);
 
         List<Experiment<Cell>> allExperiment = allSpeciesExperiment.stream()
@@ -63,7 +65,7 @@ public class JsonLandingSpeciesCardController extends HtmlExceptionHandlingContr
                 .collect(Collectors.toList());
 
         List<CardModel> cardModels = new ArrayList<>();
-        cardModels.add(CardModelFactory.createLandingPageCard(attributes.get(0), content));
+        cardModels.add(CardModelFactory.createLandingPageSpeciesCard(attributes.get(0), species, content));
 
         return CardModelAdapter.serialize(cardModels).toString();
     }
