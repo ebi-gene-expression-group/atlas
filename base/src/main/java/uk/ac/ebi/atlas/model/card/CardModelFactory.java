@@ -49,8 +49,7 @@ public class CardModelFactory {
         );
     }
 
-    public static CardModel createLandingPageSpeciesCard(Map<String, Object> landingPageCardInfo,
-                                                         String species, List<Pair<String, Optional<String>>> content) {
+    public static CardModel createLandingPageSpeciesCard(String species, List<Pair<String, Optional<String>>> content) {
         return CardModel.create(
                 CardIconType.IMAGESPECIES,
                 species.toLowerCase(),

@@ -65,7 +65,7 @@ public class JsonLandingSpeciesCardController extends HtmlExceptionHandlingContr
                 .collect(Collectors.toList());
 
         List<CardModel> cardModels = new ArrayList<>();
-        cardModels.add(CardModelFactory.createLandingPageSpeciesCard(attributes.get(0), species, content));
+        cardModels.add(CardModelFactory.createLandingPageSpeciesCard(species, content));
 
         return CardModelAdapter.serialize(cardModels).toString();
     }
