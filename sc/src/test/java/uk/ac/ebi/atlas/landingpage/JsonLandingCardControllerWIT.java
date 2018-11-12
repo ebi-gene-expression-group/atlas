@@ -82,14 +82,6 @@ class JsonLandingCardControllerWIT {
                 .andExpect(jsonPath("$.[*].content.[*].url").exists());
     }
 
-    @Test
-    void invalidExperimentAccession() throws Exception {
-        mockMvc.perform(get(URL, "FOO"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(0)));
-    }
-
     private Iterable<String> publicExperimentsProvider() {
         return jdbcUtils.fetchPublicSingleCellExperimentAccessions();
     }
