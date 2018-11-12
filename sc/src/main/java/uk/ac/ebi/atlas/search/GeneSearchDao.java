@@ -70,19 +70,19 @@ public class GeneSearchDao {
         );
     }
 
-    private static final String SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID =
+    private static final String SELECT_EXPERIMENT_ACCESSION_FOR_MARKER_GENE_ID =
             "SELECT experiment_accession FROM scxa_marker_genes AS markers " +
             "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession " +
             "WHERE private=FALSE AND gene_id=:gene_id " +
             "GROUP BY experiment_accession";
     @Transactional(readOnly = true)
-    public List<String> experimentAccessionsForGeneId(String geneId) {
+    public List<String> fetchExperimentAccessionsWhereGeneIsMarker(String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId);
 
         return namedParameterJdbcTemplate.query(
-                SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID,
+                SELECT_EXPERIMENT_ACCESSION_FOR_MARKER_GENE_ID,
                 namedParameters,
                 (ResultSet resultSet) -> {
                     List<String> result = new ArrayList<>();

@@ -49,7 +49,9 @@ public class GeneSearchService {
 
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
-                geneId -> fetchClusterIDWithPreferredKAndMinPForGeneID(geneSearchDao.experimentAccessionsForGeneId(geneId), geneId));
+                geneId -> fetchClusterIDWithPreferredKAndMinPForGeneID(
+                        geneSearchDao.fetchExperimentAccessionsWhereGeneIsMarker(geneId),
+                        geneId));
     }
 
     private <T> Map<String, T> fetchInParallel(Set<String> geneIds, Function<String, T> geneIdInfoProvider) {
