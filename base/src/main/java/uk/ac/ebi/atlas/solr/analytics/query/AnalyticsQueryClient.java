@@ -147,8 +147,8 @@ public class AnalyticsQueryClient {
         public Builder filterBaselineOrDifferentialExperiments() {
             solrQuery.addFilterQuery("(" +
                     BASELINE_FILTER_QUERY +
-                    ") OR (" +
-                    DIFFERENTIAL_FILTER_QUERY + ")");
+                    "OR (" +
+                    DIFFERENTIAL_FILTER_QUERY + "))");
             return this;
         }
 

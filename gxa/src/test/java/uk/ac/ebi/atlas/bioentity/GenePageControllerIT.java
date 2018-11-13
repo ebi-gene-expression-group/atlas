@@ -29,23 +29,20 @@ public class GenePageControllerIT {
     @Inject
     private GenePageController subject;
 
+    private static final String BIOENTITY_IDENTIFIER = "ENSG00000005801"; // zinc finger
+    private static final String BIOENTITY_IDENTIFIER_WITHOUT_GO = "ENSG00000253210";
+
     @Test
     public void bioentityProperties() {
-        bioentityProperties("ENSG00000005801", 8, true); //zinc finger
-        bioentityProperties("ENSMUSG00000006386", 5, true);
-        bioentityProperties("Zm00001d001841", 0, false);
-    }
-
-    private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms) {
         Model model = new BindingAwareModelMap();
-        subject.showGenePage(bioentityIdentifier, model);
+        subject.showGenePage(BIOENTITY_IDENTIFIER, model);
 
         JsonArray bioentityProperties =
                 GSON.fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
 
         assertTrue(
-                bioentityIdentifier + " should have properties",
-                bioentityProperties.size() >= expectedMinimalSize);
+                BIOENTITY_IDENTIFIER + " should have properties",
+                bioentityProperties.size() > 0);
 
         Map<String, Integer> gotermsAndTheirRelevance = new HashMap<>();
         for (JsonElement e: bioentityProperties) {
@@ -58,13 +55,25 @@ public class GenePageControllerIT {
                 }
             }
         }
-        if (expectGoTerms) {
-            assertThat(gotermsAndTheirRelevance.size(), greaterThan(0));
 
-            if (gotermsAndTheirRelevance.size() > 10) {
-                // not all the same relevance
-                assertThat(new HashSet<>(gotermsAndTheirRelevance.values()).size(), greaterThan(1));
-            }
+        assertThat(gotermsAndTheirRelevance.size(), greaterThan(0));
+
+        if (gotermsAndTheirRelevance.size() > 10) {
+            // not all the same relevance
+            assertThat(new HashSet<>(gotermsAndTheirRelevance.values()).size(), greaterThan(1));
         }
+    }
+
+    @Test
+    public void bioentitiyProertiesForGeneWithoutGoTerms() {
+        Model model = new BindingAwareModelMap();
+        subject.showGenePage(BIOENTITY_IDENTIFIER_WITHOUT_GO, model);
+
+        JsonArray bioentityProperties =
+                GSON.fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
+
+        assertTrue(
+                BIOENTITY_IDENTIFIER_WITHOUT_GO + " should have properties",
+                bioentityProperties.size() > 0);
     }
 }
