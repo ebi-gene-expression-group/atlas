@@ -129,7 +129,7 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        private Builder differential() {
+        public Builder filterDifferentialExperiments() {
             solrQuery.addFilterQuery("experiment_type:(" +
                     "RNASEQ_MRNA_DIFFERENTIAL " +
                     "OR MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL " +
@@ -151,12 +151,12 @@ public class AnalyticsQueryClient {
         public Builder differentialResults() {
             solrQuery.setRows(1000);
             solrQuery.set("sort", "abs(fold_change)desc, p_value asc");
-            return differential();
+            return filterDifferentialExperiments();
         }
 
         public Builder differentialFacets() {
             setFacets(differentialFacetsQueryJson);
-            return differential();
+            return filterDifferentialExperiments();
         }
 
         public Builder experimentTypeFacets() {
