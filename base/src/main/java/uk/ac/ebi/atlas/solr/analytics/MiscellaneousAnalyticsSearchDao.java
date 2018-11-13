@@ -29,8 +29,7 @@ public class MiscellaneousAnalyticsSearchDao {
                         .experimentTypeFacets()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
-                        .filterBaselineExperiments()
-                        .filterDifferentialExperiments()
+                        .filterBaselineOrDifferentialExperiments()
                         .ofSpecies(species)
                         .fetch();
     }
