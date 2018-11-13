@@ -15,10 +15,11 @@ public class CardModelFactory {
         return CardModel.create(
                 CardIconType.SPECIES,
                 popularSpeciesInfo.species(),
-                StringUtils.capitalize(popularSpeciesInfo.species()),
+                Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
+                        Optional.of(getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
                 Collections.singletonList(
                         Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
-                                Optional.of(getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))))
+                                Optional.empty()))
                 );
     }
 

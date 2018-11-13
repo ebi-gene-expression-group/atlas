@@ -14,8 +14,10 @@ public class CardModelAdapter {
         result.addProperty("iconType", cardModel.iconType().name().toLowerCase());
         result.addProperty("iconSrc", cardModel.iconSrc());
 
-        cardModel.iconDescription().ifPresent(
-                description -> result.addProperty("iconDescription", cardModel.iconDescription().get()));
+        cardModel.description().ifPresent(
+                description ->
+                    result.add("description",
+                            getTextAndUrl(description.getLeft(), description.getRight())));
 
         if (cardModel.content().size() != 0) {
             result.add("content", getContent(cardModel.content()));
@@ -36,7 +38,7 @@ public class CardModelAdapter {
         JsonArray content = new JsonArray();
 
         textAndUrls.forEach(textAndUrl -> content.add(
-                getTextAndUrlAsJson(
+                getTextAndUrl(
                         textAndUrl.getLeft(),
                         textAndUrl.getRight()
                 )));
@@ -44,7 +46,7 @@ public class CardModelAdapter {
         return content;
     }
 
-    private static JsonObject getTextAndUrlAsJson(String text, Optional<String> url) {
+    private static JsonObject getTextAndUrl(String text, Optional<String> url) {
         JsonObject textAndUrl = new JsonObject();
         textAndUrl.addProperty("text", text);
         url.ifPresent(s -> textAndUrl.addProperty("url", s));
