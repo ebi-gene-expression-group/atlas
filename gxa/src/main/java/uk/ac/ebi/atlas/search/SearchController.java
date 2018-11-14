@@ -48,7 +48,7 @@ public class SearchController extends HtmlExceptionHandlingController {
                                           SemanticQuery geneQuery,
                                           @RequestParam(value = "conditionQuery", required = false, defaultValue = "")
                                           SemanticQuery conditionQuery,
-                                          @RequestParam(value = "organism", required = false, defaultValue = "")
+                                          @RequestParam(value = "species", required = false, defaultValue = "")
                                           String speciesString,
                                           Model model, RedirectAttributes redirectAttributes) {
 
@@ -72,7 +72,7 @@ public class SearchController extends HtmlExceptionHandlingController {
             StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
             // Reactome IDs are species-specific
             if (!GeneSetUtil.matchesReactomeID(geneSetId) && !species.isUnknown()) {
-                stringBuilder.append("?").append("organism=").append(species.getReferenceName());
+                stringBuilder.append("?").append("species=").append(species.getReferenceName());
             }
 
             copyModelAttributesToFlashAttributes(model, redirectAttributes);

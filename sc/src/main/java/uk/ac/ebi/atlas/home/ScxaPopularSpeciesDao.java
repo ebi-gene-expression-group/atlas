@@ -5,8 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesDao;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesInfo;
 
 import javax.inject.Inject;
 import javax.inject.Named;

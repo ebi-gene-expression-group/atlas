@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.species.services;
+package uk.ac.ebi.atlas.home;
 
 import com.atlassian.util.concurrent.LazyReference;
 

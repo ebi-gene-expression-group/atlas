@@ -57,7 +57,7 @@ var foundationExperimentsPageModule = (function ($) {
 
     var asInitVals = [];
 
-    function _init(experimentType, kingdom, organism, experimentSet, contextPath) {
+    function _init(experimentType, kingdom, species, experimentSet, contextPath) {
 
         /* Sort on the 'alt' tags of images in a column */
         $.extend($.fn.dataTableExt.oSort, {
@@ -156,7 +156,7 @@ var foundationExperimentsPageModule = (function ($) {
                     "render": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, full);
                     } },
-                { "title":"Organism", "data":"species", "className":"center italic", "width":"10%",
+                { "title":"Species", "data":"species", "className":"center italic", "width":"10%",
                     "render": function (data, type, full) {
                         return data;
                     } },
@@ -190,7 +190,7 @@ var foundationExperimentsPageModule = (function ($) {
                 .draw();
         });
 
-        $('#gxaExperimentsTableOrganismInput').on('keyup', function () {
+        $('#gxaExperimentsTableSpeciesInput').on('keyup', function () {
             oTable
                 .columns(5)
                 .search(this.value)
@@ -319,8 +319,8 @@ var foundationExperimentsPageModule = (function ($) {
             }
         });
 
-        if (organism) {
-            $("#gxaExperimentsTableOrganismInput").val(organism).keyup();
+        if (species) {
+            $("#gxaExperimentsTableSpeciesInput").val(species).keyup();
         }
 
         oTable.search(experimentSet);

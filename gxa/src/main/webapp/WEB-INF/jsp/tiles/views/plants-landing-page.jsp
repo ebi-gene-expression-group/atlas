@@ -25,9 +25,9 @@
                     Expression Atlas contains <b>${numberOfPlantExperiments}</b>
                     <a href="${pageContext.request.contextPath}/experiments?kingdom=plants">plant experiments</a>, studying
                     e.g.
-                    <a href="${pageContext.request.contextPath}/experiments?organism=Arabidopsis+thaliana">Arabidopsis</a>,
-                    <a href="${pageContext.request.contextPath}/experiments?organism=Oryza+sativa">rice</a>, and
-                    <a href="${pageContext.request.contextPath}/experiments?organism=Zea+mays">maize</a>.
+                    <a href="${pageContext.request.contextPath}/experiments?species=Arabidopsis+thaliana">Arabidopsis</a>,
+                    <a href="${pageContext.request.contextPath}/experiments?species=Oryza+sativa">rice</a>, and
+                    <a href="${pageContext.request.contextPath}/experiments?species=Zea+mays">maize</a>.
                 </p>
                 <p>
                     The <i>baseline</i> experiments, are either RNA-seq or proteomics, and display expression levels of
@@ -91,7 +91,7 @@
                 <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                 <ul style="list-style:none;padding-left:0; margin-left:0;">
                     <li>
-                        <a href="${pageContext.request.contextPath}/experiments?organism=${species}&experimentType=differential" style="color:#337ab7; border-bottom: none;">${numDifferentialExperimentsBySpecies.get(species)} experiment${numDifferentialExperimentsBySpecies.get(species) > 1 ? "s" : "" }</a>
+                        <a href="${pageContext.request.contextPath}/experiments?species=${species}&experimentType=differential" style="color:#337ab7; border-bottom: none;">${numDifferentialExperimentsBySpecies.get(species)} experiment${numDifferentialExperimentsBySpecies.get(species) > 1 ? "s" : "" }</a>
                     </li>
                 </ul>
             </div>

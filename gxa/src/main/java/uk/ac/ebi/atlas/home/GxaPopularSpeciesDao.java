@@ -5,8 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesDao;
-import uk.ac.ebi.atlas.species.services.PopularSpeciesInfo;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,11 +16,9 @@ import java.util.Map;
 public class GxaPopularSpeciesDao extends PopularSpeciesDao {
 
     protected static final String SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK =
-            "SELECT experiment_organism.organism, experiment.type, " +
-            "count(experiment_organism.organism) AS c " +
-            "FROM experiment " +
-            "LEFT OUTER JOIN  experiment_organism ON experiment_organism.experiment=experiment.accession " +
-            "WHERE private='F' GROUP BY experiment.type, experiment_organism.organism";
+            "SELECT species, type, COUNT(species) c " +
+                    "FROM experiment " +
+                    "WHERE private=FALSE GROUP BY type, species";
 
     @Inject
     public GxaPopularSpeciesDao(JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory) {
@@ -34,7 +30,7 @@ public class GxaPopularSpeciesDao extends PopularSpeciesDao {
             Map<String, Pair<Long, Long>> result = new HashMap<>();
 
             while (resultSet.next()) {
-                String species = speciesFactory.create(resultSet.getString("organism")).getReferenceName();
+                String species = speciesFactory.create(resultSet.getString("species")).getReferenceName();
                 ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
                 long experimentCount = resultSet.getLong("c");
 

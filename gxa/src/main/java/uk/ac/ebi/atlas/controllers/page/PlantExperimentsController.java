@@ -115,8 +115,8 @@ public class PlantExperimentsController extends HtmlExceptionHandlingController 
                         experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getSpecies();
 
                 if (species.isPlant()) {
-                    Integer numSoFar = numDifferentialExperimentsBySpecies.get(species.getName());
-                    numDifferentialExperimentsBySpecies.put(species.getName(), numSoFar == null ? 1 : ++numSoFar);
+                    Integer numSoFar = numDifferentialExperimentsBySpecies.get(species.getReferenceName());
+                    numDifferentialExperimentsBySpecies.put(species.getReferenceName(), numSoFar == null ? 1 : ++numSoFar);
                     numberOfPlantExperiments++;
                 }
 

@@ -1,12 +1,16 @@
 package uk.ac.ebi.atlas.home;
 
 import com.jayway.jsonpath.JsonPath;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -14,12 +18,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.ebi.atlas.configuration.WebConfig;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -34,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JsonPopularSpeciesControllerWIT {
     @Inject
@@ -42,10 +47,29 @@ public class JsonPopularSpeciesControllerWIT {
     @Inject
     private SpeciesFactory speciesFactory;
 
+    @Inject
+    private DataSource dataSource;
+
     @Autowired
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
+
+    private static final String ENDPOINT_URL = "/json/experiments/popular-species";
+
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
+        populator.execute(dataSource);
+    }
 
     @BeforeEach
     void setUp() {
@@ -54,13 +78,15 @@ public class JsonPopularSpeciesControllerWIT {
 
     @Test
     void returnsAtLeastOnePopularSpecies() throws Exception {
-        mockMvc.perform(get("/json/experiments/popularSpecies"))
+        mockMvc.perform(get(ENDPOINT_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$.[*].iconType").exists())
                 .andExpect(jsonPath("$.[*].iconSrc").exists())
-                .andExpect(jsonPath("$.[*].iconDescription").exists())
+                .andExpect(jsonPath("$.[*].description").exists())
+                .andExpect(jsonPath("$.[*].description.text").exists())
+                .andExpect(jsonPath("$.[*].description.url").exists())
                 .andExpect(jsonPath("$.[*].content").exists())
                 .andExpect(jsonPath("$.[*].content.[*].text").exists())
                 .andExpect(jsonPath("$.[*].content.[*].url").doesNotExist());
@@ -71,7 +97,7 @@ public class JsonPopularSpeciesControllerWIT {
         List<String> species = jdbcTestUtils.fetchSpeciesForSingleCellExperiments();
         int numberOfPopularSpecies = ThreadLocalRandom.current().nextInt(1, species.size());
 
-        mockMvc.perform(get("/json/experiments/popularSpecies").param("limit", String.valueOf(numberOfPopularSpecies)))
+        mockMvc.perform(get(ENDPOINT_URL).param("limit", String.valueOf(numberOfPopularSpecies)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(lessThanOrEqualTo(numberOfPopularSpecies))));
     }
@@ -81,7 +107,7 @@ public class JsonPopularSpeciesControllerWIT {
         Species randomSpecies = speciesFactory.create(jdbcTestUtils.fetchRandomSpeciesForSingleCellExperiments());
 
         MvcResult mvcResult = mockMvc
-                .perform(get("/json/experiments/popularSpecies")
+                .perform(get(ENDPOINT_URL)
                         .param("kingdom", randomSpecies.getKingdom()))
                 .andReturn();
 
@@ -95,7 +121,7 @@ public class JsonPopularSpeciesControllerWIT {
 
     @Test
     void returnsEmptyForUnknownKingdom() throws Exception {
-        mockMvc.perform(get("/json/experiments/popularSpecies").param("kingdom", "foo"))
+        mockMvc.perform(get(ENDPOINT_URL).param("kingdom", "foo"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(0)));
