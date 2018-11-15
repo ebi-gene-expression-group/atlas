@@ -45,8 +45,14 @@ public class LatestExperimentDaoIT {
     }
 
     @Test
-    void returnsPopularSpeciesWithExperimentCounts() {
+    void returnsLatestExperimentList() {
         assertThat(subject.fetchLatestExperimentAccessions())
                 .isNotEmpty();
+    }
+
+    @Test
+    void returnsLatestExperimentCounts() {
+        assertThat(subject.fetchPublicExperimentsCount())
+                .isGreaterThanOrEqualTo(1);
     }
 }
