@@ -51,7 +51,7 @@ public class CardModelFactory {
 
     public static CardModel createLandingPageSpeciesCard(String species, List<Pair<String, Optional<String>>> content) {
         return CardModel.create(
-                CardIconType.IMAGESPECIES,
+                CardIconType.SPECIES,
                 species.toLowerCase(),
                 species,
                 content
