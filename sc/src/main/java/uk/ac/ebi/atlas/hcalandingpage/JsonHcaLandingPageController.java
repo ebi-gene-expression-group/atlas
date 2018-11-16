@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.hca;
+package uk.ac.ebi.atlas.hcalandingpage;
 
 import com.google.common.collect.ImmutableList;
 import org.springframework.http.MediaType;
@@ -23,10 +23,10 @@ public class JsonHcaLandingPageController extends JsonExceptionHandlingControlle
     public String foo() {
         CardModel hcaCard =
                 CardModelFactory.createLandingPageImageCard(
-                        experimentSearchService.searchPublicExperimentsBySpecies("EHCA"),
+                        experimentSearchService.searchPublicExperimentsByAccession("EHCA"),
                         getHcaCellLogoUrl(),
                         "Human Cell Atlas experiments",
-                        "foo");
+                        "#");
 
         CardModel humanCard =
                 CardModelFactory.createLandingPageSpeciesCard(
