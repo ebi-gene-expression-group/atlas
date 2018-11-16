@@ -23,14 +23,12 @@ const IconDiv = styled.span`
 const MarkerDiv = styled.div`
   width: 15%;
   text-align: center;
-  font-size: 15px
 `
-
 
 const TitleDiv = styled.p`
   width: 40%;
   text-align: center;
-  font-size: 15px
+  margin-bottom: 0;
 `
 
 const VariableDiv = styled.div`
@@ -41,7 +39,6 @@ const VariableDiv = styled.div`
 const CountDiv = styled.div`
   width: 10%;
   text-align: center;
-  font-size: 20px;
 `
 
 class ExperimentTableCard extends React.Component {
@@ -50,7 +47,7 @@ class ExperimentTableCard extends React.Component {
     }
 
     render() {
-        const {url, species, experimentDescription, markerGenes, specificExperimentInfo} = this.props
+        const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
 
         const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
             return <li><a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
@@ -64,22 +61,22 @@ class ExperimentTableCard extends React.Component {
                     </IconDiv>
                     {   markerGenes ?
                         <MarkerDiv>
-                            <ul>
+                            <ul style={{marginBottom: 0}}>
                                 {markerGeneLinks}
                             </ul>
                         </MarkerDiv> :
                         <MarkerDiv>
-                            <span style={{fontSize: `30px`}} data-tooltip title="No expressed marker genes">&#10006;</span>
+                          <span data-tooltip title="Not a marker gene" class="icon icon-functional" data-icon="x"></span>
                         </MarkerDiv>
                     }
 
                     <TitleDiv> {experimentDescription} </TitleDiv>
                     <VariableDiv>
-                        <ul>
-                            {specificExperimentInfo.experimentalFactors.map(factor => <li> {factor} </li>)}
+                        <ul style={{marginBottom: 0}}>
+                            {factors.map(factor => <li> {factor} </li>)}
                         </ul>
                     </VariableDiv>
-                    <CountDiv> {specificExperimentInfo.numberOfAssays} </CountDiv>
+                    <CountDiv> {numberOfAssays} </CountDiv>
                 </CardContainerDiv>
             </a>
 
@@ -96,10 +93,8 @@ ExperimentTableCard.propTypes = {
         clusterIds: PropTypes.array.isRequired,
         url: PropTypes.string.isRequired
     })),
-    specificExperimentInfo: PropTypes.shape({
-        numberOfAssays: PropTypes.number.isRequired,
-        experimentalFactors: PropTypes.array.isRequired
-    })
+  numberOfAssays: PropTypes.number.isRequired,
+  factors: PropTypes.array.isRequired
 }
 
 export default ExperimentTableCard
