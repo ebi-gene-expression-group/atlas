@@ -1,0 +1,18 @@
+{
+  "description": "atlas-homepage-cards",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ebi-gene-expression-group/atlas-homepage-cards"
+  },
+  "dependencies": {
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "atlas-homepage-cards": "^1.0.0-beta"
+  },
+  "devDependencies": {
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}

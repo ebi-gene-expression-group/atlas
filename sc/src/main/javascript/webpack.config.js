@@ -9,7 +9,8 @@ module.exports = {
     atlasAutocomplete: `./bundles/autocomplete`,
     experimentPage: `./bundles/experiment-page`,
     geneSearch: `./bundles/gene-search`,
-    geneSearchForm: `./bundles/gene-search-form`
+    geneSearchForm: `./bundles/gene-search-form`,
+    atlasHomepageCard: `./bundles/atlas-homepage-card`
   },
 
   plugins: [
