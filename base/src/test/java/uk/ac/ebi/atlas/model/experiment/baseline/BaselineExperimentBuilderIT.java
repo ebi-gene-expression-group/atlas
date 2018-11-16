@@ -55,13 +55,12 @@ public class BaselineExperimentBuilderIT {
 
     private BaselineExperimentBuilder subject = new BaselineExperimentBuilder();
     private ExperimentAttributesService experimentAttributesService;
-    private ExperimentTrader experimentTrader;
 
     @Test
     public void testCreateSingleCell() {
         IdfParser idfParser = new IdfParser(new DataFileHub(dataFilesPath.resolve("scxa")));
 
-        experimentAttributesService = new ExperimentAttributesService(europePmcClient, idfParser, experimentTrader);
+        experimentAttributesService = new ExperimentAttributesService(europePmcClient, idfParser);
 
         List<AssayGroup> assayGroups =
                 ImmutableList.of(

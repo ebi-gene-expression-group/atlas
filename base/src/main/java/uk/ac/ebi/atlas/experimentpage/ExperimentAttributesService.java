@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.model.Publication;
@@ -10,9 +9,7 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
-import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,13 +23,10 @@ public class ExperimentAttributesService {
 
     private EuropePmcClient europePmcClient;
     private IdfParser idfParser;
-    private ExperimentTrader experimentTrader;
 
-    public ExperimentAttributesService(EuropePmcClient europePmcClient, IdfParser idfParser,
-                                       ExperimentTrader experimentTrader) {
+    public ExperimentAttributesService(EuropePmcClient europePmcClient, IdfParser idfParser) {
         this.europePmcClient = europePmcClient;
         this.idfParser = idfParser;
-        this.experimentTrader = experimentTrader;
     }
 
     public Map<String, Object> getAttributes(Experiment<?> experiment) {
@@ -45,6 +39,8 @@ public class ExperimentAttributesService {
         result.put("dois", experiment.getDois());
         result.put("disclaimer", experiment.getDisclaimer());
         result.put("lastUpdated", new SimpleDateFormat("dd-MM-yyyy").format(experiment.getLastUpdate()));
+        result.put("numberOfAssays", experiment.getAnalysedAssays().size());
+        result.put("factors", experiment.getExperimentDesign().getFactorHeaders());
 
         if (!experiment.getDois().isEmpty()) {
             result.put("publications", getPublications(experiment.getDois()));
@@ -94,16 +90,4 @@ public class ExperimentAttributesService {
 
         return publications;
     }
-
-    private final ImmutableMap<String, Object> experimentsAttributesByAccession (String accession)
-    {
-        ExperimentInfo fetchExperimentsInfo = (experimentTrader.getPublicExperiment(accession)).buildExperimentInfo();
-        return ImmutableMap.of(
-                "specificExperimentInfo", fetchExperimentsInfo);
-    }
-
-    public ImmutableMap<String, Object> fetchSpecificExperimentsAttributes(String accession) {
-        return experimentsAttributesByAccession(accession);
-    }
-
 }

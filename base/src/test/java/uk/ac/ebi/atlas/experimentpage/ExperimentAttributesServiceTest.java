@@ -48,28 +48,10 @@ public class ExperimentAttributesServiceTest {
     private EuropePmcClient europePmcClientMock;
     @Mock
     private IdfParser idfParser;
-    @Mock
-    private ExperimentTrader experimentTraderMock;
 
     @InjectMocks
     private ExperimentAttributesService subject;
 
-
-    @Test
-    public void returnExperimentInformationByAccession() {
-
-        String experimentAccession = generateRandomExperimentAccession();
-        Experiment experimentRandom = MockExperiment.createBaselineExperiment(experimentAccession);
-
-        when(experimentTraderMock.getPublicExperiment(experimentAccession)).thenReturn(experimentRandom);
-
-        ImmutableMap<String, Object> result = subject.fetchSpecificExperimentsAttributes(experimentAccession);
-        assertThat(result)
-                .extracting("specificExperimentInfo")
-                .extracting("numberOfAssays", "experimentalFactors")
-                .isNotNull();
-
-    }
 
     @Test
     public void getAttributesForBaselineExperimentWithNoPublications() {
