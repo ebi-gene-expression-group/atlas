@@ -10,7 +10,7 @@ module.exports = {
     experimentPage: `./bundles/experiment-page`,
     geneSearch: `./bundles/gene-search`,
     geneSearchForm: `./bundles/gene-search-form`,
-    atlasHomepageCard: `./bundles/atlas-homepage-cards`
+    atlasHomepageCard: `./bundles/atlas-homepage-card`
   },
 
   plugins: [
