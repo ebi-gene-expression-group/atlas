@@ -42,7 +42,7 @@
     </definition>
 
     <definition name="hca-landing-page" extends="base">
-        <put-attribute name="title" value="Experiment &lt; "/>
+        <put-attribute name="title" value="HCA landing page &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/tiles/views/hca-landing-page.jsp"/>
     </definition>
 </tiles-definitions>
