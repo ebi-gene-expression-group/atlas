@@ -6,9 +6,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.home.PopularSpeciesInfo;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class CardModelFactory {
@@ -18,11 +15,12 @@ public class CardModelFactory {
         return CardModel.create(
                 CardIconType.SPECIES,
                 popularSpeciesInfo.species(),
-                StringUtils.capitalize(popularSpeciesInfo.species()),
+                Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
+                        Optional.of(getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
                 Collections.singletonList(
                         Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
-                                Optional.of(getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))))
-        );
+                                Optional.empty()))
+                );
     }
 
     private static String getExperimentsFilteredBySpeciesUrl(String species) {
@@ -32,29 +30,5 @@ public class CardModelFactory {
                 .buildAndExpand(species)
                 .encode()
                 .toUriString();
-    }
-
-    public static CardModel createLandingPageCard(Map<String, Object> landingPageCardInfo, List<Pair<String, Optional<String>>> content) {
-        String experimentAccession = String.valueOf(landingPageCardInfo.get("experimentAccession"));
-        Map<String, String> imageSrc = new HashMap<>();
-        imageSrc.put("E-EHCA", "https://goo.gl/images/xf7STU");
-        imageSrc.put("E-GEOD", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
-        imageSrc.put("E-ENAD", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
-        imageSrc.put("E-MTAB", "https://www.ebi.ac.uk/gxa/sc/resources/images/home/hero_cell.png");
-        return CardModel.create(
-                CardIconType.IMAGE,
-                imageSrc.get(experimentAccession.substring(0,6)),
-                experimentAccession.substring(2,6),
-                content
-        );
-    }
-
-    public static CardModel createLandingPageSpeciesCard(String species, List<Pair<String, Optional<String>>> content) {
-        return CardModel.create(
-                CardIconType.SPECIES,
-                species.toLowerCase(),
-                species,
-                content
-        );
     }
 }
