@@ -31,7 +31,7 @@
     document.addEventListener("DOMContentLoaded", function(event) {
         atlasHomepageCard.renderHcaLandingPageContainer({
             host: 'http://localhost:8080/gxa/sc/',
-            resource: 'json/experiments/landingpage/E-EHCA'
+            resource: 'json/hca'
         }, 'hca-card-container');
     });
 </script>
