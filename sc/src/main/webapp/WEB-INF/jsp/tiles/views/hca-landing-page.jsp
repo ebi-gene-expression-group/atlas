@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lingyun
-  Date: 25/10/2018
-  Time: 09:14
-  To change this template use File | Settings | File Templates.
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="media-object">
@@ -17,13 +9,13 @@
     </div>
     <div class="media-object-section top">
         <p>
-            "Single cell Expression Atlas provides access to the analysis results of X data sets
+            Single cell Expression Atlas provides access to the analysis results of X data sets
             from the Human Cell Atlas and Y data sets in Homo Sapiens from other studies.
         </p>
         <p>
             All studies have been re-analysed using our standardised pipeline (iRAP).
-            Pipelines and web-service are being developed by the Gene Expression Team at EMBL-EBI,
-            funded by the Wellcome Trust and the Chan Zuckerberg Initiative. "
+            Pipelines and web service are being developed by the Gene Expression Team at EMBL-EBI,
+            funded by the <a href="https://wellcome.ac.uk/">Wellcome Trust</a> and the <a href="https://www.chanzuckerberg.com/">Chan Zuckerberg Initiative</a>.
         </p>
     </div>
 </div>
