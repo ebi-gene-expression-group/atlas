@@ -30,7 +30,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         atlasHomepageCard.renderHcaLandingPageContainer({
-            host: 'http://localhost:8080/gxa/sc/',
+            host: '${pageContext.request.contextPath}/',
             resource: 'json/hca'
         }, 'hca-card-container');
     });
