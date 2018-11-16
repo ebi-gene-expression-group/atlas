@@ -42,57 +42,57 @@ const CountDiv = styled.div`
 `
 
 class ExperimentTableCard extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+  constructor(props) {
+    super(props)
+  }
 
-    render() {
-        const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
+  render() {
+    const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
 
-        const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
-            return <li><a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
-        })
+    const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
+      return <li><a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
+    })
 
-        return (
-            <a href={url}>
-                <CardContainerDiv>
-                    <IconDiv>
-                      <SpeciesIconCard iconSrc={species} description={species}/>
-                    </IconDiv>
-                    {   markerGenes ?
-                        <MarkerDiv>
-                            <ul style={{marginBottom: 0}}>
-                                {markerGeneLinks}
-                            </ul>
-                        </MarkerDiv> :
-                        <MarkerDiv>
-                          <span data-tooltip title="Not a marker gene" class="icon icon-functional" data-icon="x"></span>
-                        </MarkerDiv>
-                    }
+    return (
+      <a href={url}>
+        <CardContainerDiv>
+          <IconDiv>
+            <SpeciesIconCard iconSrc={species} description={species}/>
+          </IconDiv>
+          {   markerGenes ?
+            <MarkerDiv>
+              <ul style={{marginBottom: 0}}>
+                {markerGeneLinks}
+              </ul>
+            </MarkerDiv> :
+            <MarkerDiv>
+              <span data-tooltip title="Not a marker gene" class="icon icon-functional" data-icon="x"></span>
+            </MarkerDiv>
+          }
 
-                    <TitleDiv> {experimentDescription} </TitleDiv>
-                    <VariableDiv>
-                        <ul style={{marginBottom: 0}}>
-                            {factors.map(factor => <li> {factor} </li>)}
-                        </ul>
-                    </VariableDiv>
-                    <CountDiv> {numberOfAssays} </CountDiv>
-                </CardContainerDiv>
-            </a>
+          <TitleDiv> {experimentDescription} </TitleDiv>
+          <VariableDiv>
+            <ul style={{marginBottom: 0}}>
+              {factors.map(factor => <li> {factor} </li>)}
+            </ul>
+          </VariableDiv>
+          <CountDiv> {numberOfAssays} </CountDiv>
+        </CardContainerDiv>
+      </a>
 
-        )
-    }
+    )
+  }
 }
 
 ExperimentTableCard.propTypes = {
-    url: PropTypes.string.isRequired,
-    species: PropTypes.string.isRequired,
-    experimentDescription: PropTypes.string.isRequired,
-    markerGenes: PropTypes.arrayOf(PropTypes.shape({
-        k: PropTypes.number.isRequired,
-        clusterIds: PropTypes.array.isRequired,
-        url: PropTypes.string.isRequired
-    })),
+  url: PropTypes.string.isRequired,
+  species: PropTypes.string.isRequired,
+  experimentDescription: PropTypes.string.isRequired,
+  markerGenes: PropTypes.arrayOf(PropTypes.shape({
+    k: PropTypes.number.isRequired,
+    clusterIds: PropTypes.array.isRequired,
+    url: PropTypes.string.isRequired
+  })),
   numberOfAssays: PropTypes.number.isRequired,
   factors: PropTypes.array.isRequired
 }
