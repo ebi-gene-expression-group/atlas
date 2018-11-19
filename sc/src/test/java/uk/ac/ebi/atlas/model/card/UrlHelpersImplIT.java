@@ -24,7 +24,7 @@ import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomSpecie
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfig.class)
-class UrlHelpersImplTest {
+class UrlHelpersImplIT {
     @Mock
     Experiment experimentMock;
 

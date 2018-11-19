@@ -27,6 +27,12 @@ import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomSpecie
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ExperimentSearchServiceTest {
+    private class ExperimentSearchServiceMock extends ExperimentSearchService {
+        public ExperimentSearchServiceMock(ExperimentTrader experimentTrader) {
+            super(experimentTrader);
+        }
+    }
+
     private static final String ACCESSION_PATTERN = randomAlphabetic(4).toUpperCase();
     private static final Species SPECIES = generateRandomSpecies();
     private static final ThreadLocalRandom RNG = ThreadLocalRandom.current();
@@ -65,7 +71,7 @@ class ExperimentSearchServiceTest {
                 .collect(toImmutableSet());
 
         when(experimentTraderMock.getPublicExperiments()).thenReturn(mockedExperiments);
-        subject = new ExperimentSearchService(experimentTraderMock);
+        subject = new ExperimentSearchServiceMock(experimentTraderMock);
     }
 
     @Test

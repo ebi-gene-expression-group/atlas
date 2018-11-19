@@ -4,4 +4,3 @@ import org.springframework.stereotype.Component;
 
 @Component
 class UrlHelpersImpl implements UrlHelpers {}
-

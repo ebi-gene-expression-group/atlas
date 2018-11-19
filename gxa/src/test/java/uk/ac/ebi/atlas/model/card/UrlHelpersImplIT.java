@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.species.Species;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -25,7 +24,7 @@ import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomSpecie
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfig.class)
-class UrlHelpersImplTest {
+class UrlHelpersImplIT {
     @Mock
     Experiment experimentMock;
 
@@ -56,5 +55,4 @@ class UrlHelpersImplTest {
         assertThat(url)
                 .hasPath("/experiments/" + UrlEscapers.urlPathSegmentEscaper().escape(experimentAccession));
     }
-
 }
