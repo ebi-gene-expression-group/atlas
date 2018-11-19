@@ -118,7 +118,7 @@ class GeneSearchServiceTest {
                 .thenReturn(ImmutableMap.of(10, ImmutableList.of(1)));
 
         when(geneSearchDaoMock
-                .experimentAccessionsForGeneId(geneID))
+                .fetchExperimentAccessionsWhereGeneIsMarker(geneID))
                 .thenReturn(ImmutableList.of(experimentAccession1, experimentAccession2));
 
         Map<String, Map<String, Map<Integer, List<Integer>>>> result = subject.getMarkerGeneProfile(geneID);
@@ -161,9 +161,9 @@ class GeneSearchServiceTest {
                 .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID2, experimentAccession4, 4))
                 .thenReturn(ImmutableMap.of(4, ImmutableList.of(1)));
 
-        when(geneSearchDaoMock.experimentAccessionsForGeneId(geneID1))
+        when(geneSearchDaoMock.fetchExperimentAccessionsWhereGeneIsMarker(geneID1))
                 .thenReturn(ImmutableList.of(experimentAccession1, experimentAccession2));
-        when(geneSearchDaoMock.experimentAccessionsForGeneId(geneID2))
+        when(geneSearchDaoMock.fetchExperimentAccessionsWhereGeneIsMarker(geneID2))
                 .thenReturn(ImmutableList.of(experimentAccession3, experimentAccession4));
 
         assertThat(subject.getMarkerGeneProfile(geneID1, geneID2))
