@@ -122,7 +122,7 @@ class TSnePlotServiceDaoIT {
         Map.Entry<Integer, AtlasResource<TsvStreamer>> firstFile = resource.entrySet().iterator().next();
         Stream<String[]> fileContent = firstFile.getValue().get().get();
         Integer fileContentLines = Math.toIntExact(fileContent.count());
-        Integer numberOfcells = subject.fetchCellNumberByExperimentAccession(experimentAccession);
+        Integer numberOfcells = subject.fetchNumberOfCellsByExperimentAccession(experimentAccession);
         assertThat(numberOfcells)
                 .isEqualTo(fileContentLines-1);
         cleanDatabaseTables();
