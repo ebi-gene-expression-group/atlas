@@ -13,7 +13,7 @@ import uk.ac.ebi.atlas.model.card.CardModelFactory;
 
 @RestController
 public class JsonHcaLandingPageController extends JsonExceptionHandlingController {
-    private ExperimentSearchService experimentSearchService;
+    protected static final String HCA_ACCESSION_PATTERN = "EHCA";
 
     public JsonHcaLandingPageController(ExperimentSearchService experimentSearchService) {
         this.experimentSearchService = experimentSearchService;
@@ -26,7 +26,7 @@ public class JsonHcaLandingPageController extends JsonExceptionHandlingControlle
                         experimentSearchService.searchPublicExperimentsByAccession("EHCA"),
                         getHcaCellLogoUrl(),
                         "Human Cell Atlas experiments",
-                        "#");
+                        getHcaExperimentsUrl());
 
         CardModel humanCard =
                 CardModelFactory.createLandingPageSpeciesCard(
@@ -35,9 +35,20 @@ public class JsonHcaLandingPageController extends JsonExceptionHandlingControlle
         return CardModelAdapter.serialize(ImmutableList.of(hcaCard, humanCard)).toString();
     }
 
+    // TODO The two methods below are subject to be generalised when we add featured experiments in SCEA’s home page
+
     private String getHcaCellLogoUrl() {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/resources/images/logos/hca_cell_logo.png")
+                .toUriString();
+    }
+
+    private String getHcaExperimentsUrl() {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/experiments")
+                .query("experimentSet={accessionPattern}")
+                .buildAndExpand(HCA_ACCESSION_PATTERN)
+                .encode()
                 .toUriString();
     }
 }
