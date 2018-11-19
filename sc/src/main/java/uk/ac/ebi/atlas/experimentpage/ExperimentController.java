@@ -48,8 +48,10 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         Experiment<Cell> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         model.addAllAttributes(experimentAttributesService.getAttributes(experiment));
-        model.addAttribute("content", GSON.toJson(experimentPageContentForExperiment(experiment, accessKey)));
-        model.addAttribute("numberOfCells", tSnePlotServiceDao.fetchCellNumberByExperimentAccession(experimentAccession));
+        JsonObject content = experimentPageContentForExperiment(experiment, accessKey);
+        content.addProperty("numberOfCells", tSnePlotServiceDao.fetchNumberOfCellsByExperimentAccession(experimentAccession));
+        model.addAttribute("content", GSON.toJson(content));
+        model.addAttribute("numberOfCells", content.get("numberOfCells"));
 
         return "experiment-page";
     }
