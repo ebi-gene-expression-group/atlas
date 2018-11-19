@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Set variables HOST, PORT, DATABASE and USER for your DB connection and choose the experiment accession from which to
 # create a fixture in EXP_ID. E.g.
 # HOST=localhost PORT=5432 DATABASE=gxpatlasloc USER=atlas3dev EXP_ID=E-MTAB-5061 ./create_scxa_fixture.sh
@@ -19,13 +20,13 @@ echo "SELECT * FROM scxa_analytics AS analytics
   LIMIT 100;" | \
   psql -A -t -F"," -h $HOST -p $PORT -d $DATABASE -U $USER > tmp.csv
 
-sed -E "s/^(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_analytics(experiment_accession, gene_id, cell_id, expression_level) VALUES (\1, \2, \3, \4);/" tmp.csv | uniq > analytics.sql
+sed -E "s/^(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_analytics(experiment_accession, gene_id, cell_id, expression_level) VALUES ('\1', '\2', '\3', \4);/" tmp.csv | uniq > analytics.sql
 
-sed -E "s/^.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_tsne(experiment_accession, cell_id, x, y, perplexity) VALUES (\1, \2, \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," > tsne.sql
+sed -E "s/^.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_tsne(experiment_accession, cell_id, x, y, perplexity) VALUES ('\1', '\2', \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," > tsne.sql
 
-sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*$/INSERT INTO scxa_cell_clusters(experiment_accession, cell_id, k, cluster_id) VALUES (\1, \2, \3, \4);/" tmp.csv | uniq | grep -v ", ," > cell_clusters.sql
+sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*$/INSERT INTO scxa_cell_clusters(experiment_accession, cell_id, k, cluster_id) VALUES ('\1', '\2', \3, \4);/" tmp.csv | uniq | grep -v ", ," > cell_clusters.sql
 
-sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*)$/INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES (\1, \2, \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," > marker_genes.sql
+sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*)$/INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('\1', '\2', \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," > marker_genes.sql
 
 rm tmp.csv
 
@@ -42,15 +43,15 @@ echo "SELECT * FROM scxa_analytics AS analytics
   WHERE analytics.experiment_accession = '${EXP_ID}' AND (marker_genes.marker_probability > 0.05 OR marker_genes.marker_probability IS NULL)
 
   ORDER BY RANDOM()
-  LIMIT 100;" | \
+  LIMIT 400;" | \
   psql -A -t -F"," -h $HOST -p $PORT -d $DATABASE -U $USER > tmp.csv
 
-sed -E "s/^(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_analytics(experiment_accession, gene_id, cell_id, expression_level) VALUES (\1, \2, \3, \4);/" tmp.csv | uniq >> analytics.sql
+sed -E "s/^(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_analytics(experiment_accession, gene_id, cell_id, expression_level) VALUES ('\1', '\2', '\3', \4);/" tmp.csv | uniq >> analytics.sql
 
-sed -E "s/^.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_tsne(experiment_accession, cell_id, x, y, perplexity) VALUES (\1, \2, \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," >> tsne.sql
+sed -E "s/^.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*,.*,.*,.*,.*$/INSERT INTO scxa_tsne(experiment_accession, cell_id, x, y, perplexity) VALUES ('\1', '\2', \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," >> tsne.sql
 
-sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*$/INSERT INTO scxa_cell_clusters(experiment_accession, cell_id, k, cluster_id) VALUES (\1, \2, \3, \4);/" tmp.csv | uniq | grep -v ", ," >> cell_clusters.sql
+sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),.*,.*,.*,.*,.*$/INSERT INTO scxa_cell_clusters(experiment_accession, cell_id, k, cluster_id) VALUES ('\1', '\2', \3, \4);/" tmp.csv | uniq | grep -v ", ," >> cell_clusters.sql
 
-sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*)$/INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES (\1, \2, \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," >> marker_genes.sql
+sed -E "s/^.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,(.*),(.*),(.*),(.*),(.*)$/INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('\1', '\2', \3, \4, \5);/" tmp.csv | uniq | grep -v ", ," >> marker_genes.sql
 
 rm tmp.csv
