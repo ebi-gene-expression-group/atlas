@@ -12,8 +12,8 @@ import static org.apache.commons.lang3.StringUtils.containsIgnoreCase;
 // we know that all experiments will be cached and this will be faster than going to the DB (and if we’re not then
 // we’re doing the rest of the app a favour by pre-loading some experiments anyway).
 @Component
-public class ExperimentSearchService {
-    private ExperimentTrader experimentTrader;
+public abstract class ExperimentSearchService {
+    private final ExperimentTrader experimentTrader;
 
     public ExperimentSearchService(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
