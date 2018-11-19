@@ -18,10 +18,13 @@ import java.util.stream.Collectors;
 public class JsonPopularSpeciesController extends JsonExceptionHandlingController {
 
     private PopularSpeciesService popularSpeciesService;
+    private CardModelFactory cardModelFactory;
 
     @Inject
-    public JsonPopularSpeciesController(PopularSpeciesService popularSpeciesService) {
+    public JsonPopularSpeciesController(PopularSpeciesService popularSpeciesService,
+                                        CardModelFactory cardModelFactory) {
         this.popularSpeciesService = popularSpeciesService;
+        this.cardModelFactory = cardModelFactory;
     }
 
     @GetMapping(
@@ -36,7 +39,7 @@ public class JsonPopularSpeciesController extends JsonExceptionHandlingControlle
 
         List<CardModel> cardModels = speciesNameWithExperimentCount
                 .stream()
-                .map(CardModelFactory::create)
+                .map(cardModelFactory::create)
                 .collect(Collectors.toList());
 
         return CardModelAdapter.serialize(cardModels).toString();
