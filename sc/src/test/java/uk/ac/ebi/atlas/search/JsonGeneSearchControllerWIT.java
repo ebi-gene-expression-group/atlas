@@ -39,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.BIOENTITY_IDENTIFIER;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_NAME;
 import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.PROPERTY_VALUE;
+import static uk.ac.ebi.atlas.solr.cloud.collections.BioentitiesCollectionProxy.SPECIES;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -129,22 +130,24 @@ class JsonGeneSearchControllerWIT {
                 .addQueryFieldByTerm(BIOENTITY_IDENTIFIER, geneId)
                 .addQueryFieldByTerm(PROPERTY_NAME, "symbol")
                 .setFieldList(PROPERTY_VALUE)
+                .setFieldList(SPECIES)
                 .setRows(1);
 
         SolrDocumentList docList = bioentitiesCollectionProxy.query(solrQueryBuilder).getResults();
         String symbol = docList.get(0).getFieldValue(PROPERTY_VALUE.name()).toString();
+        String species = docList.get(0).getFieldValue(SPECIES.name()).toString();
 
-        this.mockMvc.perform(get("/json/search").param("symbol", symbol).param("species", "homo sapiens"))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-        .andExpect(jsonPath("$.results", hasSize(greaterThanOrEqualTo(1))))
-        .andExpect(jsonPath("$.results[0].element.experimentAccession", isA(String.class)))
-        .andExpect(jsonPath("$.results[0].facets", hasSize(greaterThanOrEqualTo(1))))
-        .andExpect(jsonPath("$.results[0].facets[0].group", isA(String.class)))
-        .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
-        .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
-        .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes", "Species")))
-        .andExpect(jsonPath("$.matchingGeneId", equalTo("(" + geneId + ")")));
+        this.mockMvc.perform(get("/json/search").param("symbol", symbol).param("species", species))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.results", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].element.experimentAccession", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets", hasSize(greaterThanOrEqualTo(1))))
+                .andExpect(jsonPath("$.results[0].facets[0].group", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].value", isA(String.class)))
+                .andExpect(jsonPath("$.results[0].facets[0].label", isA(String.class)))
+                .andExpect(jsonPath("$.checkboxFacetGroups", contains("Marker genes", "Species")))
+                .andExpect(jsonPath("$.matchingGeneId", equalTo("(" + geneId + ")")));
     }
 
     @Test
