@@ -50,7 +50,7 @@ class ExperimentTableCard extends React.Component {
     const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
 
     const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
-      return <li><a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(', ')} for k = {markerGene.k}</a></li>
+      return <li key={`marker-gene-${markerGene.k}`}><a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a></li>
     })
 
     return (
@@ -66,14 +66,14 @@ class ExperimentTableCard extends React.Component {
               </ul>
             </MarkerDiv> :
             <MarkerDiv>
-              <span data-tooltip title="Not a marker gene" class="icon icon-functional" data-icon="x"></span>
+              <span data-tooltip title="Not a marker gene" className="icon icon-functional" data-icon="x"></span>
             </MarkerDiv>
           }
 
           <TitleDiv> {experimentDescription} </TitleDiv>
           <VariableDiv>
             <ul style={{marginBottom: 0}}>
-              {factors.map(factor => <li> {factor} </li>)}
+              {factors.map(factor => <li key={`factor-${factor}`}> {factor} </li>)}
             </ul>
           </VariableDiv>
           <CountDiv> {numberOfAssays} </CountDiv>
