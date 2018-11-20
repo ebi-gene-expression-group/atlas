@@ -111,6 +111,8 @@ class TSnePlotServiceDaoIT {
                 .doesNotHaveDuplicates();
     }
 
+    //In this test, we test the count of cells. To make a comprehensive test we count the lines of the local file to match the return result by querying in the fixture.
+    //If the fixture is a partition of the full dataset, then it will fail, so we load a full test dataset.
     @ParameterizedTest
     @MethodSource("randomExperimentAccessionProvider")
     void testNumberOfCellsByExperimentAccession(String experimentAccession) {
