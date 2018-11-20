@@ -980,7 +980,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000028603', 15, 13, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000021905', 14, 4, 0.18984109341455);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000032599', 10, 9, 0.223410504212231);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000000600', 10, 10, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000071647', 12, 1, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000028086', 9, 7, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000028651', 9, 2, 0.922466407165288);
@@ -1038,7 +1037,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000069289', 18, 11, 0.0580578150410179);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000028266', 14, 8, 0.785883314414382);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000021982', 9, 7, 0.0941517790317073);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000033159', 12, 11, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000018761', 18, 7, 0.101005796687884);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000020653', 16, 7, 0.25571221918158);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000039770', 17, 11, 1);
@@ -1089,7 +1087,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000020130', 12, 6, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000024217', 18, 1, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000022337', 17, 11, 0.434334821290894);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000028759', 14, 8, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000087662', 16, 11, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000085438', 10, 7, 0.0812765050539231);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000037326', 15, 4, 0.252589589493015);
@@ -1122,7 +1119,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000024816', 9, 2, 0.374196545512874);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000060657', 13, 8, 0.534251528710739);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000038344', 15, 9, 1);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000039156', 11, 10, 0.164563549985489);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000034412', 18, 1, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000097193', 16, 11, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000031622', 17, 13, 1);
@@ -1147,7 +1143,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000026880', 9, 7, 0.214122894577887);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000075199', 15, 14, 0.340358013109494);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000040720', 13, 5, 0.242266052936549);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000027304', 18, 11, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000048756', 8, 7, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000074292', 12, 3, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000038593', 17, 13, 1);
@@ -1183,7 +1178,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000002504', 17, 2, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000027366', 8, 4, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000038909', 18, 1, 1);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000075254', 17, 2, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000026641', 18, 1, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000089832', 16, 13, 0.360435261811727);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000021027', 10, 10, 1);
@@ -1202,7 +1196,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000029422', 17, 2, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000032386', 10, 6, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000020420', 15, 12, 0.0615412259598133);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000028759', 14, 8, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000020069', 18, 6, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000114722', 18, 11, 0.431810799480205);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000106507', 11, 4, 0.639799909532939);
@@ -1238,7 +1231,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000021891', 10, 2, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000037652', 16, 13, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000024847', 11, 10, 0.498563232667943);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000027194', 16, 3, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000023852', 9, 4, 0.395093458893447);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000015944', 8, 5, 0.266742706982306);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000028945', 17, 12, 0.0920074058167041);
@@ -1310,7 +1302,6 @@ INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, mark
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000026361', 15, 8, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000034820', 12, 9, 1);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000025231', 15, 9, 0.0629172134045781);
-INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000071655', 10, 10, 0.143727337336772);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000010608', 12, 9, 0.12153912588665);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000062234', 18, 13, 0.0539881112291584);
 INSERT INTO scxa_marker_genes(experiment_accession, gene_id, k, cluster_id, marker_probability) VALUES ('E-EHCA-2', 'ENSMUSG00000031505', 17, 2, 1);
