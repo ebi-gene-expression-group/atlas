@@ -76,6 +76,7 @@ class ExperimentControllerWIT {
                     .andExpect(model().attribute("experimentAccession", experimentAccession))
                     .andExpect(model().attribute(
                             "type", ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE.getHumanDescription()))
+                    .andExpect(model().attributeExists("numberOfCells"))
                     .andExpect(model().attributeExists("content"));
     }
 
