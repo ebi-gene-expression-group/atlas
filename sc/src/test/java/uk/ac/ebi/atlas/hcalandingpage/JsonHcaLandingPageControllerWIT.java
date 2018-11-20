@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.hcalandingpage;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,12 +43,18 @@ public class JsonHcaLandingPageControllerWIT {
 
     private MockMvc mockMvc;
 
-
     @BeforeAll
     void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(
                 new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
+    @AfterAll
+    void cleanDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
         populator.execute(dataSource);
     }
 
