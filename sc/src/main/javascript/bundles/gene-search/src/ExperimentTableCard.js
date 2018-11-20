@@ -12,7 +12,10 @@ const CardContainerDiv = styled.div`
   border: #e6e6e6 solid 1px;
   margin-bottom: 0.5rem;
   padding: 1rem;
-  &:hover {background-color: #eaeaea;}
+  &:hover {
+    background-color: #eaeaea;
+    cursor: pointer;
+  }
 `
 
 const IconDiv = styled.span`
@@ -46,6 +49,10 @@ class ExperimentTableCard extends React.Component {
     super(props)
   }
 
+  _goToExperiment(url) {
+    window.location = url
+  }
+
   render() {
     const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
 
@@ -54,31 +61,29 @@ class ExperimentTableCard extends React.Component {
     })
 
     return (
-      <a href={url}>
-        <CardContainerDiv>
-          <IconDiv>
-            <SpeciesIconCard iconSrc={species} description={species}/>
-          </IconDiv>
-          {   markerGenes ?
-            <MarkerDiv>
-              <ul style={{marginBottom: 0}}>
-                {markerGeneLinks}
-              </ul>
-            </MarkerDiv> :
-            <MarkerDiv>
-              <span data-tooltip title="Not a marker gene" className="icon icon-functional" data-icon="x"></span>
-            </MarkerDiv>
-          }
-
-          <TitleDiv> {experimentDescription} </TitleDiv>
-          <VariableDiv>
+      <CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
+        <IconDiv>
+          <SpeciesIconCard iconSrc={species} description={species}/>
+        </IconDiv>
+        {   markerGenes ?
+          <MarkerDiv>
             <ul style={{marginBottom: 0}}>
-              {factors.map(factor => <li key={`factor-${factor}`}> {factor} </li>)}
+              {markerGeneLinks}
             </ul>
-          </VariableDiv>
-          <CountDiv> {numberOfAssays} </CountDiv>
-        </CardContainerDiv>
-      </a>
+          </MarkerDiv> :
+          <MarkerDiv>
+            <span data-tooltip title="Not a marker gene" className="icon icon-functional" data-icon="x"></span>
+          </MarkerDiv>
+        }
+
+        <TitleDiv> {experimentDescription} </TitleDiv>
+        <VariableDiv>
+          <ul style={{marginBottom: 0}}>
+            {factors.map(factor => <li key={`factor-${factor}`}> {factor} </li>)}
+          </ul>
+        </VariableDiv>
+        <CountDiv> {numberOfAssays} </CountDiv>
+      </CardContainerDiv>
 
     )
   }
