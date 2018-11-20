@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.testutils;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.solr.BioentityPropertyName;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,8 +14,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
+import static org.apache.commons.lang3.StringUtils.capitalize;
 import static uk.ac.ebi.atlas.solr.BioentityPropertyName.UNKNOWN;
 
 public class RandomDataTestUtils {
@@ -29,6 +33,10 @@ public class RandomDataTestUtils {
     public static String generateRandomExperimentAccession() {
         // n / 456, 975, 543, 024 chance of clashing for n experiments in the test database, let’s roll!
         return "E-" + randomAlphabetic(4).toUpperCase() + "-" + randomNumeric(1, 6);
+    }
+
+    public static String generateRandomExperimentAccession(String accessionPattern) {
+        return "E-" + accessionPattern.toUpperCase() + "-" + randomNumeric(1, 6);
     }
 
     public static String generateRandomEnsemblGeneId() {
@@ -128,5 +136,22 @@ public class RandomDataTestUtils {
         }
 
         return propertyName;
+    }
+
+    public static Species generateRandomSpecies() {
+        String first = capitalize(randomAlphabetic(1, 10).toLowerCase());
+        if (first.length() == 1) {
+            first = first + ".";
+        }
+
+        String second = randomAlphabetic(6, 10);
+
+        return new Species(
+                first + " " + second,
+                SpeciesProperties.create(
+                        first + "_" + second,
+                        "DEVELOPMENTAL_STAGE",
+                        "Dorne",
+                        ImmutableList.of()));
     }
 }

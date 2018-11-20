@@ -1,22 +1,33 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--@elvariable id="hcaExperimentsCount" type="int"--%>
+<%--@elvariable id="humanExperimentsCount" type="int"--%>
 
-<div class="media-object">
-    <div class="media-object-section top hide-for-small-only">
-        <div class="thumbnail">
-            <img  alt="Human Cell Atlas" style="max-width: 275px"
-                  src="${pageContext.request.contextPath}/resources/images/logos/human_cell_atlas.png"/>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<div class="row column margin-top-large expanded">
+    <div class="media-object">
+        <div class="media-object-section top hide-for-small-only">
+            <div class="thumbnail">
+                <img  alt="Human Cell Atlas" style="max-width: 275px"
+                      src="${pageContext.request.contextPath}/resources/images/logos/human_cell_atlas.png"/>
+            </div>
         </div>
-    </div>
-    <div class="media-object-section top">
-        <p>
-            Single cell Expression Atlas provides access to the analysis results of X data sets
-            from the Human Cell Atlas and Y data sets in Homo Sapiens from other studies.
-        </p>
-        <p>
-            All studies have been re-analysed using our standardised pipeline (iRAP).
-            Pipelines and web service are being developed by the Gene Expression Team at EMBL-EBI,
-            funded by the <a href="https://wellcome.ac.uk/">Wellcome Trust</a> and the <a href="https://www.chanzuckerberg.com/">Chan Zuckerberg Initiative</a>.
-        </p>
+        <div class="media-object-section top">
+            <p>
+                Single cell Expression Atlas provides access to the analysis results of
+                <fmt:formatNumber pattern="#,##0" value="${hcaExperimentsCount}"/> data sets from the Human Cell Atlas
+                and <fmt:formatNumber pattern="#,##0" value="${humanExperimentsCount}"/> data sets in <i>Homo
+                sapiens</i> from other studies.
+            </p>
+            <p>
+                All studies have been re-analysed using our standardised pipeline
+                (<a href="https://github.com/nunofonseca/irap">iRAP</a>). Pipelines and web services are
+                being developed by the Gene Expression Team at EMBL-EBI, funded by the
+                <a href="https://wellcome.ac.uk/">Wellcome Trust</a> and the
+                <a href="https://www.chanzuckerberg.com/">Chan Zuckerberg Initiative</a>.
+            </p>
+        </div>
     </div>
 </div>
 
@@ -30,8 +41,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         atlasHomepageCard.renderHcaLandingPageContainer({
-            host: 'http://localhost:8080/gxa/sc/',
-            resource: 'json/experiments/landingpage/E-EHCA'
+            host: '${pageContext.request.contextPath}/',
+            resource: 'json/hca'
         }, 'hca-card-container');
     });
 </script>
