@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.testutils.AssayGroupFactory;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import javax.inject.Inject;

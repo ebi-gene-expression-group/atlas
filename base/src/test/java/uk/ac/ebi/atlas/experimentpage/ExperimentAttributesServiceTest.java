@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.collect.ImmutableMap;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,26 +9,22 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.model.Publication;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.testutils.MockExperiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
-import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomExperimentAccession;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentAttributesServiceTest {
