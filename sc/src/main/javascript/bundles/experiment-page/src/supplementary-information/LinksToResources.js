@@ -2,11 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import URI from 'urijs'
 
-import styles from './link-to-resource.css'
-
 const LinksToResources = ({data, atlasUrl}) => {
   const links =  data.map((service, index) =>
-    <div  key={index} className={styles.resource}>
+    <div  key={index} style={{paddingBottom: `10px`}}>
       <span>
         <Icon type={service.type} />
         {
@@ -38,7 +36,7 @@ const Icon = ({type}) => {
   }
 
   return (
-    <img className={styles.icon} src={iconSrcMap[type]} />
+    <img style={{paddingRight: `5px`}} src={iconSrcMap[type]} />
   )
 }
 

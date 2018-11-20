@@ -90,7 +90,7 @@ class GeneSearchDaoIT {
     @ParameterizedTest
     @ValueSource(strings = {"ENSMUSG00000063415"})
     void validGeneIdReturnsExperimentAccessions(String geneId) {
-        List<String> result = subject.experimentAccessionsForGeneId(geneId);
+        List<String> result = subject.fetchExperimentAccessionsWhereGeneIsMarker(geneId);
 
         assertThat(result)
                 .containsOnly("E-GEOD-99058");
@@ -99,7 +99,7 @@ class GeneSearchDaoIT {
     @ParameterizedTest
     @ValueSource(strings = {"FOO"})
     void invalidGeneIdReturnsEmpty(String geneId) {
-        assertThat(subject.experimentAccessionsForGeneId(geneId))
+        assertThat(subject.fetchExperimentAccessionsWhereGeneIsMarker(geneId))
                 .isEmpty();
     }
 
