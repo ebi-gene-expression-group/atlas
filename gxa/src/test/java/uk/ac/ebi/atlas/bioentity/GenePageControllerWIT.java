@@ -36,4 +36,11 @@ public class GenePageControllerWIT {
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("error-page")); // Can be a view name
     }
+
+    @Test
+    public void genePresentButWithExpressionBelowThreshold() throws Exception {
+        this.mockMvc.perform(get("/genes/ENSMUSG00000006386"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("no-results"));
+    }
 }

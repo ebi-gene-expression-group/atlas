@@ -44,6 +44,18 @@ public class AnalyticsQueryClient {
     private final Resource experimentTypesQueryJson;
     private final Resource bioentityIdentifiersQueryJson;
 
+    private static final String BASELINE_FILTER_QUERY =
+            "(experiment_type:RNASEQ_MRNA_BASELINE AND expression_level:[0.5 TO *]) " +
+            "OR experiment_type:PROTEOMICS_BASELINE";
+
+    private static final String DIFFERENTIAL_FILTER_QUERY =
+            "experiment_type:(" +
+                    "RNASEQ_MRNA_DIFFERENTIAL " +
+                    "OR MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL " +
+                    "OR MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL " +
+                    "OR MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL) " +
+                    "AND p_value:[* TO 0.05] AND fold_change:([* TO -1.0] OR [1.0 TO *])";
+
     @Inject
     public AnalyticsQueryClient(
             RestTemplate restTemplate,
@@ -117,9 +129,7 @@ public class AnalyticsQueryClient {
         }
 
         public Builder filterBaselineExperiments() {
-            solrQuery.addFilterQuery(
-                    "(experiment_type:RNASEQ_MRNA_BASELINE AND expression_level:[0.5 TO *]) " +
-                            "OR experiment_type:PROTEOMICS_BASELINE");
+            solrQuery.addFilterQuery(BASELINE_FILTER_QUERY);
             return this;
         }
 
@@ -129,13 +139,16 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        private Builder differential() {
-            solrQuery.addFilterQuery("experiment_type:(" +
-                    "RNASEQ_MRNA_DIFFERENTIAL " +
-                    "OR MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL " +
-                    "OR MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL " +
-                    "OR MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL) " +
-                    "AND p_value:[* TO 0.05] AND fold_change:([* TO -1.0] OR [1.0 TO *])");
+        private Builder filterDifferentialExperiments() {
+            solrQuery.addFilterQuery(DIFFERENTIAL_FILTER_QUERY);
+            return this;
+        }
+
+        public Builder filterBaselineOrDifferentialExperiments() {
+            solrQuery.addFilterQuery("(" +
+                    BASELINE_FILTER_QUERY +
+                    "OR (" +
+                    DIFFERENTIAL_FILTER_QUERY + "))");
             return this;
         }
 
@@ -151,12 +164,12 @@ public class AnalyticsQueryClient {
         public Builder differentialResults() {
             solrQuery.setRows(1000);
             solrQuery.set("sort", "abs(fold_change)desc, p_value asc");
-            return differential();
+            return filterDifferentialExperiments();
         }
 
         public Builder differentialFacets() {
             setFacets(differentialFacetsQueryJson);
-            return differential();
+            return filterDifferentialExperiments();
         }
 
         public Builder experimentTypeFacets() {
