@@ -75,7 +75,8 @@ public class GeneSearchService {
         }
     }
 
-    public Map<String, Map<Integer, List<Integer>>> fetchClusterIDWithPreferredKAndMinPForGeneID(List<String> experimentAccessions, String geneId) {
+    private Map<String, Map<Integer, List<Integer>>> fetchClusterIDWithPreferredKAndMinPForGeneID(
+            List<String> experimentAccessions, String geneId) {
         Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
         for (String experimentAccession : experimentAccessions) {
@@ -84,7 +85,8 @@ public class GeneSearchService {
                     geneSearchDao.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
                             geneId,
                             experimentAccession,
-                            preferredK.orElse(null));
+                            // If there’s no preferred k we use 0, which won’t match any row
+                            preferredK.orElse(0));
             if (!clusterIDWithPreferredKAndMinP.isEmpty()) {
                 result.put(experimentAccession, clusterIDWithPreferredKAndMinP);
             }
