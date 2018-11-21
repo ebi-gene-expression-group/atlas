@@ -190,7 +190,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
         for (Map.Entry<String, String> entry : unfoldedModel) {
             ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.<String, String>builder()
                     .put("group", entry.getKey())
-                    .put("value", entry.getKey())
+                    .put("value", entry.getValue())
                     .put("label", StringUtils.capitalize(entry.getValue()));
 
             if(!isNullOrEmpty(getTooltipText(entry.getKey()))) {
