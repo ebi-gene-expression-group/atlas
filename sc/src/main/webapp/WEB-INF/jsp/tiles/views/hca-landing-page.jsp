@@ -1,8 +1,3 @@
-<%--@elvariable id="hcaExperimentsCount" type="int"--%>
-<%--@elvariable id="humanExperimentsCount" type="int"--%>
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="row column margin-top-large">
@@ -24,144 +19,15 @@
 </div>
 
 <div class="row column margin-top-xlarge">
-    <div id="data" class="callout" data-equalizer-watch>
-        <h3><span class="icon icon-functional" data-icon="A"></span> Data</h3>
-        <hr>
-
-        <p> Single cell Expression Atlas provides access to the analysis results of
-            <fmt:formatNumber pattern="#,##0" value="${hcaExperimentsCount}"/> data sets from the Human Cell Atlas
-            and <fmt:formatNumber pattern="#,##0" value="${humanExperimentsCount}"/> data sets in <i>Homo sapiens</i>
-            from other studies.
-        </p>
-        <p>
-            All studies have been re-analysed using our standardised pipeline
-            (<a href="https://github.com/nunofonseca/irap">iRAP</a>). Pipelines and web services are
-            being developed by the Gene Expression Team at EMBL-EBI, funded by the
-            <a href="https://wellcome.ac.uk/">Wellcome</a> and the
-            <a href="https://www.chanzuckerberg.com/">Chan Zuckerberg Initiative</a>.
-        </p>
-        <div class="margin-top-xlarge" id="hca-card-container"></div>
-    </div>
-</div>
-
-
-<div class="row column margin-top-large">
-    <div id="tools" class="callout" data-equalizer-watch>
-        <h3><span class="icon icon-generic" data-icon=":"></span> Tools</h3>
-        <hr>
-
-        <a href="https://github.com/nunofonseca/irap" target="_blank">
-            <div class="media-object">
-                <div class="media-object-section middle">
-                    <span class="icon icon-functional" data-icon="t"></span>
-                </div>
-                <div class="media-object-section middle">
-                    <p>
-                        <strong>iRAP: RNA-seq analysis tool</strong><br>
-                        A flexible pipeline for RNA-seq analysis that integrates many existing tools for filtering and
-                        mapping reads, quantifying expression and testing for differential expression. iRAP is used to
-                        process all RNA-seq data in Expression Atlas.
-                    </p>
-                </div>
-            </div>
-        </a>
-    </div>
+    <%@ include file="hca-landing-page/data.jsp" %>
 </div>
 
 <div class="row column margin-top-large">
-    <div id="people" class="callout" data-equalizer-watch>
-        <h3><span class="icon icon-generic" data-icon="}"></span> People</h3>
-        <hr>
-
-        <a href="https://www.ebi.ac.uk/research/brazma" target="_blank">
-            <div class="media-object">
-                <div class="media-object-section middle">
-                    <span class="icon icon-generic" data-icon="M"></span>
-                </div>
-                <div class="media-object-section middle">
-                    <p>
-                        <strong>Brazma</strong> - EMBL-EBI
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://www.sanger.ac.uk/science/groups/hemberg-group" target="_blank">
-            <div class="media-object">
-                <div class="media-object-section middle">
-                    <span class="icon icon-generic" data-icon="M"></span>
-                </div>
-                <div class="media-object-section middle">
-                    <p>
-                        <strong>Hemberg</strong> - Wellcome Sanger Institute
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://www.ebi.ac.uk/research/marioni" target="_blank">
-            <div class="media-object">
-                <div class="media-object-section middle">
-                    <span class="icon icon-generic" data-icon="M"></span>
-                </div>
-                <div class="media-object-section middle">
-                    <p>
-                        <strong>Marioni</strong> - EMBL-EBI
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://www.ebi.ac.uk/about/people/irene-papatheodorou" target="_blank">
-            <div class="media-object">
-                <div class="media-object-section middle">
-                    <span class="icon icon-generic" data-icon="M"></span>
-                </div>
-                <div class="media-object-section middle">
-                    <p>
-                        <strong>Papatheodorou</strong> - EMBL-EBI
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://www.ebi.ac.uk/about/people/helen-parkinson" target="_blank">
-            <div class="media-object">
-                <div class="media-object-section middle">
-                    <span class="icon icon-generic" data-icon="M"></span>
-                </div>
-                <div class="media-object-section middle">
-                    <p>
-                        <strong>Parkinson</strong> - EMBL-EBI
-                    </p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://www.sanger.ac.uk/science/groups/teichmann-group" target="_blank">
-            <div class="media-object">
-                <div class="media-object-section middle">
-                    <span class="icon icon-generic" data-icon="M"></span>
-                </div>
-                <div class="media-object-section middle">
-                    <p>
-                        <strong>Teichmann</strong> - Wellcome Sanger Institute
-                    </p>
-                </div>
-            </div>
-        </a>
-    </div>
+    <%@ include file="hca-landing-page/tools.jsp" %>
 </div>
 
+<div class="row column margin-top-large">
+    <%@ include file="hca-landing-page/people.jsp" %>
+</div>
 
-<script defer src="${pageContext.request.contextPath}/resources/js-bundles/atlasHomepageCard.bundle.js"></script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    atlasHomepageCard.renderHcaLandingPageContainer({
-      host: '${pageContext.request.contextPath}/',
-      resource: 'json/hca'
-    }, 'hca-card-container');
-  });
-</script>
 
