@@ -1,0 +1,6 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "sc-atlas-bioentity-information": "^1.7.2"
+  }
+}

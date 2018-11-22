@@ -9,11 +9,13 @@
 <%--@elvariable id="type" type="String"--%>
 <%--@elvariable id="alternativeViews" type="List<String>"--%>
 <%--@elvariable id="alternativeViewDescriptions" type="List<String>"--%>
+<%--@elvariable id="numberOfCells" type="Integer"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div id="experimentDescription" class="row column expanded">
     <div class="media-object stack-for-small">
@@ -32,6 +34,7 @@
             </h3>
 
             <h5>${type}</h5>
+            <div>Number of cells:  <fmt:formatNumber type = "number" value="${numberOfCells}"/></div>
 
             <div id="experimentOrganisms">Organism:
                 <span style="font-style:italic">${species}</span>

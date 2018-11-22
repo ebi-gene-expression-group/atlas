@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Differential Expression demo</title>
+
+  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="http://localhost:8080/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+</head>
+
+<body>
+  <div id="wrapper" class="row expanded">
+    <div id="target"></div>
+  </div>
+</body>
+
+<script src="/dist/vendors.bundle.js"></script>
+<script src="/dist/differentialExpression.bundle.js"></script>
+
+<script>
+  differentialExpression.render({
+    atlasUrl: 'http://localhost:8080/gxa/',
+    geneQuery: 'BRCA1',
+    conditionQuery: '',
+    species: '' },
+  'target');
+</script>
+
+</html>

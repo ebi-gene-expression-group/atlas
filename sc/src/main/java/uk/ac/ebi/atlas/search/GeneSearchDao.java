@@ -102,7 +102,7 @@ public class GeneSearchDao {
             "WHERE experiment_accession=:experiment_accession " +
                 "AND gene_id=:gene_id " +
                 "AND marker_probability<:threshold " +
-                "AND ((k is NULL OR k=:preferred_K) " +
+                "AND (k=:preferred_K " +
                     "OR marker_probability IN ( " +
                         "SELECT MIN(marker_probability) " +
                             "FROM scxa_marker_genes " +
@@ -110,7 +110,7 @@ public class GeneSearchDao {
                             "AND gene_id=:gene_id))";
     @Transactional(readOnly = true)
     public  Map<Integer, List<Integer>> fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
-            String geneId, String experimentAccession, Integer preferredK) {
+            String geneId, String experimentAccession, int preferredK) {
 
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
