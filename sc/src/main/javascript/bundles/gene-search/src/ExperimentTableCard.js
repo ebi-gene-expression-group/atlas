@@ -57,9 +57,11 @@ class ExperimentTableCard extends React.Component {
   render() {
     const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
 
-    const markerGeneLinks = markerGenes && markerGenes.map((markerGene) => {
-      return <li key={`marker-gene-${markerGene.k}`}><a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a></li>
-    })
+    const markerGeneLinks = markerGenes ? markerGenes.map((markerGene) =>
+      <li key={`marker-gene-${markerGene.k}`}>
+        <a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a>
+      </li>) :
+      []
 
     return (
       <CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
@@ -68,7 +70,7 @@ class ExperimentTableCard extends React.Component {
           <h6>{species}</h6>
         </IconDiv>
         {
-          markerGenes ?
+          markerGeneLinks.length ?
             <MarkerDiv>
               <ul style={{marginBottom: 0}}>
                 {markerGeneLinks}
@@ -76,10 +78,13 @@ class ExperimentTableCard extends React.Component {
             </MarkerDiv> :
             // Be aware that the FacetedSearchContainer in the search results component will insert <ReactTooltip/>
             <MarkerDiv>
-              <span data-tip={`<span>Not a marker gene</span>`} data-html={true} className={`icon icon-functional`} data-icon={`x`} />
+              <span
+                data-tip={`<span>Not a marker gene</span>`}
+                data-html={true}
+                className={`icon icon-functional`}
+                data-icon={`x`} />
             </MarkerDiv>
         }
-
         <TitleDiv> {experimentDescription} </TitleDiv>
         <VariableDiv>
           <ul style={{marginBottom: 0}}>
@@ -88,7 +93,6 @@ class ExperimentTableCard extends React.Component {
         </VariableDiv>
         <CountDiv> {numberOfAssays} </CountDiv>
       </CardContainerDiv>
-
     )
   }
 }
