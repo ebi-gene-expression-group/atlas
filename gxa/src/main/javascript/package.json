@@ -1,22 +1,4 @@
 {
-  "name": "expression-atlas-webpack-bundles",
-  "version": "1.0.0",
-  "description": "Expression Atlas JavaScript Webpack bundles ",
-  "main": "webpack.config.js",
-  "scripts": {
-    "dev": "webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
-    "dev-min": "webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules",
-    "ci": "webpack --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
-    "prod": "NODE_ENV=production webpack --debug --optimize-minimize --output-pathinfo --display-chunks --display-modules"
-  },
-  "author": "Expression Atlas developers <atlas-developers@ebi.ac.uk>",
-  "collaborators": [
-    "Elisabet Barrera <barrera@ebi.ac.uk>",
-    "Wojciech Bażant <wbazant@ebi.ac.uk>",
-    "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>"
-  ],
-  "license": "Apache-2.0",
-  "private": true,
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
