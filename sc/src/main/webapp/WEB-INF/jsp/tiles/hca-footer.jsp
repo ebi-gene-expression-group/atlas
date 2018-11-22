@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<footer id="local-footer" class="local-footer" role="local-footer">
+<footer id="local-footer" class="local-footer margin-bottom-large" role="local-footer">
     <div id="relationships" class="row">
         <div class="small-4 columns text-center padding-top-xlarge">
             <a href="https://www.ebi.ac.uk/" class="clear">
