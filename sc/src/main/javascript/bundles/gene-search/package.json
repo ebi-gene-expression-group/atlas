@@ -12,11 +12,12 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
+    "format-number": "^3.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-ebi-species": "^2.0.0",
-    "react-faceted-search": "^2.4.0",
+    "react-faceted-search": "^2.5.0-beta",
     "react-router-dom": "^4.3.1",
     "react-tooltip": "^3.9.0",
     "scxa-gene-search-form": "^1.1.3",
