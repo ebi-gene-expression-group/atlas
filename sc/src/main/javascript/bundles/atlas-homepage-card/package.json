@@ -1,9 +1,9 @@
 {
   "main": "index.js",
   "dependencies": {
+    "atlas-homepage-cards": "1.1.0",
     "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "atlas-homepage-cards": "^1.0.0"
+    "react-dom": "^16.6.3"
   },
   "devDependencies": {
     "webpack": "^4.26.0",
