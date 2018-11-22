@@ -27,6 +27,29 @@
         enableSpeciesSelect: true,
         speciesEndpoint: 'json/suggestions/species',
         speciesSelectClassName: 'small-12 medium-4 columns',
+
+        searchExamples: [
+          {
+            text: 'CFTR (gene symbol)',
+            url: '${pageContext.request.contextPath}/search?symbol=CFTR'
+          },
+          {
+            text: 'ENSG00000115904 (Ensembl ID)',
+            url: '${pageContext.request.contextPath}/search?ensgene=ENSG00000115904'
+          },
+          {
+            text: '657 (Entrez ID)',
+            url: '${pageContext.request.contextPath}/search?entrezgene=657'
+          },
+          {
+            text: 'MGI:98354 (MGI ID)',
+            url: '${pageContext.request.contextPath}/search?mgi_id=MGI:98354'
+          },
+          {
+            text: 'FBgn0004647 (FlyBase ID)',
+            url: '${pageContext.request.contextPath}/search?flybase_gene_id=FBgn0004647'
+          }
+        ]
       }, 'search-form')
     });
 </script>
