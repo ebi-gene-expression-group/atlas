@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import SpeciesIconCard from './SpeciesIconCard'
+import EbiSpeciesIcon from 'react-ebi-species'
 
 const CardContainerDiv = styled.div`
   height: 100%;
@@ -18,9 +18,10 @@ const CardContainerDiv = styled.div`
   }
 `
 
-const IconDiv = styled.span`
+const IconDiv = styled.div`
   width: 15%;
   text-align: center;
+  font-size: 3rem;
 `
 
 const MarkerDiv = styled.div`
@@ -63,7 +64,8 @@ class ExperimentTableCard extends React.Component {
     return (
       <CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
         <IconDiv>
-          <SpeciesIconCard iconSrc={species} description={species}/>
+          <EbiSpeciesIcon species={species}/>
+          <h6>{species}</h6>
         </IconDiv>
         {
           markerGenes ?
