@@ -1,7 +1,4 @@
 {
-  "name": "expression-atlas-experiment-page-clone",
-  "version": "0.0.1",
-  "description": "Wrapper around https://github.com/wbazant/atlas-experiment",
   "main": "index.js",
   "author": "Expression Atlas developers <atlas-developers@ebi.ac.uk>",
   "collaborators": [
@@ -12,6 +9,6 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "expression-atlas-experiment-page": "^1.9.2"
+    "expression-atlas-experiment-page": "^1.10.0"
   }
 }

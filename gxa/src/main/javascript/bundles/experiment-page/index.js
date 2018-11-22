@@ -1,1 +1,3 @@
-module.exports = require(`expression-atlas-experiment-page`);
+import { render } from 'expression-atlas-experiment-page'
+
+export { render }
