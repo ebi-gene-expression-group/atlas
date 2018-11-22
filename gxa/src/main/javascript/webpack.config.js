@@ -1,67 +1,67 @@
-var webpack = require('webpack');
-var path = require('path');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var WebpackShellPlugin = require('webpack-shell-plugin');
+const path = require(`path`)
+const CleanWebpackPlugin = require(`clean-webpack-plugin`)
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const baselineDeps = ['expression-atlas-heatmap-highcharts', 'prop-types', 'react', 'react-dom']
-const bioentityInfoDeps = ['react', 'react-dom']
-const browseByDeps = ['react', 'react-dom', 'react-ebi-species', 'urijs']
-const differentialDeps = ['expression-atlas-number-format',  'jquery', 'jquery-ui-bundle', 'prop-types', 'react', 'react-dom', 'react-ebi-species', 'urijs']
-const heatmapDeps = ['expression-atlas-heatmap-highcharts']
-const experimentPageDeps = ['expression-atlas-experiment-page']
-
-const dependenciesArray =
-  Array.from(
-    new Set(
-      [].concat(baselineDeps, bioentityInfoDeps, browseByDeps, differentialDeps, experimentPageDeps, heatmapDeps)))
-
-const alias = dependenciesArray
-  .reduce(function(acc, moduleName) {
-    acc[moduleName] = path.resolve('./node_modules/' + moduleName)
-    return acc
-  }, {})
+const vendorsBundleName = `vendorCommons`
 
 module.exports = {
-  // define the bundles we want
   entry: {
-    expressionAtlasHeatmapHighcharts: './atlas_bundles/heatmap-highcharts',
-    experimentPage: './atlas_bundles/experiment-page',
-    expressionAtlasBaselineExpression: './atlas_bundles/baseline-expression',
-    expressionAtlasDifferentialExpression: './atlas_bundles/differential-expression',
-    expressionAtlasBioentityInformation: './atlas_bundles/bioentity-information',
-    expressionAtlasBrowseBySpecies: './atlas_bundles/browse-by-species',
-    // polyfills: ['babel-polyfill', 'whatwg-fetch']
-  },
-
-  resolve: {
-    alias
-  },
-
-  output: {
-    libraryTarget: 'var',
-    library: '[name]',
-    path: path.resolve(__dirname, '../webapp/resources/js-bundles'),
-    filename: '[name].bundle.js',
-    publicPath: '/gxa/resources/js-bundles/'
+    expressionAtlasHeatmapHighcharts: `./bundles/heatmap-highcharts`,
+    experimentPage: `./bundles/experiment-page`,
+    expressionAtlasBaselineExpression: `./bundles/baseline-expression`,
+    expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
+    expressionAtlasBioentityInformation: `./bundles/bioentity-information`,
+    expressionAtlasBrowseBySpecies: `./bundles/browse-by-species`
   },
 
   plugins: [
-    new CleanWebpackPlugin(['webapp/resources/js-bundles'], {
-      root: path.resolve(__dirname , '..'),
-      verbose: true,
-      dry: false
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'dependencies', // According to the docs it defaults to filename, but it doesn’t
-      filename: 'vendorCommons.bundle.js',
-      minChunks: 3
-    }),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: process.env.NODE_ENV === 'production' ? JSON.stringify("production") : JSON.stringify("development")
+    new CleanWebpackPlugin([`webapp/resources/js-bundles`],
+      {
+        root: path.resolve(__dirname, `..`),
+        verbose: true
       }
-    })
+    ),
+    new BundleAnalyzerPlugin()
   ],
+
+  output: {
+    library: `[name]`,
+    filename: `[name].bundle.js`,
+    publicPath: `/gxa/resources/js-bundles/`,
+    path: path.resolve(__dirname, `../webapp/resources/js-bundles`)
+  },
+
+  resolve: {
+    alias: {
+      "expression-atlas-heatmap-highcharts": path.resolve(`./node_modules/expression-atlas-heatmap-highcharts`),
+      "he": path.resolve(`./node_modules/he`),
+      "highcharts": path.resolve(`./node_modules/highcharts`),
+      "lodash": path.resolve(`./node_modules/lodash`),
+      "react": path.resolve(`./node_modules/react`),
+      "react-bootstrap": path.resolve(`./node_modules/react-bootstrap`),
+      "react-dom": path.resolve(`./node_modules/react-dom`),
+      "prop-types": path.resolve(`./node_modules/prop-types`),
+      "styled-components": path.resolve(`./node_modules/styled-components`),
+      "react-router-dom": path.resolve(`./node_modules/react-router-dom`),
+      "urijs": path.resolve(`./node_modules/urijs`)
+    }
+  },
+
+  optimization: {
+    runtimeChunk: {
+      name: vendorsBundleName
+    },
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          minChunks: 2,
+          name: vendorsBundleName,
+          chunks: 'all'
+        }
+      }
+    }
+  },
 
   module: {
     rules: [
@@ -70,24 +70,30 @@ module.exports = {
         use: [ 'style-loader', 'css-loader' ]
       },
       {
-        test: /\.less$/i,
-        use: [ 'style-loader', 'css-loader', 'less-loader' ]
+        test: /\.js$/i,
+        exclude: /node_modules\//,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: `file-loader`,
             options: {
               query: {
-                name: '[hash].[ext]',
-                hash: 'sha512',
-                digest: 'hex'
+                name: `[hash].[ext]`,
+                hash: `sha512`,
+                digest: `hex`
               }
             }
           },
           {
-            loader: 'image-webpack-loader',
+            loader: `image-webpack-loader`,
             options: {
               query: {
                 bypassOnDebug: true,
@@ -107,28 +113,10 @@ module.exports = {
       },
       {
         test: /\.svg$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              query: {
-                name: '[hash].[ext]',
-                hash: 'sha512',
-                digest: 'hex'
-              }
-            }
-          }
-        ]
-      },
-      {
-        test: /\.jsx?$/i,
-        exclude: /node_modules\//,
-        use: 'babel-loader'
+        use: `file-loader`
       }
     ]
-  },
-
-  devServer: {
-    port: 9000
   }
-};
+}
+
+

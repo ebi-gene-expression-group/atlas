@@ -1,0 +1,45 @@
+{
+  "name": "expression-atlas-disclaimers",
+  "version": "1.0.0",
+  "description": "Disclaimers for Expression Atlas experiments",
+  "main": "lib/disclaimers.js",
+  "scripts": {
+    "prepack": "rm -rf lib && babel src -d lib --copy-files",
+    "test": "jest --coverage",
+    "posttest": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "postversion": "npm publish"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ebi-gene-expression-group/atlas/tree/dev/gxa/src/main/javascript/modules/atlas-disclaimers"
+  },
+  "dependencies": {
+    "react": "^16.6.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.5",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^0.1.19",
+    "coveralls": "^3.0.2",
+    "jest": "^23.6.0",
+    "react-dom": "^16.6.1",
+    "react-test-renderer": "^16.6.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
