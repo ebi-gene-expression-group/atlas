@@ -65,15 +65,17 @@ class ExperimentTableCard extends React.Component {
         <IconDiv>
           <SpeciesIconCard iconSrc={species} description={species}/>
         </IconDiv>
-        {   markerGenes ?
-          <MarkerDiv>
-            <ul style={{marginBottom: 0}}>
-              {markerGeneLinks}
-            </ul>
-          </MarkerDiv> :
-          <MarkerDiv>
-            <span data-tooltip title="Not a marker gene" className="icon icon-functional" data-icon="x"></span>
-          </MarkerDiv>
+        {
+          markerGenes ?
+            <MarkerDiv>
+              <ul style={{marginBottom: 0}}>
+                {markerGeneLinks}
+              </ul>
+            </MarkerDiv> :
+            // Be aware that the FacetedSearchContainer in the search results component will insert <ReactTooltip/>
+            <MarkerDiv>
+              <span data-tip={`<span>Not a marker gene</span>`} data-html={true} className={`icon icon-functional`} data-icon={`x`} />
+            </MarkerDiv>
         }
 
         <TitleDiv> {experimentDescription} </TitleDiv>
