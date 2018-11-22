@@ -16,7 +16,7 @@
     <p>
         All studies have been re-analysed using our standardised pipeline
         (<a href="https://github.com/nunofonseca/irap">iRAP</a>). Pipelines and web services are
-        being developed by the Gene Expression Team at EMBL-EBI, funded by the
+        being developed by the Gene Expression Team at EMBL-EBI, funded by
         <a href="https://wellcome.ac.uk/">Wellcome</a> and the
         <a href="https://www.chanzuckerberg.com/">Chan Zuckerberg Initiative</a>.
     </p>
