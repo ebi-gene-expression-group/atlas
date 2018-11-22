@@ -52,7 +52,7 @@ class GeneSearchServiceTest {
         String experimentAccession1 = generateRandomExperimentAccession();
         String experimentAccession2 = generateRandomExperimentAccession();
         String experimentAccession3 = generateRandomExperimentAccession();
-        String geneID = generateRandomEnsemblGeneId();
+        String geneId = generateRandomEnsemblGeneId();
 
         Map<String, List<String>> ensg00000104957Cells =
                     ImmutableMap.of(
@@ -63,13 +63,13 @@ class GeneSearchServiceTest {
                             experimentAccession3 ,
                             ImmutableList.of("cell_id_9", "cell_id_10"));
 
-        when(geneSearchDaoMock.fetchCellIds(geneID)).thenReturn(ensg00000104957Cells);
+        when(geneSearchDaoMock.fetchCellIds(geneId)).thenReturn(ensg00000104957Cells);
 
-        Map<String, Map<String, List<String>>> result = subject.getCellIdsInExperiments(geneID);
+        Map<String, Map<String, List<String>>> result = subject.getCellIdsInExperiments(geneId);
 
         assertThat(result)
-                .containsOnlyKeys(geneID)
-                .containsAllEntriesOf(ImmutableMap.of(geneID, ensg00000104957Cells));
+                .containsOnlyKeys(geneId)
+                .containsAllEntriesOf(ImmutableMap.of(geneId, ensg00000104957Cells));
     }
 
     @Test
@@ -79,8 +79,8 @@ class GeneSearchServiceTest {
         String experimentAccession3 = generateRandomExperimentAccession();
         String experimentAccession4 = generateRandomExperimentAccession();
         String experimentAccession5 = generateRandomExperimentAccession();
-        String geneID1 = generateRandomEnsemblGeneId();
-        String geneID2 = generateRandomEnsemblGeneId();
+        String geneId1 = generateRandomEnsemblGeneId();
+        String geneId2 = generateRandomEnsemblGeneId();
 
         Map<String, List<String>> ensfoobar1Cells = ImmutableMap.of(
                 experimentAccession1,
@@ -94,39 +94,39 @@ class GeneSearchServiceTest {
                 experimentAccession4, ImmutableList.of("cell_id_11", "cell_id_12", "cell_id_13"),
                 experimentAccession5, ImmutableList.of("cell_id_14", "cell_id_15"));
 
-        when(geneSearchDaoMock.fetchCellIds(geneID1)).thenReturn(ensfoobar1Cells);
-        when(geneSearchDaoMock.fetchCellIds(geneID2)).thenReturn(ensfoobar2Cells);
+        when(geneSearchDaoMock.fetchCellIds(geneId1)).thenReturn(ensfoobar1Cells);
+        when(geneSearchDaoMock.fetchCellIds(geneId2)).thenReturn(ensfoobar2Cells);
 
-        assertThat(subject.getCellIdsInExperiments(geneID1, geneID2))
-                .containsAllEntriesOf(ImmutableMap.of(geneID1, ensfoobar1Cells, geneID2, ensfoobar2Cells));
+        assertThat(subject.getCellIdsInExperiments(geneId1, geneId2))
+                .containsAllEntriesOf(ImmutableMap.of(geneId1, ensfoobar1Cells, geneId2, ensfoobar2Cells));
     }
 
     @Test
     void markerGeneProfilesForOneGeneId() {
         String experimentAccession1 = generateRandomExperimentAccession();
         String experimentAccession2 = generateRandomExperimentAccession();
-        String geneID = generateRandomEnsemblGeneId();
+        String geneId = generateRandomEnsemblGeneId();
 
         when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession1)).thenReturn(Optional.of(5));
         when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession2)).thenReturn(Optional.of(10));
 
         when(geneSearchDaoMock
-                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID, experimentAccession1, 5))
+                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId, experimentAccession1, 5))
                 .thenReturn(ImmutableMap.of(5, ImmutableList.of(1)));
         when(geneSearchDaoMock
-                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID, experimentAccession2, 10))
+                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId, experimentAccession2, 10))
                 .thenReturn(ImmutableMap.of(10, ImmutableList.of(1)));
 
         when(geneSearchDaoMock
-                .fetchExperimentAccessionsWhereGeneIsMarker(geneID))
+                .fetchExperimentAccessionsWhereGeneIsMarker(geneId))
                 .thenReturn(ImmutableList.of(experimentAccession1, experimentAccession2));
 
-        Map<String, Map<String, Map<Integer, List<Integer>>>> result = subject.getMarkerGeneProfile(geneID);
+        Map<String, Map<String, Map<Integer, List<Integer>>>> result = subject.getMarkerGeneProfile(geneId);
 
         assertThat(result)
                 .isNotEmpty()
-                .containsOnlyKeys(geneID)
-                .containsAllEntriesOf(ImmutableMap.of(geneID,
+                .containsOnlyKeys(geneId)
+                .containsAllEntriesOf(ImmutableMap.of(geneId,
                         ImmutableMap.of(
                                 experimentAccession1, ImmutableMap.of(5, ImmutableList.of(1)),
                                 experimentAccession2, ImmutableMap.of(10, ImmutableList.of(1)))));
@@ -138,42 +138,42 @@ class GeneSearchServiceTest {
         String experimentAccession2 = generateRandomExperimentAccession();
         String experimentAccession3 = generateRandomExperimentAccession();
         String experimentAccession4 = generateRandomExperimentAccession();
-        String geneID1 = generateRandomEnsemblGeneId();
-        String geneID2 = generateRandomEnsemblGeneId();
+        String geneId1 = generateRandomEnsemblGeneId();
+        String geneId2 = generateRandomEnsemblGeneId();
 
         when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession1)).thenReturn(Optional.of(5));
         when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession2)).thenReturn(Optional.of(10));
 
         when(geneSearchDaoMock
-                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID1, experimentAccession1, 5))
+                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId1, experimentAccession1, 5))
                 .thenReturn(ImmutableMap.of(5, ImmutableList.of(1)));
         when(geneSearchDaoMock
-                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID1, experimentAccession2, 10))
+                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId1, experimentAccession2, 10))
                 .thenReturn(ImmutableMap.of(10, ImmutableList.of(1)));
 
         when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession3)).thenReturn(Optional.of(2));
         when(tsnePlotSettingsServiceMock.getExpectedClusters(experimentAccession4)).thenReturn(Optional.of(4));
 
         when(geneSearchDaoMock
-                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID2, experimentAccession3, 2))
+                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId2, experimentAccession3, 2))
                 .thenReturn(ImmutableMap.of(2, ImmutableList.of(1)));
         when(geneSearchDaoMock
-                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneID2, experimentAccession4, 4))
+                .fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(geneId2, experimentAccession4, 4))
                 .thenReturn(ImmutableMap.of(4, ImmutableList.of(1)));
 
-        when(geneSearchDaoMock.fetchExperimentAccessionsWhereGeneIsMarker(geneID1))
+        when(geneSearchDaoMock.fetchExperimentAccessionsWhereGeneIsMarker(geneId1))
                 .thenReturn(ImmutableList.of(experimentAccession1, experimentAccession2));
-        when(geneSearchDaoMock.fetchExperimentAccessionsWhereGeneIsMarker(geneID2))
+        when(geneSearchDaoMock.fetchExperimentAccessionsWhereGeneIsMarker(geneId2))
                 .thenReturn(ImmutableList.of(experimentAccession3, experimentAccession4));
 
-        assertThat(subject.getMarkerGeneProfile(geneID1, geneID2))
+        assertThat(subject.getMarkerGeneProfile(geneId1, geneId2))
                 .containsAllEntriesOf(
                         ImmutableMap.of(
-                                geneID1,
+                                geneId1,
                                 ImmutableMap.of(
                                         experimentAccession1, ImmutableMap.of(5, ImmutableList.of(1)),
                                         experimentAccession2, ImmutableMap.of(10, ImmutableList.of(1))),
-                                geneID2,
+                                geneId2,
                                 ImmutableMap.of(
                                         experimentAccession3, ImmutableMap.of(2, ImmutableList.of(1)),
                                         experimentAccession4, ImmutableMap.of(4, ImmutableList.of(1)))));

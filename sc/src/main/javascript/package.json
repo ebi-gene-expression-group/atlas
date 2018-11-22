@@ -11,7 +11,7 @@
     "eslint-config-gene-expression": "^0.4.2",
     "file-loader": "^2.0.0",
     "image-webpack-loader": "^4.5.0",
-    "webpack": "^4.25.1",
+    "webpack": "^4.26.0",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2"
   },
@@ -19,11 +19,11 @@
     "expression-atlas-autocomplete": "^3.0.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
-    "react": "^16.6.0",
+    "react": "^16.6.3",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^16.6.0",
+    "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
-    "react-select": "^2.1.1",
+    "react-select": "^2.1.2",
     "scxa-gene-search-form": "^1.1.3",
     "styled-components": "^4.1.1",
     "urijs": "^1.19.1"

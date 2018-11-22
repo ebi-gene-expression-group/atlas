@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="fontface">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Baseline expression demo</title>
+
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="http://localhost:8080/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+</head>
+
+<body>
+    <div id="wrapper" class="container_24">
+        <div id="content" class="grid_24">
+            <div id="atlas-content">
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="/dist/vendors.bundle.js"></script>
+<script src="/dist/baselineExpression.bundle.js"></script>
+
+<script>
+    var facetsData = {
+        "homo sapiens":
+                [{name: 'ORGANISM_PART', value: 'Organism part'},
+                 {name: 'CELL_LINE', value: 'Cell line'}],
+        "caenorhabditis elegans":
+                [{name: 'DEVELOPMENTAL_STAGE', value: 'Developmental stage'}],
+        "mus musculus":
+                [{name: 'ORGANISM_PART', value: 'Organism part'}],
+        "rattus norvegicus":
+                [{name: 'ORGANISM_PART', value: 'Organism part'}]
+    };
+
+    baselineExpression.render(
+      {
+        atlasUrl: 'http://localhost:8080/gxa/',
+        facetsTreeData: facetsData,
+        geneQuery: '[{"value":"GO:0008150"}]',
+        conditionQuery: '',
+        species: ''
+      }, 'atlas-content');
+</script>
+
+</html>

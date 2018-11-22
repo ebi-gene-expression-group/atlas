@@ -17,8 +17,8 @@ import uk.ac.ebi.atlas.testutils.MockExperiment;
 import uk.ac.ebi.atlas.utils.EuropePmcClient;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +46,7 @@ public class ExperimentAttributesServiceTest {
 
     @InjectMocks
     private ExperimentAttributesService subject;
+
 
     @Test
     public void getAttributesForBaselineExperimentWithNoPublications() {
