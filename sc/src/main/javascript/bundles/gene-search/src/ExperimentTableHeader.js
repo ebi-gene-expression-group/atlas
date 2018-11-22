@@ -1,7 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import EbiSpeciesIcon from 'react-ebi-species'
 
 const CardContainerDiv = styled.div`
   height: 100%;
@@ -9,6 +7,9 @@ const CardContainerDiv = styled.div`
   display: flex !important;
   flex-wrap: nowrap;
   align-items: center;
+  padding: 1rem;
+  font-weight: bolder;
+  font-size: 0.9rem;
 `
 
 const IconDiv = styled.div`
@@ -21,7 +22,7 @@ const MarkerDiv = styled.div`
   text-align: center;
 `
 
-const TitleDiv = styled.p`
+const TitleDiv = styled.div`
   width: 40%;
   text-align: center;
 `
@@ -40,7 +41,7 @@ const ExperimentTableHeader = () =>
   <CardContainerDiv>
     <IconDiv>Species</IconDiv>
     <MarkerDiv>Marker genes</MarkerDiv>
-    <TitleDiv>Experiment</TitleDiv>
+    <TitleDiv>Title</TitleDiv>
     <VariableDiv>Experimental variables</VariableDiv>
     <CountDiv>Number of assays</CountDiv>
   </CardContainerDiv>
