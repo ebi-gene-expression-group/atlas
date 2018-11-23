@@ -10,6 +10,8 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
 public class LatestExperimentsService {
     private final LatestExperimentsDao latestExperimentsDao;
     private final ExperimentTrader experimentTrader;
@@ -37,6 +39,10 @@ public class LatestExperimentsService {
                                     ExperimentTrader experimentTrader) {
         this.latestExperimentsDao = latestExperimentsDao;
         this.experimentTrader = experimentTrader;
+    }
+
+    public String fetchLatestExperimentsJSON(){
+        return GSON.toJson(latestExperimentsAttributes.get().get("latestExperiments"));
     }
 
     public ImmutableMap<String, Object> fetchLatestExperimentsAttributes() {
