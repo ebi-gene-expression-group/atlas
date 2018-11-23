@@ -24,7 +24,7 @@
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
     "react-select": "^2.1.2",
-    "scxa-gene-search-form": "^1.1.3",
+    "scxa-gene-search-form": "^1.2.0",
     "styled-components": "^4.1.1",
     "urijs": "^1.19.1"
   }

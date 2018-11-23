@@ -10,7 +10,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "expression-atlas-experiment-page-tsne-plot": "^3.3.0",
+    "expression-atlas-experiment-page-tsne-plot": "^3.4.0",
     "linkifyjs": "^2.1.7",
     "lodash": "^4.17.11",
     "pluralize": "^7.0.0",
