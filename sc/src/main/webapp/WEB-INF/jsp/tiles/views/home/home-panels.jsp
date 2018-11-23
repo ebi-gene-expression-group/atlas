@@ -12,12 +12,9 @@
 </head>
 
 <body>
-<div id="wrapper" class="row">
-    <div id="content" class="small-12 columns">
-        <div id="panels">
-        </div>
-    </div>
-</div>
+
+<div id="panels"></div>
+
 </body>
 
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/homePagePanel.bundle.js"></script>
