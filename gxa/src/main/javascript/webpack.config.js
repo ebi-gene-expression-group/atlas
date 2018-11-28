@@ -40,6 +40,7 @@ module.exports = {
       "react": path.resolve(`./node_modules/react`),
       "react-bootstrap": path.resolve(`./node_modules/react-bootstrap`),
       "react-dom": path.resolve(`./node_modules/react-dom`),
+      "react-highcharts": path.resolve(`./node_modules/react-highcharts`),
       "prop-types": path.resolve(`./node_modules/prop-types`),
       "styled-components": path.resolve(`./node_modules/styled-components`),
       "react-router-dom": path.resolve(`./node_modules/react-router-dom`),
