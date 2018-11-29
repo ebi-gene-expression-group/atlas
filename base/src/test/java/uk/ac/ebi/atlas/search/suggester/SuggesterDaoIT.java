@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.suggester;
 
+import org.apache.solr.client.solrj.response.Suggestion;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -80,5 +81,18 @@ class SuggesterDaoIT {
                 .isNotEmpty();
         assertThat(subject.fetchBioentityProperties("ar", 10, false, speciesUtils.getHuman()))
                 .isNotEmpty();
+    }
+
+    @Test
+    void closestMatchIsFirst() {
+        String twoCharSymbol = "AR";
+
+        // Suggestion::equals is established only by term and payload, weight isn’t considered
+        assertThat(subject.fetchBioentityProperties(twoCharSymbol.toLowerCase(), 10, false))
+                .isNotEmpty()
+                .startsWith(new Suggestion(twoCharSymbol, 0, "symbol"));
+        assertThat(subject.fetchBioentityProperties("ar", 10, false, speciesUtils.getHuman()))
+                .isNotEmpty()
+                .startsWith(new Suggestion(twoCharSymbol, 0, "symbol"));
     }
 }
