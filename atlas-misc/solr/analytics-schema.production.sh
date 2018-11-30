@@ -415,7 +415,7 @@ printf "\n\nCreate dynamic rule keyword_* (string, multiValued)"
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-dynamic-field": {
      "name": "keyword_*",
-     "type": "string",
+     "type": "lowercase",
      "multiValued": true}
 }' http://$HOST/solr/$CORE/schema
 
