@@ -106,7 +106,7 @@ public class TSnePlotDao {
 
     private static final String SELECT_TOTAL_CELL_COUNT =
             "SELECT COUNT(DISTINCT(cell_id)) FROM scxa_tsne";
-    public Integer fetchTotalCellCount() {
+    public int fetchTotalCellCount() {
         return jdbcTemplate.queryForObject(SELECT_TOTAL_CELL_COUNT, Integer.class);
     }
 }
