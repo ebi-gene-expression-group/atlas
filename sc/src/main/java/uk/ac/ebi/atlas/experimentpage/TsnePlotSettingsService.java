@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
+import uk.ac.ebi.atlas.tsne.TSnePlotDao;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 public class TsnePlotSettingsService {
     private final DataFileHub dataFileHub;
     private final IdfParser idfParser;
-    private final TSnePlotServiceDao tSnePlotServiceDao;
+    private final TSnePlotDao tSnePlotDao;
 
     public TsnePlotSettingsService(DataFileHub dataFileHub,
                                    IdfParser idfParser,
-                                   TSnePlotServiceDao tSnePlotServiceDao) {
+                                   TSnePlotDao tSnePlotDao) {
         this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
-        this.tSnePlotServiceDao = tSnePlotServiceDao;
+        this.tSnePlotDao = tSnePlotDao;
     }
 
     public List<Integer> getAvailableClusters(String experimentAccession) {
@@ -36,7 +36,7 @@ public class TsnePlotSettingsService {
     }
 
     public List<Integer> getAvailablePerplexities(String experimentAccession) {
-        return tSnePlotServiceDao.fetchPerplexities(experimentAccession);
+        return tSnePlotDao.fetchPerplexities(experimentAccession);
     }
 
     public Optional<Integer> getExpectedClusters(String experimentAccession) {

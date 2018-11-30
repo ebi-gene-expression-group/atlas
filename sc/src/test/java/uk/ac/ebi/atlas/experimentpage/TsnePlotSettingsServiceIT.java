@@ -18,7 +18,7 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
-import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
+import uk.ac.ebi.atlas.tsne.TSnePlotDao;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -49,7 +49,7 @@ class TsnePlotSettingsServiceIT {
     private IdfParser idfParser;
 
     @Inject
-    private TSnePlotServiceDao tSnePlotServiceDao;
+    private TSnePlotDao tSnePlotDao;
 
     private TsnePlotSettingsService subject;
 
@@ -77,7 +77,7 @@ class TsnePlotSettingsServiceIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotServiceDao);
+        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotDao);
     }
 
     @Test
