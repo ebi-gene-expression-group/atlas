@@ -56,7 +56,7 @@ public class SuggesterDao {
                 .setParam("suggest.dictionary", suggesterDictionary)
                 .setParam("suggest.q", query)
                 // We raise suggest.count to a high enough value to get exact matches (the default is 100)
-                .setParam("suggest.count", "500")
+                .setParam("suggest.count", "750")
                 .setParam(
                         "suggest.cfq",
                         Arrays.stream(species)

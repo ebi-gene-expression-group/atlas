@@ -91,7 +91,7 @@ class SuggesterDaoIT {
         String twoCharSymbol = "AR";
 
         // Suggestion::equals is established only by term and payload, weight isn’t considered
-        assertThat(subject.fetchBioentityProperties(twoCharSymbol.toLowerCase(), 10, false))
+        assertThat(subject.fetchBioentityProperties(twoCharSymbol, 10, false))
                 .isNotEmpty()
                 .startsWith(new Suggestion(twoCharSymbol, 0, "symbol"));
         assertThat(subject.fetchBioentityProperties("ar", 10, false, speciesUtils.getHuman()))
