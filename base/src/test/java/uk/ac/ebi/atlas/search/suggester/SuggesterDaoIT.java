@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.testutils.SpeciesUtils;
 
 import javax.inject.Inject;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -31,9 +32,11 @@ class SuggesterDaoIT {
     }
 
     @Test
-    void duplicatesAreRemoved() {
-        assertThat(subject.fetchBioentityProperties("asp", 100, false).count())
-                .isLessThan(100);
+    void doesNotContainDuplicates() {
+        String query = randomAlphabetic(3, 4);
+
+        assertThat(subject.fetchBioentityProperties(query.toLowerCase(), 100, false).count())
+                .isEqualTo(subject.fetchBioentityProperties(query.toLowerCase(), 100, false).distinct().count());
     }
 
     @Test
