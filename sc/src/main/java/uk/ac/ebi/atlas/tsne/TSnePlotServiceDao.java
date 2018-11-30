@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.tsne;
 
 import com.google.common.collect.ImmutableMap;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +12,11 @@ import java.util.Map;
 
 @Component
 public class TSnePlotServiceDao {
+    private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public TSnePlotServiceDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public TSnePlotServiceDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
@@ -99,5 +102,11 @@ public class TSnePlotServiceDao {
                 namedParameters,
                 Integer.class
         );
+    }
+
+    private static final String SELECT_TOTAL_CELL_COUNT =
+            "SELECT COUNT(DISTINCT(cell_id)) FROM scxa_tsne";
+    public Integer fetchTotalCellCount() {
+        return jdbcTemplate.queryForObject(SELECT_TOTAL_CELL_COUNT, Integer.class);
     }
 }

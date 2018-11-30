@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.tsne;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -111,30 +112,55 @@ class TSnePlotServiceDaoIT {
                 .doesNotHaveDuplicates();
     }
 
-    //In this test, we test the count of cells. To make a comprehensive test we count the lines of the local file to match the return result by querying in the fixture.
-    //If the fixture is a partition of the full dataset, then it will fail, so we load a full test dataset.
+    // In this test, we test the count of cells. To make a comprehensive test we count the lines of the local file to
+    // match the return result by querying in the fixture. If the fixture is a partition of the full dataset, then
+    // it will fail, so we load a full test dataset.
     @ParameterizedTest
     @MethodSource("randomExperimentAccessionProvider")
     void testNumberOfCellsByExperimentAccession(String experimentAccession) {
         cleanDatabaseTables();
-        populator.setScripts(new ClassPathResource("fixtures/scxa_tsne-full.sql"));
-        populator.execute(dataSource);
-        Map<Integer, AtlasResource<TsvStreamer>> resource = new DataFileHub(dataFilesPath.resolve("scxa"))
-                .getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs;
-        Map.Entry<Integer, AtlasResource<TsvStreamer>> firstFile = resource.entrySet().iterator().next();
-        Stream<String[]> fileContent = firstFile.getValue().get().get();
-        Integer fileContentLines = Math.toIntExact(fileContent.count());
-        Integer numberOfcells = subject.fetchNumberOfCellsByExperimentAccession(experimentAccession);
-        assertThat(numberOfcells)
-                .isEqualTo(fileContentLines-1);
+        populateDatabaseTablesWithFullFixtures();
+
+        long expectedExperimentCellCount = countNumberOfCellsInExperimentFile(experimentAccession);
+
+        assertThat(subject.fetchNumberOfCellsByExperimentAccession(experimentAccession))
+                .isEqualTo(expectedExperimentCellCount);
         cleanDatabaseTables();
         populateDatabaseTables();
+    }
+
+    @Test
+    void testTotalCellCount() {
+        cleanDatabaseTables();
+        populateDatabaseTablesWithFullFixtures();
+
+        long expectedTotalCellCount = fetchExperimentAccessions().stream()
+                .mapToLong(this::countNumberOfCellsInExperimentFile)
+                .sum();
+
+        assertThat(subject.fetchTotalCellCount()).isEqualTo(expectedTotalCellCount);
+
+        cleanDatabaseTables();
+        populateDatabaseTables();
+    }
+
+    private void populateDatabaseTablesWithFullFixtures() {
+        populator.setScripts(
+                new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
+                new ClassPathResource("fixtures/scxa_tsne-full.sql"));
+        populator.execute(dataSource);
     }
 
     private static final String SELECT_CELL_IDS_STATEMENT =
             "SELECT DISTINCT(cell_id) FROM scxa_analytics WHERE experiment_accession=?";
     private List<String> fetchCellIds(String experimentAccession) {
         return jdbcTemplate.queryForList(SELECT_CELL_IDS_STATEMENT, String.class, experimentAccession);
+    }
+
+    private static final String SELECT_PUBLIC_EXPERIMENT_ACCESSIONS =
+            "SELECT accession FROM scxa_experiment WHERE private = FALSE";
+    private List<String> fetchExperimentAccessions() {
+        return jdbcTemplate.queryForList(SELECT_PUBLIC_EXPERIMENT_ACCESSIONS, String.class);
     }
 
     private Stream<String> randomExperimentAccessionProvider() {
@@ -154,5 +180,14 @@ class TSnePlotServiceDaoIT {
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
 
         return Stream.of(Arguments.of(experimentAccession, k, perplexity));
+    }
+
+    private long countNumberOfCellsInExperimentFile(String experimentAccession) {
+        Map<Integer, AtlasResource<TsvStreamer>> resource = new DataFileHub(dataFilesPath.resolve("scxa"))
+                .getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs;
+        Map.Entry<Integer, AtlasResource<TsvStreamer>> firstFile = resource.entrySet().iterator().next();
+        Stream<String[]> fileContent = firstFile.getValue().get().get();
+
+        return fileContent.count()-1; // discard header
     }
 }
