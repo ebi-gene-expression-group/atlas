@@ -22,25 +22,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LatestExperimentDaoIT {
     @Inject
     private DataSource dataSource;
+
     @Inject
     private LatestExperimentsDao subject;
+
     @BeforeAll
     void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
         populator.execute(dataSource);
     }
+
     @AfterAll
     void cleanDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
         populator.execute(dataSource);
     }
+
     @Test
     void returnsLatestExperimentList() {
         assertThat(subject.fetchLatestExperimentAccessions())
                 .isNotEmpty();
     }
+
     @Test
     void returnsLatestExperimentCounts() {
         assertThat(subject.fetchPublicExperimentsCount())

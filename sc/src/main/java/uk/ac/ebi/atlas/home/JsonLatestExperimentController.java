@@ -6,11 +6,13 @@ import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 
 @RestController
 public class JsonLatestExperimentController extends JsonExceptionHandlingController {
+
     private final LatestExperimentsService latestExperimentsService;
 
     public JsonLatestExperimentController (LatestExperimentsService latestExperimentsService) {
         this.latestExperimentsService = latestExperimentsService;
     }
+
     @GetMapping(
             value = "/json/experiments/latestExperiments",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

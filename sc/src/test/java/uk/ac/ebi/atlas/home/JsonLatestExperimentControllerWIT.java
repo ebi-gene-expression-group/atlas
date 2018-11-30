@@ -33,26 +33,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class JsonLatestExperimentControllerWIT {
     @Inject
     private DataSource dataSource;
+
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
     private static final String ENDPOINT_URL = "/json/experiments/latestExperiments";
+
     @BeforeAll
     void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
         populator.execute(dataSource);
     }
+
     @AfterAll
     void cleanDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-delete.sql"));
         populator.execute(dataSource);
     }
+
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
+
     @Test
     void returnsAtLeastOneLatestExperiment() throws Exception {
         mockMvc.perform(get(ENDPOINT_URL))
