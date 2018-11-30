@@ -10,7 +10,7 @@ public class JsonLatestExperimentController extends JsonExceptionHandlingControl
 
     private final LatestExperimentsService latestExperimentsService;
 
-    public JsonLatestExperimentController (LatestExperimentsService latestExperimentsService) {
+    public JsonLatestExperimentController(LatestExperimentsService latestExperimentsService) {
         this.latestExperimentsService = latestExperimentsService;
     }
 

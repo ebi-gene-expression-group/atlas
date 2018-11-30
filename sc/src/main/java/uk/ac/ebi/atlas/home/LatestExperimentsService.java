@@ -43,7 +43,7 @@ public class LatestExperimentsService {
         this.experimentTrader = experimentTrader;
     }
 
-    public String fetchLatestExperimentsJSON(){
+    public String fetchLatestExperimentsJSON() {
         return GSON.toJson(latestExperimentsAttributes.get().get("latestExperiments"));
     }
 
