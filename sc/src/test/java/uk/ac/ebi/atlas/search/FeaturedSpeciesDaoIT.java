@@ -33,6 +33,13 @@ class FeaturedSpeciesDaoIT {
 
     private FeaturedSpeciesDao subject;
 
+    @BeforeAll
+    void populateDatabaseTables() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
+        populator.execute(dataSource);
+    }
+
     @AfterAll
     void cleanDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
@@ -50,26 +57,19 @@ class FeaturedSpeciesDaoIT {
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "scxa_experiment");
         assertThat(subject.fetchSpeciesSortedByExperimentCount()).isEmpty();
         assertThat(subject.fetchTotalSpeciesCount()).isEqualTo(0);
+
+        // Repopulate deleted table
+        populateDatabaseTables();
     }
 
     @Test
     void sortsSpeciesNamesByNumberOfExperiments() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
-        populator.execute(dataSource);
-
         assertThat(subject.fetchSpeciesSortedByExperimentCount())
                 .containsExactly("Mus musculus", "Homo sapiens");
     }
 
     @Test
     void returnsCorrectNumberOfSpecies() {
-        // Clean up DB
-        JdbcTestUtils.deleteFromTables(jdbcTemplate, "scxa_experiment");
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScripts(new ClassPathResource("fixtures/scxa_experiment-fixture.sql"));
-        populator.execute(dataSource);
-
         assertThat(subject.fetchTotalSpeciesCount()).isEqualTo(2);
     }
 }
