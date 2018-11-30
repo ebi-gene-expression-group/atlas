@@ -25,4 +25,14 @@ public class FeaturedSpeciesDao {
     public List<String> fetchSpeciesSortedByExperimentCount() {
         return jdbcTemplate.queryForList(SELECT_DISTINCT_SPECIES_IN_PUBLIC_EXPERIMENTS, String.class);
     }
+
+    private static final String SELECT_SPECIES_COUNT =
+            "SELECT COUNT(DISTINCT species) " +
+                    "FROM scxa_experiment " +
+                    "WHERE private=FALSE";
+
+    @Transactional(transactionManager = "txManager", readOnly = true)
+    public int fetchTotalSpeciesCount() {
+        return jdbcTemplate.queryForObject(SELECT_SPECIES_COUNT, Integer.class);
+    }
 }
