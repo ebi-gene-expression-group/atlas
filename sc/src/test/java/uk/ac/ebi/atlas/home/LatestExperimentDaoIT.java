@@ -1,4 +1,5 @@
 package uk.ac.ebi.atlas.home;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,9 +12,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.configuration.TestConfig;
+
 import javax.inject.Inject;
 import javax.sql.DataSource;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 @Transactional
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
