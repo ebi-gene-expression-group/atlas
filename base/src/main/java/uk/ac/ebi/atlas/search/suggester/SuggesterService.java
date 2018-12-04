@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @Component
 public class SuggesterService {
     // Remember that suggestions are distinct()’ed, so this value is an upper bound
-    public static final int DEFAULT_MAX_NUMBER_OF_SUGGESTIONS = 20;
+    public static final int DEFAULT_MAX_NUMBER_OF_SUGGESTIONS = 10;
 
     private static final Function<Suggestion, Map<String, String>>
     SUGGESTION_TO_MAP =

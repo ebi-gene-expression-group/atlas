@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.solr.bioentities.query.BioentitiesSolrClient;
 import uk.ac.ebi.atlas.species.Species;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -39,17 +40,23 @@ public class SuggesterDao {
                                                 String query,
                                                 int limit,
                                                 Species... species) {
-        // Solr suggesters return suggestions if cfq is set, even when the query doesn’t reach the minimum length
-        if (query.length() < 3) {
+        // We want the user to go beyond one keystroke to get some suggestions
+        if (query.length() < 2) {
             return Stream.empty();
         }
+
+        Comparator<Suggestion> compareByWeightLengthAlphabetical =
+                Comparator
+                        .comparingLong(Suggestion::getWeight).reversed()
+                        .thenComparingInt(suggestion -> suggestion.getTerm().length())
+                        .thenComparing(Suggestion::getTerm);
 
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.setRequestHandler("/suggest")
                 .setParam("suggest.dictionary", suggesterDictionary)
-                // We don’t set suggest.count because we want unique suggestions, see distinct() below
-                // .setParam("suggest.count", Integer.toString(limit))
                 .setParam("suggest.q", query)
+                // We raise suggest.count to a high enough value to get exact matches (the default is 100)
+                .setParam("suggest.count", "750")
                 .setParam(
                         "suggest.cfq",
                         Arrays.stream(species)
@@ -59,9 +66,10 @@ public class SuggesterDao {
         return solrClient.query(solrQuery).getSuggesterResponse().getSuggestions().values().stream()
                 .flatMap(List::stream)
                 // The current implementation considers symbols Aspm and ASPM two different suggestions. I dont’t know
-                // if that’s good or bad because I dont’t know if to a biologist it’s meaningful (I guess not). If we
+                // if that’s good or bad because I don’t know if to a biologist it’s meaningful (I guess not). If we
                 // change it it should be reflected in a story.
                 .distinct()
+                .sorted(compareByWeightLengthAlphabetical)
                 .limit(limit);
     }
 }
