@@ -9,9 +9,9 @@
     <hr>
 
     <p> Single Cell Expression Atlas provides access to the analysis results of
-        <fmt:formatNumber pattern="#,##0" value="${hcaExperimentsCount}"/> data
+        <fmt:formatNumber value="${hcaExperimentsCount}"/> data
         ${hcaExperimentsCount > 1 ? "sets" : "set"} from the Human Cell Atlas
-        and <fmt:formatNumber pattern="#,##0" value="${humanExperimentsCount}"/> data
+        and <fmt:formatNumber value="${humanExperimentsCount}"/> data
         ${humanExperimentsCount > 1 ? "sets" : "set"} in <i>Homo sapiens</i>
         from other studies.
     </p>
