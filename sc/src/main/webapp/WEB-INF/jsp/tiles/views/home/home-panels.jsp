@@ -21,7 +21,4 @@
             panelNameBList: [`Latest experiments`,`Featured`]
         }, 'panels')
     });
-
 </script>
-
-</html>
