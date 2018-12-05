@@ -6,19 +6,19 @@
 <!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa_sc/ -- Remember the trailing slash! -->
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
-        homePagePanel.render({
-            host: `http://localhost:8080/gxa/sc/`,
-            resource: {
-                Featured: `alpha/hca`,
-                Latest: `json/experiments/latestExperiments`,
-                Species: `json/experiments/popular-species`,
-                Animals: `json/experiments/popular-species?kingdom=animals`,
-                Plants: `json/experiments/popular-species?kingdom=plants`,
-                Fungi: `json/experiments/popular-species?kingdom=fungi`,
-                Protists: `json/experiments/popular-species?kingdom=protists`,
-            },
-            panelNameAList: [`Species`, `Animals`, `Plants`, `Fungi`, `Protists`],
-            panelNameBList: [`Latest experiments`,`Featured`]
-        }, 'panels')
+      homePagePanel.render({
+        host: `http://localhost:8080/gxa/sc/`,
+        experimentResources: {
+          'Latest experiments': `json/experiments/latestExperiments`,
+          Featured: `alpha/hca`
+        },
+        speciesResources: {
+          Species: `json/experiments/popular-species`,
+          Animals: `json/experiments/popular-species?kingdom=animals`,
+          Plants: `json/experiments/popular-species?kingdom=plants`,
+          Fungi: `json/experiments/popular-species?kingdom=fungi`,
+          Protists: `json/experiments/popular-species?kingdom=protists`
+        }
+      }, 'panels')
     });
 </script>
