@@ -4,7 +4,8 @@
     "atlas-homepage-cards": "^1.1.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "scxa-homepage-panels": "0.0.3"
+    "scxa-homepage-panels": "^0.1.0",
+    "atlas-latest-experiments-cards": "^1.2.1"
   },
   "devDependencies": {
     "css-loader": "^1.0.1",
