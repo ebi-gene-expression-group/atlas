@@ -19,4 +19,18 @@
             </div>
         </div>
     </a>
+
+    <a href="https://github.com/hemberg-lab/scmap" target="_blank">
+        <div class="media-object">
+            <div class="media-object-section middle">
+                <span class="icon icon-functional" data-icon="t"></span>
+            </div>
+            <div class="media-object-section middle">
+                <p>
+                    <strong>scmap: projecting samples on to a reference</strong><br>
+                    A fast method for identifying the closest matching cluster or cell in the Atlas to a new sample.
+                </p>
+            </div>
+        </div>
+    </a>
 </div>
