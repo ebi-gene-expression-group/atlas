@@ -1,6 +1,5 @@
 <%--@elvariable id="hcaExperimentsCount" type="int"--%>
 <%--@elvariable id="humanExperimentsCount" type="int"--%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -9,8 +8,10 @@
     <hr>
 
     <p> Single Cell Expression Atlas provides access to the analysis results of
-        <fmt:formatNumber pattern="#,##0" value="${hcaExperimentsCount}"/> data sets from the Human Cell Atlas
-        and <fmt:formatNumber pattern="#,##0" value="${humanExperimentsCount}"/> data sets in <i>Homo sapiens</i>
+        <fmt:formatNumber pattern="#,##0" value="${hcaExperimentsCount}"/> data
+        ${hcaExperimentsCount > 1 ? "sets" : "set"} from the Human Cell Atlas
+        and <fmt:formatNumber pattern="#,##0" value="${humanExperimentsCount}"/> data
+        ${humanExperimentsCount > 1 ? "sets" : "set"} in <i>Homo sapiens</i>
         from other studies.
     </p>
     <p>
