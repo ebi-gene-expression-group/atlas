@@ -158,7 +158,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                                                 experimentAccession,
                                                 geneId,
                                                 markerGeneFacets.get(geneId).get(experimentAccession)));
-                            }else{
+                            } else {
                                 experimentAttributes.put(
                                         "markerGenes", new ArrayList());
                             }
@@ -196,7 +196,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                     .put("value", entry.getValue())
                     .put("label", StringUtils.capitalize(entry.getValue()));
 
-            if(!isNullOrEmpty(getTooltipText(entry.getKey()))) {
+            if (!isNullOrEmpty(getTooltipText(entry.getKey()))) {
                 mapBuilder.put("description", getTooltipText(entry.getKey()));
             }
 
@@ -207,7 +207,7 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
 
     private String getTooltipText(String group) {
         for (FacetsToTooltipMapping tooltip : FacetsToTooltipMapping.values()) {
-            if(tooltip.getTitle().equalsIgnoreCase(group)) {
+            if (tooltip.getTitle().equalsIgnoreCase(group)) {
                return tooltip.getTooltip();
             }
         }
