@@ -158,6 +158,9 @@ public class JsonGeneSearchController extends JsonExceptionHandlingController {
                                                 experimentAccession,
                                                 geneId,
                                                 markerGeneFacets.get(geneId).get(experimentAccession)));
+                            }else{
+                                experimentAttributes.put(
+                                        "markerGenes", new ArrayList());
                             }
 
                             return ImmutableMap.of("element", experimentAttributes, "facets", facets);
