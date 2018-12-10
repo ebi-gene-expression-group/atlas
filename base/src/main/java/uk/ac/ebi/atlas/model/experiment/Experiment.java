@@ -202,7 +202,7 @@ public abstract class Experiment<D extends DescribesDataColumns> implements Seri
             return false;
         }
         Experiment<?> that = (Experiment<?>) o;
-        return com.google.common.base.Objects.equal(accession, that.accession);
+        return Objects.equal(accession, that.accession);
     }
 
     @Override
