@@ -41,7 +41,7 @@ class LatestExperimentsServiceTest {
   }
 
   @Test
-  void expectedClustersOnlyInIdf() {
+  void expectedAttributesbyLatestExperimentsAccession() {
     List<String> latestExperimentsAccessionList = new ArrayList<>();
     latestExperimentsAccessionList.add(generateRandomExperimentAccession());
     long experimentCount = RNG.nextInt(1, 1000);
