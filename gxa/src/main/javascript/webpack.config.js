@@ -6,11 +6,11 @@ const vendorsBundleName = `vendorCommons`
 
 module.exports = {
   entry: {
-    expressionAtlasHeatmapHighcharts: `./bundles/heatmap-highcharts`,
-    experimentPage: `./bundles/experiment-page`,
+    expressionAtlasHeatmapHighcharts: `./node_modules/expression-atlas-heatmap-highcharts`,
+    experimentPage: `./node_modules/expression-atlas-experiment-page`,
+    expressionAtlasBioentityInformation: `./node_modules/sc-atlas-bioentity-information`,
     expressionAtlasBaselineExpression: `./bundles/baseline-expression`,
     expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
-    expressionAtlasBioentityInformation: `./bundles/bioentity-information`,
     expressionAtlasBrowseBySpecies: `./bundles/browse-by-species`
   },
 
