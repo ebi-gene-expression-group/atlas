@@ -11,7 +11,7 @@
 }
 
 a.clear {
-    border: none;
+    border-bottom: none;
 }
 
 ul.clear {
@@ -56,3 +56,14 @@ hr {
 #experiment-page .gene-search-container {
     margin-bottom: 1rem;
 }
+
+/** Foundation **/
+.callout {
+    position: relative;
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+    border: 1px solid rgba(10, 10, 10, 0.25);
+    border-radius: 0;
+    color: #222;
+    background-color: white; }
+/** End Foundation **/

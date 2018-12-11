@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.home;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;

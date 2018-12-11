@@ -10,7 +10,7 @@
 </div>
 
 <div class="row column margin-bottom-xlarge expanded">
-    <tiles:insertAttribute name="experiment-list-latest-box"/>
+    <tiles:insertAttribute name="experiment-and-species-panels"/>
 </div>
 
 <%--<div class="row column">--%>
