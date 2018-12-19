@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="http://localhost:8080/gxa/sc/resources/css/popup-feedback.css" type="text/css"
+          media="all">
+
+</head>
+<style>
+    /* Playground by EThaiZone */
+    #parent {
+        width: 100%;
+        height: 1000px;
+        border:solid 1px #000;
+    }
+    iframe {
+        width:100%;
+        height:100%;
+        border:0px;
+    }
+    #parent > #target {
+        opacity: 0.3;
+        position:relative;
+        float: right;
+        right:10px;
+        bottom:35px;
+        transition: 0.5s;
+    }
+    #parent > #target {
+        opacity: 1;
+    }
+
+</style>
+<body>
+<div id="parent">
+    <iframe src="https://www.ebi.ac.uk/gxa/experiments/E-MTAB-5071/Results" width="100%" height="100%"></iframe>
+
+    <div id="target">
+    </div>
+
+    <div>
+</body>
+
+<script src="../dist/vendors.bundle.js"></script>
+<script src="../dist/feedbackForm.bundle.js"></script>
+
+<!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa_sc/ -- Remember the trailing slash! -->
+<script>
+  feedbackForm.render({}, 'target')
+</script>
+
+</html>
