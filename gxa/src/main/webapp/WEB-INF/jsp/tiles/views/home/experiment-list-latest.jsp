@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <div class="row margin-bottom-xxlarge" style={"max-width":none}>
+            <div class="row margin-bottom-xxlarge"  style="max-width: none;">
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5214">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/gtex.png" />

@@ -1,50 +1,26 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+<div id="popular-species"></div>
 
-    <ul class="tabs" data-tabs id="browse-by-tabs">
-        <li class="tabs-title is-active"><a href="#by-species" aria-selected="true">By species</a></li>
-        <li class="tabs-title"><a href="#by-animals">Animals</a></li>
-        <li class="tabs-title"><a href="#by-plants">Plants</a></li>
-        <li class="tabs-title"><a href="#by-fungi">Fungi</a></li>
-    </ul>
-
-    <div class="tabs-content" data-tabs-content="browse-by-tabs">
-        <div class="tabs-panel is-active" id="by-species"></div>
-        <div class="tabs-panel" id="by-animals"></div>
-        <div class="tabs-panel" id="by-plants"></div>
-        <div class="tabs-panel" id="by-fungi"></div>
-    </div>
-
-
-
-<script defer src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
-
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/homePagePanel.bundle.js"></script>
+<!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa_sc/ -- Remember the trailing slash! -->
 <script>
-    document.addEventListener('DOMContentLoaded', function(event) {
-        expressionAtlasBrowseBySpecies.render(
-          {
-            atlasUrl: '${pageContext.request.contextPath}/',
-            speciesInfoList: ${speciesList}
-          },
-          'by-species'
-        );
-        expressionAtlasBrowseBySpecies.render(
-          {
-            atlasUrl: '${pageContext.request.contextPath}/',
-            speciesInfoList : ${animalsList}
-          }, 'by-animals'
-        );
-        expressionAtlasBrowseBySpecies.render(
-          {
-            atlasUrl: '${pageContext.request.contextPath}/',
-            speciesInfoList : ${plantsList}
-          },
-          'by-plants'
-        );
-        expressionAtlasBrowseBySpecies.render({
-            atlasUrl: '${pageContext.request.contextPath}/',
-            speciesInfoList : ${fungiList}
-          },
-          'by-fungi'
-        );
-    });
+  document.addEventListener("DOMContentLoaded", function(event) {
+    homePagePanel.render({
+      host: 'http://localhost:8080/gxa/',
+      speciesResources: {
+        Species: `json/experiments/popular-species`,
+        Animals: `json/experiments/popular-species?kingdom=animals`,
+        Plants: `json/experiments/popular-species?kingdom=plants`,
+        Fungi: `json/experiments/popular-species?kingdom=fungi`,
+        Protists: `json/experiments/popular-species?kingdom=protists`
+      },
+      experimentResources: {
+        'Latest experiments': `json/experiments/popular-species`,
+        Featured: `json/experiments/popular-species`
+      }
+    }, 'popular-species')
+
+  });
 </script>
+v
