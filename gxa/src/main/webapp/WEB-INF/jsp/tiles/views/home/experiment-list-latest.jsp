@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="callout experiment-list-latest padding-bottom-for-button" data-equalizer-watch>
     <ul class="tabs" data-tabs id="experiments-tabs">
         <li class="tabs-title is-active"><a href="#featured-experiments">Featured</a></li>
         <li class="tabs-title"><a href="#latest-experiments" aria-selected="true">Latest experiments</a></li>
@@ -13,8 +12,8 @@
         <%--Using line height hack to align contents vertically, waiting for Flexible Grid support to align stuff inside rows: https://github.com/ebiwd/EBI-Framework/issues/71--%>
         <%--Links inside links to highlight text on hover, not necessary but aesthetically pleasing--%>
         <div class="tabs-panel is-active" id="featured-experiments">
-            <div class="row margin-bottom-xxlarge">
-                <div class="small-4 columns combo text-center padding-top-medium">
+            <div class="row margin-bottom-xxlarge" style="max-width: none;">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=ENCODE">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/encode.png" />
                         <h6>
@@ -23,7 +22,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=BLUEPRINT">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/blueprint.png"/>
                         <h6>
@@ -33,7 +32,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=FANTOM5">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/fantom.png" />
                         <h6>
@@ -43,10 +42,8 @@
                         </h6>
                     </a>
                 </div>
-            </div>
 
-            <div class="row margin-bottom-xxlarge">
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-PROT-3">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/human_protein_atlas.png" />
                         <h6>
@@ -54,7 +51,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-2770">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/ccle.png" />
                         <h6>
@@ -62,7 +59,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=HipSci">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/hipsci.png" />
 
@@ -74,8 +71,8 @@
                 </div>
             </div>
 
-            <div class="row margin-bottom-xxlarge">
-                <div class="small-4 columns combo text-center padding-top-medium">
+            <div class="row margin-bottom-xxlarge" style={"max-width":none}>
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5214">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/gtex.png" />
                         <h6>
@@ -83,7 +80,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/pcawg.png" />
                         <h6>
@@ -92,7 +89,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/wtsi_mgh_cancerrxgene.png" />
                         <h6>
@@ -100,10 +97,7 @@
                         </h6>
                     </a>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4840">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/hdbr.png" />
                         <h6>
@@ -111,7 +105,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium">
+                <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/baseline/experiments">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/baseline.png" />
                         <h6>
@@ -119,7 +113,7 @@
                         </h6>
                     </a>
                 </div>
-                <div class="small-4 columns combo text-center padding-top-medium end">
+                <div class="small-2 columns combo text-center padding-top-medium end">
                     <a href="${pageContext.request.contextPath}/plant/experiments">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/gramene.png" />
                         <h6>
@@ -139,10 +133,10 @@
                                 <div class="media-object-section middle">
                                     <c:choose>
                                         <c:when test="${experimentInfo.experimentType.baseline}">
-                                            <span class="baseline button-rd">B</span>
+                                            <span class="baseline button-rd">Baseline</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="differential button-rd">D</span>
+                                            <span class="differential button-rd">Differential</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
@@ -164,13 +158,4 @@
                     </c:forEach>
             </div>
         </div>
-
-    </div>
-
-    <div class="row align-row-to-bottom">
-        <div class="small-6 small-centered columns margin-top-large">
-            <a href='${pageContext.request.contextPath}/experiments' class="button float-center">View all experiments</a>
-        </div>
-    </div>
-
 </div>
