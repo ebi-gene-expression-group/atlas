@@ -42,7 +42,7 @@ const SpeciesItem = props => {
             <span
               data-tooltip
               style={{cursor: `unset`, fontWeight: `bold`}}
-              className={`baseline tiny button-rd`} title={`Baseline experiments`}>B</span>
+              className={`baseline tiny button-rd`} title={`Baseline experiments`}>Baseline</span>
             {props.baselineExperiments}
           </ClearLink>
           <ClearLink
@@ -52,7 +52,7 @@ const SpeciesItem = props => {
                 data-tooltip
                 style={{cursor: `unset`, fontWeight: `bold`}}
                 className={`differential tiny button-rd`}
-                title={`Differential experiments`}>D</span>
+                title={`Differential experiments`}>Differential</span>
             {props.differentialExperiments}
           </ClearLink>
         </p>
