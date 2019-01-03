@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Atlas Homepage Cards demo</title>
+
+  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all" />
+
+  <link rel="stylesheet" href="http://localhost:8080/gxa/sc/resources/css/theme-atlas.css" type="text/css" media="all">
+</head>
+
+<body>
+  <div class="row">
+    <h2 class="text-center">Extendable cards, used in HCA landing page</h1>
+    <div class="small-3 columns">
+      <div id="extendable-image-card-long"></div>
+    </div>
+
+    <div class="small-3 columns">
+      <div id="extendable-image-card-short"></div>
+    </div>
+    <div class="small-3 columns">
+      <div id="extendable-species-card-long"></div>
+    </div>
+
+    <div class="small-3 columns">
+      <div id="extendable-species-card-short"></div>
+    </div>
+  </div>
+
+  <div class="row column">
+    <h2 class="text-center">Species card container</h1>
+    <div id="species-card-container"></div>
+  </div>
+
+  <div class="row column">
+    <h2 class="text-center">Image card container</h1>
+    <div id="image-card-container"></div>
+  </div>
+</body>
+
+<script src="../dist/vendors.bundle.js"></script>
+<script src="../dist/homepageCardsDemo.bundle.js"></script>
+
+<!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa/sc/ -- Remember the trailing slash! -->
+<script>
+
+  homepageCardsDemo.renderSceaHomepageSpeciesContainer({
+      host: 'http://localhost:8080/gxa',
+      resource: 'json/experiments/popular-species'
+  }, 'species-card-container')
+
+  // homepageCardsDemo.renderHcaLandingPageContainer({
+  //   host: 'http://localhost:8080/gxa/sc/',
+  //   resource: 'json/landingpage/E-GEOD'
+  // }, 'image-card-container')
+</script>
+
+</html>
