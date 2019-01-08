@@ -20,4 +20,14 @@ public interface UrlHelpers {
                 .encode()
                 .toUriString();
     }
+
+    default String getExperimentsFilteredBySpeciesAndExperimentType(String species, String type) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/experiments")
+                .query("species={species}")
+                .query("experimentType={type}")
+                .buildAndExpand(species, type)
+                .encode()
+                .toUriString();
+    }
 }
