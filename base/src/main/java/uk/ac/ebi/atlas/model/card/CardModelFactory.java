@@ -44,7 +44,7 @@ public class CardModelFactory {
                 Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "differential"))));
 
         return CardModel.create(
-                CardIconType.SPECIES,
+                CardIconType.ATLASSPECIES,
                 popularSpeciesInfo.species(),
                 Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
                         Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
