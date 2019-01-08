@@ -40,7 +40,7 @@ public class JsonPopularSpeciesController extends JsonExceptionHandlingControlle
 
     List<CardModel> cardModels = speciesNameWithExperimentCount
             .stream()
-            .map(cardModelFactory::create)
+            .map(cardModelFactory::createAtlasHomePageSpeciesCard)
             .collect(Collectors.toList());
 
     return CardModelAdapter.serialize(cardModels).toString();
