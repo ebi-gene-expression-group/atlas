@@ -25,17 +25,13 @@
 <script>
     HomePagePanel.render({
         host: 'http://localhost:8080/gxa/',
-          experimentResources: {
-            'Latest experiments': `json/experiments/popular-species`,
-            Featured: `json/experiments/popular-species`
-          },
           speciesResources: {
             Species: `json/experiments/popular-species`,
             Animals: `json/experiments/popular-species?kingdom=animals`,
             Plants: `json/experiments/popular-species?kingdom=plants`,
             Fungi: `json/experiments/popular-species?kingdom=fungi`,
             Protists: `json/experiments/popular-species?kingdom=protists`
-      }
+          }
         }, 'target')
 </script>
 
