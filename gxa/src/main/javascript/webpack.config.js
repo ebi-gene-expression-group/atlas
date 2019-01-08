@@ -13,7 +13,7 @@ module.exports = {
     expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
     expressionAtlasBrowseBySpecies: `./bundles/browse-by-species`,
     atlasHomepageCard: `./bundles/atlas-homepage-card`,
-    homePagePanel: `./bundles/scxa-homepage-panels`
+    homePagePanel: `./bundles/homepage-panels`
   },
 
   plugins: [
