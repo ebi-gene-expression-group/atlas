@@ -33,7 +33,10 @@ class CardModelFactoryTest {
         public String getExperimentsFilteredBySpeciesUrl(String species) {
             return "http://stubbed-species-url/experiments?species=" + species;
         }
-
+        @Override
+        public String getExperimentsFilteredBySpeciesAndExperimentType(String species, String type) {
+            return "http://stubbed-species-url/experiments?species=" + species + "experimentType=" + type;
+        }
         @Override
         public String getExperimentUrl(Experiment experiment) {
             return "http://stubbed-experiment-url/experiments/" + experiment.getAccession();
@@ -64,6 +67,26 @@ class CardModelFactoryTest {
 
         assertThat(subject.create(someWeirdSpeciesInfo).content())
                 .hasSize(1);
+
+    }
+
+    @Test
+    void createAtlasPopularSpeciesCard() {
+        Species species = generateRandomSpecies();
+
+        PopularSpeciesInfo someWeirdSpeciesInfo =
+                PopularSpeciesInfo.create(
+                        species.getName(),
+                        "Dorne",
+                        RNG.nextInt(0, 1000),
+                        RNG.nextInt(0, 1000));
+
+        assertThat(subject.createAtlasHomePageSpeciesCard(someWeirdSpeciesInfo))
+                .extracting("iconType", "iconSrc")
+                .containsOnly(CardIconType.ATLASSPECIES, species.getName());
+
+        assertThat(subject.createAtlasHomePageSpeciesCard(someWeirdSpeciesInfo).content())
+                .hasSize(3);
 
     }
 
