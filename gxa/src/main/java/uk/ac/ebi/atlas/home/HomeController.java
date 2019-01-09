@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.species.AtlasInformationDao;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.Random;
 
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
@@ -32,14 +34,16 @@ public class HomeController {
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final PopularSpeciesService popularSpeciesService;
     private final LatestExperimentsService latestExperimentsService;
-
+    private AtlasInformationDao atlasInformationDao;
     @Inject
     public HomeController(SpeciesPropertiesTrader speciesPropertiesTrader,
                           PopularSpeciesService popularSpeciesService,
                           LatestExperimentsDao latestExperimentsDao,
-                          ExpressionAtlasExperimentTrader experimentTrader) {
+                          ExpressionAtlasExperimentTrader experimentTrader,
+                          AtlasInformationDao atlasInformationDao) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.popularSpeciesService = popularSpeciesService;
+        this.atlasInformationDao = atlasInformationDao;
         this.latestExperimentsService =
                 new LatestExperimentsService(
                         latestExperimentsDao, experimentTrader,
@@ -54,7 +58,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/home", produces = "text/html;charset=UTF-8")
-    public String getHome(Model model) {
+    public String getHome(Model model) throws IOException {
         ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
         for (PopularSpeciesInfo popularSpeciesInfo: popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)) {
             topSixSelectBuilder.put(
@@ -76,16 +80,8 @@ public class HomeController {
 
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
 
-        model.addAttribute(
-                "speciesList", GSON.toJson(popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)));
-        model.addAttribute(
-                "animalsList", GSON.toJson(popularSpeciesService.getPopularSpecies("animals", FEATURED_SPECIES)));
-        model.addAttribute(
-                "plantsList", GSON.toJson(popularSpeciesService.getPopularSpecies("plants", FEATURED_SPECIES)));
-        model.addAttribute(
-                "fungiList", GSON.toJson(popularSpeciesService.getPopularSpecies("fungi", FEATURED_SPECIES)));
-
         model.addAttribute("speciesPath", ""); // Required by Spring form tag
+        model.addAttribute("info", atlasInformationDao.fetchAll());
 
         return "home";
     }
