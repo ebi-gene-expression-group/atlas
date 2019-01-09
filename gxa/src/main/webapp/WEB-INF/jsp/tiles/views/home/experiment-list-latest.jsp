@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
     <ul class="tabs" data-tabs id="experiments-tabs">
-        <li class="tabs-title is-active"><a href="#featured-experiments">Featured</a></li>
+        <li class="tabs-title is-active"><a href="#featured-experiments">Featured experiments</a></li>
         <li class="tabs-title"><a href="#latest-experiments" aria-selected="true">Latest experiments</a></li>
     </ul>
 
@@ -15,7 +15,7 @@
             <div class="row margin-bottom-xxlarge" style="max-width: none;">
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=ENCODE">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/encode.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/encode.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4344">Human tissues</a><br>
                             <a href="${pageContext.request.contextPath}/experiments/E-GEOD-26284">Human cells</a>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=BLUEPRINT">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/blueprint.png"/>
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/blueprint.png"/>
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4754">Plasma cells of tonsil</a><br>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-3819">Rare types of haemopoetic cells</a><br>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=FANTOM5">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/fantom.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/fantom.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-3578">Mouse cells</a><br>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-3579">Mouse tissues</a><br>
@@ -45,7 +45,7 @@
 
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-PROT-3">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/human_protein_atlas.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/human_protein_atlas.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-PROT-3">Human tissues</a>
                         </h6>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-2770">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/ccle.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/ccle.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-2770">Cancer Cell Line Encyclopedia</a>
                         </h6>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=HipSci">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/hipsci.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;"src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/hipsci.png" />
 
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-PROT-5">Proteomics – Cell lines</a><br>
@@ -74,7 +74,7 @@
             <div class="row margin-bottom-xxlarge"  style="max-width: none;">
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5214">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/gtex.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/gtex.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5214">Human tissues</a>
                         </h6>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/pcawg.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/pcawg.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5200">PCAWG by disease</a><br>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5423">PCAWG by individual</a>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=Pan-Cancer">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/wtsi_mgh_cancerrxgene.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/wtsi_mgh_cancerrxgene.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-3983">Genomics of Drug Sensitivity in Cancer Project – Cell lines</a><br>
                         </h6>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4840">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/hdbr.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/hdbr.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4840">Prenatal brain development</a>
                         </h6>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/baseline/experiments">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/baseline.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/baseline.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/baseline/experiments">All baseline experiments</a>
                         </h6>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="small-2 columns combo text-center padding-top-medium end">
                     <a href="${pageContext.request.contextPath}/plant/experiments">
-                        <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/gramene.png" />
+                        <img class="margin-bottom-large experiment-thumbnail" style="height: 100px;" src="${pageContext.request.contextPath}/resources/images/experiment-list-latest/gramene.png" />
                         <h6>
                             <a href="${pageContext.request.contextPath}/plant/experiments">Plant experiments</a>
                         </h6>
