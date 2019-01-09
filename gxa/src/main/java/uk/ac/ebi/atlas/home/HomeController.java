@@ -18,8 +18,6 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Random;
 
-import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
-
 @Controller
 public class HomeController {
     @Autowired
