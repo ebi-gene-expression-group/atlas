@@ -10,7 +10,7 @@
     "eslint": "^5.9.0",
     "eslint-config-gene-expression": "^0.4.2",
     "file-loader": "^2.0.0",
-    "image-webpack-loader": "^4.5.0",
+    "image-webpack-loader": "^4.6.0",
     "webpack": "^4.26.0",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2"
