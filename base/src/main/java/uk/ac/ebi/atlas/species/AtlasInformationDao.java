@@ -37,21 +37,16 @@ public class AtlasInformationDao {
     }
 
     private ArrayList<String> readAtlasInformation(JsonReader reader) throws IOException {
-        String left = null;
-        String right = null;
         ArrayList<String> info = new ArrayList<>();
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-
-            if ("left".equals(name)) {
-                left = reader.nextString();
-                info.add(left);
-            } else if ("right".equals(name)) {
-                right = reader.nextString();
-                info.add(right);
-            } else {
-                reader.skipValue();
+            switch(name){
+                case "Ensembl": info.add("Ensembl: " + reader.nextString()); break;
+                case "Ensembl Genomes": info.add("Ensembl Genomes: " + reader.nextString()); break;
+                case "WormBase paraSite": info.add("WormBase paraSite: " + reader.nextString()); break;
+                case "EFO": info.add("EFO: " + reader.nextString()); break;
+                default: reader.skipValue();
             }
         }
         reader.endObject();
