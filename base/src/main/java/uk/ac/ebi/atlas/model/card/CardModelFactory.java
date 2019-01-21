@@ -22,20 +22,24 @@ public class CardModelFactory {
         this.urlHelpers = urlHelpers;
     }
 
-    public CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
+    private CardModel createCardModel(PopularSpeciesInfo popularSpeciesInfo, CardIconType type, List content){
         return CardModel.create(
-                CardIconType.SPECIES,
+                type,
                 popularSpeciesInfo.species(),
                 Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
                         Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
-                Collections.singletonList(
-                        Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
-                                Optional.empty())));
+                content);
+    }
+
+    public CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
+        return createCardModel(popularSpeciesInfo, CardIconType.SPECIES, Collections.singletonList(
+                Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
+                        Optional.empty())));
     }
 
 
     public CardModel createAtlasHomePageSpeciesCard(PopularSpeciesInfo popularSpeciesInfo) {
-        List content = new ArrayList();
+        List<Pair<String, Optional<String>>> content = new ArrayList<>();
         content.add(Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
                 Optional.empty()));
         content.add(Pair.of(popularSpeciesInfo.baselineExperiments() + " ",
@@ -43,12 +47,7 @@ public class CardModelFactory {
         content.add(Pair.of(popularSpeciesInfo.differentialExperiments() + " ",
                 Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "differential"))));
 
-        return CardModel.create(
-                CardIconType.ATLASSPECIES,
-                popularSpeciesInfo.species(),
-                Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
-                        Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
-                content);
+        return createCardModel(popularSpeciesInfo,  CardIconType.ATLASSPECIES, content);
     }
 
     public CardModel createLandingPageSpeciesCard(Collection<Experiment> experiments) {
