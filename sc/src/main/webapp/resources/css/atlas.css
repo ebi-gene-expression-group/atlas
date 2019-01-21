@@ -56,7 +56,12 @@ hr {
 #experiment-page .gene-search-container {
     margin-bottom: 1rem;
 }
-
+#experiment-page, #feedback-button {
+    display: inline;
+}
+#feedback-button h1 {
+    color: black;
+}
 /** Foundation **/
 .callout {
     position: relative;

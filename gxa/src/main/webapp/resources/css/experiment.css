@@ -17,3 +17,10 @@ th.gxaHeatmapTableDesignElement {
 #experiment-page svg {
     overflow: visible !important;
 }
+
+#experiment-page, #feedback-button {
+    display: inline;
+}
+#feedback-button h1 {
+    color: black;
+}
