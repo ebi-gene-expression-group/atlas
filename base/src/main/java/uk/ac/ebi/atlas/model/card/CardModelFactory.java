@@ -32,22 +32,19 @@ public class CardModelFactory {
     }
 
     public CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
-        return createCardModel(popularSpeciesInfo, CardIconType.SPECIES, Collections.singletonList(
-                Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
-                        Optional.empty())));
-    }
-
-
-    public CardModel createAtlasHomePageSpeciesCard(PopularSpeciesInfo popularSpeciesInfo) {
         List<Pair<String, Optional<String>>> content = new ArrayList<>();
         content.add(Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
                 Optional.empty()));
-        content.add(Pair.of(popularSpeciesInfo.baselineExperiments() + " ",
+        if(popularSpeciesInfo.baselineExperiments() > 0){
+            content.add(Pair.of("Baseline: " + popularSpeciesInfo.baselineExperiments(),
                 Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "baseline"))));
-        content.add(Pair.of(popularSpeciesInfo.differentialExperiments() + " ",
+        }
+        if(popularSpeciesInfo.differentialExperiments() > 0){
+            content.add(Pair.of("Differential: " + popularSpeciesInfo.differentialExperiments() + " ",
                 Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "differential"))));
+        }
 
-        return createCardModel(popularSpeciesInfo,  CardIconType.ATLASSPECIES, content);
+        return createCardModel(popularSpeciesInfo, CardIconType.SPECIES, content);
     }
 
     public CardModel createLandingPageSpeciesCard(Collection<Experiment> experiments) {

@@ -50,17 +50,18 @@ class CardModelFactoryTest {
         subject = new CardModelFactory(urlHelpersImpl);
     }
 
-    Species species = generateRandomSpecies();
-
-    PopularSpeciesInfo someWeirdSpeciesInfo =
-            PopularSpeciesInfo.create(
-                    species.getName(),
-                    "Dorne",
-                    RNG.nextInt(0, 1000),
-                    RNG.nextInt(0, 1000));
 
     @Test
     void createPopularSpeciesCard() {
+        Species species = generateRandomSpecies();
+
+        PopularSpeciesInfo someWeirdSpeciesInfo =
+                PopularSpeciesInfo.create(
+                        species.getName(),
+                        "Dorne",
+                        RNG.nextInt(0, 1000),
+                        RNG.nextInt(0, 1000));
+
         assertThat(subject.create(someWeirdSpeciesInfo))
                 .extracting("iconType", "iconSrc")
                 .containsOnly(CardIconType.SPECIES, species.getName());
@@ -69,15 +70,6 @@ class CardModelFactoryTest {
                 .hasSize(1);
     }
 
-    @Test
-    void createAtlasPopularSpeciesCard() {
-        assertThat(subject.createAtlasHomePageSpeciesCard(someWeirdSpeciesInfo))
-                .extracting("iconType", "iconSrc")
-                .containsOnly(CardIconType.ATLASSPECIES, species.getName());
-
-        assertThat(subject.createAtlasHomePageSpeciesCard(someWeirdSpeciesInfo).content())
-                .hasSize(3);
-    }
 
     @Test
     void createLandingPageSpeciesCard() {
