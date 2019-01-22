@@ -26,32 +26,19 @@ public class AtlasInformationDao {
     public ArrayList<String> fetchAll() throws IOException {
         ArrayList<String> atlasInformation = new ArrayList<>();
         try (JsonReader reader = atlasInformationJsonFile.get()) {
-            reader.beginArray();
+            reader.beginObject();
             while (reader.hasNext()) {
-                atlasInformation.addAll(readAtlasInformation(reader));
+                String name = reader.nextName();
+                switch(name){
+                    case "ensembl": atlasInformation.add("Ensembl: " + reader.nextString()); break;
+                    case "genomes": atlasInformation.add("Ensembl Genomes: " + reader.nextString()); break;
+                    case "paraSite": atlasInformation.add("WormBase paraSite: " + reader.nextString()); break;
+                    case "efo": atlasInformation.add("EFO: " + reader.nextString()); break;
+                    default: reader.skipValue();
+                }
             }
-            reader.endArray();
+            reader.endObject();
         }
-
         return atlasInformation;
     }
-
-    private ArrayList<String> readAtlasInformation(JsonReader reader) throws IOException {
-        ArrayList<String> info = new ArrayList<>();
-        reader.beginObject();
-        while (reader.hasNext()) {
-            String name = reader.nextName();
-            switch(name){
-                case "Ensembl": info.add("Ensembl: " + reader.nextString()); break;
-                case "Ensembl Genomes": info.add("Ensembl Genomes: " + reader.nextString()); break;
-                case "WormBase paraSite": info.add("WormBase paraSite: " + reader.nextString()); break;
-                case "EFO": info.add("EFO: " + reader.nextString()); break;
-                default: reader.skipValue();
-            }
-        }
-        reader.endObject();
-
-        return info;
-    }
-
 }
