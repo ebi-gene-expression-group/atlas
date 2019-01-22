@@ -24,18 +24,15 @@
 <!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa_sc/ -- Remember the trailing slash! -->
 <script>
     HomePagePanel.render({
-          host: `http://localhost:8080/gxa/sc/`,
-          experimentResources: {
-            'Latest experiments': `json/experiments/latestExperiments`,
-            Featured: `alpha/hca`
-          },
-          speciesResources: {
-            Species: `json/experiments/popular-species`,
-            Animals: `json/experiments/popular-species?kingdom=animals`,
-            Plants: `json/experiments/popular-species?kingdom=plants`,
-            Fungi: `json/experiments/popular-species?kingdom=fungi`,
-            Protists: `json/experiments/popular-species?kingdom=protists`
-          }
+        host: 'http://localhost:8080/gxa/sc/',
+        resource: {
+            Featured: 'hca',
+            Latest: 'json/experiments/latestExperiments',
+            Species: 'json/experiments/popular-species',
+            Animals: 'json/experiments/popular-species?kingdom=animals'
+        },
+        panelNameAList: [`Species`, `Animals`],
+        panelNameBList: [`Latest experiments`,`Featured`]
         }, 'target')
 </script>
 
