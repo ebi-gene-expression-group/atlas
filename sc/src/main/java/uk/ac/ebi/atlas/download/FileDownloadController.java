@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -89,6 +91,45 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
             zipOutputStream.closeEntry();
         }
 
+        zipOutputStream.close();
+    }
+
+    @RequestMapping(value = "experimentlist/{experimentAccessionArray}/download/zip",
+            method = RequestMethod.GET,
+            produces = "application/zip")
+    public void
+    downloadMultipleExperimentsArchive(HttpServletResponse response,
+                    @PathVariable String experimentAccessionArray,
+                    @RequestParam(value = "fileType") String fileTypeId,
+                    @RequestParam(value = "accessKey", defaultValue = "") String accessKey) throws IOException {
+
+        String[] array = experimentAccessionArray.split("\\,");
+
+        String archiveName = array.length + "experiments" + "-files.zip";
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
+        response.setContentType("application/zip");
+        ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+
+        for (String experimentAccession : array){
+            Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+
+            List<Path> paths = new ArrayList<>();
+            paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId("quantification-filtered")));
+            paths.add(experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.fromId("idf")));
+
+            for (Path path : paths) {
+                File file = path.toFile();
+
+                zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+                FileInputStream fileInputStream = new FileInputStream(file);
+
+                IOUtils.copy(fileInputStream, zipOutputStream);
+
+                fileInputStream.close();
+                zipOutputStream.closeEntry();
+            }
+        }
         zipOutputStream.close();
     }
 }
