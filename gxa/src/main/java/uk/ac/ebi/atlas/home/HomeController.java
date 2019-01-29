@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.home;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.JsonArray;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -16,10 +15,12 @@ import uk.ac.ebi.atlas.species.AtlasInformationDao;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -105,24 +106,31 @@ public class HomeController {
 
         model.addAttribute("speciesPath", ""); // Required by Spring form tag
 
-        JsonArray experimentsjsonArray = experimentInfoListService.getExperimentsJson().get("aaData").getAsJsonArray();
-        ArrayList<Map<String, Object>> experimentsList = GSON.fromJson(experimentsjsonArray, ArrayList.class);
-        
+        List<ExperimentInfo> experimentlist = experimentInfoListService.listPublicExperiments();
+
         Double numberOfAssays = 0.0;
         ArrayList<String> numberOfSpecies = new ArrayList<>();
 
-        for (int i = 0; i < experimentsList.size(); i++) {
-            numberOfAssays += (Double)(experimentsList.get(i).get("numberOfAssays"));
-            if (!numberOfSpecies.contains(experimentsList.get(i).get("species").toString())){
-                numberOfSpecies.add(experimentsList.get(i).get("species").toString());
+        for (int i = 0; i < experimentlist.size(); i++) {
+            numberOfAssays += experimentlist.get(i).getNumberOfAssays();
+            if (!numberOfSpecies.contains(experimentlist.get(i).getSpecies())) {
+                numberOfSpecies.add(experimentlist.get(i).getSpecies());
             }
         }
 
-        model.addAttribute("numberOfStudies", experimentsList.size());
+        model.addAttribute("numberOfStudies", experimentlist.size());
         model.addAttribute("numberOfAssays", Math.round(numberOfAssays));
         model.addAttribute("numberOfSpecies", numberOfSpecies.size());
 
-        model.addAttribute("info", atlasInformationDao.fetchAll());
+        Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
+        model.addAttribute("info", atlasInformation.toString()
+                .replace("ensemble", "Ensembl")
+                .replace("genomes", "Ensembl Genomes")
+                .replace("paraSite", "WormBase paraSite")
+                .replace("efo", "EFO")
+                .replace("=",":")
+                .replace("{","")
+                .replace("}",""));
 
         return "home";
     }

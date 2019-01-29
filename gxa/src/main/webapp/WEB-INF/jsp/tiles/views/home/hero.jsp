@@ -16,12 +16,7 @@
             <fmt:formatNumber type = "number" value="${numberOfAssays}"/> assays</h4>
     </div>
     <div class="media-object-section top" style="position: absolute;right: 1%;">
-        <h4>
-            <c:forEach var="information" items="${info}" varStatus="i">
-                ${information}
-                <c:if test="${i.index ne 3}"> , </c:if>
-            </c:forEach>
-        </h4>
+        <h4> ${info} </h4>
     </div>
 </div>
 
