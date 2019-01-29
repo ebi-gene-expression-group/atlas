@@ -59,17 +59,16 @@ class CardModelFactoryTest {
                 PopularSpeciesInfo.create(
                         species.getName(),
                         "Dorne",
-                        RNG.nextInt(0, 1000),
-                        RNG.nextInt(0, 1000));
+                        RNG.nextInt(1, 1000),
+                        RNG.nextInt(1, 1000));
 
         assertThat(subject.create(someWeirdSpeciesInfo))
                 .extracting("iconType", "iconSrc")
                 .containsOnly(CardIconType.SPECIES, species.getName());
 
         assertThat(subject.create(someWeirdSpeciesInfo).content())
-                .hasSize(1);
+                .hasSize(3);
     }
-
 
     @Test
     void createLandingPageSpeciesCard() {
