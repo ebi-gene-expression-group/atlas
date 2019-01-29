@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="experiment-page/experiment-description.jsp" %>
 
-<link rel="stylesheet" href="http://localhost:8080/gxa/sc/resources/css/popup-feedback.css" type="text/css" media="all">
-<link rel="stylesheet" href="http://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
-
 <div class="row column margin-top-large expanded">
     <div id="experiment-page"></div>
 </div>
