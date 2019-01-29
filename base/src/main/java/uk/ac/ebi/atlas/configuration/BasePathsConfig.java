@@ -67,6 +67,6 @@ public class BasePathsConfig {
 
     @Bean
     public Path atlasInformationFilePath() {
-        return Paths.get(dataFilesLocation).resolve("species").resolve("atlas-information.json");
+        return Paths.get(dataFilesLocation).resolve("species").resolve("release-metadata.json");
     }
 }
