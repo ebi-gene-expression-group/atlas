@@ -22,29 +22,26 @@ public class CardModelFactory {
         this.urlHelpers = urlHelpers;
     }
 
-    private CardModel createCardModel(PopularSpeciesInfo popularSpeciesInfo, CardIconType type, List content){
-        return CardModel.create(
-                type,
-                popularSpeciesInfo.species(),
-                Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
-                        Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
-                content);
-    }
 
     public CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
         List<Pair<String, Optional<String>>> content = new ArrayList<>();
         content.add(Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
                 Optional.empty()));
         if(popularSpeciesInfo.baselineExperiments() > 0){
-            content.add(Pair.of("Baseline: " + popularSpeciesInfo.baselineExperiments(),
+            content.add(Pair.of("Baseline:" + popularSpeciesInfo.baselineExperiments(),
                 Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "baseline"))));
         }
         if(popularSpeciesInfo.differentialExperiments() > 0){
-            content.add(Pair.of("Differential: " + popularSpeciesInfo.differentialExperiments() + " ",
+            content.add(Pair.of("Differential:" + popularSpeciesInfo.differentialExperiments() + " ",
                 Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "differential"))));
         }
 
-        return createCardModel(popularSpeciesInfo, CardIconType.SPECIES, content);
+        return CardModel.create(
+                CardIconType.SPECIES,
+                popularSpeciesInfo.species(),
+                Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
+                        Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
+                content);
     }
 
     public CardModel createLandingPageSpeciesCard(Collection<Experiment> experiments) {
