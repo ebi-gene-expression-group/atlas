@@ -3,12 +3,13 @@ package uk.ac.ebi.atlas.species;
 import com.google.gson.stream.JsonReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.model.resource.JsonFile;
+import uk.ac.ebi.atlas.utils.GsonProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Named
 public class AtlasInformationDao {
@@ -23,22 +24,10 @@ public class AtlasInformationDao {
                         atlasInformationFilePath.getFileName().toString());
     }
 
-    public ArrayList<String> fetchAll() throws IOException {
-        ArrayList<String> atlasInformation = new ArrayList<>();
-        try (JsonReader reader = atlasInformationJsonFile.get()) {
-            reader.beginObject();
-            while (reader.hasNext()) {
-                String name = reader.nextName();
-                switch(name){
-                    case "ensembl": atlasInformation.add("Ensembl: " + reader.nextString()); break;
-                    case "genomes": atlasInformation.add("Ensembl Genomes: " + reader.nextString()); break;
-                    case "paraSite": atlasInformation.add("WormBase paraSite: " + reader.nextString()); break;
-                    case "efo": atlasInformation.add("EFO: " + reader.nextString()); break;
-                    default: reader.skipValue();
-                }
-            }
-            reader.endObject();
-        }
-        return atlasInformation;
+    public Map<String, String>  fetchAll() {
+        JsonReader reader = atlasInformationJsonFile.get();
+        Map<String, String> data = GsonProvider.GSON.fromJson(reader, HashMap.class);
+
+        return data;
     }
 }
