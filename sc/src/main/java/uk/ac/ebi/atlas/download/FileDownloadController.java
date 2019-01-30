@@ -100,12 +100,11 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
     public void
     downloadMultipleExperimentsArchive(HttpServletResponse response,
                     @PathVariable String experimentAccessionArray,
-                    @RequestParam(value = "fileType") String fileTypeId,
                     @RequestParam(value = "accessKey", defaultValue = "") String accessKey) throws IOException {
 
         String[] array = experimentAccessionArray.split("\\,");
 
-        String archiveName = array.length + "experiments" + "-files.zip";
+        String archiveName = array.length + "-" + "experiments" + "-files.zip";
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
         response.setContentType("application/zip");
@@ -116,12 +115,13 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
 
             List<Path> paths = new ArrayList<>();
             paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId("quantification-filtered")));
-            paths.add(experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.fromId("idf")));
+            paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId("quantification-raw")));
+            paths.add(experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.fromId("sdrf")));
 
             for (Path path : paths) {
                 File file = path.toFile();
 
-                zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+                zipOutputStream.putNextEntry(new ZipEntry(experiment.getAccession() + "/" + file.getName()));
                 FileInputStream fileInputStream = new FileInputStream(file);
 
                 IOUtils.copy(fileInputStream, zipOutputStream);
