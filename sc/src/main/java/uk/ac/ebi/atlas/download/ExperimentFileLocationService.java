@@ -59,9 +59,9 @@ public class ExperimentFileLocationService {
             case QUANTIFICATION_RAW:
                 return
                         Arrays.asList(
-                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).rawCountsMatrix.getPath(),
-                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).rawCountsCellIdsTsv.getPath(),
-                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).rawCountsGeneIdsTsv.getPath());
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).filteredCountsMatrix.getPath(),
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).filteredCountsCellIdsTsv.getPath(),
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).filteredCountsGeneIdsTsv.getPath());
             default:
                 return null;
         }

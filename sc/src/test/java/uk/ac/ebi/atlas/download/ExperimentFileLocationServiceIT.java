@@ -44,6 +44,13 @@ class ExperimentFileLocationServiceIT {
     private static final String MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE =
             MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE + "_cols";
 
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_filtered_counts.mtx";
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
+
     private static final String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
     private static final String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE =
             "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
@@ -115,6 +122,21 @@ class ExperimentFileLocationServiceIT {
 
         existingArchiveFilesOfType(experimentAccession,
                 ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames);
+    }
+
+    @Test
+    void existingRawFilteredQuantificationFiles() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<String> expectedFileNames =
+                Stream.of(
+                        SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE)
+                        .map(template -> MessageFormat.format(template, experimentAccession))
+                        .collect(Collectors.toList());
+
+        existingArchiveFoldersOfFilesOfType(experimentAccession,
+                ExperimentFileType.QUANTIFICATION_RAW, expectedFileNames);
     }
 
     @Test
@@ -208,6 +230,32 @@ class ExperimentFileLocationServiceIT {
         List<String> fileNames = paths.stream()
                 .map(Path::toFile)
                 .map(File::getName)
+                .collect(Collectors.toList());
+
+        assertThat(expectedFileNames)
+                .isNotEmpty()
+                .containsAnyElementsOf(fileNames);
+    }
+
+    private void existingArchiveFoldersOfFilesOfType(String experimentAccession,
+                                            ExperimentFileType fileType,
+                                            List<String> expectedFileNames) {
+        List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
+
+        // Some paths, e.g. marker genes, might not be all in the DB
+        assertThat(paths.size()).isGreaterThanOrEqualTo(expectedFileNames.size());
+
+        for (Path path : paths) {
+            File file = path.toFile();
+
+            assertThat(file).exists();
+            assertThat(file).isFile();
+        }
+
+        List<String> fileNames = paths.stream()
+                .map(Path::toFile)
+                .map(File::getName)
+                .map(entry -> experimentAccession + "/" + entry)
                 .collect(Collectors.toList());
 
         assertThat(expectedFileNames)
