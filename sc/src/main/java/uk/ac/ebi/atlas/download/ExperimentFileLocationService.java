@@ -56,6 +56,12 @@ public class ExperimentFileLocationService {
                         .stream()
                         .map(AtlasResource::getPath)
                         .collect(Collectors.toList());
+            case QUANTIFICATION_RAW:
+                return
+                        Arrays.asList(
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).rawCountsMatrix.getPath(),
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).rawCountsCellIdsTsv.getPath(),
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).rawCountsGeneIdsTsv.getPath());
             default:
                 return null;
         }
