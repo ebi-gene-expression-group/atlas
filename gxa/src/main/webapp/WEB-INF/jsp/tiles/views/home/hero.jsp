@@ -22,12 +22,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div id="hero">
-        <h4><fmt:formatNumber type = "number" value="${numberOfSpecies}"/> species,
+        <h4>Search across
+            <strong><fmt:formatNumber type = "number" value="${numberOfSpecies}"/> species,
             <fmt:formatNumber type = "number" value="${numberOfStudies}"/> studies,
-            <fmt:formatNumber type = "number" value="${numberOfAssays}"/> assays</h4>
-        <h4>Ensembl Genomes:${info.get(genomes)},
-            WormBase ParaSite:${info.get(paraSite)},
-            Ensembl:${info.get(ensembl)},
-            EFO:${info.get(efo)}</h4>
+            <fmt:formatNumber type = "number" value="${numberOfAssays}"/> assays </strong>
+        </h4>
+        <h4>Ensembl ${info.get(ensembl)},
+            Ensembl Genomes ${info.get(genomes)},
+            WormBase ParaSite ${info.get(paraSite)},
+            EFO ${info.get(efo)}</h4>
 </div>
 
