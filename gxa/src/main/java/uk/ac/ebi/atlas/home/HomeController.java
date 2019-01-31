@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.AtlasInformationDao;
+import uk.ac.ebi.atlas.species.AtlasInformationDataType;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
@@ -123,15 +124,11 @@ public class HomeController {
         model.addAttribute("numberOfSpecies", numberOfSpecies.size());
 
         Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
-        model.addAttribute("info", atlasInformation.toString()
-                .replace("ensemble", "Ensembl")
-                .replace("genomes", "Ensembl Genomes")
-                .replace("paraSite", "WormBase paraSite")
-                .replace("efo", "EFO")
-                .replace("=",":")
-                .replace("{","")
-                .replace("}",""));
-
+        model.addAttribute("info", atlasInformation);
+        model.addAttribute("ensembl", AtlasInformationDataType.ENSEMBL.getId());
+        model.addAttribute("genomes", AtlasInformationDataType.GENOMES.getId());
+        model.addAttribute("paraSite", AtlasInformationDataType.PARASITE.getId());
+        model.addAttribute("efo", AtlasInformationDataType.EFO.getId());
         return "home";
     }
 }

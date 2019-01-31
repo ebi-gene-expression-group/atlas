@@ -1,7 +1,11 @@
-<%--@elvariable id="info" type="List<String>"--%>
+<%--@elvariable id="info" type="String"--%>
 <%--@elvariable id="numberOfSpecies" type="Number"--%>
 <%--@elvariable id="numberOfStudies" type="Number"--%>
 <%--@elvariable id="numberOfAssays" type="Number"--%>
+<%--@elvariable id="genomes" type="String"--%>
+<%--@elvariable id="paraSite" type="String"--%>
+<%--@elvariable id="ensembl" type="String"--%>
+<%--@elvariable id="efo" type="String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -16,7 +20,12 @@
             <fmt:formatNumber type = "number" value="${numberOfAssays}"/> assays</h4>
     </div>
     <div class="media-object-section top" style="position: absolute;right: 1%;">
-        <h4> ${info} </h4>
+        <h4>
+            Ensembl Genomes:${info.get(genomes)},
+            WormBase paraSite:${info.get(paraSite)},
+            ensembl:${info.get(ensembl)},
+            EFO:${info.get(efo)}
+        </h4>
     </div>
 </div>
 
