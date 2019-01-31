@@ -109,7 +109,7 @@ public class HomeController {
 
         List<ExperimentInfo> experimentlist = experimentInfoListService.listPublicExperiments();
 
-        Double numberOfAssays = 0.0;
+        int numberOfAssays = 0;
         ArrayList<String> numberOfSpecies = new ArrayList<>();
 
         for (int i = 0; i < experimentlist.size(); i++) {
@@ -120,7 +120,7 @@ public class HomeController {
         }
 
         model.addAttribute("numberOfStudies", experimentlist.size());
-        model.addAttribute("numberOfAssays", Math.round(numberOfAssays));
+        model.addAttribute("numberOfAssays", numberOfAssays);
         model.addAttribute("numberOfSpecies", numberOfSpecies.size());
 
         Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
@@ -129,6 +129,7 @@ public class HomeController {
         model.addAttribute("genomes", AtlasInformationDataType.GENOMES.getId());
         model.addAttribute("paraSite", AtlasInformationDataType.PARASITE.getId());
         model.addAttribute("efo", AtlasInformationDataType.EFO.getId());
+        
         return "home";
     }
 }
