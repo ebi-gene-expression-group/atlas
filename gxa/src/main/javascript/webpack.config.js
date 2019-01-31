@@ -11,7 +11,8 @@ module.exports = {
     expressionAtlasBioentityInformation: `./node_modules/sc-atlas-bioentity-information`,
     expressionAtlasBaselineExpression: `./bundles/baseline-expression`,
     expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
-    expressionAtlasBrowseBySpecies: `./bundles/browse-by-species`
+    expressionAtlasBrowseBySpecies: `./bundles/browse-by-species`,
+    feedbackForm: `./bundles/feedback-form`
   },
 
   plugins: [
@@ -44,7 +45,8 @@ module.exports = {
       "prop-types": path.resolve(`./node_modules/prop-types`),
       "styled-components": path.resolve(`./node_modules/styled-components`),
       "react-router-dom": path.resolve(`./node_modules/react-router-dom`),
-      "urijs": path.resolve(`./node_modules/urijs`)
+      "urijs": path.resolve(`./node_modules/urijs`),
+      "react-tooltip": path.resolve(`./node_modules/react-tooltip`)
     }
   },
 

@@ -32,7 +32,7 @@
                     <li id="local-nav-release-notes"><a href="${pageContext.request.contextPath}/release-notes.html"><i class="icon icon-generic padding-right-medium" data-icon=";"></i>Release notes</a></li>
                     <li id="local-nav-help"><a href="${pageContext.request.contextPath}/help.html"><i class="icon icon-generic padding-right-medium" data-icon="?"></i>Help</a></li>
                     <%--<li id="local-nav-about"><a href="../websites/patterns/"><i class="icon icon-common padding-right-medium" data-icon="&#x2139;"></i>About</a></li>--%>
-                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/gxasc" target="_blank" data-icon="X"><i class="icon icon-functional padding-right-medium" data-icon="n"></i>Feedback</a></li>
+                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/gxasc" target="_blank" data-icon="X"><i class="icon icon-functional padding-right-medium" data-icon="n"></i>Support</a></li>
                 </ul>
             </nav>
             <!-- /local-nav -->

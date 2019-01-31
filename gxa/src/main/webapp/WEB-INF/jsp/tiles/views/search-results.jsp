@@ -9,6 +9,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities-box.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup-feedback.css" type="text/css" media="all">
+
+<style>
+    #feedback-button {
+        display: inline;
+    }
+    #feedback-button h1 {
+        color: black;
+    }
+</style>
 
 <div class="row expanded">
     <div class="small-12 columns">
@@ -66,14 +76,18 @@
 
     </div>
 </div>
+<div id="feedback-button"></div>
 
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/feedbackForm.bundle.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 <script>
+
     document.addEventListener("DOMContentLoaded", function(event) {
         if (!window.location.hash) {
             var initialHash = ${hasBaselineResults} ? '#baseline' : '#differential';
             var newURL = URI(window.location).hash(initialHash).toString();
             history.replaceState(null, '', newURL);
         }
+        feedbackForm.render({}, 'feedback-button');
     })
 </script>
