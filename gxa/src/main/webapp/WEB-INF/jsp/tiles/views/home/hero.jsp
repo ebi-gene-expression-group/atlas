@@ -26,8 +26,8 @@
             <fmt:formatNumber type = "number" value="${numberOfStudies}"/> studies,
             <fmt:formatNumber type = "number" value="${numberOfAssays}"/> assays</h4>
         <h4>Ensembl Genomes:${info.get(genomes)},
-            WormBase paraSite:${info.get(paraSite)},
-            ensembl:${info.get(ensembl)},
+            WormBase ParaSite:${info.get(paraSite)},
+            Ensembl:${info.get(ensembl)},
             EFO:${info.get(efo)}</h4>
 </div>
 
