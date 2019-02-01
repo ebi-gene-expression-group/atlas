@@ -38,8 +38,8 @@ public class MarkerGenesDao {
 
     private static final String SELECT_MARKER_GENES_WITH_AVERAGES_PER_CLUSTER =
             "SELECT * " +
-                    "FROM top_50_marker_genes_stats " +
-                    "WHERE k_where_marker =:k and experiment_accession = :experiment_accession";
+                    "FROM marker_genes_stats " +
+                    "WHERE k_where_marker =:k and experiment_accession = :experiment_accession AND marker_p_value<0.05";
     public List<MarkerGene> getMarkerGenesWithAveragesPerCluster(String experimentAccession, int k) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(

@@ -58,7 +58,7 @@ public class JsonMarkerGenesController extends JsonExperimentController {
                 .stream()
                 .map(markerGene -> {
                     Map<String, Object> heatmapCell = new HashMap<>();
-                    heatmapCell.put("x", markerGene.clusterId());
+                    heatmapCell.put("x", markerGene.clusterId() - 1);
                     heatmapCell.put("y", geneIdIndices.get(markerGene.geneId()));
                     heatmapCell.put("name", symbolsForGeneIds.get(markerGene.geneId()));
                     heatmapCell.put("value", markerGene.medianExpression());

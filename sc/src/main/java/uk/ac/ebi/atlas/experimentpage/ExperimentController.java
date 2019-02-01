@@ -62,7 +62,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
         availableTabs.add(
                 customContentTab(
-                        "t-sne-plot",
+                        "results",
                         "Results",
                         experimentPageContentService.getTsnePlotData(experiment.getAccession())));
 
