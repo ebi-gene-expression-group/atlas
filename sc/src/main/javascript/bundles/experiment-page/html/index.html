@@ -24,22 +24,62 @@
             margin: 0;
         }
 
-        .experiment-page-side-nav a {
-            text-decoration: none;
-            border-bottom: none;
-        }
-        .experiment-page-side-nav a:focus {
-            box-shadow: none;
-        }
-
-        .experiment-page-side-nav .menu > li > a {
-            line-height: 1.5;
-        }
-
         .experiment-page-side-nav .is-active {
             background-color: #e6e6e6;
             color: rgb(0,124,130);
         }
+
+        #experiment-page .tabs {
+            background: #ffffff;
+        }
+
+        .side-tabs {
+            margin: 0;
+            border: 1px solid #e6e6e6;
+            border-top: 0;
+            background: #e6e6e6;
+            list-style-type: none
+        }
+
+        #experiment-page .tabs-title, .side-tabs-title {
+            background: #ffffff;
+        }
+
+        #experiment-page .tabs-title .active, .side-tabs-title .active {
+            color: #007c82;
+            background: #e6e6e6;
+        }
+
+        #experiment-page .tabs-title .active:hover, .side-tabs-title .active:hover {
+            background: #007c82;
+        }
+
+        #experiment-page .tabs-title:hover, .side-tabs-title:hover {
+            background: #007c82;
+        }
+
+        #experiment-page .tabs-title > a:hover, .side-tabs-title > a:hover {
+            background: #007c82;
+        }
+
+        #experiment-page .tabs-title:hover > a, .side-tabs-title:hover > a {
+            color: #ffffff;
+        }
+
+        #experiment-page .tabs-title > a:focus, .side-tabs-title > a:focus {
+            box-shadow: none;
+        }
+
+        #experiment-page .tabs-title > a, .side-tabs-title > a {
+            display: block;
+            padding: 1.25rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+            line-height: 1;
+            color: black;
+            border-bottom: none;
+        }
+
     </style>
 
     <!-- Use this CSS file for any custom styling -->
@@ -68,7 +108,7 @@
 <script>
     var tabs = [
       {
-        type: 't-sne-plot',
+        type: 'results',
         name: 'Results',
         props: {
           ks: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
