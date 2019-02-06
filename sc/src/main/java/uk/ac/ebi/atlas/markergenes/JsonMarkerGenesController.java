@@ -9,21 +9,21 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.GsonProvider;
 
 import javax.inject.Inject;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 public class JsonMarkerGenesController extends JsonExperimentController {
 
     private MarkerGenesDao markerGenesDao;
+    private HighchartsHeatmapAdapter highchartsHeatmapAdapter;
 
     @Inject
-    public JsonMarkerGenesController(ExperimentTrader experimentTrader, MarkerGenesDao markerGenesDao) {
+    public JsonMarkerGenesController(ExperimentTrader experimentTrader,
+                                     MarkerGenesDao markerGenesDao,
+                                     HighchartsHeatmapAdapter highchartsHeatmapAdapter) {
         super(experimentTrader);
         this.markerGenesDao = markerGenesDao;
+        this.highchartsHeatmapAdapter = highchartsHeatmapAdapter;
     }
 
     @GetMapping(
@@ -35,40 +35,6 @@ public class JsonMarkerGenesController extends JsonExperimentController {
             @PathVariable int k) {
         List<MarkerGene> result = markerGenesDao.getMarkerGenesWithAveragesPerCluster(experimentAccession, k);
 
-        List<MarkerGene> sortedMarkerGenes = result.stream()
-                .parallel()
-                .sorted(Comparator.comparing(MarkerGene::clusterIdWhereMarker)
-                        .thenComparing(MarkerGene::pValue)
-                )
-                .collect(Collectors.toList());
-
-        List<String> uniqueGeneIds = sortedMarkerGenes
-                .stream()
-                .map(MarkerGene::geneId)
-                .distinct()
-                .collect(Collectors.toList());
-
-        Map<String, String> symbolsForGeneIds = markerGenesDao.getSymbolsForGeneIds(uniqueGeneIds);
-
-        Map<String, Integer> geneIdIndices = uniqueGeneIds
-                .stream()
-                .collect(Collectors.toMap(x -> x, uniqueGeneIds::indexOf));
-
-        List<Map<String, Object>> highchartsHeatmapData = sortedMarkerGenes
-                .stream()
-                .map(markerGene -> {
-                    Map<String, Object> heatmapCell = new HashMap<>();
-                    heatmapCell.put("x", markerGene.clusterId() - 1);
-                    heatmapCell.put("y", geneIdIndices.get(markerGene.geneId()));
-                    heatmapCell.put("name", symbolsForGeneIds.getOrDefault(markerGene.geneId(), markerGene.geneId()));
-                    heatmapCell.put("value", markerGene.medianExpression());
-                    heatmapCell.put("clusterIdWhereMarker", markerGene.clusterIdWhereMarker());
-                    heatmapCell.put("pValue", markerGene.pValue());
-                    return heatmapCell;
-                })
-                .collect(Collectors.toList());
-
-        return GsonProvider.GSON.toJson(highchartsHeatmapData);
+        return GsonProvider.GSON.toJson(highchartsHeatmapAdapter.getMarkerGeneHeatmapData(result));
     }
-
 }
