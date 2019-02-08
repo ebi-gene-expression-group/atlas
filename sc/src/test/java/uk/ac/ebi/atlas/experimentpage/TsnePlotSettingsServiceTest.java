@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
-import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
+import uk.ac.ebi.atlas.tsne.TSnePlotDao;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,7 +24,7 @@ class TsnePlotSettingsServiceTest {
     private IdfParser idfParserMock;
 
     @Mock
-    private TSnePlotServiceDao tSnePlotServiceDaoMock;
+    private TSnePlotDao tSnePlotDaoMock;
 
     private static MockDataFileHub dataFileHubMock;
 
@@ -62,7 +62,7 @@ class TsnePlotSettingsServiceTest {
     @BeforeEach
     void setUp() {
         dataFileHubMock = MockDataFileHub.create();
-        subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock, tSnePlotServiceDaoMock);
+        subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock, tSnePlotDaoMock);
     }
 
     @Test
@@ -182,7 +182,7 @@ class TsnePlotSettingsServiceTest {
     @DisplayName("Valid perplexities in database")
     void validPerplexities() {
         List<Integer> expectedPerplexities = Arrays.asList(1, 5, 25, 20, 10, 5);
-        when(tSnePlotServiceDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(expectedPerplexities);
+        when(tSnePlotDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(expectedPerplexities);
 
         assertThat(subject.getAvailablePerplexities(EXPERIMENT_ACCESSION))
                 .hasSameSizeAs(expectedPerplexities)
@@ -192,7 +192,7 @@ class TsnePlotSettingsServiceTest {
     @Test
     @DisplayName("No perplexities in database")
     void noPerplexities() {
-        when(tSnePlotServiceDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(Collections.emptyList());
+        when(tSnePlotDaoMock.fetchPerplexities(EXPERIMENT_ACCESSION)).thenReturn(Collections.emptyList());
 
         assertThat(subject.getAvailablePerplexities(EXPERIMENT_ACCESSION)).isEmpty();
     }

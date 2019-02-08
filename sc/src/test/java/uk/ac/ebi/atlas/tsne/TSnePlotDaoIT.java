@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TSnePlotServiceDaoIT {
+class TSnePlotDaoIT {
     @Inject
     private DataSource dataSource;
 
@@ -37,7 +37,7 @@ class TSnePlotServiceDaoIT {
     private JdbcUtils jdbcTestUtils;
 
     @Inject
-    private TSnePlotServiceDao subject;
+    private TSnePlotDao subject;
 
     @BeforeAll
     void populateDatabaseTables() {
