@@ -35,7 +35,7 @@ class TSnePlotServiceTest {
     private static final int NUMBER_OF_CELLS = 10000;
 
     @Mock
-    private TSnePlotServiceDao tSnePlotServiceDaoMock;
+    private TSnePlotDao tSnePlotDaoMock;
     @Mock
     private CellMetadataDao cellMetadataDaoMock;
 
@@ -43,7 +43,7 @@ class TSnePlotServiceTest {
 
     @BeforeEach
     void setUp() {
-        subject = new TSnePlotService(tSnePlotServiceDaoMock, cellMetadataDaoMock);
+        subject = new TSnePlotService(tSnePlotDaoMock, cellMetadataDaoMock);
     }
 
     @Test
@@ -55,7 +55,7 @@ class TSnePlotServiceTest {
         int k = ThreadLocalRandom.current().nextInt(5, 20);
 
         Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtosWithClusters(NUMBER_OF_CELLS, k);
-        when(tSnePlotServiceDaoMock.fetchTSnePlotWithClusters(experimentAccession, perplexity, k))
+        when(tSnePlotDaoMock.fetchTSnePlotWithClusters(experimentAccession, perplexity, k))
                 .thenReturn(ImmutableList.copyOf(randomPointDtos));
 
         Map<Integer, Set<TSnePoint>> results = subject.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
@@ -93,7 +93,7 @@ class TSnePlotServiceTest {
         List<String> metadataValues = Arrays.asList("neuron", "stem cell", "B cell");
 
         Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtos(NUMBER_OF_CELLS);
-        when(tSnePlotServiceDaoMock.fetchTSnePlotForPerplexity(experimentAccession, perplexity))
+        when(tSnePlotDaoMock.fetchTSnePlotForPerplexity(experimentAccession, perplexity))
                 .thenReturn(ImmutableList.copyOf(randomPointDtos));
 
         // Extract list of cell IDs from t-SNE points
@@ -132,7 +132,7 @@ class TSnePlotServiceTest {
         String geneId = RandomDataTestUtils.generateRandomEnsemblGeneId();
 
         Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtosWithExpression(NUMBER_OF_CELLS);
-        when(tSnePlotServiceDaoMock.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId))
+        when(tSnePlotDaoMock.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId))
                 .thenReturn(ImmutableList.copyOf(randomPointDtos));
 
         Set<TSnePoint> results = subject.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId);

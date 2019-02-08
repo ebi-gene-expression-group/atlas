@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class TSnePlotServiceDao {
+public class TSnePlotDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public TSnePlotServiceDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public TSnePlotDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
