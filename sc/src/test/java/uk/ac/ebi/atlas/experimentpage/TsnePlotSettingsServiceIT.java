@@ -16,6 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.markergenes.MarkerGenesDao;
+import uk.ac.ebi.atlas.markergenes.MarkerGenesDaoIT;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.tsne.TSnePlotDao;
@@ -51,6 +53,9 @@ class TsnePlotSettingsServiceIT {
     @Inject
     private TSnePlotDao tSnePlotDao;
 
+    @Inject
+    private MarkerGenesDao markerGenesDao;
+
     private TsnePlotSettingsService subject;
 
     @BeforeAll
@@ -77,7 +82,7 @@ class TsnePlotSettingsServiceIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotDao);
+        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotDao, markerGenesDao);
     }
 
     @Test

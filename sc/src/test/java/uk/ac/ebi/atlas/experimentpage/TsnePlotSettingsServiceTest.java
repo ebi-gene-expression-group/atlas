@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
+import uk.ac.ebi.atlas.markergenes.MarkerGenesDao;
 import uk.ac.ebi.atlas.testutils.MockDataFileHub;
 import uk.ac.ebi.atlas.tsne.TSnePlotDao;
 
@@ -25,6 +26,9 @@ class TsnePlotSettingsServiceTest {
 
     @Mock
     private TSnePlotDao tSnePlotDaoMock;
+
+    @Mock
+    private MarkerGenesDao markerGenesDaoMock;
 
     private static MockDataFileHub dataFileHubMock;
 
@@ -62,7 +66,7 @@ class TsnePlotSettingsServiceTest {
     @BeforeEach
     void setUp() {
         dataFileHubMock = MockDataFileHub.create();
-        subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock, tSnePlotDaoMock);
+        subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock, tSnePlotDaoMock, markerGenesDaoMock);
     }
 
     @Test

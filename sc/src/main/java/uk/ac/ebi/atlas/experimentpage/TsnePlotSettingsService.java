@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
+import uk.ac.ebi.atlas.markergenes.MarkerGenesDao;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.tsne.TSnePlotDao;
 
@@ -16,16 +17,19 @@ public class TsnePlotSettingsService {
     private final DataFileHub dataFileHub;
     private final IdfParser idfParser;
     private final TSnePlotDao tSnePlotDao;
+    private final MarkerGenesDao markerGenesDao;
 
     public TsnePlotSettingsService(DataFileHub dataFileHub,
                                    IdfParser idfParser,
-                                   TSnePlotDao tSnePlotDao) {
+                                   TSnePlotDao tSnePlotDao,
+                                   MarkerGenesDao markerGenesDao) {
         this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
         this.tSnePlotDao = tSnePlotDao;
+        this.markerGenesDao = markerGenesDao;
     }
 
-    public List<Integer> getAvailableKs(String experimentAccession) {
+    List<Integer> getAvailableKs(String experimentAccession) {
         try (TsvStreamer clustersTsvStreamer =
                      dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
             return clustersTsvStreamer.get()
@@ -35,7 +39,11 @@ public class TsnePlotSettingsService {
         }
     }
 
-    public List<Integer> getAvailablePerplexities(String experimentAccession) {
+    public List<Integer> getKsWithMarkerGenes(String experimentAccession) {
+        return markerGenesDao.getKsWithMarkerGenes(experimentAccession);
+    }
+
+    List<Integer> getAvailablePerplexities(String experimentAccession) {
         return tSnePlotDao.fetchPerplexities(experimentAccession);
     }
 

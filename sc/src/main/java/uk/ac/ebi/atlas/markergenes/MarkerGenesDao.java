@@ -79,4 +79,20 @@ public class MarkerGenesDao {
                             tuple -> tuple.getString("property_value")));
         }
     }
+
+    private static final String SELECT_DISTINCT_KS_WITH_MARKER_GENES =
+            "SELECT DISTINCT k_where_marker " +
+                    "FROM scxa_marker_gene_stats " +
+                    "WHERE experiment_accession = :experiment_accession AND marker_p_value < 0.05 " +
+                    "ORDER BY k_where_marker ASC";
+    public List<Integer> getKsWithMarkerGenes(String experimentAccession) {
+        Map<String, Object> namedParameters =
+                ImmutableMap.of("experiment_accession", experimentAccession);
+
+        return namedParameterJdbcTemplate.queryForList(
+                SELECT_DISTINCT_KS_WITH_MARKER_GENES,
+                namedParameters,
+                Integer.class);
+    }
+
 }
