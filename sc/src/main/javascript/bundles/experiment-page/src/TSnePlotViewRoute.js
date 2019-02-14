@@ -54,7 +54,7 @@ class TSnePlotViewRoute extends React.Component {
   render() {
     const {location, history} = this.props
     const {atlasUrl, suggesterEndpoint} = this.props
-    const {species, experimentAccession, ks, perplexities, metadata} = this.props
+    const {species, experimentAccession, ks, ksWithMarkerGenes, perplexities, metadata} = this.props
     const search = URI(location.search).search(true)
 
     const routes = [
@@ -134,6 +134,7 @@ class TSnePlotViewRoute extends React.Component {
               updateUrlWithParams(query)
             }
           }
+          ksWithMarkers={ksWithMarkerGenes}
         />
       },
       {
@@ -190,14 +191,6 @@ class TSnePlotViewRoute extends React.Component {
                 </li>
               }
             </ul>
-
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={`/`}
-                component={route.sidebar}
-              />
-            ))}
           </div>
 
           <div style={{ flex: 1, padding: `10px` }}>
@@ -227,6 +220,7 @@ TSnePlotViewRoute.propTypes = {
   resourcesUrl: PropTypes.string,
   experimentAccession: PropTypes.string.isRequired,
   ks: PropTypes.arrayOf(PropTypes.number).isRequired,
+  ksWithMarkerGenes: PropTypes.arrayOf(PropTypes.number).isRequired,
   perplexities: PropTypes.arrayOf(PropTypes.number).isRequired,
   suggesterEndpoint: PropTypes.string.isRequired,
   species: PropTypes.string.isRequired,
