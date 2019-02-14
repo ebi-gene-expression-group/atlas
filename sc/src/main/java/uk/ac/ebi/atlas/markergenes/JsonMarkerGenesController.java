@@ -35,6 +35,10 @@ public class JsonMarkerGenesController extends JsonExperimentController {
             @PathVariable int k) {
         List<MarkerGene> result = markerGenesDao.getMarkerGenesWithAveragesPerCluster(experimentAccession, k);
 
-        return GsonProvider.GSON.toJson(highchartsHeatmapAdapter.getMarkerGeneHeatmapData(result));
+        if (!result.isEmpty()) {
+            return GsonProvider.GSON.toJson(highchartsHeatmapAdapter.getMarkerGeneHeatmapData(result));
+        } else {
+            return GsonProvider.GSON.toJson(result);
+        }
     }
 }
