@@ -20,37 +20,13 @@ RedirectWithSearchAndHash.propTypes = {
 
 const RedirectWithLocation = withRouter(RedirectWithSearchAndHash)
 
-const GeneInfoRoute = (props) => {
-  return (
-    <section>
-      <BioentityInformation {...props} />
-    </section>
-  )
-}
-
-const TsnePlotRoute = (props) => {
-  return (
-    <section>
-      <TSnePlotView {...props}/>
-    </section>
-  )
-}
-
-const MarkerGeneHeatmapRoute = (props) => {
-  return (
-    <section>
-      <HeatmapView {...props}/>
-    </section>
-  )
-}
-
 class TSnePlotViewRoute extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    const {location, history} = this.props
+    const {location, match, history} = this.props
     const {atlasUrl, suggesterEndpoint} = this.props
     const {species, experimentAccession, ks, ksWithMarkerGenes, perplexities, metadata} = this.props
     const search = URI(location.search).search(true)
@@ -59,7 +35,7 @@ class TSnePlotViewRoute extends React.Component {
       {
         path: `/tsne`,
         title: `t-SNE plots`,
-        main: () => <TsnePlotRoute
+        main: () => <TSnePlotView
           atlasUrl={atlasUrl}
           suggesterEndpoint={suggesterEndpoint}
           wrapperClassName={`row expanded`}
@@ -113,7 +89,7 @@ class TSnePlotViewRoute extends React.Component {
       {
         path: `/marker-genes`,
         title: `Marker Genes`,
-        main: () => <MarkerGeneHeatmapRoute
+        main: () => <HeatmapView
           host={atlasUrl}
           resource={`json/experiments/${experimentAccession}/marker-genes/${search.markerGeneK || preferredK}`}
           wrapperClassName={`row expanded`}
@@ -138,7 +114,7 @@ class TSnePlotViewRoute extends React.Component {
       {
         path: `/gene-info`,
         title: `Gene information`,
-        main: () => <GeneInfoRoute atlasUrl={atlasUrl} geneId={search.geneId}/>
+        main: () => <BioentityInformation atlasUrl={atlasUrl} geneId={search.geneId}/>
       }
     ]
 
@@ -157,7 +133,7 @@ class TSnePlotViewRoute extends React.Component {
 
     const preferredK = this.props.selectedK ? this.props.selectedK.toString() : this.props.ks[0].toString()
 
-    const basename = URI(`experiments/${experimentAccession}${location.pathname}`, URI(atlasUrl).path()).toString()
+    const basename = URI(`experiments/${experimentAccession}${match.path}`, URI(atlasUrl).path()).toString()
 
     return (
       <BrowserRouter basename={basename}>
@@ -192,9 +168,7 @@ class TSnePlotViewRoute extends React.Component {
           </div>
           <div
             className={`small-9 medium-10 large-11 columns`}
-            style={{
-              padding: `10px`
-            }}>
+            style={{padding: `10px`}}>
             <Switch>
               {routes.map((route, index) => (
                 <Route
