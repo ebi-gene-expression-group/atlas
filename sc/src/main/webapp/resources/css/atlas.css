@@ -91,6 +91,7 @@ hr {
 
 #experiment-page .tabs-title, .side-tabs-title {
     background: #ffffff;
+    word-wrap: normal;
 }
 
 #experiment-page .tabs-title .active, .side-tabs-title .active {

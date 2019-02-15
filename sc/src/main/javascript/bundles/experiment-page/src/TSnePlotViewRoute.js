@@ -22,9 +22,8 @@ const RedirectWithLocation = withRouter(RedirectWithSearchAndHash)
 
 const GeneInfoRoute = (props) => {
   return (
-    <section className={`margin-top-large`}>
-      <h4 key={`title`}>Information about gene {props.geneId}</h4>
-      <BioentityInformation key={`gene-information`} atlasUrl={props.atlasUrl} geneId={props.geneId} />
+    <section>
+      <BioentityInformation {...props} />
     </section>
   )
 }
@@ -40,8 +39,7 @@ const TsnePlotRoute = (props) => {
 const MarkerGeneHeatmapRoute = (props) => {
   return (
     <section>
-      <HeatmapView {...props}
-      />
+      <HeatmapView {...props}/>
     </section>
   )
 }
@@ -60,7 +58,7 @@ class TSnePlotViewRoute extends React.Component {
     const routes = [
       {
         path: `/tsne`,
-        title: `Clusters`,
+        title: `t-SNE plots`,
         main: () => <TsnePlotRoute
           atlasUrl={atlasUrl}
           suggesterEndpoint={suggesterEndpoint}
@@ -139,7 +137,7 @@ class TSnePlotViewRoute extends React.Component {
       },
       {
         path: `/gene-info`,
-        title: `Information about ${search.geneId}`,
+        title: `Gene information`,
         main: () => <GeneInfoRoute atlasUrl={atlasUrl} geneId={search.geneId}/>
       }
     ]
@@ -163,14 +161,14 @@ class TSnePlotViewRoute extends React.Component {
 
     return (
       <BrowserRouter basename={basename}>
-        <div style={{ display: `flex` }}>
+        <div className={`row expanded`}>
           <div
+            className={`small-3 medium-2 large-1 columns`}
             style={{
-              width: `20%`,
+              padding: 0,
               // background: `#e6e6e6`
               background: `#ffffff`
-            }}
-          >
+            }}>
             <ul className={`side-tabs`}>
               <li title={routes[0].title} className={`side-tabs-title`}>
                 <NavLink to={{pathname:routes[0].path, search: location.search, hash: location.hash}}
@@ -184,16 +182,19 @@ class TSnePlotViewRoute extends React.Component {
               </li>
               {
                 search.geneId &&
-                <li title={routes[2].title} className={`side-tabs-title`}>
-                  <NavLink to={{pathname:routes[2].path, search: location.search, hash: location.hash}}
-                    activeClassName={`active`}>
-                    {routes[2].title}</NavLink>
-                </li>
+                  <li title={routes[2].title} className={`side-tabs-title`}>
+                    <NavLink to={{pathname:routes[2].path, search: location.search, hash: location.hash}}
+                      activeClassName={`active`}>
+                      {routes[2].title}</NavLink>
+                  </li>
               }
             </ul>
           </div>
-
-          <div style={{ flex: 1, padding: `10px` }}>
+          <div
+            className={`small-9 medium-10 large-11 columns`}
+            style={{
+              padding: `10px`
+            }}>
             <Switch>
               {routes.map((route, index) => (
                 <Route
@@ -208,7 +209,6 @@ class TSnePlotViewRoute extends React.Component {
         </div>
       </BrowserRouter>
     )
-
   }
 }
 
