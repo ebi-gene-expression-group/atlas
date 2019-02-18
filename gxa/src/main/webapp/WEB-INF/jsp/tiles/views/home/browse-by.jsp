@@ -6,13 +6,13 @@
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
     homePagePanel.render({
-      host: 'http://localhost:8080/gxa/',
+      host: '${pageContext.request.contextPath}/',
       speciesResources: {
-        Species: `json/experiments/popular-species`,
-        Animals: `json/experiments/popular-species?kingdom=animals`,
-        Plants: `json/experiments/popular-species?kingdom=plants`,
-        Fungi: `json/experiments/popular-species?kingdom=fungi`,
-        Protists: `json/experiments/popular-species?kingdom=protists`
+        Species: 'json/experiments/popular-species',
+        Animals: 'json/experiments/popular-species?kingdom=animals',
+        Plants: 'json/experiments/popular-species?kingdom=plants',
+        Fungi: 'json/experiments/popular-species?kingdom=fungi',
+        Protists: 'json/experiments/popular-species?kingdom=protist'
       }
     }, 'popular-species')
 
