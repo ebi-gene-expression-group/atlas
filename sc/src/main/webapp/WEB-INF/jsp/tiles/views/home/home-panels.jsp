@@ -9,8 +9,8 @@
       homePagePanel.render({
         host: '${pageContext.request.contextPath}/',
         experimentResources: {
-          'Latest experiment': 'json/experiments/latestExperiments',
-          'Featured experiment': 'alpha/hca'
+          'Latest experiments': 'json/experiments/latestExperiments',
+          'Featured experiments': 'alpha/hca'
         },
         speciesResources: {
           Species: 'json/experiments/popular-species',
