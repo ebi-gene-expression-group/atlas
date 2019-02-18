@@ -40,6 +40,7 @@
     "react-localstorage": "^1.0.0",
     "react-refetch": "^2.0.1",
     "react-svg": "^7.2.2",
+    "react-tooltip": "^3.9.0",
     "sc-atlas-bioentity-information": "^1.7.2",
     "styled-components": "^4.1.2",
     "transform-props-with": "^2.2.0",

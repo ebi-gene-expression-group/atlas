@@ -22,7 +22,7 @@
                 <div class="column column-block margin-top-large margin-bottom-large text-center">
                     <h4 style="color:white">Follow us</h4>
                     <a href="https://twitter.com/ExpressionAtlas" target="_blank">Twitter</a><br/>
-                    <a href="https://www.ebi.ac.uk/support/gxa" target="_blank">Feedback</a><br/>
+                    <a href="https://www.ebi.ac.uk/support/gxa" target="_blank">Support</a><br/>
                 </div>
             </div>
         </div>

@@ -11,7 +11,8 @@ module.exports = {
     geneSearch: `./bundles/gene-search`,
     geneSearchForm: `./bundles/gene-search-form`,
     atlasHomepageCard: `./bundles/atlas-homepage-card`,
-    homePagePanel: `./bundles/scxa-homepage-panels`
+    homePagePanel: `./bundles/scxa-homepage-panels`,
+    feedbackForm: `./bundles/feedback-form`
   },
 
   plugins: [

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.home;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
@@ -8,14 +9,28 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.species.AtlasInformationDao;
+import uk.ac.ebi.atlas.species.AtlasInformationDataType;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import javax.inject.Inject;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Controller
@@ -32,17 +47,23 @@ public class HomeController {
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final PopularSpeciesService popularSpeciesService;
     private final LatestExperimentsService latestExperimentsService;
+    private AtlasInformationDao atlasInformationDao;
+
+    private ExperimentInfoListService experimentInfoListService;
+
 
     @Inject
     public HomeController(SpeciesPropertiesTrader speciesPropertiesTrader,
                           PopularSpeciesService popularSpeciesService,
                           LatestExperimentsDao latestExperimentsDao,
-                          ExpressionAtlasExperimentTrader experimentTrader) {
+                          ExpressionAtlasExperimentTrader expressionAtlasExperimentTrader,
+                          AtlasInformationDao atlasInformationDao) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.popularSpeciesService = popularSpeciesService;
+        this.atlasInformationDao = atlasInformationDao;
         this.latestExperimentsService =
                 new LatestExperimentsService(
-                        latestExperimentsDao, experimentTrader,
+                        latestExperimentsDao, expressionAtlasExperimentTrader,
                         ImmutableSet.of(
                                 ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
                                 ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
@@ -51,10 +72,18 @@ public class HomeController {
                                 ExperimentType.PROTEOMICS_BASELINE,
                                 ExperimentType.RNASEQ_MRNA_BASELINE
         ));
+        this.experimentInfoListService =
+                new ExperimentInfoListService(expressionAtlasExperimentTrader, ImmutableList.of(
+                        RNASEQ_MRNA_BASELINE,
+                        PROTEOMICS_BASELINE,
+                        RNASEQ_MRNA_DIFFERENTIAL,
+                        MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                        MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                        MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL));
     }
 
     @RequestMapping(value = "/home", produces = "text/html;charset=UTF-8")
-    public String getHome(Model model) {
+    public String getHome(Model model) throws IOException {
         ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
         for (PopularSpeciesInfo popularSpeciesInfo: popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)) {
             topSixSelectBuilder.put(
@@ -76,17 +105,31 @@ public class HomeController {
 
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
 
-        model.addAttribute(
-                "speciesList", GSON.toJson(popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)));
-        model.addAttribute(
-                "animalsList", GSON.toJson(popularSpeciesService.getPopularSpecies("animals", FEATURED_SPECIES)));
-        model.addAttribute(
-                "plantsList", GSON.toJson(popularSpeciesService.getPopularSpecies("plants", FEATURED_SPECIES)));
-        model.addAttribute(
-                "fungiList", GSON.toJson(popularSpeciesService.getPopularSpecies("fungi", FEATURED_SPECIES)));
-
         model.addAttribute("speciesPath", ""); // Required by Spring form tag
 
+        List<ExperimentInfo> experimentlist = experimentInfoListService.listPublicExperiments();
+
+        int numberOfAssays = 0;
+        ArrayList<String> numberOfSpecies = new ArrayList<>();
+
+        for (int i = 0; i < experimentlist.size(); i++) {
+            numberOfAssays += experimentlist.get(i).getNumberOfAssays();
+            if (!numberOfSpecies.contains(experimentlist.get(i).getSpecies())) {
+                numberOfSpecies.add(experimentlist.get(i).getSpecies());
+            }
+        }
+
+        model.addAttribute("numberOfStudies", experimentlist.size());
+        model.addAttribute("numberOfAssays", numberOfAssays);
+        model.addAttribute("numberOfSpecies", numberOfSpecies.size());
+
+        Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
+        model.addAttribute("info", atlasInformation);
+        model.addAttribute("ensembl", AtlasInformationDataType.ENSEMBL.getId());
+        model.addAttribute("genomes", AtlasInformationDataType.GENOMES.getId());
+        model.addAttribute("paraSite", AtlasInformationDataType.PARASITE.getId());
+        model.addAttribute("efo", AtlasInformationDataType.EFO.getId());
+        
         return "home";
     }
 }

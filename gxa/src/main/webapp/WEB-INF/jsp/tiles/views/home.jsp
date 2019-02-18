@@ -9,13 +9,12 @@
     <tiles:insertAttribute name="home-search"/>
 </div>
 
-<div class="row expanded margin-top-large" data-equalizer>
-    <div class="small-12 medium-12 large-6 columns">
-            <tiles:insertAttribute name="browse-by-box"/>
-    </div>
-    <div class="small-12 medium-12 large-6 columns">
-            <tiles:insertAttribute name="experiment-list-latest-box"/>
-    </div>
+<div class="row column margin-bottom-xlarge expanded">
+    <tiles:insertAttribute name="browse-by-box"/>
+</div>
+
+<div class="row column margin-bottom-xlarge expanded">
+    <tiles:insertAttribute name="experiment-list-latest-box"/>
 </div>
 
 <div class="row expanded margin-top-large" data-equalizer>

@@ -11,7 +11,7 @@ const BrowseBySpecies = props => {
       {...speciesInfo}/>)
 
   return (
-    <div className={`row small-up-2 medium-up-3`}>
+    <div className={`row small-up-2 medium-up-6`} style={{"max-width":"none"}}>
       {speciesItems}
     </div>
   )

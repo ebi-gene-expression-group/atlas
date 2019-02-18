@@ -7,7 +7,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
       homePagePanel.render({
-        host: `http://localhost:8080/gxa/sc/`,
+        host: '${pageContext.request.contextPath}/',
         experimentResources: {
           'Latest experiments': `json/experiments/latestExperiments`,
           Featured: `alpha/hca`
