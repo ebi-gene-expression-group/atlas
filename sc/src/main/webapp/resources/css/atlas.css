@@ -56,19 +56,9 @@ hr {
 #experiment-page .gene-search-container {
     margin-bottom: 1rem;
 }
-#experiment-page, #feedback-button {
-    display: inline;
+
+/* Featured experiments landing page icon */
+img.experiment-thumbnail {
+    height: 100px;
+    margin-bottom: 20px;
 }
-#feedback-button h1 {
-    color: black;
-}
-/** Foundation **/
-.callout {
-    position: relative;
-    margin: 0 0 1rem 0;
-    padding: 1rem;
-    border: 1px solid rgba(10, 10, 10, 0.25);
-    border-radius: 0;
-    color: #222;
-    background-color: white; }
-/** End Foundation **/
