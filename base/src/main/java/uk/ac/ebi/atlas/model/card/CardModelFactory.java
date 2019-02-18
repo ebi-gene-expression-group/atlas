@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.home.PopularSpeciesInfo;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.species.Species;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -21,15 +22,26 @@ public class CardModelFactory {
         this.urlHelpers = urlHelpers;
     }
 
+
     public CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
+        List<Pair<String, Optional<String>>> content = new ArrayList<>();
+        content.add(Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
+                Optional.empty()));
+        if(popularSpeciesInfo.baselineExperiments() > 0){
+            content.add(Pair.of("Baseline:" + popularSpeciesInfo.baselineExperiments(),
+                Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "baseline"))));
+        }
+        if(popularSpeciesInfo.differentialExperiments() > 0){
+            content.add(Pair.of("Differential:" + popularSpeciesInfo.differentialExperiments() + " ",
+                Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "differential"))));
+        }
+
         return CardModel.create(
                 CardIconType.SPECIES,
                 popularSpeciesInfo.species(),
                 Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
                         Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
-                Collections.singletonList(
-                        Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
-                                Optional.empty())));
+                content);
     }
 
     public CardModel createLandingPageSpeciesCard(Collection<Experiment> experiments) {
