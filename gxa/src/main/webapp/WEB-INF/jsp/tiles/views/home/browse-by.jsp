@@ -12,7 +12,7 @@
         Animals: 'json/experiments/popular-species?kingdom=animals',
         Plants: 'json/experiments/popular-species?kingdom=plants',
         Fungi: 'json/experiments/popular-species?kingdom=fungi',
-        Protists: 'json/experiments/popular-species?kingdom=protist'
+        Protists: 'json/experiments/popular-species?kingdom=protists'
       }
     }, 'popular-species')
 
