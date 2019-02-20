@@ -51,6 +51,13 @@ class ExperimentFileLocationServiceIT {
     private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_filtered_normalised_counts.mtx";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
+
     private static final String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
     private static final String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE =
             "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
@@ -122,6 +129,21 @@ class ExperimentFileLocationServiceIT {
 
         existingArchiveFilesOfType(experimentAccession,
                 ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames);
+    }
+
+    @Test
+    void existingNormalisedQuantificationFiles() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<String> expectedFileNames =
+                Stream.of(
+                        SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE)
+                        .map(template -> MessageFormat.format(template, experimentAccession))
+                        .collect(Collectors.toList());
+
+        existingArchiveFoldersOfFilesOfType(experimentAccession,
+                ExperimentFileType.NORMALISED, expectedFileNames);
     }
 
     @Test

@@ -135,6 +135,16 @@ class DataFileHubIT {
     }
 
     @Test
+    void findsNormalisedCountsFiles() {
+        String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
+        DataFileHub subject = new DataFileHub(dataFilesPath.resolve("scxa"));
+        LOGGER.info("Test normalised filtered count files for experiment {}", experimentAccession);
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).normalisedCountsMatrix);
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).normalisedCountsGeneIdsTsv);
+        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).normalisedCountsCellIdsTsv);
+    }
+
+    @Test
     void findsRawCountsFiles() {
         String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
         DataFileHub subject = new DataFileHub(dataFilesPath.resolve("scxa"));
