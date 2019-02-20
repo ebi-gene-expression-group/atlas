@@ -62,6 +62,12 @@ public class ExperimentFileLocationService {
                                 dataFileHub.getSingleCellExperimentFiles(experimentAccession).filteredCountsMatrix.getPath(),
                                 dataFileHub.getSingleCellExperimentFiles(experimentAccession).filteredCountsCellIdsTsv.getPath(),
                                 dataFileHub.getSingleCellExperimentFiles(experimentAccession).filteredCountsGeneIdsTsv.getPath());
+            case NORMALISED:
+                return  Arrays.asList(
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).normalisedCountsMatrix.getPath(),
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).normalisedCountsCellIdsTsv.getPath(),
+                                dataFileHub.getSingleCellExperimentFiles(experimentAccession).normalisedCountsGeneIdsTsv.getPath());
+
             default:
                 return null;
         }
