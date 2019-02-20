@@ -41,14 +41,17 @@ public class JdbcUtils {
 
     public String fetchRandomSingleCellExperimentAccessionWithMarkerGenes() {
         return jdbcTemplate.queryForObject(
-                "SELECT experiment_accession FROM scxa_marker_gene_stats WHERE marker_p_value < 0.05 ORDER BY RANDOM() LIMIT 1",
+                "SELECT experiment_accession FROM scxa_marker_gene_stats " +
+                        "WHERE marker_p_value < 0.05 " +
+                        "ORDER BY RANDOM() " +
+                        "LIMIT 1",
                 String.class);
     }
 
     public String fetchRandomSingleCellExperimentAccessionWithoutMarkerGenes() {
-        // This is a bit of a naive approach that only really works with mock data. In reality, all experiments seen so far
-        // have at least one marker gene for some k value. A better function would return a pair of (experiment accession, k)
-        // that don't have marker genes.
+        // This is a bit of a naive approach that only really works with mock data. In reality, all experiments seen so
+        // far have at least one marker gene for some k value. A better function would return a pair of (experiment
+        // accession, k) that don't have marker genes.
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM ( " +
                         "SELECT accession FROM scxa_experiment EXCEPT " +
@@ -156,7 +159,9 @@ public class JdbcUtils {
 
     public int fetchRandomKWithMarkerGene(String experimentAccession) {
         return jdbcTemplate.queryForObject(
-                "SELECT k_where_marker FROM scxa_marker_gene_stats WHERE experiment_accession=? ORDER BY RANDOM() LIMIT 1",
+                "SELECT k_where_marker FROM scxa_marker_gene_stats " +
+                        "WHERE experiment_accession=? AND marker_p_value < 0.05 " +
+                        "ORDER BY RANDOM() LIMIT 1",
                 Integer.class,
                 experimentAccession);
     }

@@ -84,7 +84,7 @@ public class JsonMarkerGenesControllerWIT {
 
         this.mockMvc
                 .perform(get(urlTemplate, experimentAccession, k))
-                .andExpect(status().isOk()).andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[0].clusterIdWhereMarker", isA(Number.class)))
                 .andExpect(jsonPath("$[0].x", isA(Number.class)))
@@ -97,11 +97,11 @@ public class JsonMarkerGenesControllerWIT {
     @Test
     void experimentWithoutMarkerGenesReturnsEmptyJson() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccessionWithoutMarkerGenes();
-        int k = jdbcTestUtils.fetchRandomKWithMarkerGene(experimentAccession);
+        int k = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
 
         this.mockMvc
                 .perform(get(urlTemplate, experimentAccession, k))
-                .andExpect(status().isOk()).andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$").isEmpty());
     }
