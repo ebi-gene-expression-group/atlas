@@ -75,6 +75,13 @@ public class DataFileHub {
     private static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_filtered_normalised_counts.mtx";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
+
     private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
             "{0}/{0}.aggregated_filtered_counts.mtx";
     private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
@@ -359,6 +366,9 @@ public class DataFileHub {
         public final AtlasResource<MatrixMarketReader> filteredCountsMatrix;
         public final AtlasResource<TsvStreamer> filteredCountsGeneIdsTsv;
         public final AtlasResource<TsvStreamer> filteredCountsCellIdsTsv;
+        public final AtlasResource<MatrixMarketReader> normalisedCountsMatrix;
+        public final AtlasResource<TsvStreamer> normalisedCountsGeneIdsTsv;
+        public final AtlasResource<TsvStreamer> normalisedCountsCellIdsTsv;
         public final AtlasResource<TsvStreamer> clustersTsv;
         public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
         public final Map<Integer, AtlasResource<TsvStreamer>> markerGeneTsvs;
@@ -428,6 +438,25 @@ public class DataFileHub {
                             experimentsMageTabDirLocation,
                             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
+
+
+            normalisedCountsMatrix =
+                    new MatrixMarketFile(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            normalisedCountsGeneIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+
+            normalisedCountsCellIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_NORMOLISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+
             tSnePlotTsvs = retrieveIntegersFromFileNames(experimentAccession, SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE).stream()
                     .collect(
                             Collectors.toMap(
