@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.markergenes;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,6 +20,8 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -86,6 +89,36 @@ public class MarkerGenesDaoIT {
         assertThat(markerGenesWithAveragesPerCluster)
                 .isNotEmpty()
                 .allMatch(x -> x.pValue() < 0.05);
+    }
+
+    @Test
+    void validGeneIdsReturnAssociatedSymbols() {
+        List<String> geneIds = Arrays.asList("ENSG00000001626", "ENSMUSG00000033952", "ENSDARG00000103754");
+
+        assertThat(subject.getSymbolsForGeneIds(geneIds))
+                .hasSize(3)
+                .containsOnlyKeys(geneIds.toArray(new String[0]));
+    }
+
+    @Test
+    void geneIdsWithoutSymbolsReturnNoResults() {
+        List<String> geneIds = Collections.singletonList("FAKE_GENE_ID");
+
+        assertThat(subject.getSymbolsForGeneIds(geneIds)).isEmpty();
+    }
+
+    @Test
+    void noKsAreRetrievedForExperimentWithoutMarkerGenes() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccessionWithoutMarkerGenes();
+
+        assertThat(subject.getKsWithMarkerGenes(experimentAccession)).isEmpty();
+    }
+
+    @Test
+    void ksAreRetrievedForExperimentWithMarkerGenes() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccessionWithMarkerGenes();
+
+        assertThat(subject.getKsWithMarkerGenes(experimentAccession)).isNotEmpty();
     }
 
     @BeforeEach
