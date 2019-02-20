@@ -116,6 +116,7 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
             List<Path> paths = new ArrayList<>();
             paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId("quantification-filtered")));
             paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId("quantification-raw")));
+            paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.fromId("normalised")));
             paths.add(experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.fromId("sdrf")));
 
             for (Path path : paths) {
