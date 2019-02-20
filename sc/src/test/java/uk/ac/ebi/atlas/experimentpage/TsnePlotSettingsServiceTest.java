@@ -26,9 +26,12 @@ class TsnePlotSettingsServiceTest {
 
     @Mock
     private TSnePlotDao tSnePlotDaoMock;
+<<<<<<< HEAD
 
     @Mock
     private MarkerGenesDao markerGenesDaoMock;
+=======
+>>>>>>> 317ce3cf1186bae9fe3a6a2e6755ce2ccb7418fd
 
     private static MockDataFileHub dataFileHubMock;
 
@@ -66,7 +69,11 @@ class TsnePlotSettingsServiceTest {
     @BeforeEach
     void setUp() {
         dataFileHubMock = MockDataFileHub.create();
+<<<<<<< HEAD
         subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock, tSnePlotDaoMock, markerGenesDaoMock);
+=======
+        subject = new TsnePlotSettingsService(dataFileHubMock, idfParserMock, tSnePlotDaoMock);
+>>>>>>> 317ce3cf1186bae9fe3a6a2e6755ce2ccb7418fd
     }
 
     @Test

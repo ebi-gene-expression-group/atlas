@@ -52,9 +52,12 @@ class TsnePlotSettingsServiceIT {
 
     @Inject
     private TSnePlotDao tSnePlotDao;
+<<<<<<< HEAD
 
     @Inject
     private MarkerGenesDao markerGenesDao;
+=======
+>>>>>>> 317ce3cf1186bae9fe3a6a2e6755ce2ccb7418fd
 
     private TsnePlotSettingsService subject;
 
@@ -82,7 +85,11 @@ class TsnePlotSettingsServiceIT {
 
     @BeforeEach
     void setUp() {
+<<<<<<< HEAD
         this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotDao, markerGenesDao);
+=======
+        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotDao);
+>>>>>>> 317ce3cf1186bae9fe3a6a2e6755ce2ccb7418fd
     }
 
     @Test
