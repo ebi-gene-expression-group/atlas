@@ -142,7 +142,6 @@ class TSnePlotViewRoute extends React.Component {
             className={`small-3 medium-2 large-1 columns`}
             style={{
               padding: 0,
-              // background: `#e6e6e6`
               background: `#ffffff`
             }}>
             <ul className={`side-tabs`}>
