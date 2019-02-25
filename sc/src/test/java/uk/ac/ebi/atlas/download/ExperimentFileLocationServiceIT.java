@@ -128,7 +128,7 @@ class ExperimentFileLocationServiceIT {
                         .collect(Collectors.toList());
 
         existingArchiveFilesOfType(experimentAccession,
-                ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames);
+                ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames, false);
     }
 
     @Test
@@ -142,8 +142,8 @@ class ExperimentFileLocationServiceIT {
                         .map(template -> MessageFormat.format(template, experimentAccession))
                         .collect(Collectors.toList());
 
-        existingArchiveFoldersOfFilesOfType(experimentAccession,
-                ExperimentFileType.NORMALISED, expectedFileNames);
+        existingArchiveFilesOfType(experimentAccession,
+                ExperimentFileType.NORMALISED, expectedFileNames, true);
     }
 
     @Test
@@ -157,8 +157,8 @@ class ExperimentFileLocationServiceIT {
                         .map(template -> MessageFormat.format(template, experimentAccession))
                         .collect(Collectors.toList());
 
-        existingArchiveFoldersOfFilesOfType(experimentAccession,
-                ExperimentFileType.QUANTIFICATION_RAW, expectedFileNames);
+        existingArchiveFilesOfType(experimentAccession,
+                ExperimentFileType.QUANTIFICATION_RAW, expectedFileNames, true);
     }
 
     @Test
@@ -171,7 +171,7 @@ class ExperimentFileLocationServiceIT {
                 .map(k -> MessageFormat.format(MARKER_GENES_FILE_NAME_TEMPLATE, experimentAccession, k))
                 .collect(Collectors.toList());
 
-        existingArchiveFilesOfType(experimentAccession, ExperimentFileType.MARKER_GENES, expectedFileNames);
+        existingArchiveFilesOfType(experimentAccession, ExperimentFileType.MARKER_GENES, expectedFileNames, false);
     }
 
     @Test
@@ -236,7 +236,8 @@ class ExperimentFileLocationServiceIT {
 
     private void existingArchiveFilesOfType(String experimentAccession,
                                             ExperimentFileType fileType,
-                                            List<String> expectedFileNames) {
+                                            List<String> expectedFileNames,
+                                            Boolean folder) {
         List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
 
         // Some paths, e.g. marker genes, might not be all in the DB
@@ -252,6 +253,7 @@ class ExperimentFileLocationServiceIT {
         List<String> fileNames = paths.stream()
                 .map(Path::toFile)
                 .map(File::getName)
+                .map(entry -> folder ? experimentAccession + "/" + entry : entry)
                 .collect(Collectors.toList());
 
         assertThat(expectedFileNames)
@@ -259,29 +261,4 @@ class ExperimentFileLocationServiceIT {
                 .containsAnyElementsOf(fileNames);
     }
 
-    private void existingArchiveFoldersOfFilesOfType(String experimentAccession,
-                                            ExperimentFileType fileType,
-                                            List<String> expectedFileNames) {
-        List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
-
-        // Some paths, e.g. marker genes, might not be all in the DB
-        assertThat(paths.size()).isGreaterThanOrEqualTo(expectedFileNames.size());
-
-        for (Path path : paths) {
-            File file = path.toFile();
-
-            assertThat(file).exists();
-            assertThat(file).isFile();
-        }
-
-        List<String> fileNames = paths.stream()
-                .map(Path::toFile)
-                .map(File::getName)
-                .map(entry -> experimentAccession + "/" + entry)
-                .collect(Collectors.toList());
-
-        assertThat(expectedFileNames)
-                .isNotEmpty()
-                .containsAnyElementsOf(fileNames);
-    }
 }
