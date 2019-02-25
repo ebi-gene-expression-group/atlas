@@ -144,15 +144,6 @@ class DataFileHubIT {
         assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).normalisedCountsCellIdsTsv);
     }
 
-    @Test
-    void findsRawCountsFiles() {
-        String experimentAccession = jdbcUtils.fetchRandomSingleCellExperimentAccession();
-        DataFileHub subject = new DataFileHub(dataFilesPath.resolve("scxa"));
-        LOGGER.info("Test raw filtered count files for experiment {}", experimentAccession);
-        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).rawCountsMatrix);
-        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).rawCountsCellIdsTsv);
-        assertAtlasResourceExists(subject.getSingleCellExperimentFiles(experimentAccession).rawCountsGeneIdsTsv);
-    }
     private void assertAtlasResourceExists(AtlasResource<?> resource) {
         assertThat(resource.exists()).isTrue();
     }
