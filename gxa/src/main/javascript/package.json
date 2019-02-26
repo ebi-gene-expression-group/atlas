@@ -21,7 +21,7 @@
     "anatomogram": "^2.0.0",
     "color": "^3.1.0",
     "downloadjs": "^1.4.7",
-    "expression-atlas-experiment-page": "^1.11.1",
+    "expression-atlas-experiment-page": "^1.12.0",
     "expression-atlas-heatmap-highcharts": "^5.1.1",
     "expression-atlas-number-format": "^3.0.0",
     "he": "^1.2.0",
