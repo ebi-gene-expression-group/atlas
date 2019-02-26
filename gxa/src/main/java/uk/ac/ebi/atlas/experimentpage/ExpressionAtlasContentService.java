@@ -53,6 +53,7 @@ public class ExpressionAtlasContentService {
             LinkToArrayExpress.ProteomicsBaseline proteomicsBaselineLinkToArrayExpress,
             LinkToArrayExpress.Differential differentialLinkToArrayExpress,
             LinkToArrayExpress.Microarray microarrayLinkToArrayExpress,
+            LinkToPride.ProteomicsBaseline linkToPride,
             ExperimentTrader experimentTrader) {
 
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
@@ -61,7 +62,8 @@ public class ExpressionAtlasContentService {
                                 proteomicsExperimentDownloadSupplier,
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
-                                proteomicsBaselineLinkToArrayExpress)
+                                proteomicsBaselineLinkToArrayExpress,
+                                linkToPride)
                 );
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
