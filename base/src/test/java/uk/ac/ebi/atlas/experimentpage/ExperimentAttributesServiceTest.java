@@ -52,7 +52,7 @@ public class ExperimentAttributesServiceTest {
     public void getAttributesForBaselineExperimentWithNoPublications() {
         when(europePmcClientMock.getPublicationByIdentifier(anyString())).thenReturn(Optional.empty());
         when(idfParser.parse(any()))
-                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+                .thenReturn(new IdfParserOutput("title", "12345","description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment("FOOBAR");
         Map<String, Object> result = subject.getAttributes(experiment);
@@ -74,7 +74,7 @@ public class ExperimentAttributesServiceTest {
         when(europePmcClientMock.getPublicationByIdentifier("999.100/another-doi"))
                 .thenReturn(Optional.of(new Publication("", "999.100/another-doi", "Publication 2")));
         when(idfParser.parse(any()))
-                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+                .thenReturn(new IdfParserOutput("title", "12345","description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(Lists.emptyList(), dois);
 
@@ -92,7 +92,7 @@ public class ExperimentAttributesServiceTest {
         when(europePmcClientMock.getPublicationByIdentifier("1235"))
                 .thenReturn(Optional.of(new Publication("1235", "999.100/another-doi", "Publication 2")));
         when(idfParser.parse(any()))
-                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+                .thenReturn(new IdfParserOutput("title", "12345","description", Lists.emptyList(), 0, Lists.emptyList()));
 
         BaselineExperiment experiment = MockExperiment.createBaselineExperiment(pubmedIds, Lists.emptyList());
 
@@ -105,7 +105,7 @@ public class ExperimentAttributesServiceTest {
     public void getAttributesForDifferentialExperiment() {
         DifferentialExperiment experiment = MockExperiment.createDifferentialExperiment();
         when(idfParser.parse(any()))
-                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+                .thenReturn(new IdfParserOutput("title", "12345","description", Lists.emptyList(), 0, Lists.emptyList()));
 
         Map<String, Object> result = subject.getAttributes(experiment);
 
@@ -119,7 +119,7 @@ public class ExperimentAttributesServiceTest {
     public void getAttributesForMicroarrayExperiment() {
         MicroarrayExperiment experiment = MockExperiment.createMicroarrayExperiment();
         when(idfParser.parse(any()))
-                .thenReturn(new IdfParserOutput("title", "description", Lists.emptyList(), 0, Lists.emptyList()));
+                .thenReturn(new IdfParserOutput("title", "12345","description", Lists.emptyList(), 0, Lists.emptyList()));
 
         Map<String, Object> result = subject.getAttributes(experiment);
 

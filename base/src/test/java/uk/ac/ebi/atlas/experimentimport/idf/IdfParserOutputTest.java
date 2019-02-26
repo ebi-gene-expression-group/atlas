@@ -27,12 +27,14 @@ class IdfParserOutputTest {
     void testGetters() {
         subject = new IdfParserOutput(
                 "Another experiment title",
+                "12345",
                 "Another experiment description",
                 publicationsWithoutNulls,
                 3,
                 Arrays.asList("field1", "field2"));
 
         assertThat(subject.getTitle()).isEqualTo("Another experiment title");
+        assertThat(subject.getSecondaryAccession()).isEqualTo("12345");
         assertThat(subject.getExperimentDescription()).isEqualTo("Another experiment description");
         assertThat(subject.getExpectedClusters()).isEqualTo(3);
         assertThat(subject.getMetadataFieldsOfInterest()).containsExactly("field1", "field2");
@@ -45,6 +47,7 @@ class IdfParserOutputTest {
     void testDoisAndPubmedIdsWithNulls() {
         subject = new IdfParserOutput(
                 "Experiment title",
+                "12345",
                 "Experiment description",
                 publicationsWithNulls,
                 0,

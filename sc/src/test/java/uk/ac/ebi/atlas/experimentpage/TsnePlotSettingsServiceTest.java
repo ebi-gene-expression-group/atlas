@@ -74,6 +74,7 @@ class TsnePlotSettingsServiceTest {
                 .thenReturn(
                         new IdfParserOutput(
                                 "Title",
+                                "",
                                 "Description",
                                 Collections.emptyList(),
                                 Integer.parseInt(IDF_PREFERRED_K),
@@ -93,6 +94,7 @@ class TsnePlotSettingsServiceTest {
                 .thenReturn(
                         new IdfParserOutput(
                                 "Title",
+                                "",
                                 "Description",
                                 Collections.emptyList(),
                                 Integer.parseInt(IDF_PREFERRED_K),
@@ -113,6 +115,7 @@ class TsnePlotSettingsServiceTest {
                 .thenReturn(
                         new IdfParserOutput(
                                 "Title",
+                                "",
                                 "Description",
                                 Collections.emptyList(),
                                 Integer.parseInt(IDF_PREFERRED_K),
@@ -130,6 +133,7 @@ class TsnePlotSettingsServiceTest {
                 .thenReturn(
                         new IdfParserOutput(
                                 "Title",
+                                "",
                                 "Description",
                                 Collections.emptyList(),
                                 Integer.parseInt(IDF_PREFERRED_K),
@@ -150,6 +154,7 @@ class TsnePlotSettingsServiceTest {
                 .thenReturn(
                         new IdfParserOutput(
                                 "Title",
+                                "",
                                 "Description",
                                 Collections.emptyList(),
                                 0,
@@ -170,6 +175,7 @@ class TsnePlotSettingsServiceTest {
                 .thenReturn(
                         new IdfParserOutput(
                                 "Title",
+                                "",
                                 "Description",
                                 Collections.emptyList(),
                                 0,
