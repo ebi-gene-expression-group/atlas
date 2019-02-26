@@ -237,7 +237,7 @@ class ExperimentFileLocationServiceIT {
     private void existingArchiveFilesOfType(String experimentAccession,
                                             ExperimentFileType fileType,
                                             List<String> expectedFileNames,
-                                            Boolean folder) {
+                                            Boolean isArchive) {
         List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
 
         // Some paths, e.g. marker genes, might not be all in the DB
@@ -253,7 +253,7 @@ class ExperimentFileLocationServiceIT {
         List<String> fileNames = paths.stream()
                 .map(Path::toFile)
                 .map(File::getName)
-                .map(entry -> folder ? experimentAccession + "/" + entry : entry)
+                .map(entry -> isArchive ? experimentAccession + "/" + entry : entry)
                 .collect(Collectors.toList());
 
         assertThat(expectedFileNames)
