@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -50,7 +51,6 @@ class CardModelFactoryTest {
         subject = new CardModelFactory(urlHelpersImpl);
     }
 
-
     @Test
     void createPopularSpeciesCard() {
         Species species = generateRandomSpecies();
@@ -68,6 +68,48 @@ class CardModelFactoryTest {
 
         assertThat(subject.create(someWeirdSpeciesInfo).content())
                 .hasSize(3);
+    }
+
+    @Test
+    void experimentWordIsPluralisedInSpeciesCards() {
+        assertThat(
+                subject.create(
+                        PopularSpeciesInfo.create(
+                                randomAlphabetic(10),
+                                randomAlphabetic(10),
+                                0,
+                                1))
+                        .content().get(0).getLeft())
+                .endsWith("experiment");
+
+        assertThat(
+                subject.create(
+                        PopularSpeciesInfo.create(
+                                randomAlphabetic(10),
+                                randomAlphabetic(10),
+                                1))
+                        .content().get(0).getLeft())
+                .endsWith("experiment");
+
+
+        assertThat(
+                subject.create(
+                        PopularSpeciesInfo.create(
+                                randomAlphabetic(10),
+                                randomAlphabetic(10),
+                                1,
+                                1)).content().get(0).getLeft())
+                .endsWith("experiments");
+
+        assertThat(
+                subject.create(
+                        PopularSpeciesInfo.create(
+                                randomAlphabetic(10),
+                                randomAlphabetic(10),
+                                RNG.nextInt(2, Integer.MAX_VALUE)))
+                        .content().get(0).getLeft())
+                .endsWith("experiments");
+
     }
 
     @Test
