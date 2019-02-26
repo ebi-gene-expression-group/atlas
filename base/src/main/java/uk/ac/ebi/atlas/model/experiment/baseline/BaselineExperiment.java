@@ -18,6 +18,7 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
 
     public BaselineExperiment(ExperimentType experimentType,
                        String accession,
+                       String secondaryAccession,
                        Date lastUpdate,
                        String description,
                        String displayName,
@@ -33,7 +34,7 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
                        List<String> alternativeViewDescriptions,
                        ExperimentDisplayDefaults experimentDisplayDefaults) {
 
-        super(experimentType, accession, lastUpdate, displayName, description, disclaimer, species,
+        super(experimentType, accession, secondaryAccession, lastUpdate, displayName, description, disclaimer, species,
               pubMedIds, dois, experimentDesign, dataProviderURL, dataProviderDescription,
               alternativeViews, alternativeViewDescriptions, assayGroups, experimentDisplayDefaults);
     }

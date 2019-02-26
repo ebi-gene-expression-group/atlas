@@ -39,7 +39,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
                                      Collection<String> pubMedIds, Collection<String> dois,
                                      ExperimentDesign experimentDesign) {
 
-        super(experimentType, accession, lastUpdate, null, description, "", species, pubMedIds,
+        super(experimentType, accession, null, lastUpdate, null, description, "", species, pubMedIds,
                 dois, experimentDesign, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),
                 Collections.emptyList(), contrasts.stream().map(UNPACK).collect(Collectors.toList()),
                 ExperimentDisplayDefaults.simpleDefaults());

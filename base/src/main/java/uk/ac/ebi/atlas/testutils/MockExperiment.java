@@ -148,6 +148,7 @@ public class MockExperiment {
         return new BaselineExperiment(
                 ExperimentType.RNASEQ_MRNA_BASELINE,
                 accession,
+                "",
                 new Date(),
                 DESCRIPTION,
                 DISPLAY_NAME,

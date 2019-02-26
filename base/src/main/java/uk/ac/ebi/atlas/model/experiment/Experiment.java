@@ -34,6 +34,7 @@ public abstract class Experiment<D extends DescribesDataColumns> implements Seri
     private List<String> pubMedIds;
     private List<String> dois;
     private String accession;
+    private String secondaryAccession;
     protected String description;
     private String displayName;
     private String disclaimer;
@@ -45,8 +46,9 @@ public abstract class Experiment<D extends DescribesDataColumns> implements Seri
     private final ImmutableMap<String, D> dataColumnDescriptorsPerId;
     private final ExperimentDisplayDefaults experimentDisplayDefaults;
 
-    public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      String disclaimer, Species species, Collection<String> pubMedIds, Collection<String> dois,
+    public Experiment(ExperimentType type, String accession, String secondaryAccession, Date lastUpdate,
+                      String displayName, String description, String disclaimer, Species species,
+                      Collection<String> pubMedIds, Collection<String> dois,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
                       List<String> alternativeViewDescriptions, List<D> dataColumnDescriptors,
@@ -56,6 +58,7 @@ public abstract class Experiment<D extends DescribesDataColumns> implements Seri
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
         this.accession = accession;
+        this.secondaryAccession = secondaryAccession;
         this.displayName = displayName;
         this.description = description;
         this.disclaimer = disclaimer;
@@ -108,6 +111,10 @@ public abstract class Experiment<D extends DescribesDataColumns> implements Seri
 
     public String getAccession() {
         return accession;
+    }
+
+    public String getSecondaryAccession() {
+        return secondaryAccession;
     }
 
     public Species getSpecies() {
