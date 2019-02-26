@@ -18,7 +18,7 @@ public abstract class LinkToPride<E extends Experiment> extends ExternallyAvaila
                         "https://www.ebi.ac.uk/pride/archive/projects/" + experiment.getSecondaryAccession(),
                         ExternallyAvailableContent.Description.create(
                                 "icon-pride",
-                                MessageFormat.format("PRIDE Archive: experiment {0}", experiment.getSecondaryAccession()))));
+                                MessageFormat.format("PRIDE Archive: project {0}", experiment.getSecondaryAccession()))));
     }
 
     @Override

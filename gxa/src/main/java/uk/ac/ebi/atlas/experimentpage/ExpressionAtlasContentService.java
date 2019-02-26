@@ -62,8 +62,9 @@ public class ExpressionAtlasContentService {
                                 proteomicsExperimentDownloadSupplier,
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
-                                proteomicsBaselineLinkToArrayExpress,
-                                linkToPride)
+                                linkToPride,
+                                proteomicsBaselineLinkToArrayExpress
+                                )
                 );
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
