@@ -65,10 +65,9 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
     public void
     downloadArchive(HttpServletResponse response,
                     @PathVariable String experimentAccession,
-                    @RequestParam(value = "fileType") String fileTypeId,
-                    @RequestParam(value = "accessKey", defaultValue = "") String accessKey) throws IOException {
+                    @RequestParam(value = "fileType") String fileTypeId) throws IOException {
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         List<Path> paths =
                 experimentFileLocationService.getFilePathsForArchive(
                         experiment.getAccession(), ExperimentFileType.fromId(fileTypeId));
