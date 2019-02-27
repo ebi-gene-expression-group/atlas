@@ -10,7 +10,7 @@
     "eslint": "^5.8.0",
     "eslint-config-gene-expression": "^0.4.2",
     "file-loader": "^2.0.0",
-    "image-webpack-loader": "^4.5.0",
+    "image-webpack-loader": "^4.6.0",
     "webpack": "^4.25.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2"
@@ -24,7 +24,7 @@
     "react-dom": "^16.6.0",
     "react-router-dom": "^4.3.1",
     "react-select": "^2.1.1",
-    "scxa-gene-search-form": "^1.1.3",
+    "scxa-gene-search-form": "^1.2.0",
     "styled-components": "^4.0.3",
     "urijs": "^1.19.1"
   }
