@@ -9,14 +9,11 @@
       homePagePanel.render({
         host: '${pageContext.request.contextPath}/',
         experimentResources: {
-          'Latest experiments': 'json/experiments/latestExperiments',
-          'Featured experiments': 'alpha/hca'
+          'Latest experiments': 'json/experiments/latestExperiments'
         },
         speciesResources: {
           Species: 'json/experiments/popular-species',
           Animals: 'json/experiments/popular-species?kingdom=animals',
-          Plants: 'json/experiments/popular-species?kingdom=plants',
-          Fungi: 'json/experiments/popular-species?kingdom=fungi',
           Protists: 'json/experiments/popular-species?kingdom=protists'
         }
       }, 'panels')
