@@ -21,7 +21,7 @@
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
     "sc-atlas-bioentity-information": "^1.7.2",
-    "scxa-marker-gene-heatmap": "file:../../../../../../../scxa-marker-gene-heatmap/scxa-marker-gene-heatmap-0.0.1.tgz",
+    "scxa-marker-gene-heatmap": "^1.0.0",
     "styled-components": "^4.0.3",
     "urijs": "^1.19.1"
   },
