@@ -28,7 +28,7 @@ const tabTypeComponent = {
   'results' : TSnePlotViewRoute,
   'experiment-design' : ExperimentDesignRoute,
   'supplementary-information' : SupplementaryInformationRoute,
-  'resources' : DownloadsRoute
+  'downloads' : DownloadsRoute
 }
 
 const TopRibbon = ({tabs, routeProps}) =>

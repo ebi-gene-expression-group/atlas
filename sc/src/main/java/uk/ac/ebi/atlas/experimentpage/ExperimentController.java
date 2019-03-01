@@ -88,7 +88,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
         availableTabs.add(
                 customContentTab(
-                        "resources",
+                        "downloads",
                         "Downloads",
                         "data",
                         experimentPageContentService.getDownloads(experiment.getAccession(), accessKey))
