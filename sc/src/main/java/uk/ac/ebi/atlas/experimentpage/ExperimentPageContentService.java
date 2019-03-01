@@ -37,7 +37,8 @@ public class ExperimentPageContentService {
     public JsonObject getTsnePlotData(String experimentAccession) {
         JsonObject result = new JsonObject();
 
-        result.add("ks", GSON.toJsonTree(tsnePlotSettingsService.getAvailableClusters(experimentAccession)));
+        result.add("ks", GSON.toJsonTree(tsnePlotSettingsService.getAvailableKs(experimentAccession)));
+        result.add("ksWithMarkerGenes", GSON.toJsonTree(tsnePlotSettingsService.getKsWithMarkerGenes(experimentAccession)));
 
         tsnePlotSettingsService.getExpectedClusters(experimentAccession)
                 .ifPresent(value -> result.addProperty("selectedK", value));

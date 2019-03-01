@@ -4,8 +4,9 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParserOutput;
+import uk.ac.ebi.atlas.markergenes.MarkerGenesDao;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
+import uk.ac.ebi.atlas.tsne.TSnePlotDao;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,17 +16,20 @@ import java.util.stream.Collectors;
 public class TsnePlotSettingsService {
     private final DataFileHub dataFileHub;
     private final IdfParser idfParser;
-    private final TSnePlotServiceDao tSnePlotServiceDao;
+    private final TSnePlotDao tSnePlotDao;
+    private final MarkerGenesDao markerGenesDao;
 
     public TsnePlotSettingsService(DataFileHub dataFileHub,
                                    IdfParser idfParser,
-                                   TSnePlotServiceDao tSnePlotServiceDao) {
+                                   TSnePlotDao tSnePlotDao,
+                                   MarkerGenesDao markerGenesDao) {
         this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
-        this.tSnePlotServiceDao = tSnePlotServiceDao;
+        this.tSnePlotDao = tSnePlotDao;
+        this.markerGenesDao = markerGenesDao;
     }
 
-    public List<Integer> getAvailableClusters(String experimentAccession) {
+    List<Integer> getAvailableKs(String experimentAccession) {
         try (TsvStreamer clustersTsvStreamer =
                      dataFileHub.getSingleCellExperimentFiles(experimentAccession).clustersTsv.get()) {
             return clustersTsvStreamer.get()
@@ -35,8 +39,12 @@ public class TsnePlotSettingsService {
         }
     }
 
-    public List<Integer> getAvailablePerplexities(String experimentAccession) {
-        return tSnePlotServiceDao.fetchPerplexities(experimentAccession);
+    List<Integer> getKsWithMarkerGenes(String experimentAccession) {
+        return markerGenesDao.getKsWithMarkerGenes(experimentAccession);
+    }
+
+    List<Integer> getAvailablePerplexities(String experimentAccession) {
+        return tSnePlotDao.fetchPerplexities(experimentAccession);
     }
 
     public Optional<Integer> getExpectedClusters(String experimentAccession) {
@@ -44,7 +52,7 @@ public class TsnePlotSettingsService {
 
         // Only add preferred cluster property if it exists in the idf file and it is one of the available k values
         if (idfParserOutput.getExpectedClusters() != 0 &&
-            getAvailableClusters(experimentAccession).contains(idfParserOutput.getExpectedClusters())) {
+            getAvailableKs(experimentAccession).contains(idfParserOutput.getExpectedClusters())) {
             return Optional.of(idfParserOutput.getExpectedClusters());
         } else {
             try (TsvStreamer clustersTsvStreamer =

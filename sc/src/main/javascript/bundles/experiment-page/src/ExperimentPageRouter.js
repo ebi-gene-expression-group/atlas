@@ -25,27 +25,31 @@ const TabCommonPropTypes = {
 
 // What component each tab type should render, coupled to ExperimentController.java
 const tabTypeComponent = {
-  't-sne-plot' : TSnePlotViewRoute,
+  'results' : TSnePlotViewRoute,
   'experiment-design' : ExperimentDesignRoute,
   'supplementary-information' : SupplementaryInformationRoute,
-  'resources' : DownloadsRoute
+  'downloads' : DownloadsRoute
 }
 
-const TopRibbon = ({tabNames, routeProps}) =>
+const TopRibbon = ({tabs, routeProps}) =>
   <ul className={`tabs`}>
     {
-      tabNames.map((tabName) =>
-        <li title={tabName} key={tabName} className={`tabs-title`}>
-          <NavLink to={{pathname:`/${tabName}`, search: routeProps.location.search, hash: routeProps.location.hash}}
-            activeStyle={{color: `#0a0a0a`, background: `#e6e6e6`}}>
-            {tabName}
+      tabs.map((tab) =>
+        <li title={tab.name} key={tab.type} className={`tabs-title`}>
+          <NavLink to={{pathname:`/${tab.type}`, search: routeProps.location.search, hash: routeProps.location.hash}}
+                   activeClassName={`active`}>
+            {tab.name}
           </NavLink>
         </li>
       )}
   </ul>
 
 TopRibbon.propTypes = {
-  tabNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tabs: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    props: PropTypes.object
+  })).isRequired,
   routeProps: PropTypes.shape(RoutePropTypes)
 }
 
@@ -97,15 +101,15 @@ const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, spec
           render={
             (routeProps) =>
               <TopRibbon
-                tabNames={tabs.map((tab) => tab.name)}
+                tabs={tabs}
                 routeProps={routeProps} />
           } />
         <Switch>
           {
             tabs.map((tab) =>
               <Route
-                key={tab.name}
-                path={`/${tab.name}`}
+                key={tab.type}
+                path={`/${tab.type}`}
                 render={
                   (routeProps) =>
                     <TabContent
@@ -116,7 +120,7 @@ const ExperimentPageRouter = ({atlasUrl, resourcesUrl, experimentAccession, spec
                 } />
             )
           }
-          <RedirectWithLocation pathname={`/${tabs[0].name}`} />
+          <RedirectWithLocation pathname={`/${tabs[0].type}`} />
         </Switch>
       </div>
     </BrowserRouter>

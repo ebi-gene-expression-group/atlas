@@ -43,6 +43,10 @@ public class RandomDataTestUtils {
         return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(ENSEMBLE_GENE_ID_NUM_LENGTH);
     }
 
+    public static String generateRandomGeneSymbol() {
+        return randomAlphabetic(3, 10);
+    }
+
     public static String generateRandomEfoAccession() {
         // https://www.ebi.ac.uk/ols/ontologies/efo
         // Version: 2.99

@@ -16,9 +16,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
+import uk.ac.ebi.atlas.markergenes.MarkerGenesDao;
+import uk.ac.ebi.atlas.markergenes.MarkerGenesDaoIT;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
-import uk.ac.ebi.atlas.tsne.TSnePlotServiceDao;
+import uk.ac.ebi.atlas.tsne.TSnePlotDao;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -49,7 +51,10 @@ class TsnePlotSettingsServiceIT {
     private IdfParser idfParser;
 
     @Inject
-    private TSnePlotServiceDao tSnePlotServiceDao;
+    private TSnePlotDao tSnePlotDao;
+
+    @Inject
+    private MarkerGenesDao markerGenesDao;
 
     private TsnePlotSettingsService subject;
 
@@ -77,12 +82,12 @@ class TsnePlotSettingsServiceIT {
 
     @BeforeEach
     void setUp() {
-        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotServiceDao);
+        this.subject = new TsnePlotSettingsService(dataFileHub, idfParser, tSnePlotDao, markerGenesDao);
     }
 
     @Test
     void getClustersForValidAccession() {
-        List<Integer> result = subject.getAvailableClusters(jdbcTestUtils.fetchRandomSingleCellExperimentAccession());
+        List<Integer> result = subject.getAvailableKs(jdbcTestUtils.fetchRandomSingleCellExperimentAccession());
 
         assertThat(result)
                 .isNotEmpty()
@@ -91,7 +96,7 @@ class TsnePlotSettingsServiceIT {
 
     @Test()
     void getClustersForInvalidAccessionThrowsException() {
-        assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(() -> subject.getAvailableClusters("FOO"));
+        assertThatExceptionOfType(UncheckedIOException.class).isThrownBy(() -> subject.getAvailableKs("FOO"));
     }
 
     @Test
@@ -115,7 +120,7 @@ class TsnePlotSettingsServiceIT {
     @MethodSource("randomSingleCellExperimentAccessionProvider")
     void filesClosed(String experimentAccession) {
         long fileDescriptorsOpenBefore = getOpenFileCount();
-        subject.getAvailableClusters(experimentAccession);
+        subject.getAvailableKs(experimentAccession);
         subject.getExpectedClusters(experimentAccession);
         long fileDescriptorsOpenAfter = getOpenFileCount();
 
