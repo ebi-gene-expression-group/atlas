@@ -1,789 +1,177 @@
 var expressionAtlasBaselineExpression =
-webpackJsonp_name_([3],{
+(window["webpackJsonp_name_"] = window["webpackJsonp_name_"] || []).push([["expressionAtlasBaselineExpression"],{
 
-/***/ 972:
-/*!****************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/index.js ***!
-  \****************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./bundles/baseline-expression/index.js":
+/*!**********************************************!*\
+  !*** ./bundles/baseline-expression/index.js ***!
+  \**********************************************/
+/*! exports provided: render */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.render = undefined;
-
-var _baselineRenderer = __webpack_require__(/*! ./src/baselineRenderer.jsx */ 973);
-
-var _baselineRenderer2 = _interopRequireDefault(_baselineRenderer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.render = _baselineRenderer2.default;
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _src_BaselineRouter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/BaselineRouter */ \"./bundles/baseline-expression/src/BaselineRouter.js\");\n\n\n\n\nvar render = function render(_ref, target) {\n  var _ref$atlasUrl = _ref.atlasUrl,\n      atlasUrl = _ref$atlasUrl === void 0 ? \"https://www.ebi.ac.uk/gxa\" : _ref$atlasUrl,\n      facetsTreeData = _ref.facetsTreeData,\n      geneQuery = _ref.geneQuery,\n      conditionQuery = _ref.conditionQuery,\n      species = _ref.species;\n  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_src_BaselineRouter__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n    atlasUrl: atlasUrl,\n    facetsTreeData: facetsTreeData,\n    geneQuery: geneQuery,\n    conditionQuery: conditionQuery,\n    species: species\n  }), document.getElementById(target));\n};\n\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9bbmFtZV0vLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vaW5kZXguanM/M2U2MSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnXG5pbXBvcnQgUmVhY3RET00gZnJvbSAncmVhY3QtZG9tJ1xuXG5pbXBvcnQgQmFzZWxpbmVSb3V0ZXIgZnJvbSAnLi9zcmMvQmFzZWxpbmVSb3V0ZXInXG5cbmNvbnN0IHJlbmRlciA9ICh7IGF0bGFzVXJsID0gYGh0dHBzOi8vd3d3LmViaS5hYy51ay9neGFgLFxuICAgICAgICAgICAgICAgICAgZmFjZXRzVHJlZURhdGEsXG4gICAgICAgICAgICAgICAgICBnZW5lUXVlcnksXG4gICAgICAgICAgICAgICAgICBjb25kaXRpb25RdWVyeSxcbiAgICAgICAgICAgICAgICAgIHNwZWNpZXMgfSxcbiAgICAgICAgICAgICAgICB0YXJnZXQpID0+IHtcbiAgUmVhY3RET00ucmVuZGVyKFxuICAgIDxCYXNlbGluZVJvdXRlclxuICAgICAgYXRsYXNVcmw9e2F0bGFzVXJsfVxuICAgICAgZmFjZXRzVHJlZURhdGE9e2ZhY2V0c1RyZWVEYXRhfVxuICAgICAgZ2VuZVF1ZXJ5PXtnZW5lUXVlcnl9XG4gICAgICBjb25kaXRpb25RdWVyeT17Y29uZGl0aW9uUXVlcnl9XG4gICAgICBzcGVjaWVzPXtzcGVjaWVzfSAvPixcbiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCh0YXJnZXQpXG4gIClcbn1cblxuZXhwb3J0IHsgcmVuZGVyIH1cbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBS0E7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBTEE7QUFRQTtBQUNBOyIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/index.js\n");
 
 /***/ }),
 
-/***/ 973:
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/baselineRenderer.jsx ***!
-  \********************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function (_ref) {
-    var _ref$atlasUrl = _ref.atlasUrl,
-        atlasUrl = _ref$atlasUrl === undefined ? 'https://www.ebi.ac.uk/gxa' : _ref$atlasUrl,
-        _ref$target = _ref.target,
-        target = _ref$target === undefined ? 'gxaBaselineTab' : _ref$target,
-        facetsTreeData = _ref.facetsTreeData,
-        geneQuery = _ref.geneQuery,
-        conditionQuery = _ref.conditionQuery,
-        species = _ref.species;
-
-
-    _reactDom2.default.render(_react2.default.createElement(_BaselineRouter2.default, { atlasUrl: atlasUrl,
-        facetsTreeData: facetsTreeData,
-        geneQuery: geneQuery,
-        conditionQuery: conditionQuery,
-        species: species
-    }), document.getElementById(target));
-};
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(/*! react-dom */ 9);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _BaselineRouter = __webpack_require__(/*! ./BaselineRouter.jsx */ 974);
-
-var _BaselineRouter2 = _interopRequireDefault(_BaselineRouter);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-
-/***/ 974:
+/***/ "./bundles/baseline-expression/src/BaselineHeatmapWidget.js":
 /*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/BaselineRouter.jsx ***!
+  !*** ./bundles/baseline-expression/src/BaselineHeatmapWidget.js ***!
   \******************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _BaselineFacetsTree = __webpack_require__(/*! ./facets-tree/BaselineFacetsTree.jsx */ 975);
-
-var _BaselineFacetsTree2 = _interopRequireDefault(_BaselineFacetsTree);
-
-var _BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 978);
-
-var _BaselineHeatmaps2 = _interopRequireDefault(_BaselineHeatmaps);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var UrlManager = __webpack_require__(/*! ./urlManager.js */ 980);
-
-var BaselineRouter = function (_React$Component) {
-    _inherits(BaselineRouter, _React$Component);
-
-    function BaselineRouter(props) {
-        _classCallCheck(this, BaselineRouter);
-
-        var _this = _possibleConstructorReturn(this, (BaselineRouter.__proto__ || Object.getPrototypeOf(BaselineRouter)).call(this, props));
-
-        var newQuerySelect = UrlManager.parseBaselineUrlParameter();
-        var newShowAnatomograms = false;
-
-        if (Object.keys(newQuerySelect).length === 0) {
-            Object.keys(_this.props.facetsTreeData).forEach(function (species) {
-                var factorToPreselect = _this.props.facetsTreeData[species].find(function (factor) {
-                    return factor.name.toLowerCase() === 'organism_part';
-                });
-                if (factorToPreselect) {
-                    _this._addElementToObjectOfArrays(newQuerySelect, species, factorToPreselect.name);
-                    newShowAnatomograms = true;
-                } else if (_this.props.facetsTreeData[species].length) {
-                    _this._addElementToObjectOfArrays(newQuerySelect, species, _this.props.facetsTreeData[species][0].name);
-                }
-            });
-        }
-
-        UrlManager.baselinePush(newQuerySelect, true);
-
-        _this.state = {
-            facetsTreeData: _this._transformPropsFacetsObjectToArray(newQuerySelect),
-            querySelect: newQuerySelect,
-            showAnatomograms: newShowAnatomograms
-        };
-
-        _this.setChecked = _this._setChecked.bind(_this);
-        _this.toggleAnatomograms = _this._toggleAnatomograms.bind(_this);
-        return _this;
-    }
-
-    _createClass(BaselineRouter, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            // TODO Consider using https://github.com/reactjs/react-router
-            window.addEventListener('popstate', function () {
-                var newQuerySelect = UrlManager.parseBaselineUrlParameter();
-                _this2.setState({
-                    querySelect: newQuerySelect,
-                    facetsTreeData: _this2._transformPropsFacetsObjectToArray(newQuerySelect)
-                });
-            }, false);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var organismPartInQuerySelect = this._organismPartInQuerySelect();
-            var heatmaps = this._querySelectToHeatmaps();
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'row expanded' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'small-3 large-2 columns' },
-                    _react2.default.createElement(_BaselineFacetsTree2.default, {
-                        facets: this.state.facetsTreeData,
-                        setChecked: this.setChecked,
-                        showAnatomograms: this.state.showAnatomograms,
-                        toggleAnatomograms: this.toggleAnatomograms,
-                        disableAnatomogramsCheckbox: !organismPartInQuerySelect })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'small-9 large-10 columns' },
-                    _react2.default.createElement(_BaselineHeatmaps2.default, {
-                        atlasUrl: this.props.atlasUrl,
-                        geneQuery: this.props.geneQuery,
-                        conditionQuery: this.props.conditionQuery,
-                        heatmaps: heatmaps,
-                        showAnatomograms: this.state.showAnatomograms })
-                )
-            );
-        }
-    }, {
-        key: '_setChecked',
-        value: function _setChecked(species, factorName, checked) {
-            var newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect));
-            var newFacetsTreeData = JSON.parse(JSON.stringify(this.state.facetsTreeData));
-
-            if (checked) {
-                this._addElementToObjectOfArrays(newQuerySelect, species, factorName);
-                newFacetsTreeData.find(function (facet) {
-                    return facet.facetName === species;
-                }).facetItems.find(function (factor) {
-                    return factor.name === factorName;
-                }).checked = true;
-            } else {
-                this._removeElementFromObjectOfArrays(newQuerySelect, species, factorName);
-                newFacetsTreeData.find(function (facet) {
-                    return facet.facetName === species;
-                }).facetItems.find(function (factor) {
-                    return factor.name === factorName;
-                }).checked = false;
-            }
-
-            UrlManager.baselinePush(newQuerySelect, false);
-            this.setState({
-                facetsTreeData: newFacetsTreeData,
-                querySelect: newQuerySelect
-            });
-        }
-    }, {
-        key: '_addElementToObjectOfArrays',
-        value: function _addElementToObjectOfArrays(obj, arrayName, element) {
-            if (!obj[arrayName]) {
-                obj[arrayName] = [];
-            }
-            obj[arrayName].push(element);
-        }
-    }, {
-        key: '_removeElementFromObjectOfArrays',
-        value: function _removeElementFromObjectOfArrays(obj, arrayName, element) {
-            delete obj[arrayName].splice(obj[arrayName].indexOf(element), 1);
-            if (obj[arrayName].length === 0) {
-                delete obj[arrayName];
-            }
-        }
-    }, {
-        key: '_toggleAnatomograms',
-        value: function _toggleAnatomograms() {
-            var newShowAnatomograms = !this.state.showAnatomograms;
-
-            this.setState({
-                showAnatomograms: newShowAnatomograms
-            });
-        }
-    }, {
-        key: '_organismPartInQuerySelect',
-        value: function _organismPartInQuerySelect() {
-            var querySelect = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.querySelect;
-
-            return Object.keys(querySelect).some(function (species) {
-                return querySelect[species].some(function (facetItem) {
-                    return facetItem.toLowerCase() === 'organism_part';
-                });
-            });
-        }
-
-        // Also syncs this.state.facetsTreeData with querySelect
-
-    }, {
-        key: '_transformPropsFacetsObjectToArray',
-        value: function _transformPropsFacetsObjectToArray(querySelect) {
-            var _this3 = this;
-
-            return Object.keys(this.props.facetsTreeData).map(function (facetName) {
-                return {
-                    facetName: facetName,
-                    facetItems: _this3.props.facetsTreeData[facetName].map(function (facetItem) {
-                        return {
-                            name: facetItem.name,
-                            value: facetItem.value,
-                            checked: querySelect[facetName] ? querySelect[facetName].includes(facetItem.name) : false
-                        };
-                    })
-                };
-            });
-        }
-    }, {
-        key: '_querySelectToHeatmaps',
-        value: function _querySelectToHeatmaps() {
-            var _this4 = this;
-
-            /*
-             querySelect={ "Homo sapiens": [ "CELL_LINE", "ORGANISM_PART" ] }
-             ->
-             [ { "species": "Homo sapiens",
-                 "factor": { "name": "ORGANISM_PART", "value": "Organism part"}
-               },
-               { "species": "Homo sapiens",
-                 "factor": { "name": "CELL_LINE", "value": "Cell line" }
-             ]
-             */
-            var heatmaps = [];
-
-            // We iterate over facetsTreeData instead of over querySelect to get heatmaps in the same order as the facets
-            // tree
-            this.state.facetsTreeData.forEach(function (facet) {
-                facet.facetItems.forEach(function (facetItem) {
-                    if (_this4.state.querySelect[facet.facetName] && _this4.state.querySelect[facet.facetName].includes(facetItem.name)) {
-                        heatmaps.push({
-                            species: facet.facetName,
-                            factor: facetItem
-                        });
-                    }
-                });
-            });
-
-            return heatmaps;
-        }
-    }]);
-
-    return BaselineRouter;
-}(_react2.default.Component);
-
-BaselineRouter.propTypes = {
-    atlasUrl: _propTypes2.default.string.isRequired,
-    /*
-    {
-        "homo sapiens": [{ "name": "ORGANISM_PART", "value": "Organism part"},
-        { "name": "CELL_LINE", "value": "Cell line"}],
-        "macaca mulatta": [{ "name": "ORGANISM_PART", "value": "Organism part"}]
-    }
-     */
-    facetsTreeData: _propTypes2.default.object.isRequired,
-    geneQuery: _propTypes2.default.string.isRequired,
-    conditionQuery: _propTypes2.default.string.isRequired,
-    species: _propTypes2.default.string.isRequired
-};
-
-exports.default = BaselineRouter;
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ \"./node_modules/prop-types/index.js\");\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var expression_atlas_heatmap_highcharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ \"./node_modules/expression-atlas-heatmap-highcharts/lib/Main.js\");\n/* harmony import */ var expression_atlas_heatmap_highcharts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(expression_atlas_heatmap_highcharts__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\nvar capitalizeFirstLetter = function capitalizeFirstLetter(str) {\n  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();\n};\n\nvar BaselineHeatmapWidget = function BaselineHeatmapWidget(props) {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: \"row column expanded margin-top-large margin-bottom-xlarge\"\n  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h5\", null, (props.showHeatmapLabel ? \"\".concat(capitalizeFirstLetter(props.species), \" \\u2014 \") : \"\") + props.factor.value), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(expression_atlas_heatmap_highcharts__WEBPACK_IMPORTED_MODULE_2___default.a, {\n    atlasUrl: props.atlasUrl,\n    query: {\n      gene: props.geneQuery,\n      condition: props.conditionQuery,\n      species: props.species,\n      source: props.factor.name\n    },\n    isWidget: false,\n    showAnatomogram: props.showAnatomogram\n  }));\n};\n\nBaselineHeatmapWidget.propTypes = {\n  atlasUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  geneQuery: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  conditionQuery: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  species: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  factor: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({\n    name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n    value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired\n  }).isRequired,\n  showAnatomogram: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,\n  showHeatmapLabel: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (BaselineHeatmapWidget);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL0Jhc2VsaW5lSGVhdG1hcFdpZGdldC5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS8uL2J1bmRsZXMvYmFzZWxpbmUtZXhwcmVzc2lvbi9zcmMvQmFzZWxpbmVIZWF0bWFwV2lkZ2V0LmpzPzc2ODYiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0J1xuaW1wb3J0IFByb3BUeXBlcyBmcm9tICdwcm9wLXR5cGVzJ1xuXG5pbXBvcnQgRXhwcmVzc2lvbkF0bGFzSGVhdG1hcCBmcm9tICdleHByZXNzaW9uLWF0bGFzLWhlYXRtYXAtaGlnaGNoYXJ0cydcblxuY29uc3QgY2FwaXRhbGl6ZUZpcnN0TGV0dGVyID0gKHN0cikgPT4gc3RyLmNoYXJBdCgwKS50b1VwcGVyQ2FzZSgpICsgc3RyLnNsaWNlKDEpLnRvTG93ZXJDYXNlKClcblxuY29uc3QgQmFzZWxpbmVIZWF0bWFwV2lkZ2V0ID0gKHByb3BzKSA9PlxuICA8ZGl2IGNsYXNzTmFtZT17YHJvdyBjb2x1bW4gZXhwYW5kZWQgbWFyZ2luLXRvcC1sYXJnZSBtYXJnaW4tYm90dG9tLXhsYXJnZWB9PlxuICAgIDxoNT57KHByb3BzLnNob3dIZWF0bWFwTGFiZWwgPyBgJHtjYXBpdGFsaXplRmlyc3RMZXR0ZXIocHJvcHMuc3BlY2llcyl9IOKAlCBgIDogYGApICsgcHJvcHMuZmFjdG9yLnZhbHVlfTwvaDU+XG4gICAgPEV4cHJlc3Npb25BdGxhc0hlYXRtYXBcbiAgICAgIGF0bGFzVXJsPXtwcm9wcy5hdGxhc1VybH1cbiAgICAgIHF1ZXJ5PXt7XG4gICAgICAgIGdlbmU6IHByb3BzLmdlbmVRdWVyeSxcbiAgICAgICAgY29uZGl0aW9uOiBwcm9wcy5jb25kaXRpb25RdWVyeSxcbiAgICAgICAgc3BlY2llczogcHJvcHMuc3BlY2llcyxcbiAgICAgICAgc291cmNlOiBwcm9wcy5mYWN0b3IubmFtZVxuICAgICAgfX1cbiAgICAgIGlzV2lkZ2V0PXtmYWxzZX1cbiAgICAgIHNob3dBbmF0b21vZ3JhbT17cHJvcHMuc2hvd0FuYXRvbW9ncmFtfSAvPlxuICA8L2Rpdj5cblxuXG5CYXNlbGluZUhlYXRtYXBXaWRnZXQucHJvcFR5cGVzID0ge1xuICBhdGxhc1VybDogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICBnZW5lUXVlcnk6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZCxcbiAgY29uZGl0aW9uUXVlcnk6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZCxcbiAgc3BlY2llczogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICBmYWN0b3I6IFByb3BUeXBlcy5zaGFwZSh7XG4gICAgbmFtZTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICAgIHZhbHVlOiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWRcbiAgfSkuaXNSZXF1aXJlZCxcbiAgc2hvd0FuYXRvbW9ncmFtOiBQcm9wVHlwZXMuYm9vbC5pc1JlcXVpcmVkLFxuICBzaG93SGVhdG1hcExhYmVsOiBQcm9wVHlwZXMuYm9vbC5pc1JlcXVpcmVkXG59XG5cbmV4cG9ydCBkZWZhdWx0IEJhc2VsaW5lSGVhdG1hcFdpZGdldFxuIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFBQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUdBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUpBO0FBTUE7QUFDQTtBQVRBO0FBSEE7QUFDQTtBQWVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFGQTtBQUlBO0FBQ0E7QUFWQTtBQWFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/src/BaselineHeatmapWidget.js\n");
 
 /***/ }),
 
-/***/ 975:
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.jsx ***!
-  \**********************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _Facet = __webpack_require__(/*! ./Facet.jsx */ 976);
-
-var _Facet2 = _interopRequireDefault(_Facet);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var BaselineFacetsTree = function BaselineFacetsTree(props) {
-    var facets = props.facets.map(function (facet) {
-        return _react2.default.createElement(_Facet2.default, {
-            key: facet.facetName,
-            facetName: facet.facetName,
-            facetItems: facet.facetItems,
-            setChecked: props.setChecked
-        });
-    });
-
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement('input', { type: 'checkbox', checked: props.showAnatomograms, onChange: props.toggleAnatomograms, disabled: props.disableAnatomogramsCheckbox }),
-        _react2.default.createElement(
-            'label',
-            { className: props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : "" },
-            'Show anatomograms'
-        ),
-        _react2.default.createElement(
-            'h4',
-            null,
-            'Filter your results'
-        ),
-        facets
-    );
-};
-
-BaselineFacetsTree.propTypes = {
-    /*
-     [
-         {
-             facetName : "homo sapiens",
-             facetItems: [
-                 {"name": "CELL_LINE", "value": "Cell line", "checked": true},
-                 {"name": "ORGANISM_PART", "value": "Tissue", "checked: true}
-             ]
-         },
-         {
-             facetName : "mus musculus",
-             facetItems": [
-                 {"name": "CELL_LINE", "value": "Cell line", "checked": false},
-                 {"name": "ORGANISM_PART", "value": "Tissue", "checked": true}
-             ]
-         }
-     ]
-     */
-    facets: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-        facetName: _propTypes2.default.string.isRequired,
-        facetItems: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-            name: _propTypes2.default.string.isRequired,
-            value: _propTypes2.default.string.isRequired,
-            checked: _propTypes2.default.bool.isRequired
-        })).isRequired
-    })).isRequired,
-    setChecked: _propTypes2.default.func.isRequired,
-    showAnatomograms: _propTypes2.default.bool.isRequired,
-    toggleAnatomograms: _propTypes2.default.func.isRequired,
-    disableAnatomogramsCheckbox: _propTypes2.default.bool.isRequired
-};
-
-exports.default = BaselineFacetsTree;
-
-/***/ }),
-
-/***/ 976:
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/facets-tree/Facet.jsx ***!
-  \*********************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _FacetItem = __webpack_require__(/*! ./FacetItem.jsx */ 977);
-
-var _FacetItem2 = _interopRequireDefault(_FacetItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var capitalizeFirstLetter = function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
-
-var Facet = function Facet(props) {
-    var facetItems = props.facetItems.map(function (facetItem) {
-        return _react2.default.createElement(_FacetItem2.default, {
-            key: props.facetName + '_' + facetItem.name,
-            name: facetItem.name,
-            value: facetItem.value,
-            checked: facetItem.checked,
-            setChecked: function setChecked(facetItemName, facetItemChecked) {
-                props.setChecked(props.facetName, facetItemName, facetItemChecked);
-            }
-        });
-    });
-
-    return _react2.default.createElement(
-        'div',
-        { className: 'margin-top-large' },
-        _react2.default.createElement(
-            'h5',
-            null,
-            capitalizeFirstLetter(props.facetName)
-        ),
-        facetItems
-    );
-};
-
-Facet.propTypes = {
-    facetName: _propTypes2.default.string.isRequired,
-    facetItems: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-        name: _propTypes2.default.string.isRequired,
-        value: _propTypes2.default.string.isRequired,
-        checked: _propTypes2.default.bool.isRequired
-    })).isRequired,
-    setChecked: _propTypes2.default.func.isRequired
-};
-
-exports.default = Facet;
-
-/***/ }),
-
-/***/ 977:
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/facets-tree/FacetItem.jsx ***!
-  \*************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var FacetItem = function FacetItem(props) {
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement('input', { type: 'checkbox', checked: props.checked, onChange: function onChange() {
-                return props.setChecked(props.name, !props.checked);
-            } }),
-        _react2.default.createElement(
-            'label',
-            null,
-            props.value
-        )
-    );
-};
-
-FacetItem.propTypes = {
-    name: _propTypes2.default.string.isRequired,
-    value: _propTypes2.default.string.isRequired,
-    checked: _propTypes2.default.bool.isRequired,
-    setChecked: _propTypes2.default.func.isRequired
-};
-
-exports.default = FacetItem;
-
-/***/ }),
-
-/***/ 978:
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmaps.jsx ***!
-  \********************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 979);
-
-var _BaselineHeatmapWidget2 = _interopRequireDefault(_BaselineHeatmapWidget);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var BaselineHeatmaps = function (_React$Component) {
-    _inherits(BaselineHeatmaps, _React$Component);
-
-    function BaselineHeatmaps() {
-        _classCallCheck(this, BaselineHeatmaps);
-
-        return _possibleConstructorReturn(this, (BaselineHeatmaps.__proto__ || Object.getPrototypeOf(BaselineHeatmaps)).apply(this, arguments));
-    }
-
-    _createClass(BaselineHeatmaps, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                this.props.heatmaps.map(function (heatmap) {
-                    return _react2.default.createElement(_BaselineHeatmapWidget2.default, {
-                        key: heatmap.species + '_' + heatmap.factor.name,
-                        showAnatomogram: _this2.props.showAnatomograms,
-                        showHeatmapLabel: _this2._hasMoreThanOneSpecies(),
-                        species: heatmap.species,
-                        factor: heatmap.factor,
-                        atlasUrl: _this2.props.atlasUrl,
-                        geneQuery: _this2.props.geneQuery,
-                        conditionQuery: _this2.props.conditionQuery });
-                })
-            );
-        }
-    }, {
-        key: '_hasMoreThanOneSpecies',
-        value: function _hasMoreThanOneSpecies() {
-            var uniqueSpecies = new Set();
-            this.props.heatmaps.forEach(function (heatmap) {
-                uniqueSpecies.add(heatmap.species);
-            });
-            return uniqueSpecies.size > 1;
-        }
-    }]);
-
-    return BaselineHeatmaps;
-}(_react2.default.Component);
-
-BaselineHeatmaps.propTypes = {
-    atlasUrl: _propTypes2.default.string.isRequired,
-    geneQuery: _propTypes2.default.string.isRequired,
-    conditionQuery: _propTypes2.default.string,
-    /*
-     [{"species":"Homo sapiens", "factor":"CELL_LINE"}, {"species":"Mus musculus", "factor":"ORGANISM_PART"}]
-     */
-    showAnatomograms: _propTypes2.default.bool.isRequired,
-    heatmaps: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-        species: _propTypes2.default.string.isRequired,
-        factor: _propTypes2.default.shape({
-            name: _propTypes2.default.string.isRequired,
-            value: _propTypes2.default.string.isRequired
-        })
-    })).isRequired
-};
-
-exports.default = BaselineHeatmaps;
-
-/***/ }),
-
-/***/ 979:
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmapWidget.jsx ***!
-  \*************************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(/*! react */ 0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ 1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 121);
-
-var _expressionAtlasHeatmapHighcharts2 = _interopRequireDefault(_expressionAtlasHeatmapHighcharts);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var capitalizeFirstLetter = function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
-
-var BaselineHeatmapWidget = function BaselineHeatmapWidget(props) {
-    return _react2.default.createElement(
-        'div',
-        { className: 'row column expanded margin-top-large margin-bottom-xlarge' },
-        _react2.default.createElement(
-            'h5',
-            null,
-            (props.showHeatmapLabel ? capitalizeFirstLetter(props.species) + ' \u2014 ' : '') + props.factor.value
-        ),
-        _react2.default.createElement(_expressionAtlasHeatmapHighcharts2.default, { atlasUrl: props.atlasUrl,
-            query: {
-                gene: props.geneQuery,
-                condition: props.conditionQuery,
-                species: props.species,
-                source: props.factor.name
-            },
-            isWidget: false,
-            showAnatomogram: props.showAnatomogram
-        })
-    );
-};
-
-BaselineHeatmapWidget.propTypes = {
-    atlasUrl: _propTypes2.default.string.isRequired,
-    geneQuery: _propTypes2.default.string.isRequired,
-    conditionQuery: _propTypes2.default.string.isRequired,
-    species: _propTypes2.default.string.isRequired,
-    factor: _propTypes2.default.shape({
-        name: _propTypes2.default.string.isRequired,
-        value: _propTypes2.default.string.isRequired
-    }).isRequired,
-    showAnatomogram: _propTypes2.default.bool.isRequired,
-    showHeatmapLabel: _propTypes2.default.bool.isRequired
-};
-
-exports.default = BaselineHeatmapWidget;
-
-/***/ }),
-
-/***/ 980:
+/***/ "./bundles/baseline-expression/src/BaselineHeatmaps.js":
 /*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/urlManager.js ***!
+  !*** ./bundles/baseline-expression/src/BaselineHeatmaps.js ***!
   \*************************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ \"./node_modules/prop-types/index.js\");\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _BaselineHeatmapWidget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BaselineHeatmapWidget */ \"./bundles/baseline-expression/src/BaselineHeatmapWidget.js\");\nfunction _typeof(obj) { if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nfunction _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === \"object\" || typeof call === \"function\")) { return call; } return _assertThisInitialized(self); }\n\nfunction _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return self; }\n\nfunction _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function\"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }\n\nfunction _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }\n\n\n\n\n\nvar BaselineHeatmaps =\n/*#__PURE__*/\nfunction (_React$Component) {\n  _inherits(BaselineHeatmaps, _React$Component);\n\n  function BaselineHeatmaps() {\n    _classCallCheck(this, BaselineHeatmaps);\n\n    return _possibleConstructorReturn(this, _getPrototypeOf(BaselineHeatmaps).apply(this, arguments));\n  }\n\n  _createClass(BaselineHeatmaps, [{\n    key: \"render\",\n    value: function render() {\n      var _this = this;\n\n      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, this.props.heatmaps.map(function (heatmap) {\n        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BaselineHeatmapWidget__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n          key: \"\".concat(heatmap.species, \"_\").concat(heatmap.factor.name),\n          showAnatomogram: _this.props.showAnatomograms,\n          showHeatmapLabel: _this._hasMoreThanOneSpecies(),\n          species: heatmap.species,\n          factor: heatmap.factor,\n          atlasUrl: _this.props.atlasUrl,\n          geneQuery: _this.props.geneQuery,\n          conditionQuery: _this.props.conditionQuery\n        });\n      }));\n    }\n  }, {\n    key: \"_hasMoreThanOneSpecies\",\n    value: function _hasMoreThanOneSpecies() {\n      var uniqueSpecies = new Set();\n      this.props.heatmaps.forEach(function (heatmap) {\n        uniqueSpecies.add(heatmap.species);\n      });\n      return uniqueSpecies.size > 1;\n    }\n  }]);\n\n  return BaselineHeatmaps;\n}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);\n\nBaselineHeatmaps.propTypes = {\n  atlasUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  geneQuery: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  conditionQuery: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,\n\n  /*\n   [{\"species\":\"Homo sapiens\", \"factor\":\"CELL_LINE\"}, {\"species\":\"Mus musculus\", \"factor\":\"ORGANISM_PART\"}]\n   */\n  showAnatomograms: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,\n  heatmaps: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({\n    species: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n    factor: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({\n      name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n      value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired\n    })\n  })).isRequired\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (BaselineHeatmaps);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL0Jhc2VsaW5lSGVhdG1hcHMuanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9bbmFtZV0vLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL0Jhc2VsaW5lSGVhdG1hcHMuanM/NWFiOSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnXG5pbXBvcnQgUHJvcFR5cGVzIGZyb20gJ3Byb3AtdHlwZXMnXG5cbmltcG9ydCBCYXNlbGluZUhlYXRtYXBXaWRnZXQgZnJvbSAnLi9CYXNlbGluZUhlYXRtYXBXaWRnZXQnXG5cbmNsYXNzIEJhc2VsaW5lSGVhdG1hcHMgZXh0ZW5kcyBSZWFjdC5Db21wb25lbnQge1xuICByZW5kZXIoKSB7XG4gICAgcmV0dXJuIChcbiAgICAgIDxkaXY+XG4gICAgICAgIHt0aGlzLnByb3BzLmhlYXRtYXBzLm1hcChoZWF0bWFwID0+XG4gICAgICAgICAgPEJhc2VsaW5lSGVhdG1hcFdpZGdldFxuICAgICAgICAgICAga2V5ID0ge2Ake2hlYXRtYXAuc3BlY2llc31fJHtoZWF0bWFwLmZhY3Rvci5uYW1lfWB9XG4gICAgICAgICAgICBzaG93QW5hdG9tb2dyYW0gPSB7dGhpcy5wcm9wcy5zaG93QW5hdG9tb2dyYW1zfVxuICAgICAgICAgICAgc2hvd0hlYXRtYXBMYWJlbCA9IHt0aGlzLl9oYXNNb3JlVGhhbk9uZVNwZWNpZXMoKX1cbiAgICAgICAgICAgIHNwZWNpZXMgPSB7aGVhdG1hcC5zcGVjaWVzfVxuICAgICAgICAgICAgZmFjdG9yID0ge2hlYXRtYXAuZmFjdG9yfVxuICAgICAgICAgICAgYXRsYXNVcmwgPSB7dGhpcy5wcm9wcy5hdGxhc1VybH1cbiAgICAgICAgICAgIGdlbmVRdWVyeSA9IHt0aGlzLnByb3BzLmdlbmVRdWVyeX1cbiAgICAgICAgICAgIGNvbmRpdGlvblF1ZXJ5ID0ge3RoaXMucHJvcHMuY29uZGl0aW9uUXVlcnl9IC8+XG4gICAgICAgICl9XG4gICAgICA8L2Rpdj5cbiAgICApXG4gIH1cblxuICBfaGFzTW9yZVRoYW5PbmVTcGVjaWVzICgpIHtcbiAgICBjb25zdCB1bmlxdWVTcGVjaWVzID0gbmV3IFNldCgpXG4gICAgdGhpcy5wcm9wcy5oZWF0bWFwcy5mb3JFYWNoKGhlYXRtYXAgPT4geyB1bmlxdWVTcGVjaWVzLmFkZChoZWF0bWFwLnNwZWNpZXMpIH0pXG4gICAgcmV0dXJuIHVuaXF1ZVNwZWNpZXMuc2l6ZSA+IDFcbiAgfVxufVxuXG5CYXNlbGluZUhlYXRtYXBzLnByb3BUeXBlcyA9IHtcbiAgYXRsYXNVcmw6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZCxcbiAgZ2VuZVF1ZXJ5OiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWQsXG4gIGNvbmRpdGlvblF1ZXJ5OiBQcm9wVHlwZXMuc3RyaW5nLFxuICAvKlxuICAgW3tcInNwZWNpZXNcIjpcIkhvbW8gc2FwaWVuc1wiLCBcImZhY3RvclwiOlwiQ0VMTF9MSU5FXCJ9LCB7XCJzcGVjaWVzXCI6XCJNdXMgbXVzY3VsdXNcIiwgXCJmYWN0b3JcIjpcIk9SR0FOSVNNX1BBUlRcIn1dXG4gICAqL1xuICBzaG93QW5hdG9tb2dyYW1zOiBQcm9wVHlwZXMuYm9vbC5pc1JlcXVpcmVkLFxuICBoZWF0bWFwczogUHJvcFR5cGVzLmFycmF5T2YoUHJvcFR5cGVzLnNoYXBlKHtcbiAgICBzcGVjaWVzOiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWQsXG4gICAgZmFjdG9yOiBQcm9wVHlwZXMuc2hhcGUoe1xuICAgICAgbmFtZTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICAgICAgdmFsdWU6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZFxuICAgIH0pXG4gIH0pKS5pc1JlcXVpcmVkXG59XG5cbmV4cG9ydCBkZWZhdWx0IEJhc2VsaW5lSGVhdG1hcHM7XG4iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7Ozs7Ozs7Ozs7Ozs7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUVBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQVJBO0FBREE7QUFhQTs7O0FBRUE7QUFDQTtBQUNBO0FBQUE7QUFBQTtBQUNBO0FBQ0E7Ozs7QUF2QkE7QUFDQTtBQXlCQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7OztBQUdBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUZBO0FBRkE7QUFSQTtBQWlCQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/src/BaselineHeatmaps.js\n");
 
+/***/ }),
 
-var Url = __webpack_require__(/*! url */ 119);
-var QueryString = __webpack_require__(/*! querystring */ 189);
+/***/ "./bundles/baseline-expression/src/BaselineRouter.js":
+/*!***********************************************************!*\
+  !*** ./bundles/baseline-expression/src/BaselineRouter.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/**
- * Stringify the `query` object, assign it to the `bs` search field in the URL and store it in the History
- * @param {object} querySelect
- * @param {boolean} replace - use `replaceState` instead of `pushState`
- */
-exports.baselinePush = function pushQueryIntoBrowserHistory(querySelect, replace) {
-    var currentUrlObject = Url.parse(window.location.toString());
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ \"./node_modules/prop-types/index.js\");\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _facets_tree_BaselineFacetsTree__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./facets-tree/BaselineFacetsTree */ \"./bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.js\");\n/* harmony import */ var _BaselineHeatmaps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BaselineHeatmaps */ \"./bundles/baseline-expression/src/BaselineHeatmaps.js\");\n/* harmony import */ var _urlManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./urlManager */ \"./bundles/baseline-expression/src/urlManager.js\");\nfunction _typeof(obj) { if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nfunction _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === \"object\" || typeof call === \"function\")) { return call; } return _assertThisInitialized(self); }\n\nfunction _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function\"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }\n\nfunction _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }\n\nfunction _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return self; }\n\n\n\n\n\n\n\nvar BaselineRouter =\n/*#__PURE__*/\nfunction (_React$Component) {\n  _inherits(BaselineRouter, _React$Component);\n\n  function BaselineRouter(props) {\n    var _this;\n\n    _classCallCheck(this, BaselineRouter);\n\n    _this = _possibleConstructorReturn(this, _getPrototypeOf(BaselineRouter).call(this, props));\n    var newQuerySelect = _urlManager__WEBPACK_IMPORTED_MODULE_4__[\"default\"].parseBaselineUrlParameter();\n    var newShowAnatomograms = false;\n\n    if (Object.keys(newQuerySelect).length === 0) {\n      Object.keys(_this.props.facetsTreeData).forEach(function (species) {\n        var factorToPreselect = _this.props.facetsTreeData[species].find(function (factor) {\n          return factor.name.toLowerCase() === 'organism_part';\n        });\n\n        if (factorToPreselect) {\n          _this._addElementToObjectOfArrays(newQuerySelect, species, factorToPreselect.name);\n\n          newShowAnatomograms = true;\n        } else if (_this.props.facetsTreeData[species].length) {\n          _this._addElementToObjectOfArrays(newQuerySelect, species, _this.props.facetsTreeData[species][0].name);\n        }\n      });\n    }\n\n    _urlManager__WEBPACK_IMPORTED_MODULE_4__[\"default\"].baselinePush(newQuerySelect, true);\n    _this.state = {\n      facetsTreeData: _this._transformPropsFacetsObjectToArray(newQuerySelect),\n      querySelect: newQuerySelect,\n      showAnatomograms: newShowAnatomograms\n    };\n    _this.setChecked = _this._setChecked.bind(_assertThisInitialized(_assertThisInitialized(_this)));\n    _this.toggleAnatomograms = _this._toggleAnatomograms.bind(_assertThisInitialized(_assertThisInitialized(_this)));\n    return _this;\n  }\n\n  _createClass(BaselineRouter, [{\n    key: \"componentDidMount\",\n    value: function componentDidMount() {\n      var _this2 = this;\n\n      // TODO Consider using https://github.com/reactjs/react-router\n      window.addEventListener('popstate', function () {\n        var newQuerySelect = _urlManager__WEBPACK_IMPORTED_MODULE_4__[\"default\"].parseBaselineUrlParameter();\n\n        _this2.setState({\n          querySelect: newQuerySelect,\n          facetsTreeData: _this2._transformPropsFacetsObjectToArray(newQuerySelect)\n        });\n      }, false);\n    }\n  }, {\n    key: \"render\",\n    value: function render() {\n      var organismPartInQuerySelect = this._organismPartInQuerySelect();\n\n      var heatmaps = this._querySelectToHeatmaps();\n\n      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n        className: \"row expanded\"\n      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n        className: \"small-3 large-2 columns\"\n      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_facets_tree_BaselineFacetsTree__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n        facets: this.state.facetsTreeData,\n        setChecked: this.setChecked,\n        showAnatomograms: this.state.showAnatomograms,\n        toggleAnatomograms: this.toggleAnatomograms,\n        disableAnatomogramsCheckbox: !organismPartInQuerySelect\n      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n        className: \"small-9 large-10 columns\"\n      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BaselineHeatmaps__WEBPACK_IMPORTED_MODULE_3__[\"default\"], {\n        atlasUrl: this.props.atlasUrl,\n        geneQuery: this.props.geneQuery,\n        conditionQuery: this.props.conditionQuery,\n        heatmaps: heatmaps,\n        showAnatomograms: this.state.showAnatomograms\n      })));\n    }\n  }, {\n    key: \"_setChecked\",\n    value: function _setChecked(species, factorName, checked) {\n      var newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect));\n      var newFacetsTreeData = JSON.parse(JSON.stringify(this.state.facetsTreeData));\n\n      if (checked) {\n        this._addElementToObjectOfArrays(newQuerySelect, species, factorName);\n\n        newFacetsTreeData.find(function (facet) {\n          return facet.facetName === species;\n        }).facetItems.find(function (factor) {\n          return factor.name === factorName;\n        }).checked = true;\n      } else {\n        this._removeElementFromObjectOfArrays(newQuerySelect, species, factorName);\n\n        newFacetsTreeData.find(function (facet) {\n          return facet.facetName === species;\n        }).facetItems.find(function (factor) {\n          return factor.name === factorName;\n        }).checked = false;\n      }\n\n      _urlManager__WEBPACK_IMPORTED_MODULE_4__[\"default\"].baselinePush(newQuerySelect, false);\n      this.setState({\n        facetsTreeData: newFacetsTreeData,\n        querySelect: newQuerySelect\n      });\n    }\n  }, {\n    key: \"_addElementToObjectOfArrays\",\n    value: function _addElementToObjectOfArrays(obj, arrayName, element) {\n      if (!obj[arrayName]) {\n        obj[arrayName] = [];\n      }\n\n      obj[arrayName].push(element);\n    }\n  }, {\n    key: \"_removeElementFromObjectOfArrays\",\n    value: function _removeElementFromObjectOfArrays(obj, arrayName, element) {\n      delete obj[arrayName].splice(obj[arrayName].indexOf(element), 1);\n\n      if (obj[arrayName].length === 0) {\n        delete obj[arrayName];\n      }\n    }\n  }, {\n    key: \"_toggleAnatomograms\",\n    value: function _toggleAnatomograms() {\n      var newShowAnatomograms = !this.state.showAnatomograms;\n      this.setState({\n        showAnatomograms: newShowAnatomograms\n      });\n    }\n  }, {\n    key: \"_organismPartInQuerySelect\",\n    value: function _organismPartInQuerySelect() {\n      var querySelect = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.querySelect;\n      return Object.keys(querySelect).some(function (species) {\n        return querySelect[species].some(function (facetItem) {\n          return facetItem.toLowerCase() === 'organism_part';\n        });\n      });\n    } // Also syncs this.state.facetsTreeData with querySelect\n\n  }, {\n    key: \"_transformPropsFacetsObjectToArray\",\n    value: function _transformPropsFacetsObjectToArray(querySelect) {\n      var _this3 = this;\n\n      return Object.keys(this.props.facetsTreeData).map(function (facetName) {\n        return {\n          facetName: facetName,\n          facetItems: _this3.props.facetsTreeData[facetName].map(function (facetItem) {\n            return {\n              name: facetItem.name,\n              value: facetItem.value,\n              checked: querySelect[facetName] ? querySelect[facetName].includes(facetItem.name) : false\n            };\n          })\n        };\n      });\n    }\n  }, {\n    key: \"_querySelectToHeatmaps\",\n    value: function _querySelectToHeatmaps() {\n      var _this4 = this;\n\n      /*\n       querySelect={ \"Homo sapiens\": [ \"CELL_LINE\", \"ORGANISM_PART\" ] }\n       ->\n       [ { \"species\": \"Homo sapiens\",\n           \"factor\": { \"name\": \"ORGANISM_PART\", \"value\": \"Organism part\"}\n         },\n         { \"species\": \"Homo sapiens\",\n           \"factor\": { \"name\": \"CELL_LINE\", \"value\": \"Cell line\" }\n       ]\n       */\n      var heatmaps = []; // We iterate over facetsTreeData instead of over querySelect to get heatmaps in the same order as the facets\n      // tree\n\n      this.state.facetsTreeData.forEach(function (facet) {\n        facet.facetItems.forEach(function (facetItem) {\n          if (_this4.state.querySelect[facet.facetName] && _this4.state.querySelect[facet.facetName].includes(facetItem.name)) {\n            heatmaps.push({\n              species: facet.facetName,\n              factor: facetItem\n            });\n          }\n        });\n      });\n      return heatmaps;\n    }\n  }]);\n\n  return BaselineRouter;\n}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);\n\nBaselineRouter.propTypes = {\n  atlasUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n\n  /*\n  {\n      \"homo sapiens\": [{ \"name\": \"ORGANISM_PART\", \"value\": \"Organism part\"},\n      { \"name\": \"CELL_LINE\", \"value\": \"Cell line\"}],\n      \"macaca mulatta\": [{ \"name\": \"ORGANISM_PART\", \"value\": \"Organism part\"}]\n  }\n   */\n  facetsTreeData: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,\n  geneQuery: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  conditionQuery: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  species: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (BaselineRouter);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL0Jhc2VsaW5lUm91dGVyLmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vW25hbWVdLy4vYnVuZGxlcy9iYXNlbGluZS1leHByZXNzaW9uL3NyYy9CYXNlbGluZVJvdXRlci5qcz9hNWRhIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCdcbmltcG9ydCBQcm9wVHlwZXMgZnJvbSAncHJvcC10eXBlcydcblxuaW1wb3J0IEJhc2VsaW5lRmFjZXRzVHJlZSBmcm9tICcuL2ZhY2V0cy10cmVlL0Jhc2VsaW5lRmFjZXRzVHJlZSdcbmltcG9ydCBCYXNlbGluZUhlYXRtYXBzIGZyb20gJy4vQmFzZWxpbmVIZWF0bWFwcydcbmltcG9ydCBVcmxNYW5hZ2VyIGZyb20gJy4vdXJsTWFuYWdlcidcblxuY2xhc3MgQmFzZWxpbmVSb3V0ZXIgZXh0ZW5kcyBSZWFjdC5Db21wb25lbnQge1xuXG4gIGNvbnN0cnVjdG9yKHByb3BzKSB7XG4gICAgc3VwZXIocHJvcHMpXG5cbiAgICBjb25zdCBuZXdRdWVyeVNlbGVjdCA9IFVybE1hbmFnZXIucGFyc2VCYXNlbGluZVVybFBhcmFtZXRlcigpXG4gICAgbGV0IG5ld1Nob3dBbmF0b21vZ3JhbXMgPSBmYWxzZVxuXG4gICAgaWYgKE9iamVjdC5rZXlzKG5ld1F1ZXJ5U2VsZWN0KS5sZW5ndGggPT09IDApIHtcbiAgICAgIE9iamVjdC5rZXlzKHRoaXMucHJvcHMuZmFjZXRzVHJlZURhdGEpLmZvckVhY2goc3BlY2llcyA9PiB7XG4gICAgICAgIGNvbnN0IGZhY3RvclRvUHJlc2VsZWN0ID1cbiAgICAgICAgICB0aGlzLnByb3BzLmZhY2V0c1RyZWVEYXRhW3NwZWNpZXNdLmZpbmQoZmFjdG9yID0+IGZhY3Rvci5uYW1lLnRvTG93ZXJDYXNlKCkgPT09ICdvcmdhbmlzbV9wYXJ0JylcbiAgICAgICAgaWYgKGZhY3RvclRvUHJlc2VsZWN0KSB7XG4gICAgICAgICAgdGhpcy5fYWRkRWxlbWVudFRvT2JqZWN0T2ZBcnJheXMobmV3UXVlcnlTZWxlY3QsIHNwZWNpZXMsIGZhY3RvclRvUHJlc2VsZWN0Lm5hbWUpXG4gICAgICAgICAgbmV3U2hvd0FuYXRvbW9ncmFtcyA9IHRydWVcbiAgICAgICAgfSBlbHNlIGlmICh0aGlzLnByb3BzLmZhY2V0c1RyZWVEYXRhW3NwZWNpZXNdLmxlbmd0aCkge1xuICAgICAgICAgIHRoaXMuX2FkZEVsZW1lbnRUb09iamVjdE9mQXJyYXlzKFxuICAgICAgICAgICAgbmV3UXVlcnlTZWxlY3QsIHNwZWNpZXMsIHRoaXMucHJvcHMuZmFjZXRzVHJlZURhdGFbc3BlY2llc11bMF0ubmFtZSlcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9XG5cbiAgICBVcmxNYW5hZ2VyLmJhc2VsaW5lUHVzaChuZXdRdWVyeVNlbGVjdCwgdHJ1ZSlcblxuICAgIHRoaXMuc3RhdGUgPSB7XG4gICAgICBmYWNldHNUcmVlRGF0YTogdGhpcy5fdHJhbnNmb3JtUHJvcHNGYWNldHNPYmplY3RUb0FycmF5KG5ld1F1ZXJ5U2VsZWN0KSxcbiAgICAgIHF1ZXJ5U2VsZWN0OiBuZXdRdWVyeVNlbGVjdCxcbiAgICAgIHNob3dBbmF0b21vZ3JhbXM6IG5ld1Nob3dBbmF0b21vZ3JhbXNcbiAgICB9XG5cbiAgICB0aGlzLnNldENoZWNrZWQgPSB0aGlzLl9zZXRDaGVja2VkLmJpbmQodGhpcylcbiAgICB0aGlzLnRvZ2dsZUFuYXRvbW9ncmFtcyA9IHRoaXMuX3RvZ2dsZUFuYXRvbW9ncmFtcy5iaW5kKHRoaXMpXG4gIH1cblxuICBjb21wb25lbnREaWRNb3VudCAoKSB7XG4gICAgLy8gVE9ETyBDb25zaWRlciB1c2luZyBodHRwczovL2dpdGh1Yi5jb20vcmVhY3Rqcy9yZWFjdC1yb3V0ZXJcbiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcihcbiAgICAgICdwb3BzdGF0ZScsXG4gICAgICAoKSA9PiB7XG4gICAgICAgIGNvbnN0IG5ld1F1ZXJ5U2VsZWN0ID0gVXJsTWFuYWdlci5wYXJzZUJhc2VsaW5lVXJsUGFyYW1ldGVyKClcbiAgICAgICAgdGhpcy5zZXRTdGF0ZSh7XG4gICAgICAgICAgcXVlcnlTZWxlY3Q6IG5ld1F1ZXJ5U2VsZWN0LFxuICAgICAgICAgIGZhY2V0c1RyZWVEYXRhOiB0aGlzLl90cmFuc2Zvcm1Qcm9wc0ZhY2V0c09iamVjdFRvQXJyYXkobmV3UXVlcnlTZWxlY3QpXG4gICAgICAgIH0pXG4gICAgICB9LFxuICAgICAgZmFsc2UpXG4gIH1cblxuICByZW5kZXIgKCkge1xuICAgIGNvbnN0IG9yZ2FuaXNtUGFydEluUXVlcnlTZWxlY3QgPSB0aGlzLl9vcmdhbmlzbVBhcnRJblF1ZXJ5U2VsZWN0KClcbiAgICBjb25zdCBoZWF0bWFwcyA9IHRoaXMuX3F1ZXJ5U2VsZWN0VG9IZWF0bWFwcygpXG5cbiAgICByZXR1cm4gKFxuICAgICAgPGRpdiBjbGFzc05hbWU9e2Byb3cgZXhwYW5kZWRgfT5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9e2BzbWFsbC0zIGxhcmdlLTIgY29sdW1uc2B9PlxuICAgICAgICAgIDxCYXNlbGluZUZhY2V0c1RyZWVcbiAgICAgICAgICAgIGZhY2V0cyA9IHt0aGlzLnN0YXRlLmZhY2V0c1RyZWVEYXRhfVxuICAgICAgICAgICAgc2V0Q2hlY2tlZCA9IHt0aGlzLnNldENoZWNrZWR9XG4gICAgICAgICAgICBzaG93QW5hdG9tb2dyYW1zID0ge3RoaXMuc3RhdGUuc2hvd0FuYXRvbW9ncmFtc31cbiAgICAgICAgICAgIHRvZ2dsZUFuYXRvbW9ncmFtcyA9IHt0aGlzLnRvZ2dsZUFuYXRvbW9ncmFtc31cbiAgICAgICAgICAgIGRpc2FibGVBbmF0b21vZ3JhbXNDaGVja2JveCA9IHshb3JnYW5pc21QYXJ0SW5RdWVyeVNlbGVjdH0gLz5cbiAgICAgICAgPC9kaXY+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPXtgc21hbGwtOSBsYXJnZS0xMCBjb2x1bW5zYH0+XG4gICAgICAgICAgPEJhc2VsaW5lSGVhdG1hcHNcbiAgICAgICAgICAgIGF0bGFzVXJsID0ge3RoaXMucHJvcHMuYXRsYXNVcmx9XG4gICAgICAgICAgICBnZW5lUXVlcnkgPSB7dGhpcy5wcm9wcy5nZW5lUXVlcnl9XG4gICAgICAgICAgICBjb25kaXRpb25RdWVyeSA9IHt0aGlzLnByb3BzLmNvbmRpdGlvblF1ZXJ5fVxuICAgICAgICAgICAgaGVhdG1hcHMgPSB7aGVhdG1hcHN9XG4gICAgICAgICAgICBzaG93QW5hdG9tb2dyYW1zID0ge3RoaXMuc3RhdGUuc2hvd0FuYXRvbW9ncmFtc30gLz5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cbiAgICApXG4gIH1cblxuICBfc2V0Q2hlY2tlZCAoc3BlY2llcywgZmFjdG9yTmFtZSwgY2hlY2tlZCkge1xuICAgIGNvbnN0IG5ld1F1ZXJ5U2VsZWN0ID0gSlNPTi5wYXJzZShKU09OLnN0cmluZ2lmeSh0aGlzLnN0YXRlLnF1ZXJ5U2VsZWN0KSlcbiAgICBjb25zdCBuZXdGYWNldHNUcmVlRGF0YSA9IEpTT04ucGFyc2UoSlNPTi5zdHJpbmdpZnkodGhpcy5zdGF0ZS5mYWNldHNUcmVlRGF0YSkpXG5cbiAgICBpZiAoY2hlY2tlZCkge1xuICAgICAgdGhpcy5fYWRkRWxlbWVudFRvT2JqZWN0T2ZBcnJheXMobmV3UXVlcnlTZWxlY3QsIHNwZWNpZXMsIGZhY3Rvck5hbWUpXG4gICAgICBuZXdGYWNldHNUcmVlRGF0YS5maW5kKGZhY2V0ID0+IGZhY2V0LmZhY2V0TmFtZSA9PT0gc3BlY2llcykuZmFjZXRJdGVtc1xuICAgICAgICAuZmluZChmYWN0b3IgPT4gZmFjdG9yLm5hbWUgPT09IGZhY3Rvck5hbWUpLmNoZWNrZWQgPSB0cnVlXG4gICAgfSBlbHNlIHtcbiAgICAgIHRoaXMuX3JlbW92ZUVsZW1lbnRGcm9tT2JqZWN0T2ZBcnJheXMobmV3UXVlcnlTZWxlY3QsIHNwZWNpZXMsIGZhY3Rvck5hbWUpXG4gICAgICBuZXdGYWNldHNUcmVlRGF0YS5maW5kKGZhY2V0ID0+IGZhY2V0LmZhY2V0TmFtZSA9PT0gc3BlY2llcykuZmFjZXRJdGVtc1xuICAgICAgICAuZmluZChmYWN0b3IgPT4gZmFjdG9yLm5hbWUgPT09IGZhY3Rvck5hbWUpLmNoZWNrZWQgPSBmYWxzZVxuICAgIH1cblxuICAgIFVybE1hbmFnZXIuYmFzZWxpbmVQdXNoKG5ld1F1ZXJ5U2VsZWN0LCBmYWxzZSlcbiAgICB0aGlzLnNldFN0YXRlKHtcbiAgICAgIGZhY2V0c1RyZWVEYXRhOiBuZXdGYWNldHNUcmVlRGF0YSxcbiAgICAgIHF1ZXJ5U2VsZWN0OiBuZXdRdWVyeVNlbGVjdFxuICAgIH0pXG4gIH1cblxuICBfYWRkRWxlbWVudFRvT2JqZWN0T2ZBcnJheXMgKG9iaiwgYXJyYXlOYW1lLCBlbGVtZW50KSB7XG4gICAgaWYgKCFvYmpbYXJyYXlOYW1lXSkge1xuICAgICAgb2JqW2FycmF5TmFtZV0gPSBbXVxuICAgIH1cbiAgICBvYmpbYXJyYXlOYW1lXS5wdXNoKGVsZW1lbnQpXG4gIH1cblxuICBfcmVtb3ZlRWxlbWVudEZyb21PYmplY3RPZkFycmF5cyAob2JqLCBhcnJheU5hbWUsIGVsZW1lbnQpIHtcbiAgICBkZWxldGUgb2JqW2FycmF5TmFtZV0uc3BsaWNlKG9ialthcnJheU5hbWVdLmluZGV4T2YoZWxlbWVudCksIDEpXG4gICAgaWYgKG9ialthcnJheU5hbWVdLmxlbmd0aCA9PT0gMCkge1xuICAgICAgZGVsZXRlIG9ialthcnJheU5hbWVdXG4gICAgfVxuICB9XG5cbiAgX3RvZ2dsZUFuYXRvbW9ncmFtcygpIHtcbiAgICBsZXQgbmV3U2hvd0FuYXRvbW9ncmFtcyA9ICF0aGlzLnN0YXRlLnNob3dBbmF0b21vZ3JhbXNcblxuICAgIHRoaXMuc2V0U3RhdGUoe1xuICAgICAgc2hvd0FuYXRvbW9ncmFtczogbmV3U2hvd0FuYXRvbW9ncmFtc1xuICAgIH0pXG4gIH1cblxuICBfb3JnYW5pc21QYXJ0SW5RdWVyeVNlbGVjdChxdWVyeVNlbGVjdCA9IHRoaXMuc3RhdGUucXVlcnlTZWxlY3QpIHtcbiAgICByZXR1cm4gT2JqZWN0LmtleXMocXVlcnlTZWxlY3QpXG4gICAgICAuc29tZShzcGVjaWVzID0+IHF1ZXJ5U2VsZWN0W3NwZWNpZXNdLnNvbWUoZmFjZXRJdGVtID0+IGZhY2V0SXRlbS50b0xvd2VyQ2FzZSgpID09PSAnb3JnYW5pc21fcGFydCcpKVxuICB9XG5cbiAgLy8gQWxzbyBzeW5jcyB0aGlzLnN0YXRlLmZhY2V0c1RyZWVEYXRhIHdpdGggcXVlcnlTZWxlY3RcbiAgX3RyYW5zZm9ybVByb3BzRmFjZXRzT2JqZWN0VG9BcnJheSAocXVlcnlTZWxlY3QpIHtcbiAgICByZXR1cm4gT2JqZWN0LmtleXModGhpcy5wcm9wcy5mYWNldHNUcmVlRGF0YSkubWFwKGZhY2V0TmFtZSA9PiB7XG4gICAgICByZXR1cm4ge1xuICAgICAgICBmYWNldE5hbWU6IGZhY2V0TmFtZSxcbiAgICAgICAgZmFjZXRJdGVtczogdGhpcy5wcm9wcy5mYWNldHNUcmVlRGF0YVtmYWNldE5hbWVdLm1hcChmYWNldEl0ZW0gPT4ge1xuICAgICAgICAgIHJldHVybiB7XG4gICAgICAgICAgICBuYW1lOiBmYWNldEl0ZW0ubmFtZSxcbiAgICAgICAgICAgIHZhbHVlOiBmYWNldEl0ZW0udmFsdWUsXG4gICAgICAgICAgICBjaGVja2VkOiBxdWVyeVNlbGVjdFtmYWNldE5hbWVdID8gcXVlcnlTZWxlY3RbZmFjZXROYW1lXS5pbmNsdWRlcyhmYWNldEl0ZW0ubmFtZSkgOiBmYWxzZVxuICAgICAgICAgIH1cbiAgICAgICAgfSlcbiAgICAgIH1cbiAgICB9KVxuICB9XG5cbiAgX3F1ZXJ5U2VsZWN0VG9IZWF0bWFwcyAoKSB7XG4gICAgLypcbiAgICAgcXVlcnlTZWxlY3Q9eyBcIkhvbW8gc2FwaWVuc1wiOiBbIFwiQ0VMTF9MSU5FXCIsIFwiT1JHQU5JU01fUEFSVFwiIF0gfVxuICAgICAtPlxuICAgICBbIHsgXCJzcGVjaWVzXCI6IFwiSG9tbyBzYXBpZW5zXCIsXG4gICAgICAgICBcImZhY3RvclwiOiB7IFwibmFtZVwiOiBcIk9SR0FOSVNNX1BBUlRcIiwgXCJ2YWx1ZVwiOiBcIk9yZ2FuaXNtIHBhcnRcIn1cbiAgICAgICB9LFxuICAgICAgIHsgXCJzcGVjaWVzXCI6IFwiSG9tbyBzYXBpZW5zXCIsXG4gICAgICAgICBcImZhY3RvclwiOiB7IFwibmFtZVwiOiBcIkNFTExfTElORVwiLCBcInZhbHVlXCI6IFwiQ2VsbCBsaW5lXCIgfVxuICAgICBdXG4gICAgICovXG4gICAgbGV0IGhlYXRtYXBzID0gW11cblxuICAgIC8vIFdlIGl0ZXJhdGUgb3ZlciBmYWNldHNUcmVlRGF0YSBpbnN0ZWFkIG9mIG92ZXIgcXVlcnlTZWxlY3QgdG8gZ2V0IGhlYXRtYXBzIGluIHRoZSBzYW1lIG9yZGVyIGFzIHRoZSBmYWNldHNcbiAgICAvLyB0cmVlXG4gICAgdGhpcy5zdGF0ZS5mYWNldHNUcmVlRGF0YS5mb3JFYWNoKGZhY2V0ID0+IHtcbiAgICAgIGZhY2V0LmZhY2V0SXRlbXMuZm9yRWFjaChmYWNldEl0ZW0gPT4ge1xuICAgICAgICBpZiAodGhpcy5zdGF0ZS5xdWVyeVNlbGVjdFtmYWNldC5mYWNldE5hbWVdICYmXG4gICAgICAgICAgdGhpcy5zdGF0ZS5xdWVyeVNlbGVjdFtmYWNldC5mYWNldE5hbWVdLmluY2x1ZGVzKGZhY2V0SXRlbS5uYW1lKSkge1xuICAgICAgICAgIGhlYXRtYXBzLnB1c2goe1xuICAgICAgICAgICAgc3BlY2llczogZmFjZXQuZmFjZXROYW1lLFxuICAgICAgICAgICAgZmFjdG9yOiBmYWNldEl0ZW1cbiAgICAgICAgICB9KVxuICAgICAgICB9XG4gICAgICB9KVxuICAgIH0pXG5cbiAgICByZXR1cm4gaGVhdG1hcHNcbiAgfVxufVxuXG5CYXNlbGluZVJvdXRlci5wcm9wVHlwZXMgPSB7XG4gIGF0bGFzVXJsOiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWQsXG4gIC8qXG4gIHtcbiAgICAgIFwiaG9tbyBzYXBpZW5zXCI6IFt7IFwibmFtZVwiOiBcIk9SR0FOSVNNX1BBUlRcIiwgXCJ2YWx1ZVwiOiBcIk9yZ2FuaXNtIHBhcnRcIn0sXG4gICAgICB7IFwibmFtZVwiOiBcIkNFTExfTElORVwiLCBcInZhbHVlXCI6IFwiQ2VsbCBsaW5lXCJ9XSxcbiAgICAgIFwibWFjYWNhIG11bGF0dGFcIjogW3sgXCJuYW1lXCI6IFwiT1JHQU5JU01fUEFSVFwiLCBcInZhbHVlXCI6IFwiT3JnYW5pc20gcGFydFwifV1cbiAgfVxuICAgKi9cbiAgZmFjZXRzVHJlZURhdGE6IFByb3BUeXBlcy5vYmplY3QuaXNSZXF1aXJlZCxcbiAgZ2VuZVF1ZXJ5OiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWQsXG4gIGNvbmRpdGlvblF1ZXJ5OiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWQsXG4gIHNwZWNpZXM6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZFxufVxuXG5leHBvcnQgZGVmYXVsdCBCYXNlbGluZVJvdXRlclxuIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7OztBQUVBO0FBQUE7QUFDQTtBQURBO0FBQ0E7QUFBQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUhBO0FBTUE7QUFDQTtBQTdCQTtBQThCQTtBQUNBOzs7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBR0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUZBO0FBSUE7QUFFQTs7O0FBRUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBTEE7QUFPQTtBQUFBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUxBO0FBU0E7OztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFBQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQUE7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFGQTtBQUlBOzs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTs7O0FBRUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7OztBQUVBO0FBQ0E7QUFFQTtBQUNBO0FBREE7QUFHQTs7O0FBRUE7QUFBQTtBQUNBO0FBQ0E7QUFBQTtBQUFBO0FBQUE7QUFDQTtBQUNBOzs7QUFFQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBSEE7QUFLQTtBQVJBO0FBVUE7QUFDQTs7O0FBRUE7QUFBQTtBQUNBO0FBQUE7Ozs7Ozs7Ozs7QUFVQTtBQUdBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFGQTtBQUlBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7Ozs7QUF0S0E7QUFDQTtBQXdLQTtBQUNBO0FBQ0E7QUFBQTs7Ozs7OztBQU9BO0FBQ0E7QUFDQTtBQUNBO0FBWkE7QUFlQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/src/BaselineRouter.js\n");
 
-    var newUrlQueryParams = QueryString.parse(currentUrlObject.query);
-    newUrlQueryParams.bs = JSON.stringify(querySelect);
+/***/ }),
 
-    var newUrlObject = {
-        protocol: currentUrlObject.protocol,
-        host: currentUrlObject.host,
-        hash: currentUrlObject.hash,
-        pathname: currentUrlObject.pathname,
-        query: newUrlQueryParams
-    };
+/***/ "./bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.js":
+/*!***************************************************************************!*\
+  !*** ./bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.js ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-    if (replace) {
-        history.replaceState(null, '', Url.format(newUrlObject));
-    } else {
-        history.pushState(null, '', Url.format(newUrlObject));
-    }
-};
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ \"./node_modules/prop-types/index.js\");\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _Facet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Facet */ \"./bundles/baseline-expression/src/facets-tree/Facet.js\");\n\n\n\n\nvar BaselineFacetsTree = function BaselineFacetsTree(props) {\n  var facets = props.facets.map(function (facet) {\n    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Facet__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n      key: facet.facetName,\n      facetName: facet.facetName,\n      facetItems: facet.facetItems,\n      setChecked: props.setChecked\n    });\n  });\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"input\", {\n    type: \"checkbox\",\n    checked: props.showAnatomograms,\n    onChange: props.toggleAnatomograms,\n    disabled: props.disableAnatomogramsCheckbox\n  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"label\", null, \"Show anatomograms\"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h4\", null, \"Filter your results\"), facets);\n};\n\nBaselineFacetsTree.propTypes = {\n  /*\n  [\n    {\n      facetName : \"homo sapiens\",\n      facetItems: [\n        {\"name\": \"CELL_LINE\", \"value\": \"Cell line\", \"checked\": true},\n        {\"name\": \"ORGANISM_PART\", \"value\": \"Tissue\", \"checked: true}\n      ]\n    },\n    {\n      facetName : \"mus musculus\",\n      facetItems\": [\n        {\"name\": \"CELL_LINE\", \"value\": \"Cell line\", \"checked\": false},\n        {\"name\": \"ORGANISM_PART\", \"value\": \"Tissue\", \"checked\": true}\n      ]\n    }\n  ]\n  */\n  facets: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({\n    facetName: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n    facetItems: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({\n      name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n      value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n      checked: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired\n    })).isRequired\n  })).isRequired,\n  setChecked: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,\n  showAnatomograms: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,\n  toggleAnatomograms: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,\n  disableAnatomogramsCheckbox: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (BaselineFacetsTree);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL2ZhY2V0cy10cmVlL0Jhc2VsaW5lRmFjZXRzVHJlZS5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS8uL2J1bmRsZXMvYmFzZWxpbmUtZXhwcmVzc2lvbi9zcmMvZmFjZXRzLXRyZWUvQmFzZWxpbmVGYWNldHNUcmVlLmpzPzRiZDUiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0J1xuaW1wb3J0IFByb3BUeXBlcyBmcm9tICdwcm9wLXR5cGVzJ1xuXG5pbXBvcnQgRmFjZXQgZnJvbSAnLi9GYWNldCdcblxuY29uc3QgQmFzZWxpbmVGYWNldHNUcmVlID0gcHJvcHMgPT4ge1xuICBjb25zdCBmYWNldHMgPSBwcm9wcy5mYWNldHMubWFwKGZhY2V0ID0+XG4gICAgPEZhY2V0XG4gICAgICBrZXkgPSB7ZmFjZXQuZmFjZXROYW1lfVxuICAgICAgZmFjZXROYW1lID0ge2ZhY2V0LmZhY2V0TmFtZX1cbiAgICAgIGZhY2V0SXRlbXMgPSB7ZmFjZXQuZmFjZXRJdGVtc31cbiAgICAgIHNldENoZWNrZWQgPSB7cHJvcHMuc2V0Q2hlY2tlZH1cbiAgICAvPlxuICApXG5cbiAgcmV0dXJuIChcbiAgICA8ZGl2PlxuICAgICAgPGlucHV0XG4gICAgICAgIHR5cGU9e2BjaGVja2JveGB9XG4gICAgICAgIGNoZWNrZWQ9e3Byb3BzLnNob3dBbmF0b21vZ3JhbXN9XG4gICAgICAgIG9uQ2hhbmdlPXtwcm9wcy50b2dnbGVBbmF0b21vZ3JhbXN9XG4gICAgICAgIGRpc2FibGVkPXtwcm9wcy5kaXNhYmxlQW5hdG9tb2dyYW1zQ2hlY2tib3h9IC8+XG4gICAgICA8bGFiZWw+U2hvdyBhbmF0b21vZ3JhbXM8L2xhYmVsPlxuXG4gICAgICA8aDQ+RmlsdGVyIHlvdXIgcmVzdWx0czwvaDQ+XG4gICAgICB7ZmFjZXRzfVxuICAgIDwvZGl2PlxuICApXG59XG5cbkJhc2VsaW5lRmFjZXRzVHJlZS5wcm9wVHlwZXMgPSB7XG4gIC8qXG4gIFtcbiAgICB7XG4gICAgICBmYWNldE5hbWUgOiBcImhvbW8gc2FwaWVuc1wiLFxuICAgICAgZmFjZXRJdGVtczogW1xuICAgICAgICB7XCJuYW1lXCI6IFwiQ0VMTF9MSU5FXCIsIFwidmFsdWVcIjogXCJDZWxsIGxpbmVcIiwgXCJjaGVja2VkXCI6IHRydWV9LFxuICAgICAgICB7XCJuYW1lXCI6IFwiT1JHQU5JU01fUEFSVFwiLCBcInZhbHVlXCI6IFwiVGlzc3VlXCIsIFwiY2hlY2tlZDogdHJ1ZX1cbiAgICAgIF1cbiAgICB9LFxuICAgIHtcbiAgICAgIGZhY2V0TmFtZSA6IFwibXVzIG11c2N1bHVzXCIsXG4gICAgICBmYWNldEl0ZW1zXCI6IFtcbiAgICAgICAge1wibmFtZVwiOiBcIkNFTExfTElORVwiLCBcInZhbHVlXCI6IFwiQ2VsbCBsaW5lXCIsIFwiY2hlY2tlZFwiOiBmYWxzZX0sXG4gICAgICAgIHtcIm5hbWVcIjogXCJPUkdBTklTTV9QQVJUXCIsIFwidmFsdWVcIjogXCJUaXNzdWVcIiwgXCJjaGVja2VkXCI6IHRydWV9XG4gICAgICBdXG4gICAgfVxuICBdXG4gICovXG4gIGZhY2V0czogUHJvcFR5cGVzLmFycmF5T2YoUHJvcFR5cGVzLnNoYXBlKHtcbiAgICBmYWNldE5hbWU6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZCxcbiAgICBmYWNldEl0ZW1zOiBQcm9wVHlwZXMuYXJyYXlPZihQcm9wVHlwZXMuc2hhcGUoe1xuICAgICAgbmFtZTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICAgICAgdmFsdWU6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZCxcbiAgICAgIGNoZWNrZWQ6IFByb3BUeXBlcy5ib29sLmlzUmVxdWlyZWRcbiAgICB9KSkuaXNSZXF1aXJlZFxuICB9KSkuaXNSZXF1aXJlZCxcbiAgc2V0Q2hlY2tlZDogUHJvcFR5cGVzLmZ1bmMuaXNSZXF1aXJlZCxcbiAgc2hvd0FuYXRvbW9ncmFtczogUHJvcFR5cGVzLmJvb2wuaXNSZXF1aXJlZCxcbiAgdG9nZ2xlQW5hdG9tb2dyYW1zOiBQcm9wVHlwZXMuZnVuYy5pc1JlcXVpcmVkLFxuICBkaXNhYmxlQW5hdG9tb2dyYW1zQ2hlY2tib3g6IFByb3BUeXBlcy5ib29sLmlzUmVxdWlyZWRcbn1cblxuZXhwb3J0IGRlZmF1bHQgQmFzZWxpbmVGYWNldHNUcmVlXG4iXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFKQTtBQURBO0FBU0E7QUFHQTtBQUNBO0FBQ0E7QUFDQTtBQUpBO0FBV0E7QUFDQTtBQUNBO0FBQ0E7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQWtCQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFIQTtBQUZBO0FBUUE7QUFDQTtBQUNBO0FBQ0E7QUE5QkE7QUFpQ0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.js\n");
 
-exports.parseBaselineUrlParameter = function getQuerySelectFromLocation() {
-    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location;
+/***/ }),
 
-    var currentURL = Url.parse(location.toString());
-    var differentialSelectParam = QueryString.parse(currentURL.query).bs;
-    return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};
-};
+/***/ "./bundles/baseline-expression/src/facets-tree/Facet.js":
+/*!**************************************************************!*\
+  !*** ./bundles/baseline-expression/src/facets-tree/Facet.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ \"./node_modules/prop-types/index.js\");\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _FacetItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FacetItem */ \"./bundles/baseline-expression/src/facets-tree/FacetItem.js\");\n\n\n\n\nvar capitalizeFirstLetter = function capitalizeFirstLetter(str) {\n  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();\n};\n\nvar Facet = function Facet(props) {\n  var facetItems = props.facetItems.map(function (facetItem) {\n    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FacetItem__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n      key: \"\".concat(props.facetName, \"_\").concat(facetItem.name),\n      name: facetItem.name,\n      value: facetItem.value,\n      checked: facetItem.checked,\n      setChecked: function setChecked(facetItemName, facetItemChecked) {\n        props.setChecked(props.facetName, facetItemName, facetItemChecked);\n      }\n    });\n  });\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: \"margin-top-large\"\n  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h5\", null, capitalizeFirstLetter(props.facetName)), facetItems);\n};\n\nFacet.propTypes = {\n  facetName: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  facetItems: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({\n    name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n    value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n    checked: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired\n  })).isRequired,\n  setChecked: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (Facet);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL2ZhY2V0cy10cmVlL0ZhY2V0LmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vW25hbWVdLy4vYnVuZGxlcy9iYXNlbGluZS1leHByZXNzaW9uL3NyYy9mYWNldHMtdHJlZS9GYWNldC5qcz84MmRmIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCdcbmltcG9ydCBQcm9wVHlwZXMgZnJvbSAncHJvcC10eXBlcydcblxuaW1wb3J0IEZhY2V0SXRlbSBmcm9tICcuL0ZhY2V0SXRlbSdcblxuY29uc3QgY2FwaXRhbGl6ZUZpcnN0TGV0dGVyID0gc3RyID0+IHN0ci5jaGFyQXQoMCkudG9VcHBlckNhc2UoKSArIHN0ci5zbGljZSgxKS50b0xvd2VyQ2FzZSgpXG5cbmNvbnN0IEZhY2V0ID0gcHJvcHMgPT4ge1xuICBjb25zdCBmYWNldEl0ZW1zID0gcHJvcHMuZmFjZXRJdGVtcy5tYXAoZmFjZXRJdGVtID0+XG4gICAgPEZhY2V0SXRlbVxuICAgICAga2V5PXtgJHtwcm9wcy5mYWNldE5hbWV9XyR7ZmFjZXRJdGVtLm5hbWV9YH1cbiAgICAgIG5hbWU9e2ZhY2V0SXRlbS5uYW1lfVxuICAgICAgdmFsdWU9e2ZhY2V0SXRlbS52YWx1ZX1cbiAgICAgIGNoZWNrZWQ9e2ZhY2V0SXRlbS5jaGVja2VkfVxuICAgICAgc2V0Q2hlY2tlZD17XG4gICAgICAgIChmYWNldEl0ZW1OYW1lLCBmYWNldEl0ZW1DaGVja2VkKSA9PiB7XG4gICAgICAgICAgcHJvcHMuc2V0Q2hlY2tlZChwcm9wcy5mYWNldE5hbWUsIGZhY2V0SXRlbU5hbWUsIGZhY2V0SXRlbUNoZWNrZWQpXG4gICAgICAgIH1cbiAgICAgIH0gLz5cbiAgKVxuXG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9XCJtYXJnaW4tdG9wLWxhcmdlXCI+XG4gICAgICA8aDU+e2NhcGl0YWxpemVGaXJzdExldHRlcihwcm9wcy5mYWNldE5hbWUpfTwvaDU+XG4gICAgICB7ZmFjZXRJdGVtc31cbiAgICA8L2Rpdj5cbiAgKVxufVxuXG5GYWNldC5wcm9wVHlwZXMgPSB7XG4gIGZhY2V0TmFtZTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICBmYWNldEl0ZW1zOiBQcm9wVHlwZXMuYXJyYXlPZihQcm9wVHlwZXMuc2hhcGUoe1xuICAgIG5hbWU6IFByb3BUeXBlcy5zdHJpbmcuaXNSZXF1aXJlZCxcbiAgICB2YWx1ZTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICAgIGNoZWNrZWQ6IFByb3BUeXBlcy5ib29sLmlzUmVxdWlyZWRcbiAgfSkpLmlzUmVxdWlyZWQsXG4gIHNldENoZWNrZWQ6IFByb3BUeXBlcy5mdW5jLmlzUmVxdWlyZWRcbn1cblxuZXhwb3J0IGRlZmF1bHQgRmFjZXRcbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUFBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBUkE7QUFEQTtBQWFBO0FBQ0E7QUFBQTtBQUtBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFIQTtBQUtBO0FBUEE7QUFVQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/src/facets-tree/Facet.js\n");
+
+/***/ }),
+
+/***/ "./bundles/baseline-expression/src/facets-tree/FacetItem.js":
+/*!******************************************************************!*\
+  !*** ./bundles/baseline-expression/src/facets-tree/FacetItem.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ \"./node_modules/prop-types/index.js\");\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nvar FacetItem = function FacetItem(props) {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"input\", {\n    type: \"checkbox\",\n    checked: props.checked,\n    onChange: function onChange() {\n      return props.setChecked(props.name, !props.checked);\n    }\n  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"label\", null, props.value));\n};\n\nFacetItem.propTypes = {\n  name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,\n  checked: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,\n  setChecked: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (FacetItem);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL2ZhY2V0cy10cmVlL0ZhY2V0SXRlbS5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS8uL2J1bmRsZXMvYmFzZWxpbmUtZXhwcmVzc2lvbi9zcmMvZmFjZXRzLXRyZWUvRmFjZXRJdGVtLmpzPzYxYmUiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0J1xuaW1wb3J0IFByb3BUeXBlcyBmcm9tICdwcm9wLXR5cGVzJ1xuXG5jb25zdCBGYWNldEl0ZW0gPSBwcm9wcyA9PlxuICA8ZGl2PlxuICAgIDxpbnB1dFxuICAgICAgdHlwZT17YGNoZWNrYm94YH1cbiAgICAgIGNoZWNrZWQ9e3Byb3BzLmNoZWNrZWR9XG4gICAgICBvbkNoYW5nZT17KCkgPT4gcHJvcHMuc2V0Q2hlY2tlZChwcm9wcy5uYW1lLCAhcHJvcHMuY2hlY2tlZCl9IC8+XG4gICAgPGxhYmVsPntwcm9wcy52YWx1ZX08L2xhYmVsPlxuICA8L2Rpdj5cblxuRmFjZXRJdGVtLnByb3BUeXBlcyA9IHtcbiAgbmFtZTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICB2YWx1ZTogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxuICBjaGVja2VkOiBQcm9wVHlwZXMuYm9vbC5pc1JlcXVpcmVkLFxuICBzZXRDaGVja2VkOiBQcm9wVHlwZXMuZnVuYy5pc1JlcXVpcmVkXG59XG5cbmV4cG9ydCBkZWZhdWx0IEZhY2V0SXRlbSJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFHQTtBQUNBO0FBQ0E7QUFBQTtBQUFBO0FBSEE7QUFGQTtBQUNBO0FBUUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUpBO0FBT0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/src/facets-tree/FacetItem.js\n");
+
+/***/ }),
+
+/***/ "./bundles/baseline-expression/src/urlManager.js":
+/*!*******************************************************!*\
+  !*** ./bundles/baseline-expression/src/urlManager.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! url */ \"./node_modules/url/url.js\");\n/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(url__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! querystring */ \"./node_modules/querystring-es3/index.js\");\n/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(querystring__WEBPACK_IMPORTED_MODULE_1__);\n\n\n/**\n * Stringify the `query` object, assign it to the `bs` search field in the URL and store it in the History\n * @param {object} querySelect\n * @param {boolean} replace - use `replaceState` instead of `pushState`\n */\n\nvar pushQueryIntoBrowserHistory = function pushQueryIntoBrowserHistory(querySelect, replace) {\n  var currentUrlObject = url__WEBPACK_IMPORTED_MODULE_0___default.a.parse(window.location.toString());\n  var newUrlQueryParams = querystring__WEBPACK_IMPORTED_MODULE_1___default.a.parse(currentUrlObject.query);\n  newUrlQueryParams.bs = JSON.stringify(querySelect);\n  var newUrlObject = {\n    protocol: currentUrlObject.protocol,\n    host: currentUrlObject.host,\n    hash: currentUrlObject.hash,\n    pathname: currentUrlObject.pathname,\n    query: newUrlQueryParams\n  };\n\n  if (replace) {\n    history.replaceState(null, \"\", url__WEBPACK_IMPORTED_MODULE_0___default.a.format(newUrlObject));\n  } else {\n    history.pushState(null, \"\", url__WEBPACK_IMPORTED_MODULE_0___default.a.format(newUrlObject));\n  }\n};\n\nvar getQuerySelectFromLocation = function getQuerySelectFromLocation() {\n  var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location;\n  var currentURL = url__WEBPACK_IMPORTED_MODULE_0___default.a.parse(location.toString());\n  var differentialSelectParam = querystring__WEBPACK_IMPORTED_MODULE_1___default.a.parse(currentURL.query).bs;\n  return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  baselinePush: pushQueryIntoBrowserHistory,\n  parseBaselineUrlParameter: getQuerySelectFromLocation\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL3VybE1hbmFnZXIuanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9bbmFtZV0vLi9idW5kbGVzL2Jhc2VsaW5lLWV4cHJlc3Npb24vc3JjL3VybE1hbmFnZXIuanM/OGEwOCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgVXJsIGZyb20gJ3VybCdcbmltcG9ydCBRdWVyeVN0cmluZyBmcm9tICdxdWVyeXN0cmluZydcblxuLyoqXG4gKiBTdHJpbmdpZnkgdGhlIGBxdWVyeWAgb2JqZWN0LCBhc3NpZ24gaXQgdG8gdGhlIGBic2Agc2VhcmNoIGZpZWxkIGluIHRoZSBVUkwgYW5kIHN0b3JlIGl0IGluIHRoZSBIaXN0b3J5XG4gKiBAcGFyYW0ge29iamVjdH0gcXVlcnlTZWxlY3RcbiAqIEBwYXJhbSB7Ym9vbGVhbn0gcmVwbGFjZSAtIHVzZSBgcmVwbGFjZVN0YXRlYCBpbnN0ZWFkIG9mIGBwdXNoU3RhdGVgXG4gKi9cbmNvbnN0IHB1c2hRdWVyeUludG9Ccm93c2VySGlzdG9yeSA9IChxdWVyeVNlbGVjdCwgcmVwbGFjZSkgPT4ge1xuICBsZXQgY3VycmVudFVybE9iamVjdCA9IFVybC5wYXJzZSh3aW5kb3cubG9jYXRpb24udG9TdHJpbmcoKSlcblxuICBsZXQgbmV3VXJsUXVlcnlQYXJhbXMgPSBRdWVyeVN0cmluZy5wYXJzZShjdXJyZW50VXJsT2JqZWN0LnF1ZXJ5KVxuICBuZXdVcmxRdWVyeVBhcmFtcy5icyA9IEpTT04uc3RyaW5naWZ5KHF1ZXJ5U2VsZWN0KVxuXG4gIGxldCBuZXdVcmxPYmplY3QgPSB7XG4gICAgcHJvdG9jb2w6IGN1cnJlbnRVcmxPYmplY3QucHJvdG9jb2wsXG4gICAgaG9zdDogY3VycmVudFVybE9iamVjdC5ob3N0LFxuICAgIGhhc2g6IGN1cnJlbnRVcmxPYmplY3QuaGFzaCxcbiAgICBwYXRobmFtZTogY3VycmVudFVybE9iamVjdC5wYXRobmFtZSxcbiAgICBxdWVyeTogbmV3VXJsUXVlcnlQYXJhbXNcbiAgfVxuXG4gIGlmIChyZXBsYWNlKSB7XG4gICAgaGlzdG9yeS5yZXBsYWNlU3RhdGUobnVsbCwgYGAsIFVybC5mb3JtYXQobmV3VXJsT2JqZWN0KSlcbiAgfSBlbHNlIHtcbiAgICBoaXN0b3J5LnB1c2hTdGF0ZShudWxsLCBgYCwgVXJsLmZvcm1hdChuZXdVcmxPYmplY3QpKVxuICB9XG59XG5cbmNvbnN0IGdldFF1ZXJ5U2VsZWN0RnJvbUxvY2F0aW9uID0gKGxvY2F0aW9uID0gd2luZG93LmxvY2F0aW9uKSA9PiB7XG4gIGxldCBjdXJyZW50VVJMID0gVXJsLnBhcnNlKGxvY2F0aW9uLnRvU3RyaW5nKCkpXG4gIGxldCBkaWZmZXJlbnRpYWxTZWxlY3RQYXJhbSA9IFF1ZXJ5U3RyaW5nLnBhcnNlKGN1cnJlbnRVUkwucXVlcnkpLmJzXG4gIHJldHVybiBkaWZmZXJlbnRpYWxTZWxlY3RQYXJhbSA/IEpTT04ucGFyc2UoZGlmZmVyZW50aWFsU2VsZWN0UGFyYW0pIDoge31cbn1cblxuZXhwb3J0IGRlZmF1bHQge1xuICBiYXNlbGluZVB1c2g6IHB1c2hRdWVyeUludG9Ccm93c2VySGlzdG9yeSxcbiAgcGFyc2VCYXNlbGluZVVybFBhcmFtZXRlcjogZ2V0UXVlcnlTZWxlY3RGcm9tTG9jYXRpb25cbn0iXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUNBO0FBRUE7Ozs7OztBQUtBO0FBQ0E7QUFFQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBTEE7QUFDQTtBQU9BO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFGQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./bundles/baseline-expression/src/urlManager.js\n");
+
+/***/ }),
+
+/***/ "./node_modules/anatomogram/lib/img sync recursive ^\\.\\/.*selected\\.png$":
+/*!*********************************************************************!*\
+  !*** ./node_modules/anatomogram/lib/img sync ^\.\/.*selected\.png$ ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("var map = {\n\t\"./brain.selected.png\": \"./node_modules/anatomogram/lib/img/brain.selected.png\",\n\t\"./brain.unselected.png\": \"./node_modules/anatomogram/lib/img/brain.unselected.png\",\n\t\"./female.selected.png\": \"./node_modules/anatomogram/lib/img/female.selected.png\",\n\t\"./female.unselected.png\": \"./node_modules/anatomogram/lib/img/female.unselected.png\",\n\t\"./flower_parts.selected.png\": \"./node_modules/anatomogram/lib/img/flower_parts.selected.png\",\n\t\"./flower_parts.unselected.png\": \"./node_modules/anatomogram/lib/img/flower_parts.unselected.png\",\n\t\"./male.selected.png\": \"./node_modules/anatomogram/lib/img/male.selected.png\",\n\t\"./male.unselected.png\": \"./node_modules/anatomogram/lib/img/male.unselected.png\",\n\t\"./whole_plant.selected.png\": \"./node_modules/anatomogram/lib/img/whole_plant.selected.png\",\n\t\"./whole_plant.unselected.png\": \"./node_modules/anatomogram/lib/img/whole_plant.unselected.png\"\n};\n\n\nfunction webpackContext(req) {\n\tvar id = webpackContextResolve(req);\n\treturn __webpack_require__(id);\n}\nfunction webpackContextResolve(req) {\n\tvar id = map[req];\n\tif(!(id + 1)) { // check for number or string\n\t\tvar e = new Error(\"Cannot find module '\" + req + \"'\");\n\t\te.code = 'MODULE_NOT_FOUND';\n\t\tthrow e;\n\t}\n\treturn id;\n}\nwebpackContext.keys = function webpackContextKeys() {\n\treturn Object.keys(map);\n};\nwebpackContext.resolve = webpackContextResolve;\nmodule.exports = webpackContext;\nwebpackContext.id = \"./node_modules/anatomogram/lib/img sync recursive ^\\\\.\\\\/.*selected\\\\.png$\";//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL2ltZyBzeW5jIHJlY3Vyc2l2ZSBeXFwuXFwvLipzZWxlY3RlZFxcLnBuZyQuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9bbmFtZV0vLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL2ltZyBzeW5jIF5cXC5cXC8uKnNlbGVjdGVkXFwucG5nJD8wZDU5Il0sInNvdXJjZXNDb250ZW50IjpbInZhciBtYXAgPSB7XG5cdFwiLi9icmFpbi5zZWxlY3RlZC5wbmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvaW1nL2JyYWluLnNlbGVjdGVkLnBuZ1wiLFxuXHRcIi4vYnJhaW4udW5zZWxlY3RlZC5wbmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvaW1nL2JyYWluLnVuc2VsZWN0ZWQucG5nXCIsXG5cdFwiLi9mZW1hbGUuc2VsZWN0ZWQucG5nXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL2ltZy9mZW1hbGUuc2VsZWN0ZWQucG5nXCIsXG5cdFwiLi9mZW1hbGUudW5zZWxlY3RlZC5wbmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvaW1nL2ZlbWFsZS51bnNlbGVjdGVkLnBuZ1wiLFxuXHRcIi4vZmxvd2VyX3BhcnRzLnNlbGVjdGVkLnBuZ1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9pbWcvZmxvd2VyX3BhcnRzLnNlbGVjdGVkLnBuZ1wiLFxuXHRcIi4vZmxvd2VyX3BhcnRzLnVuc2VsZWN0ZWQucG5nXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL2ltZy9mbG93ZXJfcGFydHMudW5zZWxlY3RlZC5wbmdcIixcblx0XCIuL21hbGUuc2VsZWN0ZWQucG5nXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL2ltZy9tYWxlLnNlbGVjdGVkLnBuZ1wiLFxuXHRcIi4vbWFsZS51bnNlbGVjdGVkLnBuZ1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9pbWcvbWFsZS51bnNlbGVjdGVkLnBuZ1wiLFxuXHRcIi4vd2hvbGVfcGxhbnQuc2VsZWN0ZWQucG5nXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL2ltZy93aG9sZV9wbGFudC5zZWxlY3RlZC5wbmdcIixcblx0XCIuL3dob2xlX3BsYW50LnVuc2VsZWN0ZWQucG5nXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL2ltZy93aG9sZV9wbGFudC51bnNlbGVjdGVkLnBuZ1wiXG59O1xuXG5cbmZ1bmN0aW9uIHdlYnBhY2tDb250ZXh0KHJlcSkge1xuXHR2YXIgaWQgPSB3ZWJwYWNrQ29udGV4dFJlc29sdmUocmVxKTtcblx0cmV0dXJuIF9fd2VicGFja19yZXF1aXJlX18oaWQpO1xufVxuZnVuY3Rpb24gd2VicGFja0NvbnRleHRSZXNvbHZlKHJlcSkge1xuXHR2YXIgaWQgPSBtYXBbcmVxXTtcblx0aWYoIShpZCArIDEpKSB7IC8vIGNoZWNrIGZvciBudW1iZXIgb3Igc3RyaW5nXG5cdFx0dmFyIGUgPSBuZXcgRXJyb3IoXCJDYW5ub3QgZmluZCBtb2R1bGUgJ1wiICsgcmVxICsgXCInXCIpO1xuXHRcdGUuY29kZSA9ICdNT0RVTEVfTk9UX0ZPVU5EJztcblx0XHR0aHJvdyBlO1xuXHR9XG5cdHJldHVybiBpZDtcbn1cbndlYnBhY2tDb250ZXh0LmtleXMgPSBmdW5jdGlvbiB3ZWJwYWNrQ29udGV4dEtleXMoKSB7XG5cdHJldHVybiBPYmplY3Qua2V5cyhtYXApO1xufTtcbndlYnBhY2tDb250ZXh0LnJlc29sdmUgPSB3ZWJwYWNrQ29udGV4dFJlc29sdmU7XG5tb2R1bGUuZXhwb3J0cyA9IHdlYnBhY2tDb250ZXh0O1xud2VicGFja0NvbnRleHQuaWQgPSBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9pbWcgc3luYyByZWN1cnNpdmUgXlxcXFwuXFxcXC8uKnNlbGVjdGVkXFxcXC5wbmckXCI7Il0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./node_modules/anatomogram/lib/img sync recursive ^\\.\\/.*selected\\.png$\n");
+
+/***/ }),
+
+/***/ "./node_modules/anatomogram/lib/svg sync recursive ^\\.\\/.*\\.svg$":
+/*!*************************************************************!*\
+  !*** ./node_modules/anatomogram/lib/svg sync ^\.\/.*\.svg$ ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("var map = {\n\t\"./anolis_carolinensis.svg\": \"./node_modules/anatomogram/lib/svg/anolis_carolinensis.svg\",\n\t\"./arabidopsis_thaliana.svg\": \"./node_modules/anatomogram/lib/svg/arabidopsis_thaliana.svg\",\n\t\"./bos_taurus.svg\": \"./node_modules/anatomogram/lib/svg/bos_taurus.svg\",\n\t\"./brachypodium_distachyon.flower_parts.svg\": \"./node_modules/anatomogram/lib/svg/brachypodium_distachyon.flower_parts.svg\",\n\t\"./brachypodium_distachyon.whole_plant.svg\": \"./node_modules/anatomogram/lib/svg/brachypodium_distachyon.whole_plant.svg\",\n\t\"./gallus_gallus.svg\": \"./node_modules/anatomogram/lib/svg/gallus_gallus.svg\",\n\t\"./homo_sapiens.brain.svg\": \"./node_modules/anatomogram/lib/svg/homo_sapiens.brain.svg\",\n\t\"./homo_sapiens.female.svg\": \"./node_modules/anatomogram/lib/svg/homo_sapiens.female.svg\",\n\t\"./homo_sapiens.male.svg\": \"./node_modules/anatomogram/lib/svg/homo_sapiens.male.svg\",\n\t\"./hordeum_vulgare.flower_parts.svg\": \"./node_modules/anatomogram/lib/svg/hordeum_vulgare.flower_parts.svg\",\n\t\"./hordeum_vulgare.whole_plant.svg\": \"./node_modules/anatomogram/lib/svg/hordeum_vulgare.whole_plant.svg\",\n\t\"./macaca_mulatta.svg\": \"./node_modules/anatomogram/lib/svg/macaca_mulatta.svg\",\n\t\"./monodelphis_domestica.svg\": \"./node_modules/anatomogram/lib/svg/monodelphis_domestica.svg\",\n\t\"./mus_musculus.brain.svg\": \"./node_modules/anatomogram/lib/svg/mus_musculus.brain.svg\",\n\t\"./mus_musculus.female.svg\": \"./node_modules/anatomogram/lib/svg/mus_musculus.female.svg\",\n\t\"./mus_musculus.male.svg\": \"./node_modules/anatomogram/lib/svg/mus_musculus.male.svg\",\n\t\"./oryza_sativa.flower_parts.svg\": \"./node_modules/anatomogram/lib/svg/oryza_sativa.flower_parts.svg\",\n\t\"./oryza_sativa.whole_plant.svg\": \"./node_modules/anatomogram/lib/svg/oryza_sativa.whole_plant.svg\",\n\t\"./papio_anubis.svg\": \"./node_modules/anatomogram/lib/svg/papio_anubis.svg\",\n\t\"./rattus_norvegicus.svg\": \"./node_modules/anatomogram/lib/svg/rattus_norvegicus.svg\",\n\t\"./solanum_lycopersicum.flower_parts.svg\": \"./node_modules/anatomogram/lib/svg/solanum_lycopersicum.flower_parts.svg\",\n\t\"./solanum_lycopersicum.whole_plant.svg\": \"./node_modules/anatomogram/lib/svg/solanum_lycopersicum.whole_plant.svg\",\n\t\"./solanum_tuberosum.svg\": \"./node_modules/anatomogram/lib/svg/solanum_tuberosum.svg\",\n\t\"./sorghum_bicolor.flower_parts.svg\": \"./node_modules/anatomogram/lib/svg/sorghum_bicolor.flower_parts.svg\",\n\t\"./sorghum_bicolor.whole_plant.svg\": \"./node_modules/anatomogram/lib/svg/sorghum_bicolor.whole_plant.svg\",\n\t\"./tetraodon_nigroviridis.svg\": \"./node_modules/anatomogram/lib/svg/tetraodon_nigroviridis.svg\",\n\t\"./triticum_aestivum.flower_parts.svg\": \"./node_modules/anatomogram/lib/svg/triticum_aestivum.flower_parts.svg\",\n\t\"./triticum_aestivum.whole_plant.svg\": \"./node_modules/anatomogram/lib/svg/triticum_aestivum.whole_plant.svg\",\n\t\"./xenopus_tropicalis.svg\": \"./node_modules/anatomogram/lib/svg/xenopus_tropicalis.svg\",\n\t\"./zea_mays.flower_parts.svg\": \"./node_modules/anatomogram/lib/svg/zea_mays.flower_parts.svg\",\n\t\"./zea_mays.whole_plant.svg\": \"./node_modules/anatomogram/lib/svg/zea_mays.whole_plant.svg\"\n};\n\n\nfunction webpackContext(req) {\n\tvar id = webpackContextResolve(req);\n\treturn __webpack_require__(id);\n}\nfunction webpackContextResolve(req) {\n\tvar id = map[req];\n\tif(!(id + 1)) { // check for number or string\n\t\tvar e = new Error(\"Cannot find module '\" + req + \"'\");\n\t\te.code = 'MODULE_NOT_FOUND';\n\t\tthrow e;\n\t}\n\treturn id;\n}\nwebpackContext.keys = function webpackContextKeys() {\n\treturn Object.keys(map);\n};\nwebpackContext.resolve = webpackContextResolve;\nmodule.exports = webpackContext;\nwebpackContext.id = \"./node_modules/anatomogram/lib/svg sync recursive ^\\\\.\\\\/.*\\\\.svg$\";//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2ZyBzeW5jIHJlY3Vyc2l2ZSBeXFwuXFwvLipcXC5zdmckLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vW25hbWVdLy4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcgc3luYyBeXFwuXFwvLipcXC5zdmckPzEwZjAiXSwic291cmNlc0NvbnRlbnQiOlsidmFyIG1hcCA9IHtcblx0XCIuL2Fub2xpc19jYXJvbGluZW5zaXMuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9hbm9saXNfY2Fyb2xpbmVuc2lzLnN2Z1wiLFxuXHRcIi4vYXJhYmlkb3BzaXNfdGhhbGlhbmEuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9hcmFiaWRvcHNpc190aGFsaWFuYS5zdmdcIixcblx0XCIuL2Jvc190YXVydXMuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9ib3NfdGF1cnVzLnN2Z1wiLFxuXHRcIi4vYnJhY2h5cG9kaXVtX2Rpc3RhY2h5b24uZmxvd2VyX3BhcnRzLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvYnJhY2h5cG9kaXVtX2Rpc3RhY2h5b24uZmxvd2VyX3BhcnRzLnN2Z1wiLFxuXHRcIi4vYnJhY2h5cG9kaXVtX2Rpc3RhY2h5b24ud2hvbGVfcGxhbnQuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9icmFjaHlwb2RpdW1fZGlzdGFjaHlvbi53aG9sZV9wbGFudC5zdmdcIixcblx0XCIuL2dhbGx1c19nYWxsdXMuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9nYWxsdXNfZ2FsbHVzLnN2Z1wiLFxuXHRcIi4vaG9tb19zYXBpZW5zLmJyYWluLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvaG9tb19zYXBpZW5zLmJyYWluLnN2Z1wiLFxuXHRcIi4vaG9tb19zYXBpZW5zLmZlbWFsZS5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL2hvbW9fc2FwaWVucy5mZW1hbGUuc3ZnXCIsXG5cdFwiLi9ob21vX3NhcGllbnMubWFsZS5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL2hvbW9fc2FwaWVucy5tYWxlLnN2Z1wiLFxuXHRcIi4vaG9yZGV1bV92dWxnYXJlLmZsb3dlcl9wYXJ0cy5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL2hvcmRldW1fdnVsZ2FyZS5mbG93ZXJfcGFydHMuc3ZnXCIsXG5cdFwiLi9ob3JkZXVtX3Z1bGdhcmUud2hvbGVfcGxhbnQuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9ob3JkZXVtX3Z1bGdhcmUud2hvbGVfcGxhbnQuc3ZnXCIsXG5cdFwiLi9tYWNhY2FfbXVsYXR0YS5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL21hY2FjYV9tdWxhdHRhLnN2Z1wiLFxuXHRcIi4vbW9ub2RlbHBoaXNfZG9tZXN0aWNhLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvbW9ub2RlbHBoaXNfZG9tZXN0aWNhLnN2Z1wiLFxuXHRcIi4vbXVzX211c2N1bHVzLmJyYWluLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvbXVzX211c2N1bHVzLmJyYWluLnN2Z1wiLFxuXHRcIi4vbXVzX211c2N1bHVzLmZlbWFsZS5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL211c19tdXNjdWx1cy5mZW1hbGUuc3ZnXCIsXG5cdFwiLi9tdXNfbXVzY3VsdXMubWFsZS5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL211c19tdXNjdWx1cy5tYWxlLnN2Z1wiLFxuXHRcIi4vb3J5emFfc2F0aXZhLmZsb3dlcl9wYXJ0cy5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL29yeXphX3NhdGl2YS5mbG93ZXJfcGFydHMuc3ZnXCIsXG5cdFwiLi9vcnl6YV9zYXRpdmEud2hvbGVfcGxhbnQuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9vcnl6YV9zYXRpdmEud2hvbGVfcGxhbnQuc3ZnXCIsXG5cdFwiLi9wYXBpb19hbnViaXMuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9wYXBpb19hbnViaXMuc3ZnXCIsXG5cdFwiLi9yYXR0dXNfbm9ydmVnaWN1cy5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL3JhdHR1c19ub3J2ZWdpY3VzLnN2Z1wiLFxuXHRcIi4vc29sYW51bV9seWNvcGVyc2ljdW0uZmxvd2VyX3BhcnRzLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvc29sYW51bV9seWNvcGVyc2ljdW0uZmxvd2VyX3BhcnRzLnN2Z1wiLFxuXHRcIi4vc29sYW51bV9seWNvcGVyc2ljdW0ud2hvbGVfcGxhbnQuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy9zb2xhbnVtX2x5Y29wZXJzaWN1bS53aG9sZV9wbGFudC5zdmdcIixcblx0XCIuL3NvbGFudW1fdHViZXJvc3VtLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvc29sYW51bV90dWJlcm9zdW0uc3ZnXCIsXG5cdFwiLi9zb3JnaHVtX2JpY29sb3IuZmxvd2VyX3BhcnRzLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvc29yZ2h1bV9iaWNvbG9yLmZsb3dlcl9wYXJ0cy5zdmdcIixcblx0XCIuL3NvcmdodW1fYmljb2xvci53aG9sZV9wbGFudC5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL3NvcmdodW1fYmljb2xvci53aG9sZV9wbGFudC5zdmdcIixcblx0XCIuL3RldHJhb2Rvbl9uaWdyb3ZpcmlkaXMuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy90ZXRyYW9kb25fbmlncm92aXJpZGlzLnN2Z1wiLFxuXHRcIi4vdHJpdGljdW1fYWVzdGl2dW0uZmxvd2VyX3BhcnRzLnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvdHJpdGljdW1fYWVzdGl2dW0uZmxvd2VyX3BhcnRzLnN2Z1wiLFxuXHRcIi4vdHJpdGljdW1fYWVzdGl2dW0ud2hvbGVfcGxhbnQuc3ZnXCI6IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2Zy90cml0aWN1bV9hZXN0aXZ1bS53aG9sZV9wbGFudC5zdmdcIixcblx0XCIuL3hlbm9wdXNfdHJvcGljYWxpcy5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL3hlbm9wdXNfdHJvcGljYWxpcy5zdmdcIixcblx0XCIuL3plYV9tYXlzLmZsb3dlcl9wYXJ0cy5zdmdcIjogXCIuL25vZGVfbW9kdWxlcy9hbmF0b21vZ3JhbS9saWIvc3ZnL3plYV9tYXlzLmZsb3dlcl9wYXJ0cy5zdmdcIixcblx0XCIuL3plYV9tYXlzLndob2xlX3BsYW50LnN2Z1wiOiBcIi4vbm9kZV9tb2R1bGVzL2FuYXRvbW9ncmFtL2xpYi9zdmcvemVhX21heXMud2hvbGVfcGxhbnQuc3ZnXCJcbn07XG5cblxuZnVuY3Rpb24gd2VicGFja0NvbnRleHQocmVxKSB7XG5cdHZhciBpZCA9IHdlYnBhY2tDb250ZXh0UmVzb2x2ZShyZXEpO1xuXHRyZXR1cm4gX193ZWJwYWNrX3JlcXVpcmVfXyhpZCk7XG59XG5mdW5jdGlvbiB3ZWJwYWNrQ29udGV4dFJlc29sdmUocmVxKSB7XG5cdHZhciBpZCA9IG1hcFtyZXFdO1xuXHRpZighKGlkICsgMSkpIHsgLy8gY2hlY2sgZm9yIG51bWJlciBvciBzdHJpbmdcblx0XHR2YXIgZSA9IG5ldyBFcnJvcihcIkNhbm5vdCBmaW5kIG1vZHVsZSAnXCIgKyByZXEgKyBcIidcIik7XG5cdFx0ZS5jb2RlID0gJ01PRFVMRV9OT1RfRk9VTkQnO1xuXHRcdHRocm93IGU7XG5cdH1cblx0cmV0dXJuIGlkO1xufVxud2VicGFja0NvbnRleHQua2V5cyA9IGZ1bmN0aW9uIHdlYnBhY2tDb250ZXh0S2V5cygpIHtcblx0cmV0dXJuIE9iamVjdC5rZXlzKG1hcCk7XG59O1xud2VicGFja0NvbnRleHQucmVzb2x2ZSA9IHdlYnBhY2tDb250ZXh0UmVzb2x2ZTtcbm1vZHVsZS5leHBvcnRzID0gd2VicGFja0NvbnRleHQ7XG53ZWJwYWNrQ29udGV4dC5pZCA9IFwiLi9ub2RlX21vZHVsZXMvYW5hdG9tb2dyYW0vbGliL3N2ZyBzeW5jIHJlY3Vyc2l2ZSBeXFxcXC5cXFxcLy4qXFxcXC5zdmckXCI7Il0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./node_modules/anatomogram/lib/svg sync recursive ^\\.\\/.*\\.svg$\n");
+
+/***/ }),
+
+/***/ 0:
+/*!*********************************!*\
+  !*** readable-stream (ignored) ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) *///# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS9yZWFkYWJsZS1zdHJlYW0gKGlnbm9yZWQpP2VlNzYiXSwic291cmNlc0NvbnRlbnQiOlsiLyogKGlnbm9yZWQpICovIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///0\n");
+
+/***/ }),
+
+/***/ 1:
+/*!********************************!*\
+  !*** supports-color (ignored) ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) *///# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMS5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS9zdXBwb3J0cy1jb2xvciAoaWdub3JlZCk/YWNhOSJdLCJzb3VyY2VzQ29udGVudCI6WyIvKiAoaWdub3JlZCkgKi8iXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///1\n");
+
+/***/ }),
+
+/***/ 2:
+/*!***********************!*\
+  !*** chalk (ignored) ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) *///# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMi5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS9jaGFsayAoaWdub3JlZCk/NGUwZSJdLCJzb3VyY2VzQ29udGVudCI6WyIvKiAoaWdub3JlZCkgKi8iXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///2\n");
+
+/***/ }),
+
+/***/ 3:
+/*!**************************************!*\
+  !*** ./terminal-highlight (ignored) ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) *///# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS8uL3Rlcm1pbmFsLWhpZ2hsaWdodCAoaWdub3JlZCk/MDZhNyJdLCJzb3VyY2VzQ29udGVudCI6WyIvKiAoaWdub3JlZCkgKi8iXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///3\n");
+
+/***/ }),
+
+/***/ 4:
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) *///# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiNC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovL1tuYW1lXS9mcyAoaWdub3JlZCk/OGVlNyJdLCJzb3VyY2VzQ29udGVudCI6WyIvKiAoaWdub3JlZCkgKi8iXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///4\n");
 
 /***/ })
 
-},[972]);
-//# sourceMappingURL=expressionAtlasBaselineExpression.bundle.js.map
+},[["./bundles/baseline-expression/index.js","vendorCommons"]]]);

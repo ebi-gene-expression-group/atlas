@@ -49,7 +49,9 @@ public class GeneSearchService {
 
         return fetchInParallel(
                 ImmutableSet.copyOf(geneIds),
-                geneId -> fetchClusterIDWithPreferredKAndMinPForGeneID(geneSearchDao.experimentAccessionsForGeneId(geneId), geneId));
+                geneId -> fetchClusterIDWithPreferredKAndMinPForGeneID(
+                        geneSearchDao.fetchExperimentAccessionsWhereGeneIsMarker(geneId),
+                        geneId));
     }
 
     private <T> Map<String, T> fetchInParallel(Set<String> geneIds, Function<String, T> geneIdInfoProvider) {
@@ -73,17 +75,20 @@ public class GeneSearchService {
         }
     }
 
-    public  Map<String, Map<Integer, List<Integer>>> fetchClusterIDWithPreferredKAndMinPForGeneID (List<String> experimentAccessions, String geneId){
+    private Map<String, Map<Integer, List<Integer>>> fetchClusterIDWithPreferredKAndMinPForGeneID(
+            List<String> experimentAccessions, String geneId) {
         Map<String, Map<Integer, List<Integer>>> result = new HashMap<>();
 
         for (String experimentAccession : experimentAccessions) {
             Optional<Integer> preferredK = tsnePlotSettingsService.getExpectedClusters(experimentAccession);
-            if (preferredK.isPresent()) {
-                Map<Integer, List<Integer>> clusterIDWithPreferredKAndMinP = geneSearchDao.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession
-                        (geneId, experimentAccession, preferredK.get());
-                if(!clusterIDWithPreferredKAndMinP.isEmpty()){
-                    result.put(experimentAccession, clusterIDWithPreferredKAndMinP);
-                }
+            Map<Integer, List<Integer>> clusterIDWithPreferredKAndMinP =
+                    geneSearchDao.fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
+                            geneId,
+                            experimentAccession,
+                            // If there’s no preferred k we use 0, which won’t match any row
+                            preferredK.orElse(0));
+            if (!clusterIDWithPreferredKAndMinP.isEmpty()) {
+                result.put(experimentAccession, clusterIDWithPreferredKAndMinP);
             }
         }
         return result;

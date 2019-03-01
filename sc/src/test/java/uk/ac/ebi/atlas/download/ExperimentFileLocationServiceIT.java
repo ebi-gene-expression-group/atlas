@@ -44,6 +44,20 @@ class ExperimentFileLocationServiceIT {
     private static final String MATRIX_MARKET_FILTERED_QUANTIFICATION_COLUMNS_FILE_NAME_TEMPLATE =
             MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE + "_cols";
 
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_filtered_counts.mtx";
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
+
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_filtered_normalised_counts.mtx";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
+
     private static final String EXPERIMENT_FILES_URI_TEMPLATE = "experiment/{0}/download?fileType={1}&accessKey={2}";
     private static final String EXPERIMENT_FILES_ARCHIVE_URI_TEMPLATE =
             "experiment/{0}/download/zip?fileType={1}&accessKey={2}";
@@ -114,7 +128,37 @@ class ExperimentFileLocationServiceIT {
                         .collect(Collectors.toList());
 
         existingArchiveFilesOfType(experimentAccession,
-                ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames);
+                ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames, false);
+    }
+
+    @Test
+    void existingNormalisedQuantificationFiles() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<String> expectedFileNames =
+                Stream.of(
+                        SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE)
+                        .map(template -> MessageFormat.format(template, experimentAccession))
+                        .collect(Collectors.toList());
+
+        existingArchiveFilesOfType(experimentAccession,
+                ExperimentFileType.NORMALISED, expectedFileNames, true);
+    }
+
+    @Test
+    void existingRawFilteredQuantificationFiles() {
+        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+        List<String> expectedFileNames =
+                Stream.of(
+                        SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
+                        SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE)
+                        .map(template -> MessageFormat.format(template, experimentAccession))
+                        .collect(Collectors.toList());
+
+        existingArchiveFilesOfType(experimentAccession,
+                ExperimentFileType.QUANTIFICATION_RAW, expectedFileNames, true);
     }
 
     @Test
@@ -127,7 +171,7 @@ class ExperimentFileLocationServiceIT {
                 .map(k -> MessageFormat.format(MARKER_GENES_FILE_NAME_TEMPLATE, experimentAccession, k))
                 .collect(Collectors.toList());
 
-        existingArchiveFilesOfType(experimentAccession, ExperimentFileType.MARKER_GENES, expectedFileNames);
+        existingArchiveFilesOfType(experimentAccession, ExperimentFileType.MARKER_GENES, expectedFileNames, false);
     }
 
     @Test
@@ -192,7 +236,8 @@ class ExperimentFileLocationServiceIT {
 
     private void existingArchiveFilesOfType(String experimentAccession,
                                             ExperimentFileType fileType,
-                                            List<String> expectedFileNames) {
+                                            List<String> expectedFileNames,
+                                            Boolean isArchive) {
         List<Path> paths = subject.getFilePathsForArchive(experimentAccession, fileType);
 
         // Some paths, e.g. marker genes, might not be all in the DB
@@ -208,10 +253,12 @@ class ExperimentFileLocationServiceIT {
         List<String> fileNames = paths.stream()
                 .map(Path::toFile)
                 .map(File::getName)
+                .map(entry -> isArchive ? experimentAccession + "/" + entry : entry)
                 .collect(Collectors.toList());
 
         assertThat(expectedFileNames)
                 .isNotEmpty()
                 .containsAnyElementsOf(fileNames);
     }
+
 }

@@ -84,10 +84,12 @@ public class JsonPopularSpeciesControllerWIT {
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
                 .andExpect(jsonPath("$.[*].iconType").exists())
                 .andExpect(jsonPath("$.[*].iconSrc").exists())
-                .andExpect(jsonPath("$.[*].iconDescription").exists())
+                .andExpect(jsonPath("$.[*].description").exists())
+                .andExpect(jsonPath("$.[*].description.text").exists())
+                .andExpect(jsonPath("$.[*].description.url").exists())
                 .andExpect(jsonPath("$.[*].content").exists())
                 .andExpect(jsonPath("$.[*].content.[*].text").exists())
-                .andExpect(jsonPath("$.[*].content.[*].url").exists());
+                .andExpect(jsonPath("$.[*].content.[*].url").doesNotExist());
     }
 
     @Test

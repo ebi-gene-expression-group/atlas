@@ -52,6 +52,7 @@
     <!-- also inform ES so we can host your colour palette file -->
     <!-- <link rel="stylesheet" href="https://dev.ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/theme-embl-petrol.css" type="text/css" media="all" /> -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme-atlas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup-feedback.css" type="text/css" media="all">
 
     <!-- Use this CSS file for any custom styling -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/atlas.css" type="text/css" media="all">

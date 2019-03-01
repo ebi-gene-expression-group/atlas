@@ -49,6 +49,7 @@ EvidenceService<
         P extends Profile<Contrast, X, P>> {
 
     private static final double MIN_P_VALUE = 1e-234;
+    private static final String ACTIVITY_URL_TEMPLATE = "http://identifiers.org/cttv.activity/{0}";
 
     private final ProfileStreamFactory<Contrast, X, E, O, P> differentialProfileStreamFactory;
     private final DataFileHub dataFileHub;
@@ -280,9 +281,9 @@ EvidenceService<
     private JsonArray evidenceCodes(ExperimentType experimentType) {
         JsonArray result = new JsonArray();
         if (experimentType.isMicroarray()) {
-            result.add(new JsonPrimitive("http://purl.obolibrary.org/obo/ECO_0000356"));
+            result.add(new JsonPrimitive("http://purl.obolibrary.org/obo/ECO_0000058"));
         } else if (experimentType.isRnaSeqDifferential()) {
-            result.add(new JsonPrimitive("http://purl.obolibrary.org/obo/ECO_0000357"));
+            result.add(new JsonPrimitive("http://purl.obolibrary.org/obo/ECO_0000295"));
         }
         return result;
     }
@@ -363,13 +364,13 @@ EvidenceService<
     private String activity(boolean isCttvPrimary, X expression) {
         if (isCttvPrimary) {
             if (expression.getFoldChange() > 0) {
-                return "http://purl.obolibrary.org/obo/SO_0001542";
+                return MessageFormat.format(ACTIVITY_URL_TEMPLATE, "increased_transcript_level");
             } else if (expression.getFoldChange() < 0) {
-                return "http://purl.obolibrary.org/obo/SO_0001541";
+                return MessageFormat.format(ACTIVITY_URL_TEMPLATE, "decreased_transcript_level");
             }
         }
 
-        return "http://identifiers.org/cttv.activity/unknown";
+        return MessageFormat.format(ACTIVITY_URL_TEMPLATE, "unknown");
     }
 
     private JsonObject target(String ensemblGeneId, boolean isCttvPrimary, X expression) {

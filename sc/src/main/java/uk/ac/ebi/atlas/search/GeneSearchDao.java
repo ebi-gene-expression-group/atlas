@@ -28,7 +28,7 @@ import static uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollecti
 @Component
 public class GeneSearchDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchDao.class);
-    private static final double MARKER_GENE_P_VALUE_THRESHOLD = 0.005;
+    private static final double MARKER_GENE_P_VALUE_THRESHOLD = 0.05;
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
@@ -70,23 +70,23 @@ public class GeneSearchDao {
         );
     }
 
-    private static final String SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID =
-            "SELECT experiment_accession FROM scxa_marker_genes AS markers "+
-            "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession "+
-            "WHERE private=FALSE AND gene_id=:gene_id "+
+    private static final String SELECT_EXPERIMENT_ACCESSION_FOR_MARKER_GENE_ID =
+            "SELECT experiment_accession FROM scxa_marker_genes AS markers " +
+            "JOIN scxa_experiment AS experiments ON markers.experiment_accession = experiments.accession " +
+            "WHERE private=FALSE AND gene_id=:gene_id " +
             "GROUP BY experiment_accession";
     @Transactional(readOnly = true)
-    public List<String> experimentAccessionsForGeneId (String geneId) {
+    public List<String> fetchExperimentAccessionsWhereGeneIsMarker(String geneId) {
         Map<String, Object> namedParameters =
                 ImmutableMap.of(
                         "gene_id", geneId);
 
         return namedParameterJdbcTemplate.query(
-                SELECT_EXPERIMENT_ACCESSION_FOR_GENE_ID,
+                SELECT_EXPERIMENT_ACCESSION_FOR_MARKER_GENE_ID,
                 namedParameters,
-                (ResultSet resultSet)->{
+                (ResultSet resultSet) -> {
                     List<String> result = new ArrayList<>();
-                    while(resultSet.next()){
+                    while (resultSet.next()) {
                         String experimentAccession = resultSet.getString("experiment_accession");
                         result.add(experimentAccession);
                     }
@@ -95,25 +95,22 @@ public class GeneSearchDao {
         );
     }
 
-
-    //In marker gene dataset files, one and only one clusterID for each preferred cluster K value,
-    //which is supposed to have the lowest marker_probability,
-    //so we get one pair from searching (experiment_accesion, k).
-    //If dataset has changed, i.e. there are multiple gene clusterID in one preferred cluster K file,
-    //we probably need to order and limit the searching result based on marker_propability
+    // Retrieves cluster IDs the preferred K value (if present), as well as for the minimum p-value. If the minimum
+    // p-value is equal for multiple Ks (and a preferred K is not passed in), all K values will be returned. */
     private static final String SELECT_PREFERREDK_AND_MINP_CLUSTER_ID_FOR_GENE_STATEMENT =
-            "SELECT experiment_accession, k, marker_probability, cluster_id FROM scxa_marker_genes AS markers " +
-                    "WHERE (marker_probability IN (SELECT MIN(marker_probability) "+
-                                                                    "FROM scxa_marker_genes " +
-                                                                    "WHERE gene_id = :gene_id " +
-                                                                    "GROUP BY experiment_accession) " +
-                                                "AND experiment_accession = :experiment_accession " +
-                                                "AND marker_probability <= :threshold) " +
-                    "OR ((experiment_accession, k) IN ((:experiment_accession, :preferred_K)) " +
-                        "AND marker_probability <= :threshold AND gene_id = :gene_id)";
+    "SELECT k, cluster_id FROM scxa_marker_genes AS markers " +
+            "WHERE experiment_accession=:experiment_accession " +
+                "AND gene_id=:gene_id " +
+                "AND marker_probability<:threshold " +
+                "AND (k=:preferred_K " +
+                    "OR marker_probability IN ( " +
+                        "SELECT MIN(marker_probability) " +
+                            "FROM scxa_marker_genes " +
+                            "WHERE markers.experiment_accession = :experiment_accession " +
+                            "AND gene_id=:gene_id))";
     @Transactional(readOnly = true)
     public  Map<Integer, List<Integer>> fetchClusterIdsWithPreferredKAndMinPForExperimentAccession(
-            String geneId, String experimentAccession, Integer preferredK) {
+            String geneId, String experimentAccession, int preferredK) {
 
         Map<String, Object> namedParameters =
                 ImmutableMap.of(

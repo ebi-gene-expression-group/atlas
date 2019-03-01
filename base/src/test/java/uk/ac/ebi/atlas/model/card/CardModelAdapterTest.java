@@ -35,7 +35,7 @@ public class CardModelAdapterTest {
 
         assertThat(result.has("iconType")).isTrue();
         assertThat(result.has("iconSrc")).isTrue();
-        assertThat(result.has("iconDescription")).isFalse();
+        assertThat(result.has("description")).isFalse();
         assertThat(result.has("content")).isFalse();
     }
 
@@ -45,7 +45,7 @@ public class CardModelAdapterTest {
 
         JsonObject result = CardModelAdapter.serialize(cardModel);
 
-        assertThat(result.has("iconDescription")).isTrue();
+        assertThat(result.has("description")).isTrue();
 
         JsonArray contentResult = result.get("content").getAsJsonArray();
         assertThat(contentResult.size()).isEqualTo(3);
@@ -120,7 +120,7 @@ public class CardModelAdapterTest {
         }
 
         if (hasDescription) {
-            return CardModel.create(iconType, iconSrc, randomAlphabetic(10), content);
+            return CardModel.create(iconType, iconSrc, Pair.of(randomAlphabetic(10), Optional.empty()), content);
         }
         else {
             return CardModel.create(iconType, iconSrc, content);

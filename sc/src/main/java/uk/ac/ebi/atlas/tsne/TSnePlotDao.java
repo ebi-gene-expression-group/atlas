@@ -89,4 +89,15 @@ public class TSnePlotDao {
                 Integer.class
         );
     }
+
+    private static final String COUNT_CELLS_BY_EXPERIMENT_ACCESSION =
+            "SELECT COUNT(DISTINCT(cell_id)) FROM scxa_tsne WHERE experiment_accession=:experiment_accession";
+    public Integer fetchNumberOfCellsByExperimentAccession(String experimentAccession) {
+        Map<String, Object> namedParameters = ImmutableMap.of("experiment_accession", experimentAccession);
+        return namedParameterJdbcTemplate.queryForObject(
+                COUNT_CELLS_BY_EXPERIMENT_ACCESSION,
+                namedParameters,
+                Integer.class
+        );
+    }
 }

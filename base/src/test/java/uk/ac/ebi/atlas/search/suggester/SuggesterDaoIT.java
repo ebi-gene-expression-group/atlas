@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.suggester;
 
+import org.apache.solr.client.solrj.response.Suggestion;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,6 +10,7 @@ import uk.ac.ebi.atlas.testutils.SpeciesUtils;
 
 import javax.inject.Inject;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -30,9 +32,11 @@ class SuggesterDaoIT {
     }
 
     @Test
-    void duplicatesAreRemoved() {
-        assertThat(subject.fetchBioentityProperties("asp", 100, false).count())
-                .isLessThan(100);
+    void doesNotContainDuplicates() {
+        String query = randomAlphabetic(3, 4);
+
+        assertThat(subject.fetchBioentityProperties(query.toLowerCase(), 100, false).count())
+                .isEqualTo(subject.fetchBioentityProperties(query.toLowerCase(), 100, false).distinct().count());
     }
 
     @Test
@@ -70,14 +74,28 @@ class SuggesterDaoIT {
     }
 
     @Test
-    void atLeastThreeCharactersRequired() {
-        assertThat(subject.fetchBioentityProperties("as", 10, false))
+    void atLeastTwoCharactersRequired() {
+        assertThat(subject.fetchBioentityProperties("a", 10, false))
                 .isEmpty();
-        assertThat(subject.fetchBioentityProperties("as", 10, false, speciesUtils.getHuman()))
+        assertThat(subject.fetchBioentityProperties("a", 10, false, speciesUtils.getHuman()))
                 .isEmpty();
-        assertThat(subject.fetchBioentityProperties("asp", 10, false))
+
+        assertThat(subject.fetchBioentityProperties("ar", 10, false))
                 .isNotEmpty();
-        assertThat(subject.fetchBioentityProperties("asp", 10, false, speciesUtils.getHuman()))
+        assertThat(subject.fetchBioentityProperties("ar", 10, false, speciesUtils.getHuman()))
                 .isNotEmpty();
+    }
+
+    @Test
+    void closestMatchIsFirst() {
+        String twoCharSymbol = "AR";
+
+        // Suggestion::equals is established only by term and payload, weight isn’t considered
+        assertThat(subject.fetchBioentityProperties(twoCharSymbol, 10, false))
+                .isNotEmpty()
+                .startsWith(new Suggestion(twoCharSymbol, 0, "symbol"));
+        assertThat(subject.fetchBioentityProperties("ar", 10, false, speciesUtils.getHuman()))
+                .isNotEmpty()
+                .startsWith(new Suggestion(twoCharSymbol, 0, "symbol"));
     }
 }

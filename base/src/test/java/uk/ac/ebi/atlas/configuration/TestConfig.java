@@ -5,10 +5,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.client.RestTemplate;
-
-import javax.servlet.ServletContext;
+import uk.ac.ebi.atlas.model.card.UrlHelpers;
 
 @Configuration
 // Enabling component scanning will also load BasePathsConfig, JdbcConfig and SolrConfig, so just using this class as
@@ -20,5 +18,10 @@ public class TestConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public UrlHelpers urlHelpers() {
+        return new UrlHelpers() {};
     }
 }

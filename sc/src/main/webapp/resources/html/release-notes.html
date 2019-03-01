@@ -1,0 +1,14 @@
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.2/iframeResizer.min.js"></script>
+
+<div class="row column">
+    <iframe id="release-notes-iframe" class="row" src="https://ebi-gene-expression-group.github.io/atlas-release-notes/sc.html"
+            style="width: 1px; min-width: 100%; border: none; display: block; overflow: hidden;">
+    </iframe>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById("local-nav-release-notes").className += ' active';
+        iFrameResize({log:true}, '#release-notes-iframe');
+    });
+</script>

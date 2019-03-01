@@ -1,17 +1,17 @@
 {
   "devDependencies": {
     "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.5",
+    "@babel/core": "^7.1.6",
     "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
-    "clean-webpack-plugin": "^0.1.19",
-    "eslint": "^5.8.0",
+    "clean-webpack-plugin": "^1.0.0",
+    "eslint": "^5.9.0",
     "eslint-config-gene-expression": "^0.4.2",
     "file-loader": "^2.0.0",
     "image-webpack-loader": "^4.6.0",
-    "webpack": "^4.25.1",
+    "webpack": "^4.26.0",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2"
   },
@@ -19,13 +19,14 @@
     "expression-atlas-autocomplete": "^3.0.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
-    "react": "^16.6.0",
+    "react": "^16.6.3",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^16.6.0",
+    "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
-    "react-select": "^2.1.1",
+    "react-select": "^2.1.2",
     "scxa-gene-search-form": "^1.2.0",
-    "styled-components": "^4.0.3",
+    "scxa-homepage-panels": "0.0.3",
+    "styled-components": "^4.1.1",
     "urijs": "^1.19.1"
   }
 }

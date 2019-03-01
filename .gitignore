@@ -24,6 +24,8 @@ bin
 npm-debug.log
 **/src/main/**/node_modules
 **/src/main/javascript/**/dist
+**/src/main/javascript/**/coverage
+**/src/main/javascript/**/lib
 
 # Different test data
 **/src/main/javascript/expression-atlas-heatmap-highcharts/test/data

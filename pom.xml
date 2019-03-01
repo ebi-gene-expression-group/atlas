@@ -606,6 +606,18 @@
             <timezone>0</timezone>
             <properties/>
         </developer>
+        <developer>
+            <id>lingyun</id>
+            <name>Lingyun Zhao</name>
+            <email>lingyun@ebi.ac.uk</email>
+            <organization>EBI</organization>
+            <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties/>
+        </developer>
     </developers>
 
     <profiles>

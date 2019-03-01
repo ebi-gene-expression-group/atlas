@@ -12,4 +12,9 @@
         <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
         <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
     </definition>
+    <definition name="base-no-branding" template="/WEB-INF/jsp/tiles/base-no-branding.jsp">
+        <put-attribute name="title" value="Human Cell Atlas Portal at the Wellcome Genome Campus"/>
+        <put-attribute name="content"/>
+        <put-attribute name="hca-footer" value="/WEB-INF/jsp/tiles/hca-footer.jsp"/>
+    </definition>
 </tiles-definitions>

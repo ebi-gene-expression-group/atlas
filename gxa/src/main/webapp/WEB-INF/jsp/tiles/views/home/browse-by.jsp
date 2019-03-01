@@ -1,67 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<div class="callout browse-by padding-bottom-for-button" data-equalizer-watch>
-    <ul class="tabs" data-tabs id="browse-by-tabs">
-        <li class="tabs-title is-active"><a href="#by-species" aria-selected="true">By species</a></li>
-        <li class="tabs-title"><a href="#by-animals">Animals</a></li>
-        <li class="tabs-title"><a href="#by-plants">Plants</a></li>
-        <li class="tabs-title"><a href="#by-fungi">Fungi</a></li>
-    </ul>
+<div id="popular-species"></div>
 
-    <div class="tabs-content" data-tabs-content="browse-by-tabs">
-        <div class="tabs-panel is-active" id="by-species"></div>
-        <div class="tabs-panel" id="by-animals"></div>
-        <div class="tabs-panel" id="by-plants"></div>
-        <div class="tabs-panel" id="by-fungi"></div>
-    </div>
-
-    <div class="row align-row-to-bottom">
-        <div class="small-6 small-centered columns margin-top-large">
-            <a id="viewAllLink" href='${pageContext.request.contextPath}/experiments' class="button float-center">View all species</a>
-        </div>
-    </div>
-</div>
-
-<script defer src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
-
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/homePagePanel.bundle.js"></script>
+<!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa_sc/ -- Remember the trailing slash! -->
 <script>
-    document.addEventListener("DOMContentLoaded", function(event) {
-        var $viewAllLink = $('#viewAllLink');
-        $('#browse-by-tabs').on('change.zf.tabs', function() {
-            switch ($('#browse-by-tabs .tabs-title.is-active').text()) {
-                case 'Animals':
-                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=animals');
-                    break;
-                case 'Plants':
-                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=plants');
-                    break;
-                case 'Fungi':
-                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=fungi');
-                    break;
-                default:
-                    $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments');
-                    break;
-            }
-        });
+  document.addEventListener("DOMContentLoaded", function(event) {
+    homePagePanel.render({
+      host: '${pageContext.request.contextPath}/',
+      speciesResources: {
+        Species: 'json/experiments/popular-species',
+        Animals: 'json/experiments/popular-species?kingdom=animals',
+        Plants: 'json/experiments/popular-species?kingdom=plants',
+        Fungi: 'json/experiments/popular-species?kingdom=fungi',
+        Protists: 'json/experiments/popular-species?kingdom=protists'
+      }
+    }, 'popular-species')
 
-        expressionAtlasBrowseBySpecies.render({
-            atlasUrl: "${pageContext.request.contextPath}/",
-            speciesInfoList: ${speciesList},
-            container: document.getElementById('by-species')
-        });
-        expressionAtlasBrowseBySpecies.render({
-            atlasUrl: "${pageContext.request.contextPath}/",
-            speciesInfoList : ${animalsList},
-            container: document.getElementById('by-animals')
-        });
-        expressionAtlasBrowseBySpecies.render({
-            atlasUrl: "${pageContext.request.contextPath}/",
-            speciesInfoList : ${plantsList},
-            container: document.getElementById('by-plants')
-        });
-        expressionAtlasBrowseBySpecies.render({
-            atlasUrl: "${pageContext.request.contextPath}/",
-            speciesInfoList : ${fungiList},
-            container: document.getElementById('by-fungi')
-        });
-    });
+  });
 </script>

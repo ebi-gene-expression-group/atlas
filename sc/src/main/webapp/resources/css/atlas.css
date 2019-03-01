@@ -11,7 +11,7 @@
 }
 
 a.clear {
-    border: none;
+    border-bottom: none;
 }
 
 ul.clear {
@@ -57,6 +57,7 @@ hr {
     margin-bottom: 1rem;
 }
 
+<<<<<<< HEAD
 /* Magellan nav in the experiment page */
 .experiment-page-side-nav a {
     text-decoration: none;
@@ -127,4 +128,10 @@ hr {
     line-height: 1;
     color: black;
     border-bottom: none;
+}
+
+/* Featured experiments landing page icon */
+img.experiment-thumbnail {
+    height: 100px;
+    margin-bottom: 20px;
 }

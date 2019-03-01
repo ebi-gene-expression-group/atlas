@@ -13,11 +13,16 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commons.readers.TsvStreamer;
 import uk.ac.ebi.atlas.configuration.TestConfig;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,15 +39,19 @@ class TSnePlotDaoIT {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
+    private Path dataFilesPath;
+
+    @Inject
     private JdbcUtils jdbcTestUtils;
 
     @Inject
     private TSnePlotDao subject;
 
+    public ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+
     @BeforeAll
     void populateDatabaseTables() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScripts(
+        populator.setScripts(
                 new ClassPathResource("fixtures/scxa_experiment-fixture.sql"),
                 new ClassPathResource("fixtures/scxa_tsne-fixture.sql"),
                 new ClassPathResource("fixtures/scxa_cell_clusters-fixture.sql"),
@@ -52,8 +61,7 @@ class TSnePlotDaoIT {
 
     @AfterAll
     void cleanDatabaseTables() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScripts(
+        populator.setScripts(
                 new ClassPathResource("fixtures/scxa_experiment-delete.sql"),
                 new ClassPathResource("fixtures/scxa_tsne-delete.sql"),
                 new ClassPathResource("fixtures/scxa_cell_clusters-delete.sql"),
@@ -101,6 +109,26 @@ class TSnePlotDaoIT {
         assertThat(subject.fetchPerplexities(experimentAccession))
                 .isNotEmpty()
                 .doesNotHaveDuplicates();
+    }
+
+    //In this test, we test the count of cells. To make a comprehensive test we count the lines of the local file to match the return result by querying in the fixture.
+    //If the fixture is a partition of the full dataset, then it will fail, so we load a full test dataset.
+    @ParameterizedTest
+    @MethodSource("randomExperimentAccessionProvider")
+    void testNumberOfCellsByExperimentAccession(String experimentAccession) {
+        cleanDatabaseTables();
+        populator.setScripts(new ClassPathResource("fixtures/scxa_tsne-full.sql"));
+        populator.execute(dataSource);
+        Map<Integer, AtlasResource<TsvStreamer>> resource = new DataFileHub(dataFilesPath.resolve("scxa"))
+                .getSingleCellExperimentFiles(experimentAccession).tSnePlotTsvs;
+        Map.Entry<Integer, AtlasResource<TsvStreamer>> firstFile = resource.entrySet().iterator().next();
+        Stream<String[]> fileContent = firstFile.getValue().get().get();
+        Integer fileContentLines = Math.toIntExact(fileContent.count());
+        Integer numberOfcells = subject.fetchNumberOfCellsByExperimentAccession(experimentAccession);
+        assertThat(numberOfcells)
+                .isEqualTo(fileContentLines-1);
+        cleanDatabaseTables();
+        populateDatabaseTables();
     }
 
     private static final String SELECT_CELL_IDS_STATEMENT =
