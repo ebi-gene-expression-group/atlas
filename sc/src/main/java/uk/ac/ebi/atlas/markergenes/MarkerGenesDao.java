@@ -25,8 +25,6 @@ import static uk.ac.ebi.atlas.solr.cloud.search.SolrQueryBuilder.SOLR_MAX_ROWS;
 
 @Component
 public class MarkerGenesDao {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerGenesDao.class);
-
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final BioentitiesCollectionProxy bioentitiesCollectionProxy;
 
