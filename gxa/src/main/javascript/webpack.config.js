@@ -12,7 +12,8 @@ module.exports = {
     expressionAtlasBaselineExpression: `./bundles/baseline-expression`,
     expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
     atlasHomepageCard: `./bundles/atlas-homepage-card`,
-    homePagePanel: `./bundles/homepage-panels`
+    homePagePanel: `./bundles/homepage-panels`,
+    feedbackForm: `atlas-feedback-form`
   },
 
   plugins: [
