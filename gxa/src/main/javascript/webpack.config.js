@@ -11,7 +11,6 @@ module.exports = {
     expressionAtlasBioentityInformation: `./node_modules/sc-atlas-bioentity-information`,
     expressionAtlasBaselineExpression: `./bundles/baseline-expression`,
     expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
-    expressionAtlasBrowseBySpecies: `./bundles/browse-by-species`,
     atlasHomepageCard: `./bundles/atlas-homepage-card`,
     homePagePanel: `./bundles/homepage-panels`
   },
