@@ -12,7 +12,7 @@ module.exports = {
     geneSearchForm: `./bundles/gene-search-form`,
     atlasHomepageCard: `./bundles/atlas-homepage-card`,
     homePagePanel: `./bundles/scxa-homepage-panels`,
-    feedbackForm: `./bundles/feedback-form`
+    feedbackForm: `atlas-feedback-form`
   },
 
   plugins: [
