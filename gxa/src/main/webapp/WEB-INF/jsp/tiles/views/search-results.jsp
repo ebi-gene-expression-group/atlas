@@ -78,16 +78,20 @@
 </div>
 <div id="feedback-button"></div>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/react-popup.css" type="text/css" media="all">
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/feedbackForm.bundle.js"></script>
+
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 <script>
-
-    document.addEventListener("DOMContentLoaded", function(event) {
-        if (!window.location.hash) {
-            var initialHash = ${hasBaselineResults} ? '#baseline' : '#differential';
-            var newURL = URI(window.location).hash(initialHash).toString();
-            history.replaceState(null, '', newURL);
-        }
-        feedbackForm.render({}, 'feedback-button');
-    })
+  document.addEventListener("DOMContentLoaded", function(event) {
+    if (!window.location.hash) {
+      var initialHash = ${hasBaselineResults} ? '#baseline' : '#differential';
+      var newURL = URI(window.location).hash(initialHash).toString();
+      history.replaceState(null, '', newURL);
+    }
+    feedbackForm.render({
+      feedbackFormLink: 'https://www.ebi.ac.uk/support/gxa',
+      gaId: 'UA-37676851-1'
+    }, 'feedback-button');
+  })
 </script>

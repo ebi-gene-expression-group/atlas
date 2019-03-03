@@ -1,18 +1,18 @@
 {
   "main": "index.js",
   "dependencies": {
-    "atlas-homepage-cards": "^1.2.0",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "atlas-homepage-cards": "^1.2.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "scxa-homepage-panels": "^0.1.0",
     "atlas-latest-experiments-cards": "^1.2.1"
   },
   "devDependencies": {
-    "css-loader": "^1.0.1",
+    "css-loader": "^2.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.26.0",
-    "webpack-cli": "^3.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
   }
 }

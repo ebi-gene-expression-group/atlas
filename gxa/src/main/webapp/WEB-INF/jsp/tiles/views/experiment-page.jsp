@@ -15,9 +15,10 @@
 <div id="feedback-button">
 </div>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/react-popup.css" type="text/css" media="all">
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/feedbackForm.bundle.js"></script>
 
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/experimentPage.bundle.js"></script>
-<script defer src="${pageContext.request.contextPath}/resources/js-bundles/feedbackForm.bundle.js"></script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
@@ -26,7 +27,10 @@
       content: ${content},
       target: 'experiment-page'
     });
-    feedbackForm.render({}, 'feedback-button');
+    feedbackForm.render({
+      feedbackFormLink: 'https://www.ebi.ac.uk/support/gxa',
+      gaId: 'UA-37676851-1'
+    }, 'feedback-button');
   });
 </script>
 
