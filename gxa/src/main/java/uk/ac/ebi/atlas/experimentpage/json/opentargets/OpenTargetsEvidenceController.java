@@ -50,8 +50,7 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
                                          MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
                                          DataFileHub dataFileHub) {
         super(experimentTrader);
-        // String resourcesVersion = props.getProperty("projectVersion");
-        String resourcesVersion = "prod.23";
+        String resourcesVersion = "prod.30";
 
         diffRnaSeqEvidenceService =
                 new EvidenceService<>(rnaSeqProfileStreamFactory, dataFileHub, resourcesVersion);
@@ -103,7 +102,6 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
         DifferentialExperiment experiment =
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         response.setHeader("content-type", "application/json-seq; charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
         PrintWriter w = response.getWriter();
         diffRnaSeqEvidenceService.evidenceForExperiment(
                 experiment,
