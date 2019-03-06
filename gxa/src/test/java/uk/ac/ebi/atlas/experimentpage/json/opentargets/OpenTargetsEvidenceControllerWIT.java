@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.configuration.TestConfig;
-import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -33,9 +32,6 @@ import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_ANY;
 class OpenTargetsEvidenceControllerWIT {
     @Inject
     private DataSource dataSource;
-
-    @Inject
-    private JdbcUtils jdbcUtils;
 
     @Autowired
     private WebApplicationContext wac;
