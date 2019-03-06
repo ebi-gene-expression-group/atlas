@@ -871,3 +871,11 @@ button.close {
     background-color: #207a7a;
     border-bottom: none;
 }
+
+/* Fix for Highcharts tooltip being cut off */
+.gxaHeatmapContainer .highcharts-container {
+    overflow: visible !important;
+}
+.gxaHeatmapContainer svg {
+    overflow: visible !important;
+}

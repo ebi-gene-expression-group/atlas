@@ -302,3 +302,12 @@ img.icon {
 img.big-icon {
     height: 64px;
 }
+
+/* Fix for Highcharts tooltip being cut off */
+.gxaHeatmapContainer .highcharts-container {
+    overflow: visible !important;
+}
+.gxaHeatmapContainer svg {
+    overflow: visible !important;
+}
+

@@ -33,7 +33,7 @@
                     <li id="local-nav-help"><a href="${pageContext.request.contextPath}/help/index.html"><i class="icon icon-generic padding-right-medium" data-icon="?"></i>Help</a></li>
                     <li id="local-nav-licence"><a href="${pageContext.request.contextPath}/licence.html"><i class="icon icon-generic padding-right-medium" data-icon="'"></i>Licence</a></li>
                     <li id="local-nav-about"><a href="${pageContext.request.contextPath}/about.html"><i class="icon icon-generic padding-right-medium" data-icon="i"></i>About</a></li>
-                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/gxa" target="_blank" data-icon="X"><i class="icon icon-functional padding-right-medium" data-icon="n"></i>Support</a></li>
+                    <li id="local-nav-feedback"><a href="https://www.ebi.ac.uk/support/gxa" target="_blank" data-icon="X"><i class="icon icon-generic padding-right-medium" data-icon="s"></i>Support</a></li>
                 </ul>
             </nav>
             <!-- /local-nav -->

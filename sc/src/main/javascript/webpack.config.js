@@ -16,12 +16,10 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin([`webapp/resources/js-bundles`],
-      {
-        root: path.resolve(__dirname, `..`),
-        verbose: true
-      }
-    ),
+    new CleanWebpackPlugin({
+      verbose: true,
+      cleanOnceBeforeBuildPatterns: `../webapp/resources/js-bundles/**`
+    }),
     new BundleAnalyzerPlugin()
   ],
 

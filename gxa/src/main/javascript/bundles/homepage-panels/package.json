@@ -1,9 +1,9 @@
 {
   "main": "index.js",
   "dependencies": {
-    "atlas-homepage-cards": "^1.2.1",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "atlas-homepage-cards": "^1.2.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "atlas-homepage-panels": "^0.1.4",
     "atlas-latest-experiments-cards": "^1.2.1"
   },

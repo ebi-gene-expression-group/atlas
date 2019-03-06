@@ -9,8 +9,8 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "scxa-gene-search-form": "^1.2.0"
   }
 }
