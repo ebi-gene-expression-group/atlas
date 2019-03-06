@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.json.opentargets;
 
 import com.google.common.collect.ImmutableSet;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -49,8 +48,7 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
     public OpenTargetsEvidenceController(ExperimentTrader experimentTrader,
                                          RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory,
                                          MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
-                                         DataFileHub dataFileHub,
-                                         Environment props) {
+                                         DataFileHub dataFileHub) {
         super(experimentTrader);
         // String resourcesVersion = props.getProperty("projectVersion");
         String resourcesVersion = "prod.23";
@@ -66,18 +64,20 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
         binder.addValidators(new DifferentialRequestPreferencesValidator());
     }
 
+    // As the response is written directly the content-type is set in the HttpServletResponse, within the method
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
-            produces = "application/json-seq;charset=UTF-8",
-            params = "type=MICROARRAY_ANY")
-    public void differentialMicroarrayExperimentEvidence(
-            @RequestParam(defaultValue = "0") double logFoldChangeCutoff,
-            @RequestParam(defaultValue = "1") double pValueCutoff,
-            @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
-            @PathVariable String experimentAccession,
-            @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
+                    params = "type=MICROARRAY_ANY")
+    public void differentialMicroarrayExperimentEvidence(@RequestParam(defaultValue = "0") double logFoldChangeCutoff,
+                                                         @RequestParam(defaultValue = "1") double pValueCutoff,
+                                                         @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
+                                                         @PathVariable String experimentAccession,
+                                                         @RequestParam(defaultValue = "") String accessKey,
+                                                         HttpServletResponse response) throws IOException {
         MicroarrayExperiment experiment =
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-        PrintWriter w = response.getWriter();
+        // Setting the header is enough, there’s no need to do response.setCharacterEncoding("UTF-8")
+        response.setHeader("content-type", "application/json-seq; charset=UTF-8");
+        PrintWriter responseWriter = response.getWriter();
         diffMicroarrayEvidenceService.evidenceForExperiment(
                 experiment,
                 contrast -> {
@@ -88,20 +88,22 @@ public class OpenTargetsEvidenceController extends JsonExperimentController {
                     requestPreferences.setSelectedColumnIds(ImmutableSet.of(contrast.getId()));
                     return new MicroarrayRequestContext(requestPreferences, experiment);
                 },
-                o -> w.println(GSON.toJson(o)));
+                jsonObject -> responseWriter.println(GSON.toJson(jsonObject)));
     }
 
+    // As the response is written directly the content-type is set in the HttpServletResponse, within the method
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
-            produces = "application/json-seq;charset=UTF-8",
-            params = "type=RNASEQ_MRNA_DIFFERENTIAL")
-    public void differentialRnaSeqExperimentEvidence(
-            @RequestParam(defaultValue = "0") double logFoldChangeCutoff,
-            @RequestParam(defaultValue = "1") double pValueCutoff,
-            @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
-            @PathVariable String experimentAccession,
-            @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
+                    params = "type=RNASEQ_MRNA_DIFFERENTIAL")
+    public void differentialRnaSeqExperimentEvidence(@RequestParam(defaultValue = "0") double logFoldChangeCutoff,
+                                                     @RequestParam(defaultValue = "1") double pValueCutoff,
+                                                     @RequestParam(defaultValue = "-1") int maxGenesPerContrast,
+                                                     @PathVariable String experimentAccession,
+                                                     @RequestParam(defaultValue = "") String accessKey,
+                                                     HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment =
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        response.setHeader("content-type", "application/json-seq; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter w = response.getWriter();
         diffRnaSeqEvidenceService.evidenceForExperiment(
                 experiment,
