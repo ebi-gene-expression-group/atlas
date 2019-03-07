@@ -2,10 +2,10 @@
   "main": "index.js",
   "dependencies": {
     "atlas-homepage-cards": "^1.2.2",
+    "atlas-homepage-panels": "^0.1.4",
+    "atlas-latest-experiments-cards": "^1.2.1",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "scxa-homepage-panels": "^0.1.0",
-    "atlas-latest-experiments-cards": "^1.2.1"
+    "react-dom": "^16.8.4"
   },
   "devDependencies": {
     "css-loader": "^2.1.0",
