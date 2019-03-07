@@ -45,6 +45,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                 .ofType(experimentType)
                 .forSpecies(speciesFactory.create(experimentDTO.getSpecies()))
                 .withAccession(experimentAccession)
+                .withSecondaryAccession(idfParserOutput.getSecondaryAccession())
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(idfParserOutput.getTitle())
                 .withDisclaimer(factorsConfig.disclaimer())

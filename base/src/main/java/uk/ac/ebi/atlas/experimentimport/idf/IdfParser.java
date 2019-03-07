@@ -29,10 +29,11 @@ public class IdfParser {
     private static final String AE_EXPERIMENT_DISPLAY_NAME_ID = "Comment[AEExperimentDisplayName]";
     private static final String EXPECTED_CLUSTERS_ID = "Comment[EAExpectedClusters]";
     private static final String ADDITIONAL_ATTRIBUTES_ID = "Comment[EAAdditionalAttributes]";
+    private static final String SECONDARY_ACCESSION_ID = "Comment[SecondaryAccession]";
 
     private static final Set<String> LINE_IDS = Stream.of(INVESTIGATION_TITLE_ID, EXPERIMENT_DESCRIPTION_ID, PUBMED_ID,
             PUBLICATION_TITLE_ID, PUBLICATION_DOI_ID, AE_EXPERIMENT_DISPLAY_NAME_ID, EXPECTED_CLUSTERS_ID,
-            ADDITIONAL_ATTRIBUTES_ID)
+            ADDITIONAL_ATTRIBUTES_ID, SECONDARY_ACCESSION_ID)
             .map(IdfParser::convertIdfFieldNameToKey)
             .collect(Collectors.toSet());
 
@@ -66,6 +67,11 @@ public class IdfParser {
                     .findFirst()
                     .orElse("");
 
+            String secondaryAccession = getParsedOutputByKey(SECONDARY_ACCESSION_ID, emptyList())
+                    .stream()
+                    .findFirst()
+                    .orElse("");
+
             String experimentDescription = getParsedOutputByKey(EXPERIMENT_DESCRIPTION_ID, emptyList())
                     .stream()
                     .findFirst()
@@ -87,6 +93,7 @@ public class IdfParser {
 
             return new IdfParserOutput(
                     title,
+                    secondaryAccession,
                     experimentDescription,
                     publications,
                     expectedClusters,
