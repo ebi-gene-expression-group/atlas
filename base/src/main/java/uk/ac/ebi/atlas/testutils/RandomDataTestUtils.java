@@ -39,6 +39,10 @@ public class RandomDataTestUtils {
         return "E-" + accessionPattern.toUpperCase() + "-" + randomNumeric(1, 6);
     }
 
+    public static String generateRandomPrideExperimentAccession() {
+        return "PXD" + randomNumeric(6);
+    }
+
     public static String generateRandomEnsemblGeneId() {
         return "ENS" + randomAlphabetic(4).toUpperCase() + randomNumeric(ENSEMBLE_GENE_ID_NUM_LENGTH);
     }
