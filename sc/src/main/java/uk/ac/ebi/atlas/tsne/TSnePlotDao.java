@@ -41,6 +41,37 @@ public class TSnePlotDao {
                         rs.getString("cell_id")));
     }
 
+
+    private static final String SELECT_T_SNE_PLOT_WITH_CLUSTERS_STATEMENT_AND_EXPRESSION =
+            "SELECT tsne.cell_id, tsne.x, tsne.y, clusters.cluster_id,  analytics.expression_level  " +
+                    "FROM scxa_tsne AS tsne " +
+                    "LEFT JOIN " +
+                    "(SELECT * FROM scxa_cell_clusters WHERE k=:k) AS clusters " +
+                    "ON clusters.cell_id=tsne.cell_id AND clusters.experiment_accession=tsne.experiment_accession " +
+                    "LEFT JOIN " +
+                    "(SELECT * FROM scxa_analytics WHERE gene_id=:gene_id) AS analytics " +
+                    "ON analytics.cell_id=tsne.cell_id AND analytics.experiment_accession=tsne.experiment_accession " +
+                    "WHERE tsne.experiment_accession=:experiment_accession AND tsne.perplexity=:perplexity";
+    @Transactional(transactionManager = "txManager", readOnly = true)
+    public List<TSnePoint.Dto> fetchTSnePlotWithClustersAndExpression(String experimentAccession, int perplexity, int k,  String geneId) {
+        Map<String, Object> namedParameters =
+                ImmutableMap.of(
+                        "experiment_accession", experimentAccession,
+                        "perplexity", perplexity,
+                        "k", k,
+                        "gene_id", geneId);
+        return namedParameterJdbcTemplate.query(
+                SELECT_T_SNE_PLOT_WITH_CLUSTERS_STATEMENT_AND_EXPRESSION,
+                namedParameters,
+                (rs, rowNum) -> TSnePoint.Dto.create(
+                        rs.getDouble("x"),
+                        rs.getDouble("y"),
+                        rs.getDouble("expression_level"),
+                        rs.getInt("cluster_id"),
+                        rs.getString("cell_id")));
+    }
+
+
     private static final String SELECT_T_SNE_PLOT_WITH_CLUSTERS_STATEMENT =
             "SELECT tsne.cell_id, tsne.x, tsne.y, clusters.cluster_id " +
             "FROM scxa_tsne AS tsne " +
@@ -59,7 +90,10 @@ public class TSnePlotDao {
                 SELECT_T_SNE_PLOT_WITH_CLUSTERS_STATEMENT,
                 namedParameters,
                 (rs, rowNum) -> TSnePoint.Dto.create(
-                        rs.getDouble("x"), rs.getDouble("y"), rs.getInt("cluster_id"), rs.getString("cell_id")));
+                        rs.getDouble("x"),
+                        rs.getDouble("y"),
+                        rs.getInt("cluster_id"),
+                        rs.getString("cell_id")));
     }
 
     private static final String SELECT_T_SNE_PLOT_WITHOUT_CLUSTERS_STATEMENT =
