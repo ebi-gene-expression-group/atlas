@@ -40,6 +40,25 @@ public class TSnePlotService {
                 .collect(toSet());
     }
 
+    public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithExpressionAndClusters(String experimentAccession, int perplexity, String geneId, int k) {
+        List<TSnePoint.Dto> points = tSnePlotDao.fetchTSnePlotWithClustersAndExpression(experimentAccession, perplexity, k, geneId);
+
+        return points.stream()
+                .collect(groupingBy(TSnePoint.Dto::clusterId))
+                .entrySet().stream()
+                .collect(toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream()
+                                .map(
+                                        pointDto ->
+                                                TSnePoint.create(
+                                                        MathUtils.round(pointDto.x(), 2),
+                                                        MathUtils.round(pointDto.y(), 2),
+                                                        pointDto.expressionLevel(),
+                                                        pointDto.name()))
+                                .collect(toSet())));
+    }
+
     public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithClusters(String experimentAccession, int perplexity, int k) {
         List<TSnePoint.Dto> points = tSnePlotDao.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
 

@@ -54,6 +54,26 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
                                 tSnePlotService.fetchTSnePlotWithClusters(experiment.getAccession(), perplexity, k))));
     }
 
+
+    @RequestMapping(
+            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/k/{k}/expression/{geneId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String tSnePlotWithClusters(
+            @PathVariable String experimentAccession,
+            @PathVariable int perplexity,
+            @PathVariable int k,
+            @PathVariable String geneId,
+            @RequestParam(defaultValue = "") String accessKey) {
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        return GSON.toJson(
+                ImmutableMap.of(
+                        "series",
+                        modelForHighcharts(
+                                "Cluster ",
+                                tSnePlotService.fetchTSnePlotWithExpressionAndClusters(experiment.getAccession(), perplexity, geneId, k))));
+    }
+
     @RequestMapping(
             value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/expression",
             method = RequestMethod.GET,
