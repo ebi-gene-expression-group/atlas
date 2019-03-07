@@ -6,23 +6,20 @@ const vendorsBundleName = `vendorCommons`
 
 module.exports = {
   entry: {
-    expressionAtlasHeatmapHighcharts: `./node_modules/expression-atlas-heatmap-highcharts`,
-    experimentPage: `./node_modules/expression-atlas-experiment-page`,
-    expressionAtlasBioentityInformation: `./node_modules/sc-atlas-bioentity-information`,
+    expressionAtlasHeatmapHighcharts: `expression-atlas-heatmap-highcharts`,
+    experimentPage: `expression-atlas-experiment-page`,
+    expressionAtlasBioentityInformation: `sc-atlas-bioentity-information`,
     expressionAtlasBaselineExpression: `./bundles/baseline-expression`,
     expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
-    expressionAtlasBrowseBySpecies: `./bundles/browse-by-species`,
     atlasHomepageCard: `./bundles/atlas-homepage-card`,
-    homePagePanel: `./bundles/homepage-panels`
+    homePagePanel: `./bundles/homepage-panels`,
+    feedbackForm: `atlas-feedback-form`
   },
 
   plugins: [
-    new CleanWebpackPlugin([`webapp/resources/js-bundles`],
-      {
-        root: path.resolve(__dirname, `..`),
-        verbose: true
-      }
-    ),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: `../webapp/resources/js-bundles/**`
+    }),
     new BundleAnalyzerPlugin()
   ],
 

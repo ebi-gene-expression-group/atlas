@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "expression-atlas-autocomplete": "^3.0.1",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   }
 }

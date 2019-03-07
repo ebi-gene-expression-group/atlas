@@ -25,15 +25,26 @@ public class CardModelFactory {
 
     public CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
         List<Pair<String, Optional<String>>> content = new ArrayList<>();
-        content.add(Pair.of(popularSpeciesInfo.totalExperiments() + " experiments",
-                Optional.empty()));
-        if(popularSpeciesInfo.baselineExperiments() > 0){
-            content.add(Pair.of("Baseline:" + popularSpeciesInfo.baselineExperiments(),
-                Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "baseline"))));
+        content.add(
+                Pair.of(popularSpeciesInfo.totalExperiments() + " experiment" +
+                                (popularSpeciesInfo.totalExperiments() > 1 ? "s" : ""),
+                        Optional.empty()));
+
+        if (popularSpeciesInfo.baselineExperiments() > 0) {
+            content.add(
+                    Pair.of("Baseline: " + popularSpeciesInfo.baselineExperiments(),
+                            Optional.of(
+                                    urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(
+                                            popularSpeciesInfo.species(),
+                                            "baseline"))));
         }
-        if(popularSpeciesInfo.differentialExperiments() > 0){
-            content.add(Pair.of("Differential:" + popularSpeciesInfo.differentialExperiments() + " ",
-                Optional.of(urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(popularSpeciesInfo.species(), "differential"))));
+        if (popularSpeciesInfo.differentialExperiments() > 0) {
+            content.add(
+                    Pair.of("Differential: " + popularSpeciesInfo.differentialExperiments(),
+                            Optional.of(
+                                    urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(
+                                            popularSpeciesInfo.species(),
+                                            "differential"))));
         }
 
         return CardModel.create(

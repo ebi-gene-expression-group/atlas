@@ -12,16 +12,14 @@ module.exports = {
     geneSearchForm: `./bundles/gene-search-form`,
     atlasHomepageCard: `./bundles/atlas-homepage-card`,
     homePagePanel: `./bundles/scxa-homepage-panels`,
-    feedbackForm: `./bundles/feedback-form`
+    feedbackForm: `atlas-feedback-form`
   },
 
   plugins: [
-    new CleanWebpackPlugin([`webapp/resources/js-bundles`],
-      {
-        root: path.resolve(__dirname, `..`),
-        verbose: true
-      }
-    ),
+    new CleanWebpackPlugin({
+      verbose: true,
+      cleanOnceBeforeBuildPatterns: `../webapp/resources/js-bundles/**`
+    }),
     new BundleAnalyzerPlugin()
   ],
 

@@ -20,8 +20,10 @@
 
 <div id="feedback-button"></div>
 
-<script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearch.bundle.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/react-popup.css" type="text/css" media="all">
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/feedbackForm.bundle.js"></script>
+
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearch.bundle.js"></script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
@@ -30,6 +32,9 @@
       atlasUrl: '${pageContext.request.contextPath}/',
       basename: '${pageContext.request.contextPath}',
     }, 'gene-search');
-    feedbackForm.render({}, 'feedback-button');
+    feedbackForm.render({
+      feedbackFormLink: 'https://www.ebi.ac.uk/support/gxasc',
+      gaId: 'UA-37676851-3'
+    }, 'feedback-button');
   });
 </script>

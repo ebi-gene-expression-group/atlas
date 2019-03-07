@@ -37,7 +37,8 @@ class ExperimentFileTypeTest {
                 Arguments.of("sdrf", ExperimentFileType.SDRF),
                 Arguments.of("cluster", ExperimentFileType.CLUSTERING),
                 Arguments.of("quantification-raw", ExperimentFileType.QUANTIFICATION_RAW),
-                Arguments.of("quantification-filtered", ExperimentFileType.QUANTIFICATION_FILTERED)
+                Arguments.of("quantification-filtered", ExperimentFileType.QUANTIFICATION_FILTERED),
+                Arguments.of("normalised", ExperimentFileType.NORMALISED)
         );
     }
 }

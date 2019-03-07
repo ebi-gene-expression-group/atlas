@@ -18,6 +18,8 @@ public enum ExperimentFileType {
             "quantification-raw", "Raw quantification files (MatrixMarket)", IconType.TSV, true),
     QUANTIFICATION_FILTERED(
             "quantification-filtered", "Filtered quantification files (MatrixMarket)", IconType.TSV, true),
+    NORMALISED(
+            "normalised", "Normalised counts files (MatrixMarket)", IconType.TSV, true),
     MARKER_GENES(
             "marker-genes", "Marker gene files (.tsv)", IconType.TSV, true);
 

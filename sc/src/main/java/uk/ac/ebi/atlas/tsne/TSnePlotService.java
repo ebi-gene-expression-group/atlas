@@ -20,16 +20,16 @@ import static java.util.stream.Collectors.toSet;
 
 @Component
 public class TSnePlotService {
-    private final TSnePlotServiceDao tSnePlotServiceDao;
+    private final TSnePlotDao tSnePlotDao;
     private final CellMetadataDao cellMetadataDao;
 
-    public TSnePlotService(TSnePlotServiceDao tSnePlotServiceDao, CellMetadataDao cellMetadataDao) {
-        this.tSnePlotServiceDao = tSnePlotServiceDao;
+    public TSnePlotService(TSnePlotDao tSnePlotDao, CellMetadataDao cellMetadataDao) {
+        this.tSnePlotDao = tSnePlotDao;
         this.cellMetadataDao = cellMetadataDao;
     }
 
     public Set<TSnePoint> fetchTSnePlotWithExpression(String experimentAccession, int perplexity, String geneId) {
-        return tSnePlotServiceDao.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId).stream()
+        return tSnePlotDao.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId).stream()
                 .map(
                         pointDto ->
                                 TSnePoint.create(
@@ -41,7 +41,7 @@ public class TSnePlotService {
     }
 
     public Map<Integer, Set<TSnePoint>> fetchTSnePlotWithClusters(String experimentAccession, int perplexity, int k) {
-        List<TSnePoint.Dto> points = tSnePlotServiceDao.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
+        List<TSnePoint.Dto> points = tSnePlotDao.fetchTSnePlotWithClusters(experimentAccession, perplexity, k);
 
         return points.stream()
                 .collect(groupingBy(TSnePoint.Dto::clusterId))
@@ -57,7 +57,7 @@ public class TSnePlotService {
     public Map<String, Set<TSnePoint>> fetchTSnePlotWithMetadata(String experimentAccession,
                                                                  int perplexity,
                                                                  String metadataCategory) {
-        List<TSnePoint.Dto> pointDtos = tSnePlotServiceDao.fetchTSnePlotForPerplexity(experimentAccession, perplexity);
+        List<TSnePoint.Dto> pointDtos = tSnePlotDao.fetchTSnePlotForPerplexity(experimentAccession, perplexity);
 
         // An alternative implementation would be to get the metadata for each cell in the tSnePlotServiceDao method
         // and create TSnePoint.Dto objects with metadata values. This would require separate requests to Solr for

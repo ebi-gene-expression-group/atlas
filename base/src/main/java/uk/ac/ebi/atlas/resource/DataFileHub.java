@@ -68,18 +68,25 @@ public class DataFileHub {
     protected static final String SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_TPMS_FILE_PATH_TEMPLATE + "_cols";
 
-    static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+    private static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
             "{0}/{0}.aggregated_counts.mtx";
-    static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+    private static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
-    static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+    private static final String SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_RAW_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
-    static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
+            "{0}/{0}.aggregated_filtered_normalised_counts.mtx";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
+    private static final String SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
+
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE =
             "{0}/{0}.aggregated_filtered_counts.mtx";
-    static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_rows";
-    static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
+    private static final String SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE =
             SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE + "_cols";
 
     protected static final String SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE = "{0}/{0}.tsne_perp_{1}.tsv";
@@ -353,6 +360,12 @@ public class DataFileHub {
         public final AtlasResource<MatrixMarketReader> tpmsMatrix;
         public final AtlasResource<TsvStreamer> geneIdsTsv;
         public final AtlasResource<TsvStreamer> cellIdsTsv;
+        public final AtlasResource<MatrixMarketReader> filteredCountsMatrix;
+        public final AtlasResource<TsvStreamer> filteredCountsGeneIdsTsv;
+        public final AtlasResource<TsvStreamer> filteredCountsCellIdsTsv;
+        public final AtlasResource<MatrixMarketReader> normalisedCountsMatrix;
+        public final AtlasResource<TsvStreamer> normalisedCountsGeneIdsTsv;
+        public final AtlasResource<TsvStreamer> normalisedCountsCellIdsTsv;
         public final AtlasResource<TsvStreamer> clustersTsv;
         public final Map<Integer, AtlasResource<TsvStreamer>> tSnePlotTsvs;
         public final Map<Integer, AtlasResource<TsvStreamer>> markerGeneTsvs;
@@ -386,6 +399,41 @@ public class DataFileHub {
                     new TsvFile.ReadOnly(
                             experimentsMageTabDirLocation,
                             SINGLE_CELL_MATRIX_MARKET_TPMS_CELL_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+
+            filteredCountsMatrix =
+                    new MatrixMarketFile(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            filteredCountsGeneIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+
+            filteredCountsCellIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+
+
+            normalisedCountsMatrix =
+                    new MatrixMarketFile(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+            normalisedCountsGeneIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_GENE_IDS_FILE_PATH_TEMPLATE,
+                            experimentAccession);
+
+            normalisedCountsCellIdsTsv =
+                    new TsvFile.ReadOnly(
+                            experimentsMageTabDirLocation,
+                            SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_CELL_IDS_FILE_PATH_TEMPLATE,
                             experimentAccession);
 
             tSnePlotTsvs = retrieveIntegersFromFileNames(experimentAccession, SINGLE_CELL_T_SNE_PLOT_FILE_PATH_TEMPLATE).stream()
