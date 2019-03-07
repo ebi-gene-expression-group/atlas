@@ -71,12 +71,11 @@ class ExperimentsHeader extends  React.Component {
 			sortTitle: `markerGenes`,
 			ascending: false
 		}
-
 		this.onClick = this.onClick.bind(this)
 	}
 
 	onClick(attribute){
-		this.props.onClick(attribute)
+		this.props.onClick(!this.state.ascending, attribute)
 		this.setState({
 			sortTitle: attribute,
 			ascending: !this.state.ascending

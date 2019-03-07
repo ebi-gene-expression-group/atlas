@@ -57,6 +57,7 @@ const GeneSearch = ({atlasUrl, history}) => {
               species: requestParams.species
             })
           }
+          sortTitle={`markerGenes`}
           ResultsHeaderClass={ExperimentsHeader}
           ResultElementClass={ExperimentCard}
           noResultsMessageFormatter={(data) => `${geneQuery.term} is not expressed in any experiment: ${data.reason}`}
