@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableList;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
 import uk.ac.ebi.atlas.experimentpage.qc.RnaSeqQcReport;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
@@ -11,16 +12,13 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.resource.ContrastImageSupplier;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.List;
 import java.util.function.Function;
 
-@Named
+@Component
 public class ExpressionAtlasContentService {
-
     private final ExternallyAvailableContentService<BaselineExperiment>
             proteomicsBaselineExperimentExternallyAvailableContentService;
     private final ExternallyAvailableContentService<BaselineExperiment>
@@ -32,7 +30,6 @@ public class ExpressionAtlasContentService {
 
     private final ExperimentTrader experimentTrader;
 
-    @Inject
     public ExpressionAtlasContentService(
             ExperimentDownloadSupplier.Proteomics proteomicsExperimentDownloadSupplier,
             ExperimentDownloadSupplier.RnaSeqBaseline rnaSeqBaselineExperimentDownloadSupplier,
@@ -53,8 +50,9 @@ public class ExpressionAtlasContentService {
             LinkToArrayExpress.ProteomicsBaseline proteomicsBaselineLinkToArrayExpress,
             LinkToArrayExpress.Differential differentialLinkToArrayExpress,
             LinkToArrayExpress.Microarray microarrayLinkToArrayExpress,
-            LinkToPride.ProteomicsBaseline linkToPride,
+            LinkToPride linkToPride,
             ExperimentTrader experimentTrader) {
+        this.experimentTrader = experimentTrader;
 
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -63,17 +61,16 @@ public class ExpressionAtlasContentService {
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
                                 linkToPride,
-                                proteomicsBaselineLinkToArrayExpress
-                                )
-                );
+                                proteomicsBaselineLinkToArrayExpress));
+
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
                                 rnaSeqBaselineExperimentDownloadSupplier,
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
-                                rnaSeqBaselineLinkToArrayExpress)
-                );
+                                rnaSeqBaselineLinkToArrayExpress));
+
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
@@ -83,8 +80,8 @@ public class ExpressionAtlasContentService {
                                 rnaSeqDifferentialExperimentDesignFile,
                                 rnaSeqQCReport,
                                 differentialLinkToArrayExpress,
-                                rnaSeqDifferentialContrastImageSupplier
-                                ));
+                                rnaSeqDifferentialContrastImageSupplier));
+
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
@@ -93,9 +90,7 @@ public class ExpressionAtlasContentService {
                                 microarrayStaticFilesDownload,
                                 microarrayExperimentDesignFile,
                                 microarrayLinkToArrayExpress,
-                                microarrayContrastImageSupplier
-                                ));
-        this.experimentTrader = experimentTrader;
+                                microarrayContrastImageSupplier));
     }
 
     public Function<HttpServletResponse, Void> stream(String experimentAccession, String accessKey, final URI uri) {
