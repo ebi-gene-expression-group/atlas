@@ -61,41 +61,40 @@ class ExperimentCard extends React.Component {
 		const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
 
 		const markerGeneLinks = markerGenes ? markerGenes.map((markerGene) =>
-						<li key={`marker-gene-${markerGene.k}`}>
-							<a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a>
-						</li>) :
-				[]
+			<li key={`marker-gene-${markerGene.k}`}>
+				<a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a>
+			</li>) : []
 
 		return (
-				<CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
-					<IconDiv>
-						<EbiSpeciesIcon species={species}/>
-						<h6>{species}</h6>
-					</IconDiv>
-					{
-						markerGeneLinks.length ?
-								<MarkerDiv>
-									<ul style={{marginBottom: 0}}>
-										{markerGeneLinks}
-									</ul>
-								</MarkerDiv> :
-								// Be aware that the FacetedSearchContainer in the search results component will insert <ReactTooltip/>
-								<MarkerDiv>
-              <span
-		              data-tip={`<span>Not a marker gene</span>`}
-		              data-html={true}
-		              className={`icon icon-functional`}
-		              data-icon={`x`} />
-								</MarkerDiv>
-					}
-					<TitleDiv> {experimentDescription} </TitleDiv>
-					<VariableDiv>
-						<ul style={{marginBottom: 0}}>
-							{factors.map(factor => <li key={`factor-${factor}`}> {factor} </li>)}
-						</ul>
-					</VariableDiv>
-					<CountDiv> {_formatNumber(numberOfAssays)} </CountDiv>
-				</CardContainerDiv>
+			<CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
+				<IconDiv>
+					<EbiSpeciesIcon species={species}/>
+					<h6>{species}</h6>
+				</IconDiv>
+				{
+					markerGeneLinks.length ?
+						<MarkerDiv>
+							<ul style={{marginBottom: 0}}>
+								{markerGeneLinks}
+							</ul>
+						</MarkerDiv> :
+						// Be aware that the FacetedSearchContainer in the search results component will insert <ReactTooltip/>
+						<MarkerDiv>
+            <span
+              data-tip={`<span>Not a marker gene</span>`}
+              data-html={true}
+              className={`icon icon-functional`}
+              data-icon={`x`} />
+						</MarkerDiv>
+				}
+				<TitleDiv> {experimentDescription} </TitleDiv>
+				<VariableDiv>
+					<ul style={{marginBottom: 0}}>
+						{factors.map(factor => <li key={`factor-${factor}`}> {factor} </li>)}
+					</ul>
+				</VariableDiv>
+				<CountDiv> {_formatNumber(numberOfAssays)} </CountDiv>
+			</CardContainerDiv>
 		)
 	}
 }

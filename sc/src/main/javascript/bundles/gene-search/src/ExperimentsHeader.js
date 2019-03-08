@@ -89,20 +89,20 @@ class ExperimentsHeader extends  React.Component {
 		const jsonAttributes = ExperimentTableHeaderBasic().attributes
 
 		return(
-				<CardContainerDiv>
-					{
-						tableTitles.map((title, index) => {
-							const TitleDiv = tableTitleDivs[index]
-							const attribute = jsonAttributes[index]
-							return attribute ?
-									attribute === this.state.sortTitle ?
-											<TitleDiv key={title} style={{opacity: 1}}><span id={`selected`} onClick={() => this.onClick(attribute)}>{`${title} `}
-												{this.state.ascending ? <i className="icon icon-common icon-sort-up"/> : <i className="icon icon-common icon-sort-down"/>}</span></TitleDiv>
-											: <TitleDiv key={title}><span id={`title`} onClick={() => this.onClick(attribute, this.state.ascending)}>{title} <i className={`icon icon-common icon-sort`}/></span></TitleDiv>
-									: <TitleDiv key={title}><span id={`title`}>{title}</span></TitleDiv>
-						})
-					}
-				</CardContainerDiv>
+			<CardContainerDiv>
+				{
+					tableTitles.map((title, index) => {
+						const TitleDiv = tableTitleDivs[index]
+						const attribute = jsonAttributes[index]
+						return attribute ?
+							attribute === this.state.sortTitle ?
+								<TitleDiv key={title} style={{opacity: 1}}><span id={`selected`} onClick={() => this.onClick(attribute)}>{`${title} `}
+									{this.state.ascending ? <i className="icon icon-common icon-sort-up"/> : <i className="icon icon-common icon-sort-down"/>}</span></TitleDiv>
+								: <TitleDiv key={title}><span id={`title`} onClick={() => this.onClick(attribute, this.state.ascending)}>{title} <i className={`icon icon-common icon-sort`}/></span></TitleDiv>
+							: <TitleDiv key={title}><span id={`title`}>{title}</span></TitleDiv>
+					})
+				}
+			</CardContainerDiv>
 		)
 	}
 }
