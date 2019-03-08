@@ -21,6 +21,8 @@
 <div id="feedback-button"></div>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/react-popup.css" type="text/css" media="all">
+<link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/feedbackForm.bundle.js"></script>
 
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/geneSearch.bundle.js"></script>
