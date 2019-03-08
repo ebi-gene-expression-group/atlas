@@ -28,8 +28,13 @@
             Search results can be filtered using the selection criteria along the left hand side of the search results page.
             Selecting a filter criteria will remove all non-applicable experiments from the search results. For example: selecting
             <b>Species: Homo sapiens</b> will show only human experiments, similar to searching only on the human specific gene symbol in
-            the Home page Search bar. Additionally, you can select experiments where a gene is expressed only in a particular <b>Organism part</b>
+            the Home page Search bar. You can also select experiments where your gene of interest is expressed only in a particular <b>Organism part</b>
             or <b>Inferred cell type</b> by selecting these from the relevant drop-down menus.
+        </p>
+
+        <p>
+            Additionally, by clicking on the <b>"Marker gene"</b> filter you can return search results based on whether your gene of interest comprises part
+            of the specific expression profile for a cluster.
         </p>
 
         <p>
@@ -43,7 +48,7 @@
             equivalent to the number of cells as some cells do not pass sequencing file quality checks or you can have multiple
             sequencing runs or libraries generated from the same cell (technical replicates).
 
-        </p>
+       </p>
 
         <p>
             <img style="max-height: 650px; display:block; margin-left: auto; margin-right: auto;" src="resources/images/help/latest_experiments.png" alt="Latest experiments">
@@ -77,14 +82,14 @@
         </p>
 
         <p>
-            <img style="max-height: 650px; display:block; margin-left: auto; margin-right: auto;" src="resources/images/help/experiment_results_header.png" alt="Experiment page">
+            <img style="max-height: 650px; display:block; margin-left: auto; margin-right: auto;" src="resources/images/help/HCA_headerpage.png" alt="Experiment page">
         </p>
 
         <p>
             The Experiment page is comprised of four sections:
         </p>
         <ol>
-            <li>Results: this is where you can visualise the t-SNE plot and gene expression for the data</li>
+            <li>Results: this is where you can visualise the t-SNE plots (clustering and gene expression) as well as the marker gene heatmap of the data</li>
             <li>Experiment Design: this is where you can find the simplified sample metadata for the experiment</li>
             <li>Supplementary Information: here you can find the data analysis pipelines and corresponding documentation</li>
             <li>Downloads: links to the raw data files; analysis results and sample metadata files</li>
@@ -92,18 +97,20 @@
 
         <h4>Results tab</h4>
         <p>
-            Here you can view the results of the data analysis. The t-SNE plot displays subpopulations within the data
-            and on the left and gene expression variation at single-cell resolution on the right. Each plot can be
-            saved by clicking on the drop down menu symbol at the top right-hand side of the plot.
+            Here you can view the results of the data analysis. This comprises of two visualisation methods: t-SNE plots and the marker gene heatmap.
+            The t-SNE plots display subpopulations within the data and on the left and gene expression variation at single-cell resolution on the right.
+            Each plot can be saved by clicking on the drop down menu symbol at the top right-hand side of the plot.
         </p>
 
         <p>
-            <img style="max-height: 650px; display:block; margin-left: auto; margin-right: auto;" src="resources/images/help/experiment_page.png"
+            <img style="max-height: 650px; display:block; margin-left: auto; margin-right: auto;" src="resources/images/help/experiments_page_update_annotated.png"
                  alt="Results page">
         </p>
 
         <h5>t-SNE plot with clusters</h5>
         <p>
+            These are found in the <b>t-SNE plots</b> tab under <b>Results</b>.
+
             <a href="https://lvdmaaten.github.io/tsne/">t-SNE plots</a> are a useful way of visualising highly complex
             data in a 2D space. Although the size and distance between clusters is not very informative, manipulating
             the t-SNE perplexity value allows you to re-display the data in different ways.
@@ -112,17 +119,17 @@
         <p>
             The number of clusters (<i>k</i> value) shows the output of the
             <a href="https://www.sanger.ac.uk/science/tools/single-cell-consensus-clustering-sc3">Single-cell Consensus
-                Clustering analysis (SC3 algorithm)</a>. The SC3 algorithm groups cell clusters based on similar expression
+            Clustering analysis (SC3 algorithm)</a>. The SC3 algorithm groups cell clusters based on similar expression
             profiles. This also colours the data to allow easier visualisation of different sub-populations within a
             dataset.
         </p>
 
         <p>
-            It is also possible to colour the clusters by metadata. The colour legend for each group of cells is
-            displayed along the bottom of the t-SNE plot.
+            It is also possible to colour the clusters by metadata! The colour legend for each
+            group of cells is displayed along the bottom of the t-SNE plot.
 
-            The metadata used to colour the clusters is derived from different experimental groups described by the
-            authors. This is displayed in the <b>Experiment Design</b> tab along the top of the results page.
+            The metadata used to colour the clusters is derived from different experimental groups described by the authors.
+            This is displayed in the <b>Experiment Design</b> tab along the top of the results page.
 
         </p>
 
@@ -171,6 +178,18 @@
         <p>
             <img style="max-height: 650px; display:block; margin-left: auto; margin-right: auto;" src="resources/images/help/tsne_gene_expression.png" alt="Gene expression plot">
         </p>
+
+        <h5>Marker Gene heatmap</h5>
+
+        <p>
+            Genes which comprise part of the specific expression profile for a cell population (cluster) are defined as <b>marker genes</b>.
+            These are displayed - 5 per cluster in the <b>Marker Genes</b> tab under <b>Results</b>. Along the top of the page, you can specify
+            the number of clusters or to view only a subset of clusters. As with the t-SNE plots, the heatmap can also be saved as an image.
+
+        </p>
+
+        <p>
+            <img style="max-height: 650px; display:block; margin-left: auto; margin-right: auto;" src="resources/images/help/HCA_heatmap_annotated.png" alt="Marker Gene heatmap">
 
         <h4>Experiment Design tab</h4>
         <p>
@@ -234,7 +253,7 @@
                         Clustering file – output of SC3 analysis for clustering of filtered cells for the different
                         <i>k</i> values
                         <a href="https://www.sanger.ac.uk/science/tools/single-cell-consensus-clustering-sc3">(Single-cell
-                            Consensus Clustering – SC3)</a>
+                        Consensus Clustering – SC3)</a>
                     </li>
                     <li>
                         Filtered quantification file – provides the measured gene expression in TPMs for each filtered
@@ -247,7 +266,7 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    document.getElementById("local-nav-help").className += ' active';
-  });
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById("local-nav-help").className += ' active';
+    });
 </script>
