@@ -49,67 +49,67 @@ const CountDiv = styled.div`
 `
 
 class ExperimentCard extends React.Component {
-	constructor(props) {
-		super(props)
-	}
+  constructor(props) {
+    super(props)
+  }
 
-	_goToExperiment(url) {
-		window.location = url
-	}
+  _goToExperiment(url) {
+    window.location = url
+  }
 
-	render() {
-		const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
+  render() {
+    const {url, species, experimentDescription, markerGenes, numberOfAssays, factors} = this.props
 
-		const markerGeneLinks = markerGenes ? markerGenes.map((markerGene) =>
-			<li key={`marker-gene-${markerGene.k}`}>
-				<a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a>
-			</li>) : []
+    const markerGeneLinks = markerGenes ? markerGenes.map((markerGene) =>
+      <li key={`marker-gene-${markerGene.k}`}>
+        <a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a>
+      </li>) : []
 
-		return (
-			<CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
-				<IconDiv>
-					<EbiSpeciesIcon species={species}/>
-					<h6>{species}</h6>
-				</IconDiv>
-				{
-					markerGeneLinks.length ?
-						<MarkerDiv>
-							<ul style={{marginBottom: 0}}>
-								{markerGeneLinks}
-							</ul>
-						</MarkerDiv> :
-						// Be aware that the FacetedSearchContainer in the search results component will insert <ReactTooltip/>
-						<MarkerDiv>
+    return (
+      <CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
+        <IconDiv>
+          <EbiSpeciesIcon species={species}/>
+          <h6>{species}</h6>
+        </IconDiv>
+        {
+          markerGeneLinks.length ?
+            <MarkerDiv>
+              <ul style={{marginBottom: 0}}>
+                {markerGeneLinks}
+              </ul>
+            </MarkerDiv> :
+            // Be aware that the FacetedSearchContainer in the search results component will insert <ReactTooltip/>
+            <MarkerDiv>
             <span
               data-tip={`<span>Not a marker gene</span>`}
               data-html={true}
               className={`icon icon-functional`}
               data-icon={`x`} />
-						</MarkerDiv>
-				}
-				<TitleDiv> {experimentDescription} </TitleDiv>
-				<VariableDiv>
-					<ul style={{marginBottom: 0}}>
-						{factors.map(factor => <li key={`factor-${factor}`}> {factor} </li>)}
-					</ul>
-				</VariableDiv>
-				<CountDiv> {_formatNumber(numberOfAssays)} </CountDiv>
-			</CardContainerDiv>
-		)
-	}
+            </MarkerDiv>
+        }
+        <TitleDiv> {experimentDescription} </TitleDiv>
+        <VariableDiv>
+          <ul style={{marginBottom: 0}}>
+            {factors.map(factor => <li key={`factor-${factor}`}> {factor} </li>)}
+          </ul>
+        </VariableDiv>
+        <CountDiv> {_formatNumber(numberOfAssays)} </CountDiv>
+      </CardContainerDiv>
+    )
+  }
 }
 
 ExperimentCard.propTypes = {
-	url: PropTypes.string.isRequired,
-	species: PropTypes.string.isRequired,
-	experimentDescription: PropTypes.string.isRequired,
-	markerGenes: PropTypes.arrayOf(PropTypes.shape({
-		k: PropTypes.number.isRequired,
-		clusterIds: PropTypes.array.isRequired,
-		url: PropTypes.string.isRequired
-	})),
-	numberOfAssays: PropTypes.number.isRequired,
-	factors: PropTypes.array.isRequired
+  url: PropTypes.string.isRequired,
+  species: PropTypes.string.isRequired,
+  experimentDescription: PropTypes.string.isRequired,
+  markerGenes: PropTypes.arrayOf(PropTypes.shape({
+    k: PropTypes.number.isRequired,
+    clusterIds: PropTypes.array.isRequired,
+    url: PropTypes.string.isRequired
+  })),
+  numberOfAssays: PropTypes.number.isRequired,
+  factors: PropTypes.array.isRequired
 }
 
 export default ExperimentCard
