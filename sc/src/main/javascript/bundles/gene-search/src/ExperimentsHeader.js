@@ -18,7 +18,7 @@ const IconDiv = styled.div`
   text-align: center;
   cursor: pointer;
   opacity: 0.6;
-  transition: 0.3s;a
+  transition: 0.3s;
   :hover {opacity: 1};
 `
 
@@ -71,11 +71,12 @@ class ExperimentsHeader extends  React.Component {
 			sortTitle: `markerGenes`,
 			ascending: false
 		}
+
 		this.onClick = this.onClick.bind(this)
 	}
 
 	onClick(attribute){
-		this.props.onClick(!this.state.ascending, attribute)
+		this.props.onClick(attribute)
 		this.setState({
 			sortTitle: attribute,
 			ascending: !this.state.ascending
