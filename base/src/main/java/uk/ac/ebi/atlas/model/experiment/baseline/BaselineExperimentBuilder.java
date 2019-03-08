@@ -30,6 +30,7 @@ public class BaselineExperimentBuilder {
     private List<String> dataProviderDescription;
     private String displayName;
     private String experimentAccession;
+    private String secondaryAccession;
     private Set<String> pubMedIds;
     private Set<String> dois;
     private ExperimentDesign experimentDesign;
@@ -100,6 +101,11 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
+    public BaselineExperimentBuilder withSecondaryAccession(String secondaryAccession) {
+        this.secondaryAccession = secondaryAccession;
+        return this;
+    }
+
     public BaselineExperimentBuilder withLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
         return this;
@@ -122,7 +128,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new
-                BaselineExperiment(experimentType, experimentAccession, lastUpdate, description,
+                BaselineExperiment(experimentType, experimentAccession, secondaryAccession, lastUpdate, description,
                 displayName, disclaimer, species, pubMedIds, dois, experimentDesign, assayGroups, dataProviderURL,
                 dataProviderDescription, alternativeViews, alternativeViewDescriptions, experimentDisplayDefaults);
     }

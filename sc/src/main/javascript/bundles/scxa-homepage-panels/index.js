@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import HomePagePanel from 'scxa-homepage-panels'
+import HomePagePanel from 'atlas-homepage-panels'
 import {SceaHomepageSpeciesContainer} from 'atlas-homepage-cards'
 import {SceaHomePageLatestExperimentContainer} from 'atlas-latest-experiments-cards'
 const render = (options, target) => {

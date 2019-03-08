@@ -31,7 +31,7 @@ public class SingleCellBaselineExperiment extends Experiment<Cell> {
                                         //ExperimentDisplayDefaults experimentDisplayDefaults
                                         ) {
 
-        super(type, accession, lastUpdate, displayName, description, null, species,
+        super(type, accession, null, lastUpdate, displayName, description, null, species,
                 pubMedIds, dois, experimentDesign, null, dataProviderDescription,
                 alternativeViews, alternativeViewDescriptions, cells, null);
     }

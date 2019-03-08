@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class IdfParserOutput {
 
     private String title;
+    private String secondaryAccession;
     private String experimentDescription;
     // Map of Pubmed IDs and publication titles
     private List<Publication> publications;
@@ -18,9 +19,11 @@ public class IdfParserOutput {
     // Curated selection of metadata fields (chosen from experiment characteristics)
     private List<String> metadataFieldsOfInterest;
 
-    public IdfParserOutput(String title, String experimentDescription, List<Publication> publications,
+    public IdfParserOutput(String title, String secondaryAccession, String experimentDescription,
+                           List<Publication> publications,
                            int expectedClusters, List<String> metadataFieldsOfInterest) {
         this.title = title;
+        this.secondaryAccession = secondaryAccession;
         this.experimentDescription = experimentDescription;
         this.publications = publications;
         this.expectedClusters = expectedClusters;
@@ -29,6 +32,10 @@ public class IdfParserOutput {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getSecondaryAccession() {
+        return secondaryAccession;
     }
 
     public String getExperimentDescription() {

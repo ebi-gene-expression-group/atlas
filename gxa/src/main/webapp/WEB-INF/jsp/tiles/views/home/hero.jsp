@@ -23,13 +23,13 @@
 
 <div id="hero">
         <h4>Search across
-            <strong><fmt:formatNumber type = "number" value="${numberOfSpecies}"/> species,
-            <fmt:formatNumber type = "number" value="${numberOfStudies}"/> studies,
-            <fmt:formatNumber type = "number" value="${numberOfAssays}"/> assays </strong>
+            <strong><fmt:formatNumber value="${numberOfSpecies}"/> species,
+            <fmt:formatNumber value="${numberOfStudies}"/> studies,
+            <fmt:formatNumber value="${numberOfAssays}"/> assays</strong>
         </h4>
-        <h4>Ensembl ${info.get(ensembl)},
-            Ensembl Genomes ${info.get(genomes)},
-            WormBase ParaSite ${info.get(paraSite)},
-            EFO ${info.get(efo)}</h4>
+        <h4>Ensembl <fmt:formatNumber value="${info.get(ensembl)}"/>,
+            Ensembl Genomes <fmt:formatNumber value="${info.get(genomes)}"/>,
+            WormBase ParaSite <fmt:formatNumber value="${info.get(paraSite)}"/>,
+            EFO <fmt:formatNumber value="${info.get(efo)}"/></h4>
 </div>
 
