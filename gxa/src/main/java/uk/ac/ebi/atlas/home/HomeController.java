@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.AtlasInformationDao;
-import uk.ac.ebi.atlas.species.AtlasInformationDataType;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import javax.inject.Inject;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,35 +28,32 @@ import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_2COLOUR
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELINE;
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
-import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+import static uk.ac.ebi.atlas.species.AtlasInformationDataType.EFO;
+import static uk.ac.ebi.atlas.species.AtlasInformationDataType.ENSEMBL;
+import static uk.ac.ebi.atlas.species.AtlasInformationDataType.GENOMES;
+import static uk.ac.ebi.atlas.species.AtlasInformationDataType.PARASITE;
 
 @Controller
 public class HomeController {
     @Autowired
     protected Environment env;
 
-    private static final int FEATURED_SPECIES = 6;
     private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
     private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
     private static final double EASTER_EGG_PROBABILITY = 0.001;
     private static final Random RANDOM = new Random();
 
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
-    private final PopularSpeciesService popularSpeciesService;
     private final LatestExperimentsService latestExperimentsService;
     private AtlasInformationDao atlasInformationDao;
 
     private ExperimentInfoListService experimentInfoListService;
 
-
-    @Inject
     public HomeController(SpeciesPropertiesTrader speciesPropertiesTrader,
-                          PopularSpeciesService popularSpeciesService,
                           LatestExperimentsDao latestExperimentsDao,
                           ExpressionAtlasExperimentTrader expressionAtlasExperimentTrader,
                           AtlasInformationDao atlasInformationDao) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
-        this.popularSpeciesService = popularSpeciesService;
         this.atlasInformationDao = atlasInformationDao;
         this.latestExperimentsService =
                 new LatestExperimentsService(
@@ -83,14 +77,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/home", produces = "text/html;charset=UTF-8")
-    public String getHome(Model model) throws IOException {
-        ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
-        for (PopularSpeciesInfo popularSpeciesInfo: popularSpeciesService.getPopularSpecies(FEATURED_SPECIES)) {
-            topSixSelectBuilder.put(
-                    popularSpeciesInfo.species(), StringUtils.capitalize(popularSpeciesInfo.species()));
-        }
-        model.addAttribute("topSixByExperimentCount", topSixSelectBuilder.build());
-
+    public String getHome(Model model) {
         model.addAttribute(
                 "separator", RANDOM.nextDouble() < EASTER_EGG_PROBABILITY ? BEST_SEPARATOR : NORMAL_SEPARATOR);
 
@@ -105,30 +92,28 @@ public class HomeController {
 
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
 
-        model.addAttribute("speciesPath", ""); // Required by Spring form tag
-
-        List<ExperimentInfo> experimentlist = experimentInfoListService.listPublicExperiments();
+        List<ExperimentInfo> experimentsInfo = experimentInfoListService.listPublicExperiments();
 
         int numberOfAssays = 0;
         ArrayList<String> numberOfSpecies = new ArrayList<>();
 
-        for (int i = 0; i < experimentlist.size(); i++) {
-            numberOfAssays += experimentlist.get(i).getNumberOfAssays();
-            if (!numberOfSpecies.contains(experimentlist.get(i).getSpecies())) {
-                numberOfSpecies.add(experimentlist.get(i).getSpecies());
+        for (ExperimentInfo experimentInfo : experimentsInfo) {
+            numberOfAssays += experimentInfo.getNumberOfAssays();
+            if (!numberOfSpecies.contains(experimentInfo.getSpecies())) {
+                numberOfSpecies.add(experimentInfo.getSpecies());
             }
         }
 
-        model.addAttribute("numberOfStudies", experimentlist.size());
+        model.addAttribute("numberOfStudies", experimentsInfo.size());
         model.addAttribute("numberOfAssays", numberOfAssays);
         model.addAttribute("numberOfSpecies", numberOfSpecies.size());
 
         Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
         model.addAttribute("info", atlasInformation);
-        model.addAttribute("ensembl", AtlasInformationDataType.ENSEMBL.getId());
-        model.addAttribute("genomes", AtlasInformationDataType.GENOMES.getId());
-        model.addAttribute("paraSite", AtlasInformationDataType.PARASITE.getId());
-        model.addAttribute("efo", AtlasInformationDataType.EFO.getId());
+        model.addAttribute("ensembl", ENSEMBL.getId());
+        model.addAttribute("genomes", GENOMES.getId());
+        model.addAttribute("paraSite", PARASITE.getId());
+        model.addAttribute("efo", EFO.getId());
         
         return "home";
     }
