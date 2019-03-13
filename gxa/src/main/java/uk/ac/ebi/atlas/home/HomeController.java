@@ -55,6 +55,7 @@ public class HomeController {
                           AtlasInformationDao atlasInformationDao) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.atlasInformationDao = atlasInformationDao;
+
         this.latestExperimentsService =
                 new LatestExperimentsService(
                         latestExperimentsDao, expressionAtlasExperimentTrader,
@@ -64,8 +65,8 @@ public class HomeController {
                                 ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
                                 ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
                                 ExperimentType.PROTEOMICS_BASELINE,
-                                ExperimentType.RNASEQ_MRNA_BASELINE
-        ));
+                                ExperimentType.RNASEQ_MRNA_BASELINE));
+
         this.experimentInfoListService =
                 new ExperimentInfoListService(expressionAtlasExperimentTrader, ImmutableList.of(
                         RNASEQ_MRNA_BASELINE,
@@ -91,22 +92,20 @@ public class HomeController {
         model.addAttribute("speciesPath", ""); // Required by Spring form tag
 
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
+        model.addAttribute("numberOfStudies", experimentInfoListService.listPublicExperiments().size());
 
-        List<ExperimentInfo> experimentsInfo = experimentInfoListService.listPublicExperiments();
+        long numberOfSpecies =
+                experimentInfoListService.listPublicExperiments().stream()
+                        .map(ExperimentInfo::getSpecies)
+                        .distinct()
+                        .count();
+        model.addAttribute("numberOfSpecies", numberOfSpecies);
 
-        int numberOfAssays = 0;
-        ArrayList<String> numberOfSpecies = new ArrayList<>();
-
-        for (ExperimentInfo experimentInfo : experimentsInfo) {
-            numberOfAssays += experimentInfo.getNumberOfAssays();
-            if (!numberOfSpecies.contains(experimentInfo.getSpecies())) {
-                numberOfSpecies.add(experimentInfo.getSpecies());
-            }
-        }
-
-        model.addAttribute("numberOfStudies", experimentsInfo.size());
+        int numberOfAssays =
+                experimentInfoListService.listPublicExperiments().stream()
+                        .mapToInt(ExperimentInfo::getNumberOfAssays)
+                        .sum();
         model.addAttribute("numberOfAssays", numberOfAssays);
-        model.addAttribute("numberOfSpecies", numberOfSpecies.size());
 
         Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
         model.addAttribute("info", atlasInformation);
