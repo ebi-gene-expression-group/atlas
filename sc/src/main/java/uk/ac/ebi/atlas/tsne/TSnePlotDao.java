@@ -17,31 +17,6 @@ public class TSnePlotDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    private static final String SELECT_T_SNE_PLOT_WITH_EXPRESSION_STATEMENT =
-            "SELECT tsne.cell_id, tsne.x, tsne.y, analytics.expression_level " +
-            "FROM scxa_tsne AS tsne " +
-                "LEFT JOIN " +
-                "(SELECT * FROM scxa_analytics WHERE gene_id=:gene_id) AS analytics " +
-                "ON analytics.cell_id=tsne.cell_id AND analytics.experiment_accession=tsne.experiment_accession " +
-            "WHERE tsne.experiment_accession=:experiment_accession AND tsne.perplexity=:perplexity";
-    @Transactional(transactionManager = "txManager", readOnly = true)
-    public List<TSnePoint.Dto> fetchTSnePlotWithExpression(String experimentAccession, int perplexity, String geneId) {
-        Map<String, Object> namedParameters =
-                ImmutableMap.of(
-                        "experiment_accession", experimentAccession,
-                        "perplexity", perplexity,
-                        "gene_id", geneId);
-        return namedParameterJdbcTemplate.query(
-                SELECT_T_SNE_PLOT_WITH_EXPRESSION_STATEMENT,
-                namedParameters,
-                (rs, rowNum) -> TSnePoint.Dto.create(
-                        rs.getDouble("x"),
-                        rs.getDouble("y"),
-                        rs.getDouble("expression_level"),
-                        rs.getString("cell_id")));
-    }
-
-
     private static final String SELECT_T_SNE_PLOT_WITH_CLUSTERS_STATEMENT_AND_EXPRESSION =
             "SELECT tsne.cell_id, tsne.x, tsne.y, clusters.cluster_id,  analytics.expression_level  " +
                     "FROM scxa_tsne AS tsne " +
@@ -68,6 +43,30 @@ public class TSnePlotDao {
                         rs.getDouble("y"),
                         rs.getDouble("expression_level"),
                         rs.getInt("cluster_id"),
+                        rs.getString("cell_id")));
+    }
+
+    private static final String SELECT_T_SNE_PLOT_WITH_EXPRESSION_STATEMENT =
+            "SELECT tsne.cell_id, tsne.x, tsne.y, analytics.expression_level " +
+                    "FROM scxa_tsne AS tsne " +
+                    "LEFT JOIN " +
+                    "(SELECT * FROM scxa_analytics WHERE gene_id=:gene_id) AS analytics " +
+                    "ON analytics.cell_id=tsne.cell_id AND analytics.experiment_accession=tsne.experiment_accession " +
+                    "WHERE tsne.experiment_accession=:experiment_accession AND tsne.perplexity=:perplexity";
+    @Transactional(transactionManager = "txManager", readOnly = true)
+    public List<TSnePoint.Dto> fetchTSnePlotWithExpression(String experimentAccession, int perplexity, String geneId) {
+        Map<String, Object> namedParameters =
+                ImmutableMap.of(
+                        "experiment_accession", experimentAccession,
+                        "perplexity", perplexity,
+                        "gene_id", geneId);
+        return namedParameterJdbcTemplate.query(
+                SELECT_T_SNE_PLOT_WITH_EXPRESSION_STATEMENT,
+                namedParameters,
+                (rs, rowNum) -> TSnePoint.Dto.create(
+                        rs.getDouble("x"),
+                        rs.getDouble("y"),
+                        rs.getDouble("expression_level"),
                         rs.getString("cell_id")));
     }
 
