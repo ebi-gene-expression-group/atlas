@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestConfig.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ScxaPopularSpeciesDaoIT {
+public class ScxaSpeciesSummaryDaoIT {
     @Inject
     private SpeciesFactory speciesFactory;
 
@@ -32,7 +32,7 @@ public class ScxaPopularSpeciesDaoIT {
     private DataSource dataSource;
 
     @Inject
-    private ScxaPopularSpeciesDao subject;
+    private ScxaSpeciesSummaryDao subject;
 
     @BeforeAll
     void populateDatabaseTables() {
@@ -54,12 +54,12 @@ public class ScxaPopularSpeciesDaoIT {
         assertThat(subject.getExperimentCountBySpecies())
                 .isNotEmpty()
                 .allSatisfy(species -> {
-                    assertThat(species.totalExperiments()).isGreaterThan(0);
-                    assertThat(species.baselineExperiments()).isEqualTo(0);
-                    assertThat(species.differentialExperiments()).isEqualTo(0);
-                    assertThat(speciesFactory.create(species.species()).isUnknown()).isFalse();
-                    assertThat(speciesFactory.create(species.species()).getKingdom())
-                            .isEqualToIgnoringCase(species.kingdom());
+                    assertThat(species.getTotalExperiments()).isGreaterThan(0);
+                    assertThat(species.getBaselineExperiments()).isEqualTo(0);
+                    assertThat(species.getDifferentialExperiments()).isEqualTo(0);
+                    assertThat(speciesFactory.create(species.getSpecies()).isUnknown()).isFalse();
+                    assertThat(speciesFactory.create(species.getSpecies()).getKingdom())
+                            .isEqualToIgnoringCase(species.getKingdom());
                 });
     }
 }

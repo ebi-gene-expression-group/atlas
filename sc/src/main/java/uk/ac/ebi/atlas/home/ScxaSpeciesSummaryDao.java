@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Named
-public class ScxaPopularSpeciesDao extends PopularSpeciesDao {
+public class ScxaSpeciesSummaryDao extends SpeciesSummaryDao {
 
     private static final String SELECT_SPECIES_WITH_EXPERIMENT_COUNT_SINGLE_CELL =
             "SELECT species, COUNT(species) AS count FROM scxa_experiment "
@@ -21,13 +21,13 @@ public class ScxaPopularSpeciesDao extends PopularSpeciesDao {
                     + "GROUP BY species ";
 
     @Inject
-    public ScxaPopularSpeciesDao(JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory) {
+    public ScxaSpeciesSummaryDao(JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory) {
         super(jdbcTemplate, speciesFactory);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ImmutableList<PopularSpeciesInfo> getExperimentCountBySpecies() {
+    public ImmutableList<SpeciesSummary> getExperimentCountBySpecies() {
         return jdbcTemplate.query(SELECT_SPECIES_WITH_EXPERIMENT_COUNT_SINGLE_CELL, (ResultSet resultSet) -> {
             Map<String, Long> result = new HashMap<>();
             while (resultSet.next()) {
@@ -41,7 +41,7 @@ public class ScxaPopularSpeciesDao extends PopularSpeciesDao {
             return result.entrySet().stream()
                     .map(entry -> {
                         Species species = speciesFactory.create(entry.getKey());
-                        return PopularSpeciesInfo.create(
+                        return SpeciesSummary.create(
                                 species.getReferenceName(),
                                 species.getKingdom(),
                                 entry.getValue());

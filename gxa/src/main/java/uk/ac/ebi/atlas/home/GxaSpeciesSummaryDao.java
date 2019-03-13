@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Named
-public class GxaPopularSpeciesDao extends PopularSpeciesDao {
+public class GxaSpeciesSummaryDao extends SpeciesSummaryDao {
 
     protected static final String SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK =
             "SELECT species, type, COUNT(species) c " +
@@ -21,11 +21,11 @@ public class GxaPopularSpeciesDao extends PopularSpeciesDao {
                     "WHERE private=FALSE GROUP BY type, species";
 
     @Inject
-    public GxaPopularSpeciesDao(JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory) {
+    public GxaSpeciesSummaryDao(JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory) {
         super(jdbcTemplate, speciesFactory);
     }
 
-    public ImmutableList<PopularSpeciesInfo> getExperimentCountBySpecies() {
+    public ImmutableList<SpeciesSummary> getExperimentCountBySpecies() {
         return jdbcTemplate.query(SELECT_SPECIES_WITH_EXPERIMENT_TYPE_COUNT_BULK, (ResultSet resultSet) -> {
             Map<String, Pair<Long, Long>> result = new HashMap<>();
 
@@ -57,7 +57,7 @@ public class GxaPopularSpeciesDao extends PopularSpeciesDao {
                         String kingdom = speciesFactory.create(speciesName).getKingdom();
                         long baselineExperimentsCount = entry.getValue().getLeft();
                         long differentialExperimentsCount = entry.getValue().getRight();
-                        return PopularSpeciesInfo.create(
+                        return SpeciesSummary.create(
                                 speciesName,
                                 kingdom,
                                 baselineExperimentsCount,

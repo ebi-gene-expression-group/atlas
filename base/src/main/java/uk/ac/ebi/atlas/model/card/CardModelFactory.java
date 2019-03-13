@@ -3,13 +3,12 @@ package uk.ac.ebi.atlas.model.card;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.atlas.home.PopularSpeciesInfo;
+import uk.ac.ebi.atlas.home.SpeciesSummary;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.species.Species;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,36 +21,35 @@ public class CardModelFactory {
         this.urlHelpers = urlHelpers;
     }
 
-
-    public CardModel create(PopularSpeciesInfo popularSpeciesInfo) {
+    public CardModel create(SpeciesSummary speciesSummary) {
         List<Pair<String, Optional<String>>> content = new ArrayList<>();
         content.add(
-                Pair.of(popularSpeciesInfo.totalExperiments() + " experiment" +
-                                (popularSpeciesInfo.totalExperiments() > 1 ? "s" : ""),
+                Pair.of(speciesSummary.getTotalExperiments() + " experiment" +
+                                (speciesSummary.getTotalExperiments() > 1 ? "s" : ""),
                         Optional.empty()));
 
-        if (popularSpeciesInfo.baselineExperiments() > 0) {
+        if (speciesSummary.getBaselineExperiments() > 0) {
             content.add(
-                    Pair.of("Baseline: " + popularSpeciesInfo.baselineExperiments(),
+                    Pair.of("Baseline: " + speciesSummary.getBaselineExperiments(),
                             Optional.of(
                                     urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(
-                                            popularSpeciesInfo.species(),
+                                            speciesSummary.getSpecies(),
                                             "baseline"))));
         }
-        if (popularSpeciesInfo.differentialExperiments() > 0) {
+        if (speciesSummary.getDifferentialExperiments() > 0) {
             content.add(
-                    Pair.of("Differential: " + popularSpeciesInfo.differentialExperiments(),
+                    Pair.of("Differential: " + speciesSummary.getDifferentialExperiments(),
                             Optional.of(
                                     urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(
-                                            popularSpeciesInfo.species(),
+                                            speciesSummary.getSpecies(),
                                             "differential"))));
         }
 
         return CardModel.create(
                 CardIconType.SPECIES,
-                popularSpeciesInfo.species(),
-                Pair.of(StringUtils.capitalize(popularSpeciesInfo.species()),
-                        Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(popularSpeciesInfo.species()))),
+                speciesSummary.getSpecies(),
+                Pair.of(StringUtils.capitalize(speciesSummary.getSpecies()),
+                        Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(speciesSummary.getSpecies()))),
                 content);
     }
 
@@ -68,9 +66,9 @@ public class CardModelFactory {
     }
 
     public CardModel createLandingPageImageCard(Collection<Experiment> experiments,
-                                                       String imageUrl,
-                                                       String description,
-                                                       String descriptionUrl) {
+                                                String imageUrl,
+                                                String description,
+                                                String descriptionUrl) {
         return CardModel.create(
                 CardIconType.IMAGE,
                 imageUrl,
