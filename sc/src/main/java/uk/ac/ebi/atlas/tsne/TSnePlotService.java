@@ -102,4 +102,32 @@ public class TSnePlotService {
                                         StringUtils.capitalize(metadataValuesForCells.get(pointDto.name()))))
                 .collect(groupingBy(TSnePoint::metadata, mapping(Function.identity(), Collectors.toSet())));
     }
+
+    public Map<String, Set<TSnePoint>> fetchTSnePlotWithExpressionAndMetadata(String experimentAccession,
+                                                                               int perplexity,
+                                                                               String geneId,
+                                                                               String metadataCategory) {
+        List<TSnePoint.Dto> points = tSnePlotDao.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId);
+        List<String> cellIds = points
+                .stream()
+                .map(TSnePoint.Dto::name)
+                .collect(Collectors.toList());
+
+        Map<String, String> metadataValuesForCells =
+                cellMetadataDao.getMetadataValueForCellIds(
+                        experimentAccession,
+                        SingleCellAnalyticsCollectionProxy.metadataAsSchemaField(metadataCategory),
+                        cellIds);
+
+        return points.stream()
+                .map(
+                        pointDto ->
+                                TSnePoint.create(
+                                        MathUtils.round(pointDto.x(), 2),
+                                        MathUtils.round(pointDto.y(), 2),
+                                        pointDto.expressionLevel(),
+                                        pointDto.name(),
+                                        StringUtils.capitalize(metadataValuesForCells.get(pointDto.name()))))
+                .collect(groupingBy(TSnePoint::metadata, mapping(Function.identity(), Collectors.toSet())));
+    }
 }
