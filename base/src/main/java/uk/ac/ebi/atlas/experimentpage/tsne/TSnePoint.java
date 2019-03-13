@@ -55,6 +55,10 @@ public abstract class TSnePoint {
         return new AutoValue_TSnePoint(x, y, Optional.empty(), name, "");
     }
 
+    public static TSnePoint create(double x, double y, double expressionLevel, String name, String metadata) {
+        return new AutoValue_TSnePoint(x, y, Optional.of(expressionLevel), name, metadata);
+    }
+
     public static TSnePoint create(double x, double y, String name, String metadata) {
         return new AutoValue_TSnePoint(x, y, Optional.empty(), name, metadata);
     }
