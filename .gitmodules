@@ -8,8 +8,8 @@
 	path = sc/src/test/resources/schemas
 	url = https://github.com/ebi-gene-expression-group/atlas-schemas.git
 [submodule "gxa/src/main/javascript/bundles/atlas-homepage-species-summary-panel"]
-	path = gxa/src/main/javascript/bundles/atlas-homepage-species-summary-panel
+	path = gxa/src/main/javascript/modules/atlas-homepage-species-summary-panel
 	url = https://github.com/ebi-gene-expression-group/atlas-homepage-species-summary-panel.git
 [submodule "sc/src/main/javascript/bundles/atlas-homepage-species-summary-panel"]
-	path = sc/src/main/javascript/bundles/atlas-homepage-species-summary-panel
+	path = sc/src/main/javascript/modules/atlas-homepage-species-summary-panel
 	url = https://github.com/ebi-gene-expression-group/atlas-homepage-species-summary-panel.git
