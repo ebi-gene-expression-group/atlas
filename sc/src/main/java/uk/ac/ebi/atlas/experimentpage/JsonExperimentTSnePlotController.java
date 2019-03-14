@@ -96,10 +96,10 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
     }
 
     @RequestMapping(
-            value =  "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/k/{k}/expression",
+            value = "/json/experiments/{experimentAccession}/tsneplot/{perplexity}/clusters/k/{k}/expression",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String pointsWithExpressionAndClusters(
+    public String tSnePlotExpressionsWithClusters(
             @PathVariable String experimentAccession,
             @PathVariable int perplexity,
             @PathVariable int k,
@@ -181,7 +181,7 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
             @PathVariable int perplexity,
             @PathVariable String metadata,
             @RequestParam(defaultValue = "") String accessKey) {
-        return tSnePlotExpressionsWithMetadata(experimentAccession, perplexity, "", accessKey);
+        return tSnePlotExpressionsWithMetadata(experimentAccession, perplexity, metadata, "", "accessKey");
     }
 
     private List<Map<String, Object>> modelForHighcharts(String seriesNamePrefix, Map<?, Set<TSnePoint>> points) {
