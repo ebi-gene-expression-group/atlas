@@ -84,6 +84,20 @@ class TSnePlotDaoIT {
 
     @ParameterizedTest
     @MethodSource("randomExperimentAccessionKAndPerplexityProvider")
+    void testExpressionAndClusters(String experimentAccession, int k, int perplexity) {
+        String geneId = jdbcTestUtils.fetchRandomGeneFromSingleCellExperiment(experimentAccession);
+
+        assertThat(subject.fetchTSnePlotWithClustersAndExpression(experimentAccession, perplexity, k, geneId))
+                .isNotEmpty()
+                .doesNotHaveDuplicates()
+                .allMatch(tSnePointDto -> tSnePointDto.expressionLevel() >= 0.0)
+                .allMatch(tSnePointDto -> tSnePointDto.clusterId() <= k)
+                .extracting("name")
+                .isSubsetOf(fetchCellIds(experimentAccession));
+    }
+
+    @ParameterizedTest
+    @MethodSource("randomExperimentAccessionKAndPerplexityProvider")
     void testClustersForK(String experimentAccession, int k, int perplexity) {
         assertThat(subject.fetchTSnePlotWithClusters(experimentAccession, perplexity, k))
                 .isNotEmpty()

@@ -77,17 +77,17 @@ class JsonExperimentTSnePlotControllerWIT {
     }
 
     @Test
-    void validJsonForExpressedGeneId() throws Exception {
+    void validJsonForExpressedGeneIdWithClusters() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         String geneId = jdbcTestUtils.fetchRandomGeneFromSingleCellExperiment(experimentAccession);
         // If our fixtures contained full experiments we could use any random perplexity with
         // fetchRandomPerplexityFromExperimentTSne(experimentAccession), but since we have a subset of all the rows, we
         // need to restrict this value to the perplexities actually available for the particular gene we choose.
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession, geneId);
-
+        int cluster = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
         this.mockMvc
                 .perform(get(
-                        "/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity +
+                        "/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity + "/clusters/k/" + cluster +
                         "/expression/" + geneId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -103,10 +103,11 @@ class JsonExperimentTSnePlotControllerWIT {
     void validJsonForInvalidGeneId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
+        int cluster = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
 
         this.mockMvc
                 .perform(get(
-                        "/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity + "/expression/FOOBAR"))
+                        "/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity  + "/clusters/k/" + cluster + "/expression/FOOBAR"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min").doesNotExist())
@@ -120,9 +121,10 @@ class JsonExperimentTSnePlotControllerWIT {
     void noExpressionForEmptyGeneId() throws Exception {
         String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
         int perplexity = jdbcTestUtils.fetchRandomPerplexityFromExperimentTSne(experimentAccession);
+        int cluster = jdbcTestUtils.fetchRandomKFromCellClusters(experimentAccession);
 
         this.mockMvc
-                .perform(get("/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity + "/expression/"))
+                .perform(get("/json/experiments/" + experimentAccession + "/tsneplot/" + perplexity + "/clusters/k/" + cluster + "/expression/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.min").doesNotExist())

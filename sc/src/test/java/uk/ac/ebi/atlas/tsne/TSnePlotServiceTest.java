@@ -12,8 +12,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.metadata.CellMetadataDao;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
+import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
 
+import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TSnePlotServiceTest {
+
+    @Inject
+    private JdbcUtils jdbcTestUtils;
+
     private static final int NUMBER_OF_CELLS = 10000;
 
     @Mock
@@ -146,5 +152,92 @@ class TSnePlotServiceTest {
                                         dto.expressionLevel(),
                                         dto.name()))
                                 .toArray(TSnePoint[]::new));
+    }
+
+    @Test
+    @DisplayName("Points retrieved by the DAO class are assigned the right cluster with gene expression levels")
+    void testFetchPlotWithExpressionLevelsAndClusters() {
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
+        int[] perplexities = new int[] {1, 5, 10, 15, 20};
+        int perplexity = perplexities[ThreadLocalRandom.current().nextInt(0, perplexities.length)];
+        String geneId = RandomDataTestUtils.generateRandomEnsemblGeneId();
+        int k = ThreadLocalRandom.current().nextInt(5, 20);
+
+        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtosWithExpression(NUMBER_OF_CELLS);
+        when(tSnePlotDaoMock.fetchTSnePlotWithClustersAndExpression(experimentAccession, perplexity, k, geneId))
+                .thenReturn(ImmutableList.copyOf(randomPointDtos));
+
+        Map<Integer, Set<TSnePoint>> results = subject.fetchTSnePlotWithExpressionAndClusters(experimentAccession, perplexity, geneId, k);
+
+        assertThat(results)
+                .containsOnlyKeys(
+                        randomPointDtos.stream()
+                                .collect(groupingBy(TSnePoint.Dto::clusterId))
+                                .keySet()
+                                .toArray(new Integer[0]));
+        assertThat(results.values().stream().flatMap(Set::stream).collect(toSet()))
+                .containsExactlyInAnyOrder(
+                        randomPointDtos.stream()
+                                .map(dto -> TSnePoint.create(
+                                        MathUtils.round(dto.x(), 2),
+                                        MathUtils.round(dto.y(), 2),
+                                        dto.expressionLevel(),
+                                        dto.name()))
+                                .toArray(TSnePoint[]::new));
+    }
+
+    @Test
+    @DisplayName("Points retrieved by the DAO class are assigned the metadata category with gene expression levels")
+    void testFetchPlotWithExpressionLevelsAndMetadata() {
+        String experimentAccession = RandomDataTestUtils.generateRandomExperimentAccession();
+        int[] perplexities = new int[] {1, 5, 10, 15, 20};
+        int perplexity = perplexities[ThreadLocalRandom.current().nextInt(0, perplexities.length)];
+        String metadataCategory = "characteristic_inferred_cell_type";
+        List<String> metadataValues = Arrays.asList("neuron", "stem cell", "B cell");
+        String geneId = RandomDataTestUtils.generateRandomEnsemblGeneId();
+        int k = ThreadLocalRandom.current().nextInt(5, 20);
+
+
+        Set<TSnePoint.Dto> randomPointDtos = RandomDataTestUtils.generateRandomTSnePointDtos(NUMBER_OF_CELLS);
+        when(tSnePlotDaoMock.fetchTSnePlotWithExpression(experimentAccession, perplexity, geneId))
+                .thenReturn(ImmutableList.copyOf(randomPointDtos));
+
+        // Extract list of cell IDs from t-SNE points
+        List<String> cellIds = randomPointDtos
+                .stream()
+                .map(TSnePoint.Dto::name)
+                .collect(Collectors.toList());
+
+        assertThat(cellIds).doesNotHaveDuplicates();
+
+        // Assign random metadata value to each cell ID
+        Map<String, String> cellMetadata = cellIds
+                .stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        value -> metadataValues.get(ThreadLocalRandom.current().nextInt(0, metadataValues.size()))));
+
+        when(
+                cellMetadataDaoMock.getMetadataValueForCellIds(
+                        eq(experimentAccession), any(SingleCellAnalyticsSchemaField.class), eq(cellIds)))
+                .thenReturn(cellMetadata);
+
+
+        Map<String, Set<TSnePoint>> results =
+                subject.fetchTSnePlotWithExpressionAndMetadata(experimentAccession, perplexity, geneId, metadataCategory);
+
+        assertThat(results)
+                .containsOnlyKeys(metadataValues.stream().map(StringUtils::capitalize).toArray(String[]::new));
+        assertThat(results.values().stream().flatMap(Set::stream).collect(toSet()))
+                .containsExactlyInAnyOrder(
+                        randomPointDtos.stream()
+                                .map(dto -> TSnePoint.create(
+                                        MathUtils.round(dto.x(), 2),
+                                        MathUtils.round(dto.y(), 2),
+                                        dto.expressionLevel(),
+                                        dto.name(),
+                                       org.apache.commons.lang.StringUtils.capitalize(cellMetadata.get(dto.name()))))
+                                .toArray(TSnePoint[]::new));
+
     }
 }
