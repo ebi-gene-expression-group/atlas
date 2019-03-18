@@ -1,16 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
+<div class="row column expanded">
+    <tiles:insertAttribute name="release-stats"/>
+</div>
+
 <div class="row column margin-bottom-xlarge expanded">
     <tiles:insertAttribute name="home-search"/>
 </div>
 
 <div class="row column margin-bottom-xlarge expanded">
-    <tiles:insertAttribute name="browse-by-box"/>
+    <tiles:insertAttribute name="species-summary-panel"/>
 </div>
 
 <div class="row column margin-bottom-xlarge expanded">
-    <tiles:insertAttribute name="experiment-list-latest-box"/>
+    <tiles:insertAttribute name="experiments-summary-panel"/>
 </div>
 
 <div class="row expanded margin-top-large" data-equalizer>
