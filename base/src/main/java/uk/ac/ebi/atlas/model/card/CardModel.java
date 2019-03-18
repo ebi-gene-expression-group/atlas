@@ -10,7 +10,7 @@ import java.util.Optional;
 public abstract class CardModel {
     public abstract CardIconType iconType();
     public abstract String iconSrc();
-    public abstract Optional<Pair<String, Optional<String>>> description();
+    public abstract Pair<Optional<String>, Optional<String>> description();
     public abstract List<Pair<String, Optional<String>>> content();
 
     public static CardModel create(CardIconType iconType,
@@ -19,19 +19,19 @@ public abstract class CardModel {
         return new AutoValue_CardModel(
                 iconType,
                 iconSrc,
-                Optional.empty(),
+                Pair.of(Optional.empty(), Optional.empty()),
                 content
         );
     }
 
     public static CardModel create(CardIconType iconType,
                                    String iconSrc,
-                                   Pair<String, Optional<String>> description,
+                                   Pair<Optional<String>, Optional<String>> description,
                                    List<Pair<String, Optional<String>>> content) {
         return new AutoValue_CardModel(
                 iconType,
                 iconSrc,
-                Optional.of(description),
+                description,
                 content
         );
     }

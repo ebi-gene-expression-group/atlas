@@ -48,7 +48,8 @@ public class CardModelFactory {
         return CardModel.create(
                 CardIconType.SPECIES,
                 speciesSummary.getSpecies(),
-                Pair.of(StringUtils.capitalize(speciesSummary.getSpecies()),
+                Pair.of(
+                        Optional.of(StringUtils.capitalize(speciesSummary.getSpecies())),
                         Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(speciesSummary.getSpecies()))),
                 content);
     }
@@ -59,7 +60,8 @@ public class CardModelFactory {
         return CardModel.create(
                 CardIconType.SPECIES,
                 species.getReferenceName(),
-                Pair.of(StringUtils.capitalize(species.getName() + " experiments"),
+                Pair.of(
+                        Optional.of(StringUtils.capitalize(species.getName() + " experiments")),
                         Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(species.getReferenceName()))),
                 experimentsToContent(experiments));
 
@@ -72,7 +74,7 @@ public class CardModelFactory {
         return CardModel.create(
                 CardIconType.IMAGE,
                 imageUrl,
-                Pair.of(description, Optional.of(descriptionUrl)),
+                Pair.of(Optional.of(description), Optional.of(descriptionUrl)),
                 experimentsToContent(experiments));
     }
 

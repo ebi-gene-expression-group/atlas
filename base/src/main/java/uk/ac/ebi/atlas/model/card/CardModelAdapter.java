@@ -14,10 +14,9 @@ public class CardModelAdapter {
         result.addProperty("iconType", cardModel.iconType().name().toLowerCase());
         result.addProperty("iconSrc", cardModel.iconSrc());
 
-        cardModel.description().ifPresent(
-                description ->
-                    result.add("description",
-                            getTextAndUrl(description.getLeft(), description.getRight())));
+        if (cardModel.description().getLeft().isPresent() || cardModel.description().getRight().isPresent()) {
+            result.add("description", getTextAndUrl(cardModel.description()));
+        }
 
         if (cardModel.content().size() != 0) {
             result.add("content", getContent(cardModel.content()));
@@ -40,8 +39,7 @@ public class CardModelAdapter {
         textAndUrls.forEach(textAndUrl -> content.add(
                 getTextAndUrl(
                         textAndUrl.getLeft(),
-                        textAndUrl.getRight()
-                )));
+                        textAndUrl.getRight())));
 
         return content;
     }
@@ -53,4 +51,12 @@ public class CardModelAdapter {
 
         return textAndUrl;
     }
+
+    private static JsonObject getTextAndUrl(Pair<Optional<String>, Optional<String>> description) {
+        JsonObject textAndUrl = new JsonObject();
+        description.getLeft().ifPresent(text -> textAndUrl.addProperty("text", text));
+        description.getRight().ifPresent(url -> textAndUrl.addProperty("url", url));
+        return textAndUrl;
+    }
+
 }
