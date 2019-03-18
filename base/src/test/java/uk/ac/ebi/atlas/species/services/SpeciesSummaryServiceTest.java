@@ -2,18 +2,18 @@ package uk.ac.ebi.atlas.species.services;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.home.SpeciesSummaryDao;
 import uk.ac.ebi.atlas.home.SpeciesSummaryService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SpeciesSummaryServiceTest {
+@ExtendWith(MockitoExtension.class)
+class SpeciesSummaryServiceTest {
     private static final ImmutableMap<String, ImmutableList<String>> KINGDOM_TO_SPECIES =
             ImmutableMap.of(
                     "animals",
@@ -33,8 +33,8 @@ public class SpeciesSummaryServiceTest {
 
     private SpeciesSummaryService subject;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() {
         subject = new SpeciesSummaryService(speciesSummaryDaoMock);
     }
 
