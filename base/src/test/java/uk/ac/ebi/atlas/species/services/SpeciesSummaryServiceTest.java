@@ -3,15 +3,14 @@ package uk.ac.ebi.atlas.species.services;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.home.SpeciesSummaryDao;
 import uk.ac.ebi.atlas.home.SpeciesSummaryService;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SpeciesSummaryServiceTest {
@@ -37,5 +36,11 @@ public class SpeciesSummaryServiceTest {
     @Before
     public void setUp() throws Exception {
         subject = new SpeciesSummaryService(speciesSummaryDaoMock);
+    }
+
+    @Test
+    void stub() {
+        // TODO
+        assertThat(true).isTrue();
     }
 }
