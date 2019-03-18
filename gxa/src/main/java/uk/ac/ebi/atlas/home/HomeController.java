@@ -10,15 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.AtlasInformationDao;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -44,37 +41,26 @@ public class HomeController {
     private static final Random RANDOM = new Random();
 
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
-    private final LatestExperimentsService latestExperimentsService;
     private AtlasInformationDao atlasInformationDao;
 
     private ExperimentInfoListService experimentInfoListService;
 
     public HomeController(SpeciesPropertiesTrader speciesPropertiesTrader,
-                          LatestExperimentsDao latestExperimentsDao,
                           ExpressionAtlasExperimentTrader expressionAtlasExperimentTrader,
                           AtlasInformationDao atlasInformationDao) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.atlasInformationDao = atlasInformationDao;
 
-        this.latestExperimentsService =
-                new LatestExperimentsService(
-                        latestExperimentsDao, expressionAtlasExperimentTrader,
-                        ImmutableSet.of(
-                                ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
-                                ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
-                                ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
-                                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
-                                ExperimentType.PROTEOMICS_BASELINE,
-                                ExperimentType.RNASEQ_MRNA_BASELINE));
-
         this.experimentInfoListService =
-                new ExperimentInfoListService(expressionAtlasExperimentTrader, ImmutableList.of(
-                        RNASEQ_MRNA_BASELINE,
-                        PROTEOMICS_BASELINE,
-                        RNASEQ_MRNA_DIFFERENTIAL,
-                        MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
-                        MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
-                        MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL));
+                new ExperimentInfoListService(
+                        expressionAtlasExperimentTrader,
+                        ImmutableList.of(
+                                RNASEQ_MRNA_BASELINE,
+                                PROTEOMICS_BASELINE,
+                                RNASEQ_MRNA_DIFFERENTIAL,
+                                MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                                MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                                MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL));
     }
 
     @RequestMapping(value = "/home", produces = "text/html;charset=UTF-8")
@@ -90,8 +76,6 @@ public class HomeController {
 
         model.addAttribute("species", speciesSelectBuilder.build());
         model.addAttribute("speciesPath", ""); // Required by Spring form tag
-
-        model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
         model.addAttribute("numberOfStudies", experimentInfoListService.listPublicExperiments().size());
 
         long numberOfSpecies =

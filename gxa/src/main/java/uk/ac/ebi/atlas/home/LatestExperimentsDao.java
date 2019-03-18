@@ -1,27 +1,25 @@
 package uk.ac.ebi.atlas.home;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Named
+@Component
 public class LatestExperimentsDao {
     static final int LIMIT = 8;
     private static final String SELECT_PUBLIC_ACCESSIONS =
             "SELECT accession FROM experiment WHERE private=FALSE ";
     private static final String IN_DESCENDING_ORDER_BY_DATE =
-            " ORDER BY last_update DESC LIMIT " + Integer.toString(LIMIT);
+            " ORDER BY last_update DESC LIMIT " + LIMIT;
     private static final String EXPERIMENT_COUNT =
             "SELECT COUNT(*) FROM experiment WHERE private=FALSE ";
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Inject
     public LatestExperimentsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
