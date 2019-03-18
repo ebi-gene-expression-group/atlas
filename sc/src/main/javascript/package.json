@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "atlas-feedback-form": "^1.1.0",
+    "atlas-homepage-cards": "^2.0.0-beta3",
+    "atlas-react-fetch-loader": "^1.0.0-beta",
     "expression-atlas-autocomplete": "^3.0.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",

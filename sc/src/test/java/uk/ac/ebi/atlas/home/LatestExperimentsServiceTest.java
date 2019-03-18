@@ -55,14 +55,6 @@ class LatestExperimentsServiceTest {
     when(experiment.getAccession()).thenReturn(latestExperimentsAccessionList.get(0));
     when(experimentTraderMock.getPublicExperiment(latestExperimentsAccessionList.get(0))).thenReturn(experiment);
 
-    assertThat(subject.fetchLatestExperimentsJSON())
-            .isNotEmpty()
-            .isEqualTo(GSON.toJson(new ArrayList<ExperimentInfo>() {{
-              add(experiment.buildExperimentInfo());
-            }}
-            .stream().collect(Collectors.toList())
-            ));
-
     assertThat(subject.fetchLatestExperimentsAttributes())
             .isNotEmpty()
             .containsKeys("experimentCount", "formattedExperimentCount", "latestExperiments")

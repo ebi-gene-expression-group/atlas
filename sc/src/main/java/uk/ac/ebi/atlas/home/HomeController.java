@@ -6,14 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 
-import javax.inject.Inject;
-
 @Controller
 public class HomeController extends HtmlExceptionHandlingController {
-
     private final LatestExperimentsService latestExperimentsService;
 
-    @Inject
     public HomeController(LatestExperimentsDao latestExperimentsDao, ScxaExperimentTrader experimentTrader) {
         latestExperimentsService = new LatestExperimentsService(latestExperimentsDao, experimentTrader);
     }

@@ -1,0 +1,177 @@
+package uk.ac.ebi.atlas.home;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
+import uk.ac.ebi.atlas.model.card.CardModel;
+import uk.ac.ebi.atlas.model.card.CardModelAdapter;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
+
+import java.util.Optional;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static uk.ac.ebi.atlas.model.card.CardIconType.IMAGE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
+@RestController
+public class JsonExperimentsSummaryController extends JsonExceptionHandlingController {
+    private final LatestExperimentsService latestExperimentsService;
+
+    public JsonExperimentsSummaryController(LatestExperimentsDao latestExperimentsDao,
+                                            ExpressionAtlasExperimentTrader experimentTrader) {
+        this.latestExperimentsService =
+                new LatestExperimentsService(
+                        latestExperimentsDao,
+                        experimentTrader,
+                        ImmutableSet.of(
+                                MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
+                                MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                                MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                                RNASEQ_MRNA_DIFFERENTIAL,
+                                PROTEOMICS_BASELINE,
+                                RNASEQ_MRNA_BASELINE));
+    }
+
+    @GetMapping(value = "/json/experiments-summary",
+                produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getLatestExperiments() {
+        return GSON.toJson(
+                ImmutableMap.of(
+                        "latestExperiments",
+                        latestExperimentsService.fetchLatestExperimentsAttributes().get("latestExperiments"),
+                        "featuredExperiments",
+                        featuredExperimentsCards().stream()
+                                .map(CardModelAdapter::serialize)
+                                .collect(toImmutableList())));
+    }
+
+    private static String getImageUrl(String imageFileName) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/resources/images/experiment-list-latest/{imageFileName}.png")
+                        .buildAndExpand(imageFileName)
+                        .toUriString();
+    }
+
+    private static String getCustomUrl(String path) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(path)
+                .build()
+                .toUriString();
+    }
+
+    private static Optional<String> getExperimentSetUrl(String keyword) {
+        return Optional.of(
+                ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/experiments")
+                        .query("experimentSet={keyword}")
+                        .buildAndExpand(keyword)
+                        .toUriString());
+    }
+
+    private static Optional<String> getExperimentUrl(String accession) {
+        return Optional.of(
+                ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/experiments/{accession}")
+                        .buildAndExpand(accession)
+                        .toUriString());
+    }
+
+    private static Pair<String, Optional<String>> getExperimentLink(String label, String accession) {
+        return Pair.of(label, getExperimentUrl(accession));
+    }
+
+    private static ImmutableList<CardModel> featuredExperimentsCards() {
+        return ImmutableList.of(
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("encode"),
+                        Pair.of(Optional.empty(), getExperimentSetUrl("ENCODE")),
+                        ImmutableList.of(
+                                getExperimentLink("Human tissues", "E-MTAB-4344"),
+                                getExperimentLink("Human cells", "E-GEOD-26284"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("blueprint"),
+                        Pair.of(Optional.empty(), getExperimentSetUrl("BLUEPRINT")),
+                        ImmutableList.of(
+                                getExperimentLink("Plasma cells of tonsil", "E-MTAB-4754"),
+                                getExperimentLink("Rare types of haemopoetic cells", "E-MTAB-3819"),
+                                getExperimentLink("Common types of haemopoetic cells", "E-MTAB-3827"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("fantom"),
+                        Pair.of(Optional.empty(), getExperimentSetUrl("FANTOM5")),
+                        ImmutableList.of(
+                                getExperimentLink("Mouse cells", "E-MTAB-3578"),
+                                getExperimentLink("Mouse tissues", "E-MTAB-3579"),
+                                getExperimentLink("Human tissues", "E-MTAB-3358"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("human_protein_atlas"),
+                        Pair.of(Optional.empty(), getExperimentUrl("E-PROT-3")),
+                        ImmutableList.of(
+                                getExperimentLink("Human tissues", "E-PROT-3"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("ccle"),
+                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-2770")),
+                        ImmutableList.of(
+                                getExperimentLink("Cancer Cell Line Encyclopedia", "E-MTAB-2770"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("hipsci"),
+                        Pair.of(Optional.empty(), getExperimentSetUrl("HipSci")),
+                        ImmutableList.of(
+                                getExperimentLink("Proteomics – Cell lines", "E-PROT-5"),
+                                getExperimentLink("RNA – Cell lines", "E-MTAB-4748"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("gtex"),
+                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-5214")),
+                        ImmutableList.of(
+                                getExperimentLink("Human tissues", "E-MTAB-5214"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("pcawg"),
+                        Pair.of(Optional.empty(), getExperimentSetUrl("Pan-Cancer")),
+                        ImmutableList.of(
+                                getExperimentLink("PCAWG by disease", "E-MTAB-5200"),
+                                getExperimentLink("PCAWG by individual", "E-MTAB-5423"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("wtsi_mgh_cancerrxgene"),
+                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-3983")),
+                        ImmutableList.of(
+                                getExperimentLink("Genomics of Drug Sensitivity in Cancer Project – Cell lines", "E-MTAB-3983"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("hdbr"),
+                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-4840")),
+                        ImmutableList.of(
+                                getExperimentLink("Prenatal brain development", "E-MTAB-4840"))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("baseline"),
+                        Pair.of(Optional.empty(), Optional.of(getCustomUrl("/baseline/experiments"))),
+                        ImmutableList.of(
+                                Pair.of("Baseline experiments", Optional.of(getCustomUrl("/baseline/experiments"))))),
+                CardModel.create(
+                        IMAGE,
+                        getImageUrl("gramene"),
+                        Pair.of(Optional.empty(), Optional.of(getCustomUrl("/plant/experiments"))),
+                        ImmutableList.of(
+                                Pair.of("Plant experiments", Optional.of(getCustomUrl("/plant/experiments"))))));
+    }
+}

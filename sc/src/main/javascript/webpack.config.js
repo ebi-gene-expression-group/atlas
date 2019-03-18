@@ -10,9 +10,10 @@ module.exports = {
     experimentPage: `./bundles/experiment-page`,
     geneSearch: `./bundles/gene-search`,
     geneSearchForm: `./bundles/gene-search-form`,
-    atlasHomepageCard: `./bundles/atlas-homepage-card`,
-    homePagePanel: `./bundles/scxa-homepage-panels`,
-    feedbackForm: `atlas-feedback-form`
+    feedbackForm: `atlas-feedback-form`,
+    homepageSpeciesSummaryPanel: `./bundles/homepage-species-summary-panel`,
+    homepageExperimentsSummaryPanel: `./bundles/homepage-experiments-summary-panel`,
+    homepageCards: `./bundles/homepage-cards`
   },
 
   plugins: [
@@ -41,7 +42,9 @@ module.exports = {
       "lodash": path.resolve(`./node_modules/lodash`),
       "react-select": path.resolve(`./node_modules/react-select`),
       "expression-atlas-autocomplete": path.resolve(`./node_modules/expression-atlas-autocomplete`),
-      "scxa-gene-search-form": path.resolve(`./node_modules/scxa-gene-search-form`)
+      "scxa-gene-search-form": path.resolve(`./node_modules/scxa-gene-search-form`),
+      "atlas-homepage-cards": path.resolve(`./node_modules/atlas-homepage-cards`),
+      "atlas-react-fetch-loader": path.resolve(`./node_modules/atlas-react-fetch-loader`)
     }
   },
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import uk.ac.ebi.atlas.home.PopularSpeciesInfo;
+import uk.ac.ebi.atlas.home.SpeciesSummary;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.species.Species;
 
@@ -55,8 +55,8 @@ class CardModelFactoryTest {
     void createPopularSpeciesCard() {
         Species species = generateRandomSpecies();
 
-        PopularSpeciesInfo someWeirdSpeciesInfo =
-                PopularSpeciesInfo.create(
+        SpeciesSummary someWeirdSpeciesInfo =
+                SpeciesSummary.create(
                         species.getName(),
                         "Dorne",
                         RNG.nextInt(1, 1000),
@@ -74,7 +74,7 @@ class CardModelFactoryTest {
     void experimentWordIsPluralisedInSpeciesCards() {
         assertThat(
                 subject.create(
-                        PopularSpeciesInfo.create(
+                        SpeciesSummary.create(
                                 randomAlphabetic(10),
                                 randomAlphabetic(10),
                                 0,
@@ -84,7 +84,7 @@ class CardModelFactoryTest {
 
         assertThat(
                 subject.create(
-                        PopularSpeciesInfo.create(
+                        SpeciesSummary.create(
                                 randomAlphabetic(10),
                                 randomAlphabetic(10),
                                 1))
@@ -94,7 +94,7 @@ class CardModelFactoryTest {
 
         assertThat(
                 subject.create(
-                        PopularSpeciesInfo.create(
+                        SpeciesSummary.create(
                                 randomAlphabetic(10),
                                 randomAlphabetic(10),
                                 1,
@@ -103,7 +103,7 @@ class CardModelFactoryTest {
 
         assertThat(
                 subject.create(
-                        PopularSpeciesInfo.create(
+                        SpeciesSummary.create(
                                 randomAlphabetic(10),
                                 randomAlphabetic(10),
                                 RNG.nextInt(2, Integer.MAX_VALUE)))

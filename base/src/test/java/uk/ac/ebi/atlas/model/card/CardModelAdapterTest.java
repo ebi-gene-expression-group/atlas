@@ -120,7 +120,11 @@ public class CardModelAdapterTest {
         }
 
         if (hasDescription) {
-            return CardModel.create(iconType, iconSrc, Pair.of(randomAlphabetic(10), Optional.empty()), content);
+            return CardModel.create(
+                    iconType,
+                    iconSrc,
+                    Pair.of(Optional.of(randomAlphabetic(10)), Optional.empty()),
+                    content);
         }
         else {
             return CardModel.create(iconType, iconSrc, content);

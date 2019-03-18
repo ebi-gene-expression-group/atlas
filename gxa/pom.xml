@@ -87,7 +87,7 @@
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
             <artifactId>atlas-core</artifactId>
-            <version>1.4.0</version>
+            <version>1.5.0</version>
         </dependency>
 
         <!-- For URL rewrite (see WEB-INF/web.xml) -->

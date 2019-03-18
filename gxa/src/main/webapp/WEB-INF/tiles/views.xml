@@ -8,10 +8,10 @@
         <put-attribute name="title" value="Home &lt; "/>
         <put-attribute name="content">
             <definition template="/WEB-INF/jsp/tiles/views/home.jsp">
-                <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/views/home/hero.jsp"/>
+                <put-attribute name="release-stats" value="/WEB-INF/jsp/tiles/views/home/release-stats.jsp"/>
                 <put-attribute name="home-search" value="/WEB-INF/jsp/tiles/views/home/search.jsp"/>
-                <put-attribute name="browse-by-box" value="/WEB-INF/jsp/tiles/views/home/browse-by.jsp"/>
-                <put-attribute name="experiment-list-latest-box" value="/WEB-INF/jsp/tiles/views/home/experiment-list-latest.jsp"/>
+                <put-attribute name="species-summary-panel" value="/WEB-INF/jsp/tiles/views/home/species-summary-panel.jsp"/>
+                <put-attribute name="experiments-summary-panel" value="/WEB-INF/jsp/tiles/views/home/experiments-summary-panel.jsp"/>
                 <put-attribute name="tools-box" value="/WEB-INF/jsp/tiles/views/home/tools.jsp"/>
                 <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/views/home/publications.jsp"/>
                 <put-attribute name="news" value="/WEB-INF/jsp/tiles/views/home/twitter-timeline.jsp"/>
