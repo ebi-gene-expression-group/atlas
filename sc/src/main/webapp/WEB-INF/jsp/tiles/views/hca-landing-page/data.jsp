@@ -24,13 +24,19 @@
     <div class="margin-top-xlarge" id="hca-card-container"></div>
 </div>
 
-<script defer src="${pageContext.request.contextPath}/resources/js-bundles/atlasHomepageCard.bundle.js"></script>
+<script defer src="${pageContext.request.contextPath}/resources/js-bundles/homepageCards.bundle.js"></script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
-    atlasHomepageCard.renderHcaLandingPageContainer({
+    homepageCards.render({
       host: '${pageContext.request.contextPath}/',
-      resource: 'json/hca'
-    }, 'hca-card-container');
+      resource: 'json/hca',
+      className: 'row small-up-2',
+      cardContainerClassName: 'column',
+      speciesIconHeight: `8rem`,
+      imageIconHeight: `8rem`,
+      hoverColour: `none`
+    },
+    'hca-card-container');
   });
 </script>
