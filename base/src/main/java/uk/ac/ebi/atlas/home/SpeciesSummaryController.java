@@ -21,7 +21,7 @@ public abstract class SpeciesSummaryController extends JsonExceptionHandlingCont
 
     public String getPopularExperimentsGroupedByKingdom(int limit) {
         // I want Java 10 and val!
-        ImmutableList<ImmutableMap<String, Object>> foo =
+        ImmutableList<ImmutableMap<String, Object>> kingdom2SerialisedCards =
                 speciesSummaryService.getSpeciesSummaryGroupedByKingdom(limit).entrySet().stream()
                         .map(entry -> ImmutableMap.of(
                                 "kingdom", entry.getKey(),
@@ -30,6 +30,6 @@ public abstract class SpeciesSummaryController extends JsonExceptionHandlingCont
                                         .collect(toImmutableList()))))
                         .collect(toImmutableList());
 
-        return GsonProvider.GSON.toJson(ImmutableMap.of("speciesSummary", foo));
+        return GsonProvider.GSON.toJson(ImmutableMap.of("speciesSummary", kingdom2SerialisedCards));
     }
 }
