@@ -12,15 +12,15 @@
 
 <div class= "small-12 medium-6 columns text-left">
   <h4>Search across
-    <strong><fmt:formatNumber value="${numberOfSpecies}"/> species,
-      <fmt:formatNumber value="${numberOfStudies}"/> studies,
-      <fmt:formatNumber value="${numberOfAssays}"/> assays</strong>
+    <strong><fmt:formatNumber value="${numberOfSpecies}"/>&nbsp;species,
+      <fmt:formatNumber value="${numberOfStudies}"/>&nbsp;studies,
+      <fmt:formatNumber value="${numberOfAssays}"/>&nbsp;assays</strong>
   </h4>
 </div>
 <div class="small-12 medium-6 columns text-right">
-  <h4>Ensembl <fmt:formatNumber value="${info.get(ensembl)}"/>,
-    Ensembl Genomes <fmt:formatNumber value="${info.get(genomes)}"/>,
-    WormBase ParaSite <fmt:formatNumber value="${info.get(paraSite)}"/>,
-    EFO <fmt:formatNumber value="${info.get(efo)}"/></h4>
+  <h4>Ensembl&nbsp;<fmt:formatNumber value="${info.get(ensembl)}"/>,
+    Ensembl&nbsp;Genomes&nbsp;<fmt:formatNumber value="${info.get(genomes)}"/>,
+    WormBase&nbsp;ParaSite&nbsp;<fmt:formatNumber value="${info.get(paraSite)}"/>,
+    EFO&nbsp;<fmt:formatNumber value="${info.get(efo)}"/></h4>
 </div>
 
