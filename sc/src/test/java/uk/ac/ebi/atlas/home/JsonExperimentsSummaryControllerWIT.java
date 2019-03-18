@@ -32,15 +32,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class JsonLatestExperimentControllerWIT {
+public class JsonExperimentsSummaryControllerWIT {
     @Inject
     private DataSource dataSource;
 
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
-    private static final String ENDPOINT_URL = "/json/experiments/latestExperiments";
 
+    private static final String ENDPOINT_URL = "/json/experiments-summary";
     @BeforeAll
     void populateDatabaseTables() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
@@ -65,17 +65,7 @@ public class JsonLatestExperimentControllerWIT {
         mockMvc.perform(get(ENDPOINT_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$.[*].experimentType").exists())
-                .andExpect(jsonPath("$.[*].experimentAccession").exists())
-                .andExpect(jsonPath("$.[*].experimentDescription").exists())
-                .andExpect(jsonPath("$.[*].lastUpdate").exists())
-                .andExpect(jsonPath("$.[*].numberOfAssays").exists())
-                .andExpect(jsonPath("$.[*].numberOfContrasts").exists())
-                .andExpect(jsonPath("$.[*].species").exists())
-                .andExpect(jsonPath("$.[*].kingdom").exists())
-                .andExpect(jsonPath("$.[*].experimentalFactors", hasSize(greaterThanOrEqualTo(1))))
-                .andExpect(jsonPath("$.[*].arrayDesigns").exists())
-                .andExpect(jsonPath("$.[*].arrayDesignNames").exists());
+                .andExpect(jsonPath("$.latestExperiments").exists())
+                .andExpect(jsonPath("$.featuredExperiments").exists());
     }
 }

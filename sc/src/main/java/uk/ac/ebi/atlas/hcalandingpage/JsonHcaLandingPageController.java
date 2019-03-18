@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.hcalandingpage;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import uk.ac.ebi.atlas.experiments.ExperimentSearchService;
 import uk.ac.ebi.atlas.model.card.CardModel;
 import uk.ac.ebi.atlas.model.card.CardModelAdapter;
 import uk.ac.ebi.atlas.model.card.CardModelFactory;
+import uk.ac.ebi.atlas.utils.GsonProvider;
 
 @RestController
 public class JsonHcaLandingPageController extends JsonExceptionHandlingController {
@@ -37,7 +39,8 @@ public class JsonHcaLandingPageController extends JsonExceptionHandlingControlle
                 cardModelFactory.createLandingPageSpeciesCard(
                         experimentSearchService.searchPublicExperimentsBySpecies("Homo sapiens"));
 
-        return CardModelAdapter.serialize(ImmutableList.of(hcaCard, humanCard)).toString();
+        return GsonProvider.GSON.toJson(
+                ImmutableMap.of("cards", CardModelAdapter.serialize(ImmutableList.of(hcaCard, humanCard))));
     }
 
     // TODO The two methods below are subject to be generalised when we add featured experiments in SCEA’s home page

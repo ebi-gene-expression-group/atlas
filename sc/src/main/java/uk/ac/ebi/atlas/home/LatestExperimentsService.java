@@ -15,10 +15,8 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @Component
 public class LatestExperimentsService {
-
     private final LatestExperimentsDao latestExperimentsDao;
     private final ExperimentTrader experimentTrader;
-
     private final LazyReference<ImmutableMap<String, Object>> latestExperimentsAttributes =
         new LazyReference<ImmutableMap<String, Object>>() {
             @Override
@@ -41,10 +39,6 @@ public class LatestExperimentsService {
                                     ExperimentTrader experimentTrader) {
         this.latestExperimentsDao = latestExperimentsDao;
         this.experimentTrader = experimentTrader;
-    }
-
-    public String fetchLatestExperimentsJSON() {
-        return GSON.toJson(latestExperimentsAttributes.get().get("latestExperiments"));
     }
 
     public ImmutableMap<String, Object> fetchLatestExperimentsAttributes() {
