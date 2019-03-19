@@ -6,7 +6,7 @@
             <div class="medium-12 large-8 columns">
                 <!-- local-title -->
                 <a href="${pageContext.request.contextPath}/home" title="Back to Single Cell Expression Atlas homepage">
-                <div class="media-object columns small-8" id="local-title">
+                <div class="media-object columns small-12" id="local-title">
                     <div class="media-object-section hide-for-small-only">
                         <img src="${pageContext.request.contextPath}/resources/images/logos/sc_atlas_logo.png" alt="Single Cell Expression Atlas logo" style="height:7em">
                     </div>
