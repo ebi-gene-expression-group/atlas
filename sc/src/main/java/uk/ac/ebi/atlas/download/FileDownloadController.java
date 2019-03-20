@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.download;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -20,8 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -93,39 +92,41 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
         zipOutputStream.close();
     }
 
-    @RequestMapping(value = "experimentlist/download/zip",
+    @RequestMapping(value = "experiments/download/zip",
             method = RequestMethod.GET,
             produces = "application/zip")
     public void
     downloadMultipleExperimentsArchive(HttpServletResponse response,
-                    @RequestParam(value= "experimentAccessions", defaultValue = "") List<String> accessions,
+                    @RequestParam(value= "accession", defaultValue = "") List<String> accessions,
                     @RequestParam(value = "accessKey", defaultValue = "") String accessKey) throws IOException {
 
-        String archiveName = accessions.size() + "-" + "experiments" + "-files.zip";
-        response.setStatus(HttpServletResponse.SC_OK);
+        String archiveName = accessions.size() + "-" + "experiment" + "-files.zip";
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
+        response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/zip");
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
-        for (String experimentAccession : accessions){
-            Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        for (String accession : accessions){
+            Experiment experiment = experimentTrader.getExperiment(accession, accessKey);
+            if(experiment != null) {
+                ImmutableList<Path> paths = ImmutableList.<Path>builder()
+                        .addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.QUANTIFICATION_FILTERED))
+                        .addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.QUANTIFICATION_RAW))
+                        .addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.NORMALISED))
+                        .add(experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.SDRF))
+                        .build();
 
-            List<Path> paths = new ArrayList<>();
-            paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.QUANTIFICATION_FILTERED));
-            paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.QUANTIFICATION_RAW));
-            paths.addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.NORMALISED));
-            paths.add(experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.SDRF));
+                for (Path path : paths) {
+                    File file = path.toFile();
 
-            for (Path path : paths) {
-                File file = path.toFile();
+                    zipOutputStream.putNextEntry(new ZipEntry(experiment.getAccession() + "/" + file.getName()));
+                    FileInputStream fileInputStream = new FileInputStream(file);
 
-                zipOutputStream.putNextEntry(new ZipEntry(experiment.getAccession() + "/" + file.getName()));
-                FileInputStream fileInputStream = new FileInputStream(file);
+                    IOUtils.copy(fileInputStream, zipOutputStream);
 
-                IOUtils.copy(fileInputStream, zipOutputStream);
-
-                fileInputStream.close();
-                zipOutputStream.closeEntry();
+                    fileInputStream.close();
+                    zipOutputStream.closeEntry();
+                }
             }
         }
         zipOutputStream.close();
