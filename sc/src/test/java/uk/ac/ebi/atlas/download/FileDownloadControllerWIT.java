@@ -42,7 +42,7 @@ class FileDownloadControllerWIT {
     private static final String ARCHIVE_NAME = "{0}-{1}-files.zip";
     private static final String FILE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download";
     private static final String ARCHIVE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download/zip";
-    private static final String ARCHIVE_DOWNLOAD_LIST_URL = "/experimentlist/download/zip";
+    private static final String ARCHIVE_DOWNLOAD_LIST_URL = "/experiments/download/zip";
 
     @Inject
     private DataSource dataSource;
@@ -128,12 +128,12 @@ class FileDownloadControllerWIT {
     }
 
     @Test
-    void downloadArchiveForValidExperimentAccessionList() throws Exception {
+    void downloadArchiveForValidExperimentAccessions() throws Exception {
         String expectedArchiveName =
                 MessageFormat.format(
-                        ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiments");
+                        ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("experimentAccessions",  EXPERIMENT_ACCESSION_LIST.toString().replace("[","").replace("]", "")))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.toString().replace("[","").replace("]", "")))
                 .andExpect(status().isOk())
                 .andExpect(
                         header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
@@ -141,10 +141,18 @@ class FileDownloadControllerWIT {
     }
 
     @Test
-    void downloadArchiveForInvalidExperimentAccessionList() throws Exception {
+    void downloadArchiveForInvalidExperimentAccessions() throws Exception {
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("experimentAccessions", "Foo"))
+                .param("accession",  "Foo"))
                 .andExpect(status().is(400))
                 .andExpect(view().name("error-page"));
+    }
+
+    @Test
+    void downloadArchiveForMixedValidAndInvalidExperimentAccessions() throws Exception {
+        this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
+                .param("accession",  EXPERIMENT_ACCESSION_LIST.toString().replace("[","").replace("]", "").concat(",foo")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/zip"));
     }
 }
