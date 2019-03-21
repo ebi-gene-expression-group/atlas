@@ -97,23 +97,26 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
             produces = "application/zip")
     public void
     downloadMultipleExperimentsArchive(HttpServletResponse response,
-                    @RequestParam(value= "accession", defaultValue = "") List<String> accessions,
-                    @RequestParam(value = "accessKey", defaultValue = "") String accessKey) throws IOException {
+                    @RequestParam(value = "accession", defaultValue = "") List<String> accessions) throws IOException {
 
-        String archiveName = accessions.size() + "-" + "experiment" + "-files.zip";
+        String archiveName = accessions.size() + "-experiment-files.zip";
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/zip");
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
-        for (String accession : accessions){
-            Experiment experiment = experimentTrader.getExperiment(accession, accessKey);
-            if(experiment != null) {
+        for (String accession : accessions) {
+            Experiment experiment = experimentTrader.getExperiment(accession, "");
+            if (experiment != null) {
                 ImmutableList<Path> paths = ImmutableList.<Path>builder()
-                        .addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.QUANTIFICATION_FILTERED))
-                        .addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.QUANTIFICATION_RAW))
-                        .addAll(experimentFileLocationService.getFilePathsForArchive(experiment.getAccession(), ExperimentFileType.NORMALISED))
-                        .add(experimentFileLocationService.getFilePath(experiment.getAccession(), ExperimentFileType.SDRF))
+                        .addAll(experimentFileLocationService.getFilePathsForArchive(
+                                experiment.getAccession(), ExperimentFileType.QUANTIFICATION_FILTERED))
+                        .addAll(experimentFileLocationService.getFilePathsForArchive(
+                                experiment.getAccession(), ExperimentFileType.QUANTIFICATION_RAW))
+                        .addAll(experimentFileLocationService.getFilePathsForArchive(
+                                experiment.getAccession(), ExperimentFileType.NORMALISED))
+                        .add(experimentFileLocationService.getFilePath(
+                                experiment.getAccession(), ExperimentFileType.SDRF))
                         .build();
 
                 for (Path path : paths) {
