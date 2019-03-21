@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.home;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -91,7 +90,7 @@ public class HomeController {
                         .sum();
         model.addAttribute("numberOfAssays", numberOfAssays);
 
-        Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
+        Map<String, String> atlasInformation = atlasInformationDao.atlasInformation.get();
         model.addAttribute("info", atlasInformation);
         model.addAttribute("ensembl", ENSEMBL.getId());
         model.addAttribute("genomes", GENOMES.getId());

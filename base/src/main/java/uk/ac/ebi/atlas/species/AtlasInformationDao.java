@@ -1,33 +1,45 @@
 package uk.ac.ebi.atlas.species;
 
+import com.atlassian.util.concurrent.LazyReference;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.stream.JsonReader;
-import uk.ac.ebi.atlas.model.resource.AtlasResource;
-import uk.ac.ebi.atlas.model.resource.JsonFile;
-import uk.ac.ebi.atlas.utils.GsonProvider;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Map;
 
-@Named
+import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+
+@Component
 public class AtlasInformationDao {
+    private final Path atlasInformationFilePath;
+    public final LazyReference<ImmutableMap<String, String>> atlasInformation =
+            new LazyReference<ImmutableMap<String, String>>() {
+                @Override
+                protected ImmutableMap<String, String> create() {
+                    try {
+                        JsonReader jsonReader =
+                                new JsonReader(
+                                        Files.newBufferedReader(atlasInformationFilePath, StandardCharsets.UTF_8));
+                        ImmutableMap<String, String> atlasInformation =
+                                ImmutableMap.copyOf(GSON.<HashMap<String, String>>fromJson(jsonReader, HashMap.class));
+                        jsonReader.close();
+                        return atlasInformation;
+                    } catch (IOException e) {
+                        return ImmutableMap.of(
+                                "ensembl", "foo",
+                                "ensembl_genomes", "unknown",
+                                "wormbase_parasite", "unknown",
+                                "efo", "unknown");
+                    }
+                }
+            };
 
-    private final AtlasResource<JsonReader> atlasInformationJsonFile;
-
-    @Inject
     public AtlasInformationDao(Path atlasInformationFilePath) {
-        atlasInformationJsonFile =
-                new JsonFile.ReadOnly(
-                        atlasInformationFilePath.getParent().toString(),
-                        atlasInformationFilePath.getFileName().toString());
-    }
-
-    public Map<String, String>  fetchAll() {
-        JsonReader reader = atlasInformationJsonFile.get();
-        Map<String, String> data = GsonProvider.GSON.fromJson(reader, HashMap.class);
-
-        return data;
+        this.atlasInformationFilePath = atlasInformationFilePath;
     }
 }
