@@ -31,7 +31,7 @@ public class AtlasInformationDao {
                         return atlasInformation;
                     } catch (IOException e) {
                         return ImmutableMap.of(
-                                "ensembl", "foo",
+                                "ensembl", "unknown",
                                 "ensembl_genomes", "unknown",
                                 "wormbase_parasite", "unknown",
                                 "efo", "unknown");
