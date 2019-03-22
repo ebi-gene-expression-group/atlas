@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -95,19 +96,25 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
     @RequestMapping(value = "experiments/download/zip",
             method = RequestMethod.GET,
             produces = "application/zip")
-    public void
-    downloadMultipleExperimentsArchive(HttpServletResponse response,
-                    @RequestParam(value = "accession", defaultValue = "") List<String> accessions) throws IOException {
+    public void downloadMultipleExperimentsArchive(HttpServletResponse response,
+                                                     @RequestParam(value = "accession", defaultValue = "") List<String> accessions) throws IOException {
 
-        String archiveName = accessions.size() + "-experiment-files.zip";
-        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/zip");
-        ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
-
+        List<Experiment> experiments = new ArrayList<Experiment>();
         for (String accession : accessions) {
-            Experiment experiment = experimentTrader.getExperiment(accession, "");
-            if (experiment != null) {
+            try {
+                experiments.add(experimentTrader.getPublicExperiment(accession));
+            } catch (Exception e) {
+                System.out.println("Experiment accession is not valid: " + accession);
+            }
+        }
+        if (experiments.size() >= 1) {
+            String archiveName = experiments.size() + "-experiment-files.zip";
+            response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("application/zip");
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+
+            for (Experiment experiment : experiments) {
                 ImmutableList<Path> paths = ImmutableList.<Path>builder()
                         .addAll(experimentFileLocationService.getFilePathsForArchive(
                                 experiment.getAccession(), ExperimentFileType.QUANTIFICATION_FILTERED))
@@ -131,7 +138,7 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
                     zipOutputStream.closeEntry();
                 }
             }
+            zipOutputStream.close();
         }
-        zipOutputStream.close();
     }
 }
