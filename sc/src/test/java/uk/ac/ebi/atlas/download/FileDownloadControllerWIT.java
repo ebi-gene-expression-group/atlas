@@ -38,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class FileDownloadControllerWIT {
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
     private static final List<String> EXPERIMENT_ACCESSION_LIST = Arrays.asList("E-MTAB-5061", "E-EHCA-2");
+    private static final List<String> INVALID_EXPERIMENT_ACCESSION_LIST = Arrays.asList("E-MTAB", "E-EHCA");
     private static final String EXPERIMENT_DESIGN_FILE_NAME = "ExpDesign-{0}.tsv";
     private static final String ARCHIVE_NAME = "{0}-{1}-files.zip";
     private static final String FILE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download";
@@ -133,7 +134,7 @@ class FileDownloadControllerWIT {
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession", EXPERIMENT_ACCESSION_LIST.toString().replace("[","").replace("]", "")))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.toString().replace("[", "").replace("]", "")))
                 .andExpect(status().isOk())
                 .andExpect(
                         header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
@@ -143,16 +144,23 @@ class FileDownloadControllerWIT {
     @Test
     void downloadArchiveForInvalidExperimentAccessions() throws Exception {
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession",  "Foo"))
-                .andExpect(status().is(400))
-                .andExpect(view().name("error-page"));
+                .param("accession",  INVALID_EXPERIMENT_ACCESSION_LIST.toString().replace("[", "").replace("]", "")))
+                .andExpect(status().is(200));
     }
 
     @Test
     void downloadArchiveForMixedValidAndInvalidExperimentAccessions() throws Exception {
+        String expectedArchiveName =
+                MessageFormat.format(
+                        ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
+
+
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession",  EXPERIMENT_ACCESSION_LIST.toString().replace("[","").replace("]", "").concat(",foo")))
+                .param("accession",  EXPERIMENT_ACCESSION_LIST.toString().concat("," + INVALID_EXPERIMENT_ACCESSION_LIST.toString())
+                        .replace("[", "").replace("]", "")))
                 .andExpect(status().isOk())
+                .andExpect(
+                        header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
                 .andExpect(content().contentType("application/zip"));
     }
 }
