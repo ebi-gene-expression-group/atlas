@@ -34,9 +34,9 @@ public class UrlHelpers {
                 .toUriString();
     }
 
-    public static String getImageUrl(String imageFileName) {
+    public static String getExperimentsSummaryImageUrl(String imageFileName) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/resources/images/experiment-list-latest/{imageFileName}.png")
+                .path("/resources/images/experiments-summary/{imageFileName}.png")
                 .buildAndExpand(imageFileName)
                 .toUriString();
     }

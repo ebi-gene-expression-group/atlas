@@ -26,7 +26,7 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 import static uk.ac.ebi.atlas.utils.UrlHelpers.getCustomUrl;
 import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentSetUrl;
 import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentUrl;
-import static uk.ac.ebi.atlas.utils.UrlHelpers.getImageUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentsSummaryImageUrl;
 
 @RestController
 public class JsonExperimentsSummaryController extends JsonExceptionHandlingController {
@@ -82,14 +82,14 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
         return ImmutableList.of(
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("encode"),
+                        getExperimentsSummaryImageUrl("encode"),
                         getExperimentSetLink("ENCODE"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-MTAB-4344"),
                                 getExperimentLink("Human cells", "E-GEOD-26284"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("blueprint"),
+                        getExperimentsSummaryImageUrl("blueprint"),
                         getExperimentSetLink("BLUEPRINT"),
                         ImmutableList.of(
                                 getExperimentLink("Plasma cells of tonsil", "E-MTAB-4754"),
@@ -97,7 +97,7 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
                                 getExperimentLink("Common types of haemopoetic cells", "E-MTAB-3827"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("fantom"),
+                        getExperimentsSummaryImageUrl("fantom"),
                         getExperimentSetLink("FANTOM5"),
                         ImmutableList.of(
                                 getExperimentLink("Mouse cells", "E-MTAB-3578"),
@@ -105,57 +105,57 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
                                 getExperimentLink("Human tissues", "E-MTAB-3358"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("human_protein_atlas"),
+                        getExperimentsSummaryImageUrl("human_protein_atlas"),
                         getExperimentLink("E-PROT-3"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-PROT-3"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("ccle"),
+                        getExperimentsSummaryImageUrl("ccle"),
                         getExperimentLink("E-MTAB-2770"),
                         ImmutableList.of(
                                 getExperimentLink("Cancer Cell Line Encyclopedia", "E-MTAB-2770"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("hipsci"),
+                        getExperimentsSummaryImageUrl("hipsci"),
                         getExperimentSetLink("HipSci"),
                         ImmutableList.of(
                                 getExperimentLink("Proteomics – Cell lines", "E-PROT-5"),
                                 getExperimentLink("RNA – Cell lines", "E-MTAB-4748"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("gtex"),
+                        getExperimentsSummaryImageUrl("gtex"),
                         getExperimentLink("E-MTAB-5214"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-MTAB-5214"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("pcawg"),
+                        getExperimentsSummaryImageUrl("pcawg"),
                         getExperimentSetLink("Pan-Cancer"),
                         ImmutableList.of(
                                 getExperimentLink("PCAWG by disease", "E-MTAB-5200"),
                                 getExperimentLink("PCAWG by individual", "E-MTAB-5423"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("wtsi_mgh_cancerrxgene"),
+                        getExperimentsSummaryImageUrl("wtsi_mgh_cancerrxgene"),
                         getExperimentLink("E-MTAB-3983"),
                         ImmutableList.of(
                                 getExperimentLink("Genomics of Drug Sensitivity in Cancer Project – Cell lines", "E-MTAB-3983"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("hdbr"),
+                        getExperimentsSummaryImageUrl("hdbr"),
                         getExperimentLink("E-MTAB-4840"),
                         ImmutableList.of(
                                 getExperimentLink("Prenatal brain development", "E-MTAB-4840"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("baseline"),
+                        getExperimentsSummaryImageUrl("baseline"),
                         getLinkWithEmptyLabel(getCustomUrl("/baseline/experiments")),
                         ImmutableList.of(
                                 Pair.of("Baseline experiments", Optional.of(getCustomUrl("/baseline/experiments"))))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("gramene"),
+                        getExperimentsSummaryImageUrl("gramene"),
                         getLinkWithEmptyLabel(getCustomUrl("/plant/experiments")),
                         ImmutableList.of(
                                 Pair.of("Plant experiments", Optional.of(getCustomUrl("/plant/experiments"))))));
