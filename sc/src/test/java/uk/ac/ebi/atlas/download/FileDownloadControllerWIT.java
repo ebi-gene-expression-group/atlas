@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.download;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.net.HttpHeaders;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,7 +23,6 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,8 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FileDownloadControllerWIT {
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-5061";
-    private static final List<String> EXPERIMENT_ACCESSION_LIST = Arrays.asList("E-MTAB-5061", "E-EHCA-2");
-    private static final List<String> INVALID_EXPERIMENT_ACCESSION_LIST = Arrays.asList("E-MTAB", "E-EHCA");
+    private static final List<String> EXPERIMENT_ACCESSION_LIST = ImmutableList.of("E-MTAB-5061", "E-EHCA-2");
+    private static final List<String> INVALID_EXPERIMENT_ACCESSION_LIST = ImmutableList.of("E-MTAB", "E-EHCA");
     private static final String EXPERIMENT_DESIGN_FILE_NAME = "ExpDesign-{0}.tsv";
     private static final String ARCHIVE_NAME = "{0}-{1}-files.zip";
     private static final String FILE_DOWNLOAD_URL = "/experiment/{experimentAccession}/download";
@@ -134,18 +134,21 @@ class FileDownloadControllerWIT {
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession", EXPERIMENT_ACCESSION_LIST.toString().replace("[", "").replace("]", "")))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(0))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(1)))
                 .andExpect(status().isOk())
-                .andExpect(
-                        header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
-                .andExpect(content().contentType("application/zip"));
+                .andExpect(content().contentType("application/zip"))
+                .andExpect(header().string("Content-Length", String.valueOf(EXPERIMENT_ACCESSION_LIST.size() * 10)))
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName));
     }
 
     @Test
     void downloadArchiveForInvalidExperimentAccessions() throws Exception {
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession",  INVALID_EXPERIMENT_ACCESSION_LIST.toString().replace("[", "").replace("]", "")))
-                .andExpect(status().is(200));
+                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(0))
+                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(1)))
+                .andExpect(status().isOk())
+                .andExpect(header().doesNotExist("Content-Length"));
     }
 
     @Test
@@ -154,13 +157,14 @@ class FileDownloadControllerWIT {
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
-
         this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession",  EXPERIMENT_ACCESSION_LIST.toString().concat("," + INVALID_EXPERIMENT_ACCESSION_LIST.toString())
-                        .replace("[", "").replace("]", "")))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(0))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(1))
+                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(0))
+                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(1)))
                 .andExpect(status().isOk())
-                .andExpect(
-                        header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
+                .andExpect(header().string("Content-Length", String.valueOf(EXPERIMENT_ACCESSION_LIST.size() * 10)))
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
                 .andExpect(content().contentType("application/zip"));
     }
 }
