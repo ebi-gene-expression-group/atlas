@@ -12,12 +12,6 @@ import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Map;
 
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL;
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL;
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELINE;
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE;
 import static uk.ac.ebi.atlas.species.AtlasInformationDataType.EFO;
 import static uk.ac.ebi.atlas.species.AtlasInformationDataType.ENSEMBL;
@@ -58,7 +52,7 @@ public class HomeController extends HtmlExceptionHandlingController {
                         .sum();
         model.addAttribute("numberOfAssays", numberOfAssays);
 
-        Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
+        Map<String, String> atlasInformation = atlasInformationDao.atlasInformation.get();
         model.addAttribute("info", atlasInformation);
         model.addAttribute("ensembl", ENSEMBL.getId());
         model.addAttribute("genomes", GENOMES.getId());
