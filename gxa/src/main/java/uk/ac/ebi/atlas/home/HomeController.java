@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.home;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -41,19 +40,18 @@ public class HomeController {
     private static final Random RANDOM = new Random();
 
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
-    private AtlasInformationDao atlasInformationDao;
-
-    private ExperimentInfoListService experimentInfoListService;
+    private final AtlasInformationDao atlasInformationDao;
+    private final ExperimentInfoListService experimentInfoListService;
 
     public HomeController(SpeciesPropertiesTrader speciesPropertiesTrader,
-                          ExpressionAtlasExperimentTrader expressionAtlasExperimentTrader,
+                          ExpressionAtlasExperimentTrader experimentTrader,
                           AtlasInformationDao atlasInformationDao) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.atlasInformationDao = atlasInformationDao;
 
         this.experimentInfoListService =
                 new ExperimentInfoListService(
-                        expressionAtlasExperimentTrader,
+                        experimentTrader,
                         ImmutableList.of(
                                 RNASEQ_MRNA_BASELINE,
                                 PROTEOMICS_BASELINE,
