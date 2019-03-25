@@ -51,34 +51,4 @@ class SpeciesSummaryServiceTest {
                 .containsAllEntriesOf(
                         ImmutableMap.of(species.getKingdom(), ImmutableList.of(speciesSummary)));
     }
-
-    @Test
-    void animalsBeforePlantsBeforeFungiBeforeProtistsBeforeAnythingElse() {
-        ImmutableList<String> prescribedKingdoms =
-                ImmutableList.of("animals", "plants", "fungi", "protists");
-        ImmutableList<String> otherKingdoms =
-                IntStream.range(0, RNG.nextInt(1, 10)).boxed()
-                        .map(__ -> randomAlphabetic(5, 15))
-                        .collect(toImmutableList());
-
-        ArrayList<String> allKingdoms = new ArrayList<>();
-        allKingdoms.addAll(prescribedKingdoms);
-        allKingdoms.addAll(otherKingdoms);
-        Collections.shuffle(allKingdoms);
-
-        ImmutableList<SpeciesSummary> daoResults =
-                allKingdoms.stream()
-                        .map(kingdom ->
-                                SpeciesSummary.create(generateRandomSpecies().getName(), kingdom, RNG.nextInt(1, 100)))
-                .collect(toImmutableList());
-        when(speciesSummaryDaoMock.getExperimentCountBySpecies())
-                .thenReturn(daoResults);
-
-        assertThat(subject.getSpeciesSummaryGroupedByKingdom(1).keySet().asList())
-                .containsExactlyElementsOf(
-                        ImmutableList.<String>builder()
-                                .addAll(prescribedKingdoms)
-                                .addAll(otherKingdoms.stream().sorted().collect(toImmutableList()))
-                                .build());
-    }
 }

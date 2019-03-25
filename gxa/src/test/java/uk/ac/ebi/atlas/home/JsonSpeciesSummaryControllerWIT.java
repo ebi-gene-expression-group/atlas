@@ -35,7 +35,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JsonSpeciesSummaryControllerWIT {
-
     @Inject
     private SpeciesPropertiesTrader speciesPropertiesTrader;
 
