@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.card;
+package uk.ac.ebi.atlas.utils;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.model.experiment.Experiment;

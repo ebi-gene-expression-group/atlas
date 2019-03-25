@@ -10,6 +10,7 @@ import org.mockito.quality.Strictness;
 import uk.ac.ebi.atlas.home.SpeciesSummary;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.utils.UrlHelpers;
 
 import java.util.Collection;
 import java.util.HashSet;

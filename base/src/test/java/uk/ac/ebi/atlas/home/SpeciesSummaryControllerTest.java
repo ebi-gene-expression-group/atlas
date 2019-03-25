@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.ac.ebi.atlas.model.card.CardModelFactory;
-import uk.ac.ebi.atlas.model.card.UrlHelpers;
+import uk.ac.ebi.atlas.utils.UrlHelpers;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
 import java.util.ArrayList;
