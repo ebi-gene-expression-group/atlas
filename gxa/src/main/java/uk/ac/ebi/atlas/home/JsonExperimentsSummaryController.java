@@ -7,7 +7,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.model.card.CardModel;
 import uk.ac.ebi.atlas.model.card.CardModelAdapter;
@@ -24,6 +23,10 @@ import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELIN
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getCustomUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentSetUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentsSummaryImageUrl;
 
 @RestController
 public class JsonExperimentsSummaryController extends JsonExceptionHandlingController {
@@ -57,120 +60,103 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
                                 .collect(toImmutableList())));
     }
 
-    private static String getImageUrl(String imageFileName) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/resources/images/experiment-list-latest/{imageFileName}.png")
-                        .buildAndExpand(imageFileName)
-                        .toUriString();
-    }
 
-    private static String getCustomUrl(String path) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(path)
-                .build()
-                .toUriString();
-    }
-
-    private static Optional<String> getExperimentSetUrl(String keyword) {
-        return Optional.of(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/experiments")
-                        .query("experimentSet={keyword}")
-                        .buildAndExpand(keyword)
-                        .toUriString());
-    }
-
-    private static Optional<String> getExperimentUrl(String accession) {
-        return Optional.of(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/experiments/{accession}")
-                        .buildAndExpand(accession)
-                        .toUriString());
-    }
 
     private static Pair<String, Optional<String>> getExperimentLink(String label, String accession) {
-        return Pair.of(label, getExperimentUrl(accession));
+        return Pair.of(label, Optional.of(getExperimentUrl(accession)));
+    }
+
+    private static Pair<Optional<String>, Optional<String>> getLinkWithEmptyLabel(String link) {
+        return Pair.of(Optional.empty(), Optional.of(link));
+    }
+
+    private static Pair<Optional<String>, Optional<String>> getExperimentLink(String accession) {
+        return getLinkWithEmptyLabel(getExperimentUrl(accession));
+    }
+
+    private static Pair<Optional<String>, Optional<String>> getExperimentSetLink(String keyword) {
+        return getLinkWithEmptyLabel(getExperimentSetUrl(keyword));
     }
 
     private static ImmutableList<CardModel> featuredExperimentsCards() {
         return ImmutableList.of(
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("encode"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("ENCODE")),
+                        getExperimentsSummaryImageUrl("encode"),
+                        getExperimentSetLink("ENCODE"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-MTAB-4344"),
                                 getExperimentLink("Human cells", "E-GEOD-26284"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("blueprint"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("BLUEPRINT")),
+                        getExperimentsSummaryImageUrl("blueprint"),
+                        getExperimentSetLink("BLUEPRINT"),
                         ImmutableList.of(
                                 getExperimentLink("Plasma cells of tonsil", "E-MTAB-4754"),
                                 getExperimentLink("Rare types of haemopoetic cells", "E-MTAB-3819"),
                                 getExperimentLink("Common types of haemopoetic cells", "E-MTAB-3827"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("fantom"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("FANTOM5")),
+                        getExperimentsSummaryImageUrl("fantom"),
+                        getExperimentSetLink("FANTOM5"),
                         ImmutableList.of(
                                 getExperimentLink("Mouse cells", "E-MTAB-3578"),
                                 getExperimentLink("Mouse tissues", "E-MTAB-3579"),
                                 getExperimentLink("Human tissues", "E-MTAB-3358"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("human_protein_atlas"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-PROT-3")),
+                        getExperimentsSummaryImageUrl("human_protein_atlas"),
+                        getExperimentLink("E-PROT-3"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-PROT-3"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("ccle"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-2770")),
+                        getExperimentsSummaryImageUrl("ccle"),
+                        getExperimentLink("E-MTAB-2770"),
                         ImmutableList.of(
                                 getExperimentLink("Cancer Cell Line Encyclopedia", "E-MTAB-2770"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("hipsci"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("HipSci")),
+                        getExperimentsSummaryImageUrl("hipsci"),
+                        getExperimentSetLink("HipSci"),
                         ImmutableList.of(
                                 getExperimentLink("Proteomics – Cell lines", "E-PROT-5"),
                                 getExperimentLink("RNA – Cell lines", "E-MTAB-4748"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("gtex"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-5214")),
+                        getExperimentsSummaryImageUrl("gtex"),
+                        getExperimentLink("E-MTAB-5214"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-MTAB-5214"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("pcawg"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("Pan-Cancer")),
+                        getExperimentsSummaryImageUrl("pcawg"),
+                        getExperimentSetLink("Pan-Cancer"),
                         ImmutableList.of(
                                 getExperimentLink("PCAWG by disease", "E-MTAB-5200"),
                                 getExperimentLink("PCAWG by individual", "E-MTAB-5423"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("wtsi_mgh_cancerrxgene"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-3983")),
+                        getExperimentsSummaryImageUrl("wtsi_mgh_cancerrxgene"),
+                        getExperimentLink("E-MTAB-3983"),
                         ImmutableList.of(
                                 getExperimentLink("Genomics of Drug Sensitivity in Cancer Project – Cell lines", "E-MTAB-3983"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("hdbr"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-4840")),
+                        getExperimentsSummaryImageUrl("hdbr"),
+                        getExperimentLink("E-MTAB-4840"),
                         ImmutableList.of(
                                 getExperimentLink("Prenatal brain development", "E-MTAB-4840"))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("baseline"),
-                        Pair.of(Optional.empty(), Optional.of(getCustomUrl("/baseline/experiments"))),
+                        getExperimentsSummaryImageUrl("baseline"),
+                        getLinkWithEmptyLabel(getCustomUrl("/baseline/experiments")),
                         ImmutableList.of(
                                 Pair.of("Baseline experiments", Optional.of(getCustomUrl("/baseline/experiments"))))),
                 CardModel.create(
                         IMAGE,
-                        getImageUrl("gramene"),
-                        Pair.of(Optional.empty(), Optional.of(getCustomUrl("/plant/experiments"))),
+                        getExperimentsSummaryImageUrl("gramene"),
+                        getLinkWithEmptyLabel(getCustomUrl("/plant/experiments")),
                         ImmutableList.of(
                                 Pair.of("Plant experiments", Optional.of(getCustomUrl("/plant/experiments"))))));
     }

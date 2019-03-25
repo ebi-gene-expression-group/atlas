@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
-<div class="row column expanded">
+<div class="row expanded">
     <tiles:insertAttribute name="release-stats"/>
 </div>
 
@@ -35,8 +35,6 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         document.getElementById("local-nav-home").className += ' active';
-        // /* This is to prevent overlapping between boxes in home page */
-        Foundation.reInit('equalizer');
     });
 </script>
 

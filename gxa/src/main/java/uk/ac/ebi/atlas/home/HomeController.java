@@ -40,19 +40,18 @@ public class HomeController {
     private static final Random RANDOM = new Random();
 
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
-    private AtlasInformationDao atlasInformationDao;
-
-    private ExperimentInfoListService experimentInfoListService;
+    private final AtlasInformationDao atlasInformationDao;
+    private final ExperimentInfoListService experimentInfoListService;
 
     public HomeController(SpeciesPropertiesTrader speciesPropertiesTrader,
-                          ExpressionAtlasExperimentTrader expressionAtlasExperimentTrader,
+                          ExpressionAtlasExperimentTrader experimentTrader,
                           AtlasInformationDao atlasInformationDao) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.atlasInformationDao = atlasInformationDao;
 
         this.experimentInfoListService =
                 new ExperimentInfoListService(
-                        expressionAtlasExperimentTrader,
+                        experimentTrader,
                         ImmutableList.of(
                                 RNASEQ_MRNA_BASELINE,
                                 PROTEOMICS_BASELINE,
