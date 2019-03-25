@@ -63,7 +63,19 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
 
 
     private static Pair<String, Optional<String>> getExperimentLink(String label, String accession) {
-        return Pair.of(label, getExperimentUrl(accession));
+        return Pair.of(label, Optional.of(getExperimentUrl(accession)));
+    }
+
+    private static Pair<Optional<String>, Optional<String>> getLinkWithEmptyLabel(String link) {
+        return Pair.of(Optional.empty(), Optional.of(link));
+    }
+
+    private static Pair<Optional<String>, Optional<String>> getExperimentLink(String accession) {
+        return getLinkWithEmptyLabel(getExperimentUrl(accession));
+    }
+
+    private static Pair<Optional<String>, Optional<String>> getExperimentSetLink(String keyword) {
+        return getLinkWithEmptyLabel(getExperimentSetUrl(keyword));
     }
 
     private static ImmutableList<CardModel> featuredExperimentsCards() {
@@ -71,14 +83,14 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
                 CardModel.create(
                         IMAGE,
                         getImageUrl("encode"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("ENCODE")),
+                        getExperimentSetLink("ENCODE"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-MTAB-4344"),
                                 getExperimentLink("Human cells", "E-GEOD-26284"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("blueprint"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("BLUEPRINT")),
+                        getExperimentSetLink("BLUEPRINT"),
                         ImmutableList.of(
                                 getExperimentLink("Plasma cells of tonsil", "E-MTAB-4754"),
                                 getExperimentLink("Rare types of haemopoetic cells", "E-MTAB-3819"),
@@ -86,7 +98,7 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
                 CardModel.create(
                         IMAGE,
                         getImageUrl("fantom"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("FANTOM5")),
+                        getExperimentSetLink("FANTOM5"),
                         ImmutableList.of(
                                 getExperimentLink("Mouse cells", "E-MTAB-3578"),
                                 getExperimentLink("Mouse tissues", "E-MTAB-3579"),
@@ -94,57 +106,57 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
                 CardModel.create(
                         IMAGE,
                         getImageUrl("human_protein_atlas"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-PROT-3")),
+                        getExperimentLink("E-PROT-3"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-PROT-3"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("ccle"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-2770")),
+                        getExperimentLink("E-MTAB-2770"),
                         ImmutableList.of(
                                 getExperimentLink("Cancer Cell Line Encyclopedia", "E-MTAB-2770"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("hipsci"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("HipSci")),
+                        getExperimentSetLink("HipSci"),
                         ImmutableList.of(
                                 getExperimentLink("Proteomics – Cell lines", "E-PROT-5"),
                                 getExperimentLink("RNA – Cell lines", "E-MTAB-4748"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("gtex"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-5214")),
+                        getExperimentLink("E-MTAB-5214"),
                         ImmutableList.of(
                                 getExperimentLink("Human tissues", "E-MTAB-5214"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("pcawg"),
-                        Pair.of(Optional.empty(), getExperimentSetUrl("Pan-Cancer")),
+                        getExperimentSetLink("Pan-Cancer"),
                         ImmutableList.of(
                                 getExperimentLink("PCAWG by disease", "E-MTAB-5200"),
                                 getExperimentLink("PCAWG by individual", "E-MTAB-5423"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("wtsi_mgh_cancerrxgene"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-3983")),
+                        getExperimentLink("E-MTAB-3983"),
                         ImmutableList.of(
                                 getExperimentLink("Genomics of Drug Sensitivity in Cancer Project – Cell lines", "E-MTAB-3983"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("hdbr"),
-                        Pair.of(Optional.empty(), getExperimentUrl("E-MTAB-4840")),
+                        getExperimentLink("E-MTAB-4840"),
                         ImmutableList.of(
                                 getExperimentLink("Prenatal brain development", "E-MTAB-4840"))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("baseline"),
-                        Pair.of(Optional.empty(), Optional.of(getCustomUrl("/baseline/experiments"))),
+                        getLinkWithEmptyLabel(getCustomUrl("/baseline/experiments")),
                         ImmutableList.of(
                                 Pair.of("Baseline experiments", Optional.of(getCustomUrl("/baseline/experiments"))))),
                 CardModel.create(
                         IMAGE,
                         getImageUrl("gramene"),
-                        Pair.of(Optional.empty(), Optional.of(getCustomUrl("/plant/experiments"))),
+                        getLinkWithEmptyLabel(getCustomUrl("/plant/experiments")),
                         ImmutableList.of(
                                 Pair.of("Plant experiments", Optional.of(getCustomUrl("/plant/experiments"))))));
     }

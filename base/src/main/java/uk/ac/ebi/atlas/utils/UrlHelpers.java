@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.utils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
-import java.util.Optional;
-
 public class UrlHelpers {
     public static String getExperimentsFilteredBySpeciesUrl(String species) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -16,11 +14,14 @@ public class UrlHelpers {
     }
 
     public static String getExperimentUrl(Experiment experiment) {
+        return getExperimentUrl(experiment.getAccession());
+    }
+
+    public static String getExperimentUrl(String accession) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/experiments/{accession}")
-                .buildAndExpand(experiment.getAccession())
-                .encode()
-                .toUriString();
+                        .path("/experiments/{accession}")
+                        .buildAndExpand(accession)
+                        .toUriString();
     }
 
     public static String getExperimentsFilteredBySpeciesAndExperimentType(String species, String type) {
@@ -47,20 +48,11 @@ public class UrlHelpers {
                 .toUriString();
     }
 
-    public static Optional<String> getExperimentSetUrl(String keyword) {
-        return Optional.of(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
+    public static String getExperimentSetUrl(String keyword) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
                         .path("/experiments")
                         .query("experimentSet={keyword}")
                         .buildAndExpand(keyword)
-                        .toUriString());
-    }
-
-    public static Optional<String> getExperimentUrl(String accession) {
-        return Optional.of(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/experiments/{accession}")
-                        .buildAndExpand(accession)
-                        .toUriString());
+                        .toUriString();
     }
 }
