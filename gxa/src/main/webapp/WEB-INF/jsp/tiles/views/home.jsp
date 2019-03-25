@@ -35,8 +35,6 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         document.getElementById("local-nav-home").className += ' active';
-        // /* This is to prevent overlapping between boxes in home page */
-        Foundation.reInit('equalizer');
     });
 </script>
 
