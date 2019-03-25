@@ -3,8 +3,10 @@ package uk.ac.ebi.atlas.utils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
-public interface UrlHelpers {
-    default String getExperimentsFilteredBySpeciesUrl(String species) {
+import java.util.Optional;
+
+public class UrlHelpers {
+    public static String getExperimentsFilteredBySpeciesUrl(String species) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/experiments")
                 .query("species={species}")
@@ -13,7 +15,7 @@ public interface UrlHelpers {
                 .toUriString();
     }
 
-    default String getExperimentUrl(Experiment experiment) {
+    public static String getExperimentUrl(Experiment experiment) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/experiments/{accession}")
                 .buildAndExpand(experiment.getAccession())
@@ -21,7 +23,7 @@ public interface UrlHelpers {
                 .toUriString();
     }
 
-    default String getExperimentsFilteredBySpeciesAndExperimentType(String species, String type) {
+    public static String getExperimentsFilteredBySpeciesAndExperimentType(String species, String type) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/experiments")
                 .query("species={species}")
@@ -29,5 +31,36 @@ public interface UrlHelpers {
                 .buildAndExpand(species, type)
                 .encode()
                 .toUriString();
+    }
+
+    public static String getImageUrl(String imageFileName) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/resources/images/experiment-list-latest/{imageFileName}.png")
+                .buildAndExpand(imageFileName)
+                .toUriString();
+    }
+
+    public static String getCustomUrl(String path) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(path)
+                .build()
+                .toUriString();
+    }
+
+    public static Optional<String> getExperimentSetUrl(String keyword) {
+        return Optional.of(
+                ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/experiments")
+                        .query("experimentSet={keyword}")
+                        .buildAndExpand(keyword)
+                        .toUriString());
+    }
+
+    public static Optional<String> getExperimentUrl(String accession) {
+        return Optional.of(
+                ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/experiments/{accession}")
+                        .buildAndExpand(accession)
+                        .toUriString());
     }
 }

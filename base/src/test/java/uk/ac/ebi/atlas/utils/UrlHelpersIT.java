@@ -1,7 +1,6 @@
-package uk.ac.ebi.atlas.model.card;
+package uk.ac.ebi.atlas.utils;
 
 import com.google.common.net.UrlEscapers;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,25 +19,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomExperimentAccession;
 import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomSpecies;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentsFilteredBySpeciesUrl;
 
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfig.class)
-class UrlHelpersImplIT {
+class UrlHelpersIT {
     @Mock
     Experiment experimentMock;
-
-    private UrlHelpersImpl subject;
-
-    @BeforeEach
-    void setUp() {
-        subject = new UrlHelpersImpl();
-    }
 
     @Test
     void speciesUrl() throws MalformedURLException {
         Species species = generateRandomSpecies();
-        URL url = new URL(subject.getExperimentsFilteredBySpeciesUrl(species.getReferenceName()));
+        URL url = new URL(getExperimentsFilteredBySpeciesUrl(species.getReferenceName()));
 
         assertThat(url)
                 .hasPath("/experiments")
@@ -50,7 +44,7 @@ class UrlHelpersImplIT {
         String experimentAccession = generateRandomExperimentAccession();
         when(experimentMock.getAccession()).thenReturn(experimentAccession);
 
-        URL url = new URL(subject.getExperimentUrl(experimentMock));
+        URL url = new URL(getExperimentUrl(experimentMock));
 
         assertThat(url)
                 .hasPath("/experiments/" + UrlEscapers.urlPathSegmentEscaper().escape(experimentAccession));

@@ -4,13 +4,13 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.home.SpeciesSummary;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.utils.UrlHelpers;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -25,31 +25,18 @@ import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomExperimentAccession;
 import static uk.ac.ebi.atlas.testutils.RandomDataTestUtils.generateRandomSpecies;
 
-@ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
-class CardModelFactoryTest {
+// This test needs to be an IT with @WebAppConfiguration for UrlHelpers to have access to ServletRequestAttributes
+@ExtendWith(SpringExtension.class)
+@WebAppConfiguration
+@ContextConfiguration(classes = TestConfig.class)
+class CardModelFactoryIT {
     private static final ThreadLocalRandom RNG = ThreadLocalRandom.current();
-
-    private UrlHelpers urlHelpersImpl = new UrlHelpers() {
-        @Override
-        public String getExperimentsFilteredBySpeciesUrl(String species) {
-            return "http://stubbed-species-url/experiments?species=" + species;
-        }
-        @Override
-        public String getExperimentsFilteredBySpeciesAndExperimentType(String species, String type) {
-            return "http://stubbed-species-url/experiments?species=" + species + "experimentType=" + type;
-        }
-        @Override
-        public String getExperimentUrl(Experiment experiment) {
-            return "http://stubbed-experiment-url/experiments/" + experiment.getAccession();
-        }
-    };
 
     private CardModelFactory subject;
 
     @BeforeEach
     void setUp() {
-        subject = new CardModelFactory(urlHelpersImpl);
+        subject = new CardModelFactory();
     }
 
     @Test

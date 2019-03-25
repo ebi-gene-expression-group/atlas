@@ -7,7 +7,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.model.card.CardModel;
 import uk.ac.ebi.atlas.model.card.CardModelAdapter;
@@ -24,6 +23,10 @@ import static uk.ac.ebi.atlas.model.experiment.ExperimentType.PROTEOMICS_BASELIN
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_BASELINE;
 import static uk.ac.ebi.atlas.model.experiment.ExperimentType.RNASEQ_MRNA_DIFFERENTIAL;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getCustomUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentSetUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getImageUrl;
 
 @RestController
 public class JsonExperimentsSummaryController extends JsonExceptionHandlingController {
@@ -57,36 +60,7 @@ public class JsonExperimentsSummaryController extends JsonExceptionHandlingContr
                                 .collect(toImmutableList())));
     }
 
-    private static String getImageUrl(String imageFileName) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/resources/images/experiment-list-latest/{imageFileName}.png")
-                        .buildAndExpand(imageFileName)
-                        .toUriString();
-    }
 
-    private static String getCustomUrl(String path) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(path)
-                .build()
-                .toUriString();
-    }
-
-    private static Optional<String> getExperimentSetUrl(String keyword) {
-        return Optional.of(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/experiments")
-                        .query("experimentSet={keyword}")
-                        .buildAndExpand(keyword)
-                        .toUriString());
-    }
-
-    private static Optional<String> getExperimentUrl(String accession) {
-        return Optional.of(
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/experiments/{accession}")
-                        .buildAndExpand(accession)
-                        .toUriString());
-    }
 
     private static Pair<String, Optional<String>> getExperimentLink(String label, String accession) {
         return Pair.of(label, getExperimentUrl(accession));
