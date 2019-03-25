@@ -1,6 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <div id="species-summary-panel"></div>
 
+<div class="row expanded column text-center margin-top-medium">
+  <a class="button primary" href="${pageContext.request.contextPath}/experiments">Show experiments of all species</a>
+</div>
+
 <script defer src="${pageContext.request.contextPath}/resources/js-bundles/homepageSpeciesSummaryPanel.bundle.js"></script>
 <!-- Set to http://localhost:8080/gxa/ or http://localhost:8080/gxa_sc/ -- Remember the trailing slash! -->
 <script>

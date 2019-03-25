@@ -13,14 +13,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentUrl;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentsFilteredBySpeciesAndExperimentType;
+import static uk.ac.ebi.atlas.utils.UrlHelpers.getExperimentsFilteredBySpeciesUrl;
+
 @Component
 public class CardModelFactory {
-    private final UrlHelpers urlHelpers;
-
-    public CardModelFactory(UrlHelpers urlHelpers) {
-        this.urlHelpers = urlHelpers;
-    }
-
     public CardModel create(SpeciesSummary speciesSummary) {
         List<Pair<String, Optional<String>>> content = new ArrayList<>();
         content.add(
@@ -32,7 +30,7 @@ public class CardModelFactory {
             content.add(
                     Pair.of("Baseline: " + speciesSummary.getBaselineExperiments(),
                             Optional.of(
-                                    urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(
+                                    getExperimentsFilteredBySpeciesAndExperimentType(
                                             speciesSummary.getSpecies(),
                                             "baseline"))));
         }
@@ -40,7 +38,7 @@ public class CardModelFactory {
             content.add(
                     Pair.of("Differential: " + speciesSummary.getDifferentialExperiments(),
                             Optional.of(
-                                    urlHelpers.getExperimentsFilteredBySpeciesAndExperimentType(
+                                    getExperimentsFilteredBySpeciesAndExperimentType(
                                             speciesSummary.getSpecies(),
                                             "differential"))));
         }
@@ -50,7 +48,7 @@ public class CardModelFactory {
                 speciesSummary.getSpecies(),
                 Pair.of(
                         Optional.of(StringUtils.capitalize(speciesSummary.getSpecies())),
-                        Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(speciesSummary.getSpecies()))),
+                        Optional.of(getExperimentsFilteredBySpeciesUrl(speciesSummary.getSpecies()))),
                 content);
     }
 
@@ -62,7 +60,7 @@ public class CardModelFactory {
                 species.getReferenceName(),
                 Pair.of(
                         Optional.of(StringUtils.capitalize(species.getName() + " experiments")),
-                        Optional.of(urlHelpers.getExperimentsFilteredBySpeciesUrl(species.getReferenceName()))),
+                        Optional.of(getExperimentsFilteredBySpeciesUrl(species.getReferenceName()))),
                 experimentsToContent(experiments));
 
     }
@@ -88,7 +86,7 @@ public class CardModelFactory {
     private Pair<String, Optional<String>> experimentToDescriptionAndUrl(Experiment experiment) {
         return Pair.of(
                 experiment.getDescription(),
-                Optional.of(urlHelpers.getExperimentUrl(experiment)));
+                Optional.of(getExperimentUrl(experiment)));
     }
 
 }

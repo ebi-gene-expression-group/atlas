@@ -8,9 +8,9 @@ import uk.ac.ebi.atlas.model.card.CardModelFactory;
 
 @RestController
 public class JsonSpeciesSummaryController extends SpeciesSummaryController {
-    public JsonSpeciesSummaryController(GxaSpeciesSummaryDao popularSpeciesDao,
+    public JsonSpeciesSummaryController(GxaSpeciesSummaryDao speciesSummaryDao,
                                         CardModelFactory cardModelFactory) {
-        super(popularSpeciesDao, cardModelFactory);
+        super(speciesSummaryDao, cardModelFactory);
     }
 
     @GetMapping(value = "/json/species-summary",

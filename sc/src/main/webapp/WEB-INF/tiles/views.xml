@@ -8,6 +8,7 @@
         <put-attribute name="title" value="Home &lt; "/>
         <put-attribute name="content">
             <definition template="/WEB-INF/jsp/tiles/views/home.jsp">
+                <put-attribute name="rel" value="/WEB-INF/jsp/tiles/views/home/release-stats.jsp"/>
                 <put-attribute name="search" value="/WEB-INF/jsp/tiles/views/home/search.jsp"/>
                 <put-attribute name="species-summary" value="/WEB-INF/jsp/tiles/views/home/species-summary.jsp"/>
                 <put-attribute name="experiments-summary-panel" value="/WEB-INF/jsp/tiles/views/home/experiments-summary-panel.jsp"/>
