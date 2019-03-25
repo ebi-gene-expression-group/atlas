@@ -1,5 +1,6 @@
 <%--@elvariable id="species" type="String"--%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<c:set var="species" value="${species.substring(0, 1).toUpperCase()}${species.substring(1).toLowerCase()}"/>
 <c:choose>
     <c:when test="${species == 'Anolis carolinensis'}">
         <c:set var="speciesIconCode" value="7"/>

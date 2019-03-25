@@ -89,7 +89,7 @@ public class HomeController {
                         .sum();
         model.addAttribute("numberOfAssays", numberOfAssays);
 
-        Map<String, String> atlasInformation = atlasInformationDao.fetchAll();
+        Map<String, String> atlasInformation = atlasInformationDao.atlasInformation.get();
         model.addAttribute("info", atlasInformation);
         model.addAttribute("ensembl", ENSEMBL.getId());
         model.addAttribute("genomes", GENOMES.getId());
