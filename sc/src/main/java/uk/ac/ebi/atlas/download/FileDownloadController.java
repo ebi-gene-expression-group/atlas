@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.download;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -30,6 +32,7 @@ import java.util.zip.ZipOutputStream;
 public class FileDownloadController extends HtmlExceptionHandlingController {
     private final ExperimentFileLocationService experimentFileLocationService;
     private final ScxaExperimentTrader experimentTrader;
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileDownloadController.class);
 
     @Inject
     public FileDownloadController(ExperimentFileLocationService experimentFileLocationService,
@@ -104,10 +107,13 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
             try {
                 experiments.add(experimentTrader.getPublicExperiment(accession));
             } catch (Exception e) {
-                System.out.println("Experiment accession is not valid: " + accession);
+                LOGGER.debug("Invalid experiment accession: {}", accession);
             }
         }
-        if (experiments.size() >= 1) {
+
+        int fileLength = 0;
+
+        if (!experiments.isEmpty()) {
             String archiveName = experiments.size() + "-experiment-files.zip";
             response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archiveName);
             response.setStatus(HttpServletResponse.SC_OK);
@@ -128,16 +134,17 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
 
                 for (Path path : paths) {
                     File file = path.toFile();
+                    fileLength += 1;
 
                     zipOutputStream.putNextEntry(new ZipEntry(experiment.getAccession() + "/" + file.getName()));
                     FileInputStream fileInputStream = new FileInputStream(file);
 
                     IOUtils.copy(fileInputStream, zipOutputStream);
-
                     fileInputStream.close();
                     zipOutputStream.closeEntry();
                 }
             }
+            response.setHeader("Content-Length", String.valueOf(fileLength));
             zipOutputStream.close();
         }
     }
