@@ -4,8 +4,8 @@ import URI from 'urijs'
 
 import GeneSearchForm from 'scxa-gene-search-form'
 import FacetedSearchResults from 'react-faceted-search'
-import ExperimentTableHeader from './ExperimentTableHeader'
-import ExperimentTableCard from './ExperimentTableCard'
+import ExperimentsHeader from './ExperimentsHeader'
+import ExperimentCard from './ExperimentCard'
 
 const GeneSearch = ({atlasUrl, history}) => {
   const updateUrl = (event, query, species) => {
@@ -57,8 +57,9 @@ const GeneSearch = ({atlasUrl, history}) => {
               species: requestParams.species
             })
           }
-          ResultsHeaderClass={ExperimentTableHeader}
-          ResultElementClass={ExperimentTableCard}
+          sortTitle={`markerGenes`}
+          ResultsHeaderClass={ExperimentsHeader}
+          ResultElementClass={ExperimentCard}
           noResultsMessageFormatter={(data) => `${geneQuery.term} is not expressed in any experiment: ${data.reason}`}
           resultsMessageFormatter={(data) => `${geneQuery.term} ${data.matchingGeneId} is expressed in:`} />
       }

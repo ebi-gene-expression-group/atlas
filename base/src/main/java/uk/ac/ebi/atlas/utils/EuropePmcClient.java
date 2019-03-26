@@ -4,6 +4,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.model.Publication;
 
@@ -33,25 +34,30 @@ public class EuropePmcClient {
     private Optional<Publication> parseResponseWithOneResult(String query) {
         // Enclose query in quotes as EuropePmc only searches up to the slash for DOIs not enclosed in quotes
         query = "\"" + query + "\"";
-        ResponseEntity<String> response = restTemplate.getForEntity(MessageFormat.format(URL, query), String.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            try {
-                JsonNode responseAsJson = mapper.readTree(response.getBody());
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(MessageFormat.format(URL, query), String.class);
 
-                if (responseAsJson.has("resultList")) {
-                    JsonNode publicationResultList = responseAsJson.get("resultList").get("result");
+            if (response.getStatusCode().is2xxSuccessful()) {
+                try {
+                    JsonNode responseAsJson = mapper.readTree(response.getBody());
 
-                    if (publicationResultList.has(0)) {
-                        return Optional.of(mapper.readValue(publicationResultList.get(0), Publication.class));
-                    } else {
-                        return Optional.empty();
+                    if (responseAsJson.has("resultList")) {
+                        JsonNode publicationResultList = responseAsJson.get("resultList").get("result");
+
+                        if (publicationResultList.has(0)) {
+                            return Optional.of(mapper.readValue(publicationResultList.get(0), Publication.class));
+                        } else {
+                            return Optional.empty();
+                        }
                     }
-                }
 
-            } catch (IOException e) {
-                return Optional.empty();
+                } catch (IOException e) {
+                    return Optional.empty();
+                }
             }
+        } catch (RestClientException e) {
+            return Optional.empty();
         }
 
         return Optional.empty();

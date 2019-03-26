@@ -48,7 +48,7 @@ const CountDiv = styled.div`
   text-align: center;
 `
 
-class ExperimentTableCard extends React.Component {
+class ExperimentCard extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -63,8 +63,7 @@ class ExperimentTableCard extends React.Component {
     const markerGeneLinks = markerGenes ? markerGenes.map((markerGene) =>
       <li key={`marker-gene-${markerGene.k}`}>
         <a href={markerGene.url}>See cluster {markerGene.clusterIds.sort().join(`, `)} for k = {markerGene.k}</a>
-      </li>) :
-      []
+      </li>) : []
 
     return (
       <CardContainerDiv onClick={this._goToExperiment.bind(this, url)}>
@@ -81,11 +80,11 @@ class ExperimentTableCard extends React.Component {
             </MarkerDiv> :
             // Be aware that the FacetedSearchContainer in the search results component will insert <ReactTooltip/>
             <MarkerDiv>
-              <span
-                data-tip={`<span>Not a marker gene</span>`}
-                data-html={true}
-                className={`icon icon-functional`}
-                data-icon={`x`} />
+            <span
+              data-tip={`<span>Not a marker gene</span>`}
+              data-html={true}
+              className={`icon icon-functional`}
+              data-icon={`x`} />
             </MarkerDiv>
         }
         <TitleDiv> {experimentDescription} </TitleDiv>
@@ -100,7 +99,7 @@ class ExperimentTableCard extends React.Component {
   }
 }
 
-ExperimentTableCard.propTypes = {
+ExperimentCard.propTypes = {
   url: PropTypes.string.isRequired,
   species: PropTypes.string.isRequired,
   experimentDescription: PropTypes.string.isRequired,
@@ -113,4 +112,4 @@ ExperimentTableCard.propTypes = {
   factors: PropTypes.array.isRequired
 }
 
-export default ExperimentTableCard
+export default ExperimentCard
