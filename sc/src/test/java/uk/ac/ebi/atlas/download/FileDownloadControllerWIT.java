@@ -16,15 +16,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.io.ByteArrayInputStream;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.zip.ZipInputStream;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -130,15 +134,17 @@ class FileDownloadControllerWIT {
 
     @Test
     void downloadArchiveForValidExperimentAccessions() throws Exception {
+        ResultActions result  = this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(0))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(1)));
+        byte[] contentByte = result.andReturn().getResponse().getContentAsByteArray();
+        ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(contentByte));
         String expectedArchiveName =
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
-        this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession", EXPERIMENT_ACCESSION_LIST.get(0))
-                .param("accession", EXPERIMENT_ACCESSION_LIST.get(1)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/zip"))
-                .andExpect(header().string("Content-Length", String.valueOf(EXPERIMENT_ACCESSION_LIST.size() * 10)))
+
+        result.andExpect(status().isOk())
+                .andExpect(content().string(containsString(zipInputStream.getNextEntry().getName())))
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName));
     }
 
@@ -148,22 +154,24 @@ class FileDownloadControllerWIT {
                 .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(0))
                 .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(1)))
                 .andExpect(status().isOk())
-                .andExpect(header().doesNotExist("Content-Length"));
+                .andExpect(content().string(""));
     }
 
     @Test
     void downloadArchiveForMixedValidAndInvalidExperimentAccessions() throws Exception {
+        ResultActions result  = this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(0))
+                .param("accession", EXPERIMENT_ACCESSION_LIST.get(1))
+                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(0))
+                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(1)));
+        byte[] contentByte = result.andReturn().getResponse().getContentAsByteArray();
+        ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(contentByte));
         String expectedArchiveName =
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
-        this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
-                .param("accession", EXPERIMENT_ACCESSION_LIST.get(0))
-                .param("accession", EXPERIMENT_ACCESSION_LIST.get(1))
-                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(0))
-                .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(1)))
-                .andExpect(status().isOk())
-                .andExpect(header().string("Content-Length", String.valueOf(EXPERIMENT_ACCESSION_LIST.size() * 10)))
+        result.andExpect(status().isOk())
+                .andExpect(content().string(containsString(zipInputStream.getNextEntry().getName())))
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
                 .andExpect(content().contentType("application/zip"));
     }
