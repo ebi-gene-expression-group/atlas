@@ -102,7 +102,7 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
     public void downloadMultipleExperimentsArchive(HttpServletResponse response,
                                                      @RequestParam(value = "accession", defaultValue = "") List<String> accessions) throws IOException {
 
-        List<Experiment> experiments = new ArrayList<Experiment>();
+        List<Experiment> experiments = new ArrayList<>();
         for (String accession : accessions) {
             try {
                 experiments.add(experimentTrader.getPublicExperiment(accession));
@@ -110,8 +110,6 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
                 LOGGER.debug("Invalid experiment accession: {}", accession);
             }
         }
-
-        int fileLength = 0;
 
         if (!experiments.isEmpty()) {
             String archiveName = experiments.size() + "-experiment-files.zip";
@@ -134,8 +132,6 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
 
                 for (Path path : paths) {
                     File file = path.toFile();
-                    fileLength += 1;
-
                     zipOutputStream.putNextEntry(new ZipEntry(experiment.getAccession() + "/" + file.getName()));
                     FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -144,7 +140,6 @@ public class FileDownloadController extends HtmlExceptionHandlingController {
                     zipOutputStream.closeEntry();
                 }
             }
-            response.setHeader("Content-Length", String.valueOf(fileLength));
             zipOutputStream.close();
         }
     }
