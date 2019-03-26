@@ -147,31 +147,8 @@ a.baseline {
     border-bottom: 0;
 }
 
-.experiment-list-latest ul {
-    list-style: none;
-    font-size: smaller;
-}
-.experiment-list-latest .list-project-l ul li {padding: 1.5em 0.5em; border-radius:0;}
-.experiment-list-latest .list-project-l ul li span {
-    margin-right: 0.5em;
-    margin-bottom: 0;
-    margin-top: 0.7em;
-}
-
 .tabs a {
     border-bottom: none;
-}
-
-.experiment-list-latest a {
-    border-bottom: none;
-}
-
-.experiment-list-latest li:hover {
-    background-color: aliceblue;
-}
-
-.experiment-list-latest img.experiment-thumbnail {
-    height: 50px;
 }
 
 #publication-list .icon, #tools .icon {

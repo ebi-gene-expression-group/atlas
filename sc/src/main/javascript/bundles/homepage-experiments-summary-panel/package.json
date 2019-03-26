@@ -1,0 +1,17 @@
+{
+  "name": "homepage-experiments-summary-panel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "atlas-react-fetch-loader": "^1.0.0",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "experiments-summary-panel": "file:../../modules/experiments-summary-panel"
+  }
+}

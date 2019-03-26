@@ -11,9 +11,9 @@ module.exports = {
     expressionAtlasBioentityInformation: `sc-atlas-bioentity-information`,
     expressionAtlasBaselineExpression: `./bundles/baseline-expression`,
     expressionAtlasDifferentialExpression: `./bundles/differential-expression`,
-    atlasHomepageCard: `./bundles/atlas-homepage-card`,
-    homePagePanel: `./bundles/homepage-panels`,
-    feedbackForm: `atlas-feedback-form`
+    feedbackForm: `atlas-feedback-form`,
+    homepageSpeciesSummaryPanel: `./bundles/homepage-species-summary-panel`,
+    homepageExperimentsSummaryPanel: `./bundles/homepage-experiments-summary-panel`
   },
 
   plugins: [
@@ -43,7 +43,9 @@ module.exports = {
       "prop-types": path.resolve(`./node_modules/prop-types`),
       "styled-components": path.resolve(`./node_modules/styled-components`),
       "react-router-dom": path.resolve(`./node_modules/react-router-dom`),
-      "urijs": path.resolve(`./node_modules/urijs`)
+      "urijs": path.resolve(`./node_modules/urijs`),
+      "atlas-homepage-cards": path.resolve(`./node_modules/atlas-homepage-cards`),
+      "atlas-react-fetch-loader": path.resolve(`./node_modules/atlas-react-fetch-loader`)
     }
   },
 
