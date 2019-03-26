@@ -154,6 +154,7 @@ class FileDownloadControllerWIT {
                 .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(0))
                 .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(1)))
                 .andExpect(status().isOk())
+                .andExpect(header().doesNotExist(HttpHeaders.CONTENT_DISPOSITION))
                 .andExpect(content().string(""));
     }
 
