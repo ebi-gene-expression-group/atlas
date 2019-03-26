@@ -2,7 +2,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
 <div class="row expanded">
-  <tiles:insertAttribute name="rel"/>
+  <tiles:insertAttribute name="release-stats"/>
 </div>
 
 <div class="row column margin-bottom-xlarge expanded">
