@@ -175,7 +175,7 @@ class JsonExperimentTSnePlotControllerWIT {
     }
 
     @Test
-    void validJsonWithValidExperimentAccessionButNoMetadata(String experimentAccession) throws Exception {
+    void validJsonWithValidExperimentAccessionButNoMetadata() throws Exception {
         mockMvc.perform(get(URL, "E-GEOD-99058"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
