@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -22,22 +24,19 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import static org.hamcrest.Matchers.everyItem;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isA;
-import static org.hamcrest.Matchers.oneOf;
+import java.util.Random;
+
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JsonExperimentTSnePlotControllerWIT {
+    private static final String URL = "/json/experiments/{experimentAccession}/metadata";
+
     @Inject
     private DataSource dataSource;
 
@@ -164,4 +163,29 @@ class JsonExperimentTSnePlotControllerWIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.series", hasSize(1)));
     }
+
+    @Test
+    void validJsonWithValidExperimentAccession() throws Exception {
+        String [] experimentAccession = {"E-MTAB-5061", "E-EHCA-2"};
+        mockMvc.perform(get(URL, experimentAccession[new Random().nextInt(experimentAccession.length)]))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[0].label").exists())
+                .andExpect(jsonPath("$.[*]", hasSize(greaterThan(0))));
+    }
+
+    @Test
+    void validJsonWithValidExperimentAccessionButNoMetadata(String experimentAccession) throws Exception {
+        mockMvc.perform(get(URL, "E-GEOD-99058"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*]", hasSize(equalTo(0))));
+    }
+
+    @Test
+    void invalidExperimentAccession() throws Exception {
+        mockMvc.perform(get(URL, "FOO"))
+                .andExpect(status().is(400));
+    }
+
 }

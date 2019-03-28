@@ -2,12 +2,15 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.experimentpage.tsne.TSnePoint;
 import uk.ac.ebi.atlas.tsne.TSnePlotService;
 import uk.ac.ebi.atlas.experimentpage.json.JsonExperimentController;
@@ -17,6 +20,7 @@ import uk.ac.ebi.atlas.trader.ScxaExperimentTrader;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
@@ -29,11 +33,13 @@ import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 @RestController
 public class JsonExperimentTSnePlotController extends JsonExperimentController {
     private final TSnePlotService tSnePlotService;
+    private final ExperimentPageContentService experimentPageContentService;
 
     @Inject
-    public JsonExperimentTSnePlotController(ScxaExperimentTrader experimentTrader, TSnePlotService tSnePlotService) {
+    public JsonExperimentTSnePlotController(ScxaExperimentTrader experimentTrader, TSnePlotService tSnePlotService, ExperimentPageContentService experimentPageContentService) {
         super(experimentTrader);
         this.tSnePlotService = tSnePlotService;
+        this.experimentPageContentService = experimentPageContentService;
     }
 
     @RequestMapping(
@@ -76,14 +82,24 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
             @RequestParam(defaultValue = "") String accessKey) {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        return GSON.toJson(
-                ImmutableMap.of(
-                        "series",
-                        modelForHighcharts(
-                                "",
-                                new TreeMap<>(
-                                        tSnePlotService.fetchTSnePlotWithMetadata(
-                                                experiment.getAccession(), perplexity, metadata)))));
+        // need to have this check in case there is no metadata for specified experiment
+        if(getTSnePlotMetadata(experiment.getAccession()).equalsIgnoreCase("[]")) {
+            return GSON.toJson(ImmutableMap.of(
+                    "series",
+                    new ArrayList<Map<String, Object>>()
+            ));
+
+        }
+        else {
+            return GSON.toJson(
+                    ImmutableMap.of(
+                            "series",
+                            modelForHighcharts(
+                                    "",
+                                    new TreeMap<>(
+                                            tSnePlotService.fetchTSnePlotWithMetadata(
+                                                    experiment.getAccession(), perplexity, metadata)))));
+        }
     }
 
     @RequestMapping(
@@ -123,6 +139,19 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
         min.ifPresent(n -> model.put("min", n));
 
         return GSON.toJson(model);
+    }
+
+    @RequestMapping(
+            value = "json/experiments/{experimentAccession}/metadata",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String getTSnePlotMetadata(
+            @PathVariable String experimentAccession) {
+        JsonObject plotData = experimentPageContentService.getTsnePlotData(experimentAccession);
+        return plotData.getAsJsonArray("metadata").size() == 0 ?
+                GSON.toJson(new JsonArray()) :
+                    GSON.toJson(plotData.getAsJsonArray("metadata"));
     }
 
     private List<Map<String, Object>> modelForHighcharts(String seriesNamePrefix, Map<?, Set<TSnePoint>> points) {
