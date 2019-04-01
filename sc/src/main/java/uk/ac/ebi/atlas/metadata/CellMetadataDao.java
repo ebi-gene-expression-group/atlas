@@ -166,8 +166,16 @@ public class CellMetadataDao {
                                 // shouldn't be. Apparently we don't expect any cell ID to have more than one factor
                                 // value. This was confirmed by curators in this Slack conversation:
                                 // https://ebi-fg.slack.com/archives/C800ZEPPS/p1529592962001046
-                                entry -> (String) ((ArrayList) entry
-                                                .getValue().get(0).getFieldValue(metadataField.name()))
-                                                .get(0)));
+                                entry -> {
+                                    SolrDocument result = entry.getValue().get(0);
+
+                                    if (result.containsKey(metadataField.name())) {
+                                        return (String) ((ArrayList) result
+                                                .getFieldValues(metadataField.name())).get(0);
+                                    } else {
+                                        // Some fields could be blank, in which case they wouldn't even be stored in Solr
+                                        return "not available";
+                                    }
+                                }));
     }
 }
