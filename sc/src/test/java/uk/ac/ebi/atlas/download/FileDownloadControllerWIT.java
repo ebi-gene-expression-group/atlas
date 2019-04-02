@@ -26,6 +26,7 @@ import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import static org.hamcrest.Matchers.containsString;
@@ -143,8 +144,12 @@ class FileDownloadControllerWIT {
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
+        ZipEntry entry;
+        while ( (entry = zipInputStream.getNextEntry()) != null ) {
+            result.andExpect(content().string(containsString(entry.getName())));
+        }
+
         result.andExpect(status().isOk())
-                .andExpect(content().string(containsString(zipInputStream.getNextEntry().getName())))
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName));
     }
 
@@ -171,8 +176,12 @@ class FileDownloadControllerWIT {
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
+        ZipEntry entry;
+        while ( (entry = zipInputStream.getNextEntry()) != null ) {
+            result.andExpect(content().string(containsString(entry.getName())));
+        }
+
         result.andExpect(status().isOk())
-                .andExpect(content().string(containsString(zipInputStream.getNextEntry().getName())))
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
                 .andExpect(content().contentType("application/zip"));
     }
