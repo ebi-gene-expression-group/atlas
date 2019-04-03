@@ -23,12 +23,11 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import java.io.ByteArrayInputStream;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -52,6 +51,9 @@ class FileDownloadControllerWIT {
 
     @Inject
     private DataSource dataSource;
+
+    @Inject
+    private ExperimentFileLocationService experimentFileLocationService;
 
     @Autowired
     private WebApplicationContext wac;
@@ -138,15 +140,14 @@ class FileDownloadControllerWIT {
         ResultActions result  = this.mockMvc.perform(get(ARCHIVE_DOWNLOAD_LIST_URL)
                 .param("accession", EXPERIMENT_ACCESSION_LIST.get(0))
                 .param("accession", EXPERIMENT_ACCESSION_LIST.get(1)));
-        byte[] contentByte = result.andReturn().getResponse().getContentAsByteArray();
-        ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(contentByte));
+
         String expectedArchiveName =
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
-        ZipEntry entry;
-        while ( (entry = zipInputStream.getNextEntry()) != null ) {
-            result.andExpect(content().string(containsString(entry.getName())));
+        ImmutableList<String> sourceFileNames = getSourceValidFileNames();
+        for ( String fileName : sourceFileNames ) {
+            result.andExpect(content().string(containsString(fileName)));
         }
 
         result.andExpect(status().isOk())
@@ -170,19 +171,46 @@ class FileDownloadControllerWIT {
                 .param("accession", EXPERIMENT_ACCESSION_LIST.get(1))
                 .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(0))
                 .param("accession", INVALID_EXPERIMENT_ACCESSION_LIST.get(1)));
-        byte[] contentByte = result.andReturn().getResponse().getContentAsByteArray();
-        ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(contentByte));
+
         String expectedArchiveName =
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
-        ZipEntry entry;
-        while ( (entry = zipInputStream.getNextEntry()) != null ) {
-            result.andExpect(content().string(containsString(entry.getName())));
+        ImmutableList<String> sourceFileNames = getSourceValidFileNames();
+        for ( String fileName : sourceFileNames ) {
+            result.andExpect(content().string(containsString(fileName)));
         }
 
         result.andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
                 .andExpect(content().contentType("application/zip"));
+    }
+
+    private ImmutableList<String> getSourceValidFileNames() {
+        ImmutableList<Path> paths = ImmutableList.<Path>builder()
+                .addAll(experimentFileLocationService.getFilePathsForArchive(
+                        EXPERIMENT_ACCESSION_LIST.get(0), ExperimentFileType.QUANTIFICATION_FILTERED))
+                .addAll(experimentFileLocationService.getFilePathsForArchive(
+                        EXPERIMENT_ACCESSION_LIST.get(0), ExperimentFileType.QUANTIFICATION_RAW))
+                .addAll(experimentFileLocationService.getFilePathsForArchive(
+                        EXPERIMENT_ACCESSION_LIST.get(0), ExperimentFileType.NORMALISED))
+                .add(experimentFileLocationService.getFilePath(
+                        EXPERIMENT_ACCESSION_LIST.get(0), ExperimentFileType.SDRF))
+                .addAll(experimentFileLocationService.getFilePathsForArchive(
+                        EXPERIMENT_ACCESSION_LIST.get(1), ExperimentFileType.QUANTIFICATION_FILTERED))
+                .addAll(experimentFileLocationService.getFilePathsForArchive(
+                        EXPERIMENT_ACCESSION_LIST.get(1), ExperimentFileType.QUANTIFICATION_RAW))
+                .addAll(experimentFileLocationService.getFilePathsForArchive(
+                        EXPERIMENT_ACCESSION_LIST.get(1), ExperimentFileType.NORMALISED))
+                .add(experimentFileLocationService.getFilePath(
+                        EXPERIMENT_ACCESSION_LIST.get(1), ExperimentFileType.SDRF))
+                .build();
+
+        ImmutableList<String> sourceFileNames = paths.stream()
+                .map(Path::getFileName)
+                .map(Path::toString)
+                .collect(toImmutableList());
+
+        return sourceFileNames;
     }
 }
