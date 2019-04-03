@@ -23,12 +23,17 @@ import uk.ac.ebi.atlas.configuration.TestConfig;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.io.ByteArrayInputStream;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static org.hamcrest.Matchers.containsString;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -145,11 +150,18 @@ class FileDownloadControllerWIT {
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
+        byte[] contentByte = result.andReturn().getResponse().getContentAsByteArray();
+        ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(contentByte));
+
         ImmutableList<String> sourceFileNames = getSourceValidFileNames();
-        for ( String fileName : sourceFileNames ) {
-            result.andExpect(content().string(containsString(fileName)));
+
+        ArrayList<String> contentFileNames = new ArrayList<>();
+        ZipEntry entry;
+        while ((entry = zipInputStream.getNextEntry()) != null) {
+            contentFileNames.add(Paths.get(entry.getName()).getFileName().toString());
         }
 
+        assertThat(sourceFileNames.containsAll(contentFileNames)).isTrue();
         result.andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName));
     }
@@ -176,11 +188,18 @@ class FileDownloadControllerWIT {
                 MessageFormat.format(
                         ARCHIVE_NAME, EXPERIMENT_ACCESSION_LIST.size(), "experiment");
 
+        byte[] contentByte = result.andReturn().getResponse().getContentAsByteArray();
+        ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(contentByte));
+
         ImmutableList<String> sourceFileNames = getSourceValidFileNames();
-        for ( String fileName : sourceFileNames ) {
-            result.andExpect(content().string(containsString(fileName)));
+
+        ArrayList<String> contentFileNames = new ArrayList<>();
+        ZipEntry entry;
+        while ((entry = zipInputStream.getNextEntry()) != null) {
+            contentFileNames.add(Paths.get(entry.getName()).getFileName().toString());
         }
 
+        assertThat(sourceFileNames.containsAll(contentFileNames)).isTrue();
         result.andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + expectedArchiveName))
                 .andExpect(content().contentType("application/zip"));
