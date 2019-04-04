@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
@@ -98,27 +100,30 @@ class ExperimentFileLocationServiceIT {
         this.subject = new ExperimentFileLocationService(dataFileHub);
     }
 
-    @Test
-    void existingExperimentDesignFile() {
-        existingFileOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void existingExperimentDesignFile(String experimentAccession) {
+        existingFileOfType(experimentAccession,
                 ExperimentFileType.EXPERIMENT_DESIGN, EXPERIMENT_DESIGN_FILE_NAME_TEMPLATE);
     }
 
-    @Test
-    void existingSdrfFile() {
-        existingFileOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void existingSdrfFile(String experimentAccession) {
+        existingFileOfType(experimentAccession,
                 ExperimentFileType.SDRF, SDRF_FILE_NAME_TEMPLATE);
     }
 
-    @Test
-    void existingClusteringFile() {
-        existingFileOfType(jdbcTestUtils.fetchRandomSingleCellExperimentAccession(),
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void existingClusteringFile(String experimentAccession) {
+        existingFileOfType(experimentAccession,
                 ExperimentFileType.CLUSTERING, CLUSTERS_FILE_NAME_TEMPLATE);
     }
 
-    @Test
-    void existingFilteredQuantificationFiles() {
-        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void existingFilteredQuantificationFiles(String experimentAccession) {
         List<String> expectedFileNames =
                 Stream.of(
                         MATRIX_MARKET_FILTERED_QUANTIFICATION_FILE_NAME_TEMPLATE,
@@ -131,9 +136,9 @@ class ExperimentFileLocationServiceIT {
                 ExperimentFileType.QUANTIFICATION_FILTERED, expectedFileNames, false);
     }
 
-    @Test
-    void existingNormalisedQuantificationFiles() {
-        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void existingNormalisedQuantificationFiles(String experimentAccession) {
         List<String> expectedFileNames =
                 Stream.of(
                         SINGLE_CELL_MATRIX_MARKET_NORMALISED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
@@ -146,9 +151,9 @@ class ExperimentFileLocationServiceIT {
                 ExperimentFileType.NORMALISED, expectedFileNames, true);
     }
 
-    @Test
-    void existingRawFilteredQuantificationFiles() {
-        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void existingRawFilteredQuantificationFiles(String experimentAccession) {
         List<String> expectedFileNames =
                 Stream.of(
                         SINGLE_CELL_MATRIX_MARKET_FILTERED_AGGREGATED_COUNTS_FILE_PATH_TEMPLATE,
@@ -161,9 +166,9 @@ class ExperimentFileLocationServiceIT {
                 ExperimentFileType.QUANTIFICATION_RAW, expectedFileNames, true);
     }
 
-    @Test
-    void existingMarkerGeneFiles() {
-        String experimentAccession = "E-MTAB-5061"; //jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void existingMarkerGeneFiles(String experimentAccession) {
         List<Integer> ks = jdbcTestUtils.fetchKsFromCellClusters(experimentAccession);
 
         List<String> expectedFileNames = ks
@@ -212,10 +217,9 @@ class ExperimentFileLocationServiceIT {
         assertThat(uri.toString()).isEqualTo(expectedUrl);
     }
 
-    @Test
-    void uriForValidArchiveFileType() {
-        String experimentAccession = jdbcTestUtils.fetchRandomSingleCellExperimentAccession();
-
+    @ParameterizedTest
+    @MethodSource("singleCellExperimentAccesionProvider")
+    void uriForValidArchiveFileType(String experimentAccession) {
         ExperimentFileType fileType = ExperimentFileType.QUANTIFICATION_FILTERED;
         URI uri = subject.getFileUri(experimentAccession, fileType, "");
 
@@ -259,6 +263,12 @@ class ExperimentFileLocationServiceIT {
         assertThat(expectedFileNames)
                 .isNotEmpty()
                 .containsAnyElementsOf(fileNames);
+    }
+
+    private Stream<String> singleCellExperimentAccesionProvider() {
+        return jdbcTestUtils
+                .fetchAllSingleCellExperimentAccessions()
+                .stream();
     }
 
 }
