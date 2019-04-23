@@ -24,7 +24,8 @@ import static uk.ac.ebi.atlas.utils.StringUtil.suffixAfterLastSlash;
 @Component
 public class EfoLookupService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EfoLookupService.class);
-    private static final String EFO_OWL_FILE_URL = "https://www.ebi.ac.uk/efo/efo.owl";
+    // private static final String EFO_OWL_FILE_URL = "https://www.ebi.ac.uk/efo/efo.owl";
+    private static final String EFO_OWL_FILE_URL = "https://raw.githubusercontent.com/EBISPOT/efo/v2019-03-18/efo.owl";
 
     private final LazyReference<ImmutableMap<String, EFONode>> idToEFONode =
             new LazyReference<ImmutableMap<String, EFONode>>() {
