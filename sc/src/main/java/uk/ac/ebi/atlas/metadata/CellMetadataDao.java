@@ -37,6 +37,8 @@ public class CellMetadataDao {
     private SingleCellAnalyticsCollectionProxy singleCellAnalyticsCollectionProxy;
     private IdfParser idfParser;
 
+    static final String MISSING_METADATA_VALUE_PLACEHOLDER = "not available";
+
     public CellMetadataDao(SolrCloudCollectionProxyFactory solrCloudCollectionProxyFactory,
                            IdfParser idfParser) {
         this.singleCellAnalyticsCollectionProxy =
@@ -174,7 +176,7 @@ public class CellMetadataDao {
                                                 .getFieldValues(metadataField.name())).get(0);
                                     } else {
                                         // Some fields could be blank, in which case they wouldn't even be stored in Solr
-                                        return "not available";
+                                        return MISSING_METADATA_VALUE_PLACEHOLDER;
                                     }
                                 }));
     }

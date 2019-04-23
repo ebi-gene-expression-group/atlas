@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.ac.ebi.atlas.metadata.CellMetadataDao.MISSING_METADATA_VALUE_PLACEHOLDER;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -154,6 +155,7 @@ class CellMetadataDaoIT {
     void experimentWithMissingValuesReturnsNotAvailable() {
         String experimentAccession = "E-GEOD-71585";
 
+        // TODO: Retrieve randomly sampled cell IDs from Solr
         ImmutableList<String> cellIdsWithMissingValues = ImmutableList.of(
                 "SRR2138737",
                 "SRR2140225",
@@ -164,7 +166,7 @@ class CellMetadataDaoIT {
                 SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE,
                 cellIdsWithMissingValues);
 
-        assertThat(result.values()).containsOnly("not available");
+        assertThat(result.values()).containsOnly(MISSING_METADATA_VALUE_PLACEHOLDER);
     }
 
 
