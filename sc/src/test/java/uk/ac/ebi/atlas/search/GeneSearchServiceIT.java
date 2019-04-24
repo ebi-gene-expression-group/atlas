@@ -2,10 +2,13 @@ package uk.ac.ebi.atlas.search;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,6 +20,8 @@ import uk.ac.ebi.atlas.testutils.JdbcUtils;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,6 +31,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = TestConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GeneSearchServiceIT {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneSearchServiceIT.class);
+
     @Inject
     private DataSource dataSource;
 
@@ -60,7 +67,10 @@ class GeneSearchServiceIT {
     @MethodSource("experimentAccesionWithoutPreferredKProvider")
     void experimentsWithoutPreferredKReturnASingleProfile(String experimentAccession) {
         String geneId = jdbcTestUtils.fetchRandomMarkerGeneFromSingleCellExperiment(experimentAccession);
-        assertThat(subject.getMarkerGeneProfile(geneId)).hasSize(1);
+        LOGGER.info("Fetching marker gene profile for {}", geneId);
+        Map<String, Map<String, Map<Integer, List<Integer>>>> markerGeneProfile = subject.getMarkerGeneProfile(geneId);
+
+        assertThat(markerGeneProfile).hasSize(1);
     }
 
     private Stream<String> experimentAccesionWithoutPreferredKProvider() {

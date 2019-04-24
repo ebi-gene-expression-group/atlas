@@ -121,7 +121,7 @@ class CellMetadataServiceIT {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
         return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"))
+                .filter(accession -> !accession.equalsIgnoreCase(EXPERIMENT_WITHOUT_METADATA_ACCESSION))
                 .collect(Collectors.toSet());
     }
 
@@ -130,7 +130,8 @@ class CellMetadataServiceIT {
         return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
                 .filter(accession ->
-                        !accession.equalsIgnoreCase("E-GEOD-99058") && !accession.equalsIgnoreCase("E-ENAD-13"))
+                        !accession.equalsIgnoreCase(EXPERIMENT_WITHOUT_METADATA_ACCESSION) &&
+                                !accession.equalsIgnoreCase("E-ENAD-13"))
                 .collect(Collectors.toSet());
     }
 }

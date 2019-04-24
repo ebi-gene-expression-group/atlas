@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.metadata;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,6 +23,7 @@ import uk.ac.ebi.atlas.experimentimport.idf.IdfParser;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.configuration.TestConfig;
 import uk.ac.ebi.atlas.solr.cloud.SolrCloudCollectionProxyFactory;
+import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy;
 import uk.ac.ebi.atlas.solr.cloud.collections.SingleCellAnalyticsCollectionProxy.SingleCellAnalyticsSchemaField;
 import uk.ac.ebi.atlas.testutils.JdbcUtils;
 import uk.ac.ebi.atlas.testutils.RandomDataTestUtils;
@@ -30,12 +32,14 @@ import javax.inject.Inject;
 import java.util.Arrays;
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.ac.ebi.atlas.metadata.CellMetadataDao.MISSING_METADATA_VALUE_PLACEHOLDER;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -147,6 +151,25 @@ class CellMetadataDaoIT {
         assertThat(subject.getFactorFieldNames(experimentAccession, cellId)).isEmpty();
     }
 
+    @Test
+    void experimentWithMissingValuesReturnsNotAvailable() {
+        String experimentAccession = "E-GEOD-71585";
+
+        // TODO: Retrieve randomly sampled cell IDs from Solr
+        ImmutableList<String> cellIdsWithMissingValues = ImmutableList.of(
+                "SRR2138737",
+                "SRR2140225",
+                "SRR2139550",
+                "SRR2139566");
+
+        Map<String, String> result = subject.getMetadataValueForCellIds(experimentAccession,
+                SingleCellAnalyticsCollectionProxy.CHARACTERISTIC_INFERRED_CELL_TYPE,
+                cellIdsWithMissingValues);
+
+        assertThat(result.values()).containsOnly(MISSING_METADATA_VALUE_PLACEHOLDER);
+    }
+
+
     @ParameterizedTest
     @MethodSource("experimentsWithMetadataProvider")
     void validCellIdsHaveMetadataValues(String experimentAccession) {
@@ -192,9 +215,11 @@ class CellMetadataDaoIT {
 
     private Stream<String> experimentsWithMetadataProvider() {
         // E-GEOD-99058 does not have any metadata (factors or inferred cell types)
+        // E-GEOD-71585 has missing inferred cell types for some cells
         return jdbcUtils.fetchPublicSingleCellExperimentAccessions()
                 .stream()
-                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058"));
+                .filter(accession -> !accession.equalsIgnoreCase("E-GEOD-99058") &&
+                        !accession.equalsIgnoreCase("E-GEOD-71585"));
     }
 
     private Stream<String> experimentsWithFactorsProvider() {
