@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,7 +82,7 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         // need to have this check in case there is no metadata for specified experiment
-        if(getTSnePlotMetadata(experiment.getAccession()).equalsIgnoreCase("[]")) {
+        if(getTSnePlotMetadata(experiment.getAccession()).equalsIgnoreCase("metadata:   []")) {
             return GSON.toJson(ImmutableMap.of(
                     "series",
                     new ArrayList<Map<String, Object>>()
@@ -148,10 +147,8 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
     @ResponseBody
     public String getTSnePlotMetadata(
             @PathVariable String experimentAccession) {
-        JsonObject plotData = experimentPageContentService.getTsnePlotData(experimentAccession);
-        return plotData.getAsJsonArray("metadata").size() == 0 ?
-                GSON.toJson(new JsonArray()) :
-                    GSON.toJson(plotData.getAsJsonArray("metadata"));
+        JsonObject plotData = experimentPageContentService.getTsnePlotMetaData(experimentAccession);
+        return GSON.toJson(plotData);
     }
 
     private List<Map<String, Object>> modelForHighcharts(String seriesNamePrefix, Map<?, Set<TSnePoint>> points) {

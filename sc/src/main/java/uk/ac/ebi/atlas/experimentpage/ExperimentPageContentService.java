@@ -46,15 +46,7 @@ public class ExperimentPageContentService {
         tsnePlotSettingsService.getAvailablePerplexities(experimentAccession).forEach(perplexityArray::add);
         result.add("perplexities", perplexityArray);
 
-        JsonArray metadataArray = new JsonArray();
-        Stream.concat(
-                cellMetadataDao.getMetadataFieldNames(experimentAccession).stream(),
-                cellMetadataDao.getAdditionalAttributesFieldNames(experimentAccession).stream())
-                .map(x -> ImmutableMap.of("value", x.name(), "label", x.displayName()))
-                .collect(Collectors.toSet())
-                .forEach(x -> metadataArray.add(GSON.toJsonTree(x)));
-
-        result.add("metadata", metadataArray);
+        result.add("metadata", getMetadata(experimentAccession));
 
         JsonArray units = new JsonArray();
         units.add("TPM");
@@ -62,6 +54,13 @@ public class ExperimentPageContentService {
         result.add("units", units);
 
         result.addProperty("suggesterEndpoint", "json/suggestions");
+
+        return result;
+    }
+
+    public JsonObject getTsnePlotMetaData(String experimentAccession) {
+        JsonObject result = new JsonObject();
+        result.add("metadata", getMetadata(experimentAccession));
 
         return result;
     }
@@ -144,5 +143,17 @@ public class ExperimentPageContentService {
         section.add("files", files);
 
         return section;
+    }
+
+    private JsonArray getMetadata(String experimentAccession) {
+        JsonArray metadataArray = new JsonArray();
+        Stream.concat(
+                cellMetadataDao.getMetadataFieldNames(experimentAccession).stream(),
+                cellMetadataDao.getAdditionalAttributesFieldNames(experimentAccession).stream())
+                .map(x -> ImmutableMap.of("value", x.name(), "label", x.displayName()))
+                .collect(Collectors.toSet())
+                .forEach(x -> metadataArray.add(GSON.toJsonTree(x)));
+
+        return metadataArray;
     }
 }
