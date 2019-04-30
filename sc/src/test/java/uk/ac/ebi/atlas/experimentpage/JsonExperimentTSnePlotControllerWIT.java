@@ -183,7 +183,7 @@ class JsonExperimentTSnePlotControllerWIT {
         mockMvc.perform(get(URL, "E-GEOD-99058"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.metadata", hasSize(equalTo(0))));
+                .andExpect(jsonPath("$", hasSize(equalTo(0))));
     }
 
     @Test
