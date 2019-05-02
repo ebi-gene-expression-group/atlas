@@ -59,10 +59,7 @@ public class ExperimentPageContentService {
     }
 
     public JsonArray getTsnePlotMetaData(String experimentAccession) {
-        JsonObject result = new JsonObject();
-        result.add("metadata", getMetadata(experimentAccession));
-
-        return result.getAsJsonArray("metadata");
+        return getMetadata(experimentAccession);
     }
 
     public JsonObject getExperimentDesign(String experimentAccession,

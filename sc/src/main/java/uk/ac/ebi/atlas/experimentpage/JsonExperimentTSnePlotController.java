@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static uk.ac.ebi.atlas.utils.GsonProvider.GSON;
 
 @RestController
@@ -82,12 +83,11 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         // need to have this check in case there is no metadata for specified experiment
-        if(getTSnePlotMetadata(experiment.getAccession()).equalsIgnoreCase("[]")) {
+        if(isNullOrEmpty(getTSnePlotMetadata(experiment.getAccession()))) {
             return GSON.toJson(ImmutableMap.of(
                     "series",
                     new ArrayList<Map<String, Object>>()
             ));
-
         }
         else {
             return GSON.toJson(
@@ -148,7 +148,11 @@ public class JsonExperimentTSnePlotController extends JsonExperimentController {
     public String getTSnePlotMetadata(
             @PathVariable String experimentAccession) {
         JsonArray plotData = experimentPageContentService.getTsnePlotMetaData(experimentAccession);
-        return GSON.toJson(plotData);
+        if(plotData.size() == 0) {
+            return null;
+        } else {
+            return GSON.toJson(plotData);
+        }
     }
 
     private List<Map<String, Object>> modelForHighcharts(String seriesNamePrefix, Map<?, Set<TSnePoint>> points) {
